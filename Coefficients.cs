@@ -763,6 +763,16 @@ namespace warmf {
             return line;    // return entire line if no line code
         }
 
+
+		// read a line into a string
+		public string readSpacerLine(STechStreamReader sr, string text) {
+			string line;
+			line = sr.ReadLine();
+			if (!line.Contains(text))
+				Debug.WriteLine("SPACER LINE\nExpected: |" + text + "| at line num "+sr.LineNum+"\nLine = |" + line + "|");
+			return line;
+		}
+
         // read in and parse the Coeffieicents file
         public bool readFile(string filename) {
             string line;
@@ -787,7 +797,7 @@ namespace warmf {
                 nums = readIntData(sr, "ENDDATE", 3);
                 endDate = new DateTime(nums[2], nums[1], nums[0]);
 
-                line = sr.ReadLine();  // spacer line
+                line = readSpacerLine(sr,"****");
 
                 // numbers of objects in model
                 nums = readIntData(sr, "SYSTEM", 8);
@@ -854,9 +864,8 @@ namespace warmf {
                 warmfstartOutFilename = readString(sr, "FILES");
                 textOutFilename = readString(sr, "FILES");
 
-                // System coefficients
-                line = sr.ReadLine();  // separator line
-
+				// System coefficients
+				line = readSpacerLine(sr, "****");
                 dnums = readDoubleData(sr, "TOL", 4);
                 tolerancePH = nums[0];
                 // nums[1] is unused;
@@ -1052,8 +1061,8 @@ namespace warmf {
                     reactions.Add(reaction);
                 }
 
-                // Sediments
-                line = sr.ReadLine();  // spacer line: SEDIMENT
+				// Sediments
+				line = readSpacerLine(sr, "SEDIMENT");
                 sediments = new List<Sediment>();
                 nums = readIntData(sr, "NPART", 2);
                 numSedParticleSizes = nums[0];
@@ -1067,8 +1076,8 @@ namespace warmf {
                     sediments.Add(sediment);
                 }
 
-                // Algae
-                line = sr.ReadLine();  // spacer line: ALGAE AND PERIPHYTON
+				// Algae
+				line = readSpacerLine(sr, "ALGAE & PERIPHYTON");
                 algaes = new List<Algae>();
                 numAlgae = 3;
                 for (int ii = 0; ii < numAlgae; ii++) {
@@ -1108,8 +1117,8 @@ namespace warmf {
                 algaeShading = dnums[1];
                 detritusShading = dnums[2];
 
-                // Minerals
-                line = sr.ReadLine();  // spacer line: MINERALS
+				// Minerals
+				line = readSpacerLine(sr, "MINERALS");
                 minerals = new List<Mineral>();
                 numMinerals = readInt(sr, "NMNRLS");
                 for (int ii = 0; ii < numMinerals; ii++) {
@@ -1125,8 +1134,8 @@ namespace warmf {
                     }
                 }
 
-                // Litter leachable ion params
-                line = sr.ReadLine();  // spacer line: LITTER AND HUMUS
+				// Litter leachable ion params
+				line = readSpacerLine(sr, "LITTER & HUMUS");
                 litter = new Litter();
                 dnums = readDoubleData(sr, "FRLCH", 4);
                 litter.courseLitterFrac = dnums[0];
@@ -1138,8 +1147,8 @@ namespace warmf {
                 litter.fineLitterDecay = dnums[1];
                 litter.humusDecay = dnums[2];
 
-                // Snow
-                line = sr.ReadLine();  // spacer line: SNOW AND ICE
+				// Snow
+				line = readSpacerLine(sr, "SNOW AND ICE");
                 snow = new Snow();
                 dnums = readDoubleData(sr, "SNOW", 9);
                 snow.formTemp = dnums[0];
@@ -1157,16 +1166,16 @@ namespace warmf {
                 snow.meltLeaching = dnums[2];
                 snow.nitrificationRate = dnums[3];
 
-                // Septic
-                line = sr.ReadLine();  // spacer line: SEPTIC
+				// Septic
+				line = readSpacerLine(sr, "SEPTIC");
                 septic = new Septic();
                 septic.failedFlow = readDouble(sr, "SEPTIC");
                 septic.type1 = readDoubleData(sr, "SEPTIC", numComponents);
                 septic.type2 = readDoubleData(sr, "SEPTIC", numComponents);
                 septic.type3 = readDoubleData(sr, "SEPTIC", numComponents);
 
-                // Land use data
-                line = sr.ReadLine();   // spacer line: CANOPY AND LAND USE
+				// Land use data
+				line = readSpacerLine(sr, "CANOPY AND LAND USE");
                 // general land use params
                 partDV = readMonthlyDoubleData(sr, "PARTDV");
                 courseDV = readMonthlyDoubleData(sr, "COARSEDV");
@@ -1178,17 +1187,15 @@ namespace warmf {
                 heightWindSpeed = dnums[0];
                 vonkar = dnums[1];
 
-                line = sr.ReadLine();
-                if (testLine(line, sr.LineNum, "NITRIFYR")) {
-                    numLanduses = Int32.TryParse(line.Substring(8, 8), out intRes) ? intRes : 0;
-                    standingBiomass = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0;
-                }
+				dnums = readDoubleData(sr, "NITRIFYR", 2);
+				numLanduses = (int)dnums[0];
+				standingBiomass = dnums[1];
 
                 // Land use individual data
                 landuse = new List<Landuse>();
 
                 for (int ii = 0; ii < numLanduses; ii++) {
-                    line = sr.ReadLine();   // spacer line: LAND USE TYPE
+					line = readSpacerLine(sr, "LAND USE TYPE");
                     line = sr.ReadLine();
                     Landuse lu = new Landuse();
                     if (testLine(line, sr.LineNum, "INTCEPT")) {
@@ -1196,6 +1203,7 @@ namespace warmf {
                         lu.imperviousFrac = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0;
                         lu.maxPotentInceptStorage = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : 0;
                         lu.name = line.Substring(32);
+
                         dnums = readDoubleData(sr, "EROSION", 2);
                         lu.rainDetachFactor = dnums[0];
                         lu.flowDetachFactor = dnums[1];
@@ -1208,6 +1216,7 @@ namespace warmf {
                         lu.dryCollectEff = dnums[5];
                         lu.wetCollEff = dnums[6];
                         lu.leafWgtRation = dnums[7];
+
                         dnums = readDoubleData(sr, "HEIGHT", 2);
                         lu.canopyHeight = dnums[0];
                         lu.stomatalResist = dnums[1];
@@ -1229,8 +1238,8 @@ namespace warmf {
                     }
                 }
 
-                // CATCHMENTS
-                line = sr.ReadLine();  // spacer line: CATCHMENT COEFFICIENTS
+				// CATCHMENTS
+				line = readSpacerLine(sr, "CATCHMENT COEFFICIENTS");
 
                 catchments = new List<Catchment>();
                 for (int ii = 0; ii < numCatchments; ii++) {
@@ -1438,11 +1447,11 @@ namespace warmf {
                     catchments.Add(catchData);
                 }
 
-                // RIVERS
-                line = sr.ReadLine();  // spacer line: RIVER COEFFICIENTS
+				// RIVERS
+				line = readSpacerLine(sr, "RIVER COEFFICIENTS");
                 rivers = new List<River>();
                 for (int ii = 0; ii < numRivers; ii++) {
-                    line = sr.ReadLine();  // spacer line: RIVE####  - can these have 5 digits?  MRL
+					line = readSpacerLine(sr, "RIVE");	// RIVE####  - can these have 5 digits?  MRL
                     River river = new River();
 					dnums = readDoubleData(sr, "STRE", 9);
 					river.idNum = (int)dnums[0];
@@ -1525,10 +1534,10 @@ namespace warmf {
 
 
 				// RESERVOIRS
-				line = sr.ReadLine();  // spacer line: RIVER COEFFICIENTS
+				line = readSpacerLine(sr, "LAKE COEFFICIENTS");
 				reservoirs = new List<Reservoir>();
 				for (int ii = 0; ii < numReservoirs; ii++) {
-					line = sr.ReadLine();  // spacer line: RESE####  - can these have 5 digits?  MRL
+					line = readSpacerLine(sr, "RESE");	// RESE####  - can these have 5 digits?  MRL
 					line = sr.ReadLine();
 					Reservoir reservoir = new Reservoir();
 					reservoir.idNum = ii;
@@ -1597,7 +1606,7 @@ namespace warmf {
 
 					reservoir.reservoirSegs = new List<ReservoirSeg>();
 					for (int jj=0; jj<reservoir.numSegments; jj++) {
-						line = sr.ReadLine();	// spacer line: RESERVOIR SEGMENT ####
+						line = readSpacerLine(sr, "RESERVOIR SEGMENT");
 						ReservoirSeg seg = new ReservoirSeg();
 						line = sr.ReadLine();
 						if (testLine(line, sr.LineNum, "DEPTH")) {
