@@ -764,7 +764,7 @@ namespace warmf {
         }
 
 
-		// read a line into a string
+		// read an (ignored) line into a string
 		public string readSpacerLine(STechStreamReader sr, string text) {
 			string line;
 			line = sr.ReadLine();
