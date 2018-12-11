@@ -107,7 +107,7 @@ namespace warmf {
             shpFile.RenderSettings.IsSelectable = true;
         }
 
-		/*  scrool wheel works without this.  --MRL
+		/*  scroll wheel works without this.  --MRL
         private void frmMap_MouseWheel(object sender, MouseEventArgs e) {
             if (e.Delta > 0) {
                 miEditZoomIn_Click(sender, e);
