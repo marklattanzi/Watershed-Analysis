@@ -23,26 +23,37 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.toolChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.miDataGraph = new System.Windows.Forms.ToolStripMenuItem();
 			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.moduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.miDataEngr = new System.Windows.Forms.ToolStripMenuItem();
 			this.miDataKnow = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolGrid = new System.Windows.Forms.DataGridView();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.chkboxStdDev = new System.Windows.Forms.CheckBox();
+			this.chkboxAverage = new System.Windows.Forms.CheckBox();
+			this.textBox4 = new System.Windows.Forms.TextBox();
+			this.textBox3 = new System.Windows.Forms.TextBox();
+			this.tboxFilename = new System.Windows.Forms.TextBox();
+			this.tboxLongitude = new System.Windows.Forms.TextBox();
+			this.tboxLatitude = new System.Windows.Forms.TextBox();
+			this.lblName = new System.Windows.Forms.Label();
+			this.lblLongitude = new System.Windows.Forms.Label();
+			this.lblLatitude = new System.Windows.Forms.Label();
+			this.lblData = new System.Windows.Forms.Label();
+			this.cboxData = new System.Windows.Forms.ComboBox();
 			this.gboxGraphChart = new System.Windows.Forms.GroupBox();
 			this.radioChart = new System.Windows.Forms.RadioButton();
 			this.radioGraph = new System.Windows.Forms.RadioButton();
 			this.lblFilename = new System.Windows.Forms.Label();
 			this.lblTypeOfData = new System.Windows.Forms.Label();
 			this.cboxFilename = new System.Windows.Forms.ComboBox();
-			this.cboxTypeOfData = new System.Windows.Forms.ComboBox();
+			this.cboxTypeOfFile = new System.Windows.Forms.ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.toolChart)).BeginInit();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.toolGrid)).BeginInit();
@@ -55,20 +66,20 @@
 			this.toolChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			chartArea4.Name = "ChartArea1";
-			this.toolChart.ChartAreas.Add(chartArea4);
+			chartArea1.Name = "ChartArea1";
+			this.toolChart.ChartAreas.Add(chartArea1);
 			this.toolChart.DataSource = this.toolChart.Images;
-			legend4.Enabled = false;
-			legend4.Name = "Legend1";
-			this.toolChart.Legends.Add(legend4);
-			this.toolChart.Location = new System.Drawing.Point(21, 111);
+			legend1.Enabled = false;
+			legend1.Name = "Legend1";
+			this.toolChart.Legends.Add(legend1);
+			this.toolChart.Location = new System.Drawing.Point(0, 101);
 			this.toolChart.Name = "toolChart";
-			series4.ChartArea = "ChartArea1";
-			series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-			series4.Legend = "Legend1";
-			series4.Name = "data";
-			this.toolChart.Series.Add(series4);
-			this.toolChart.Size = new System.Drawing.Size(1276, 536);
+			series1.ChartArea = "ChartArea1";
+			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+			series1.Legend = "Legend1";
+			series1.Name = "data";
+			this.toolChart.Series.Add(series1);
+			this.toolChart.Size = new System.Drawing.Size(1319, 538);
 			this.toolChart.TabIndex = 0;
 			this.toolChart.Text = "WARMF Chart";
 			// 
@@ -86,18 +97,9 @@
 			// 
 			// fileToolStripMenuItem
 			// 
-			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miDataGraph});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.fileToolStripMenuItem.Text = "&File";
-			// 
-			// miDataGraph
-			// 
-			this.miDataGraph.Name = "miDataGraph";
-			this.miDataGraph.Size = new System.Drawing.Size(106, 22);
-			this.miDataGraph.Text = "Graph";
-			this.miDataGraph.Click += new System.EventHandler(this.miDataGraph_Click);
 			// 
 			// editToolStripMenuItem
 			// 
@@ -142,32 +144,152 @@
 			// 
 			this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.panel1.Controls.Add(this.chkboxStdDev);
+			this.panel1.Controls.Add(this.chkboxAverage);
+			this.panel1.Controls.Add(this.textBox4);
+			this.panel1.Controls.Add(this.textBox3);
+			this.panel1.Controls.Add(this.tboxFilename);
+			this.panel1.Controls.Add(this.tboxLongitude);
+			this.panel1.Controls.Add(this.tboxLatitude);
+			this.panel1.Controls.Add(this.lblName);
+			this.panel1.Controls.Add(this.lblLongitude);
+			this.panel1.Controls.Add(this.lblLatitude);
+			this.panel1.Controls.Add(this.lblData);
+			this.panel1.Controls.Add(this.cboxData);
 			this.panel1.Controls.Add(this.gboxGraphChart);
 			this.panel1.Controls.Add(this.lblFilename);
 			this.panel1.Controls.Add(this.lblTypeOfData);
 			this.panel1.Controls.Add(this.cboxFilename);
-			this.panel1.Controls.Add(this.cboxTypeOfData);
+			this.panel1.Controls.Add(this.cboxTypeOfFile);
 			this.panel1.Location = new System.Drawing.Point(0, 27);
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(1309, 78);
 			this.panel1.TabIndex = 3;
 			// 
+			// chkboxStdDev
+			// 
+			this.chkboxStdDev.AutoSize = true;
+			this.chkboxStdDev.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.chkboxStdDev.Location = new System.Drawing.Point(1028, 35);
+			this.chkboxStdDev.Name = "chkboxStdDev";
+			this.chkboxStdDev.Size = new System.Drawing.Size(110, 20);
+			this.chkboxStdDev.TabIndex = 20;
+			this.chkboxStdDev.Text = "Std Deviation:";
+			this.chkboxStdDev.UseVisualStyleBackColor = true;
+			// 
+			// chkboxAverage
+			// 
+			this.chkboxAverage.AutoSize = true;
+			this.chkboxAverage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.chkboxAverage.Location = new System.Drawing.Point(1028, 7);
+			this.chkboxAverage.Name = "chkboxAverage";
+			this.chkboxAverage.Size = new System.Drawing.Size(82, 20);
+			this.chkboxAverage.TabIndex = 19;
+			this.chkboxAverage.Text = "Average:";
+			this.chkboxAverage.UseVisualStyleBackColor = true;
+			// 
+			// textBox4
+			// 
+			this.textBox4.Location = new System.Drawing.Point(1144, 34);
+			this.textBox4.Name = "textBox4";
+			this.textBox4.Size = new System.Drawing.Size(118, 20);
+			this.textBox4.TabIndex = 18;
+			// 
+			// textBox3
+			// 
+			this.textBox3.Location = new System.Drawing.Point(1144, 7);
+			this.textBox3.Name = "textBox3";
+			this.textBox3.Size = new System.Drawing.Size(118, 20);
+			this.textBox3.TabIndex = 17;
+			// 
+			// tboxFilename
+			// 
+			this.tboxFilename.Location = new System.Drawing.Point(840, 53);
+			this.tboxFilename.Name = "tboxFilename";
+			this.tboxFilename.Size = new System.Drawing.Size(118, 20);
+			this.tboxFilename.TabIndex = 16;
+			// 
+			// tboxLongitude
+			// 
+			this.tboxLongitude.Location = new System.Drawing.Point(840, 28);
+			this.tboxLongitude.Name = "tboxLongitude";
+			this.tboxLongitude.Size = new System.Drawing.Size(118, 20);
+			this.tboxLongitude.TabIndex = 15;
+			// 
+			// tboxLatitude
+			// 
+			this.tboxLatitude.Location = new System.Drawing.Point(840, 4);
+			this.tboxLatitude.Name = "tboxLatitude";
+			this.tboxLatitude.Size = new System.Drawing.Size(118, 20);
+			this.tboxLatitude.TabIndex = 14;
+			// 
+			// lblName
+			// 
+			this.lblName.AutoSize = true;
+			this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblName.Location = new System.Drawing.Point(756, 54);
+			this.lblName.Name = "lblName";
+			this.lblName.Size = new System.Drawing.Size(73, 16);
+			this.lblName.TabIndex = 12;
+			this.lblName.Text = "File Name:";
+			// 
+			// lblLongitude
+			// 
+			this.lblLongitude.AutoSize = true;
+			this.lblLongitude.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblLongitude.Location = new System.Drawing.Point(756, 32);
+			this.lblLongitude.Name = "lblLongitude";
+			this.lblLongitude.Size = new System.Drawing.Size(70, 16);
+			this.lblLongitude.TabIndex = 11;
+			this.lblLongitude.Text = "Longitude:";
+			// 
+			// lblLatitude
+			// 
+			this.lblLatitude.AutoSize = true;
+			this.lblLatitude.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblLatitude.Location = new System.Drawing.Point(756, 8);
+			this.lblLatitude.Name = "lblLatitude";
+			this.lblLatitude.Size = new System.Drawing.Size(58, 16);
+			this.lblLatitude.TabIndex = 10;
+			this.lblLatitude.Text = "Latitude:";
+			// 
+			// lblData
+			// 
+			this.lblData.AutoSize = true;
+			this.lblData.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblData.Location = new System.Drawing.Point(402, 12);
+			this.lblData.Name = "lblData";
+			this.lblData.Size = new System.Drawing.Size(40, 16);
+			this.lblData.TabIndex = 9;
+			this.lblData.Text = "Data:";
+			// 
+			// cboxData
+			// 
+			this.cboxData.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.cboxData.FormattingEnabled = true;
+			this.cboxData.Location = new System.Drawing.Point(405, 33);
+			this.cboxData.Name = "cboxData";
+			this.cboxData.Size = new System.Drawing.Size(202, 24);
+			this.cboxData.TabIndex = 8;
+			this.cboxData.SelectedIndexChanged += new System.EventHandler(this.cboxData_SelectedIndexChanged);
+			// 
 			// gboxGraphChart
 			// 
 			this.gboxGraphChart.Controls.Add(this.radioChart);
 			this.gboxGraphChart.Controls.Add(this.radioGraph);
-			this.gboxGraphChart.Location = new System.Drawing.Point(279, 5);
+			this.gboxGraphChart.Location = new System.Drawing.Point(634, 3);
 			this.gboxGraphChart.Name = "gboxGraphChart";
-			this.gboxGraphChart.Size = new System.Drawing.Size(74, 61);
+			this.gboxGraphChart.Size = new System.Drawing.Size(84, 62);
 			this.gboxGraphChart.TabIndex = 7;
 			this.gboxGraphChart.TabStop = false;
 			// 
 			// radioChart
 			// 
 			this.radioChart.AutoSize = true;
-			this.radioChart.Location = new System.Drawing.Point(6, 32);
+			this.radioChart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.radioChart.Location = new System.Drawing.Point(6, 31);
 			this.radioChart.Name = "radioChart";
-			this.radioChart.Size = new System.Drawing.Size(50, 17);
+			this.radioChart.Size = new System.Drawing.Size(57, 20);
 			this.radioChart.TabIndex = 1;
 			this.radioChart.Text = "Chart";
 			this.radioChart.UseVisualStyleBackColor = true;
@@ -176,9 +298,10 @@
 			// 
 			this.radioGraph.AutoSize = true;
 			this.radioGraph.Checked = true;
+			this.radioGraph.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.radioGraph.Location = new System.Drawing.Point(6, 9);
 			this.radioGraph.Name = "radioGraph";
-			this.radioGraph.Size = new System.Drawing.Size(54, 17);
+			this.radioGraph.Size = new System.Drawing.Size(63, 20);
 			this.radioGraph.TabIndex = 0;
 			this.radioGraph.TabStop = true;
 			this.radioGraph.Text = "Graph";
@@ -187,38 +310,42 @@
 			// lblFilename
 			// 
 			this.lblFilename.AutoSize = true;
-			this.lblFilename.Location = new System.Drawing.Point(32, 48);
+			this.lblFilename.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblFilename.Location = new System.Drawing.Point(208, 12);
 			this.lblFilename.Name = "lblFilename";
-			this.lblFilename.Size = new System.Drawing.Size(57, 13);
+			this.lblFilename.Size = new System.Drawing.Size(73, 16);
 			this.lblFilename.TabIndex = 4;
 			this.lblFilename.Text = "File Name:";
 			// 
 			// lblTypeOfData
 			// 
 			this.lblTypeOfData.AutoSize = true;
-			this.lblTypeOfData.Location = new System.Drawing.Point(17, 20);
+			this.lblTypeOfData.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblTypeOfData.Location = new System.Drawing.Point(12, 14);
 			this.lblTypeOfData.Name = "lblTypeOfData";
-			this.lblTypeOfData.Size = new System.Drawing.Size(72, 13);
+			this.lblTypeOfData.Size = new System.Drawing.Size(89, 16);
 			this.lblTypeOfData.TabIndex = 3;
 			this.lblTypeOfData.Text = "Type of Data:";
 			// 
 			// cboxFilename
 			// 
+			this.cboxFilename.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.cboxFilename.FormattingEnabled = true;
-			this.cboxFilename.Location = new System.Drawing.Point(105, 45);
+			this.cboxFilename.Location = new System.Drawing.Point(211, 33);
 			this.cboxFilename.Name = "cboxFilename";
-			this.cboxFilename.Size = new System.Drawing.Size(153, 21);
+			this.cboxFilename.Size = new System.Drawing.Size(156, 24);
 			this.cboxFilename.TabIndex = 2;
 			this.cboxFilename.SelectedIndexChanged += new System.EventHandler(this.cboxFilename_SelectedIndexChanged);
 			// 
-			// cboxTypeOfData
+			// cboxTypeOfFile
 			// 
-			this.cboxTypeOfData.FormattingEnabled = true;
-			this.cboxTypeOfData.Location = new System.Drawing.Point(105, 12);
-			this.cboxTypeOfData.Name = "cboxTypeOfData";
-			this.cboxTypeOfData.Size = new System.Drawing.Size(153, 21);
-			this.cboxTypeOfData.TabIndex = 1;
-			this.cboxTypeOfData.SelectedIndexChanged += new System.EventHandler(this.cboxTypeOfData_SelectedIndexChanged);
+			this.cboxTypeOfFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.cboxTypeOfFile.FormattingEnabled = true;
+			this.cboxTypeOfFile.Location = new System.Drawing.Point(15, 33);
+			this.cboxTypeOfFile.Name = "cboxTypeOfFile";
+			this.cboxTypeOfFile.Size = new System.Drawing.Size(167, 24);
+			this.cboxTypeOfFile.TabIndex = 1;
+			this.cboxTypeOfFile.SelectedIndexChanged += new System.EventHandler(this.cboxTypeOfFile_SelectedIndexChanged);
 			// 
 			// FormData
 			// 
@@ -259,14 +386,25 @@
 		private System.Windows.Forms.DataGridView toolGrid;
 		private System.Windows.Forms.ToolStripMenuItem miDataEngr;
 		private System.Windows.Forms.ToolStripMenuItem miDataKnow;
-		private System.Windows.Forms.ToolStripMenuItem miDataGraph;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.Label lblFilename;
 		private System.Windows.Forms.Label lblTypeOfData;
 		private System.Windows.Forms.ComboBox cboxFilename;
-		private System.Windows.Forms.ComboBox cboxTypeOfData;
+		private System.Windows.Forms.ComboBox cboxTypeOfFile;
 		private System.Windows.Forms.GroupBox gboxGraphChart;
 		private System.Windows.Forms.RadioButton radioChart;
 		private System.Windows.Forms.RadioButton radioGraph;
+		private System.Windows.Forms.ComboBox cboxData;
+		private System.Windows.Forms.Label lblData;
+		private System.Windows.Forms.Label lblLongitude;
+		private System.Windows.Forms.Label lblLatitude;
+		private System.Windows.Forms.CheckBox chkboxStdDev;
+		private System.Windows.Forms.CheckBox chkboxAverage;
+		private System.Windows.Forms.TextBox textBox4;
+		private System.Windows.Forms.TextBox textBox3;
+		private System.Windows.Forms.TextBox tboxFilename;
+		private System.Windows.Forms.TextBox tboxLongitude;
+		private System.Windows.Forms.TextBox tboxLatitude;
+		private System.Windows.Forms.Label lblName;
 	}
 }
