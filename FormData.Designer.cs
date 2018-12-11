@@ -61,7 +61,7 @@
 			this.toolChart.Size = new System.Drawing.Size(1276, 536);
 			this.toolChart.TabIndex = 0;
 			this.toolChart.Text = "WARMF Chart";
-			this.toolChart.Click += new System.EventHandler(this.toolChart_Click);
+
 			// 
 			// menuStrip1
 			// 
