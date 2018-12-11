@@ -20,9 +20,26 @@ namespace warmf {
 			InitializeComponent();
 			this.parent = par;
 			dataPlotted = null;
+			this.Load += new System.EventHandler(this.FormData_Load);
 			this.ResizeEnd += new EventHandler(DataForm_ResizeEnd);
+
+			// populate Type of Data combo box
+			for (int ii=0; ii<7; ii++) 
+				cboxTypeOfData.Items.Add(METFile.labels[ii].yaxis);
+			cboxTypeOfData.SelectedIndex = 0;
+
 		}
 
+		private void FormData_Load(object sender, EventArgs e) {
+			populateFilenameCbox(0);	// MET files
+		}
+
+		private void populateFilenameCbox(int dataIdx) {
+			for (int ii = 0; ii < Global.coe.numMETFiles; ii++)
+				cboxFilename.Items.Add(Global.coe.METFilename[ii]);
+			cboxFilename.SelectedIndex = 1;
+		}
+		
 		private void miDataEngr_Click(object sender, EventArgs e) {
 			parent.showForm("engr");
 		}
@@ -85,5 +102,19 @@ namespace warmf {
 			}
 		}
 
+		private void cboxTypeOfData_SelectedIndexChanged(object sender, EventArgs e) {
+			if (cboxFilename.SelectedIndex != -1) {
+				dataPlotted = METFile.labels[cboxTypeOfData.SelectedIndex].key;
+				string filename = "data/met/" + Global.coe.METFilename[cboxFilename.SelectedIndex];
+				met = new METFile(filename);
+				if (met.readMETFile()) {
+					plotMETData(met, dataPlotted);
+				}
+			}
+		}
+
+		private void cboxFilename_SelectedIndexChanged(object sender, EventArgs e) {
+			cboxTypeOfData_SelectedIndexChanged(sender, e);
+		}
 	}
 }

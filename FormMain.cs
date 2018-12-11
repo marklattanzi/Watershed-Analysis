@@ -11,7 +11,7 @@ namespace warmf {
             InitializeComponent();
 			frmData = new FormData(this);
 			frmKnow = new FormKnowledge(this);
-			frmData.Show();  // for testing MRL
+			//frmData.Show();  // for testing MRL
         }
 
         private void FormMain_Load(object sender, EventArgs e) {
