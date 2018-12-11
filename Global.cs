@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace warmf {
-    static class Global {
-
-        public static Coefficients coe = new Coefficients();
-    }
+	static class Global {
+		public static Coefficients coe = new Coefficients();
+	}
 }

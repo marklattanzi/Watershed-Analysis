@@ -41,6 +41,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,22 +53,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormData.Designer.cs">
+      <DependentUpon>FormData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormKnowledge.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormKnowledge.Designer.cs">
+      <DependentUpon>FormKnowledge.cs</DependentUpon>
+    </Compile>
     <Compile Include="STechStreamReader.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Coefficients.cs" />
     <Compile Include="WMDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Warmf.cs">
+    <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Warmf.Designer.cs">
-      <DependentUpon>Warmf.cs</DependentUpon>
+    <Compile Include="FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Warmf.resx">
-      <DependentUpon>Warmf.cs</DependentUpon>
+    <EmbeddedResource Include="FormData.resx">
+      <DependentUpon>FormData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormKnowledge.resx">
+      <DependentUpon>FormKnowledge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

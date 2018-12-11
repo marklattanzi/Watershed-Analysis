@@ -3,12 +3,17 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace warmf {
-    public partial class frmWARMF : Form {
-        public frmWARMF() {
+    public partial class FormMain : Form {
+		public FormData frmData;
+		public FormKnowledge frmKnow;
+
+        public FormMain() {
             InitializeComponent();
+			frmData = new FormData(this);
+			frmKnow = new FormKnowledge(this);
         }
 
-        private void frmWARMF_Load(object sender, EventArgs e) {
+        private void FormMain_Load(object sender, EventArgs e) {
             frmMap.Hide();
             pboxSplash.Top = 100;
             pboxSplash.Left = 100;
@@ -83,6 +88,7 @@ namespace warmf {
             }
 
         }
+
         private void openShapefile(string path) {
             // clear any shapefiles the map is currently displaying
             this.frmMap.ClearShapeFiles();
@@ -100,7 +106,8 @@ namespace warmf {
             shpFile.RenderSettings.ToolTipFieldName = shpFile.RenderSettings.FieldName;
             shpFile.RenderSettings.IsSelectable = true;
         }
-        /*  scrool wheel works without this.  --MRL
+
+		/*  scrool wheel works without this.  --MRL
         private void frmMap_MouseWheel(object sender, MouseEventArgs e) {
             if (e.Delta > 0) {
                 miEditZoomIn_Click(sender, e);
@@ -110,43 +117,53 @@ namespace warmf {
             }
         }*/
 
-        private void frmMap_MouseClick(object sender, MouseEventArgs e) {
-            int recordIndex = frmMap.GetShapeIndexAtPixelCoord(0, e.Location, 8);
-            if (recordIndex >= 0) {
-                string[] recordAttributes = frmMap[0].GetAttributeFieldValues(recordIndex);
-                string[] attributeNames = frmMap[0].GetAttributeFieldNames();
-                StringBuilder sb = new StringBuilder();
-                int catchNum = 0;
-                for (int n = 0; n < attributeNames.Length; ++n) {
-                    sb.Append(attributeNames[n]).Append(':').AppendLine(recordAttributes[n].Trim());
-                    catchNum = Int32.Parse(recordAttributes[n]);
-                }
-                //MessageBox.Show(this, sb.ToString(), "record attributes", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+		public void showForm(string name) {
+			//this.Hide();	// ENGR window is always visible - MRL
+			frmKnow.Hide();
+			frmData.Hide();
+			switch (name) {
+				case "engr": this.Show(); break;
+				case "know": frmKnow.Show(); break;
+				case "data": frmData.Show(); break;
+			}
+		}
 
-                // test of coefficients file read
-                int ii = 0;
-                while (Global.coe.catchments[ii].idNum != catchNum) ii++;
+		private void frmMap_MouseClick(object sender, MouseEventArgs e) {
+			int recordIndex = frmMap.GetShapeIndexAtPixelCoord(0, e.Location, 8);
+			if (recordIndex >= 0) {
+				string[] recordAttributes = frmMap[0].GetAttributeFieldValues(recordIndex);
+				string[] attributeNames = frmMap[0].GetAttributeFieldNames();
+				StringBuilder sb = new StringBuilder();
+				int catchNum = 0;
+				for (int n = 0; n < attributeNames.Length; ++n) {
+					sb.Append(attributeNames[n]).Append(':').AppendLine(recordAttributes[n].Trim());
+					catchNum = Int32.Parse(recordAttributes[n]);
+				}
+				//MessageBox.Show(this, sb.ToString(), "record attributes", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
 
-                sb.AppendLine("Name:"+Global.coe.catchments[ii].name);
-                sb.AppendLine("MET file:" + Global.coe.METFilename[Global.coe.catchments[ii].METFileNum]);
-                sb.AppendLine("Precipitation Weighting multiplier:" + Global.coe.catchments[ii].precipMultiplier);
-                sb.AppendLine("Average temperature lapse:" + Global.coe.catchments[ii].aveTempLapse);
-                sb.AppendLine("Altitudinal Temp Lapse:" + Global.coe.catchments[ii].altitudeTempLapse);
-                sb.AppendLine("Output to file?:" + Global.coe.catchments[ii].swOutputToFile);
-                sb.AppendLine("Air/rain chemistry file num" + Global.coe.catchments[ii].airRainChemFileNum);
-                sb.AppendLine("Particle/rain chemistry file num:" + Global.coe.catchments[ii].particleRainChemFileNum);
-                sb.AppendLine("Num soil layers:" + Global.coe.catchments[ii].numSoilLayers);
-                sb.AppendLine("Slope:" + Global.coe.catchments[ii].slope);
-                sb.AppendLine("Width:" + Global.coe.catchments[ii].width);
-                sb.AppendLine("Aspect:" + Global.coe.catchments[ii].aspect);
-                sb.AppendLine("Manning N:" + Global.coe.catchments[ii].ManningN);
-                sb.AppendLine("Detention storage:" + Global.coe.catchments[ii].detentionStorage);
-                
-                WMDialog popup = new WMDialog("Shapefile Data", sb.ToString());
-                popup.ShowDialog();
-            }
+				// test of coefficients file read
+				int ii = 0;
+				while (Global.coe.catchments[ii].idNum != catchNum) ii++;
 
-        }
+				sb.AppendLine("Name:" + Global.coe.catchments[ii].name);
+				sb.AppendLine("MET file:" + Global.coe.METFilename[Global.coe.catchments[ii].METFileNum]);
+				sb.AppendLine("Precipitation Weighting multiplier:" + Global.coe.catchments[ii].precipMultiplier);
+				sb.AppendLine("Average temperature lapse:" + Global.coe.catchments[ii].aveTempLapse);
+				sb.AppendLine("Altitudinal Temp Lapse:" + Global.coe.catchments[ii].altitudeTempLapse);
+				sb.AppendLine("Output to file?:" + Global.coe.catchments[ii].swOutputToFile);
+				sb.AppendLine("Air/rain chemistry file num" + Global.coe.catchments[ii].airRainChemFileNum);
+				sb.AppendLine("Particle/rain chemistry file num:" + Global.coe.catchments[ii].particleRainChemFileNum);
+				sb.AppendLine("Num soil layers:" + Global.coe.catchments[ii].numSoilLayers);
+				sb.AppendLine("Slope:" + Global.coe.catchments[ii].slope);
+				sb.AppendLine("Width:" + Global.coe.catchments[ii].width);
+				sb.AppendLine("Aspect:" + Global.coe.catchments[ii].aspect);
+				sb.AppendLine("Manning N:" + Global.coe.catchments[ii].ManningN);
+				sb.AppendLine("Detention storage:" + Global.coe.catchments[ii].detentionStorage);
+
+				WMDialog popup = new WMDialog("Shapefile Data", sb.ToString());
+				popup.ShowDialog();
+			}
+		}
 
         private void miFileExit_Click(object sender, EventArgs e) {
             System.Windows.Forms.Application.Exit();
@@ -174,6 +191,14 @@ namespace warmf {
             popup.setTextColor(System.Drawing.Color.Green);
             popup.ShowDialog();
         }
-    }
+
+		private void miModuleData_Click(object sender, EventArgs e) {
+			showForm("data");
+		}
+
+		private void miModuleKnowledge_Click(object sender, EventArgs e) {
+			showForm("know");
+		}
+	}
 
 }
