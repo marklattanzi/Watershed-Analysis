@@ -11,6 +11,7 @@ namespace warmf {
             InitializeComponent();
 			frmData = new FormData(this);
 			frmKnow = new FormKnowledge(this);
+			frmData.Show();  // for testing MRL
         }
 
         private void FormMain_Load(object sender, EventArgs e) {
@@ -33,6 +34,9 @@ namespace warmf {
             miTopScenario.Visible = false;
             miTopDocument.Visible = false;
             miTopWindow.Visible = false;
+
+			// for testing - MRL
+			this.Hide();
         }
 
         private void loadDefault() {
