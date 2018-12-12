@@ -44,7 +44,6 @@ namespace warmf {
 
 					cboxFilename.SelectedIndex = -1;
 					cboxData.SelectedIndex = -1;
-					//plotMETData();
 					break;
 				case 1: // AIR QUALITY
 					break;
@@ -61,7 +60,6 @@ namespace warmf {
 			}
 		}
 
-		
 		private void miDataEngr_Click(object sender, EventArgs e) {
 			parent.showForm("engr");
 		}
@@ -70,12 +68,12 @@ namespace warmf {
 			parent.showForm("know");
 		}
 
-		private void DataForm_ResizeEnd(Object sender, EventArgs r) {
-			plotMETData(met);
+		private void DataForm_ResizeEnd(Object sender, EventArgs r) { 
+			plotData();
 		}
 
 		// plots MET file data
-		private void plotMETData(METFile met) {
+		private void plotMETData() {
 			List<double> data = null;
 
 			if (cboxData.SelectedIndex != -1) {
@@ -102,7 +100,6 @@ namespace warmf {
 				if (series.MarkerSize < 1) series.MarkerSize = 1;
 				if (series.MarkerSize > 7) series.MarkerSize = 7;
 
-
 				toolChart.Titles.Clear();
 				METFile.METGraphLabels labels;
 				labels = Array.Find(METFile.labels, item => item.key == dataName);
@@ -123,15 +120,52 @@ namespace warmf {
 		}
 
 		private void cboxFilename_SelectedIndexChanged(object sender, EventArgs e) {
-			if (cboxFilename.SelectedIndex != -1) {
-				string filename = "data/met/" + Global.coe.METFilename[cboxFilename.SelectedIndex];
-				met = new METFile(filename);
-				if (met.readMETFile()) plotMETData(met);
+			switch (cboxTypeOfFile.SelectedIndex) {
+				case 0: // MET
+					if (cboxFilename.SelectedIndex != -1) {
+						string filename = "data/met/" + Global.coe.METFilename[cboxFilename.SelectedIndex];
+						met = new METFile(filename);
+						if (met.readMETFile()) plotMETData();
+					}
+					break;
+				case 1: // AIR QUALITY
+					break;
+				case 2: // OBSERVED HYDROLOGY
+					break;
+				case 3: // OBSERVED WATER QUALITY
+					break;
+				case 4: // MANAGED FLOW
+					break;
+				case 5: // POINT SOURCES
+					break;
+				case 6: // PICTURES
+					break;
 			}
 		}
 
+		private void plotData() {
+			switch (cboxTypeOfFile.SelectedIndex) {
+				case 0: // MET
+					plotMETData();
+					break;
+				case 1: // AIR QUALITY
+					break;
+				case 2: // OBSERVED HYDROLOGY
+					break;
+				case 3: // OBSERVED WATER QUALITY
+					break;
+				case 4: // MANAGED FLOW
+					break;
+				case 5: // POINT SOURCES
+					break;
+				case 6: // PICTURES
+					break;
+			}
+
+		}
+	
 		private void cboxData_SelectedIndexChanged(object sender, EventArgs e) {
-			plotMETData(met);
+			plotData();
 		}
 	}
 }
