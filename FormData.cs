@@ -174,10 +174,10 @@ namespace warmf {
 		private void toolGrid_CellChanged(object sender, DataGridViewCellEventArgs e) {
 			needToSave = true;
 		}
+
 		// ask to save data if changed
 		private bool saveGridData() {
 			if (needToSave) {
-				MessageBox.Show("Need to Save");
 				writeMETFile();
 				needToSave = false;
 			}
@@ -207,7 +207,8 @@ namespace warmf {
 
 		// write out MET file data
 		private void writeMETFile() {
-
+			MessageBox.Show("Saving MET file "+met.filename);  // change to ask user if they want to save
+			met.writeMETfile(toolDataGrid);
 		}
 
 		// plots MET file data

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.IO;
-
+using System.Windows.Forms;
 
 namespace warmf {
 	class METFile {
@@ -101,6 +101,11 @@ namespace warmf {
 				Debug.WriteLine("Error in MET file.  Badly formatted data at line = " + sr.LineNum);
 				return false;
 			}
+			return true;
+		}
+
+		public bool writeMETfile(DataGridView grid) {
+			
 			return true;
 		}
 	}
