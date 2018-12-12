@@ -12,9 +12,9 @@ namespace warmf {
 		public string filename;
 		public int version;
 		public double latitude, longitude;
-		public string comment;
 
 		public List<DateTime> date;
+		public List<string> clockTime;
 		public List<double> precip;
 		public List<double> minTemp;
 		public List<double> maxTemp;
@@ -22,6 +22,7 @@ namespace warmf {
 		public List<double> dewPointTemp;
 		public List<double> airPressure;
 		public List<double> windSpeed;
+		public List<string> comment;
 
 		public struct METGraphLabels {
 			public string key;
@@ -67,6 +68,8 @@ namespace warmf {
 				latitude = Double.TryParse(line.Substring(9, 10), out dblRes) ? dblRes : 0;
 				longitude = Double.TryParse(line.Substring(30, 10), out dblRes) ? dblRes : 0;
 				date = new List<DateTime>();
+				clockTime = new List<string>();
+				
 				precip = new List<double>();
 				minTemp = new List<double>();
 				maxTemp = new List<double>();
@@ -74,6 +77,7 @@ namespace warmf {
 				dewPointTemp = new List<double>();
 				airPressure = new List<double>();
 				windSpeed = new List<double>();
+				comment = new List<string>();
 
 				line = sr.ReadLine();
 				while (line != null) {
@@ -81,6 +85,7 @@ namespace warmf {
 					month = Int32.TryParse(line.Substring(2, 2), out intRes) ? intRes : 0;
 					year = Int32.TryParse(line.Substring(4, 4), out intRes) ? intRes : 0;
 					date.Add(new DateTime(year, month, day));
+					clockTime.Add(line.Substring(8, 5));
 					precip.Add(Double.TryParse(line.Substring(13, 8), out dblRes) ? dblRes : 0);
 					minTemp.Add(Double.TryParse(line.Substring(21, 8), out dblRes) ? dblRes : 0);
 					maxTemp.Add(Double.TryParse(line.Substring(29, 8), out dblRes) ? dblRes : 0);
@@ -88,7 +93,7 @@ namespace warmf {
 					dewPointTemp.Add(Double.TryParse(line.Substring(45, 8), out dblRes) ? dblRes : 0);
 					airPressure.Add(Double.TryParse(line.Substring(53, 8), out dblRes) ? dblRes : 0);
 					windSpeed.Add(Double.TryParse(line.Substring(61, 8), out dblRes) ? dblRes : 0);
-					comment = line.Substring(69);
+					comment.Add(line.Substring(69));
 					line = sr.ReadLine();
 				}
 			}

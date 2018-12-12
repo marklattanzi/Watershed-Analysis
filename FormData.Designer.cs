@@ -23,17 +23,17 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			this.toolChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			this.toolGraph = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.moduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.miDataEngr = new System.Windows.Forms.ToolStripMenuItem();
 			this.miDataKnow = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolGrid = new System.Windows.Forms.DataGridView();
+			this.toolDataGrid = new System.Windows.Forms.DataGridView();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.chkboxStdDev = new System.Windows.Forms.CheckBox();
 			this.chkboxAverage = new System.Windows.Forms.CheckBox();
@@ -54,34 +54,34 @@
 			this.lblTypeOfData = new System.Windows.Forms.Label();
 			this.cboxFilename = new System.Windows.Forms.ComboBox();
 			this.cboxTypeOfFile = new System.Windows.Forms.ComboBox();
-			((System.ComponentModel.ISupportInitialize)(this.toolChart)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.toolGraph)).BeginInit();
 			this.menuStrip1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.toolGrid)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.toolDataGrid)).BeginInit();
 			this.panel1.SuspendLayout();
 			this.gboxGraphChart.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// toolChart
+			// toolGraph
 			// 
-			this.toolChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.toolGraph.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			chartArea2.Name = "ChartArea1";
-			this.toolChart.ChartAreas.Add(chartArea2);
-			this.toolChart.DataSource = this.toolChart.Images;
-			legend2.Enabled = false;
-			legend2.Name = "Legend1";
-			this.toolChart.Legends.Add(legend2);
-			this.toolChart.Location = new System.Drawing.Point(0, 101);
-			this.toolChart.Name = "toolChart";
-			series2.ChartArea = "ChartArea1";
-			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-			series2.Legend = "Legend1";
-			series2.Name = "data";
-			this.toolChart.Series.Add(series2);
-			this.toolChart.Size = new System.Drawing.Size(1319, 538);
-			this.toolChart.TabIndex = 0;
-			this.toolChart.Text = "WARMF Chart";
+			chartArea5.Name = "ChartArea1";
+			this.toolGraph.ChartAreas.Add(chartArea5);
+			this.toolGraph.DataSource = this.toolGraph.Images;
+			legend5.Enabled = false;
+			legend5.Name = "Legend1";
+			this.toolGraph.Legends.Add(legend5);
+			this.toolGraph.Location = new System.Drawing.Point(0, 101);
+			this.toolGraph.Name = "toolChart";
+			series5.ChartArea = "ChartArea1";
+			series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+			series5.Legend = "Legend1";
+			series5.Name = "data";
+			this.toolGraph.Series.Add(series5);
+			this.toolGraph.Size = new System.Drawing.Size(1319, 538);
+			this.toolGraph.TabIndex = 0;
+			this.toolGraph.Text = "WARMF Chart";
 			// 
 			// menuStrip1
 			// 
@@ -130,15 +130,17 @@
 			this.miDataKnow.Text = "Knowledge";
 			this.miDataKnow.Click += new System.EventHandler(this.miDataKnow_Click);
 			// 
-			// toolGrid
+			// toolDataGrid
 			// 
-			this.toolGrid.AllowUserToDeleteRows = false;
-			this.toolGrid.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.toolGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.toolGrid.Location = new System.Drawing.Point(0, 111);
-			this.toolGrid.Name = "toolGrid";
-			this.toolGrid.Size = new System.Drawing.Size(1284, 518);
-			this.toolGrid.TabIndex = 2;
+			this.toolDataGrid.AllowUserToDeleteRows = false;
+			this.toolDataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.toolDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.toolDataGrid.Location = new System.Drawing.Point(0, 111);
+			this.toolDataGrid.Name = "toolDataGrid";
+			this.toolDataGrid.Size = new System.Drawing.Size(1284, 518);
+			this.toolDataGrid.TabIndex = 2;
 			// 
 			// panel1
 			// 
@@ -297,6 +299,7 @@
 			this.radioChart.TabIndex = 1;
 			this.radioChart.Text = "Chart";
 			this.radioChart.UseVisualStyleBackColor = true;
+			this.radioChart.CheckedChanged += new System.EventHandler(this.radioChart_CheckedChanged);
 			// 
 			// radioGraph
 			// 
@@ -310,6 +313,7 @@
 			this.radioGraph.TabStop = true;
 			this.radioGraph.Text = "Graph";
 			this.radioGraph.UseVisualStyleBackColor = true;
+			this.radioGraph.CheckedChanged += new System.EventHandler(this.radioGraph_CheckedChanged);
 			// 
 			// lblFilename
 			// 
@@ -358,19 +362,19 @@
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.ClientSize = new System.Drawing.Size(1309, 670);
 			this.Controls.Add(this.panel1);
-			this.Controls.Add(this.toolChart);
-			this.Controls.Add(this.toolGrid);
+			this.Controls.Add(this.toolDataGrid);
 			this.Controls.Add(this.menuStrip1);
+			this.Controls.Add(this.toolGraph);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "FormData";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
 			this.Text = "Data Module";
-			((System.ComponentModel.ISupportInitialize)(this.toolChart)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.toolGraph)).EndInit();
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.toolGrid)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.toolDataGrid)).EndInit();
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.gboxGraphChart.ResumeLayout(false);
@@ -382,12 +386,12 @@
 
 		#endregion
 
-		private System.Windows.Forms.DataVisualization.Charting.Chart toolChart;
+		private System.Windows.Forms.DataVisualization.Charting.Chart toolGraph;
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem moduleToolStripMenuItem;
-		private System.Windows.Forms.DataGridView toolGrid;
+		private System.Windows.Forms.DataGridView toolDataGrid;
 		private System.Windows.Forms.ToolStripMenuItem miDataEngr;
 		private System.Windows.Forms.ToolStripMenuItem miDataKnow;
 		private System.Windows.Forms.Panel panel1;
