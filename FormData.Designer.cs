@@ -23,9 +23,9 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.toolChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -37,8 +37,8 @@
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.chkboxStdDev = new System.Windows.Forms.CheckBox();
 			this.chkboxAverage = new System.Windows.Forms.CheckBox();
-			this.textBox4 = new System.Windows.Forms.TextBox();
-			this.textBox3 = new System.Windows.Forms.TextBox();
+			this.tboxStdDev = new System.Windows.Forms.TextBox();
+			this.tboxAverage = new System.Windows.Forms.TextBox();
 			this.tboxFilename = new System.Windows.Forms.TextBox();
 			this.tboxLongitude = new System.Windows.Forms.TextBox();
 			this.tboxLatitude = new System.Windows.Forms.TextBox();
@@ -66,19 +66,19 @@
 			this.toolChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			chartArea1.Name = "ChartArea1";
-			this.toolChart.ChartAreas.Add(chartArea1);
+			chartArea2.Name = "ChartArea1";
+			this.toolChart.ChartAreas.Add(chartArea2);
 			this.toolChart.DataSource = this.toolChart.Images;
-			legend1.Enabled = false;
-			legend1.Name = "Legend1";
-			this.toolChart.Legends.Add(legend1);
+			legend2.Enabled = false;
+			legend2.Name = "Legend1";
+			this.toolChart.Legends.Add(legend2);
 			this.toolChart.Location = new System.Drawing.Point(0, 101);
 			this.toolChart.Name = "toolChart";
-			series1.ChartArea = "ChartArea1";
-			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-			series1.Legend = "Legend1";
-			series1.Name = "data";
-			this.toolChart.Series.Add(series1);
+			series2.ChartArea = "ChartArea1";
+			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+			series2.Legend = "Legend1";
+			series2.Name = "data";
+			this.toolChart.Series.Add(series2);
 			this.toolChart.Size = new System.Drawing.Size(1319, 538);
 			this.toolChart.TabIndex = 0;
 			this.toolChart.Text = "WARMF Chart";
@@ -146,8 +146,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.panel1.Controls.Add(this.chkboxStdDev);
 			this.panel1.Controls.Add(this.chkboxAverage);
-			this.panel1.Controls.Add(this.textBox4);
-			this.panel1.Controls.Add(this.textBox3);
+			this.panel1.Controls.Add(this.tboxStdDev);
+			this.panel1.Controls.Add(this.tboxAverage);
 			this.panel1.Controls.Add(this.tboxFilename);
 			this.panel1.Controls.Add(this.tboxLongitude);
 			this.panel1.Controls.Add(this.tboxLatitude);
@@ -176,6 +176,7 @@
 			this.chkboxStdDev.TabIndex = 20;
 			this.chkboxStdDev.Text = "Std Deviation:";
 			this.chkboxStdDev.UseVisualStyleBackColor = true;
+			this.chkboxStdDev.CheckedChanged += new System.EventHandler(this.chkboxStdDev_CheckedChanged);
 			// 
 			// chkboxAverage
 			// 
@@ -187,20 +188,23 @@
 			this.chkboxAverage.TabIndex = 19;
 			this.chkboxAverage.Text = "Average:";
 			this.chkboxAverage.UseVisualStyleBackColor = true;
+			this.chkboxAverage.CheckedChanged += new System.EventHandler(this.chkboxAverage_CheckedChanged);
 			// 
-			// textBox4
+			// tboxStdDev
 			// 
-			this.textBox4.Location = new System.Drawing.Point(1144, 34);
-			this.textBox4.Name = "textBox4";
-			this.textBox4.Size = new System.Drawing.Size(118, 20);
-			this.textBox4.TabIndex = 18;
+			this.tboxStdDev.Location = new System.Drawing.Point(1144, 34);
+			this.tboxStdDev.Name = "tboxStdDev";
+			this.tboxStdDev.ReadOnly = true;
+			this.tboxStdDev.Size = new System.Drawing.Size(118, 20);
+			this.tboxStdDev.TabIndex = 18;
 			// 
-			// textBox3
+			// tboxAverage
 			// 
-			this.textBox3.Location = new System.Drawing.Point(1144, 7);
-			this.textBox3.Name = "textBox3";
-			this.textBox3.Size = new System.Drawing.Size(118, 20);
-			this.textBox3.TabIndex = 17;
+			this.tboxAverage.Location = new System.Drawing.Point(1144, 7);
+			this.tboxAverage.Name = "tboxAverage";
+			this.tboxAverage.ReadOnly = true;
+			this.tboxAverage.Size = new System.Drawing.Size(118, 20);
+			this.tboxAverage.TabIndex = 17;
 			// 
 			// tboxFilename
 			// 
@@ -400,8 +404,8 @@
 		private System.Windows.Forms.Label lblLatitude;
 		private System.Windows.Forms.CheckBox chkboxStdDev;
 		private System.Windows.Forms.CheckBox chkboxAverage;
-		private System.Windows.Forms.TextBox textBox4;
-		private System.Windows.Forms.TextBox textBox3;
+		private System.Windows.Forms.TextBox tboxStdDev;
+		private System.Windows.Forms.TextBox tboxAverage;
 		private System.Windows.Forms.TextBox tboxFilename;
 		private System.Windows.Forms.TextBox tboxLongitude;
 		private System.Windows.Forms.TextBox tboxLatitude;

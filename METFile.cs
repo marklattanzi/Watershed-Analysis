@@ -10,9 +10,9 @@ using System.IO;
 namespace warmf {
 	class METFile {
 		public string filename;
-		int version;
-		double latitude, longitude;
-		string comment;
+		public int version;
+		public double latitude, longitude;
+		public string comment;
 
 		public List<DateTime> date;
 		public List<double> precip;

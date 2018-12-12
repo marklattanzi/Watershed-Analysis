@@ -88,6 +88,15 @@ namespace warmf {
 					case "windspeed": data = met.windSpeed; break;
 				};
 
+				toolChart.Titles.Clear();
+				toolChart.ChartAreas[0].AxisY.StripLines.Clear();
+
+				tboxFilename.Text = met.filename.Substring(9);
+				tboxLatitude.Text = met.latitude.ToString();
+				tboxLongitude.Text = met.longitude.ToString();
+				tboxAverage.Text = data.Average().ToString("0.00000");
+				tboxStdDev.Text = Extensions.StdDev(data).ToString("0.00000");
+				
 				Series series = toolChart.Series["data"];
 				series.Points.Clear();
 				series.XValueType = ChartValueType.Date;
@@ -100,18 +109,50 @@ namespace warmf {
 				if (series.MarkerSize < 1) series.MarkerSize = 1;
 				if (series.MarkerSize > 7) series.MarkerSize = 7;
 
-				toolChart.Titles.Clear();
 				METFile.METGraphLabels labels;
 				labels = Array.Find(METFile.labels, item => item.key == dataName);
 				toolChart.Titles.Add(labels.yaxis + " vs. " + labels.xaxis);
 				toolChart.Palette = ChartColorPalette.Berry;
 				for (int ii = 0; ii < len; ii++)
 					series.Points.AddXY(met.date[ii].ToString("yyyy"), data[ii]);
-				toolChart.ChartAreas.First().AxisX.IntervalType = DateTimeIntervalType.Months;
-				toolChart.ChartAreas.First().AxisX.Interval = 12;
-				toolChart.ChartAreas.First().AxisY.LabelStyle.Angle = -90;
+				toolChart.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Months;
+				toolChart.ChartAreas[0].AxisX.Interval = 12;
+
+				toolChart.ChartAreas[0].AxisY.Minimum = Extensions.GetMinimum(data);
+				toolChart.ChartAreas[0].AxisY.Maximum = Extensions.GetMaximum(data);
+				toolChart.ChartAreas[0].AxisY.LabelStyle.Angle = -90;
 				toolChart.ChartAreas[0].AxisX.Title = labels.xaxis;
 				toolChart.ChartAreas[0].AxisY.Title = labels.yaxis;
+
+				// plot average
+				if (chkboxAverage.Checked) {
+					double dblRes;
+					StripLine line = new StripLine();
+					line.StripWidth = 0.01;
+					line.BackColor = Color.Green;
+					//line.BorderDashStyle = ChartDashStyle.Dash;	// use with BorderColor but need to refigure line width --MRL
+					line.IntervalOffset = Double.TryParse(tboxAverage.Text, out dblRes) ? dblRes : 0;
+					toolChart.ChartAreas[0].AxisY.StripLines.Add(line);
+				}
+
+				// plot std dev
+				if (chkboxStdDev.Checked) {
+					double dblRes;
+					double average = Double.TryParse(tboxAverage.Text, out dblRes) ? dblRes : 0;
+					StripLine line = new StripLine();
+					line.StripWidth = 0.01;
+					line.BackColor = Color.Orange;
+					//line.BorderDashStyle = ChartDashStyle.Dash;	// use with BorderColor but need to refigure line width --MRL
+					line.IntervalOffset = average + (Double.TryParse(tboxStdDev.Text, out dblRes) ? dblRes : 0);
+					toolChart.ChartAreas[0].AxisY.StripLines.Add(line);
+
+					StripLine line2 = new StripLine();
+					line2.StripWidth = 0.01;
+					line2.BackColor = Color.Orange;
+					//line2.BorderDashStyle = ChartDashStyle.Dash;	// use with BorderColor but need to refigure line width --MRL
+					line2.IntervalOffset = average - (Double.TryParse(tboxStdDev.Text, out dblRes) ? dblRes : 0);
+					toolChart.ChartAreas[0].AxisY.StripLines.Add(line2);
+				}
 			}
 		}
 
@@ -165,6 +206,14 @@ namespace warmf {
 		}
 	
 		private void cboxData_SelectedIndexChanged(object sender, EventArgs e) {
+			plotData();
+		}
+
+		private void chkboxAverage_CheckedChanged(object sender, EventArgs e) {
+			plotData();
+		}
+
+		private void chkboxStdDev_CheckedChanged(object sender, EventArgs e) {
 			plotData();
 		}
 	}
