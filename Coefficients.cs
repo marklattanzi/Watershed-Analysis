@@ -851,7 +851,7 @@ namespace warmf {
                     PTSFilename.Add(readString(sr, "PTSFILES"));
 
                 // AIRFILES
-                numAIRFiles = readInt(sr, "AIRFILE");   //spec says "AIRFILES" but sample data has "AIRFILE" - MRL
+                numAIRFiles = readInt(sr, "AIRFILE");   //spec says "AIRFILES" but sample Catawba data has "AIRFILE" - MRL
                 AIRFilename = new List<string>();
                 for (int ii = 0; ii < numAIRFiles; ii++)
                     AIRFilename.Add(readString(sr, "AIRFILE"));
