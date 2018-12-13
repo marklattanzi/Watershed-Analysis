@@ -103,7 +103,7 @@ namespace warmf {
         public bool swIsAnoxic;
         public double dissolvedOxyLimit;
         public bool swIsUVCatalysis;
-        public int numLinkedRactions;
+        public int numLinkedReactions;
         public double tempCorrectCoeff;
         public string fortranCode;
         public string units;
@@ -1050,7 +1050,7 @@ namespace warmf {
                         reaction.swIsAnoxic = !line.Substring(16, 8).Contains("0");
                         reaction.dissolvedOxyLimit = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : 0;
                         reaction.swIsUVCatalysis = !line.Substring(32, 8).Contains("0");
-                        reaction.numLinkedRactions = Int32.TryParse(line.Substring(40, 8), out intRes) ? intRes : 0;
+                        reaction.numLinkedReactions = Int32.TryParse(line.Substring(40, 8), out intRes) ? intRes : 0;
                         reaction.tempCorrectCoeff = Double.TryParse(line.Substring(48, 8), out dblRes) ? dblRes : 0;
                         reaction.fortranCode = line.Substring(56, 8);
                         reaction.units = line.Substring(64, 8);
