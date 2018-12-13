@@ -34,10 +34,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EGIS.Controls">
-      <HintPath>.\EGIS.Controls.dll</HintPath>
+      <HintPath>..\EGIS.Controls.dll</HintPath>
     </Reference>
     <Reference Include="EGIS.ShapeFileLib">
-      <HintPath>.\EGIS.ShapeFileLib.dll</HintPath>
+      <HintPath>..\EGIS.ShapeFileLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

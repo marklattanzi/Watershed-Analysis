@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace warmf {
 	class Extensions {
+		// return std deviation for a list of doubles
 		public static double StdDev(List<double> dnums) {
 			double mean = dnums.Average();
 			return Math.Sqrt(dnums.Sum(x => Math.Pow(x - mean, 2)) / (dnums.Count()));
 		}
 
+		// used to figure out graph axes scales
 		public static int GetMinimum(List<double> dnums) {
 			double range = dnums.Max() - dnums.Min();
 			if (range <= 1) return 0;
@@ -18,6 +20,7 @@ namespace warmf {
 			return min / 10 * 10;
 		}
 
+		// used to figure out graph axes scales
 		public static int GetMaximum(List<double> dnums) {
 			double range = dnums.Max() - dnums.Min();
 			if (range <= 1) return 1;

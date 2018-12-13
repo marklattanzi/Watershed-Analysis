@@ -95,7 +95,7 @@ namespace warmf {
         public bool swIncludeAdsorbedConstits;
         public bool swIncludePrecipConstits;
 
-        public List<double> componentTotalMass;  //    36 numbers in this file - def is wrong in spec  MRL
+        public List<double> componentTotalMass;
     }
 
     public struct Reaction {
@@ -643,7 +643,7 @@ namespace warmf {
         // Coefficients METHODS
 
         // test the line code to make sure it's what it expected
-        public bool testLine(string line, int lnum, string abbrev) {
+        public bool TestLine(string line, int lnum, string abbrev) {
             if (!line.StartsWith(abbrev)) {
 				Debug.WriteLine("Expected line " + lnum + " to start with " + abbrev + ". Starts with |" + line.Substring(0, 8) + "|");
                 return false;
@@ -653,10 +653,10 @@ namespace warmf {
         }
 
         // read a line that is a single ON/OFF switch
-        public bool readOnOffSwitch(STechStreamReader sr, string lineAbbrev) {
+        public bool ReadOnOffSwitch(STechStreamReader sr, string lineAbbrev) {
             string line;
             line = sr.ReadLine();
-            if (testLine(line,sr.LineNum,lineAbbrev)) 
+            if (TestLine(line,sr.LineNum,lineAbbrev)) 
                 return line.Contains("ON") ? true : false;
             else {  //  bad abbrev when looking for switch so default is OFF
                 return false;
@@ -664,19 +664,19 @@ namespace warmf {
         }
 
         // reads in single integer
-        public int readInt(STechStreamReader sr, string lineAbbrev) {
+        public int ReadInt(STechStreamReader sr, string lineAbbrev) {
             List<int> data;
-            data = readIntData(sr, lineAbbrev, 1);
+            data = ReadIntData(sr, lineAbbrev, 1);
             return data[0];
         }
 
         // reads in monthly integers - 9 per line
-        public List<int> readMonthlyIntData(STechStreamReader sr, string lineAbbrev) {
-            return readIntData(sr, lineAbbrev, 12);
+        public List<int> ReadMonthlyIntData(STechStreamReader sr, string lineAbbrev) {
+            return ReadIntData(sr, lineAbbrev, 12);
         }
 
         // reads in integers - 9 per line
-        public List<int> readIntData(STechStreamReader sr, string lineAbbrev, int num) {
+        public List<int> ReadIntData(STechStreamReader sr, string lineAbbrev, int num) {
             int intRes;
             string line;
             int linesToRead = (num-1) / 9 + 1;
@@ -684,7 +684,7 @@ namespace warmf {
             List<int> data = new List<int>();
             for (int nlines = 0; nlines < linesToRead; nlines++) {
                 line = sr.ReadLine();
-                if (testLine(line, sr.LineNum, lineAbbrev)) {
+                if (TestLine(line, sr.LineNum, lineAbbrev)) {
                     int jj = 0;
 					try {
 						while (nlines * 9 + jj < num && jj < 9) {
@@ -705,19 +705,19 @@ namespace warmf {
         }
 
         // reads in single double
-        public double readDouble(STechStreamReader sr, string lineAbbrev) {
+        public double ReadDouble(STechStreamReader sr, string lineAbbrev) {
             List<double> data;
-            data = readDoubleData(sr, lineAbbrev, 1);
+            data = ReadDoubleData(sr, lineAbbrev, 1);
             return data[0];
         }
 
         // reads in monthly doubles - 9 per line
-        public List<double> readMonthlyDoubleData(STechStreamReader sr, string lineAbbrev) {
-            return readDoubleData(sr, lineAbbrev, 12);
+        public List<double> ReadMonthlyDoubleData(STechStreamReader sr, string lineAbbrev) {
+            return ReadDoubleData(sr, lineAbbrev, 12);
         }
 
         // reads in doubles - 9 per line
-        public List<double> readDoubleData(STechStreamReader sr, string lineAbbrev, int num) {
+        public List<double> ReadDoubleData(STechStreamReader sr, string lineAbbrev, int num) {
             double dblRes;
             string line;
             int linesToRead = (num-1) / 9 + 1;
@@ -725,7 +725,7 @@ namespace warmf {
             List<double> data = new List<double>();
             for (int nlines = 0; nlines < linesToRead; nlines++) {
                 line = sr.ReadLine();
-                if (testLine(line, sr.LineNum, lineAbbrev)) {
+                if (TestLine(line, sr.LineNum, lineAbbrev)) {
                     int jj = 0;
 					try {
 						while (nlines * 9 + jj < num && jj < 9) {
@@ -745,10 +745,10 @@ namespace warmf {
         }
 
         // read in a line that's a single string
-        public string readString(STechStreamReader sr, string lineAbbrev) {
+        public string ReadString(STechStreamReader sr, string lineAbbrev) {
             string line = sr.ReadLine();
             if (lineAbbrev != "")
-                if (testLine(line, sr.LineNum, lineAbbrev)) {
+                if (TestLine(line, sr.LineNum, lineAbbrev)) {
 					try {
 						return line.Substring(8);
 					} catch (Exception e) {
@@ -765,7 +765,7 @@ namespace warmf {
 
 
 		// read an (ignored) line into a string
-		public string readSpacerLine(STechStreamReader sr, string text) {
+		public string ReadSpacerLine(STechStreamReader sr, string text) {
 			string line;
 			line = sr.ReadLine();
 			if (!line.Contains(text))
@@ -774,7 +774,7 @@ namespace warmf {
 		}
 
         // read in and parse the Coeffieicents file
-        public bool readFile(string filename) {
+        public bool ReadFile(string filename) {
             string line;
             int intRes;
             double dblRes;
@@ -784,23 +784,23 @@ namespace warmf {
             STechStreamReader sr = null;
             try {
                 sr = new STechStreamReader(filename);
-                version = readInt(sr, "VERSION");
+                version = ReadInt(sr, "VERSION");
 
                 // Scenario description
-                scenarioDescription = readString(sr, "");
+                scenarioDescription = ReadString(sr, "");
 
                 //begdate
-                nums = readIntData(sr, "BEGDATE", 3);
+                nums = ReadIntData(sr, "BEGDATE", 3);
                 begDate = new DateTime(nums[2], nums[1], nums[0]);
 
                 //enddate
-                nums = readIntData(sr, "ENDDATE", 3);
+                nums = ReadIntData(sr, "ENDDATE", 3);
                 endDate = new DateTime(nums[2], nums[1], nums[0]);
 
-                line = readSpacerLine(sr,"****");
+                line = ReadSpacerLine(sr,"****");
 
                 // numbers of objects in model
-                nums = readIntData(sr, "SYSTEM", 8);
+                nums = ReadIntData(sr, "SYSTEM", 8);
                 numCatchments = nums[0];
                 numRivers = nums[1];
                 numReservoirSegs = nums[2];
@@ -809,27 +809,27 @@ namespace warmf {
                 numSimLoops = nums[5];
                 numAutoCalibrationLoops = nums[6];
                 swCalculateLoading = nums[7] == 0 ? false : true;
-                swWaterQualSim = readOnOffSwitch(sr, "QUAL");
-                swLakeSeepageSim = readOnOffSwitch(sr, "SEEPS");
-                swSedimentSim = readOnOffSwitch(sr, "SEDMNT");
-                swFertSim = readOnOffSwitch(sr, "FERTLZ");
-                swPointSrcSim = readOnOffSwitch(sr, "POINTS");
-                swInputCoeffChecks = readOnOffSwitch(sr, "CHECKS");
+                swWaterQualSim = ReadOnOffSwitch(sr, "QUAL");
+                swLakeSeepageSim = ReadOnOffSwitch(sr, "SEEPS");
+                swSedimentSim = ReadOnOffSwitch(sr, "SEDMNT");
+                swFertSim = ReadOnOffSwitch(sr, "FERTLZ");
+                swPointSrcSim = ReadOnOffSwitch(sr, "POINTS");
+                swInputCoeffChecks = ReadOnOffSwitch(sr, "CHECKS");
 
                 line = sr.ReadLine();
-                if (testLine(line, sr.LineNum, "WARMST")) {
+                if (TestLine(line, sr.LineNum, "WARMST")) {
                     swStartupFile = line.Substring(8, 8).Contains("1") ? true : false;
                     if (swStartupFile) startupFileName = line.Substring(16);
                 }
 
                 //METFILES
-                numMETFiles = readInt(sr, "METFILE");
+                numMETFiles = ReadInt(sr, "METFILE");
                 METFilename = new List<string>();
                 for (int ii = 0; ii < numMETFiles; ii++)
-                    METFilename.Add(readString(sr, "METFILE"));
+                    METFilename.Add(ReadString(sr, "METFILE"));
 
                 //DIVFILES
-                numDIVFiles = readInt(sr, "DIVFILES");
+                numDIVFiles = ReadInt(sr, "DIVFILES");
 
                 DIVData = new List<DIVFileData>();
                 for (int ii = 0; ii < numDIVFiles; ii++) {
@@ -840,68 +840,68 @@ namespace warmf {
                     dfd.swUseMonthFlows = !line.Substring(24, 8).Contains("0");
                     // extra column of 8 in these lines (32-39)  MRL
                     dfd.filename = line.Substring(40);
-                    dfd.monthlyFlow = readMonthlyDoubleData(sr, "DIVFILES");
+                    dfd.monthlyFlow = ReadMonthlyDoubleData(sr, "DIVFILES");
                     DIVData.Add(dfd);
                 }
 
                 // PTSFILES
-                numPTSFiles = readInt(sr, "PTSFILES");
+                numPTSFiles = ReadInt(sr, "PTSFILES");
                 PTSFilename = new List<string>();
                 for (int ii = 0; ii < numPTSFiles; ii++)
-                    PTSFilename.Add(readString(sr, "PTSFILES"));
+                    PTSFilename.Add(ReadString(sr, "PTSFILES"));
 
                 // AIRFILES
-                numAIRFiles = readInt(sr, "AIRFILE");   //spec says "AIRFILES" but sample Catawba data has "AIRFILE" - MRL
+                numAIRFiles = ReadInt(sr, "AIRFILE");   //spec says "AIRFILES" but sample data has "AIRFILE" - MRL
                 AIRFilename = new List<string>();
                 for (int ii = 0; ii < numAIRFiles; ii++)
-                    AIRFilename.Add(readString(sr, "AIRFILE"));
+                    AIRFilename.Add(ReadString(sr, "AIRFILE"));
 
                 // output filenames
-                catchmentOutFilename = readString(sr, "FILES");
-                riverOutFilename = readString(sr, "FILES");
-                reservoirOutFilename = readString(sr, "FILES");
-                loadingOutFilename = readString(sr, "FILES");
-                warmfstartOutFilename = readString(sr, "FILES");
-                textOutFilename = readString(sr, "FILES");
+                catchmentOutFilename = ReadString(sr, "FILES");
+                riverOutFilename = ReadString(sr, "FILES");
+                reservoirOutFilename = ReadString(sr, "FILES");
+                loadingOutFilename = ReadString(sr, "FILES");
+                warmfstartOutFilename = ReadString(sr, "FILES");
+                textOutFilename = ReadString(sr, "FILES");
 
 				// System coefficients
-				line = readSpacerLine(sr, "****");
-                dnums = readDoubleData(sr, "TOL", 4);
+				line = ReadSpacerLine(sr, "****");
+                dnums = ReadDoubleData(sr, "TOL", 4);
                 tolerancePH = nums[0];
                 // nums[1] is unused;
                 toleranceCation1 = nums[2];
                 toleranceCation2 = nums[3];
 
-                dnums = readDoubleData(sr, "TAREA", 2);
+                dnums = ReadDoubleData(sr, "TAREA", 2);
                 watershedArea = nums[0];
                 watershedElevation = nums[1];
 
-                dnums = readDoubleData(sr, "EVPMAX", 5);
+                dnums = ReadDoubleData(sr, "EVPMAX", 5);
                 latitude = dnums[0];
                 longitude = dnums[1]; ;
                 evaporationScaling = dnums[2]; ;
                 evaporationSeasonSkew = dnums[3]; ;
                 atmosphericTurbidity = dnums[4]; ;
-                soilThermalConduct = readDouble(sr, "RKCONV");
+                soilThermalConduct = ReadDouble(sr, "RKCONV");
 
-                nums = readIntData(sr, "RINPUT", 2);
+                nums = ReadIntData(sr, "RINPUT", 2);
                 rainBalancingIons = nums[0];
                 airBalancingIons = nums[1];
 
                 // Hydrology
                 hydroConstits = new List<HydrologyConstits>();
-                numHydrologyParams = readInt(sr, "CONSTITS");
+                numHydrologyParams = ReadInt(sr, "CONSTITS");
                 for (int ii = 0; ii < numHydrologyParams; ii++) {
                     line = sr.ReadLine();
                     HydrologyConstits hydro = new HydrologyConstits();
-                    if (testLine(line, sr.LineNum, "CONSTIT")) {
+                    if (TestLine(line, sr.LineNum, "CONSTIT")) {
                         hydro.fortranCode = line.Substring(8, 8);
                         hydro.swIncludeInOutput = !line.Substring(16, 8).Contains("0");
                         hydro.units = line.Substring(24, 16);
                         hydro.abbrevName = line.Substring(40, 16);
                         hydro.fullName = line.Substring(56);
 
-                        nums = readIntData(sr, "CONSTIT", 4);
+                        nums = ReadIntData(sr, "CONSTIT", 4);
                         hydro.swCatchmentInclude = nums[0] != 0;
                         hydro.swRiverInclude = nums[1] != 0;
                         hydro.swReservoirInclude = nums[2] != 0;
@@ -912,32 +912,32 @@ namespace warmf {
 
                 // Chemical
                 chemConstits = new List<ChemicalConstits>();
-                numChemicalParams = readInt(sr, "CONSTITS");
+                numChemicalParams = ReadInt(sr, "CONSTITS");
                 for (int ii = 0; ii < numChemicalParams; ii++) {
                     line = sr.ReadLine();
                     ChemicalConstits chem = new ChemicalConstits();
-                    if (testLine(line, sr.LineNum, "CHEMICAL")) {
+                    if (TestLine(line, sr.LineNum, "CHEMICAL")) {
                         chem.fortranCode = line.Substring(8, 8);
                         chem.swIncludeInOutput = !line.Substring(16, 8).Contains("0");
                         chem.units = line.Substring(24, 16);
                         chem.abbrevName = line.Substring(40, 16);
                         chem.fullName = line.Substring(56);
 
-                        nums = readIntData(sr, "CHEMICAL", 4);
+                        nums = ReadIntData(sr, "CHEMICAL", 4);
                         chem.swCatchmentInclude = nums[0] != 0;
                         chem.swRiverInclude = nums[1] != 0;
                         chem.swReservoirInclude = nums[2] != 0;
                         chem.swLoadingInclude = nums[3] != 0;
 
                         line = sr.ReadLine();
-                        if (testLine(line, sr.LineNum, "CHEMICAL")) {
+                        if (TestLine(line, sr.LineNum, "CHEMICAL")) {
                             chem.electricalCharge = Double.TryParse(line.Substring(8, 8), out dblRes) ? dblRes : 0;
                             chem.massEquivalent = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0;
                             chem.loadingUnitConversion = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : 0;
                             chem.loadingUnits = line.Substring(32);
                         }
 
-                        dnums = readDoubleData(sr, "CHEMICAL", 9);
+                        dnums = ReadDoubleData(sr, "CHEMICAL", 9);
                         chem.airRainMult = dnums[0];
                         chem.pointSourceMult = dnums[1];
                         chem.nonpointSourceMult = dnums[2];
@@ -948,54 +948,54 @@ namespace warmf {
                         chem.stoichChemWithHydrox = dnums[7];
                         chem.stoichHydroxWithChem = dnums[8];
 
-                        nums = readIntData(sr, "CHEMICAL", 3);
+                        nums = ReadIntData(sr, "CHEMICAL", 3);
                         chem.swLoadingTMDL = nums[0] != 0;
                         chem.dryDepositionForm = nums[1];
                         chem.swChemAdvection = nums[2] != 0;
 
-                        chem.gasDepositVelocity = readMonthlyDoubleData(sr, "CHEMICAL");
+                        chem.gasDepositVelocity = ReadMonthlyDoubleData(sr, "CHEMICAL");
                     }
                     chemConstits.Add(chem);
                 }
 
                 // Physical
                 physicalConstits = new List<PhysicalConstits>();
-                numPhysicalParams = readInt(sr, "CONSTITS");
+                numPhysicalParams = ReadInt(sr, "CONSTITS");
                 for (int ii = 0; ii < numPhysicalParams; ii++) {
                     line = sr.ReadLine();
                     PhysicalConstits physical = new PhysicalConstits();
-                    if (testLine(line, sr.LineNum, "PHYSICAL")) {
+                    if (TestLine(line, sr.LineNum, "PHYSICAL")) {
                         physical.fortranCode = line.Substring(8, 8);
                         physical.swIncludeInOutput = !line.Substring(16, 8).Contains("0");
                         physical.units = line.Substring(24, 16);
                         physical.abbrevName = line.Substring(40, 16);
                         physical.fullName = line.Substring(56);
 
-                        nums = readIntData(sr, "PHYSICAL", 4);
+                        nums = ReadIntData(sr, "PHYSICAL", 4);
                         physical.swCatchmentInclude = nums[0] != 0;
                         physical.swRiverInclude = nums[1] != 0;
                         physical.swReservoirInclude = nums[2] != 0;
                         physical.swLoadingInclude = nums[3] != 0;
 
                         line = sr.ReadLine();
-                        if (testLine(line, sr.LineNum, "PHYSICAL")) {
+                        if (TestLine(line, sr.LineNum, "PHYSICAL")) {
                             physical.electricalCharge = Double.TryParse(line.Substring(8, 8), out dblRes) ? dblRes : 0;
                             physical.massEquivalent = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0;
                             physical.loadingUnitConversion = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : 0;
                             physical.loadingUnits = line.Substring(32);
                         }
 
-                        dnums = readDoubleData(sr, "PHYSICAL", 3);
+                        dnums = ReadDoubleData(sr, "PHYSICAL", 3);
                         physical.airRainMult = dnums[0];
                         physical.pointSourceMult = dnums[1];
                         physical.nonpointSourceMult = dnums[2];
 
-                        nums = readIntData(sr, "PHYSICAL", 3);
+                        nums = ReadIntData(sr, "PHYSICAL", 3);
                         physical.swLoadingTMDL = nums[0] != 0;
                         physical.dryDepositionForm = nums[1];
                         physical.swChemAdvection = nums[2] != 0;
 
-                        physical.gasDepositVelocity = readMonthlyDoubleData(sr, "PHYSICAL");
+                        physical.gasDepositVelocity = ReadMonthlyDoubleData(sr, "PHYSICAL");
                     }
                     physicalConstits.Add(physical);
                 }
@@ -1004,48 +1004,48 @@ namespace warmf {
 
                 // Composite
                 compositeConstits = new List<CompositeConstits>();
-                numCompositeParams = readInt(sr, "CONSTITS");
+                numCompositeParams = ReadInt(sr, "CONSTITS");
                 for (int ii = 0; ii < numCompositeParams; ii++) {
                     line = sr.ReadLine();
                     CompositeConstits composite = new CompositeConstits();
-                    if (testLine(line, sr.LineNum, "COMPOSIT")) {
+                    if (TestLine(line, sr.LineNum, "COMPOSIT")) {
                         composite.fortranCode = line.Substring(8, 8);
                         composite.swIncludeInOutput = !line.Substring(16, 8).Contains("0");
                         composite.units = line.Substring(24, 16);
                         composite.abbrevName = line.Substring(40, 16);
                         composite.fullName = line.Substring(56);
 
-                        nums = readIntData(sr, "COMPOSIT", 4);
+                        nums = ReadIntData(sr, "COMPOSIT", 4);
                         composite.swCatchmentInclude = nums[0] != 0;
                         composite.swRiverInclude = nums[1] != 0;
                         composite.swReservoirInclude = nums[2] != 0;
                         composite.swLoadingInclude = nums[3] != 0;
 
                         line = sr.ReadLine();
-                        if (testLine(line, sr.LineNum, "COMPOSIT")) {
+                        if (TestLine(line, sr.LineNum, "COMPOSIT")) {
                             composite.electricalCharge = Double.TryParse(line.Substring(8, 8), out dblRes) ? dblRes : 0;
                             composite.massEquivalent = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0;
                             composite.loadingUnitConversion = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : 0;
                             composite.loadingUnits = line.Substring(32);
                         }
 
-                        nums = readIntData(sr, "COMPOSIT", 3);
+                        nums = ReadIntData(sr, "COMPOSIT", 3);
                         composite.swIncludeDissolvedConstits = nums[0] != 0;
                         composite.swIncludeAdsorbedConstits = nums[1] != 0;
                         composite.swIncludePrecipConstits = nums[2] != 0;
 
-                        composite.componentTotalMass = readDoubleData(sr, "COMPONEN", numComponents);
+                        composite.componentTotalMass = ReadDoubleData(sr, "COMPONEN", numComponents);
                     }
                     compositeConstits.Add(composite);
                 }
 
                 // Reactions
                 reactions = new List<Reaction>();
-                numReactions = readInt(sr, "REACTION");
+                numReactions = ReadInt(sr, "REACTION");
                 for (int ii = 0; ii < numReactions; ii++) {
                     line = sr.ReadLine();
                     Reaction reaction = new Reaction();
-                    if (testLine(line, sr.LineNum, "REACTION")) {
+                    if (TestLine(line, sr.LineNum, "REACTION")) {
                         reaction.primReactantNumber = Int32.TryParse(line.Substring(8, 8), out intRes) ? intRes : 0;
                         reaction.swIsAnoxic = !line.Substring(16, 8).Contains("0");
                         reaction.dissolvedOxyLimit = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : 0;
@@ -1056,20 +1056,20 @@ namespace warmf {
                         reaction.units = line.Substring(64, 8);
                         reaction.name = line.Substring(72);
 
-                        reaction.stoich = readDoubleData(sr, "STOICH", numComponents);
+                        reaction.stoich = ReadDoubleData(sr, "STOICH", numComponents);
                     }
                     reactions.Add(reaction);
                 }
 
 				// Sediments
-				line = readSpacerLine(sr, "SEDIMENT");
+				line = ReadSpacerLine(sr, "SEDIMENT");
                 sediments = new List<Sediment>();
-                nums = readIntData(sr, "NPART", 2);
+                nums = ReadIntData(sr, "NPART", 2);
                 numSedParticleSizes = nums[0];
                 numSedWashLoadParticles = nums[1];
                 for (int ii = 0; ii < numSedParticleSizes; ii++) {
                     Sediment sediment = new Sediment();
-                    dnums = readDoubleData(sr, "SEDIMEN", 3);
+                    dnums = ReadDoubleData(sr, "SEDIMEN", 3);
                     sediment.grainSize = dnums[0];
                     sediment.specGravity = dnums[1];
                     sediment.settlingRate = dnums[2];
@@ -1077,12 +1077,12 @@ namespace warmf {
                 }
 
 				// Algae
-				line = readSpacerLine(sr, "ALGAE & PERIPHYTON");
+				line = ReadSpacerLine(sr, "ALGAE & PERIPHYTON");
                 algaes = new List<Algae>();
                 numAlgae = 3;
                 for (int ii = 0; ii < numAlgae; ii++) {
                     Algae algae = new Algae();
-                    dnums = readDoubleData(sr, "WQCOEF", 7);
+                    dnums = ReadDoubleData(sr, "WQCOEF", 7);
                     algae.nitroHalfSat = dnums[0];
                     algae.phosHalfSat = dnums[1];
                     algae.silicaHalfSat = dnums[2];
@@ -1095,13 +1095,13 @@ namespace warmf {
 
                 // Periphyton
                 peri = new Periphyton();
-                dnums = readDoubleData(sr, "PERIPH", 5);
+                dnums = ReadDoubleData(sr, "PERIPH", 5);
                 peri.recycledFraction = dnums[0];
                 peri.volcityHalfSat = dnums[1];
                 peri.nitroHalfSat = dnums[2];
                 peri.phosHalfSat = dnums[3];
                 peri.lightSat = dnums[4];
-                dnums = readDoubleData(sr, "PERIPH", 8);
+                dnums = ReadDoubleData(sr, "PERIPH", 8);
                 peri.scourRegressionCoef = dnums[0];
                 peri.scourRegressionExp = dnums[1];
                 peri.ammoniaPref = dnums[2];
@@ -1112,45 +1112,45 @@ namespace warmf {
                 peri.photoRespirationFraction = dnums[7];
 
                 // Shading
-                dnums = readDoubleData(sr, "SHADING", 3);
+                dnums = ReadDoubleData(sr, "SHADING", 3);
                 sedimentShading = dnums[0];
                 algaeShading = dnums[1];
                 detritusShading = dnums[2];
 
 				// Minerals
-				line = readSpacerLine(sr, "MINERALS");
+				line = ReadSpacerLine(sr, "MINERALS");
                 minerals = new List<Mineral>();
-                numMinerals = readInt(sr, "NMNRLS");
+                numMinerals = ReadInt(sr, "NMNRLS");
                 for (int ii = 0; ii < numMinerals; ii++) {
                     line = sr.ReadLine();
                     Mineral mineral = new Mineral();
-                    if (testLine(line, sr.LineNum, "MINERL")) {
+                    if (TestLine(line, sr.LineNum, "MINERL")) {
                         mineral.name = line.Substring(8, 16);
                         mineral.molecularWgt = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : 0;
                         mineral.phDepend = Double.TryParse(line.Substring(32, 8), out dblRes) ? dblRes : 0;
                         mineral.weatheringRate = Double.TryParse(line.Substring(40, 8), out dblRes) ? dblRes : 0;
                         mineral.oxyConsumption = Double.TryParse(line.Substring(48, 8), out dblRes) ? dblRes : 0;
-                        mineral.chemReactionProduct = readDoubleData(sr, "MNWTH", numChemicalParams);
+                        mineral.chemReactionProduct = ReadDoubleData(sr, "MNWTH", numChemicalParams);
                     }
                 }
 
 				// Litter leachable ion params
-				line = readSpacerLine(sr, "LITTER & HUMUS");
+				line = ReadSpacerLine(sr, "LITTER & HUMUS");
                 litter = new Litter();
-                dnums = readDoubleData(sr, "FRLCH", 4);
+                dnums = ReadDoubleData(sr, "FRLCH", 4);
                 litter.courseLitterFrac = dnums[0];
                 litter.fineLitterFrac = dnums[1];
                 litter.humusFrac = dnums[2];
                 litter.nonStructLeach = dnums[3];
-                dnums = readDoubleData(sr, "RATES", 3);
+                dnums = ReadDoubleData(sr, "RATES", 3);
                 litter.coarseLitterDecay = dnums[0];
                 litter.fineLitterDecay = dnums[1];
                 litter.humusDecay = dnums[2];
 
 				// Snow
-				line = readSpacerLine(sr, "SNOW AND ICE");
+				line = ReadSpacerLine(sr, "SNOW AND ICE");
                 snow = new Snow();
-                dnums = readDoubleData(sr, "SNOW", 9);
+                dnums = ReadDoubleData(sr, "SNOW", 9);
                 snow.formTemp = dnums[0];
                 snow.openAreaSubRate = dnums[1];
                 snow.forestAreaSubRate = dnums[2];
@@ -1160,34 +1160,34 @@ namespace warmf {
                 snow.fieldCapacity = dnums[6];
                 snow.meltTemp = dnums[7];
                 snow.rainMeltRate = dnums[8];
-                dnums = readDoubleData(sr, "SNOWLCH", 5);
+                dnums = ReadDoubleData(sr, "SNOWLCH", 5);
                 snow.thermalConduct = dnums[0];
                 snow.iceThermalConduct = dnums[1];
                 snow.meltLeaching = dnums[2];
                 snow.nitrificationRate = dnums[3];
 
 				// Septic
-				line = readSpacerLine(sr, "SEPTIC");
+				line = ReadSpacerLine(sr, "SEPTIC");
                 septic = new Septic();
-                septic.failedFlow = readDouble(sr, "SEPTIC");
-                septic.type1 = readDoubleData(sr, "SEPTIC", numComponents);
-                septic.type2 = readDoubleData(sr, "SEPTIC", numComponents);
-                septic.type3 = readDoubleData(sr, "SEPTIC", numComponents);
+                septic.failedFlow = ReadDouble(sr, "SEPTIC");
+                septic.type1 = ReadDoubleData(sr, "SEPTIC", numComponents);
+                septic.type2 = ReadDoubleData(sr, "SEPTIC", numComponents);
+                septic.type3 = ReadDoubleData(sr, "SEPTIC", numComponents);
 
 				// Land use data
-				line = readSpacerLine(sr, "CANOPY AND LAND USE");
+				line = ReadSpacerLine(sr, "CANOPY AND LAND USE");
                 // general land use params
-                partDV = readMonthlyDoubleData(sr, "PARTDV");
-                courseDV = readMonthlyDoubleData(sr, "COARSEDV");
-                swGasDepositVelocity = readOnOffSwitch(sr, "IVDGAS");
+                partDV = ReadMonthlyDoubleData(sr, "PARTDV");
+                courseDV = ReadMonthlyDoubleData(sr, "COARSEDV");
+                swGasDepositVelocity = ReadOnOffSwitch(sr, "IVDGAS");
 //                gasDepositVelocity = readMonthlyDoubleData(sr, "NOXSOXVD");  // missing from Catawba file - MRL
-                gasUptakeVeolicty = readMonthlyDoubleData(sr, "NOXSOXVU");
+                gasUptakeVeolicty = ReadMonthlyDoubleData(sr, "NOXSOXVU");
 
-                dnums = readDoubleData(sr, "HEIGHT", 2);
+                dnums = ReadDoubleData(sr, "HEIGHT", 2);
                 heightWindSpeed = dnums[0];
                 vonkar = dnums[1];
 
-				dnums = readDoubleData(sr, "NITRIFYR", 2);
+				dnums = ReadDoubleData(sr, "NITRIFYR", 2);
 				numLanduses = (int)dnums[0];
 				standingBiomass = dnums[1];
 
@@ -1195,19 +1195,19 @@ namespace warmf {
                 landuse = new List<Landuse>();
 
                 for (int ii = 0; ii < numLanduses; ii++) {
-					line = readSpacerLine(sr, "LAND USE TYPE");
+					line = ReadSpacerLine(sr, "LAND USE TYPE");
                     line = sr.ReadLine();
                     Landuse lu = new Landuse();
-                    if (testLine(line, sr.LineNum, "INTCEPT")) {
+                    if (TestLine(line, sr.LineNum, "INTCEPT")) {
                         lu.openWinterFrac = Double.TryParse(line.Substring(8, 8), out dblRes) ? dblRes : 0;
                         lu.imperviousFrac = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0;
                         lu.maxPotentInceptStorage = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : 0;
                         lu.name = line.Substring(32);
 
-                        dnums = readDoubleData(sr, "EROSION", 2);
+                        dnums = ReadDoubleData(sr, "EROSION", 2);
                         lu.rainDetachFactor = dnums[0];
                         lu.flowDetachFactor = dnums[1];
-                        dnums = readDoubleData(sr, "GROWTH", 8);
+                        dnums = ReadDoubleData(sr, "GROWTH", 8);
                         lu.annualGrowMult = dnums[0];
                         lu.leafGrowFactor = dnums[1];
                         lu.productivity = dnums[2];
@@ -1217,29 +1217,29 @@ namespace warmf {
                         lu.wetCollEff = dnums[6];
                         lu.leafWgtRation = dnums[7];
 
-                        dnums = readDoubleData(sr, "HEIGHT", 2);
+                        dnums = ReadDoubleData(sr, "HEIGHT", 2);
                         lu.canopyHeight = dnums[0];
                         lu.stomatalResist = dnums[1];
-                        lu.cropping = readMonthlyDoubleData(sr, "CROPPING");
-                        lu.leafAreaIdx = readMonthlyDoubleData(sr, "LAID");
-                        lu.annualUptake = readMonthlyDoubleData(sr, "UDISTD");
-                        lu.litterFallRate = readMonthlyDoubleData(sr, "LFD");
-                        lu.exudationRate = readMonthlyDoubleData(sr, "BETAD");
-                        lu.leafComp = readDoubleData(sr, "LFCMPD1", numChemicalParams);
-                        lu.trunkComp = readDoubleData(sr, "TRCMPD", numChemicalParams);
+                        lu.cropping = ReadMonthlyDoubleData(sr, "CROPPING");
+                        lu.leafAreaIdx = ReadMonthlyDoubleData(sr, "LAID");
+                        lu.annualUptake = ReadMonthlyDoubleData(sr, "UDISTD");
+                        lu.litterFallRate = ReadMonthlyDoubleData(sr, "LFD");
+                        lu.exudationRate = ReadMonthlyDoubleData(sr, "BETAD");
+                        lu.leafComp = ReadDoubleData(sr, "LFCMPD1", numChemicalParams);
+                        lu.trunkComp = ReadDoubleData(sr, "TRCMPD", numChemicalParams);
 
-                        lu.numFertPlans = readInt(sr, "FERTLZ");
+                        lu.numFertPlans = ReadInt(sr, "FERTLZ");
                         lu.fertPlanApplication = new List<List<double>>();
                         for (int jj = 0; jj < lu.numFertPlans; jj++) {
                             for (int kk = 0; kk < 12; kk++) {
-                                lu.fertPlanApplication.Add(readDoubleData(sr, "FERTLZ", numComponents));
+                                lu.fertPlanApplication.Add(ReadDoubleData(sr, "FERTLZ", numComponents));
                             }
                         }
                     }
                 }
 
 				// CATCHMENTS
-				line = readSpacerLine(sr, "CATCHMENT COEFFICIENTS");
+				line = ReadSpacerLine(sr, "CATCHMENT COEFFICIENTS");
 
                 catchments = new List<Catchment>();
                 for (int ii = 0; ii < numCatchments; ii++) {
@@ -1264,46 +1264,46 @@ namespace warmf {
                     catchData.detentionStorage = Double.TryParse(line.Substring(48, 8), out dblRes) ? dblRes : 0;
 
                     // upstream catchment numbers
-                    catchData.upstreamCatchmentNum = readIntData(sr, "ICAT", 9);  // will there always be 9 values ? - MRL
-                    catchData.landUsePercent = readDoubleData(sr, "CATC", numLanduses);
+                    catchData.upstreamCatchmentNum = ReadIntData(sr, "ICAT", 9);  // will there always be 9 values ? - MRL
+                    catchData.landUsePercent = ReadDoubleData(sr, "CATC", numLanduses);
 
                     // fertilation plan nums per land use
-                    catchData.fertPlanNum = readIntData(sr, "CATC", numLanduses);
+                    catchData.fertPlanNum = ReadIntData(sr, "CATC", numLanduses);
 
                     // land application load
-                    catchData.landApplicationLoad = readDoubleData(sr, "STOC", numLanduses);
+                    catchData.landApplicationLoad = ReadDoubleData(sr, "STOC", numLanduses);
 
                     // num of irrigation sources
-                    catchData.numIrrigationSources = readIntData(sr, "IRRI", numLanduses);
+                    catchData.numIrrigationSources = ReadIntData(sr, "IRRI", numLanduses);
 
                     // for each land use, get number of irrigation sources and fraction of area
                     for (int jj=0; jj<numLanduses; jj++) {
                         catchData.irrigationSource = new List<List<double>>();
                         if (catchData.numIrrigationSources[jj] > 0) {
-                            catchData.irrigationSource.Add(readDoubleData(sr, "IRRL", 2 * catchData.numIrrigationSources[jj])); 
+                            catchData.irrigationSource.Add(ReadDoubleData(sr, "IRRL", 2 * catchData.numIrrigationSources[jj])); 
                         }
                     }
 
-                    catchData.nluPonds = readInt(sr, "NLUPONDS");
+                    catchData.nluPonds = ReadInt(sr, "NLUPONDS");
                     if (catchData.nluPonds > 0) catchData.pondFilename = new List<string>();
                     for (int jj = 0; jj < catchData.nluPonds; jj++)
-                        catchData.pondFilename.Add(readString(sr, "PONDFILE"));
+                        catchData.pondFilename.Add(ReadString(sr, "PONDFILE"));
 
                     // point sources
-                    catchData.numPointSources = readInt(sr, "PTSOURCE");
+                    catchData.numPointSources = ReadInt(sr, "PTSOURCE");
                     if (catchData.numPointSources > 0)
-                        catchData.pointSources = readIntData(sr, "PTSOURCE", catchData.numPointSources);
+                        catchData.pointSources = ReadIntData(sr, "PTSOURCE", catchData.numPointSources);
 
                     // pumping
-                    catchData.numPumpFromSchedules = readInt(sr, "PUMPFROM");
+                    catchData.numPumpFromSchedules = ReadInt(sr, "PUMPFROM");
                     if (catchData.numPumpFromSchedules > 0)
-                        catchData.pumpFromDivFile = readIntData(sr, "PUMPFROM", catchData.numPumpFromSchedules);
-                    catchData.numPumpToSchedules = readInt(sr, "PUMPTO");
+                        catchData.pumpFromDivFile = ReadIntData(sr, "PUMPFROM", catchData.numPumpFromSchedules);
+                    catchData.numPumpToSchedules = ReadInt(sr, "PUMPTO");
                     if (catchData.numPumpToSchedules > 0)
-                        catchData.pumpToDivFile = readIntData(sr, "PUMPTO", catchData.numPumpToSchedules);
+                        catchData.pumpToDivFile = ReadIntData(sr, "PUMPTO", catchData.numPumpToSchedules);
 
                     // septic
-                    dnums = readDoubleData(sr, "SEPTIC", 9);
+                    dnums = ReadDoubleData(sr, "SEPTIC", 9);
                     catchData.septic = new CatchSeptic();
                     catchData.septic.soilLayer = dnums[0];
                     catchData.septic.population = dnums[1]; 
@@ -1314,10 +1314,10 @@ namespace warmf {
                     catchData.septic.thickness = dnums[6]; 
                     catchData.septic.area = dnums[7]; 
                     catchData.septic.biomassRespRate = dnums[8]; 
-                    catchData.septic.biomassMortRate = readDouble(sr, "SEPTIC");
+                    catchData.septic.biomassMortRate = ReadDouble(sr, "SEPTIC");
 
                     // sediment
-                    dnums = readDoubleData(sr, "SEDIMENT", 4);
+                    dnums = ReadDoubleData(sr, "SEDIMENT", 4);
                     catchData.sediment = new CatchSediment();
                     catchData.sediment.erosivity = dnums[0];
                     catchData.sediment.firstPartSizePct = dnums[1];
@@ -1325,7 +1325,7 @@ namespace warmf {
                     catchData.sediment.thirdPartSizePct = dnums[3];
 
                     // Best practices
-                    dnums = readDoubleData(sr, "BMP", 5);
+                    dnums = ReadDoubleData(sr, "BMP", 5);
                     catchData.bmp = new CatchBMP();
                     catchData.bmp.streetSweepFreq = dnums[0];
                     catchData.bmp.streetSweepEff = dnums[1];
@@ -1334,19 +1334,19 @@ namespace warmf {
                     catchData.bmp.maxFertAccumTime = dnums[4];
 
                     // buffering/seeps
-                    dnums = readDoubleData(sr, "BUFFZONE", 4);
+                    dnums = ReadDoubleData(sr, "BUFFZONE", 4);
                     catchData.bufferingPct = dnums[0];
                     catchData.bufferZoneWidth = dnums[1];
                     catchData.bufferZoneSlope = dnums[2];
                     catchData.bufferManningN = dnums[3];
-                    dnums = readDoubleData(sr, "SEEPS", 2);
+                    dnums = ReadDoubleData(sr, "SEEPS", 2);
                     catchData.soilLayerSeepage = dnums[0];
                     catchData.overlandFlowSeepage = dnums[1];
 
                     // mining
                     line = sr.ReadLine();
                     catchData.mining = new CatchMining();
-                    if (testLine(line, sr.LineNum, "MINING")) {
+                    if (TestLine(line, sr.LineNum, "MINING")) {
                         catchData.mining.swIsLowSoilDeepMineOverburden = !line.Substring(8, 8).Contains("0");
                         catchData.mining.surfaceMineLanduseNum = Int32.TryParse(line.Substring(16, 8), out intRes) ? intRes : 0;
                         catchData.mining.depthSpoils = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0;
@@ -1359,60 +1359,60 @@ namespace warmf {
                     }
                     
                     // deep mines
-                    nums = readIntData(sr, "MINEPERM", 2);
+                    nums = ReadIntData(sr, "MINEPERM", 2);
                     catchData.mining.numDeepMineDischarges = nums[0];
                     catchData.mining.swAreDeepConcentrationsMax = nums[0] != 0;
                     for (int jj = 0; jj < catchData.mining.numDeepMineDischarges; jj++) {
                         line = sr.ReadLine();
                         CatchMine mine = new CatchMine();
-                        if (testLine(line, sr.LineNum, "MINEPERM")) {
+                        if (TestLine(line, sr.LineNum, "MINEPERM")) {
                             mine.areaFraction = Double.TryParse(line.Substring(8, 8), out dblRes) ? dblRes : 0;
                             mine.name = line.Substring(16);
-                            mine.concentrationLimit = readDoubleData(sr, "MINECONC", numComponents);
-                            mine.mineOutFilename = readString(sr, "MINEOUT");
+                            mine.concentrationLimit = ReadDoubleData(sr, "MINECONC", numComponents);
+                            mine.mineOutFilename = ReadString(sr, "MINEOUT");
                         }
                         catchData.mining.deepMines.Add(mine);
                     }
 
                     // surface mines
-                    nums = readIntData(sr, "MINEPERM", 2);
+                    nums = ReadIntData(sr, "MINEPERM", 2);
                     catchData.mining.numSurfaceMineDischarges = nums[0];
                     catchData.mining.swAreSurfaceConcentrationsMax = nums[0] != 0;
                     for (int jj = 0; jj < catchData.mining.numSurfaceMineDischarges; jj++) {
                         line = sr.ReadLine();
                         CatchMine mine = new CatchMine();
-                        if (testLine(line, sr.LineNum, "MINEPERM")) {
+                        if (TestLine(line, sr.LineNum, "MINEPERM")) {
                             mine.areaFraction = Double.TryParse(line.Substring(8, 8), out dblRes) ? dblRes : 0;
                             mine.name = line.Substring(16);
-                            mine.concentrationLimit = readDoubleData(sr, "MINECONC", numComponents);
-                            mine.mineOutFilename = readString(sr, "MINEOUT");
+                            mine.concentrationLimit = ReadDoubleData(sr, "MINECONC", numComponents);
+                            mine.mineOutFilename = ReadString(sr, "MINEOUT");
                         }
                         catchData.mining.surfaceMines.Add(mine);
                     }
 
                     // litter weights
-                    dnums = readDoubleData(sr, "XLIT", 3);
+                    dnums = ReadDoubleData(sr, "XLIT", 3);
                     catchData.mining.coarseLitterWgtFraction = dnums[0];
                     catchData.mining.fineLitterWgtFraction = dnums[0];
                     catchData.mining.humusWgtFraction = dnums[0];
 
                     // reaction rates
-                    catchData.mining.soilReactionRate = readDoubleData(sr, "REACSOIL", numReactions);
-                    catchData.mining.surfaceReactionRate = readDoubleData(sr, "REACSURF", numReactions);
-                    catchData.mining.canopyReactionRate = readDoubleData(sr, "REACCNPY", numReactions);
-                    catchData.mining.biozoneReactionRate = readDoubleData(sr, "REACBIOZ", numReactions);
-                    catchData.mining.numCEQW2Files = readInt(sr, "W2FILES");
+                    catchData.mining.soilReactionRate = ReadDoubleData(sr, "REACSOIL", numReactions);
+                    catchData.mining.surfaceReactionRate = ReadDoubleData(sr, "REACSURF", numReactions);
+                    catchData.mining.canopyReactionRate = ReadDoubleData(sr, "REACCNPY", numReactions);
+                    catchData.mining.biozoneReactionRate = ReadDoubleData(sr, "REACBIOZ", numReactions);
+                    catchData.mining.numCEQW2Files = ReadInt(sr, "W2FILES");
                     if (catchData.mining.numCEQW2Files == 3) {
-                        catchData.mining.flowInputFilename = readString(sr, "W2FILES");
-                        catchData.mining.tempInputFilename = readString(sr, "W2FILES");
-                        catchData.mining.waterQualInputFilename = readString(sr, "W2FILES");
+                        catchData.mining.flowInputFilename = ReadString(sr, "W2FILES");
+                        catchData.mining.tempInputFilename = ReadString(sr, "W2FILES");
+                        catchData.mining.waterQualInputFilename = ReadString(sr, "W2FILES");
                     }
 
                     // soil layers
                     catchData.soils = new List<Soil>();
                     for (int jj = 0; jj < catchData.numSoilLayers; jj++) {
                         Soil soil = new Soil();
-                        dnums = readDoubleData(sr, "LAYER", 9);
+                        dnums = ReadDoubleData(sr, "LAYER", 9);
                         soil.area = dnums[0];
                         soil.thickness = dnums[1];
                         soil.moisture = dnums[2];
@@ -1423,7 +1423,7 @@ namespace warmf {
                         soil.evaopTranspireFract = dnums[7];
                         soil.waterTemp = dnums[8];
 
-                        dnums = readDoubleData(sr, "CKCAMG", 5);
+                        dnums = ReadDoubleData(sr, "CKCAMG", 5);
                         soil.magnesiumXCoeff = dnums[0];
                         soil.sodiumXCoeff = dnums[1];
                         soil.potassiumXCoeff = dnums[2];
@@ -1431,16 +1431,16 @@ namespace warmf {
                         soil.hydrogenXCoeff = dnums[4];
 
                         line = sr.ReadLine();
-                        if (testLine(line, sr.LineNum, "COMP")) {
+                        if (TestLine(line, sr.LineNum, "COMP")) {
                             soil.exchangeCapacity = Double.TryParse(line.Substring(8, 8), out dblRes) ? dblRes : 0;
                             soil.maxPhosAdsorbion = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0;
                             soil.density = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : 0;
                             soil.tortuosity = Double.TryParse(line.Substring(32, 8), out dblRes) ? dblRes : 0;
                             soil.CO2CalcMethod = Int32.TryParse(line.Substring(40, 8), out intRes) ? intRes : 0;
                         }
-                        soil.weightFract = readDoubleData(sr, "COMP", numMinerals);
-                        soil.solutionConcen = readDoubleData(sr, "SOL", numComponents);
-                        soil.adsorptionIsotherm = readDoubleData(sr, "ADS", numComponents);
+                        soil.weightFract = ReadDoubleData(sr, "COMP", numMinerals);
+                        soil.solutionConcen = ReadDoubleData(sr, "SOL", numComponents);
+                        soil.adsorptionIsotherm = ReadDoubleData(sr, "ADS", numComponents);
                         catchData.soils.Add(soil);
                     }
 
@@ -1448,12 +1448,12 @@ namespace warmf {
                 }
 
 				// RIVERS
-				line = readSpacerLine(sr, "RIVER COEFFICIENTS");
+				line = ReadSpacerLine(sr, "RIVER COEFFICIENTS");
                 rivers = new List<River>();
                 for (int ii = 0; ii < numRivers; ii++) {
-					line = readSpacerLine(sr, "RIVE");	// RIVE####  - can these have 5 digits?  MRL
+					line = ReadSpacerLine(sr, "RIVE");	// RIVE####  - can these have 5 digits?  MRL
                     River river = new River();
-					dnums = readDoubleData(sr, "STRE", 9);
+					dnums = ReadDoubleData(sr, "STRE", 9);
 					river.idNum = (int)dnums[0];
 					river.depth = dnums[1];
 					river.length = dnums[2];
@@ -1469,14 +1469,14 @@ namespace warmf {
 					river.swIsSubwaterBoundary = !line.Substring(16, 8).Contains("0");
 					river.name = line.Substring(24);
 
-					dnums = readDoubleData(sr, "IMPO", 5);
+					dnums = ReadDoubleData(sr, "IMPO", 5);
 					river.impoundArea = dnums[0];
 					river.impoundVol = dnums[1];
 					river.freezingTemp = dnums[2];
 					river.meltingTemp = dnums[3];
 					river.iceCalcAve = dnums[4];
 
-					dnums = readDoubleData(sr, "STAR", 18);
+					dnums = ReadDoubleData(sr, "STAR", 18);
 					river.segment = new List<StageWidth>();
 					for (int jj=0; jj<18; jj+=2) {
 						StageWidth sw = new StageWidth();
@@ -1485,59 +1485,59 @@ namespace warmf {
 						river.segment.Add(sw);
 					}
 
-					river.upstreamCatch = readIntData(sr, "ICAT", 9);   // how many upstream catchments? - MRL
-					river.upstreamRiver = readIntData(sr, "IRVT", 9);   // how many upstream rivers? - MRL
-					river.upstreamReservoir = readIntData(sr, "ILKT", 9);   // how many upstream reservoirs? - MRL
+					river.upstreamCatch = ReadIntData(sr, "ICAT", 9);   // how many upstream catchments - 9? - MRL
+					river.upstreamRiver = ReadIntData(sr, "IRVT", 9);   // how many upstream rivers - 9? - MRL
+					river.upstreamReservoir = ReadIntData(sr, "ILKT", 9);   // how many upstream reservoirs -9? - MRL
 
-					river.numDiversionsFrom = readInt(sr, "DIVFROM");
+					river.numDiversionsFrom = ReadInt(sr, "DIVFROM");
 					if (river.numDiversionsFrom > 0)
-						river.divFilenumFrom = readIntData(sr, "DIVFROM", river.numDiversionsFrom);
-					river.numDiversionsTo = readInt(sr, "DIVTO");
+						river.divFilenumFrom = ReadIntData(sr, "DIVFROM", river.numDiversionsFrom);
+					river.numDiversionsTo = ReadInt(sr, "DIVTO");
 					if (river.numDiversionsTo > 0)
-						river.divFilenumTo = readIntData(sr, "DIVTO", river.numDiversionsTo);
-					river.numPointSrcs = readInt(sr, "PTSOURCE");
+						river.divFilenumTo = ReadIntData(sr, "DIVTO", river.numDiversionsTo);
+					river.numPointSrcs = ReadInt(sr, "PTSOURCE");
 					if (river.numPointSrcs > 0)
-						river.pointSrcFilenum = readIntData(sr, "PTSOURCE", river.numPointSrcs);
-					nums = readIntData(sr, "OBSW", 7);  // not in spec...  MRL
-					river.hydrologyFilename = readString(sr, "OBSD");
-					dnums = readDoubleData(sr, "SEDIMENT", 6);
+						river.pointSrcFilenum = ReadIntData(sr, "PTSOURCE", river.numPointSrcs);
+					nums = ReadIntData(sr, "OBSW", 7);  // not in spec...  MRL
+					river.hydrologyFilename = ReadString(sr, "OBSD");
+					dnums = ReadDoubleData(sr, "SEDIMENT", 6);
 					river.sedDetachVelMult = dnums[0];
 					river.sedDetachVelExp = dnums[1];
 					river.sedBedDepth = dnums[2];
 					river.sedVegFactor = dnums[3];
 					river.sedBankStabFactor = dnums[4];
 					river.sedDiffusionRate = dnums[5];
-					dnums = readDoubleData(sr, "SEDTYPES", 3);
+					dnums = ReadDoubleData(sr, "SEDTYPES", 3);
 					river.sedFirstPartSizePct = dnums[0];
 					river.sedSecondPartSizePct = dnums[1];
 					river.sedThirdPartSizePct = dnums[2];
-					dnums = readDoubleData(sr, "AIRK", 2);  // data file only has 2 values instead of 3 (which two?) - MRL
+					dnums = ReadDoubleData(sr, "AIRK", 2);  // data file only has 2 values instead of 3 (which two?) - MRL
 					river.reaerationRateMult = dnums[0];
 					river.sedOxygenDemand = dnums[1];
 					river.precipSettleRate = 0;     // not in data files - MRL
 
-					river.waterReactionRate = readDoubleData(sr, "REAC-H2O", numReactions);
-					river.bedReactionRate = readDoubleData(sr, "REAC-BED", numReactions);
-					river.waterQualFilename = readString(sr, "OBSD");
-					river.numCEQW2Files = readInt(sr, "W2FILES");
+					river.waterReactionRate = ReadDoubleData(sr, "REAC-H2O", numReactions);
+					river.bedReactionRate = ReadDoubleData(sr, "REAC-BED", numReactions);
+					river.waterQualFilename = ReadString(sr, "OBSD");
+					river.numCEQW2Files = ReadInt(sr, "W2FILES");
 					if (river.numCEQW2Files == 3) {
-						river.flowInputFilename = readString(sr, "W2FILES");
-						river.tempInputFilename = readString(sr, "W2FILES");
-						river.waterQualInputFilename = readString(sr, "W2FILES");
+						river.flowInputFilename = ReadString(sr, "W2FILES");
+						river.tempInputFilename = ReadString(sr, "W2FILES");
+						river.waterQualInputFilename = ReadString(sr, "W2FILES");
 					}
 
-					river.componentConcentration = readDoubleData(sr, "STRC", numComponents);
-					river.bedAdsorpConcentration = readDoubleData(sr, "BEDC", numComponents);
-					river.waterAdsorpIsotherm = readDoubleData(sr, "STRA", numComponents);
-					river.bedAdsorpIsotherm = readDoubleData(sr, "BEDA", numComponents);
+					river.componentConcentration = ReadDoubleData(sr, "STRC", numComponents);
+					river.bedAdsorpConcentration = ReadDoubleData(sr, "BEDC", numComponents);
+					river.waterAdsorpIsotherm = ReadDoubleData(sr, "STRA", numComponents);
+					river.bedAdsorpIsotherm = ReadDoubleData(sr, "BEDA", numComponents);
 				}
 
 
 				// RESERVOIRS
-				line = readSpacerLine(sr, "LAKE COEFFICIENTS");
+				line = ReadSpacerLine(sr, "LAKE COEFFICIENTS");
 				reservoirs = new List<Reservoir>();
 				for (int ii = 0; ii < numReservoirs; ii++) {
-					line = readSpacerLine(sr, "RESE");	// RESE####  - can these have 5 digits?  MRL
+					line = ReadSpacerLine(sr, "RESE");	// RESE####  - can these have 5 digits?  MRL
 					line = sr.ReadLine();
 					Reservoir reservoir = new Reservoir();
 					reservoir.idNum = ii;
@@ -1549,7 +1549,7 @@ namespace warmf {
 					reservoir.courseAirRainChemFilenum = Int32.TryParse(line.Substring(48, 8), out intRes) ? intRes : 0;
 					reservoir.releaseFlowFilename = line.Substring(56);
 
-					dnums = readDoubleData(sr, "STGFLO", 18);
+					dnums = ReadDoubleData(sr, "STGFLO", 18);
 					reservoir.spillway = new List<StageFlow>();
 					for (int jj = 0; jj < 18; jj += 2) {
 						StageFlow sw = new StageFlow();
@@ -1558,7 +1558,7 @@ namespace warmf {
 						reservoir.spillway.Add(sw);
 					}
 
-					dnums = readDoubleData(sr, "TOTSTA", 18);
+					dnums = ReadDoubleData(sr, "TOTSTA", 18);
 					reservoir.bathymetry = new List<StageArea>();
 					for (int jj = 0; jj < 18; jj += 2) {
 						StageArea sa = new StageArea();
@@ -1567,15 +1567,15 @@ namespace warmf {
 						reservoir.bathymetry.Add(sa);
 					}
 
-					reservoir.swAdjustResRelease = !readString(sr, "OBSDATA").Contains("0");
-					reservoir.waterReactionRate = readDoubleData(sr, "REAC-H2O", numReactions);
-					reservoir.bedReactionRate = readDoubleData(sr, "REAC-BED", numReactions);
-					reservoir.waterAdsorpIsotherm = readDoubleData(sr, "ADSISO", numComponents);
-					reservoir.bedAdsorpIsotherm = readDoubleData(sr, "ADSISO", numComponents);
+					reservoir.swAdjustResRelease = !ReadString(sr, "OBSDATA").Contains("0");
+					reservoir.waterReactionRate = ReadDoubleData(sr, "REAC-H2O", numReactions);
+					reservoir.bedReactionRate = ReadDoubleData(sr, "REAC-BED", numReactions);
+					reservoir.waterAdsorpIsotherm = ReadDoubleData(sr, "ADSISO", numComponents);
+					reservoir.bedAdsorpIsotherm = ReadDoubleData(sr, "ADSISO", numComponents);
 
 					reservoir.algae = new List <Algae > ();
 					for (int jj=0; jj<3; jj++) {
-						dnums = readDoubleData(sr, "ALGAE", 7);
+						dnums = ReadDoubleData(sr, "ALGAE", 7);
 						Algae alg  = new Algae();
 						alg.nitroHalfSat = dnums[0];
 						alg.phosHalfSat = dnums[1];
@@ -1587,29 +1587,29 @@ namespace warmf {
 						reservoir.algae.Add(alg);
 					}
 
-					reservoir.numWaterQualParams = readInt(sr, "W2PARAM");
+					reservoir.numWaterQualParams = ReadInt(sr, "W2PARAM");
 
-					reservoir.codesWQParams = readIntData(sr, "W2PARAM", reservoir.numWaterQualParams);
+					reservoir.codesWQParams = ReadIntData(sr, "W2PARAM", reservoir.numWaterQualParams);
 
-					reservoir.numDerived = readInt(sr, "W2DERIVE");
-					reservoir.derived = readIntData(sr, "W2DERIVE", reservoir.numDerived);
+					reservoir.numDerived = ReadInt(sr, "W2DERIVE");
+					reservoir.derived = ReadIntData(sr, "W2DERIVE", reservoir.numDerived);
 
-					reservoir.waterQualControlFilename = readString(sr, "W2CNTRL");
-					reservoir.masterMetFilename = readString(sr, "W2MET");
-					reservoir.prescribedOutFlowFilename = readString(sr, "W2OUTFLO");
-					reservoir.numCEQW2Files = readInt(sr, "W2FILES");
+					reservoir.waterQualControlFilename = ReadString(sr, "W2CNTRL");
+					reservoir.masterMetFilename = ReadString(sr, "W2MET");
+					reservoir.prescribedOutFlowFilename = ReadString(sr, "W2OUTFLO");
+					reservoir.numCEQW2Files = ReadInt(sr, "W2FILES");
 					if (reservoir.numCEQW2Files == 3) {
-						reservoir.flowInputFilename = readString(sr, "W2FILES");
-						reservoir.tempInputFilename = readString(sr, "W2FILES");
-						reservoir.waterQualInputFilename = readString(sr, "W2FILES");
+						reservoir.flowInputFilename = ReadString(sr, "W2FILES");
+						reservoir.tempInputFilename = ReadString(sr, "W2FILES");
+						reservoir.waterQualInputFilename = ReadString(sr, "W2FILES");
 					}
 
 					reservoir.reservoirSegs = new List<ReservoirSeg>();
 					for (int jj=0; jj<reservoir.numSegments; jj++) {
-						line = readSpacerLine(sr, "RESERVOIR SEGMENT");
+						line = ReadSpacerLine(sr, "RESERVOIR SEGMENT");
 						ReservoirSeg seg = new ReservoirSeg();
 						line = sr.ReadLine();
-						if (testLine(line, sr.LineNum, "DEPTH")) {
+						if (TestLine(line, sr.LineNum, "DEPTH")) {
 							seg.idNum = Int32.TryParse(line.Substring(8, 8), out intRes) ? intRes : 0;
 							seg.bottomElevation = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0;
 							seg.swOutputResults = !line.Substring(24, 8).Contains("0");
@@ -1619,7 +1619,7 @@ namespace warmf {
 						seg.outlets = new List<ReservoirOutlet>();
 						for (int kk=0; kk<seg.numOutlets+1; kk++) {
 							line = sr.ReadLine();
-							if (testLine(line, sr.LineNum, "DEPTH")) {
+							if (TestLine(line, sr.LineNum, "DEPTH")) {
 								ReservoirOutlet outlet = new ReservoirOutlet();
 								outlet.elevation = Double.TryParse(line.Substring(8, 8), out dblRes) ? dblRes : 0;
 								outlet.width = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0;
@@ -1630,11 +1630,11 @@ namespace warmf {
 							}
 						}
 
-						seg.numPointSrcs = readInt(sr, "PTSOURCE");
+						seg.numPointSrcs = ReadInt(sr, "PTSOURCE");
 						if (seg.numPointSrcs > 0)
-							seg.pointSrcFilenums = readIntData(sr, "PTSOURCE", seg.numPointSrcs);
+							seg.pointSrcFilenums = ReadIntData(sr, "PTSOURCE", seg.numPointSrcs);
 						
-						dnums = readDoubleData(sr, "METFAC", 6);
+						dnums = ReadDoubleData(sr, "METFAC", 6);
 						seg.precipWgtMult = dnums[0];
 						seg.tempLapse = dnums[1];
 						seg.windSpeedMult = dnums[2];
@@ -1642,7 +1642,7 @@ namespace warmf {
 						seg.radiationFractionDepth = dnums[4];
 						seg.SecchiDiskDepth = dnums[5];
 
-						dnums = readDoubleData(sr, "GMIN", 9);
+						dnums = ReadDoubleData(sr, "GMIN", 9);
 						seg.minNegDensity = dnums[0];
 						seg.minDiffCoeff = dnums[1];
 						seg.windMixA1Coef = dnums[2];
@@ -1653,12 +1653,12 @@ namespace warmf {
 						seg.densityGradExp = dnums[7];
 						seg.inflowEntrain = dnums[8];
 
-						dnums = readDoubleData(sr, "SED", 3);	// need to figure out spec(2 or 3) - MRL
+						dnums = ReadDoubleData(sr, "SED", 3);	// need to figure out spec(2 or 3 nums) - MRL
 						seg.sedBottomThickness = dnums[0];
 						seg.sedDiffusion = dnums[1];
 						//seg.sedOxygenDemand = dnums[2];	// only two pieces of data - MRL
 
-						dnums = readDoubleData(sr, "STGAREA", 18);
+						dnums = ReadDoubleData(sr, "STGAREA", 18);
 						seg.bathymetry = new List<StageArea>();
 						for (int kk = 0; kk < 18; kk += 2) {
 							StageArea sa = new StageArea();
@@ -1667,10 +1667,10 @@ namespace warmf {
 							seg.bathymetry.Add(sa);
 						}
 
-						seg.chemConcentrations = readDoubleData(sr, "LAKION", numComponents);
-						seg.chemConBedSediment = readDoubleData(sr, "BEDION", numComponents);
+						seg.chemConcentrations = ReadDoubleData(sr, "LAKION", numComponents);
+						seg.chemConBedSediment = ReadDoubleData(sr, "BEDION", numComponents);
 
-						dnums = readDoubleData(sr, "DEPTHTMP", 18);
+						dnums = ReadDoubleData(sr, "DEPTHTMP", 18);
 						seg.depthTemp = new List<DepthTemp>();
 						for (int kk = 0; kk < 18; kk += 2) {
 							DepthTemp dt = new DepthTemp();
@@ -1679,11 +1679,11 @@ namespace warmf {
 							seg.depthTemp.Add(dt);
 						}
 
-						seg.upstreamCatchIDs = readIntData(sr, "ICATOL", 9);
-						seg.upstreamRiverIDs = readIntData(sr, "IRVTOL", 9);
-						seg.upstreamCatchIDs = readIntData(sr, "ILKTOL", 9);
-						seg.diversionToFilenums = readIntData(sr, "DIVTO", 1);	// how many nums?  need to fix readData routines - MRL
-						seg.obsWQFilename = readString(sr, "OBSDATA");
+						seg.upstreamCatchIDs = ReadIntData(sr, "ICATOL", 9);
+						seg.upstreamRiverIDs = ReadIntData(sr, "IRVTOL", 9);
+						seg.upstreamCatchIDs = ReadIntData(sr, "ILKTOL", 9);
+						seg.diversionToFilenums = ReadIntData(sr, "DIVTO", 1);	// how many nums?  need to fix readData routines - MRL
+						seg.obsWQFilename = ReadString(sr, "OBSDATA");
 						reservoir.reservoirSegs.Add(seg);
 					}
 					reservoirs.Add(reservoir);
@@ -1694,7 +1694,7 @@ namespace warmf {
 				while (line.Contains("CRITERIA")) line = sr.ReadLine();  // remove - MRL
 
 				// parse the TMDL line
-				if (testLine(line, sr.LineNum, "TMDL")) {
+				if (TestLine(line, sr.LineNum, "TMDL")) {
 					// get TMDL switch.  spec has 6 other numbers...  MRL
 					isTMDLSimulation = line.Substring(8, 8).Contains("1") ? true : false;
 				}
@@ -1707,5 +1707,9 @@ namespace warmf {
                 return false;
             }
         }
+
+		public bool WriteFile() {
+			return true;
+		}
     }
 }

@@ -18,11 +18,11 @@ namespace warmf {
 		}
 
 		private void miKnowEngr_Click(object sender, EventArgs e) {
-			parent.showForm("engr");
+			parent.ShowForm("engr");
 		}
 
 		private void miKnowData_Click(object sender, EventArgs e) {
-			parent.showForm("data");
+			parent.ShowForm("data");
 		}
 	}
 }

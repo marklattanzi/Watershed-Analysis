@@ -39,9 +39,9 @@ namespace warmf {
 			this.Hide();
         }
 
-        private void loadDefault() {
+        private void LoadDefault() {
             try {
-                openShapefile("Catawba.shp");
+                OpenShapeFile("Catawba.shp");
             }
             catch (Exception ex) {
                 MessageBox.Show(this, "Error : " + ex.Message);
@@ -51,16 +51,16 @@ namespace warmf {
         private void miFileOpen_Click(object sender, EventArgs e) {
             if (dlgFileOpen.ShowDialog(this) == DialogResult.OK) {
                 try {
-                    openShapefile(dlgFileOpen.FileName);
+                    OpenShapeFile(dlgFileOpen.FileName);
                 }
                 catch (Exception ex) {
                     MessageBox.Show(this, "Error : " + ex.Message);
                 }
-                setupEngineeringModule();
+                SetupEngrModule();
             }
         }
 
-        private void setupEngineeringModule() {
+        private void SetupEngrModule() {
             pboxSplash.Hide();
             frmMap.Show();
             miFileClose.Visible = true;
@@ -87,13 +87,13 @@ namespace warmf {
             //string fname = "data\\Henn.coe";
             //string fname = "data\\SanJoaquin.coe";
 
-            if (!Global.coe.readFile(fname)) {
+            if (!Global.coe.ReadFile(fname)) {
                 MessageBox.Show(this, "Error reading coefficients file.", "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
             }
 
         }
 
-        private void openShapefile(string path) {
+        private void OpenShapeFile(string path) {
             // clear any shapefiles the map is currently displaying
             this.frmMap.ClearShapeFiles();
 
@@ -121,7 +121,7 @@ namespace warmf {
             }
         }*/
 
-		public void showForm(string name) {
+		public void ShowForm(string name) {
 			//this.Hide();	// ENGR window is always visible - MRL
 			frmKnow.Hide();
 			frmData.Hide();
@@ -186,22 +186,22 @@ namespace warmf {
         }
 
         private void pboxSplash_Click(object sender, EventArgs e) {
-            loadDefault();
-            setupEngineeringModule();
+            LoadDefault();
+            SetupEngrModule();	// shortcut to load SHP file --MRL
         }
 
         private void miHelpAbout_Click(object sender, EventArgs e) {
             WMDialog popup = new WMDialog("About WARMF", "Watershed Analysis Risk Management Framework\nVersion 7.0\n\nCopyright 2018\nSysTech Inc.\nWalnut Creek, CA\nAll rights reserved.", false);
-            popup.setTextColor(System.Drawing.Color.Green);
+            popup.SetTextColor(System.Drawing.Color.Green);
             popup.ShowDialog();
         }
 
 		private void miModuleData_Click(object sender, EventArgs e) {
-			showForm("data");
+			ShowForm("data");
 		}
 
 		private void miModuleKnowledge_Click(object sender, EventArgs e) {
-			showForm("know");
+			ShowForm("know");
 		}
 	}
 
