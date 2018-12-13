@@ -300,6 +300,7 @@ namespace warmf {
 
 		// fills MET file grid
 		private void fillMETGrid() {
+			toolDataGrid.Rows.Clear();
 			if (cboxFilename.SelectedIndex != -1) {
 				toolDataGrid.ColumnCount = 11;
 				toolDataGrid.Columns[0].Name = "Line Num";
