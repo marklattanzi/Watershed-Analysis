@@ -54,11 +54,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="DialogCatchCoeffs.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="DialogCatchCoeffs.Designer.cs">
+      <DependentUpon>DialogCatchCoeffs.cs</DependentUpon>
     </Compile>
     <Compile Include="METFile.cs" />
     <Compile Include="FormData.cs">
@@ -87,8 +87,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="DialogCatchCoeffs.resx">
+      <DependentUpon>DialogCatchCoeffs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormData.resx">
       <DependentUpon>FormData.cs</DependentUpon>

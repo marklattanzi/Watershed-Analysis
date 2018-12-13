@@ -6,11 +6,13 @@ namespace warmf {
     public partial class FormMain : Form {
 		public FormData frmData;
 		public FormKnowledge frmKnow;
+        public FormCatch frmCatch;
 
         public FormMain() {
             InitializeComponent();
 			frmData = new FormData(this);
 			frmKnow = new FormKnowledge(this);
+            frmCatch = new FormCatch(this);
 			//frmData.Show();  // for testing MRL
         }
 
@@ -165,7 +167,9 @@ namespace warmf {
 				sb.AppendLine("Detention storage:" + Global.coe.catchments[ii].detentionStorage);
 
 				WMDialog popup = new WMDialog("Shapefile Data", sb.ToString());
-				popup.ShowDialog();
+                //popup.ShowDialog();
+                frmCatch.Populate(ii);
+                frmCatch.ShowDialog();
 			}
 		}
 
