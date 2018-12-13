@@ -43,10 +43,10 @@ namespace warmf {
 
 		// menu item handlers
 		private void miDataEngr_Click(object sender, EventArgs e) {
-			parent.showForm("engr");
+			parent.ShowForm("engr");
 		}
 		private void miDataKnow_Click(object sender, EventArgs e) {
-			parent.showForm("know");
+			parent.ShowForm("know");
 		}
 
 		// graph form resize handler 
@@ -134,7 +134,7 @@ namespace warmf {
 					if (cboxFilename.SelectedIndex != -1) {
 						string filename = "data/met/" + Global.coe.METFilename[cboxFilename.SelectedIndex];
 						met = new METFile(filename);
-						if (met.readMETFile()) {
+						if (met.ReadMETFile()) {
 							if (radioGraph.Checked)
 								plotMETData();
 							else
@@ -208,7 +208,7 @@ namespace warmf {
 		// write out MET file data
 		private void writeMETFile() {
 			MessageBox.Show("Saving MET file "+met.filename);  // change to ask user if they want to save
-			met.writeMETfile(toolDataGrid);
+			met.WriteMETFile(toolDataGrid);
 		}
 
 		// plots MET file data

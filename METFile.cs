@@ -30,6 +30,7 @@ namespace warmf {
 			public string yaxis;
 		}
 
+		// labels for graph in array; may be an easier way --MRL
 		public static readonly METGraphLabels[] labels = new METGraphLabels[] {
 				new METGraphLabels() { key="precip", xaxis="Time", yaxis="Precipitation (cm)"},
 				new METGraphLabels() { key="mintemp", xaxis="Time", yaxis="Minimum Temperature (C)"},
@@ -46,7 +47,7 @@ namespace warmf {
 			filename = fname;
 		}
 
-		public bool readMETFile() {
+		public bool ReadMETFile() {
 			STechStreamReader sr = null;
 
 			try {
@@ -68,8 +69,8 @@ namespace warmf {
 				latitude = Double.TryParse(line.Substring(9, 10), out dblRes) ? dblRes : 0;
 				longitude = Double.TryParse(line.Substring(30, 10), out dblRes) ? dblRes : 0;
 				date = new List<DateTime>();
+
 				clockTime = new List<string>();
-				
 				precip = new List<double>();
 				minTemp = new List<double>();
 				maxTemp = new List<double>();
@@ -104,7 +105,7 @@ namespace warmf {
 			return true;
 		}
 
-		public bool writeMETfile(DataGridView grid) {
+		public bool WriteMETFile(DataGridView grid) {
 			
 			return true;
 		}

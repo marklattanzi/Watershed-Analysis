@@ -61,7 +61,7 @@ namespace warmf {
             this.Close();
         }
 
-        public void setTextColor(System.Drawing.Color c) {
+        public void SetTextColor(System.Drawing.Color c) {
             msg.ForeColor = c;
         }
     }
