@@ -1235,6 +1235,7 @@ namespace warmf {
                                 lu.fertPlanApplication.Add(ReadDoubleData(sr, "FERTLZ", numComponents));
                             }
                         }
+						landuse.Add(lu);
                     }
                 }
 
