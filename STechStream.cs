@@ -13,4 +13,19 @@ namespace warmf {
             return base.ReadLine();
         }
     }
+
+	public class STechStreamWriter : StreamWriter {
+		public int LineNum { get; set; }
+
+		public STechStreamWriter(string filename) : base(filename) {
+			LineNum = 0;
+		}
+
+		public STechStreamWriter(string filename, bool append) : base(filename,append) { }
+
+		public override void WriteLine() {
+			LineNum++;
+			base.WriteLine();
+		}
+	}
 }

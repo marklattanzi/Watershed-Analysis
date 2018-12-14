@@ -10,11 +10,11 @@ using System.Windows.Forms;
 namespace warmf {
 	class METFile {
 		public string filename;
+		public string shortName;
 		public int version;
 		public double latitude, longitude;
 
 		public List<DateTime> date;
-		public List<string> clockTime;
 		public List<double> precip;
 		public List<double> minTemp;
 		public List<double> maxTemp;
@@ -54,7 +54,7 @@ namespace warmf {
 				int intRes;
 				double dblRes;
 				string line;
-				int day, month, year;
+				int day, month, year, hour, minute;
 				sr = new STechStreamReader(filename);
 
 				line = sr.ReadLine();
@@ -70,7 +70,6 @@ namespace warmf {
 				longitude = Double.TryParse(line.Substring(30, 10), out dblRes) ? dblRes : 0;
 				date = new List<DateTime>();
 
-				clockTime = new List<string>();
 				precip = new List<double>();
 				minTemp = new List<double>();
 				maxTemp = new List<double>();
@@ -85,8 +84,9 @@ namespace warmf {
 					day = Int32.TryParse(line.Substring(0, 2), out intRes) ? intRes : 0;
 					month = Int32.TryParse(line.Substring(2, 2), out intRes) ? intRes : 0;
 					year = Int32.TryParse(line.Substring(4, 4), out intRes) ? intRes : 0;
-					date.Add(new DateTime(year, month, day));
-					clockTime.Add(line.Substring(8, 5));
+					hour = Int32.TryParse(line.Substring(9, 2), out intRes) ? intRes : 0;
+					minute = Int32.TryParse(line.Substring(11, 2), out intRes) ? intRes : 0;
+					date.Add(new DateTime(year, month, day, hour, minute, 0));
 					precip.Add(Double.TryParse(line.Substring(13, 8), out dblRes) ? dblRes : 0);
 					minTemp.Add(Double.TryParse(line.Substring(21, 8), out dblRes) ? dblRes : 0);
 					maxTemp.Add(Double.TryParse(line.Substring(29, 8), out dblRes) ? dblRes : 0);
@@ -106,8 +106,55 @@ namespace warmf {
 		}
 
 		public bool WriteMETFile(DataGridView grid) {
-			
-			return true;
+			STechStreamWriter sw = null;
+
+			try {
+				double dblRes;
+
+				precip.Clear();
+				minTemp.Clear();
+				maxTemp.Clear();
+				cloudCover.Clear();
+				dewPointTemp.Clear();
+				airPressure.Clear();
+				windSpeed.Clear();
+				comment.Clear();
+				sw = new STechStreamWriter(filename, false);
+				sw.WriteLine("VERSION {0, 8}", version);
+				sw.WriteLine("Latitude:{0, 10:F4} Longitude:{1,10:F4}{2}", latitude, longitude, shortName);
+				for (int ii=0; ii < date.Count(); ii++) {
+					sw.WriteLine("{0:ddMMyyyy} {1:HHmm}{2,8:0.###}{3,8:0.#}{4,8:0.#}{5,8:0.##}{6,8:0.#}{7,8:0.#}{8,8:0.#}{9}",
+						Convert.ToDateTime(grid[1, ii].Value),
+						Convert.ToDateTime(grid[1, ii].Value+" "+grid[2,ii].Value),
+						grid[3, ii].Value,
+						grid[4, ii].Value,
+						grid[5, ii].Value,
+						grid[6, ii].Value,
+						grid[7, ii].Value,
+						grid[8, ii].Value,
+						grid[9, ii].Value,
+						grid[10, ii].Value);
+
+					// we need to update the data structures in memory! - ugh!
+					// or we could read int he file again...
+					precip.Add(Double.TryParse(grid[3, ii].Value.ToString(), out dblRes) ? dblRes : 0);
+					minTemp.Add(Double.TryParse(grid[4, ii].Value.ToString(), out dblRes) ? dblRes : 0);
+					maxTemp.Add(Double.TryParse(grid[5, ii].Value.ToString(), out dblRes) ? dblRes : 0);
+					cloudCover.Add(Double.TryParse(grid[6, ii].Value.ToString(), out dblRes) ? dblRes : 0);
+					dewPointTemp.Add(Double.TryParse(grid[7, ii].Value.ToString(), out dblRes) ? dblRes : 0);
+					airPressure.Add(Double.TryParse(grid[8, ii].Value.ToString(), out dblRes) ? dblRes : 0);
+					windSpeed.Add(Double.TryParse(grid[9, ii].Value.ToString(), out dblRes) ? dblRes : 0);
+					comment.Add(grid[10, ii].Value.ToString());
+				}
+				sw.Close();
+
+
+				return true;
+			}
+			catch (Exception e) {
+				Debug.WriteLine("Error writing MET file {0} at line {1} ",filename,sw.LineNum);
+				return true;
+			}
 		}
 	}
 }

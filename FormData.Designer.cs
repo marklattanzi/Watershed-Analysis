@@ -33,6 +33,10 @@
 			this.mnuModule = new System.Windows.Forms.ToolStripMenuItem();
 			this.miEngineering = new System.Windows.Forms.ToolStripMenuItem();
 			this.miKnowledge = new System.Windows.Forms.ToolStripMenuItem();
+			this.miTMDL = new System.Windows.Forms.ToolStripMenuItem();
+			this.miConsensus = new System.Windows.Forms.ToolStripMenuItem();
+			this.miManager = new System.Windows.Forms.ToolStripMenuItem();
+			this.miExit = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolDataGrid = new System.Windows.Forms.DataGridView();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.chkboxStdDev = new System.Windows.Forms.CheckBox();
@@ -48,16 +52,12 @@
 			this.lblData = new System.Windows.Forms.Label();
 			this.cboxData = new System.Windows.Forms.ComboBox();
 			this.gboxGraphChart = new System.Windows.Forms.GroupBox();
-			this.radioChart = new System.Windows.Forms.RadioButton();
+			this.radioTable = new System.Windows.Forms.RadioButton();
 			this.radioGraph = new System.Windows.Forms.RadioButton();
 			this.lblFilename = new System.Windows.Forms.Label();
 			this.lblTypeOfData = new System.Windows.Forms.Label();
 			this.cboxFilename = new System.Windows.Forms.ComboBox();
 			this.cboxTypeOfFile = new System.Windows.Forms.ComboBox();
-			this.miManager = new System.Windows.Forms.ToolStripMenuItem();
-			this.miConsensus = new System.Windows.Forms.ToolStripMenuItem();
-			this.miTMDL = new System.Windows.Forms.ToolStripMenuItem();
-			this.miExit = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.toolGraph)).BeginInit();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.toolDataGrid)).BeginInit();
@@ -127,16 +127,42 @@
 			// miEngineering
 			// 
 			this.miEngineering.Name = "miEngineering";
-			this.miEngineering.Size = new System.Drawing.Size(180, 22);
+			this.miEngineering.Size = new System.Drawing.Size(137, 22);
 			this.miEngineering.Text = "Engineering";
 			this.miEngineering.Click += new System.EventHandler(this.miEngineering_Click);
 			// 
 			// miKnowledge
 			// 
 			this.miKnowledge.Name = "miKnowledge";
-			this.miKnowledge.Size = new System.Drawing.Size(180, 22);
+			this.miKnowledge.Size = new System.Drawing.Size(137, 22);
 			this.miKnowledge.Text = "Knowledge";
 			this.miKnowledge.Click += new System.EventHandler(this.miKnowledge_Click);
+			// 
+			// miTMDL
+			// 
+			this.miTMDL.Name = "miTMDL";
+			this.miTMDL.Size = new System.Drawing.Size(137, 22);
+			this.miTMDL.Text = "TMDL";
+			// 
+			// miConsensus
+			// 
+			this.miConsensus.Name = "miConsensus";
+			this.miConsensus.Size = new System.Drawing.Size(137, 22);
+			this.miConsensus.Text = "Consensus";
+			// 
+			// miManager
+			// 
+			this.miManager.Name = "miManager";
+			this.miManager.Size = new System.Drawing.Size(137, 22);
+			this.miManager.Text = "Manager";
+			this.miManager.Click += new System.EventHandler(this.miManager_Click);
+			// 
+			// miExit
+			// 
+			this.miExit.Name = "miExit";
+			this.miExit.Size = new System.Drawing.Size(37, 20);
+			this.miExit.Text = "E&xit";
+			this.miExit.Click += new System.EventHandler(this.miExit_Click);
 			// 
 			// toolDataGrid
 			// 
@@ -289,7 +315,7 @@
 			// 
 			// gboxGraphChart
 			// 
-			this.gboxGraphChart.Controls.Add(this.radioChart);
+			this.gboxGraphChart.Controls.Add(this.radioTable);
 			this.gboxGraphChart.Controls.Add(this.radioGraph);
 			this.gboxGraphChart.Location = new System.Drawing.Point(634, 3);
 			this.gboxGraphChart.Name = "gboxGraphChart";
@@ -297,17 +323,17 @@
 			this.gboxGraphChart.TabIndex = 7;
 			this.gboxGraphChart.TabStop = false;
 			// 
-			// radioChart
+			// radioTable
 			// 
-			this.radioChart.AutoSize = true;
-			this.radioChart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.radioChart.Location = new System.Drawing.Point(6, 31);
-			this.radioChart.Name = "radioChart";
-			this.radioChart.Size = new System.Drawing.Size(57, 20);
-			this.radioChart.TabIndex = 1;
-			this.radioChart.Text = "Chart";
-			this.radioChart.UseVisualStyleBackColor = true;
-			this.radioChart.CheckedChanged += new System.EventHandler(this.radioChart_CheckedChanged);
+			this.radioTable.AutoSize = true;
+			this.radioTable.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.radioTable.Location = new System.Drawing.Point(6, 31);
+			this.radioTable.Name = "radioTable";
+			this.radioTable.Size = new System.Drawing.Size(62, 20);
+			this.radioTable.TabIndex = 1;
+			this.radioTable.Text = "Table";
+			this.radioTable.UseVisualStyleBackColor = true;
+			this.radioTable.CheckedChanged += new System.EventHandler(this.radioTable_CheckedChanged);
 			// 
 			// radioGraph
 			// 
@@ -363,32 +389,6 @@
 			this.cboxTypeOfFile.TabIndex = 1;
 			this.cboxTypeOfFile.SelectedIndexChanged += new System.EventHandler(this.cboxTypeOfFile_SelectedIndexChanged);
 			// 
-			// miManager
-			// 
-			this.miManager.Name = "miManager";
-			this.miManager.Size = new System.Drawing.Size(180, 22);
-			this.miManager.Text = "Manager";
-			this.miManager.Click += new System.EventHandler(this.miManager_Click);
-			// 
-			// miConsensus
-			// 
-			this.miConsensus.Name = "miConsensus";
-			this.miConsensus.Size = new System.Drawing.Size(180, 22);
-			this.miConsensus.Text = "Consensus";
-			// 
-			// miTMDL
-			// 
-			this.miTMDL.Name = "miTMDL";
-			this.miTMDL.Size = new System.Drawing.Size(180, 22);
-			this.miTMDL.Text = "TMDL";
-			// 
-			// miExit
-			// 
-			this.miExit.Name = "miExit";
-			this.miExit.Size = new System.Drawing.Size(37, 20);
-			this.miExit.Text = "E&xit";
-			this.miExit.Click += new System.EventHandler(this.miExit_Click);
-			// 
 			// FormData
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -434,7 +434,7 @@
 		private System.Windows.Forms.ComboBox cboxFilename;
 		private System.Windows.Forms.ComboBox cboxTypeOfFile;
 		private System.Windows.Forms.GroupBox gboxGraphChart;
-		private System.Windows.Forms.RadioButton radioChart;
+		private System.Windows.Forms.RadioButton radioTable;
 		private System.Windows.Forms.RadioButton radioGraph;
 		private System.Windows.Forms.ComboBox cboxData;
 		private System.Windows.Forms.Label lblData;

@@ -91,7 +91,7 @@
     <Compile Include="FormKnowledge.Designer.cs">
       <DependentUpon>FormKnowledge.cs</DependentUpon>
     </Compile>
-    <Compile Include="STechStreamReader.cs" />
+    <Compile Include="STechStream.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Coefficients.cs" />
     <Compile Include="WMDialog.cs">
@@ -136,6 +136,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="WMDialog.resx">
+      <DependentUpon>WMDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

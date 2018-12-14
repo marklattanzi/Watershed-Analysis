@@ -153,6 +153,8 @@ namespace warmf {
 					if (cboxFilename.SelectedIndex != -1) {
 						string filename = "data/met/" + Global.coe.METFilename[cboxFilename.SelectedIndex];
 						met = new METFile(filename);
+						met.shortName = filename.Substring(9);
+						met.shortName = met.shortName.Substring(0, met.shortName.Length - 4);
 						if (met.ReadMETFile()) {
 							if (radioGraph.Checked)
 								plotMETData();
@@ -197,14 +199,17 @@ namespace warmf {
 		// ask to save data if changed
 		private bool saveGridData() {
 			if (needToSave) {
-				writeMETFile();
-				needToSave = false;
+				int result = writeMETFile();
+				if (result != -1) {
+					return true;	// all good, so leave grid whether saved or not
+				}
+				return false;	// cancel operation and stay on grid
 			}
-			return true;
+			return true;	// don't need to save so exit grid				
 		}
-		// chart or graph handler
-		private void ChartOrGraph() {
-			if (radioChart.Checked) {
+		// table or graph handler
+		private void TableOrGraph() {
+			if (radioTable.Checked) {
 				toolDataGrid.Show();
 				toolGraph.Hide();
 				fillGrid();
@@ -216,18 +221,25 @@ namespace warmf {
 					toolGraph.Show();
 					plotGraph();
 				}
+				else
+					radioTable.Checked = true;
 			}
 
 		}
-		private void radioChart_CheckedChanged(object sender, EventArgs e) { ChartOrGraph(); }
-		private void radioGraph_CheckedChanged(object sender, EventArgs e) { ChartOrGraph(); }
+		private void radioTable_CheckedChanged(object sender, EventArgs e) { TableOrGraph(); }
+		private void radioGraph_CheckedChanged(object sender, EventArgs e) { TableOrGraph(); }
 		
 		// ***************************** MET FILE handlers *******************************
 
 		// write out MET file data
-		private void writeMETFile() {
-			MessageBox.Show("Saving MET file "+met.filename);  // change to ask user if they want to save
-			met.WriteMETFile(toolDataGrid);
+		private int writeMETFile() {
+			WMDialog dialog = new WMDialog("MET File Write Confirmation", "There is unsaved data in the MET file grid.\nDo you wish to save it?", true, true);
+			dialog.setLabels("Save", "Discard");
+			dialog.ShowDialog();
+			if (dialog.Result == 1) {
+				met.WriteMETFile(toolDataGrid);
+			}
+			return dialog.Result;
 		}
 
 		// plots MET file data
@@ -319,6 +331,8 @@ namespace warmf {
 
 		// fills MET file grid
 		private void fillMETGrid() {
+			if (needToSave) return;
+
 			toolDataGrid.Rows.Clear();
 			if (cboxFilename.SelectedIndex != -1) {
 				toolDataGrid.ColumnCount = 11;
@@ -342,8 +356,8 @@ namespace warmf {
 				for (int ii = 0; ii < met.date.Count(); ii++) {
 					string[] row = new string[]
 						{   ii.ToString(),
-							met.date[ii].ToString("yyyy"),
-							met.clockTime[ii],
+							met.date[ii].ToString("MM/dd/yyyy"),
+							met.date[ii].ToString("HH:mm"),
 							met.precip[ii].ToString(),
 							met.minTemp[ii].ToString(),
 							met.maxTemp[ii].ToString(),
