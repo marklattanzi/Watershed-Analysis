@@ -11,7 +11,6 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace warmf {
 	public partial class FormData : Form {
-
 		FormMain parent;
 		METFile met;
 		bool needToSave;
@@ -42,13 +41,33 @@ namespace warmf {
 		}
 
 		// menu item handlers
-		private void miDataEngr_Click(object sender, EventArgs e) {
-			parent.ShowForm("engr");
-		}
-		private void miDataKnow_Click(object sender, EventArgs e) {
-			parent.ShowForm("know");
+		private void miExit_Click(object sender, EventArgs e) {
+			parent.ShowForm("engineering");
 		}
 
+		private void miData_Click(object sender, EventArgs e) {
+			parent.ShowForm("data");
+		}
+
+		private void miKnowledge_Click(object sender, EventArgs e) {
+			parent.ShowForm("knowledge");
+		}
+
+		private void miManager_Click(object sender, EventArgs e) {
+			parent.ShowForm("manager");
+		}
+
+		private void miTMDL_Click(object sender, EventArgs e) {
+			parent.ShowForm("tmdl");
+		}
+
+		private void miConsensus_Click(object sender, EventArgs e) {
+			parent.ShowForm("consensus");
+		}
+
+		private void miEngineering_Click(object sender, EventArgs e) {
+			parent.ShowForm("engineering");
+		}
 		// graph form resize handler 
 		private void DataForm_ResizeEnd(Object sender, EventArgs r) {
 			if (radioGraph.Checked) plotGraph();

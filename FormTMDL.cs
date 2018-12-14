@@ -9,10 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace warmf {
-	public partial class FormKnowledge : Form {
-		private FormMain parent;
-
-		public FormKnowledge(FormMain par) {
+	public partial class FormTMDL : Form {
+		FormMain parent;
+		public FormTMDL(FormMain par) {
 			InitializeComponent();
 			this.parent = par;
 		}
@@ -44,6 +43,5 @@ namespace warmf {
 		private void miEngineering_Click(object sender, EventArgs e) {
 			parent.ShowForm("engineering");
 		}
-
 	}
 }

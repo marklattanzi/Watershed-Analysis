@@ -72,12 +72,12 @@
 			this.miTopDocument = new System.Windows.Forms.ToolStripMenuItem();
 			this.miDocumentModelLog = new System.Windows.Forms.ToolStripMenuItem();
 			this.miDocumentNotes = new System.Windows.Forms.ToolStripMenuItem();
-			this.miTopModule = new System.Windows.Forms.ToolStripMenuItem();
-			this.miModuleData = new System.Windows.Forms.ToolStripMenuItem();
-			this.miModuleKnowledge = new System.Windows.Forms.ToolStripMenuItem();
-			this.miModuleTMDL = new System.Windows.Forms.ToolStripMenuItem();
-			this.miModuleConsensus = new System.Windows.Forms.ToolStripMenuItem();
-			this.miModuleManager = new System.Windows.Forms.ToolStripMenuItem();
+			this.miModule = new System.Windows.Forms.ToolStripMenuItem();
+			this.miData = new System.Windows.Forms.ToolStripMenuItem();
+			this.miKnowledge = new System.Windows.Forms.ToolStripMenuItem();
+			this.miTMDL = new System.Windows.Forms.ToolStripMenuItem();
+			this.miConsensus = new System.Windows.Forms.ToolStripMenuItem();
+			this.miManager = new System.Windows.Forms.ToolStripMenuItem();
 			this.miTopWindow = new System.Windows.Forms.ToolStripMenuItem();
 			this.miFileHelp = new System.Windows.Forms.ToolStripMenuItem();
 			this.miHelpContents = new System.Windows.Forms.ToolStripMenuItem();
@@ -114,15 +114,15 @@
 			// 
 			this.mnuMain.ImageScalingSize = new System.Drawing.Size(28, 28);
 			this.mnuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.miTopFile,
-			this.miTopEdit,
-			this.miTopView,
-			this.miTopMode,
-			this.miTopScenario,
-			this.miTopDocument,
-			this.miTopModule,
-			this.miTopWindow,
-			this.miFileHelp});
+            this.miTopFile,
+            this.miTopEdit,
+            this.miTopView,
+            this.miTopMode,
+            this.miTopScenario,
+            this.miTopDocument,
+            this.miModule,
+            this.miTopWindow,
+            this.miFileHelp});
 			this.mnuMain.Location = new System.Drawing.Point(0, 0);
 			this.mnuMain.Name = "mnuMain";
 			this.mnuMain.Padding = new System.Windows.Forms.Padding(3, 1, 0, 1);
@@ -133,19 +133,19 @@
 			// miTopFile
 			// 
 			this.miTopFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.miFileNew,
-			this.miFileOpen,
-			this.miFileClose,
-			this.miFileImport,
-			this.miFileExport,
-			this.miFileSave,
-			this.miFileSaveAs,
-			this.miFileSep1,
-			this.miFilePrint,
-			this.miFilePrintPreview,
-			this.miFilePrinterSetup,
-			this.toolStripSeparator3,
-			this.miFileExit});
+            this.miFileNew,
+            this.miFileOpen,
+            this.miFileClose,
+            this.miFileImport,
+            this.miFileExport,
+            this.miFileSave,
+            this.miFileSaveAs,
+            this.miFileSep1,
+            this.miFilePrint,
+            this.miFilePrintPreview,
+            this.miFilePrinterSetup,
+            this.toolStripSeparator3,
+            this.miFileExit});
 			this.miTopFile.Name = "miTopFile";
 			this.miTopFile.Size = new System.Drawing.Size(37, 22);
 			this.miTopFile.Text = "&File";
@@ -231,10 +231,10 @@
 			// miTopEdit
 			// 
 			this.miTopEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.miEditSelectCatchments,
-			this.miEditSelectReservoir,
-			this.miEditSelectRivers,
-			this.miEditSelectAll});
+            this.miEditSelectCatchments,
+            this.miEditSelectReservoir,
+            this.miEditSelectRivers,
+            this.miEditSelectAll});
 			this.miTopEdit.Name = "miTopEdit";
 			this.miTopEdit.Size = new System.Drawing.Size(39, 22);
 			this.miTopEdit.Text = "&Edit";
@@ -266,11 +266,11 @@
 			// miTopView
 			// 
 			this.miTopView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.miViewZoom,
-			this.miEditZoomIn,
-			this.miEditZoomOut,
-			this.toolStripSeparator6,
-			this.miEditRestore});
+            this.miViewZoom,
+            this.miEditZoomIn,
+            this.miEditZoomOut,
+            this.toolStripSeparator6,
+            this.miEditRestore});
 			this.miTopView.Name = "miTopView";
 			this.miTopView.Size = new System.Drawing.Size(44, 22);
 			this.miTopView.Text = "&View";
@@ -278,41 +278,41 @@
 			// miViewZoom
 			// 
 			this.miViewZoom.Name = "miViewZoom";
-			this.miViewZoom.Size = new System.Drawing.Size(140, 22);
+			this.miViewZoom.Size = new System.Drawing.Size(180, 22);
 			this.miViewZoom.Text = "Zoom";
 			// 
 			// miEditZoomIn
 			// 
 			this.miEditZoomIn.Name = "miEditZoomIn";
-			this.miEditZoomIn.Size = new System.Drawing.Size(140, 22);
+			this.miEditZoomIn.Size = new System.Drawing.Size(180, 22);
 			this.miEditZoomIn.Text = "Zoom In";
 			this.miEditZoomIn.Click += new System.EventHandler(this.miEditZoomIn_Click);
 			// 
 			// miEditZoomOut
 			// 
 			this.miEditZoomOut.Name = "miEditZoomOut";
-			this.miEditZoomOut.Size = new System.Drawing.Size(140, 22);
+			this.miEditZoomOut.Size = new System.Drawing.Size(180, 22);
 			this.miEditZoomOut.Text = "Zoom Out";
 			this.miEditZoomOut.Click += new System.EventHandler(this.miEditZoomOut_Click);
 			// 
 			// toolStripSeparator6
 			// 
 			this.toolStripSeparator6.Name = "toolStripSeparator6";
-			this.toolStripSeparator6.Size = new System.Drawing.Size(137, 6);
+			this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
 			// 
 			// miEditRestore
 			// 
 			this.miEditRestore.Name = "miEditRestore";
-			this.miEditRestore.Size = new System.Drawing.Size(140, 22);
+			this.miEditRestore.Size = new System.Drawing.Size(180, 22);
 			this.miEditRestore.Text = "Restore Map";
 			// 
 			// miTopMode
 			// 
 			this.miTopMode.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.miModeInput,
-			this.miModeOutput,
-			this.miModeFluxOutput,
-			this.miModeLongGowdyOutput});
+            this.miModeInput,
+            this.miModeOutput,
+            this.miModeFluxOutput,
+            this.miModeLongGowdyOutput});
 			this.miTopMode.Name = "miTopMode";
 			this.miTopMode.Size = new System.Drawing.Size(50, 22);
 			this.miTopMode.Text = "&Mode";
@@ -344,17 +344,17 @@
 			// miTopScenario
 			// 
 			this.miTopScenario.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.miScenarioRun,
-			this.toolStripSeparator4,
-			this.miScenarioManager,
-			this.miScenarioSave,
-			this.miScenarioSaveAs,
-			this.miScenarioDelete,
-			this.miScenarioExport,
-			this.miScenarioImport,
-			this.toolStripSeparator5,
-			this.miScenarioViewCoeff,
-			this.miScenarioCompare});
+            this.miScenarioRun,
+            this.toolStripSeparator4,
+            this.miScenarioManager,
+            this.miScenarioSave,
+            this.miScenarioSaveAs,
+            this.miScenarioDelete,
+            this.miScenarioExport,
+            this.miScenarioImport,
+            this.toolStripSeparator5,
+            this.miScenarioViewCoeff,
+            this.miScenarioCompare});
 			this.miTopScenario.Name = "miTopScenario";
 			this.miTopScenario.Size = new System.Drawing.Size(64, 22);
 			this.miTopScenario.Text = "&Scenario";
@@ -426,8 +426,8 @@
 			// miTopDocument
 			// 
 			this.miTopDocument.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.miDocumentModelLog,
-			this.miDocumentNotes});
+            this.miDocumentModelLog,
+            this.miDocumentNotes});
 			this.miTopDocument.Name = "miTopDocument";
 			this.miTopDocument.Size = new System.Drawing.Size(75, 22);
 			this.miTopDocument.Text = "&Document";
@@ -435,58 +435,61 @@
 			// miDocumentModelLog
 			// 
 			this.miDocumentModelLog.Name = "miDocumentModelLog";
-			this.miDocumentModelLog.Size = new System.Drawing.Size(131, 22);
+			this.miDocumentModelLog.Size = new System.Drawing.Size(180, 22);
 			this.miDocumentModelLog.Text = "Model Log";
 			// 
 			// miDocumentNotes
 			// 
 			this.miDocumentNotes.Name = "miDocumentNotes";
-			this.miDocumentNotes.Size = new System.Drawing.Size(131, 22);
+			this.miDocumentNotes.Size = new System.Drawing.Size(180, 22);
 			this.miDocumentNotes.Text = "Notes";
 			// 
-			// miTopModule
+			// miModule
 			// 
-			this.miTopModule.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.miModuleData,
-			this.miModuleKnowledge,
-			this.miModuleTMDL,
-			this.miModuleConsensus,
-			this.miModuleManager});
-			this.miTopModule.Name = "miTopModule";
-			this.miTopModule.Size = new System.Drawing.Size(60, 22);
-			this.miTopModule.Text = "M&odule";
+			this.miModule.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miData,
+            this.miKnowledge,
+            this.miTMDL,
+            this.miConsensus,
+            this.miManager});
+			this.miModule.Name = "miModule";
+			this.miModule.Size = new System.Drawing.Size(60, 22);
+			this.miModule.Text = "M&odule";
 			// 
-			// miModuleData
+			// miData
 			// 
-			this.miModuleData.Name = "miModuleData";
-			this.miModuleData.Size = new System.Drawing.Size(180, 22);
-			this.miModuleData.Text = "Data";
-			this.miModuleData.Click += new System.EventHandler(this.miModuleData_Click);
+			this.miData.Name = "miData";
+			this.miData.Size = new System.Drawing.Size(180, 22);
+			this.miData.Text = "Data";
+			this.miData.Click += new System.EventHandler(this.miData_Click);
 			// 
-			// miModuleKnowledge
+			// miKnowledge
 			// 
-			this.miModuleKnowledge.Name = "miModuleKnowledge";
-			this.miModuleKnowledge.Size = new System.Drawing.Size(180, 22);
-			this.miModuleKnowledge.Text = "Knowledge";
-			this.miModuleKnowledge.Click += new System.EventHandler(this.miModuleKnowledge_Click);
+			this.miKnowledge.Name = "miKnowledge";
+			this.miKnowledge.Size = new System.Drawing.Size(180, 22);
+			this.miKnowledge.Text = "Knowledge";
+			this.miKnowledge.Click += new System.EventHandler(this.miKnowledge_Click);
 			// 
-			// miModuleTMDL
+			// miTMDL
 			// 
-			this.miModuleTMDL.Name = "miModuleTMDL";
-			this.miModuleTMDL.Size = new System.Drawing.Size(180, 22);
-			this.miModuleTMDL.Text = "TMDL";
+			this.miTMDL.Name = "miTMDL";
+			this.miTMDL.Size = new System.Drawing.Size(180, 22);
+			this.miTMDL.Text = "TMDL";
+			this.miTMDL.Click += new System.EventHandler(this.miTMDL_Click);
 			// 
-			// miModuleConsensus
+			// miConsensus
 			// 
-			this.miModuleConsensus.Name = "miModuleConsensus";
-			this.miModuleConsensus.Size = new System.Drawing.Size(180, 22);
-			this.miModuleConsensus.Text = "Consensus";
+			this.miConsensus.Name = "miConsensus";
+			this.miConsensus.Size = new System.Drawing.Size(180, 22);
+			this.miConsensus.Text = "Consensus";
+			this.miConsensus.Click += new System.EventHandler(this.miConsensus_Click);
 			// 
-			// miModuleManager
+			// miManager
 			// 
-			this.miModuleManager.Name = "miModuleManager";
-			this.miModuleManager.Size = new System.Drawing.Size(180, 22);
-			this.miModuleManager.Text = "Manager";
+			this.miManager.Name = "miManager";
+			this.miManager.Size = new System.Drawing.Size(180, 22);
+			this.miManager.Text = "Manager";
+			this.miManager.Click += new System.EventHandler(this.miManager_Click);
 			// 
 			// miTopWindow
 			// 
@@ -497,10 +500,10 @@
 			// miFileHelp
 			// 
 			this.miFileHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.miHelpContents,
-			this.miHelpHelp,
-			this.toolStripSeparator2,
-			this.miHelpAbout});
+            this.miHelpContents,
+            this.miHelpHelp,
+            this.toolStripSeparator2,
+            this.miHelpAbout});
 			this.miFileHelp.Name = "miFileHelp";
 			this.miFileHelp.Size = new System.Drawing.Size(44, 22);
 			this.miFileHelp.Text = "&Help";
@@ -508,24 +511,24 @@
 			// miHelpContents
 			// 
 			this.miHelpContents.Name = "miHelpContents";
-			this.miHelpContents.Size = new System.Drawing.Size(144, 22);
+			this.miHelpContents.Size = new System.Drawing.Size(180, 22);
 			this.miHelpContents.Text = "Contents";
 			// 
 			// miHelpHelp
 			// 
 			this.miHelpHelp.Name = "miHelpHelp";
-			this.miHelpHelp.Size = new System.Drawing.Size(144, 22);
+			this.miHelpHelp.Size = new System.Drawing.Size(180, 22);
 			this.miHelpHelp.Text = "Help on Help";
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(141, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
 			// 
 			// miHelpAbout
 			// 
 			this.miHelpAbout.Name = "miHelpAbout";
-			this.miHelpAbout.Size = new System.Drawing.Size(144, 22);
+			this.miHelpAbout.Size = new System.Drawing.Size(180, 22);
 			this.miHelpAbout.Text = "About";
 			this.miHelpAbout.Click += new System.EventHandler(this.miHelpAbout_Click);
 			// 
@@ -542,7 +545,7 @@
 			this.pboxSplash.TabStop = false;
 			this.pboxSplash.Click += new System.EventHandler(this.pboxSplash_Click);
 			// 
-			// frmWARMF
+			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -552,7 +555,7 @@
 			this.Controls.Add(this.mnuMain);
 			this.MainMenuStrip = this.mnuMain;
 			this.Margin = new System.Windows.Forms.Padding(2);
-			this.Name = "frmWARMF";
+			this.Name = "FormMain";
 			this.Text = "Watershed Analysis Risk Management Framework";
 			this.Load += new System.EventHandler(this.FormMain_Load);
 			this.mnuMain.ResumeLayout(false);
@@ -583,7 +586,7 @@
 		private System.Windows.Forms.ToolStripMenuItem miTopView;
 		private System.Windows.Forms.ToolStripMenuItem miTopMode;
 		private System.Windows.Forms.ToolStripMenuItem miTopScenario;
-		private System.Windows.Forms.ToolStripMenuItem miTopModule;
+		private System.Windows.Forms.ToolStripMenuItem miModule;
 		private System.Windows.Forms.ToolStripMenuItem miTopWindow;
 		private System.Windows.Forms.ToolStripMenuItem miTopDocument;
 		private System.Windows.Forms.ToolStripMenuItem miFileClose;
@@ -619,11 +622,11 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
 		private System.Windows.Forms.ToolStripMenuItem miScenarioViewCoeff;
 		private System.Windows.Forms.ToolStripMenuItem miScenarioCompare;
-		private System.Windows.Forms.ToolStripMenuItem miModuleData;
-		private System.Windows.Forms.ToolStripMenuItem miModuleKnowledge;
-		private System.Windows.Forms.ToolStripMenuItem miModuleTMDL;
-		private System.Windows.Forms.ToolStripMenuItem miModuleConsensus;
-		private System.Windows.Forms.ToolStripMenuItem miModuleManager;
+		private System.Windows.Forms.ToolStripMenuItem miData;
+		private System.Windows.Forms.ToolStripMenuItem miKnowledge;
+		private System.Windows.Forms.ToolStripMenuItem miTMDL;
+		private System.Windows.Forms.ToolStripMenuItem miConsensus;
+		private System.Windows.Forms.ToolStripMenuItem miManager;
 		private System.Windows.Forms.ToolStripMenuItem miFileExit;
 		private System.Windows.Forms.ToolStripMenuItem miDocumentModelLog;
 		private System.Windows.Forms.ToolStripMenuItem miDocumentNotes;
