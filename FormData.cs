@@ -227,20 +227,6 @@ namespace warmf {
 			met.shortName = tboxName.Text;
 		}
 
-		// changed latitude text box
-		private void tboxLat_TextChanged(object sender, EventArgs e) {
-			double dblRes;
-			if (Double.TryParse(tboxLatitude.Text, out dblRes)) {
-				needToSave = true;
-				met.latitude = dblRes;
-			}
-			else {
-				WMDialog dialog = new WMDialog("Data Error", "Error in latitude data.  Reverting to file data.", false);
-				dialog.ShowDialog();
-				tboxLatitude.Text = met.latitude.ToString();
-			}
-		}
-
 		// validate text boxes
 		private void validateTextBoxes() {
 			double dblRes;
@@ -271,7 +257,7 @@ namespace warmf {
 		// leave lat/long text box
 		private void tbox_Leave(object sender, EventArgs e) {
 			needToSave = true;
-			validateTextBoxes();
+			validateTextBoxes();	// check now for coutesy, but it gets validated before saving
 		}
 
 		private void radioTableGraph_CheckedChanged(object sender, EventArgs e) {
