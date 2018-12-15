@@ -248,7 +248,7 @@
 			this.tboxName.Name = "tboxName";
 			this.tboxName.Size = new System.Drawing.Size(118, 20);
 			this.tboxName.TabIndex = 16;
-			this.tboxName.TextChanged += new System.EventHandler(this.tboxName_TextChanged);
+			this.tboxName.TextChanged += new System.EventHandler(this.tbox_TextChanged);
 			// 
 			// tboxLongitude
 			// 
@@ -256,7 +256,7 @@
 			this.tboxLongitude.Name = "tboxLongitude";
 			this.tboxLongitude.Size = new System.Drawing.Size(118, 20);
 			this.tboxLongitude.TabIndex = 15;
-			this.tboxLongitude.TextChanged += new System.EventHandler(this.tboxLong_TextChanged);
+			this.tboxLongitude.TextChanged += new System.EventHandler(this.tbox_TextChanged);
 			// 
 			// tboxLatitude
 			// 
@@ -264,7 +264,7 @@
 			this.tboxLatitude.Name = "tboxLatitude";
 			this.tboxLatitude.Size = new System.Drawing.Size(118, 20);
 			this.tboxLatitude.TabIndex = 14;
-			this.tboxLatitude.TextChanged += new System.EventHandler(this.tboxLat_TextChanged);
+			this.tboxLatitude.TextChanged += new System.EventHandler(this.tbox_TextChanged);
 			// 
 			// lblName
 			// 

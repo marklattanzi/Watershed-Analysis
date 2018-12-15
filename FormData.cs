@@ -35,6 +35,9 @@ namespace warmf {
 			this.Load += new System.EventHandler(this.FormData_Load);
 			this.ResizeEnd += new EventHandler(DataForm_ResizeEnd);
 			this.toolDataGrid.CellValueChanged += toolGrid_CellChanged;
+			this.tboxLatitude.Leave += new System.EventHandler(this.tbox_Leave);
+			this.tboxLongitude.Leave += new System.EventHandler(this.tbox_Leave);
+
 		}
 
 		// nothing in here at the moment
@@ -184,15 +187,15 @@ namespace warmf {
 
 		// Data element selector handler
 		private void cboxData_SelectedIndexChanged(object sender, EventArgs e) {
-			if (radioGraph.Checked)	PlotGraph();
+			if (radioGraph.Checked) PlotGraph();
 		}
 
 		// Average or Std Dev handler
 		private void chkboxAverage_CheckedChanged(object sender, EventArgs e) {
-			if (radioGraph.Checked)	PlotGraph();
+			if (radioGraph.Checked) PlotGraph();
 		}
 		private void chkboxStdDev_CheckedChanged(object sender, EventArgs e) {
-			if (radioGraph.Checked)	PlotGraph();
+			if (radioGraph.Checked) PlotGraph();
 		}
 
 		// Data grid handlers
@@ -202,24 +205,24 @@ namespace warmf {
 			Double.TryParse(toolDataGrid[e.ColumnIndex, e.RowIndex].Value.ToString(), out dblRes);
 			switch (e.ColumnIndex) {
 				case 1:  // date change
-					met.date[e.RowIndex] = Convert.ToDateTime(toolDataGrid[e.ColumnIndex, e.RowIndex].Value + " " + toolDataGrid[e.RowIndex, e.ColumnIndex+1].Value); 
+					met.date[e.RowIndex] = Convert.ToDateTime(toolDataGrid[e.ColumnIndex, e.RowIndex].Value + " " + toolDataGrid[e.RowIndex, e.ColumnIndex + 1].Value);
 					break;
 				case 2:  // time change
-					met.date[e.RowIndex] = Convert.ToDateTime(toolDataGrid[e.ColumnIndex, e.RowIndex-1].Value + " " + toolDataGrid[e.RowIndex, e.ColumnIndex].Value);
+					met.date[e.RowIndex] = Convert.ToDateTime(toolDataGrid[e.ColumnIndex, e.RowIndex - 1].Value + " " + toolDataGrid[e.RowIndex, e.ColumnIndex].Value);
 					break;
-				case 3:	met.precip[e.RowIndex] = dblRes; break;
+				case 3: met.precip[e.RowIndex] = dblRes; break;
 				case 4: met.minTemp[e.RowIndex] = dblRes; break;
 				case 5: met.maxTemp[e.RowIndex] = dblRes; break;
 				case 6: met.cloudCover[e.RowIndex] = dblRes; break;
 				case 7: met.dewPointTemp[e.RowIndex] = dblRes; break;
 				case 8: met.airPressure[e.RowIndex] = dblRes; break;
 				case 9: met.windSpeed[e.RowIndex] = dblRes; break;
-				case 10:  met.comment[e.RowIndex] = toolDataGrid[e.ColumnIndex, e.RowIndex].Value.ToString(); break;
+				case 10: met.comment[e.RowIndex] = toolDataGrid[e.ColumnIndex, e.RowIndex].Value.ToString(); break;
 			}
 		}
 
 		// changed name text box
-		private void tboxName_TextChanged(object sender, EventArgs e) { 
+		private void tboxName_TextChanged(object sender, EventArgs e) {
 			needToSave = true;
 			met.shortName = tboxName.Text;
 		}
@@ -227,15 +230,48 @@ namespace warmf {
 		// changed latitude text box
 		private void tboxLat_TextChanged(object sender, EventArgs e) {
 			double dblRes;
-			needToSave = true;
-			met.latitude = Double.TryParse(tboxLatitude.Text, out dblRes) ? dblRes : 0;
+			if (Double.TryParse(tboxLatitude.Text, out dblRes)) {
+				needToSave = true;
+				met.latitude = dblRes;
+			}
+			else {
+				WMDialog dialog = new WMDialog("Data Error", "Error in latitude data.  Reverting to file data.", false);
+				dialog.ShowDialog();
+				tboxLatitude.Text = met.latitude.ToString();
+			}
 		}
 
-		// changed longitude text box
-		private void tboxLong_TextChanged(object sender, EventArgs e) {
+		// validate text boxes
+		private void validateTextBoxes() {
 			double dblRes;
+			if (Double.TryParse(tboxLatitude.Text, out dblRes)) {
+				met.latitude = dblRes;
+			}
+			else {
+				tboxLatitude.Text = met.latitude.ToString();
+				WMDialog dialog = new WMDialog("Data Error", "Error in latitude data.  Reverting to file data.", false);
+				dialog.ShowDialog();
+			}
+
+			if (Double.TryParse(tboxLongitude.Text, out dblRes)) {
+				met.longitude = dblRes;
+			}
+			else {
+				tboxLongitude.Text = met.longitude.ToString();
+				WMDialog dialog = new WMDialog("Data Error", "Error in longitude data.  Reverting to file data.", false);
+				dialog.ShowDialog();
+			}
+		}
+
+		// changed name/lat/long text box
+		private void tbox_TextChanged(object sender, EventArgs e) {
 			needToSave = true;
-			met.longitude = Double.TryParse(tboxLongitude.Text, out dblRes) ? dblRes : 0;
+		}
+
+		// leave lat/long text box
+		private void tbox_Leave(object sender, EventArgs e) {
+			needToSave = true;
+			validateTextBoxes();
 		}
 
 		private void radioTableGraph_CheckedChanged(object sender, EventArgs e) {
@@ -254,14 +290,15 @@ namespace warmf {
 		// ask to save data if changed
 		private bool SaveFormData() {
 			if (needToSave) {
+				validateTextBoxes();
 				int result = WriteMETFile();
-				if (result != -1) {	// user didn't cancel
+				if (result != -1) { // user didn't cancel
 					needToSave = false;
-					return true;	// all good, so leave grid whether saved or not
+					return true;    // all good, so leave grid whether saved or not
 				}
-				return false;	// user canceled operation
+				return false;   // user canceled operation
 			}
-			return true;	// don't need to save				
+			return true;    // don't need to save				
 		}
 
 		// ***************************** MET FILE handlers *******************************
@@ -307,7 +344,8 @@ namespace warmf {
 				try {
 					tboxAverage.Text = data.Average().ToString("0.00000");
 					tboxStdDev.Text = Extensions.StdDev(data).ToString("0.00000");
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					// likely no data in file
 				}
 
@@ -377,7 +415,7 @@ namespace warmf {
 		private void FillMETTable() {
 			if (needToSave) return;
 			if (toolDataGrid.RowCount != 0 && met.filename == fileInTable) return;
-			
+
 			toolDataGrid.Rows.Clear();
 			if (cboxFilename.SelectedIndex != -1) {
 				toolDataGrid.ColumnCount = 11;
