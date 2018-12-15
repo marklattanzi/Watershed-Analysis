@@ -104,59 +104,25 @@ namespace warmf {
 			return true;
 		}
 
-		public bool WriteMETFile(string newName, string newLat, string newLong, DataGridView grid) {
+		public bool WriteMETFile() {
 			STechStreamWriter sw = null;
-
 			try {
-				double dblRes;
-				int count = date.Count();
-
-				// clear old data from data structures in memory
-				date.Clear();
-				precip.Clear();
-				minTemp.Clear();
-				maxTemp.Clear();
-				cloudCover.Clear();
-				dewPointTemp.Clear();
-				airPressure.Clear();
-				windSpeed.Clear();
-				comment.Clear();
-
-				shortName = newName;
-				latitude = Double.TryParse(newLat, out dblRes) ? dblRes : 0;
-				longitude = Double.TryParse(newLong, out dblRes) ? dblRes : 0;
-
 				sw = new STechStreamWriter(filename, false);
 				sw.WriteLine("VERSION {0, 8}", version);
 				sw.WriteLine("Latitude:{0, 10:F4} Longitude:{1,10:F4}{2}", latitude, longitude, shortName);
-				for (int ii=0; ii < count; ii++) {
-					sw.WriteLine("{0:ddMMyyyy} {1:HHmm}{2,8:0.###}{3,8:0.#}{4,8:0.#}{5,8:0.##}{6,8:0.#}{7,8:0.#}{8,8:0.#}{9}",
-						Convert.ToDateTime(grid[1, ii].Value),
-						Convert.ToDateTime(grid[1, ii].Value+" "+grid[2,ii].Value),
-						grid[3, ii].Value,
-						grid[4, ii].Value,
-						grid[5, ii].Value,
-						grid[6, ii].Value,
-						grid[7, ii].Value,
-						grid[8, ii].Value,
-						grid[9, ii].Value,
-						grid[10, ii].Value);
-
-					// we need to update the data structures in memory! - ugh!
-					// or we could read in the file again...
-					date.Add(Convert.ToDateTime(grid[1, ii].Value + " " + grid[2, ii].Value));
-					precip.Add(Double.TryParse(grid[3, ii].Value.ToString(), out dblRes) ? dblRes : 0);
-					minTemp.Add(Double.TryParse(grid[4, ii].Value.ToString(), out dblRes) ? dblRes : 0);
-					maxTemp.Add(Double.TryParse(grid[5, ii].Value.ToString(), out dblRes) ? dblRes : 0);
-					cloudCover.Add(Double.TryParse(grid[6, ii].Value.ToString(), out dblRes) ? dblRes : 0);
-					dewPointTemp.Add(Double.TryParse(grid[7, ii].Value.ToString(), out dblRes) ? dblRes : 0);
-					airPressure.Add(Double.TryParse(grid[8, ii].Value.ToString(), out dblRes) ? dblRes : 0);
-					windSpeed.Add(Double.TryParse(grid[9, ii].Value.ToString(), out dblRes) ? dblRes : 0);
-					comment.Add(grid[10, ii].Value.ToString());
+				for (int ii=0; ii < date.Count(); ii++) {
+					sw.WriteLine("{0:ddMMyyyy HHmm}{1,8:0.###}{2,8:0.#}{3,8:0.#}{4,8:0.##}{5,8:0.#}{6,8:0.#}{7,8:0.#}{8}",
+						Convert.ToDateTime(date[ii].ToString()),
+						precip[ii], 
+						minTemp[ii], 
+						maxTemp[ii], 
+						cloudCover[ii], 
+						dewPointTemp[ii], 
+						airPressure[ii], 
+						windSpeed[ii], 
+						comment[ii]);
 				}
 				sw.Close();
-
-
 				return true;
 			}
 			catch (Exception e) {
