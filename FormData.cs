@@ -37,11 +37,11 @@ namespace warmf {
 		}
 
 		// nothing in here at the moment
-		private void FormData_Load(object sender, EventArgs e) {
-		}
+		private void FormData_Load(object sender, EventArgs e) { }
 
 		// menu item handlers
 		private void miExit_Click(object sender, EventArgs e) {
+			SaveFormData();
 			parent.ShowForm("engineering");
 		}
 
@@ -50,35 +50,40 @@ namespace warmf {
 		}
 
 		private void miKnowledge_Click(object sender, EventArgs e) {
+			SaveFormData();
 			parent.ShowForm("knowledge");
 		}
 
 		private void miManager_Click(object sender, EventArgs e) {
+			SaveFormData();
 			parent.ShowForm("manager");
 		}
 
 		private void miTMDL_Click(object sender, EventArgs e) {
+			SaveFormData();
 			parent.ShowForm("tmdl");
 		}
 
 		private void miConsensus_Click(object sender, EventArgs e) {
+			SaveFormData();
 			parent.ShowForm("consensus");
 		}
 
 		private void miEngineering_Click(object sender, EventArgs e) {
+			SaveFormData();
 			parent.ShowForm("engineering");
 		}
 		// graph form resize handler 
 		private void DataForm_ResizeEnd(Object sender, EventArgs r) {
-			if (radioGraph.Checked) plotGraph();
+			if (radioGraph.Checked) PlotGraph();
 		}
 
 		// these routines need to be updated for other file types (than MET) --MRL
 		// pick data to graph
-		private void plotGraph() {
+		private void PlotGraph() {
 			switch (cboxTypeOfFile.SelectedIndex) {
 				case 0: // MET
-					plotMETData();
+					PlotMETData();
 					break;
 				case 1: // AIR QUALITY
 					break;
@@ -94,11 +99,11 @@ namespace warmf {
 					break;
 			}
 		}
-		// pick data to display in grid
-		private void fillGrid() {
+		// pick data to display in table
+		private void FillTable() {
 			switch (cboxTypeOfFile.SelectedIndex) {
 				case 0: // MET
-					fillMETGrid();
+					FillMETTable();
 					break;
 				case 1: // AIR QUALITY
 					break;
@@ -114,8 +119,9 @@ namespace warmf {
 					break;
 			}
 		}
+
 		// populate Filename and Data selectors based on Type of Data File picked
-		private void populateSelectors(int dataIdx) {
+		private void PopulateSelectors(int dataIdx) {
 			switch (dataIdx) {
 				case 0: // MET
 					for (int ii = 0; ii < Global.coe.numMETFiles; ii++)
@@ -143,7 +149,7 @@ namespace warmf {
 
 		// Type of Data File selector handler
 		private void cboxTypeOfFile_SelectedIndexChanged(object sender, EventArgs e) {
-			populateSelectors(cboxTypeOfFile.SelectedIndex);
+			PopulateSelectors(cboxTypeOfFile.SelectedIndex);
 		}
 
 		// Filename selector handler
@@ -153,13 +159,12 @@ namespace warmf {
 					if (cboxFilename.SelectedIndex != -1) {
 						string filename = "data/met/" + Global.coe.METFilename[cboxFilename.SelectedIndex];
 						met = new METFile(filename);
-						met.shortName = filename.Substring(9);
-						met.shortName = met.shortName.Substring(0, met.shortName.Length - 4);
 						if (met.ReadMETFile()) {
+							ShowHeaderData();
 							if (radioGraph.Checked)
-								plotMETData();
+								PlotMETData();
 							else
-								fillMETGrid();
+								FillMETTable();
 						}
 					}
 					break;
@@ -180,70 +185,85 @@ namespace warmf {
 
 		// Data element selector handler
 		private void cboxData_SelectedIndexChanged(object sender, EventArgs e) {
-			if (radioGraph.Checked)	plotGraph();
+			if (radioGraph.Checked)	PlotGraph();
 		}
 
 		// Average or Std Dev handler
 		private void chkboxAverage_CheckedChanged(object sender, EventArgs e) {
-			if (radioGraph.Checked)	plotGraph();
+			if (radioGraph.Checked)	PlotGraph();
 		}
 		private void chkboxStdDev_CheckedChanged(object sender, EventArgs e) {
-			if (radioGraph.Checked)	plotGraph();
+			if (radioGraph.Checked)	PlotGraph();
 		}
 
 		// Data grid handlers
-		private void toolGrid_CellChanged(object sender, DataGridViewCellEventArgs e) {
-			needToSave = true;
-		}
+		private void toolGrid_CellChanged(object sender, DataGridViewCellEventArgs e) {	needToSave = true; }
+
+		// changed name,lat,long text boxs
+		private void tbox_TextChanged(object sender, EventArgs e) { needToSave = true; }
 
 		// ask to save data if changed
-		private bool saveGridData() {
+		private bool SaveFormData() {
 			if (needToSave) {
-				int result = writeMETFile();
+				int result = WriteMETFile();
 				if (result != -1) {
 					return true;	// all good, so leave grid whether saved or not
 				}
 				return false;	// cancel operation and stay on grid
 			}
-			return true;	// don't need to save so exit grid				
+			return true;	// don't need to save and leaving grid display				
 		}
+
 		// table or graph handler
 		private void TableOrGraph() {
 			if (radioTable.Checked) {
 				toolDataGrid.Show();
 				toolGraph.Hide();
-				fillGrid();
+				FillTable();
 			}
 			else {
-				if (saveGridData()) {
+				if (SaveFormData()) {
 					toolDataGrid.Hide();
 					needToSave = false;
 					toolGraph.Show();
-					plotGraph();
+					PlotGraph();
 				}
 				else
 					radioTable.Checked = true;
 			}
 
 		}
+
 		private void radioTable_CheckedChanged(object sender, EventArgs e) { TableOrGraph(); }
 		private void radioGraph_CheckedChanged(object sender, EventArgs e) { TableOrGraph(); }
 		
 		// ***************************** MET FILE handlers *******************************
 
 		// write out MET file data
-		private int writeMETFile() {
-			WMDialog dialog = new WMDialog("MET File Write Confirmation", "There is unsaved data in the MET file grid.\nDo you wish to save it?", true, true);
+		private int WriteMETFile() {
+			WMDialog dialog = new WMDialog("MET File Write Confirmation", "There is unsaved data for this MET file.\nDo you wish to save it?", true, true);
 			dialog.setLabels("Save", "Discard");
 			dialog.ShowDialog();
 			if (dialog.Result == 1) {
-				met.WriteMETFile(toolDataGrid);
+				if (toolDataGrid.RowCount == 0) {
+					needToSave = false;
+					FillTable();
+				}
+				met.WriteMETFile(tboxName.Text,tboxLatitude.Text, tboxLongitude.Text,toolDataGrid);
 			}
 			return dialog.Result;
 		}
 
+		// display METfile header data on form
+		private void ShowHeaderData() {
+			tboxName.Text = met.shortName;
+			tboxLatitude.Text = met.latitude.ToString();
+			tboxLongitude.Text = met.longitude.ToString();
+			needToSave = false;
+		}
+
 		// plots MET file data
-		private void plotMETData() {
+		private void PlotMETData() {
 			List<double> data = null;
 
 			if (cboxData.SelectedIndex != -1) {
@@ -261,11 +281,12 @@ namespace warmf {
 				toolGraph.Titles.Clear();
 				toolGraph.ChartAreas[0].AxisY.StripLines.Clear();
 
-				tboxFilename.Text = met.filename.Substring(9);
-				tboxLatitude.Text = met.latitude.ToString();
-				tboxLongitude.Text = met.longitude.ToString();
-				tboxAverage.Text = data.Average().ToString("0.00000");
-				tboxStdDev.Text = Extensions.StdDev(data).ToString("0.00000");
+				try {
+					tboxAverage.Text = data.Average().ToString("0.00000");
+					tboxStdDev.Text = Extensions.StdDev(data).ToString("0.00000");
+				} catch (Exception e) {
+					// likely no data in file
+				}
 
 				Series series = toolGraph.Series["data"];
 				series.Points.Clear();
@@ -329,8 +350,8 @@ namespace warmf {
 			}
 		}
 
-		// fills MET file grid
-		private void fillMETGrid() {
+		// fills MET file data table
+		private void FillMETTable() {
 			if (needToSave) return;
 
 			toolDataGrid.Rows.Clear();

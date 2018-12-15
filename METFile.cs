@@ -9,10 +9,11 @@ using System.Windows.Forms;
 
 namespace warmf {
 	class METFile {
-		public string filename;
-		public string shortName;
-		public int version;
-		public double latitude, longitude;
+		public string filename { get; set; }
+		public string shortName { get; set; }
+		public int version { get; set; }
+		public double latitude { get; set; }
+		public double longitude { get; set; }
 
 		public List<DateTime> date;
 		public List<double> precip;
@@ -42,10 +43,7 @@ namespace warmf {
 		};
 
 		// methods
-
-		public METFile(string fname) {
-			filename = fname;
-		}
+		public METFile(string fname) { filename = fname; }
 
 		public bool ReadMETFile() {
 			STechStreamReader sr = null;
@@ -68,8 +66,9 @@ namespace warmf {
 				line = sr.ReadLine();
 				latitude = Double.TryParse(line.Substring(9, 10), out dblRes) ? dblRes : 0;
 				longitude = Double.TryParse(line.Substring(30, 10), out dblRes) ? dblRes : 0;
-				date = new List<DateTime>();
+				shortName = line.Substring(40);
 
+				date = new List<DateTime>();
 				precip = new List<double>();
 				minTemp = new List<double>();
 				maxTemp = new List<double>();
@@ -105,12 +104,15 @@ namespace warmf {
 			return true;
 		}
 
-		public bool WriteMETFile(DataGridView grid) {
+		public bool WriteMETFile(string newName, string newLat, string newLong, DataGridView grid) {
 			STechStreamWriter sw = null;
 
 			try {
 				double dblRes;
+				int count = date.Count();
 
+				// clear old data from data structures in memory
+				date.Clear();
 				precip.Clear();
 				minTemp.Clear();
 				maxTemp.Clear();
@@ -119,10 +121,15 @@ namespace warmf {
 				airPressure.Clear();
 				windSpeed.Clear();
 				comment.Clear();
+
+				shortName = newName;
+				latitude = Double.TryParse(newLat, out dblRes) ? dblRes : 0;
+				longitude = Double.TryParse(newLong, out dblRes) ? dblRes : 0;
+
 				sw = new STechStreamWriter(filename, false);
 				sw.WriteLine("VERSION {0, 8}", version);
 				sw.WriteLine("Latitude:{0, 10:F4} Longitude:{1,10:F4}{2}", latitude, longitude, shortName);
-				for (int ii=0; ii < date.Count(); ii++) {
+				for (int ii=0; ii < count; ii++) {
 					sw.WriteLine("{0:ddMMyyyy} {1:HHmm}{2,8:0.###}{3,8:0.#}{4,8:0.#}{5,8:0.##}{6,8:0.#}{7,8:0.#}{8,8:0.#}{9}",
 						Convert.ToDateTime(grid[1, ii].Value),
 						Convert.ToDateTime(grid[1, ii].Value+" "+grid[2,ii].Value),
@@ -136,7 +143,8 @@ namespace warmf {
 						grid[10, ii].Value);
 
 					// we need to update the data structures in memory! - ugh!
-					// or we could read int he file again...
+					// or we could read in the file again...
+					date.Add(Convert.ToDateTime(grid[1, ii].Value + " " + grid[2, ii].Value));
 					precip.Add(Double.TryParse(grid[3, ii].Value.ToString(), out dblRes) ? dblRes : 0);
 					minTemp.Add(Double.TryParse(grid[4, ii].Value.ToString(), out dblRes) ? dblRes : 0);
 					maxTemp.Add(Double.TryParse(grid[5, ii].Value.ToString(), out dblRes) ? dblRes : 0);
@@ -152,7 +160,10 @@ namespace warmf {
 				return true;
 			}
 			catch (Exception e) {
-				Debug.WriteLine("Error writing MET file {0} at line {1} ",filename,sw.LineNum);
+				if (sw != null)
+					Debug.WriteLine("Error writing MET file {0} at line {1} ", filename, sw.LineNum);
+				else
+					Debug.WriteLine("Error writing MET file {0}.  Problem with file creation.", filename);
 				return true;
 			}
 		}

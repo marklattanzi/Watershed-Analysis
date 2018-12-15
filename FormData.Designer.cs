@@ -23,9 +23,9 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.toolGraph = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,7 +43,7 @@
 			this.chkboxAverage = new System.Windows.Forms.CheckBox();
 			this.tboxStdDev = new System.Windows.Forms.TextBox();
 			this.tboxAverage = new System.Windows.Forms.TextBox();
-			this.tboxFilename = new System.Windows.Forms.TextBox();
+			this.tboxName = new System.Windows.Forms.TextBox();
 			this.tboxLongitude = new System.Windows.Forms.TextBox();
 			this.tboxLatitude = new System.Windows.Forms.TextBox();
 			this.lblName = new System.Windows.Forms.Label();
@@ -70,19 +70,19 @@
 			this.toolGraph.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			chartArea1.Name = "ChartArea1";
-			this.toolGraph.ChartAreas.Add(chartArea1);
+			chartArea3.Name = "ChartArea1";
+			this.toolGraph.ChartAreas.Add(chartArea3);
 			this.toolGraph.DataSource = this.toolGraph.Images;
-			legend1.Enabled = false;
-			legend1.Name = "Legend1";
-			this.toolGraph.Legends.Add(legend1);
+			legend3.Enabled = false;
+			legend3.Name = "Legend1";
+			this.toolGraph.Legends.Add(legend3);
 			this.toolGraph.Location = new System.Drawing.Point(0, 101);
 			this.toolGraph.Name = "toolGraph";
-			series1.ChartArea = "ChartArea1";
-			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-			series1.Legend = "Legend1";
-			series1.Name = "data";
-			this.toolGraph.Series.Add(series1);
+			series3.ChartArea = "ChartArea1";
+			series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+			series3.Legend = "Legend1";
+			series3.Name = "data";
+			this.toolGraph.Series.Add(series3);
 			this.toolGraph.Size = new System.Drawing.Size(1319, 538);
 			this.toolGraph.TabIndex = 0;
 			this.toolGraph.Text = "WARMF Chart";
@@ -184,7 +184,7 @@
 			this.panel1.Controls.Add(this.chkboxAverage);
 			this.panel1.Controls.Add(this.tboxStdDev);
 			this.panel1.Controls.Add(this.tboxAverage);
-			this.panel1.Controls.Add(this.tboxFilename);
+			this.panel1.Controls.Add(this.tboxName);
 			this.panel1.Controls.Add(this.tboxLongitude);
 			this.panel1.Controls.Add(this.tboxLatitude);
 			this.panel1.Controls.Add(this.lblName);
@@ -242,12 +242,13 @@
 			this.tboxAverage.Size = new System.Drawing.Size(118, 20);
 			this.tboxAverage.TabIndex = 17;
 			// 
-			// tboxFilename
+			// tboxName
 			// 
-			this.tboxFilename.Location = new System.Drawing.Point(840, 53);
-			this.tboxFilename.Name = "tboxFilename";
-			this.tboxFilename.Size = new System.Drawing.Size(118, 20);
-			this.tboxFilename.TabIndex = 16;
+			this.tboxName.Location = new System.Drawing.Point(840, 53);
+			this.tboxName.Name = "tboxName";
+			this.tboxName.Size = new System.Drawing.Size(118, 20);
+			this.tboxName.TabIndex = 16;
+			this.tboxName.TextChanged += new System.EventHandler(this.tbox_TextChanged);
 			// 
 			// tboxLongitude
 			// 
@@ -255,6 +256,7 @@
 			this.tboxLongitude.Name = "tboxLongitude";
 			this.tboxLongitude.Size = new System.Drawing.Size(118, 20);
 			this.tboxLongitude.TabIndex = 15;
+			this.tboxLongitude.TextChanged += new System.EventHandler(this.tbox_TextChanged);
 			// 
 			// tboxLatitude
 			// 
@@ -262,6 +264,7 @@
 			this.tboxLatitude.Name = "tboxLatitude";
 			this.tboxLatitude.Size = new System.Drawing.Size(118, 20);
 			this.tboxLatitude.TabIndex = 14;
+			this.tboxLatitude.TextChanged += new System.EventHandler(this.tbox_TextChanged);
 			// 
 			// lblName
 			// 
@@ -269,9 +272,9 @@
 			this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblName.Location = new System.Drawing.Point(756, 54);
 			this.lblName.Name = "lblName";
-			this.lblName.Size = new System.Drawing.Size(73, 16);
+			this.lblName.Size = new System.Drawing.Size(48, 16);
 			this.lblName.TabIndex = 12;
-			this.lblName.Text = "File Name:";
+			this.lblName.Text = "Name:";
 			// 
 			// lblLongitude
 			// 
@@ -444,7 +447,7 @@
 		private System.Windows.Forms.CheckBox chkboxAverage;
 		private System.Windows.Forms.TextBox tboxStdDev;
 		private System.Windows.Forms.TextBox tboxAverage;
-		private System.Windows.Forms.TextBox tboxFilename;
+		private System.Windows.Forms.TextBox tboxName;
 		private System.Windows.Forms.TextBox tboxLongitude;
 		private System.Windows.Forms.TextBox tboxLatitude;
 		private System.Windows.Forms.Label lblName;
