@@ -78,6 +78,7 @@
     <Compile Include="FormTMDL.Designer.cs">
       <DependentUpon>FormTMDL.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logger.cs" />
     <Compile Include="METFile.cs" />
     <Compile Include="FormData.cs">
       <SubType>Form</SubType>

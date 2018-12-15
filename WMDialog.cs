@@ -14,7 +14,7 @@ namespace warmf {
 		private Button btnCancel;
         private Label msg;
 		private int btnWidth;
-		private int boxWidth, boxHeight;	//unused, for adding size change functionality
+		//private int boxWidth, boxHeight;	//unused, for adding size change functionality
 		private int gap;
 
 		public WMDialog(string txtTitle, string message, bool showNo = true, bool showCancel = false) {
