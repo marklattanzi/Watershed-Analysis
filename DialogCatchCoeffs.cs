@@ -27,7 +27,7 @@ namespace warmf
         public void Populate(int cnum)
         {
             Catchment catchment = Global.coe.catchments[cnum];
-            Text = "Catchment " + cnum.ToString() + " Coefficients";
+            Text = "Catchment " + Global.coe.catchments[cnum].idNum + " Coefficients";
 
             //Stuff used repeatedly
             //List of land uses
@@ -36,11 +36,16 @@ namespace warmf
             {
                landuselist.Add (Global.coe.landuse.ElementAt(ii).name.ToString());
             }
-            //list of chemical constituents
-            List<string> chemconstitslist = new List<string>();
+
+            //list of chemical and physical constituents
+            List<string> ConstitsList = new List<string>();
             for (int ii = 0; ii < Global.coe.numChemicalParams; ii++)
             {
-                chemconstitslist.Add(Global.coe.chemConstits.ElementAt(ii).fullName.ToString());
+                ConstitsList.Add(Global.coe.chemConstits[ii].fullName.ToString());
+            }
+            for (int ii = 0; ii < Global.coe.numPhysicalParams; ii++)
+            {
+                ConstitsList.Add(Global.coe.physicalConstits[ii].fullName.ToString());
             }
 
             //Physical Data tab
@@ -72,10 +77,26 @@ namespace warmf
             //Land Application tab
             cbLanduse.Items.Clear();
             cbLanduse.Items.AddRange(landuselist.ToArray());
-            cbLanduse.SelectedIndex = 0;
+            cbLanduse.SelectedIndex = 7;
 
-            Global.coe.
-            catchment.fertPlanNum
+            int iFertPlanNum = catchment.fertPlanNum[cbLanduse.SelectedIndex];
+            int iNumParams = Global.coe.numChemicalParams + Global.coe.numPhysicalParams;
+
+            double[] dblArray = new double[12];
+            for (int iParam = 0; iParam < iNumParams; iParam++)
+            {
+                for (int iMonth = 0; iMonth < 12; iMonth++)
+                {
+                    dblArray[iMonth] = Global.coe.landuse[cbLanduse.SelectedIndex].fertPlanApplication[iFertPlanNum][iMonth][iParam];
+                }
+                dgLandApp.Rows.Add(dblArray);
+                Array.Clear(dblArray, 0, dblArray.Length);
+            }
+            
+            //Global.coe.
+            //catchment.fertPlanNum.ElementAt(cbLanduse.SelectedIndex).ToString(); //fert plan number for the catchment for the selected landuse
+            //Global.coe.landuse.ElementAt(cbLanduse.SelectedIndex).fertPlanApplication
+            
             //Irrigation tab
 
             //Sediment tab

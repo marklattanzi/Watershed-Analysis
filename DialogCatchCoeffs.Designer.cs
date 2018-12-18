@@ -66,7 +66,26 @@
             this.tbMetFile = new System.Windows.Forms.TextBox();
             this.tpLandUses = new System.Windows.Forms.TabPage();
             this.dgLanduse = new System.Windows.Forms.DataGridView();
+            this.columnLanduse = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.columnPercent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tpLandAp = new System.Windows.Forms.TabPage();
+            this.cbLanduse = new System.Windows.Forms.ComboBox();
+            this.lblLanduse = new System.Windows.Forms.Label();
+            this.tbMaxAccTime = new System.Windows.Forms.TextBox();
+            this.lblMaxAccTime = new System.Windows.Forms.Label();
+            this.dgLandApp = new System.Windows.Forms.DataGridView();
+            this.colJan = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFeb = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colApr = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMay = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colJun = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colJul = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAug = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSep = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOct = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNov = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDec = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tpIrrigation = new System.Windows.Forms.TabPage();
             this.tpSediment = new System.Windows.Forms.TabPage();
             this.tpBMPs = new System.Windows.Forms.TabPage();
@@ -83,25 +102,6 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
-            this.columnLanduse = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.columnPercent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.lblMaxAccTime = new System.Windows.Forms.Label();
-            this.tbMaxAccTime = new System.Windows.Forms.TextBox();
-            this.colJan = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFeb = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colApr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMay = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colJun = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colJul = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAug = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSep = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOct = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colNov = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDec = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lblLanduse = new System.Windows.Forms.Label();
-            this.cbLanduse = new System.Windows.Forms.ComboBox();
             this.tcCatchTabs.SuspendLayout();
             this.tpPhysData.SuspendLayout();
             this.gbSizeSlope.SuspendLayout();
@@ -113,8 +113,8 @@
             this.tpLandUses.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgLanduse)).BeginInit();
             this.tpLandAp.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgLandApp)).BeginInit();
             this.tabControl2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // tcCatchTabs
@@ -508,13 +508,25 @@
             this.dgLanduse.Size = new System.Drawing.Size(303, 227);
             this.dgLanduse.TabIndex = 0;
             // 
+            // columnLanduse
+            // 
+            this.columnLanduse.HeaderText = "Land Use";
+            this.columnLanduse.Name = "columnLanduse";
+            this.columnLanduse.ReadOnly = true;
+            this.columnLanduse.Width = 200;
+            // 
+            // columnPercent
+            // 
+            this.columnPercent.HeaderText = "Percent";
+            this.columnPercent.Name = "columnPercent";
+            // 
             // tpLandAp
             // 
             this.tpLandAp.Controls.Add(this.cbLanduse);
             this.tpLandAp.Controls.Add(this.lblLanduse);
             this.tpLandAp.Controls.Add(this.tbMaxAccTime);
             this.tpLandAp.Controls.Add(this.lblMaxAccTime);
-            this.tpLandAp.Controls.Add(this.dataGridView1);
+            this.tpLandAp.Controls.Add(this.dgLandApp);
             this.tpLandAp.Location = new System.Drawing.Point(4, 46);
             this.tpLandAp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tpLandAp.Name = "tpLandAp";
@@ -523,6 +535,147 @@
             this.tpLandAp.TabIndex = 3;
             this.tpLandAp.Text = "Land Application";
             this.tpLandAp.UseVisualStyleBackColor = true;
+            // 
+            // cbLanduse
+            // 
+            this.cbLanduse.FormattingEnabled = true;
+            this.cbLanduse.Location = new System.Drawing.Point(267, 10);
+            this.cbLanduse.Name = "cbLanduse";
+            this.cbLanduse.Size = new System.Drawing.Size(229, 24);
+            this.cbLanduse.TabIndex = 4;
+            // 
+            // lblLanduse
+            // 
+            this.lblLanduse.AutoSize = true;
+            this.lblLanduse.Location = new System.Drawing.Point(200, 13);
+            this.lblLanduse.Name = "lblLanduse";
+            this.lblLanduse.Size = new System.Drawing.Size(61, 16);
+            this.lblLanduse.TabIndex = 3;
+            this.lblLanduse.Text = "Landuse:";
+            // 
+            // tbMaxAccTime
+            // 
+            this.tbMaxAccTime.Location = new System.Drawing.Point(330, 392);
+            this.tbMaxAccTime.Name = "tbMaxAccTime";
+            this.tbMaxAccTime.Size = new System.Drawing.Size(99, 22);
+            this.tbMaxAccTime.TabIndex = 2;
+            // 
+            // lblMaxAccTime
+            // 
+            this.lblMaxAccTime.AutoSize = true;
+            this.lblMaxAccTime.Location = new System.Drawing.Point(101, 394);
+            this.lblMaxAccTime.Name = "lblMaxAccTime";
+            this.lblMaxAccTime.Size = new System.Drawing.Size(221, 16);
+            this.lblMaxAccTime.TabIndex = 1;
+            this.lblMaxAccTime.Text = "Maximum Accumulation Time (Days)";
+            // 
+            // dgLandApp
+            // 
+            this.dgLandApp.AllowUserToAddRows = false;
+            this.dgLandApp.AllowUserToDeleteRows = false;
+            this.dgLandApp.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgLandApp.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colJan,
+            this.colFeb,
+            this.colMar,
+            this.colApr,
+            this.colMay,
+            this.colJun,
+            this.colJul,
+            this.colAug,
+            this.colSep,
+            this.colOct,
+            this.colNov,
+            this.colDec});
+            this.dgLandApp.Location = new System.Drawing.Point(0, 40);
+            this.dgLandApp.Name = "dgLandApp";
+            this.dgLandApp.RowHeadersWidth = 100;
+            this.dgLandApp.Size = new System.Drawing.Size(671, 332);
+            this.dgLandApp.TabIndex = 0;
+            // 
+            // colJan
+            // 
+            this.colJan.HeaderText = "January";
+            this.colJan.MaxInputLength = 16;
+            this.colJan.Name = "colJan";
+            this.colJan.Width = 75;
+            // 
+            // colFeb
+            // 
+            this.colFeb.HeaderText = "February";
+            this.colFeb.MaxInputLength = 16;
+            this.colFeb.Name = "colFeb";
+            this.colFeb.Width = 75;
+            // 
+            // colMar
+            // 
+            this.colMar.HeaderText = "March";
+            this.colMar.MaxInputLength = 16;
+            this.colMar.Name = "colMar";
+            this.colMar.Width = 75;
+            // 
+            // colApr
+            // 
+            this.colApr.HeaderText = "April";
+            this.colApr.MaxInputLength = 16;
+            this.colApr.Name = "colApr";
+            this.colApr.Width = 75;
+            // 
+            // colMay
+            // 
+            this.colMay.HeaderText = "May";
+            this.colMay.MaxInputLength = 16;
+            this.colMay.Name = "colMay";
+            this.colMay.Width = 75;
+            // 
+            // colJun
+            // 
+            this.colJun.HeaderText = "June";
+            this.colJun.MaxInputLength = 16;
+            this.colJun.Name = "colJun";
+            this.colJun.Width = 75;
+            // 
+            // colJul
+            // 
+            this.colJul.HeaderText = "July";
+            this.colJul.MaxInputLength = 16;
+            this.colJul.Name = "colJul";
+            this.colJul.Width = 75;
+            // 
+            // colAug
+            // 
+            this.colAug.HeaderText = "August";
+            this.colAug.MaxInputLength = 16;
+            this.colAug.Name = "colAug";
+            this.colAug.Width = 75;
+            // 
+            // colSep
+            // 
+            this.colSep.HeaderText = "September";
+            this.colSep.MaxInputLength = 16;
+            this.colSep.Name = "colSep";
+            this.colSep.Width = 75;
+            // 
+            // colOct
+            // 
+            this.colOct.HeaderText = "October";
+            this.colOct.MaxInputLength = 16;
+            this.colOct.Name = "colOct";
+            this.colOct.Width = 75;
+            // 
+            // colNov
+            // 
+            this.colNov.HeaderText = "November";
+            this.colNov.MaxInputLength = 16;
+            this.colNov.Name = "colNov";
+            this.colNov.Width = 75;
+            // 
+            // colDec
+            // 
+            this.colDec.HeaderText = "December";
+            this.colDec.MaxInputLength = 16;
+            this.colDec.Name = "colDec";
+            this.colDec.Width = 75;
             // 
             // tpIrrigation
             // 
@@ -689,159 +842,6 @@
             this.btnHelp.Text = "Help";
             this.btnHelp.UseVisualStyleBackColor = true;
             // 
-            // columnLanduse
-            // 
-            this.columnLanduse.HeaderText = "Land Use";
-            this.columnLanduse.Name = "columnLanduse";
-            this.columnLanduse.ReadOnly = true;
-            this.columnLanduse.Width = 200;
-            // 
-            // columnPercent
-            // 
-            this.columnPercent.HeaderText = "Percent";
-            this.columnPercent.Name = "columnPercent";
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colJan,
-            this.colFeb,
-            this.colMar,
-            this.colApr,
-            this.colMay,
-            this.colJun,
-            this.colJul,
-            this.colAug,
-            this.colSep,
-            this.colOct,
-            this.colNov,
-            this.colDec});
-            this.dataGridView1.Location = new System.Drawing.Point(0, 40);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 100;
-            this.dataGridView1.Size = new System.Drawing.Size(671, 332);
-            this.dataGridView1.TabIndex = 0;
-            // 
-            // lblMaxAccTime
-            // 
-            this.lblMaxAccTime.AutoSize = true;
-            this.lblMaxAccTime.Location = new System.Drawing.Point(101, 394);
-            this.lblMaxAccTime.Name = "lblMaxAccTime";
-            this.lblMaxAccTime.Size = new System.Drawing.Size(221, 16);
-            this.lblMaxAccTime.TabIndex = 1;
-            this.lblMaxAccTime.Text = "Maximum Accumulation Time (Days)";
-            // 
-            // tbMaxAccTime
-            // 
-            this.tbMaxAccTime.Location = new System.Drawing.Point(330, 392);
-            this.tbMaxAccTime.Name = "tbMaxAccTime";
-            this.tbMaxAccTime.Size = new System.Drawing.Size(99, 22);
-            this.tbMaxAccTime.TabIndex = 2;
-            // 
-            // colJan
-            // 
-            this.colJan.HeaderText = "January";
-            this.colJan.MaxInputLength = 16;
-            this.colJan.Name = "colJan";
-            this.colJan.Width = 75;
-            // 
-            // colFeb
-            // 
-            this.colFeb.HeaderText = "February";
-            this.colFeb.MaxInputLength = 16;
-            this.colFeb.Name = "colFeb";
-            this.colFeb.Width = 75;
-            // 
-            // colMar
-            // 
-            this.colMar.HeaderText = "March";
-            this.colMar.MaxInputLength = 16;
-            this.colMar.Name = "colMar";
-            this.colMar.Width = 75;
-            // 
-            // colApr
-            // 
-            this.colApr.HeaderText = "April";
-            this.colApr.MaxInputLength = 16;
-            this.colApr.Name = "colApr";
-            this.colApr.Width = 75;
-            // 
-            // colMay
-            // 
-            this.colMay.HeaderText = "May";
-            this.colMay.MaxInputLength = 16;
-            this.colMay.Name = "colMay";
-            this.colMay.Width = 75;
-            // 
-            // colJun
-            // 
-            this.colJun.HeaderText = "June";
-            this.colJun.MaxInputLength = 16;
-            this.colJun.Name = "colJun";
-            this.colJun.Width = 75;
-            // 
-            // colJul
-            // 
-            this.colJul.HeaderText = "July";
-            this.colJul.MaxInputLength = 16;
-            this.colJul.Name = "colJul";
-            this.colJul.Width = 75;
-            // 
-            // colAug
-            // 
-            this.colAug.HeaderText = "August";
-            this.colAug.MaxInputLength = 16;
-            this.colAug.Name = "colAug";
-            this.colAug.Width = 75;
-            // 
-            // colSep
-            // 
-            this.colSep.HeaderText = "September";
-            this.colSep.MaxInputLength = 16;
-            this.colSep.Name = "colSep";
-            this.colSep.Width = 75;
-            // 
-            // colOct
-            // 
-            this.colOct.HeaderText = "October";
-            this.colOct.MaxInputLength = 16;
-            this.colOct.Name = "colOct";
-            this.colOct.Width = 75;
-            // 
-            // colNov
-            // 
-            this.colNov.HeaderText = "November";
-            this.colNov.MaxInputLength = 16;
-            this.colNov.Name = "colNov";
-            this.colNov.Width = 75;
-            // 
-            // colDec
-            // 
-            this.colDec.HeaderText = "December";
-            this.colDec.MaxInputLength = 16;
-            this.colDec.Name = "colDec";
-            this.colDec.Width = 75;
-            // 
-            // lblLanduse
-            // 
-            this.lblLanduse.AutoSize = true;
-            this.lblLanduse.Location = new System.Drawing.Point(200, 13);
-            this.lblLanduse.Name = "lblLanduse";
-            this.lblLanduse.Size = new System.Drawing.Size(61, 16);
-            this.lblLanduse.TabIndex = 3;
-            this.lblLanduse.Text = "Landuse:";
-            // 
-            // cbLanduse
-            // 
-            this.cbLanduse.FormattingEnabled = true;
-            this.cbLanduse.Location = new System.Drawing.Point(267, 10);
-            this.cbLanduse.Name = "cbLanduse";
-            this.cbLanduse.Size = new System.Drawing.Size(229, 24);
-            this.cbLanduse.TabIndex = 4;
-            // 
             // FormCatch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -877,8 +877,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgLanduse)).EndInit();
             this.tpLandAp.ResumeLayout(false);
             this.tpLandAp.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgLandApp)).EndInit();
             this.tabControl2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -946,7 +946,7 @@
         private System.Windows.Forms.Label lblLanduse;
         private System.Windows.Forms.TextBox tbMaxAccTime;
         private System.Windows.Forms.Label lblMaxAccTime;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgLandApp;
         private System.Windows.Forms.DataGridViewTextBoxColumn colJan;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFeb;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMar;

@@ -773,7 +773,7 @@ namespace warmf {
 			return line;
 		}
 
-        // read in and parse the Coeffieicents file
+        // read in and parse the Coefficients file
         public bool ReadFile(string filename) {
             string line;
             int intRes;
