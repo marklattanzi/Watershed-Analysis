@@ -16,6 +16,11 @@ namespace warmf {
 		public FormMain() {
 			InitializeComponent();
 
+			Logger.useTime = true;
+			Logger.Info("*********************************************************************************");
+			Logger.Info("Logging started");
+			Logger.useTime = false;
+
 			// module forms
 			frmData = new FormData(this);
 			frmKnow = new FormKnowledge(this);
@@ -107,6 +112,7 @@ namespace warmf {
 		}
 
 		private void OpenShapeFile(string path) {
+			Logger.Info("Opening shape file " + path);
 			// clear any shapefiles the map is currently displaying
 			this.frmMap.ClearShapeFiles();
 
@@ -142,6 +148,7 @@ namespace warmf {
 			frmTMDL.Hide();
 			frmConsensus.Hide();
 
+			Logger.Info("Showing form " + name);
 			switch (name) {
 				case "engineering": this.Show(); break;
 				case "knowledge": frmKnow.Show(); break;

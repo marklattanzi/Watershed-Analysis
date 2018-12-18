@@ -9,12 +9,13 @@ using System.Windows.Forms;
 
 namespace warmf {
 	class METFile {
-		public string filename;
-		public int version;
-		public double latitude, longitude;
+		public string filename { get; set; }
+		public string shortName { get; set; }
+		public int version { get; set; }
+		public double latitude { get; set; }
+		public double longitude { get; set; }
 
 		public List<DateTime> date;
-		public List<string> clockTime;
 		public List<double> precip;
 		public List<double> minTemp;
 		public List<double> maxTemp;
@@ -42,10 +43,7 @@ namespace warmf {
 		};
 
 		// methods
-
-		public METFile(string fname) {
-			filename = fname;
-		}
+		public METFile(string fname) { filename = fname; }
 
 		public bool ReadMETFile() {
 			STechStreamReader sr = null;
@@ -54,7 +52,7 @@ namespace warmf {
 				int intRes;
 				double dblRes;
 				string line;
-				int day, month, year;
+				int day, month, year, hour, minute;
 				sr = new STechStreamReader(filename);
 
 				line = sr.ReadLine();
@@ -68,9 +66,9 @@ namespace warmf {
 				line = sr.ReadLine();
 				latitude = Double.TryParse(line.Substring(9, 10), out dblRes) ? dblRes : 0;
 				longitude = Double.TryParse(line.Substring(30, 10), out dblRes) ? dblRes : 0;
-				date = new List<DateTime>();
+				shortName = line.Substring(40);
 
-				clockTime = new List<string>();
+				date = new List<DateTime>();
 				precip = new List<double>();
 				minTemp = new List<double>();
 				maxTemp = new List<double>();
@@ -85,8 +83,9 @@ namespace warmf {
 					day = Int32.TryParse(line.Substring(0, 2), out intRes) ? intRes : 0;
 					month = Int32.TryParse(line.Substring(2, 2), out intRes) ? intRes : 0;
 					year = Int32.TryParse(line.Substring(4, 4), out intRes) ? intRes : 0;
-					date.Add(new DateTime(year, month, day));
-					clockTime.Add(line.Substring(8, 5));
+					hour = Int32.TryParse(line.Substring(9, 2), out intRes) ? intRes : 0;
+					minute = Int32.TryParse(line.Substring(11, 2), out intRes) ? intRes : 0;
+					date.Add(new DateTime(year, month, day, hour, minute, 0));
 					precip.Add(Double.TryParse(line.Substring(13, 8), out dblRes) ? dblRes : 0);
 					minTemp.Add(Double.TryParse(line.Substring(21, 8), out dblRes) ? dblRes : 0);
 					maxTemp.Add(Double.TryParse(line.Substring(29, 8), out dblRes) ? dblRes : 0);
@@ -105,9 +104,34 @@ namespace warmf {
 			return true;
 		}
 
-		public bool WriteMETFile(DataGridView grid) {
-			
-			return true;
+		public bool WriteMETFile() {
+			STechStreamWriter sw = null;
+			try {
+				sw = new STechStreamWriter(filename, false);
+				sw.WriteLine("VERSION {0, 8}", version);
+				sw.WriteLine("Latitude:{0, 10:F4} Longitude:{1,10:F4}{2}", latitude, longitude, shortName);
+				for (int ii=0; ii < date.Count(); ii++) {
+					sw.WriteLine("{0:ddMMyyyy HHmm}{1,8:0.###}{2,8:0.#}{3,8:0.#}{4,8:0.##}{5,8:0.#}{6,8:0.#}{7,8:0.#}{8}",
+						Convert.ToDateTime(date[ii].ToString()),
+						precip[ii], 
+						minTemp[ii], 
+						maxTemp[ii], 
+						cloudCover[ii], 
+						dewPointTemp[ii], 
+						airPressure[ii], 
+						windSpeed[ii], 
+						comment[ii]);
+				}
+				sw.Close();
+				return true;
+			}
+			catch (Exception e) {
+				if (sw != null)
+					Debug.WriteLine("Error writing MET file {0} at line {1} ", filename, sw.LineNum);
+				else
+					Debug.WriteLine("Error writing MET file {0}.  Problem with file creation.", filename);
+				return true;
+			}
 		}
 	}
 }

@@ -23,9 +23,9 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.toolGraph = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -33,13 +33,17 @@
 			this.mnuModule = new System.Windows.Forms.ToolStripMenuItem();
 			this.miEngineering = new System.Windows.Forms.ToolStripMenuItem();
 			this.miKnowledge = new System.Windows.Forms.ToolStripMenuItem();
+			this.miTMDL = new System.Windows.Forms.ToolStripMenuItem();
+			this.miConsensus = new System.Windows.Forms.ToolStripMenuItem();
+			this.miManager = new System.Windows.Forms.ToolStripMenuItem();
+			this.miExit = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolDataGrid = new System.Windows.Forms.DataGridView();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.chkboxStdDev = new System.Windows.Forms.CheckBox();
 			this.chkboxAverage = new System.Windows.Forms.CheckBox();
 			this.tboxStdDev = new System.Windows.Forms.TextBox();
 			this.tboxAverage = new System.Windows.Forms.TextBox();
-			this.tboxFilename = new System.Windows.Forms.TextBox();
+			this.tboxName = new System.Windows.Forms.TextBox();
 			this.tboxLongitude = new System.Windows.Forms.TextBox();
 			this.tboxLatitude = new System.Windows.Forms.TextBox();
 			this.lblName = new System.Windows.Forms.Label();
@@ -48,16 +52,12 @@
 			this.lblData = new System.Windows.Forms.Label();
 			this.cboxData = new System.Windows.Forms.ComboBox();
 			this.gboxGraphChart = new System.Windows.Forms.GroupBox();
-			this.radioChart = new System.Windows.Forms.RadioButton();
+			this.radioTable = new System.Windows.Forms.RadioButton();
 			this.radioGraph = new System.Windows.Forms.RadioButton();
 			this.lblFilename = new System.Windows.Forms.Label();
 			this.lblTypeOfData = new System.Windows.Forms.Label();
 			this.cboxFilename = new System.Windows.Forms.ComboBox();
 			this.cboxTypeOfFile = new System.Windows.Forms.ComboBox();
-			this.miManager = new System.Windows.Forms.ToolStripMenuItem();
-			this.miConsensus = new System.Windows.Forms.ToolStripMenuItem();
-			this.miTMDL = new System.Windows.Forms.ToolStripMenuItem();
-			this.miExit = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.toolGraph)).BeginInit();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.toolDataGrid)).BeginInit();
@@ -70,19 +70,19 @@
 			this.toolGraph.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			chartArea1.Name = "ChartArea1";
-			this.toolGraph.ChartAreas.Add(chartArea1);
+			chartArea3.Name = "ChartArea1";
+			this.toolGraph.ChartAreas.Add(chartArea3);
 			this.toolGraph.DataSource = this.toolGraph.Images;
-			legend1.Enabled = false;
-			legend1.Name = "Legend1";
-			this.toolGraph.Legends.Add(legend1);
+			legend3.Enabled = false;
+			legend3.Name = "Legend1";
+			this.toolGraph.Legends.Add(legend3);
 			this.toolGraph.Location = new System.Drawing.Point(0, 101);
 			this.toolGraph.Name = "toolGraph";
-			series1.ChartArea = "ChartArea1";
-			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-			series1.Legend = "Legend1";
-			series1.Name = "data";
-			this.toolGraph.Series.Add(series1);
+			series3.ChartArea = "ChartArea1";
+			series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+			series3.Legend = "Legend1";
+			series3.Name = "data";
+			this.toolGraph.Series.Add(series3);
 			this.toolGraph.Size = new System.Drawing.Size(1319, 538);
 			this.toolGraph.TabIndex = 0;
 			this.toolGraph.Text = "WARMF Chart";
@@ -127,16 +127,42 @@
 			// miEngineering
 			// 
 			this.miEngineering.Name = "miEngineering";
-			this.miEngineering.Size = new System.Drawing.Size(180, 22);
+			this.miEngineering.Size = new System.Drawing.Size(137, 22);
 			this.miEngineering.Text = "Engineering";
 			this.miEngineering.Click += new System.EventHandler(this.miEngineering_Click);
 			// 
 			// miKnowledge
 			// 
 			this.miKnowledge.Name = "miKnowledge";
-			this.miKnowledge.Size = new System.Drawing.Size(180, 22);
+			this.miKnowledge.Size = new System.Drawing.Size(137, 22);
 			this.miKnowledge.Text = "Knowledge";
 			this.miKnowledge.Click += new System.EventHandler(this.miKnowledge_Click);
+			// 
+			// miTMDL
+			// 
+			this.miTMDL.Name = "miTMDL";
+			this.miTMDL.Size = new System.Drawing.Size(137, 22);
+			this.miTMDL.Text = "TMDL";
+			// 
+			// miConsensus
+			// 
+			this.miConsensus.Name = "miConsensus";
+			this.miConsensus.Size = new System.Drawing.Size(137, 22);
+			this.miConsensus.Text = "Consensus";
+			// 
+			// miManager
+			// 
+			this.miManager.Name = "miManager";
+			this.miManager.Size = new System.Drawing.Size(137, 22);
+			this.miManager.Text = "Manager";
+			this.miManager.Click += new System.EventHandler(this.miManager_Click);
+			// 
+			// miExit
+			// 
+			this.miExit.Name = "miExit";
+			this.miExit.Size = new System.Drawing.Size(37, 20);
+			this.miExit.Text = "E&xit";
+			this.miExit.Click += new System.EventHandler(this.miExit_Click);
 			// 
 			// toolDataGrid
 			// 
@@ -158,7 +184,7 @@
 			this.panel1.Controls.Add(this.chkboxAverage);
 			this.panel1.Controls.Add(this.tboxStdDev);
 			this.panel1.Controls.Add(this.tboxAverage);
-			this.panel1.Controls.Add(this.tboxFilename);
+			this.panel1.Controls.Add(this.tboxName);
 			this.panel1.Controls.Add(this.tboxLongitude);
 			this.panel1.Controls.Add(this.tboxLatitude);
 			this.panel1.Controls.Add(this.lblName);
@@ -216,12 +242,13 @@
 			this.tboxAverage.Size = new System.Drawing.Size(118, 20);
 			this.tboxAverage.TabIndex = 17;
 			// 
-			// tboxFilename
+			// tboxName
 			// 
-			this.tboxFilename.Location = new System.Drawing.Point(840, 53);
-			this.tboxFilename.Name = "tboxFilename";
-			this.tboxFilename.Size = new System.Drawing.Size(118, 20);
-			this.tboxFilename.TabIndex = 16;
+			this.tboxName.Location = new System.Drawing.Point(840, 53);
+			this.tboxName.Name = "tboxName";
+			this.tboxName.Size = new System.Drawing.Size(118, 20);
+			this.tboxName.TabIndex = 16;
+			this.tboxName.TextChanged += new System.EventHandler(this.tbox_TextChanged);
 			// 
 			// tboxLongitude
 			// 
@@ -229,6 +256,7 @@
 			this.tboxLongitude.Name = "tboxLongitude";
 			this.tboxLongitude.Size = new System.Drawing.Size(118, 20);
 			this.tboxLongitude.TabIndex = 15;
+			this.tboxLongitude.TextChanged += new System.EventHandler(this.tbox_TextChanged);
 			// 
 			// tboxLatitude
 			// 
@@ -236,6 +264,7 @@
 			this.tboxLatitude.Name = "tboxLatitude";
 			this.tboxLatitude.Size = new System.Drawing.Size(118, 20);
 			this.tboxLatitude.TabIndex = 14;
+			this.tboxLatitude.TextChanged += new System.EventHandler(this.tbox_TextChanged);
 			// 
 			// lblName
 			// 
@@ -243,9 +272,9 @@
 			this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblName.Location = new System.Drawing.Point(756, 54);
 			this.lblName.Name = "lblName";
-			this.lblName.Size = new System.Drawing.Size(73, 16);
+			this.lblName.Size = new System.Drawing.Size(48, 16);
 			this.lblName.TabIndex = 12;
-			this.lblName.Text = "File Name:";
+			this.lblName.Text = "Name:";
 			// 
 			// lblLongitude
 			// 
@@ -289,7 +318,7 @@
 			// 
 			// gboxGraphChart
 			// 
-			this.gboxGraphChart.Controls.Add(this.radioChart);
+			this.gboxGraphChart.Controls.Add(this.radioTable);
 			this.gboxGraphChart.Controls.Add(this.radioGraph);
 			this.gboxGraphChart.Location = new System.Drawing.Point(634, 3);
 			this.gboxGraphChart.Name = "gboxGraphChart";
@@ -297,17 +326,17 @@
 			this.gboxGraphChart.TabIndex = 7;
 			this.gboxGraphChart.TabStop = false;
 			// 
-			// radioChart
+			// radioTable
 			// 
-			this.radioChart.AutoSize = true;
-			this.radioChart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.radioChart.Location = new System.Drawing.Point(6, 31);
-			this.radioChart.Name = "radioChart";
-			this.radioChart.Size = new System.Drawing.Size(57, 20);
-			this.radioChart.TabIndex = 1;
-			this.radioChart.Text = "Chart";
-			this.radioChart.UseVisualStyleBackColor = true;
-			this.radioChart.CheckedChanged += new System.EventHandler(this.radioChart_CheckedChanged);
+			this.radioTable.AutoSize = true;
+			this.radioTable.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.radioTable.Location = new System.Drawing.Point(6, 31);
+			this.radioTable.Name = "radioTable";
+			this.radioTable.Size = new System.Drawing.Size(62, 20);
+			this.radioTable.TabIndex = 1;
+			this.radioTable.Text = "Table";
+			this.radioTable.UseVisualStyleBackColor = true;
+			this.radioTable.CheckedChanged += new System.EventHandler(this.radioTableGraph_CheckedChanged);
 			// 
 			// radioGraph
 			// 
@@ -321,7 +350,7 @@
 			this.radioGraph.TabStop = true;
 			this.radioGraph.Text = "Graph";
 			this.radioGraph.UseVisualStyleBackColor = true;
-			this.radioGraph.CheckedChanged += new System.EventHandler(this.radioGraph_CheckedChanged);
+			this.radioGraph.CheckedChanged += new System.EventHandler(this.radioTableGraph_CheckedChanged);
 			// 
 			// lblFilename
 			// 
@@ -362,32 +391,6 @@
 			this.cboxTypeOfFile.Size = new System.Drawing.Size(167, 24);
 			this.cboxTypeOfFile.TabIndex = 1;
 			this.cboxTypeOfFile.SelectedIndexChanged += new System.EventHandler(this.cboxTypeOfFile_SelectedIndexChanged);
-			// 
-			// miManager
-			// 
-			this.miManager.Name = "miManager";
-			this.miManager.Size = new System.Drawing.Size(180, 22);
-			this.miManager.Text = "Manager";
-			this.miManager.Click += new System.EventHandler(this.miManager_Click);
-			// 
-			// miConsensus
-			// 
-			this.miConsensus.Name = "miConsensus";
-			this.miConsensus.Size = new System.Drawing.Size(180, 22);
-			this.miConsensus.Text = "Consensus";
-			// 
-			// miTMDL
-			// 
-			this.miTMDL.Name = "miTMDL";
-			this.miTMDL.Size = new System.Drawing.Size(180, 22);
-			this.miTMDL.Text = "TMDL";
-			// 
-			// miExit
-			// 
-			this.miExit.Name = "miExit";
-			this.miExit.Size = new System.Drawing.Size(37, 20);
-			this.miExit.Text = "E&xit";
-			this.miExit.Click += new System.EventHandler(this.miExit_Click);
 			// 
 			// FormData
 			// 
@@ -434,7 +437,7 @@
 		private System.Windows.Forms.ComboBox cboxFilename;
 		private System.Windows.Forms.ComboBox cboxTypeOfFile;
 		private System.Windows.Forms.GroupBox gboxGraphChart;
-		private System.Windows.Forms.RadioButton radioChart;
+		private System.Windows.Forms.RadioButton radioTable;
 		private System.Windows.Forms.RadioButton radioGraph;
 		private System.Windows.Forms.ComboBox cboxData;
 		private System.Windows.Forms.Label lblData;
@@ -444,7 +447,7 @@
 		private System.Windows.Forms.CheckBox chkboxAverage;
 		private System.Windows.Forms.TextBox tboxStdDev;
 		private System.Windows.Forms.TextBox tboxAverage;
-		private System.Windows.Forms.TextBox tboxFilename;
+		private System.Windows.Forms.TextBox tboxName;
 		private System.Windows.Forms.TextBox tboxLongitude;
 		private System.Windows.Forms.TextBox tboxLatitude;
 		private System.Windows.Forms.Label lblName;

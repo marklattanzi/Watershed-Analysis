@@ -30,7 +30,7 @@ namespace warmf {
 			if (max < 10) 
 				return 10;
 			else
-				return (max / 10) * 10;
+				return ((max+10) / 10) * 10;
 		}
 	}
 }

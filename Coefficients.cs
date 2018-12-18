@@ -781,6 +781,7 @@ namespace warmf {
             List<int> nums;
             List<double> dnums;
 
+			Logger.Info("Reading coefficients file " + filename);
             STechStreamReader sr = null;
             try {
                 sr = new STechStreamReader(filename);

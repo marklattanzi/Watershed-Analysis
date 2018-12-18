@@ -14,6 +14,7 @@ namespace warmf {
 		FormMain parent;
 		METFile met;
 		bool needToSave;
+		string fileInTable;
 
 		public static readonly string[] PlotFileTypes = new string[] {
 			"Meterology", "Air Quality", "Observed Hydrology", "Observed Water Quality", "Managed Flow", "Point Sources", "Pictures"
@@ -34,51 +35,54 @@ namespace warmf {
 			this.Load += new System.EventHandler(this.FormData_Load);
 			this.ResizeEnd += new EventHandler(DataForm_ResizeEnd);
 			this.toolDataGrid.CellValueChanged += toolGrid_CellChanged;
+			this.tboxLatitude.Leave += new System.EventHandler(this.tbox_Leave);
+			this.tboxLongitude.Leave += new System.EventHandler(this.tbox_Leave);
+
 		}
 
 		// nothing in here at the moment
-		private void FormData_Load(object sender, EventArgs e) {
-		}
+		private void FormData_Load(object sender, EventArgs e) { }
 
 		// menu item handlers
 		private void miExit_Click(object sender, EventArgs e) {
+			SaveFormData();
 			parent.ShowForm("engineering");
 		}
-
 		private void miData_Click(object sender, EventArgs e) {
 			parent.ShowForm("data");
 		}
-
 		private void miKnowledge_Click(object sender, EventArgs e) {
+			SaveFormData();
 			parent.ShowForm("knowledge");
 		}
-
 		private void miManager_Click(object sender, EventArgs e) {
+			SaveFormData();
 			parent.ShowForm("manager");
 		}
-
 		private void miTMDL_Click(object sender, EventArgs e) {
+			SaveFormData();
 			parent.ShowForm("tmdl");
 		}
-
 		private void miConsensus_Click(object sender, EventArgs e) {
+			SaveFormData();
 			parent.ShowForm("consensus");
 		}
-
 		private void miEngineering_Click(object sender, EventArgs e) {
+			SaveFormData();
 			parent.ShowForm("engineering");
 		}
+
 		// graph form resize handler 
 		private void DataForm_ResizeEnd(Object sender, EventArgs r) {
-			if (radioGraph.Checked) plotGraph();
+			if (radioGraph.Checked) PlotGraph();
 		}
 
 		// these routines need to be updated for other file types (than MET) --MRL
 		// pick data to graph
-		private void plotGraph() {
+		private void PlotGraph() {
 			switch (cboxTypeOfFile.SelectedIndex) {
 				case 0: // MET
-					plotMETData();
+					PlotMETData();
 					break;
 				case 1: // AIR QUALITY
 					break;
@@ -94,11 +98,12 @@ namespace warmf {
 					break;
 			}
 		}
-		// pick data to display in grid
-		private void fillGrid() {
+
+		// pick data to display in table
+		private void FillTable() {
 			switch (cboxTypeOfFile.SelectedIndex) {
 				case 0: // MET
-					fillMETGrid();
+					FillMETTable();
 					break;
 				case 1: // AIR QUALITY
 					break;
@@ -114,8 +119,9 @@ namespace warmf {
 					break;
 			}
 		}
+
 		// populate Filename and Data selectors based on Type of Data File picked
-		private void populateSelectors(int dataIdx) {
+		private void PopulateSelectors(int dataIdx) {
 			switch (dataIdx) {
 				case 0: // MET
 					for (int ii = 0; ii < Global.coe.numMETFiles; ii++)
@@ -143,21 +149,24 @@ namespace warmf {
 
 		// Type of Data File selector handler
 		private void cboxTypeOfFile_SelectedIndexChanged(object sender, EventArgs e) {
-			populateSelectors(cboxTypeOfFile.SelectedIndex);
+			SaveFormData();
+			PopulateSelectors(cboxTypeOfFile.SelectedIndex);
 		}
 
 		// Filename selector handler
 		private void cboxFilename_SelectedIndexChanged(object sender, EventArgs e) {
 			switch (cboxTypeOfFile.SelectedIndex) {
 				case 0: // MET
+					SaveFormData();
 					if (cboxFilename.SelectedIndex != -1) {
 						string filename = "data/met/" + Global.coe.METFilename[cboxFilename.SelectedIndex];
 						met = new METFile(filename);
 						if (met.ReadMETFile()) {
+							ShowHeaderData();
 							if (radioGraph.Checked)
-								plotMETData();
+								PlotMETData();
 							else
-								fillMETGrid();
+								FillMETTable();
 						}
 					}
 					break;
@@ -178,60 +187,129 @@ namespace warmf {
 
 		// Data element selector handler
 		private void cboxData_SelectedIndexChanged(object sender, EventArgs e) {
-			if (radioGraph.Checked)	plotGraph();
+			if (radioGraph.Checked) PlotGraph();
 		}
 
 		// Average or Std Dev handler
 		private void chkboxAverage_CheckedChanged(object sender, EventArgs e) {
-			if (radioGraph.Checked)	plotGraph();
+			if (radioGraph.Checked) PlotGraph();
 		}
 		private void chkboxStdDev_CheckedChanged(object sender, EventArgs e) {
-			if (radioGraph.Checked)	plotGraph();
+			if (radioGraph.Checked) PlotGraph();
 		}
 
 		// Data grid handlers
 		private void toolGrid_CellChanged(object sender, DataGridViewCellEventArgs e) {
+			double dblRes;
+			needToSave = true;
+			Double.TryParse(toolDataGrid[e.ColumnIndex, e.RowIndex].Value.ToString(), out dblRes);
+			switch (e.ColumnIndex) {
+				case 1:  // date change
+					met.date[e.RowIndex] = Convert.ToDateTime(toolDataGrid[e.ColumnIndex, e.RowIndex].Value + " " + toolDataGrid[e.RowIndex, e.ColumnIndex + 1].Value);
+					break;
+				case 2:  // time change
+					met.date[e.RowIndex] = Convert.ToDateTime(toolDataGrid[e.ColumnIndex, e.RowIndex - 1].Value + " " + toolDataGrid[e.RowIndex, e.ColumnIndex].Value);
+					break;
+				case 3: met.precip[e.RowIndex] = dblRes; break;
+				case 4: met.minTemp[e.RowIndex] = dblRes; break;
+				case 5: met.maxTemp[e.RowIndex] = dblRes; break;
+				case 6: met.cloudCover[e.RowIndex] = dblRes; break;
+				case 7: met.dewPointTemp[e.RowIndex] = dblRes; break;
+				case 8: met.airPressure[e.RowIndex] = dblRes; break;
+				case 9: met.windSpeed[e.RowIndex] = dblRes; break;
+				case 10: met.comment[e.RowIndex] = toolDataGrid[e.ColumnIndex, e.RowIndex].Value.ToString(); break;
+			}
+		}
+
+		// changed name text box
+		private void tboxName_TextChanged(object sender, EventArgs e) {
+			needToSave = true;
+			met.shortName = tboxName.Text;
+		}
+
+		// validate text boxes
+		private void validateTextBoxes() {
+			double dblRes;
+			if (Double.TryParse(tboxLatitude.Text, out dblRes)) {
+				met.latitude = dblRes;
+			}
+			else {
+				tboxLatitude.Text = met.latitude.ToString();
+				WMDialog dialog = new WMDialog("Data Error", "Error in latitude data.  Reverting to file data.", false);
+				dialog.ShowDialog();
+			}
+
+			if (Double.TryParse(tboxLongitude.Text, out dblRes)) {
+				met.longitude = dblRes;
+			}
+			else {
+				tboxLongitude.Text = met.longitude.ToString();
+				WMDialog dialog = new WMDialog("Data Error", "Error in longitude data.  Reverting to file data.", false);
+				dialog.ShowDialog();
+			}
+		}
+
+		// changed name/lat/long text box
+		private void tbox_TextChanged(object sender, EventArgs e) {
 			needToSave = true;
 		}
 
-		// ask to save data if changed
-		private bool saveGridData() {
-			if (needToSave) {
-				writeMETFile();
-				needToSave = false;
-			}
-			return true;
+		// leave lat/long text box
+		private void tbox_Leave(object sender, EventArgs e) {
+			needToSave = true;
+			validateTextBoxes();	// check now for coutesy, but it gets validated before saving
 		}
-		// chart or graph handler
-		private void ChartOrGraph() {
-			if (radioChart.Checked) {
+
+		private void radioTableGraph_CheckedChanged(object sender, EventArgs e) {
+			if (radioTable.Checked) {
 				toolDataGrid.Show();
 				toolGraph.Hide();
-				fillGrid();
+				FillTable();
 			}
 			else {
-				if (saveGridData()) {
-					toolDataGrid.Hide();
-					needToSave = false;
-					toolGraph.Show();
-					plotGraph();
-				}
+				toolDataGrid.Hide();
+				toolGraph.Show();
+				PlotGraph();
 			}
-
 		}
-		private void radioChart_CheckedChanged(object sender, EventArgs e) { ChartOrGraph(); }
-		private void radioGraph_CheckedChanged(object sender, EventArgs e) { ChartOrGraph(); }
-		
+
+		// ask to save data if changed
+		private bool SaveFormData() {
+			if (needToSave) {
+				validateTextBoxes();
+				int result = WriteMETFile();
+				if (result != -1) { // user didn't cancel
+					needToSave = false;
+					return true;    // all good, so leave grid whether saved or not
+				}
+				return false;   // user canceled operation
+			}
+			return true;    // don't need to save				
+		}
+
 		// ***************************** MET FILE handlers *******************************
 
 		// write out MET file data
-		private void writeMETFile() {
-			MessageBox.Show("Saving MET file "+met.filename);  // change to ask user if they want to save
-			met.WriteMETFile(toolDataGrid);
+		private int WriteMETFile() {
+			WMDialog dialog = new WMDialog("MET File Write Confirmation", "There is unsaved data for this MET file.\nDo you wish to save it?", true, true);
+			dialog.setLabels("Save", "Discard");
+			dialog.ShowDialog();
+			if (dialog.Result == 1) {
+				met.WriteMETFile();
+			}
+			return dialog.Result;
+		}
+
+		// display METfile header data on form
+		private void ShowHeaderData() {
+			tboxName.Text = met.shortName;
+			tboxLatitude.Text = met.latitude.ToString();
+			tboxLongitude.Text = met.longitude.ToString();
+			needToSave = false;
 		}
 
 		// plots MET file data
-		private void plotMETData() {
+		private void PlotMETData() {
 			List<double> data = null;
 
 			if (cboxData.SelectedIndex != -1) {
@@ -249,11 +327,13 @@ namespace warmf {
 				toolGraph.Titles.Clear();
 				toolGraph.ChartAreas[0].AxisY.StripLines.Clear();
 
-				tboxFilename.Text = met.filename.Substring(9);
-				tboxLatitude.Text = met.latitude.ToString();
-				tboxLongitude.Text = met.longitude.ToString();
-				tboxAverage.Text = data.Average().ToString("0.00000");
-				tboxStdDev.Text = Extensions.StdDev(data).ToString("0.00000");
+				try {
+					tboxAverage.Text = data.Average().ToString("0.00000");
+					tboxStdDev.Text = Extensions.StdDev(data).ToString("0.00000");
+				}
+				catch (Exception e) {
+					// likely no data in file
+				}
 
 				Series series = toolGraph.Series["data"];
 				series.Points.Clear();
@@ -317,8 +397,11 @@ namespace warmf {
 			}
 		}
 
-		// fills MET file grid
-		private void fillMETGrid() {
+		// fills MET file data table
+		private void FillMETTable() {
+			if (needToSave) return;
+			if (toolDataGrid.RowCount != 0 && met.filename == fileInTable) return;
+
 			toolDataGrid.Rows.Clear();
 			if (cboxFilename.SelectedIndex != -1) {
 				toolDataGrid.ColumnCount = 11;
@@ -342,8 +425,8 @@ namespace warmf {
 				for (int ii = 0; ii < met.date.Count(); ii++) {
 					string[] row = new string[]
 						{   ii.ToString(),
-							met.date[ii].ToString("yyyy"),
-							met.clockTime[ii],
+							met.date[ii].ToString("MM/dd/yyyy"),
+							met.date[ii].ToString("HH:mm"),
 							met.precip[ii].ToString(),
 							met.minTemp[ii].ToString(),
 							met.maxTemp[ii].ToString(),
@@ -355,6 +438,7 @@ namespace warmf {
 						};
 					toolDataGrid.Rows.Add(row);
 				}
+				fileInTable = met.filename;
 			}
 		}
 	}
