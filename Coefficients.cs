@@ -211,7 +211,7 @@ namespace warmf {
         public List<double> leafComp;
         public List<double> trunkComp;
         public int numFertPlans;
-        public List<List<double>> fertPlanApplication;
+        public List<List<List<double>>> fertPlanApplication;
     }
 
     public struct CatchSeptic {
@@ -1230,11 +1230,13 @@ namespace warmf {
                         lu.trunkComp = ReadDoubleData(sr, "TRCMPD", numChemicalParams);
 
                         lu.numFertPlans = ReadInt(sr, "FERTLZ");
-                        lu.fertPlanApplication = new List<List<double>>();
+                        lu.fertPlanApplication = new List<List<List<double>>>();
+						List <List<double>> fertPlan = new List<List<double>>();
                         for (int jj = 0; jj < lu.numFertPlans; jj++) {
                             for (int kk = 0; kk < 12; kk++) {
-                                lu.fertPlanApplication.Add(ReadDoubleData(sr, "FERTLZ", numComponents));
+							fertPlan.Add(ReadDoubleData(sr, "FERTLZ", numComponents));
                             }
+							lu.fertPlanApplication.Add(fertPlan);
                         }
 						landuse.Add(lu);
                     }
