@@ -34,7 +34,7 @@ namespace warmf
             List<string> landuselist = new List<string>();
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
-               landuselist.Add (Global.coe.landuse.ElementAt(ii).name.ToString());
+               landuselist.Add (Global.coe.landuse[ii].name.ToString());
             }
 
             //list of chemical and physical constituents
@@ -62,7 +62,7 @@ namespace warmf
             //Physical Data tab
             tbName.Text = catchment.name.ToString();
             tbCatchID.Text = catchment.idNum.ToString();
-            tbArea.Text = catchment.soils.ElementAt(1).area.ToString();
+            tbArea.Text = catchment.soils[1].area.ToString();
             tbWidth.Text = catchment.width.ToString();
             tbAspect.Text = catchment.aspect.ToString();
             tbSlope.Text = catchment.slope.ToString();
@@ -70,18 +70,18 @@ namespace warmf
             tbRoughness.Text = catchment.ManningN.ToString();
 
             //Meteorology tab
-            tbMetFile.Text = Global.coe.METFilename.ElementAt(catchment.METFileNum);
+            tbMetFile.Text = Global.coe.METFilename[catchment.METFileNum];
             tbPrecipWeight.Text = catchment.precipMultiplier.ToString();
             tbTempLapse.Text = catchment.aveTempLapse.ToString();
             tbAltLapse.Text = catchment.altitudeTempLapse.ToString();
-            tbAirFile.Text = Global.coe.AIRFilename.ElementAt(catchment.airRainChemFileNum - 1);
+            tbAirFile.Text = Global.coe.AIRFilename[catchment.airRainChemFileNum - 1];
             //tbPartAir.Text = Global.coe.//(catchment.particleRainChemFileNum);
 
             //Land Uses tab
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
-                string Percent = catchment.landUsePercent.ElementAt(ii).ToString("F2");
-                string luName = Global.coe.landuse.ElementAt(ii).name;
+                string Percent = catchment.landUsePercent[ii].ToString("F2");
+                string luName = Global.coe.landuse[ii].name;
                 dgLanduse.Rows.Insert(ii, luName, Percent);
             }
 
@@ -92,19 +92,44 @@ namespace warmf
 
             int iFertPlanNum = catchment.fertPlanNum[cbLanduse.SelectedIndex];
             int iNumParams = Global.coe.numChemicalParams + Global.coe.numPhysicalParams;
-
-            for (int iParam = 0; iParam < iNumParams; iParam++)
+            if (dgLandApp.Rows.Count == 0)
             {
-                dgLandApp.Rows.Insert(iParam);
-                string NameUnit = ConstitsList[iParam].ToString() + " (" + UnitsList[iParam].ToString().Trim() + ")";
-                dgLandApp.Rows[iParam].HeaderCell.Value = NameUnit.ToString();
-                for (int iMonth = 0; iMonth < 12; iMonth++)
+                //populate datagridview
+                for (int iParam = 0; iParam < iNumParams; iParam++)
                 {
-                    dgLandApp.Rows[iParam].Cells[iMonth].Value = Global.coe.landuse[cbLanduse.SelectedIndex].fertPlanApplication[iFertPlanNum][iMonth][iParam];
+                    string NameUnit = ConstitsList[iParam].ToString() + " (" + UnitsList[iParam].ToString().Trim() + ")";
+                    dgLandApp.Rows.Insert(iParam);
+                    dgLandApp.Rows[iParam].HeaderCell.Value = NameUnit.ToString();
+                    for (int iMonth = 0; iMonth < 12; iMonth++)
+                    {
+                        dgLandApp.Rows[iParam].Cells[iMonth].Value = Global.coe.landuse[cbLanduse.SelectedIndex].fertPlanApplication[iFertPlanNum][iMonth][iParam];
+                    }
                 }
+                //hide chemical and physical parameters that aren't applicable
+                List<int> HideList = new List<int> { 0, 1, 2, 15, 16, 20, 22, 23, 24, 29, 30, 31, 32, 37 };
+                for (int ii = 0; ii < iNumParams; ii++)
+                {
+                    if (HideList.Contains(ii))
+                    {
+                        dgLandApp.Rows[ii].Visible = false;
+                    }
+                }
+                //Format datagridview
+                dgLandApp.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+                dgLandApp.AllowUserToAddRows = false;
+                dgLandApp.AllowUserToDeleteRows = false;
+                dgLandApp.AllowUserToOrderColumns = false;
+                dgLandApp.ReadOnly = false;
+
+                tbMaxAccTime.Text = catchment.bmp.maxFertAccumTime.ToString();
             }
-            
+
             //Irrigation tab
+            cbIrrLandUse.Items.Clear();
+            cbIrrLandUse.Items.AddRange(landuselist.ToArray());
+            cbIrrLandUse.SelectedIndex = 7;
+
+            catchment.numIrrigationSources[cbIrrLandUse.SelectedIndex];
 
             //Sediment tab
 
@@ -123,6 +148,16 @@ namespace warmf
             //Mining tab
 
             //CE-QUAL-W2 tab
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
         }
     }

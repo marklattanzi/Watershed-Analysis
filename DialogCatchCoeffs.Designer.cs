@@ -87,6 +87,11 @@
             this.colNov = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDec = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tpIrrigation = new System.Windows.Forms.TabPage();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cbIrrLandUse = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.tpSediment = new System.Windows.Forms.TabPage();
             this.tpBMPs = new System.Windows.Forms.TabPage();
             this.tpPtSrc = new System.Windows.Forms.TabPage();
@@ -102,6 +107,17 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ColIrrSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPct = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnBalance = new System.Windows.Forms.Button();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.btnSelect = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tcCatchTabs.SuspendLayout();
             this.tpPhysData.SuspendLayout();
             this.gbSizeSlope.SuspendLayout();
@@ -114,7 +130,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgLanduse)).BeginInit();
             this.tpLandAp.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgLandApp)).BeginInit();
+            this.tpIrrigation.SuspendLayout();
             this.tabControl2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcCatchTabs
@@ -598,6 +617,7 @@
             this.colJan.HeaderText = "January";
             this.colJan.MaxInputLength = 16;
             this.colJan.Name = "colJan";
+            this.colJan.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.colJan.Width = 75;
             // 
             // colFeb
@@ -605,6 +625,7 @@
             this.colFeb.HeaderText = "February";
             this.colFeb.MaxInputLength = 16;
             this.colFeb.Name = "colFeb";
+            this.colFeb.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.colFeb.Width = 75;
             // 
             // colMar
@@ -612,6 +633,7 @@
             this.colMar.HeaderText = "March";
             this.colMar.MaxInputLength = 16;
             this.colMar.Name = "colMar";
+            this.colMar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.colMar.Width = 75;
             // 
             // colApr
@@ -619,6 +641,7 @@
             this.colApr.HeaderText = "April";
             this.colApr.MaxInputLength = 16;
             this.colApr.Name = "colApr";
+            this.colApr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.colApr.Width = 75;
             // 
             // colMay
@@ -626,6 +649,7 @@
             this.colMay.HeaderText = "May";
             this.colMay.MaxInputLength = 16;
             this.colMay.Name = "colMay";
+            this.colMay.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.colMay.Width = 75;
             // 
             // colJun
@@ -633,6 +657,7 @@
             this.colJun.HeaderText = "June";
             this.colJun.MaxInputLength = 16;
             this.colJun.Name = "colJun";
+            this.colJun.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.colJun.Width = 75;
             // 
             // colJul
@@ -640,6 +665,7 @@
             this.colJul.HeaderText = "July";
             this.colJul.MaxInputLength = 16;
             this.colJul.Name = "colJul";
+            this.colJul.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.colJul.Width = 75;
             // 
             // colAug
@@ -647,6 +673,7 @@
             this.colAug.HeaderText = "August";
             this.colAug.MaxInputLength = 16;
             this.colAug.Name = "colAug";
+            this.colAug.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.colAug.Width = 75;
             // 
             // colSep
@@ -654,6 +681,7 @@
             this.colSep.HeaderText = "September";
             this.colSep.MaxInputLength = 16;
             this.colSep.Name = "colSep";
+            this.colSep.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.colSep.Width = 75;
             // 
             // colOct
@@ -661,6 +689,7 @@
             this.colOct.HeaderText = "October";
             this.colOct.MaxInputLength = 16;
             this.colOct.Name = "colOct";
+            this.colOct.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.colOct.Width = 75;
             // 
             // colNov
@@ -668,6 +697,7 @@
             this.colNov.HeaderText = "November";
             this.colNov.MaxInputLength = 16;
             this.colNov.Name = "colNov";
+            this.colNov.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.colNov.Width = 75;
             // 
             // colDec
@@ -675,10 +705,22 @@
             this.colDec.HeaderText = "December";
             this.colDec.MaxInputLength = 16;
             this.colDec.Name = "colDec";
+            this.colDec.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.colDec.Width = 75;
             // 
             // tpIrrigation
             // 
+            this.tpIrrigation.Controls.Add(this.groupBox2);
+            this.tpIrrigation.Controls.Add(this.btnClear);
+            this.tpIrrigation.Controls.Add(this.btnSelect);
+            this.tpIrrigation.Controls.Add(this.textBox2);
+            this.tpIrrigation.Controls.Add(this.btnBalance);
+            this.tpIrrigation.Controls.Add(this.btnDelete);
+            this.tpIrrigation.Controls.Add(this.btnAdd);
+            this.tpIrrigation.Controls.Add(this.dataGridView1);
+            this.tpIrrigation.Controls.Add(this.cbIrrLandUse);
+            this.tpIrrigation.Controls.Add(this.label4);
+            this.tpIrrigation.Controls.Add(this.groupBox1);
             this.tpIrrigation.Location = new System.Drawing.Point(4, 46);
             this.tpIrrigation.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tpIrrigation.Name = "tpIrrigation";
@@ -687,6 +729,49 @@
             this.tpIrrigation.TabIndex = 4;
             this.tpIrrigation.Text = "Irrigation";
             this.tpIrrigation.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(170, 20);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(99, 22);
+            this.textBox1.TabIndex = 10;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(100, 50);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(308, 16);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "* Assumes average source flow over period of record";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(275, 23);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(48, 16);
+            this.label6.TabIndex = 8;
+            this.label6.Text = "m/year";
+            // 
+            // cbIrrLandUse
+            // 
+            this.cbIrrLandUse.FormattingEnabled = true;
+            this.cbIrrLandUse.Location = new System.Drawing.Point(247, 7);
+            this.cbIrrLandUse.Name = "cbIrrLandUse";
+            this.cbIrrLandUse.Size = new System.Drawing.Size(229, 24);
+            this.cbIrrLandUse.TabIndex = 6;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(180, 10);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(61, 16);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Landuse:";
             // 
             // tpSediment
             // 
@@ -842,13 +927,114 @@
             this.btnHelp.Text = "Help";
             this.btnHelp.UseVisualStyleBackColor = true;
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColIrrSource,
+            this.colPct});
+            this.dataGridView1.Location = new System.Drawing.Point(20, 110);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.Size = new System.Drawing.Size(630, 110);
+            this.dataGridView1.TabIndex = 11;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // ColIrrSource
+            // 
+            this.ColIrrSource.HeaderText = "Irrigation Source";
+            this.ColIrrSource.Name = "ColIrrSource";
+            this.ColIrrSource.ReadOnly = true;
+            this.ColIrrSource.Width = 400;
+            // 
+            // colPct
+            // 
+            this.colPct.HeaderText = "% of Irrigation source";
+            this.colPct.Name = "colPct";
+            this.colPct.Width = 230;
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Location = new System.Drawing.Point(160, 230);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(80, 30);
+            this.btnAdd.TabIndex = 12;
+            this.btnAdd.Text = "Add";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Enabled = false;
+            this.btnDelete.Location = new System.Drawing.Point(270, 230);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(80, 30);
+            this.btnDelete.TabIndex = 13;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            // 
+            // btnBalance
+            // 
+            this.btnBalance.Enabled = false;
+            this.btnBalance.Location = new System.Drawing.Point(380, 230);
+            this.btnBalance.Name = "btnBalance";
+            this.btnBalance.Size = new System.Drawing.Size(130, 30);
+            this.btnBalance.TabIndex = 14;
+            this.btnBalance.Text = "Balance Sources";
+            this.btnBalance.UseVisualStyleBackColor = true;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(50, 310);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(300, 22);
+            this.textBox2.TabIndex = 15;
+            // 
+            // btnSelect
+            // 
+            this.btnSelect.Location = new System.Drawing.Point(370, 306);
+            this.btnSelect.Name = "btnSelect";
+            this.btnSelect.Size = new System.Drawing.Size(80, 30);
+            this.btnSelect.TabIndex = 16;
+            this.btnSelect.Text = "Select";
+            this.btnSelect.UseVisualStyleBackColor = true;
+            // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(470, 306);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(80, 30);
+            this.btnClear.TabIndex = 17;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Location = new System.Drawing.Point(30, 280);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(540, 70);
+            this.groupBox1.TabIndex = 18;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Prescribed Ponding Depth File:";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Controls.Add(this.textBox1);
+            this.groupBox2.Controls.Add(this.label6);
+            this.groupBox2.Location = new System.Drawing.Point(30, 40);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(540, 70);
+            this.groupBox2.TabIndex = 19;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Calculated Applied Water Rate";
+            // 
             // FormCatch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoScrollMargin = new System.Drawing.Size(5, 5);
-            this.ClientSize = new System.Drawing.Size(675, 637);
+            this.ClientSize = new System.Drawing.Size(549, 637);
             this.Controls.Add(this.btnHelp);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
@@ -878,7 +1064,12 @@
             this.tpLandAp.ResumeLayout(false);
             this.tpLandAp.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgLandApp)).EndInit();
+            this.tpIrrigation.ResumeLayout(false);
+            this.tpIrrigation.PerformLayout();
             this.tabControl2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -959,5 +1150,21 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colOct;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNov;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDec;
+        private System.Windows.Forms.ComboBox cbIrrLandUse;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Button btnSelect;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button btnBalance;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColIrrSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPct;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
