@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+// Utility routines
 namespace warmf {
 	class Extensions {
 		// return std deviation for a list of doubles
