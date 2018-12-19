@@ -48,6 +48,17 @@ namespace warmf
                 ConstitsList.Add(Global.coe.physicalConstits[ii].fullName.ToString());
             }
 
+            //units for each chemical and physical parameter
+            List<string> UnitsList = new List<string>();
+            for (int ii = 0; ii < Global.coe.numChemicalParams; ii++)
+            {
+                UnitsList.Add(Global.coe.chemConstits[ii].units.ToString());
+            }
+            for (int ii = 0; ii < Global.coe.numPhysicalParams; ii++)
+            {
+                UnitsList.Add(Global.coe.physicalConstits[ii].units.ToString());
+            }
+
             //Physical Data tab
             tbName.Text = catchment.name.ToString();
             tbCatchID.Text = catchment.idNum.ToString();
@@ -82,20 +93,16 @@ namespace warmf
             int iFertPlanNum = catchment.fertPlanNum[cbLanduse.SelectedIndex];
             int iNumParams = Global.coe.numChemicalParams + Global.coe.numPhysicalParams;
 
-            double[] dblArray = new double[12];
             for (int iParam = 0; iParam < iNumParams; iParam++)
             {
+                dgLandApp.Rows.Insert(iParam);
+                string NameUnit = ConstitsList[iParam].ToString() + " (" + UnitsList[iParam].ToString().Trim() + ")";
+                dgLandApp.Rows[iParam].HeaderCell.Value = NameUnit.ToString();
                 for (int iMonth = 0; iMonth < 12; iMonth++)
                 {
-                    dblArray[iMonth] = Global.coe.landuse[cbLanduse.SelectedIndex].fertPlanApplication[iFertPlanNum][iMonth][iParam];
+                    dgLandApp.Rows[iParam].Cells[iMonth].Value = Global.coe.landuse[cbLanduse.SelectedIndex].fertPlanApplication[iFertPlanNum][iMonth][iParam];
                 }
-                dgLandApp.Rows.Add(dblArray);
-                Array.Clear(dblArray, 0, dblArray.Length);
             }
-            
-            //Global.coe.
-            //catchment.fertPlanNum.ElementAt(cbLanduse.SelectedIndex).ToString(); //fert plan number for the catchment for the selected landuse
-            //Global.coe.landuse.ElementAt(cbLanduse.SelectedIndex).fertPlanApplication
             
             //Irrigation tab
 
