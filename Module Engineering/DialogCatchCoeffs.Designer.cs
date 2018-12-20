@@ -87,11 +87,22 @@
             this.colNov = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDec = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tpIrrigation = new System.Windows.Forms.TabPage();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.btnSelect = new System.Windows.Forms.Button();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.btnBalance = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ColIrrSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPct = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cbIrrLandUse = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tpSediment = new System.Windows.Forms.TabPage();
             this.tpBMPs = new System.Windows.Forms.TabPage();
             this.tpPtSrc = new System.Windows.Forms.TabPage();
@@ -107,17 +118,6 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.ColIrrSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPct = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.btnBalance = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.btnSelect = new System.Windows.Forms.Button();
-            this.btnClear = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tcCatchTabs.SuspendLayout();
             this.tpPhysData.SuspendLayout();
             this.gbSizeSlope.SuspendLayout();
@@ -131,9 +131,9 @@
             this.tpLandAp.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgLandApp)).BeginInit();
             this.tpIrrigation.SuspendLayout();
-            this.tabControl2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.tabControl2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcCatchTabs
@@ -730,13 +730,17 @@
             this.tpIrrigation.Text = "Irrigation";
             this.tpIrrigation.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // groupBox2
             // 
-            this.textBox1.Location = new System.Drawing.Point(170, 20);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(99, 22);
-            this.textBox1.TabIndex = 10;
+            this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Controls.Add(this.textBox1);
+            this.groupBox2.Controls.Add(this.label6);
+            this.groupBox2.Location = new System.Drawing.Point(30, 40);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(540, 70);
+            this.groupBox2.TabIndex = 19;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Calculated Applied Water Rate";
             // 
             // label7
             // 
@@ -747,6 +751,14 @@
             this.label7.TabIndex = 9;
             this.label7.Text = "* Assumes average source flow over period of record";
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(170, 20);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(99, 22);
+            this.textBox1.TabIndex = 10;
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -755,6 +767,86 @@
             this.label6.Size = new System.Drawing.Size(48, 16);
             this.label6.TabIndex = 8;
             this.label6.Text = "m/year";
+            // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(470, 306);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(80, 30);
+            this.btnClear.TabIndex = 17;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            // 
+            // btnSelect
+            // 
+            this.btnSelect.Location = new System.Drawing.Point(370, 306);
+            this.btnSelect.Name = "btnSelect";
+            this.btnSelect.Size = new System.Drawing.Size(80, 30);
+            this.btnSelect.TabIndex = 16;
+            this.btnSelect.Text = "Select";
+            this.btnSelect.UseVisualStyleBackColor = true;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(50, 310);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(300, 22);
+            this.textBox2.TabIndex = 15;
+            // 
+            // btnBalance
+            // 
+            this.btnBalance.Enabled = false;
+            this.btnBalance.Location = new System.Drawing.Point(380, 230);
+            this.btnBalance.Name = "btnBalance";
+            this.btnBalance.Size = new System.Drawing.Size(130, 30);
+            this.btnBalance.TabIndex = 14;
+            this.btnBalance.Text = "Balance Sources";
+            this.btnBalance.UseVisualStyleBackColor = true;
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Enabled = false;
+            this.btnDelete.Location = new System.Drawing.Point(270, 230);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(80, 30);
+            this.btnDelete.TabIndex = 13;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Location = new System.Drawing.Point(160, 230);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(80, 30);
+            this.btnAdd.TabIndex = 12;
+            this.btnAdd.Text = "Add";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColIrrSource,
+            this.colPct});
+            this.dataGridView1.Location = new System.Drawing.Point(20, 110);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.Size = new System.Drawing.Size(630, 110);
+            this.dataGridView1.TabIndex = 11;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // ColIrrSource
+            // 
+            this.ColIrrSource.HeaderText = "Irrigation Source";
+            this.ColIrrSource.Name = "ColIrrSource";
+            this.ColIrrSource.ReadOnly = true;
+            this.ColIrrSource.Width = 400;
+            // 
+            // colPct
+            // 
+            this.colPct.HeaderText = "% of Irrigation source";
+            this.colPct.Name = "colPct";
+            this.colPct.Width = 230;
             // 
             // cbIrrLandUse
             // 
@@ -772,6 +864,15 @@
             this.label4.Size = new System.Drawing.Size(61, 16);
             this.label4.TabIndex = 5;
             this.label4.Text = "Landuse:";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Location = new System.Drawing.Point(30, 280);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(540, 70);
+            this.groupBox1.TabIndex = 18;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Prescribed Ponding Depth File:";
             // 
             // tpSediment
             // 
@@ -927,114 +1028,13 @@
             this.btnHelp.Text = "Help";
             this.btnHelp.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ColIrrSource,
-            this.colPct});
-            this.dataGridView1.Location = new System.Drawing.Point(20, 110);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(630, 110);
-            this.dataGridView1.TabIndex = 11;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // ColIrrSource
-            // 
-            this.ColIrrSource.HeaderText = "Irrigation Source";
-            this.ColIrrSource.Name = "ColIrrSource";
-            this.ColIrrSource.ReadOnly = true;
-            this.ColIrrSource.Width = 400;
-            // 
-            // colPct
-            // 
-            this.colPct.HeaderText = "% of Irrigation source";
-            this.colPct.Name = "colPct";
-            this.colPct.Width = 230;
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.Location = new System.Drawing.Point(160, 230);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(80, 30);
-            this.btnAdd.TabIndex = 12;
-            this.btnAdd.Text = "Add";
-            this.btnAdd.UseVisualStyleBackColor = true;
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.Enabled = false;
-            this.btnDelete.Location = new System.Drawing.Point(270, 230);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(80, 30);
-            this.btnDelete.TabIndex = 13;
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            // 
-            // btnBalance
-            // 
-            this.btnBalance.Enabled = false;
-            this.btnBalance.Location = new System.Drawing.Point(380, 230);
-            this.btnBalance.Name = "btnBalance";
-            this.btnBalance.Size = new System.Drawing.Size(130, 30);
-            this.btnBalance.TabIndex = 14;
-            this.btnBalance.Text = "Balance Sources";
-            this.btnBalance.UseVisualStyleBackColor = true;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(50, 310);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(300, 22);
-            this.textBox2.TabIndex = 15;
-            // 
-            // btnSelect
-            // 
-            this.btnSelect.Location = new System.Drawing.Point(370, 306);
-            this.btnSelect.Name = "btnSelect";
-            this.btnSelect.Size = new System.Drawing.Size(80, 30);
-            this.btnSelect.TabIndex = 16;
-            this.btnSelect.Text = "Select";
-            this.btnSelect.UseVisualStyleBackColor = true;
-            // 
-            // btnClear
-            // 
-            this.btnClear.Location = new System.Drawing.Point(470, 306);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(80, 30);
-            this.btnClear.TabIndex = 17;
-            this.btnClear.Text = "Clear";
-            this.btnClear.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Location = new System.Drawing.Point(30, 280);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(540, 70);
-            this.groupBox1.TabIndex = 18;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Prescribed Ponding Depth File:";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.textBox1);
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Location = new System.Drawing.Point(30, 40);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(540, 70);
-            this.groupBox2.TabIndex = 19;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Calculated Applied Water Rate";
-            // 
             // FormCatch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoScrollMargin = new System.Drawing.Size(5, 5);
-            this.ClientSize = new System.Drawing.Size(549, 637);
+            this.ClientSize = new System.Drawing.Size(693, 637);
             this.Controls.Add(this.btnHelp);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
@@ -1066,10 +1066,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgLandApp)).EndInit();
             this.tpIrrigation.ResumeLayout(false);
             this.tpIrrigation.PerformLayout();
-            this.tabControl2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tabControl2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
