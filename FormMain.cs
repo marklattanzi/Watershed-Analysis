@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Text;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Diagnostics;
+using EGIS;
+using EGIS.ShapeFileLib;
 
 namespace warmf {
 	public partial class FormMain : Form {
@@ -10,6 +15,9 @@ namespace warmf {
 		private FormTMDL frmTMDL;
 		private FormConsensus frmConsensus;
 
+		// what's on the map
+		bool showMETStations = false;
+		
 		// sub forms of Engineering (Main) module
 		public FormCatch frmCatch;
 
@@ -160,6 +168,13 @@ namespace warmf {
 		}
 
 		private void frmMap_MouseClick(object sender, MouseEventArgs e) {
+
+			// for debugging
+			//Point clickPt = new Point(e.X, e.Y);	clickPt is in GIS coords
+			//PointD pt = frmMap.PixelCoordToGisPoint(clickPt);
+			//MessageBox.Show("Pixel point = "+pt.X+", "+pt.Y+" :" + "GIS X,Y point = " + pt.X + ", " + pt.Y);
+			//return;
+
 			int recordIndex = frmMap.GetShapeIndexAtPixelCoord(0, e.Location, 8);
 			if (recordIndex >= 0) {
 				string[] recordAttributes = frmMap[0].GetAttributeFieldValues(recordIndex);
@@ -174,7 +189,13 @@ namespace warmf {
 
 				// test of coefficients file read
 				int ii = 0;
-				while (Global.coe.catchments[ii].idNum != catchNum) ii++;
+				while (Global.coe.catchments[ii].idNum != catchNum)
+					if (ii < Global.coe.numCatchments - 1)
+						ii++;
+					else {
+						Debug.WriteLine("No catchment found with IDnum = " + catchNum);
+						return;
+					}
 
 				sb.AppendLine("Name:" + Global.coe.catchments[ii].name);
 				sb.AppendLine("MET file:" + Global.coe.METFilename[Global.coe.catchments[ii].METFileNum]);
@@ -249,6 +270,63 @@ namespace warmf {
 			ShowForm("engineering");
 		}
 
+		private void DrawMarker(Graphics g, double longitude, double latitude) {
+			Point pt = frmMap.GisPointToPixelCoord(longitude, latitude);
+			int width = 10;
+
+			g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+			g.DrawLine(Pens.Red, pt.X, pt.Y - width, pt.X, pt.Y + width);
+			g.DrawLine(Pens.Red, pt.X - width, pt.Y, pt.X + width, pt.Y);
+			pt.Offset(-width / 2, -width / 2);
+			g.FillEllipse(Brushes.Yellow, pt.X, pt.Y, width, width);
+			g.DrawEllipse(Pens.Red, pt.X, pt.Y, width, width);
+		}
+
+		private void miMETStations_Click(object sender, EventArgs e) {
+			//show MET stations on map
+			if (showMETStations) {
+				showMETStations = false;
+				miViewMETStations.Text = miViewMETStations.Text.Substring(1);
+				frmMap.Refresh();
+				return;
+			}
+			showMETStations = true;
+			miViewMETStations.Text = Global.checkmark + miViewMETStations.Text;
+			DrawMETStations(frmMap.CreateGraphics());
+		}
+			
+		// need to change to creating a new shpfile layer on frmMap and show/hide it - MRL
+		private void DrawMETStations(Graphics g) {
+			List<METFile> mFiles = new List<METFile>();
+			for (int ii = 0; ii < Global.coe.numMETFiles; ii++) {
+				METFile met = new METFile("data/met/" + Global.coe.METFilename[ii]);
+				met.ReadMETFile();  // for better performance, we could just read MET file headers with new method - MRL
+				mFiles.Add(met);
+			}
+
+			for (int ii = 0; ii < Global.coe.numMETFiles; ii++) {
+				METFile met = mFiles[ii];
+				DrawMarker(g, met.longitude, met.latitude);
+			}
+		}
+
+		private void frmMap_Load(object sender, EventArgs e) {
+			this.frmMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMap_MouseMove);
+			this.frmMap.Paint += new System.Windows.Forms.PaintEventHandler(this.frmMap_Paint);
+		}
+
+		private void frmMap_MouseMove(object sender, MouseEventArgs e) {
+			PointD pt = frmMap.PixelCoordToGisPoint(e.Y, e.X);
+			lblLatLong.Text = "Lat/Long: " + pt.Y + ", " + pt.X;
+		}
+
+		private void frmMap_Paint (object sender, PaintEventArgs e) {
+			if (showMETStations) {
+				Graphics g = e.Graphics;
+				DrawMETStations(g);
+			}
+				
+		}
 	}
 }
 

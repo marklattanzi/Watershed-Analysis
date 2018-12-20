@@ -98,7 +98,10 @@ namespace warmf {
 				}
 			}
 			catch (Exception e) {
-				Debug.WriteLine("Error in MET file.  Badly formatted data at line = " + sr.LineNum);
+				if (sr != null)
+					Debug.WriteLine("Error in MET file.  Badly formatted data at line = " + sr.LineNum);
+					else
+					Debug.WriteLine("Error opening StreamReader for MET file " + filename);
 				return false;
 			}
 			return true;

@@ -34,10 +34,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EGIS.Controls">
-      <HintPath>..\EGIS.Controls.dll</HintPath>
+      <HintPath>EGIS.Controls.dll</HintPath>
     </Reference>
     <Reference Include="EGIS.ShapeFileLib">
-      <HintPath>..\EGIS.ShapeFileLib.dll</HintPath>
+      <HintPath>EGIS.ShapeFileLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -155,6 +155,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\splash.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EGIS.Controls.dll" />
+    <Content Include="EGIS.ShapeFileLib.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
