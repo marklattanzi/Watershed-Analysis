@@ -53,78 +53,78 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions.cs" />
-    <Compile Include="DialogCatchCoeffs.cs">
+    <Compile Include="UtilityClasses\Extensions.cs" />
+    <Compile Include="Module Engineering\DialogCatchCoeffs.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DialogCatchCoeffs.Designer.cs">
+    <Compile Include="Module Engineering\DialogCatchCoeffs.Designer.cs">
       <DependentUpon>DialogCatchCoeffs.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormConsensus.cs">
+    <Compile Include="Module Consensus\FormConsensus.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormConsensus.Designer.cs">
+    <Compile Include="Module Consensus\FormConsensus.Designer.cs">
       <DependentUpon>FormConsensus.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormManager.cs">
+    <Compile Include="Module Manager\FormManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormManager.Designer.cs">
+    <Compile Include="Module Manager\FormManager.Designer.cs">
       <DependentUpon>FormManager.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormTMDL.cs">
+    <Compile Include="Module TMDL\FormTMDL.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormTMDL.Designer.cs">
+    <Compile Include="Module TMDL\FormTMDL.Designer.cs">
       <DependentUpon>FormTMDL.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logger.cs" />
-    <Compile Include="METFile.cs" />
-    <Compile Include="FormData.cs">
+    <Compile Include="UtilityClasses\Logger.cs" />
+    <Compile Include="DataStructs\METFile.cs" />
+    <Compile Include="Module Data\FormData.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormData.Designer.cs">
+    <Compile Include="Module Data\FormData.Designer.cs">
       <DependentUpon>FormData.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormKnowledge.cs">
+    <Compile Include="Module Knowledge\FormKnowledge.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormKnowledge.Designer.cs">
+    <Compile Include="Module Knowledge\FormKnowledge.Designer.cs">
       <DependentUpon>FormKnowledge.cs</DependentUpon>
     </Compile>
-    <Compile Include="STechStream.cs" />
-    <Compile Include="Global.cs" />
-    <Compile Include="Coefficients.cs" />
-    <Compile Include="WMDialog.cs">
+    <Compile Include="UtilityClasses\STechStream.cs" />
+    <Compile Include="Main\Global.cs" />
+    <Compile Include="DataStructs\Coefficients.cs" />
+    <Compile Include="UtilityClasses\WMDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMain.cs">
+    <Compile Include="Module Engineering\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMain.Designer.cs">
+    <Compile Include="Module Engineering\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Main\Application.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="DialogCatchCoeffs.resx">
+    <EmbeddedResource Include="Module Engineering\DialogCatchCoeffs.resx">
       <DependentUpon>DialogCatchCoeffs.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormConsensus.resx">
+    <EmbeddedResource Include="Module Consensus\FormConsensus.resx">
       <DependentUpon>FormConsensus.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormManager.resx">
+    <EmbeddedResource Include="Module Manager\FormManager.resx">
       <DependentUpon>FormManager.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormData.resx">
+    <EmbeddedResource Include="Module Data\FormData.resx">
       <DependentUpon>FormData.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormKnowledge.resx">
+    <EmbeddedResource Include="Module Knowledge\FormKnowledge.resx">
       <DependentUpon>FormKnowledge.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormMain.resx">
+    <EmbeddedResource Include="Module Engineering\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormTMDL.resx">
+    <EmbeddedResource Include="Module TMDL\FormTMDL.resx">
       <DependentUpon>FormTMDL.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -137,7 +137,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="WMDialog.resx">
+    <EmbeddedResource Include="UtilityClasses\WMDialog.resx">
       <DependentUpon>WMDialog.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -151,14 +151,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="Main\App.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\splash.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="EGIS.Controls.dll" />
-    <Content Include="EGIS.ShapeFileLib.dll" />
+    <Content Include="DLLs\EGIS.Controls.dll" />
+    <Content Include="DLLs\EGIS.ShapeFileLib.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

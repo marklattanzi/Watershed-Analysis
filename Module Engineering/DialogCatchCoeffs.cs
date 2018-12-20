@@ -129,7 +129,7 @@ namespace warmf
             cbIrrLandUse.Items.AddRange(landuselist.ToArray());
             cbIrrLandUse.SelectedIndex = 7;
 
-            catchment.numIrrigationSources[cbIrrLandUse.SelectedIndex];
+            //catchment.numIrrigationSources[cbIrrLandUse.SelectedIndex];
 
             //Sediment tab
 

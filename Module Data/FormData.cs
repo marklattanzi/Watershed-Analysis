@@ -159,7 +159,7 @@ namespace warmf {
 				case 0: // MET
 					SaveFormData();
 					if (cboxFilename.SelectedIndex != -1) {
-						string filename = "data/met/" + Global.coe.METFilename[cboxFilename.SelectedIndex];
+						string filename = Global.DATA_DIR + "met/" + Global.coe.METFilename[cboxFilename.SelectedIndex];
 						met = new METFile(filename);
 						if (met.ReadMETFile()) {
 							ShowHeaderData();

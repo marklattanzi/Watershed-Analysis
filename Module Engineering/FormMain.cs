@@ -67,7 +67,8 @@ namespace warmf {
 
 		private void LoadDefault() {
 			try {
-				OpenShapeFile("Catawba.shp");
+				//OpenShapeFile(Global.DATA_DIR+"shp/Catawba-Albers/Catawba.shp");
+				OpenShapeFile(Global.DATA_DIR+"shp/Catawba-new/Catawba.shp");
 			}
 			catch (Exception ex) {
 				MessageBox.Show(this, "Error : " + ex.Message);
@@ -106,12 +107,14 @@ namespace warmf {
 			miTopScenario.Visible = true;
 			miTopDocument.Visible = true;
 			miTopWindow.Visible = true;
+
+			lblLatLong.Visible = true;
 			frmMap.Focus();
 
 			// read in Coefficients file
-			string fname = "data\\Catawba.coe";
-			//string fname = "data\\Henn.coe";
-			//string fname = "data\\SanJoaquin.coe";
+			string fname = Global.DATA_DIR+"coe/Catawba.coe";
+			//string fname = Global.DATA_DIR+"coe/Henn.coe";
+			//string fname = Global.DATA_DIR+"coe/SanJoaquin.coe";
 
 			if (!Global.coe.ReadFile(fname)) {
 				MessageBox.Show(this, "Error reading coefficients file.", "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
@@ -119,15 +122,15 @@ namespace warmf {
 
 		}
 
-		private void OpenShapeFile(string path) {
-			Logger.Info("Opening shape file " + path);
+		private void OpenShapeFile(string filename) {
+			Logger.Info("Opening shape file " + filename);
 			// clear any shapefiles the map is currently displaying
 			this.frmMap.ClearShapeFiles();
 
 			// open the shapefile passing in the path, display name of the shapefile and
 			// the field name to be used when rendering the shapes (we use an empty string
 			// as the field name (3rd parameter) can not be null)
-			this.frmMap.AddShapeFile(path, "ShapeFile", "");
+			this.frmMap.AddShapeFile(filename, "ShapeFile", "");
 
 			// read the shapefile dbf field names and set the shapefiles's RenderSettings
 			// to use the first field to label the shapes.
@@ -292,7 +295,7 @@ namespace warmf {
 			}
 			showMETStations = true;
 			miViewMETStations.Text = Global.checkmark + miViewMETStations.Text;
-			DrawMETStations(frmMap.CreateGraphics());
+			frmMap.Refresh();
 		}
 			
 		// need to change to creating a new shpfile layer on frmMap and show/hide it - MRL

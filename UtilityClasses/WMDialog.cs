@@ -21,14 +21,16 @@ namespace warmf {
 			Result = -1;
 			BResult = false;
 			this.Width = 315;
-            this.Height = 200;
+            this.Height = 130;
 			btnWidth = 70;
 			gap = 20;
 
 			msg = new Label();
             msg.Text = message;
             msg.AutoSize = true;
-            msg.ForeColor = System.Drawing.Color.Black;
+			System.Drawing.Size lblSize = TextRenderer.MeasureText(msg.Text, msg.Font);
+			this.Height += lblSize.Height;
+			msg.ForeColor = System.Drawing.Color.Black;
             msg.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.Controls.Add(msg);
             msg.Left = (this.ClientSize.Width - msg.Width) / 2;

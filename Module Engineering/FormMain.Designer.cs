@@ -564,6 +564,7 @@
 			this.lblLatLong.Size = new System.Drawing.Size(95, 25);
 			this.lblLatLong.TabIndex = 4;
 			this.lblLatLong.Text = "Lat/Long:";
+			this.lblLatLong.Visible = false;
 			// 
 			// FormMain
 			// 
