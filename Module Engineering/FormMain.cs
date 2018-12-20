@@ -67,8 +67,7 @@ namespace warmf {
 
 		private void LoadDefault() {
 			try {
-				//OpenShapeFile(Global.DATA_DIR+"shp/Catawba-Albers/Catawba.shp");
-				OpenShapeFile(Global.DATA_DIR+"shp/Catawba-new/Catawba.shp");
+				OpenShapeFile(Global.DATA_DIR + "shp/Catawba.shp");
 			}
 			catch (Exception ex) {
 				MessageBox.Show(this, "Error : " + ex.Message);
