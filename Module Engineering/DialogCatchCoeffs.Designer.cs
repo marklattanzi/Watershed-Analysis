@@ -104,20 +104,71 @@
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tpSediment = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.tbSand = new System.Windows.Forms.TextBox();
+            this.tbSilt = new System.Windows.Forms.TextBox();
+            this.tbClay = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.tbSoilErosivity = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.tpBMPs = new System.Windows.Forms.TabPage();
+            this.gbDetentionPonds = new System.Windows.Forms.GroupBox();
+            this.tbDetVolume = new System.Windows.Forms.TextBox();
+            this.tbImpRouting = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.gbStreetSweeping = new System.Windows.Forms.GroupBox();
+            this.tbEfficiency = new System.Windows.Forms.TextBox();
+            this.tbFrequency = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.gbBufferZone = new System.Windows.Forms.GroupBox();
+            this.tbBufferRoughness = new System.Windows.Forms.TextBox();
+            this.tbBufferSlope = new System.Windows.Forms.TextBox();
+            this.tbBufferWidth = new System.Windows.Forms.TextBox();
+            this.tbPctBuffered = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.dgLivestockEx = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label11 = new System.Windows.Forms.Label();
             this.tpPtSrc = new System.Windows.Forms.TabPage();
             this.tpPumping = new System.Windows.Forms.TabPage();
             this.tpSeptic = new System.Windows.Forms.TabPage();
+            this.tbPopSeptic = new System.Windows.Forms.TextBox();
+            this.tbDischargeSoilLayer = new System.Windows.Forms.TextBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
             this.tpRxns = new System.Windows.Forms.TabPage();
             this.tpSoil = new System.Windows.Forms.TabPage();
             this.tpMining = new System.Windows.Forms.TabPage();
             this.tpCequalw2 = new System.Windows.Forms.TabPage();
-            this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
+            this.tbTreatment1 = new System.Windows.Forms.TextBox();
+            this.tbTreatment2 = new System.Windows.Forms.TextBox();
+            this.tbTreatment3 = new System.Windows.Forms.TextBox();
+            this.tbInitBiomass = new System.Windows.Forms.TextBox();
+            this.tbBioThick = new System.Windows.Forms.TextBox();
+            this.tbBiozoneArea = new System.Windows.Forms.TextBox();
+            this.tbBioRespCoeff = new System.Windows.Forms.TextBox();
+            this.tbBioMortCoeff = new System.Windows.Forms.TextBox();
             this.tcCatchTabs.SuspendLayout();
             this.tpPhysData.SuspendLayout();
             this.gbSizeSlope.SuspendLayout();
@@ -133,7 +184,15 @@
             this.tpIrrigation.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.tabControl2.SuspendLayout();
+            this.tpSediment.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.tpBMPs.SuspendLayout();
+            this.gbDetentionPonds.SuspendLayout();
+            this.gbStreetSweeping.SuspendLayout();
+            this.gbBufferZone.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgLivestockEx)).BeginInit();
+            this.tpSeptic.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcCatchTabs
@@ -342,11 +401,11 @@
             this.tpMeteorology.Controls.Add(this.gbCoarseAir);
             this.tpMeteorology.Controls.Add(this.gbFineAir);
             this.tpMeteorology.Controls.Add(this.gbMetFile);
-            this.tpMeteorology.Location = new System.Drawing.Point(4, 46);
+            this.tpMeteorology.Location = new System.Drawing.Point(4, 25);
             this.tpMeteorology.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tpMeteorology.Name = "tpMeteorology";
             this.tpMeteorology.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tpMeteorology.Size = new System.Drawing.Size(667, 434);
+            this.tpMeteorology.Size = new System.Drawing.Size(667, 455);
             this.tpMeteorology.TabIndex = 1;
             this.tpMeteorology.Text = "Meteorology";
             this.tpMeteorology.UseVisualStyleBackColor = true;
@@ -504,11 +563,11 @@
             // tpLandUses
             // 
             this.tpLandUses.Controls.Add(this.dgLanduse);
-            this.tpLandUses.Location = new System.Drawing.Point(4, 46);
+            this.tpLandUses.Location = new System.Drawing.Point(4, 25);
             this.tpLandUses.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tpLandUses.Name = "tpLandUses";
             this.tpLandUses.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tpLandUses.Size = new System.Drawing.Size(667, 434);
+            this.tpLandUses.Size = new System.Drawing.Size(667, 455);
             this.tpLandUses.TabIndex = 2;
             this.tpLandUses.Text = "Land Uses";
             this.tpLandUses.UseVisualStyleBackColor = true;
@@ -546,11 +605,11 @@
             this.tpLandAp.Controls.Add(this.tbMaxAccTime);
             this.tpLandAp.Controls.Add(this.lblMaxAccTime);
             this.tpLandAp.Controls.Add(this.dgLandApp);
-            this.tpLandAp.Location = new System.Drawing.Point(4, 46);
+            this.tpLandAp.Location = new System.Drawing.Point(4, 25);
             this.tpLandAp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tpLandAp.Name = "tpLandAp";
             this.tpLandAp.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tpLandAp.Size = new System.Drawing.Size(667, 434);
+            this.tpLandAp.Size = new System.Drawing.Size(667, 455);
             this.tpLandAp.TabIndex = 3;
             this.tpLandAp.Text = "Land Application";
             this.tpLandAp.UseVisualStyleBackColor = true;
@@ -721,11 +780,11 @@
             this.tpIrrigation.Controls.Add(this.cbIrrLandUse);
             this.tpIrrigation.Controls.Add(this.label4);
             this.tpIrrigation.Controls.Add(this.groupBox1);
-            this.tpIrrigation.Location = new System.Drawing.Point(4, 46);
+            this.tpIrrigation.Location = new System.Drawing.Point(4, 25);
             this.tpIrrigation.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tpIrrigation.Name = "tpIrrigation";
             this.tpIrrigation.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tpIrrigation.Size = new System.Drawing.Size(667, 434);
+            this.tpIrrigation.Size = new System.Drawing.Size(667, 455);
             this.tpIrrigation.TabIndex = 4;
             this.tpIrrigation.Text = "Irrigation";
             this.tpIrrigation.UseVisualStyleBackColor = true;
@@ -876,33 +935,338 @@
             // 
             // tpSediment
             // 
-            this.tpSediment.Location = new System.Drawing.Point(4, 46);
+            this.tpSediment.Controls.Add(this.groupBox4);
+            this.tpSediment.Controls.Add(this.tbSoilErosivity);
+            this.tpSediment.Controls.Add(this.label5);
+            this.tpSediment.Location = new System.Drawing.Point(4, 25);
             this.tpSediment.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tpSediment.Name = "tpSediment";
             this.tpSediment.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tpSediment.Size = new System.Drawing.Size(667, 434);
+            this.tpSediment.Size = new System.Drawing.Size(667, 455);
             this.tpSediment.TabIndex = 5;
             this.tpSediment.Text = "Sediment";
             this.tpSediment.UseVisualStyleBackColor = true;
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.tbSand);
+            this.groupBox4.Controls.Add(this.tbSilt);
+            this.groupBox4.Controls.Add(this.tbClay);
+            this.groupBox4.Controls.Add(this.label8);
+            this.groupBox4.Controls.Add(this.label9);
+            this.groupBox4.Controls.Add(this.label10);
+            this.groupBox4.Location = new System.Drawing.Point(204, 214);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(305, 192);
+            this.groupBox4.TabIndex = 2;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Surface Soil Particle Composition";
+            // 
+            // tbSand
+            // 
+            this.tbSand.Location = new System.Drawing.Point(110, 137);
+            this.tbSand.Name = "tbSand";
+            this.tbSand.Size = new System.Drawing.Size(100, 22);
+            this.tbSand.TabIndex = 8;
+            // 
+            // tbSilt
+            // 
+            this.tbSilt.Location = new System.Drawing.Point(110, 100);
+            this.tbSilt.Name = "tbSilt";
+            this.tbSilt.Size = new System.Drawing.Size(100, 22);
+            this.tbSilt.TabIndex = 7;
+            // 
+            // tbClay
+            // 
+            this.tbClay.Location = new System.Drawing.Point(110, 65);
+            this.tbClay.Name = "tbClay";
+            this.tbClay.Size = new System.Drawing.Size(100, 22);
+            this.tbClay.TabIndex = 6;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(15, 71);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(34, 16);
+            this.label8.TabIndex = 3;
+            this.label8.Text = "Clay";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(15, 106);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(27, 16);
+            this.label9.TabIndex = 4;
+            this.label9.Text = "Silt";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(15, 137);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(38, 16);
+            this.label10.TabIndex = 5;
+            this.label10.Text = "Sand";
+            // 
+            // tbSoilErosivity
+            // 
+            this.tbSoilErosivity.Location = new System.Drawing.Point(295, 128);
+            this.tbSoilErosivity.Name = "tbSoilErosivity";
+            this.tbSoilErosivity.Size = new System.Drawing.Size(100, 22);
+            this.tbSoilErosivity.TabIndex = 1;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(166, 131);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(128, 16);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Soil Erosivity Factor:";
+            this.label5.Click += new System.EventHandler(this.label5_Click_1);
+            // 
             // tpBMPs
             // 
-            this.tpBMPs.Location = new System.Drawing.Point(4, 46);
+            this.tpBMPs.Controls.Add(this.gbDetentionPonds);
+            this.tpBMPs.Controls.Add(this.gbStreetSweeping);
+            this.tpBMPs.Controls.Add(this.gbBufferZone);
+            this.tpBMPs.Controls.Add(this.groupBox5);
+            this.tpBMPs.Location = new System.Drawing.Point(4, 25);
             this.tpBMPs.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tpBMPs.Name = "tpBMPs";
             this.tpBMPs.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tpBMPs.Size = new System.Drawing.Size(667, 434);
+            this.tpBMPs.Size = new System.Drawing.Size(667, 455);
             this.tpBMPs.TabIndex = 6;
             this.tpBMPs.Text = "BMP\'s";
             this.tpBMPs.UseVisualStyleBackColor = true;
             // 
+            // gbDetentionPonds
+            // 
+            this.gbDetentionPonds.Controls.Add(this.tbDetVolume);
+            this.gbDetentionPonds.Controls.Add(this.tbImpRouting);
+            this.gbDetentionPonds.Controls.Add(this.label18);
+            this.gbDetentionPonds.Controls.Add(this.label19);
+            this.gbDetentionPonds.Location = new System.Drawing.Point(375, 314);
+            this.gbDetentionPonds.Name = "gbDetentionPonds";
+            this.gbDetentionPonds.Size = new System.Drawing.Size(278, 100);
+            this.gbDetentionPonds.TabIndex = 2;
+            this.gbDetentionPonds.TabStop = false;
+            this.gbDetentionPonds.Text = "Detention Ponds";
+            // 
+            // tbDetVolume
+            // 
+            this.tbDetVolume.Location = new System.Drawing.Point(163, 64);
+            this.tbDetVolume.Name = "tbDetVolume";
+            this.tbDetVolume.Size = new System.Drawing.Size(100, 22);
+            this.tbDetVolume.TabIndex = 9;
+            // 
+            // tbImpRouting
+            // 
+            this.tbImpRouting.Location = new System.Drawing.Point(163, 28);
+            this.tbImpRouting.Name = "tbImpRouting";
+            this.tbImpRouting.Size = new System.Drawing.Size(100, 22);
+            this.tbImpRouting.TabIndex = 8;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(20, 67);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(138, 16);
+            this.label18.TabIndex = 5;
+            this.label18.Text = "Volume (cubic meters)";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(20, 31);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(141, 16);
+            this.label19.TabIndex = 4;
+            this.label19.Text = "Impervious Routing (%)";
+            // 
+            // gbStreetSweeping
+            // 
+            this.gbStreetSweeping.Controls.Add(this.tbEfficiency);
+            this.gbStreetSweeping.Controls.Add(this.tbFrequency);
+            this.gbStreetSweeping.Controls.Add(this.label16);
+            this.gbStreetSweeping.Controls.Add(this.label17);
+            this.gbStreetSweeping.Location = new System.Drawing.Point(375, 198);
+            this.gbStreetSweeping.Name = "gbStreetSweeping";
+            this.gbStreetSweeping.Size = new System.Drawing.Size(278, 100);
+            this.gbStreetSweeping.TabIndex = 2;
+            this.gbStreetSweeping.TabStop = false;
+            this.gbStreetSweeping.Text = "Street Sweeping";
+            // 
+            // tbEfficiency
+            // 
+            this.tbEfficiency.Location = new System.Drawing.Point(163, 64);
+            this.tbEfficiency.Name = "tbEfficiency";
+            this.tbEfficiency.Size = new System.Drawing.Size(100, 22);
+            this.tbEfficiency.TabIndex = 9;
+            // 
+            // tbFrequency
+            // 
+            this.tbFrequency.Location = new System.Drawing.Point(163, 28);
+            this.tbFrequency.Name = "tbFrequency";
+            this.tbFrequency.Size = new System.Drawing.Size(100, 22);
+            this.tbFrequency.TabIndex = 8;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(20, 67);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(88, 16);
+            this.label16.TabIndex = 3;
+            this.label16.Text = "Efficiency (%)";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(20, 31);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(109, 16);
+            this.label17.TabIndex = 2;
+            this.label17.Text = "Frequency (days)";
+            // 
+            // gbBufferZone
+            // 
+            this.gbBufferZone.Controls.Add(this.tbBufferRoughness);
+            this.gbBufferZone.Controls.Add(this.tbBufferSlope);
+            this.gbBufferZone.Controls.Add(this.tbBufferWidth);
+            this.gbBufferZone.Controls.Add(this.tbPctBuffered);
+            this.gbBufferZone.Controls.Add(this.label15);
+            this.gbBufferZone.Controls.Add(this.label14);
+            this.gbBufferZone.Controls.Add(this.label13);
+            this.gbBufferZone.Controls.Add(this.label12);
+            this.gbBufferZone.Location = new System.Drawing.Point(375, 7);
+            this.gbBufferZone.Name = "gbBufferZone";
+            this.gbBufferZone.Size = new System.Drawing.Size(278, 175);
+            this.gbBufferZone.TabIndex = 1;
+            this.gbBufferZone.TabStop = false;
+            this.gbBufferZone.Text = "Stream Buffer Zone";
+            // 
+            // tbBufferRoughness
+            // 
+            this.tbBufferRoughness.Location = new System.Drawing.Point(163, 136);
+            this.tbBufferRoughness.Name = "tbBufferRoughness";
+            this.tbBufferRoughness.Size = new System.Drawing.Size(100, 22);
+            this.tbBufferRoughness.TabIndex = 7;
+            // 
+            // tbBufferSlope
+            // 
+            this.tbBufferSlope.Location = new System.Drawing.Point(163, 100);
+            this.tbBufferSlope.Name = "tbBufferSlope";
+            this.tbBufferSlope.Size = new System.Drawing.Size(100, 22);
+            this.tbBufferSlope.TabIndex = 6;
+            // 
+            // tbBufferWidth
+            // 
+            this.tbBufferWidth.Location = new System.Drawing.Point(163, 64);
+            this.tbBufferWidth.Name = "tbBufferWidth";
+            this.tbBufferWidth.Size = new System.Drawing.Size(100, 22);
+            this.tbBufferWidth.TabIndex = 5;
+            // 
+            // tbPctBuffered
+            // 
+            this.tbPctBuffered.Location = new System.Drawing.Point(163, 28);
+            this.tbPctBuffered.Name = "tbPctBuffered";
+            this.tbPctBuffered.Size = new System.Drawing.Size(100, 22);
+            this.tbPctBuffered.TabIndex = 4;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(20, 139);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(110, 16);
+            this.label15.TabIndex = 3;
+            this.label15.Text = "Buffer Roughness";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(20, 103);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(78, 16);
+            this.label14.TabIndex = 2;
+            this.label14.Text = "Buffer Slope";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(20, 67);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(102, 16);
+            this.label13.TabIndex = 1;
+            this.label13.Text = "Buffer Width (m)";
+            this.label13.Click += new System.EventHandler(this.label13_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(20, 31);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(104, 16);
+            this.label12.TabIndex = 0;
+            this.label12.Text = "Percent Buffered";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.dgLivestockEx);
+            this.groupBox5.Controls.Add(this.label11);
+            this.groupBox5.Location = new System.Drawing.Point(13, 7);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(345, 407);
+            this.groupBox5.TabIndex = 0;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Livestock Exclusion / Stream Fencing";
+            // 
+            // dgLivestockEx
+            // 
+            this.dgLivestockEx.AllowUserToAddRows = false;
+            this.dgLivestockEx.AllowUserToDeleteRows = false;
+            this.dgLivestockEx.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgLivestockEx.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2});
+            this.dgLivestockEx.Location = new System.Drawing.Point(21, 48);
+            this.dgLivestockEx.Name = "dgLivestockEx";
+            this.dgLivestockEx.RowHeadersVisible = false;
+            this.dgLivestockEx.Size = new System.Drawing.Size(303, 345);
+            this.dgLivestockEx.TabIndex = 1;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Land Use";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Width = 200;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "Percent";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 18);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(334, 16);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Percent of land application loaded directly to the stream:";
+            // 
             // tpPtSrc
             // 
-            this.tpPtSrc.Location = new System.Drawing.Point(4, 46);
+            this.tpPtSrc.Location = new System.Drawing.Point(4, 25);
             this.tpPtSrc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tpPtSrc.Name = "tpPtSrc";
             this.tpPtSrc.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tpPtSrc.Size = new System.Drawing.Size(667, 434);
+            this.tpPtSrc.Size = new System.Drawing.Size(667, 455);
             this.tpPtSrc.TabIndex = 7;
             this.tpPtSrc.Text = "Point Sources";
             this.tpPtSrc.UseVisualStyleBackColor = true;
@@ -920,6 +1284,27 @@
             // 
             // tpSeptic
             // 
+            this.tpSeptic.Controls.Add(this.tbBioMortCoeff);
+            this.tpSeptic.Controls.Add(this.tbBioRespCoeff);
+            this.tpSeptic.Controls.Add(this.tbBiozoneArea);
+            this.tpSeptic.Controls.Add(this.tbBioThick);
+            this.tpSeptic.Controls.Add(this.tbInitBiomass);
+            this.tpSeptic.Controls.Add(this.tbTreatment3);
+            this.tpSeptic.Controls.Add(this.tbTreatment2);
+            this.tpSeptic.Controls.Add(this.tbTreatment1);
+            this.tpSeptic.Controls.Add(this.tbPopSeptic);
+            this.tpSeptic.Controls.Add(this.tbDischargeSoilLayer);
+            this.tpSeptic.Controls.Add(this.label30);
+            this.tpSeptic.Controls.Add(this.label29);
+            this.tpSeptic.Controls.Add(this.label28);
+            this.tpSeptic.Controls.Add(this.label27);
+            this.tpSeptic.Controls.Add(this.label26);
+            this.tpSeptic.Controls.Add(this.label25);
+            this.tpSeptic.Controls.Add(this.label24);
+            this.tpSeptic.Controls.Add(this.label23);
+            this.tpSeptic.Controls.Add(this.label22);
+            this.tpSeptic.Controls.Add(this.label21);
+            this.tpSeptic.Controls.Add(this.label20);
             this.tpSeptic.Location = new System.Drawing.Point(4, 46);
             this.tpSeptic.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tpSeptic.Name = "tpSeptic";
@@ -928,6 +1313,120 @@
             this.tpSeptic.TabIndex = 8;
             this.tpSeptic.Text = "Septic Systems";
             this.tpSeptic.UseVisualStyleBackColor = true;
+            // 
+            // tbPopSeptic
+            // 
+            this.tbPopSeptic.Location = new System.Drawing.Point(412, 74);
+            this.tbPopSeptic.Name = "tbPopSeptic";
+            this.tbPopSeptic.Size = new System.Drawing.Size(100, 22);
+            this.tbPopSeptic.TabIndex = 12;
+            // 
+            // tbDischargeSoilLayer
+            // 
+            this.tbDischargeSoilLayer.Location = new System.Drawing.Point(413, 42);
+            this.tbDischargeSoilLayer.Name = "tbDischargeSoilLayer";
+            this.tbDischargeSoilLayer.Size = new System.Drawing.Size(100, 22);
+            this.tbDischargeSoilLayer.TabIndex = 11;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(143, 365);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(239, 16);
+            this.label30.TabIndex = 10;
+            this.label30.Text = "Biomass Mortality Coefficient (cm3/day)";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(143, 333);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(254, 16);
+            this.label29.TabIndex = 9;
+            this.label29.Text = "Biomass Respiration Coefficient (cm3/day)";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(143, 301);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(154, 16);
+            this.label28.TabIndex = 8;
+            this.label28.Text = "Biozone Area (m2/capita)";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(143, 269);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(152, 16);
+            this.label27.TabIndex = 7;
+            this.label27.Text = "Biomass Thickness (cm)";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(143, 237);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(141, 16);
+            this.label26.TabIndex = 6;
+            this.label26.Text = "Initial Biomass (g/cm2)";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(171, 173);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(192, 16);
+            this.label25.TabIndex = 5;
+            this.label25.Text = "Treatment Type 2 (Standard, %)";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(171, 205);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(196, 16);
+            this.label24.TabIndex = 4;
+            this.label24.Text = "Treatment Type 3 (Advanced, %)";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(171, 141);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(178, 16);
+            this.label23.TabIndex = 3;
+            this.label23.Text = "Treatment Type 1 (Failing, %)";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(143, 109);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(270, 16);
+            this.label22.TabIndex = 2;
+            this.label22.Text = "Distribution of Septic Systems (total = 100%)";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(143, 77);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(178, 16);
+            this.label21.TabIndex = 1;
+            this.label21.Text = "Population Served by Septics";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(143, 45);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(128, 16);
+            this.label20.TabIndex = 0;
+            this.label20.Text = "Discharge Soil Layer";
+            this.label20.Click += new System.EventHandler(this.label20_Click);
             // 
             // tpRxns
             // 
@@ -965,42 +1464,9 @@
             this.tpCequalw2.Text = "CE-QUAL-W2";
             this.tpCequalw2.UseVisualStyleBackColor = true;
             // 
-            // tabControl2
-            // 
-            this.tabControl2.Controls.Add(this.tabPage3);
-            this.tabControl2.Controls.Add(this.tabPage4);
-            this.tabControl2.Location = new System.Drawing.Point(793, 301);
-            this.tabControl2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabControl2.Name = "tabControl2";
-            this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(9, 10);
-            this.tabControl2.TabIndex = 1;
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 25);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPage3.Size = new System.Drawing.Size(1, 0);
-            this.tabPage3.TabIndex = 0;
-            this.tabPage3.Text = "tabPage3";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Location = new System.Drawing.Point(4, 25);
-            this.tabPage4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPage4.Size = new System.Drawing.Size(1, 0);
-            this.tabPage4.TabIndex = 1;
-            this.tabPage4.Text = "tabPage4";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(132, 585);
+            this.btnOK.Location = new System.Drawing.Point(104, 507);
             this.btnOK.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(137, 39);
@@ -1010,7 +1476,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(296, 585);
+            this.btnCancel.Location = new System.Drawing.Point(268, 507);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(137, 39);
@@ -1020,7 +1486,7 @@
             // 
             // btnHelp
             // 
-            this.btnHelp.Location = new System.Drawing.Point(457, 585);
+            this.btnHelp.Location = new System.Drawing.Point(429, 507);
             this.btnHelp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new System.Drawing.Size(137, 39);
@@ -1028,17 +1494,72 @@
             this.btnHelp.Text = "Help";
             this.btnHelp.UseVisualStyleBackColor = true;
             // 
+            // tbTreatment1
+            // 
+            this.tbTreatment1.Location = new System.Drawing.Point(412, 138);
+            this.tbTreatment1.Name = "tbTreatment1";
+            this.tbTreatment1.Size = new System.Drawing.Size(100, 22);
+            this.tbTreatment1.TabIndex = 13;
+            // 
+            // tbTreatment2
+            // 
+            this.tbTreatment2.Location = new System.Drawing.Point(412, 170);
+            this.tbTreatment2.Name = "tbTreatment2";
+            this.tbTreatment2.Size = new System.Drawing.Size(100, 22);
+            this.tbTreatment2.TabIndex = 14;
+            // 
+            // tbTreatment3
+            // 
+            this.tbTreatment3.Location = new System.Drawing.Point(412, 202);
+            this.tbTreatment3.Name = "tbTreatment3";
+            this.tbTreatment3.Size = new System.Drawing.Size(100, 22);
+            this.tbTreatment3.TabIndex = 15;
+            // 
+            // tbInitBiomass
+            // 
+            this.tbInitBiomass.Location = new System.Drawing.Point(412, 234);
+            this.tbInitBiomass.Name = "tbInitBiomass";
+            this.tbInitBiomass.Size = new System.Drawing.Size(100, 22);
+            this.tbInitBiomass.TabIndex = 16;
+            // 
+            // tbBioThick
+            // 
+            this.tbBioThick.Location = new System.Drawing.Point(412, 266);
+            this.tbBioThick.Name = "tbBioThick";
+            this.tbBioThick.Size = new System.Drawing.Size(100, 22);
+            this.tbBioThick.TabIndex = 17;
+            // 
+            // tbBiozoneArea
+            // 
+            this.tbBiozoneArea.Location = new System.Drawing.Point(412, 298);
+            this.tbBiozoneArea.Name = "tbBiozoneArea";
+            this.tbBiozoneArea.Size = new System.Drawing.Size(100, 22);
+            this.tbBiozoneArea.TabIndex = 18;
+            // 
+            // tbBioRespCoeff
+            // 
+            this.tbBioRespCoeff.Location = new System.Drawing.Point(412, 330);
+            this.tbBioRespCoeff.Name = "tbBioRespCoeff";
+            this.tbBioRespCoeff.Size = new System.Drawing.Size(100, 22);
+            this.tbBioRespCoeff.TabIndex = 19;
+            // 
+            // tbBioMortCoeff
+            // 
+            this.tbBioMortCoeff.Location = new System.Drawing.Point(412, 362);
+            this.tbBioMortCoeff.Name = "tbBioMortCoeff";
+            this.tbBioMortCoeff.Size = new System.Drawing.Size(100, 22);
+            this.tbBioMortCoeff.TabIndex = 20;
+            // 
             // FormCatch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoScrollMargin = new System.Drawing.Size(5, 5);
-            this.ClientSize = new System.Drawing.Size(693, 637);
+            this.ClientSize = new System.Drawing.Size(695, 564);
             this.Controls.Add(this.btnHelp);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
-            this.Controls.Add(this.tabControl2);
             this.Controls.Add(this.tcCatchTabs);
             this.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -1069,7 +1590,22 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.tabControl2.ResumeLayout(false);
+            this.tpSediment.ResumeLayout(false);
+            this.tpSediment.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.tpBMPs.ResumeLayout(false);
+            this.gbDetentionPonds.ResumeLayout(false);
+            this.gbDetentionPonds.PerformLayout();
+            this.gbStreetSweeping.ResumeLayout(false);
+            this.gbStreetSweeping.PerformLayout();
+            this.gbBufferZone.ResumeLayout(false);
+            this.gbBufferZone.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgLivestockEx)).EndInit();
+            this.tpSeptic.ResumeLayout(false);
+            this.tpSeptic.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1101,11 +1637,7 @@
         private System.Windows.Forms.TabPage tpSediment;
         private System.Windows.Forms.TabPage tpBMPs;
         private System.Windows.Forms.TabPage tpPtSrc;
-        private System.Windows.Forms.TabPage tpSeptic;
         private System.Windows.Forms.TabPage tpPumping;
-        private System.Windows.Forms.TabControl tabControl2;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.GroupBox gbSizeSlope;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
@@ -1166,5 +1698,60 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colPct;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.TextBox tbSoilErosivity;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tbSand;
+        private System.Windows.Forms.TextBox tbSilt;
+        private System.Windows.Forms.TextBox tbClay;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.GroupBox gbDetentionPonds;
+        private System.Windows.Forms.GroupBox gbStreetSweeping;
+        private System.Windows.Forms.GroupBox gbBufferZone;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox tbDetVolume;
+        private System.Windows.Forms.TextBox tbImpRouting;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox tbEfficiency;
+        private System.Windows.Forms.TextBox tbFrequency;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TextBox tbBufferRoughness;
+        private System.Windows.Forms.TextBox tbBufferSlope;
+        private System.Windows.Forms.TextBox tbBufferWidth;
+        private System.Windows.Forms.TextBox tbPctBuffered;
+        private System.Windows.Forms.DataGridView dgLivestockEx;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.TabPage tpSeptic;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox tbPopSeptic;
+        private System.Windows.Forms.TextBox tbDischargeSoilLayer;
+        private System.Windows.Forms.TextBox tbBioMortCoeff;
+        private System.Windows.Forms.TextBox tbBioRespCoeff;
+        private System.Windows.Forms.TextBox tbBiozoneArea;
+        private System.Windows.Forms.TextBox tbBioThick;
+        private System.Windows.Forms.TextBox tbInitBiomass;
+        private System.Windows.Forms.TextBox tbTreatment3;
+        private System.Windows.Forms.TextBox tbTreatment2;
+        private System.Windows.Forms.TextBox tbTreatment1;
     }
 }

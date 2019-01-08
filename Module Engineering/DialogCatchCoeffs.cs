@@ -124,22 +124,60 @@ namespace warmf
                 tbMaxAccTime.Text = catchment.bmp.maxFertAccumTime.ToString();
             }
 
-            //Irrigation tab
-            cbIrrLandUse.Items.Clear();
-            cbIrrLandUse.Items.AddRange(landuselist.ToArray());
-            cbIrrLandUse.SelectedIndex = 7;
+            //Irrigation tab - Tabled for now - there is no irrigation in the Catawba watershed...
+            //cbIrrLandUse.Items.Clear();
+            //cbIrrLandUse.Items.AddRange(landuselist.ToArray());
+            //cbIrrLandUse.SelectedIndex = 7;
 
-            //catchment.numIrrigationSources[cbIrrLandUse.SelectedIndex];
+            //catchment.numIrrigationSources[cbIrrLandUse.SelectedIndex].ToString();
+            //catchment.irrigationSource.ToString();
+            //catchment.irrigationSourcePercent.ToString();
 
             //Sediment tab
+            tbSoilErosivity.Text = catchment.sediment.erosivity.ToString();
+            tbClay.Text = catchment.sediment.firstPartSizePct.ToString();
+            tbSilt.Text = catchment.sediment.secondPartSizePct.ToString();
+            tbSand.Text = catchment.sediment.thirdPartSizePct.ToString();
 
             //BMP's tab
+            for (int ii = 0; ii < Global.coe.numLanduses; ii++)
+            {
+                string luName = Global.coe.landuse[ii].name;
+                string Percent = catchment.landApplicationLoad[ii].ToString("F1");
+                dgLivestockEx.Rows.Insert(ii, luName, Percent);
+            }
+            dgLivestockEx.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            dgLivestockEx.AllowUserToAddRows = false;
+            dgLivestockEx.AllowUserToDeleteRows = false;
+            dgLivestockEx.AllowUserToOrderColumns = false;
+            dgLivestockEx.ReadOnly = false;
+
+            tbPctBuffered.Text = catchment.bufferingPct.ToString();
+            tbBufferWidth.Text = catchment.bufferZoneWidth.ToString();
+            tbBufferSlope.Text = catchment.bufferZoneSlope.ToString();
+            tbBufferRoughness.Text = catchment.bufferManningN.ToString();
+
+            tbFrequency.Text = catchment.bmp.streetSweepFreq.ToString();
+            tbEfficiency.Text = catchment.bmp.streetSweepEff.ToString();
+
+            tbImpRouting.Text = catchment.bmp.divertedImpervFlow.ToString();
+            tbDetVolume.Text = catchment.bmp.detentionPondVol.ToString();
 
             //Point Sources tab
 
             //Pumping tab
 
             //Septic Systems tab
+            tbDischargeSoilLayer.Text = catchment.septic.soilLayer.ToString();
+            tbPopSeptic.Text = catchment.septic.population.ToString();
+            tbTreatment1.Text = catchment.septic.failingPct.ToString();
+            tbTreatment2.Text = catchment.septic.standardPct.ToString();
+            tbTreatment3.Text = catchment.septic.advancedPct.ToString();
+            tbInitBiomass.Text = catchment.septic.initialBiomass.ToString();
+            tbBioThick.Text = catchment.septic.thickness.ToString();
+            tbBiozoneArea.Text = catchment.septic.area.ToString();
+            tbBioRespCoeff.Text = catchment.septic.biomassRespRate.ToString();
+            tbBioMortCoeff.Text = catchment.septic.biomassMortRate.ToString();
 
             //Reactions tab
 
@@ -157,6 +195,21 @@ namespace warmf
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void label5_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label20_Click(object sender, EventArgs e)
         {
 
         }
