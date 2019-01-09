@@ -290,7 +290,7 @@ namespace warmf {
         public double saturationMoisture;
         public double horizHydraulicConduct;
         public double vertHydraulicConduct;
-        public double evaopTranspireFract;
+        public double evapTranspireFract;
         public double waterTemp;
 
         public double magnesiumXCoeff;
@@ -1424,7 +1424,7 @@ namespace warmf {
                         soil.saturationMoisture = dnums[4];
                         soil.horizHydraulicConduct = dnums[5];
                         soil.vertHydraulicConduct = dnums[6];
-                        soil.evaopTranspireFract = dnums[7];
+                        soil.evapTranspireFract = dnums[7];
                         soil.waterTemp = dnums[8];
 
                         dnums = ReadDoubleData(sr, "CKCAMG", 5);

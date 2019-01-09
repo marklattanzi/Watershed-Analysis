@@ -34,29 +34,39 @@ namespace warmf
             List<string> landuselist = new List<string>();
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
-               landuselist.Add (Global.coe.landuse[ii].name.ToString());
+                landuselist.Add (Global.coe.landuse[ii].name.ToString());
             }
 
-            //list of chemical and physical constituents
-            List<string> ConstitsList = new List<string>();
+            //list of chemical and physical constituent names
+            List<string> ConstitNames = new List<string>();
             for (int ii = 0; ii < Global.coe.numChemicalParams; ii++)
             {
-                ConstitsList.Add(Global.coe.chemConstits[ii].fullName.ToString());
+                ConstitNames.Add(Global.coe.chemConstits[ii].fullName.ToString());
             }
             for (int ii = 0; ii < Global.coe.numPhysicalParams; ii++)
             {
-                ConstitsList.Add(Global.coe.physicalConstits[ii].fullName.ToString());
+                ConstitNames.Add(Global.coe.physicalConstits[ii].fullName.ToString());
+            }
+
+            List<string> ConstitShortNames = new List<string>();
+            for (int ii = 0; ii < Global.coe.numChemicalParams; ii++)
+            {
+                ConstitShortNames.Add(Global.coe.chemConstits[ii].abbrevName.ToString().Trim());
+            }
+            for (int ii = 0; ii < Global.coe.numPhysicalParams; ii++)
+            {
+                ConstitShortNames.Add(Global.coe.physicalConstits[ii].abbrevName.ToString().Trim());
             }
 
             //units for each chemical and physical parameter
-            List<string> UnitsList = new List<string>();
+            List<string> ConstitUnits = new List<string>();
             for (int ii = 0; ii < Global.coe.numChemicalParams; ii++)
             {
-                UnitsList.Add(Global.coe.chemConstits[ii].units.ToString());
+                ConstitUnits.Add(Global.coe.chemConstits[ii].units.ToString());
             }
             for (int ii = 0; ii < Global.coe.numPhysicalParams; ii++)
             {
-                UnitsList.Add(Global.coe.physicalConstits[ii].units.ToString());
+                ConstitUnits.Add(Global.coe.physicalConstits[ii].units.ToString());
             }
 
             //Physical Data tab
@@ -97,7 +107,7 @@ namespace warmf
                 //populate datagridview
                 for (int iParam = 0; iParam < iNumParams; iParam++)
                 {
-                    string NameUnit = ConstitsList[iParam].ToString() + " (" + UnitsList[iParam].ToString().Trim() + ")";
+                    string NameUnit = ConstitNames[iParam].ToString() + " (" + ConstitUnits[iParam].ToString().Trim() + ")";
                     dgLandApp.Rows.Insert(iParam);
                     dgLandApp.Rows[iParam].HeaderCell.Value = NameUnit.ToString();
                     for (int iMonth = 0; iMonth < 12; iMonth++)
@@ -182,7 +192,50 @@ namespace warmf
             //Reactions tab
 
             //Soil Layers tab
-
+            tbNumSoilLayers.Text = catchment.numSoilLayers.ToString();
+            cbSoilCoeffGroup.SelectedItem = "Hydrology";
+                //Hydrology coefficients displayed on load
+                    for (int ii = 0; ii < catchment.numSoilLayers; ii++)
+                        {
+                            string area = catchment.soils[ii].area.ToString();
+                            string thickness = catchment.soils[ii].thickness.ToString("F0");
+                            string moisture = catchment.soils[ii].moisture.ToString("F2");
+                            string fieldCap = catchment.soils[ii].fieldCapacity.ToString("F2");
+                            string satMoist = catchment.soils[ii].saturationMoisture.ToString("F2");
+                            string horizCond = catchment.soils[ii].horizHydraulicConduct.ToString("F0");
+                            string vertCond = catchment.soils[ii].vertHydraulicConduct.ToString("F0");
+                            string rootDist = catchment.soils[ii].evapTranspireFract.ToString("F2");
+                            string density = catchment.soils[ii].density.ToString("F1");
+                            string tortuosity = catchment.soils[ii].tortuosity.ToString("F0");
+                            dgSoilHydroCoeffs.Rows.Insert(ii, area, thickness, moisture, fieldCap, satMoist, horizCond, vertCond, rootDist, density, tortuosity);
+                        dgSoilHydroCoeffs.Rows[ii].HeaderCell.Value = "Soil Layer " + (ii+1).ToString();
+                        }
+                    dgSoilHydroCoeffs.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+                    dgSoilHydroCoeffs.AllowUserToAddRows = false;
+                    dgSoilHydroCoeffs.AllowUserToDeleteRows = false;
+                    dgSoilHydroCoeffs.AllowUserToOrderColumns = false;
+                    dgSoilHydroCoeffs.ReadOnly = false;
+                    dgSoilHydroCoeffs.Visible = false;
+            //Initial Concentrations
+            for (int ii = 0; ii < iNumParams; ii++)
+            {
+                dgInitialConc.Columns.Add(ConstitShortNames[ii], ConstitShortNames[ii].ToString() + " (" + ConstitUnits[ii].ToString() + ")");
+            }
+            for (int ii = 0; ii < catchment.numSoilLayers; ii++)
+            {
+                dgInitialConc.Rows.Insert(ii);
+                dgInitialConc.Rows[ii].HeaderCell.Value = "Soil Layer " + (ii + 1).ToString();
+                for (int iParam = 0; iParam < iNumParams; iParam++)
+                {
+                    dgInitialConc.Rows[ii].Cells[iParam].Value = catchment.soils[ii].solutionConcen[iParam].ToString();
+                }
+            }
+            dgInitialConc.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            dgInitialConc.AllowUserToAddRows = false;
+            dgInitialConc.AllowUserToDeleteRows = false;
+            dgInitialConc.AllowUserToOrderColumns = false;
+            dgInitialConc.ReadOnly = false;
+            dgInitialConc.Visible = true;
             //Mining tab
 
             //CE-QUAL-W2 tab

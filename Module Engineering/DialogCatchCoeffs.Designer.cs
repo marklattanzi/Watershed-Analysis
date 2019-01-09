@@ -141,6 +141,14 @@
             this.tpPtSrc = new System.Windows.Forms.TabPage();
             this.tpPumping = new System.Windows.Forms.TabPage();
             this.tpSeptic = new System.Windows.Forms.TabPage();
+            this.tbBioMortCoeff = new System.Windows.Forms.TextBox();
+            this.tbBioRespCoeff = new System.Windows.Forms.TextBox();
+            this.tbBiozoneArea = new System.Windows.Forms.TextBox();
+            this.tbBioThick = new System.Windows.Forms.TextBox();
+            this.tbInitBiomass = new System.Windows.Forms.TextBox();
+            this.tbTreatment3 = new System.Windows.Forms.TextBox();
+            this.tbTreatment2 = new System.Windows.Forms.TextBox();
+            this.tbTreatment1 = new System.Windows.Forms.TextBox();
             this.tbPopSeptic = new System.Windows.Forms.TextBox();
             this.tbDischargeSoilLayer = new System.Windows.Forms.TextBox();
             this.label30 = new System.Windows.Forms.Label();
@@ -161,14 +169,21 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
-            this.tbTreatment1 = new System.Windows.Forms.TextBox();
-            this.tbTreatment2 = new System.Windows.Forms.TextBox();
-            this.tbTreatment3 = new System.Windows.Forms.TextBox();
-            this.tbInitBiomass = new System.Windows.Forms.TextBox();
-            this.tbBioThick = new System.Windows.Forms.TextBox();
-            this.tbBiozoneArea = new System.Windows.Forms.TextBox();
-            this.tbBioRespCoeff = new System.Windows.Forms.TextBox();
-            this.tbBioMortCoeff = new System.Windows.Forms.TextBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.tbNumSoilLayers = new System.Windows.Forms.TextBox();
+            this.cbSoilCoeffGroup = new System.Windows.Forms.ComboBox();
+            this.dgSoilHydroCoeffs = new System.Windows.Forms.DataGridView();
+            this.area = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Thickness = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.InitMoisture = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FieldCap = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SatMoisture = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HorHydCond = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VertHydCond = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RootDist = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Density = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SoilTort = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgInitialConc = new System.Windows.Forms.DataGridView();
             this.tcCatchTabs.SuspendLayout();
             this.tpPhysData.SuspendLayout();
             this.gbSizeSlope.SuspendLayout();
@@ -193,6 +208,9 @@
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgLivestockEx)).BeginInit();
             this.tpSeptic.SuspendLayout();
+            this.tpSoil.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgSoilHydroCoeffs)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgInitialConc)).BeginInit();
             this.SuspendLayout();
             // 
             // tcCatchTabs
@@ -401,11 +419,11 @@
             this.tpMeteorology.Controls.Add(this.gbCoarseAir);
             this.tpMeteorology.Controls.Add(this.gbFineAir);
             this.tpMeteorology.Controls.Add(this.gbMetFile);
-            this.tpMeteorology.Location = new System.Drawing.Point(4, 25);
+            this.tpMeteorology.Location = new System.Drawing.Point(4, 46);
             this.tpMeteorology.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tpMeteorology.Name = "tpMeteorology";
             this.tpMeteorology.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tpMeteorology.Size = new System.Drawing.Size(667, 455);
+            this.tpMeteorology.Size = new System.Drawing.Size(667, 434);
             this.tpMeteorology.TabIndex = 1;
             this.tpMeteorology.Text = "Meteorology";
             this.tpMeteorology.UseVisualStyleBackColor = true;
@@ -563,11 +581,11 @@
             // tpLandUses
             // 
             this.tpLandUses.Controls.Add(this.dgLanduse);
-            this.tpLandUses.Location = new System.Drawing.Point(4, 25);
+            this.tpLandUses.Location = new System.Drawing.Point(4, 46);
             this.tpLandUses.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tpLandUses.Name = "tpLandUses";
             this.tpLandUses.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tpLandUses.Size = new System.Drawing.Size(667, 455);
+            this.tpLandUses.Size = new System.Drawing.Size(667, 434);
             this.tpLandUses.TabIndex = 2;
             this.tpLandUses.Text = "Land Uses";
             this.tpLandUses.UseVisualStyleBackColor = true;
@@ -605,11 +623,11 @@
             this.tpLandAp.Controls.Add(this.tbMaxAccTime);
             this.tpLandAp.Controls.Add(this.lblMaxAccTime);
             this.tpLandAp.Controls.Add(this.dgLandApp);
-            this.tpLandAp.Location = new System.Drawing.Point(4, 25);
+            this.tpLandAp.Location = new System.Drawing.Point(4, 46);
             this.tpLandAp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tpLandAp.Name = "tpLandAp";
             this.tpLandAp.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tpLandAp.Size = new System.Drawing.Size(667, 455);
+            this.tpLandAp.Size = new System.Drawing.Size(667, 434);
             this.tpLandAp.TabIndex = 3;
             this.tpLandAp.Text = "Land Application";
             this.tpLandAp.UseVisualStyleBackColor = true;
@@ -780,11 +798,11 @@
             this.tpIrrigation.Controls.Add(this.cbIrrLandUse);
             this.tpIrrigation.Controls.Add(this.label4);
             this.tpIrrigation.Controls.Add(this.groupBox1);
-            this.tpIrrigation.Location = new System.Drawing.Point(4, 25);
+            this.tpIrrigation.Location = new System.Drawing.Point(4, 46);
             this.tpIrrigation.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tpIrrigation.Name = "tpIrrigation";
             this.tpIrrigation.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tpIrrigation.Size = new System.Drawing.Size(667, 455);
+            this.tpIrrigation.Size = new System.Drawing.Size(667, 434);
             this.tpIrrigation.TabIndex = 4;
             this.tpIrrigation.Text = "Irrigation";
             this.tpIrrigation.UseVisualStyleBackColor = true;
@@ -938,11 +956,11 @@
             this.tpSediment.Controls.Add(this.groupBox4);
             this.tpSediment.Controls.Add(this.tbSoilErosivity);
             this.tpSediment.Controls.Add(this.label5);
-            this.tpSediment.Location = new System.Drawing.Point(4, 25);
+            this.tpSediment.Location = new System.Drawing.Point(4, 46);
             this.tpSediment.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tpSediment.Name = "tpSediment";
             this.tpSediment.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tpSediment.Size = new System.Drawing.Size(667, 455);
+            this.tpSediment.Size = new System.Drawing.Size(667, 434);
             this.tpSediment.TabIndex = 5;
             this.tpSediment.Text = "Sediment";
             this.tpSediment.UseVisualStyleBackColor = true;
@@ -1033,11 +1051,11 @@
             this.tpBMPs.Controls.Add(this.gbStreetSweeping);
             this.tpBMPs.Controls.Add(this.gbBufferZone);
             this.tpBMPs.Controls.Add(this.groupBox5);
-            this.tpBMPs.Location = new System.Drawing.Point(4, 25);
+            this.tpBMPs.Location = new System.Drawing.Point(4, 46);
             this.tpBMPs.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tpBMPs.Name = "tpBMPs";
             this.tpBMPs.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tpBMPs.Size = new System.Drawing.Size(667, 455);
+            this.tpBMPs.Size = new System.Drawing.Size(667, 434);
             this.tpBMPs.TabIndex = 6;
             this.tpBMPs.Text = "BMP\'s";
             this.tpBMPs.UseVisualStyleBackColor = true;
@@ -1262,11 +1280,11 @@
             // 
             // tpPtSrc
             // 
-            this.tpPtSrc.Location = new System.Drawing.Point(4, 25);
+            this.tpPtSrc.Location = new System.Drawing.Point(4, 46);
             this.tpPtSrc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tpPtSrc.Name = "tpPtSrc";
             this.tpPtSrc.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tpPtSrc.Size = new System.Drawing.Size(667, 455);
+            this.tpPtSrc.Size = new System.Drawing.Size(667, 434);
             this.tpPtSrc.TabIndex = 7;
             this.tpPtSrc.Text = "Point Sources";
             this.tpPtSrc.UseVisualStyleBackColor = true;
@@ -1313,6 +1331,62 @@
             this.tpSeptic.TabIndex = 8;
             this.tpSeptic.Text = "Septic Systems";
             this.tpSeptic.UseVisualStyleBackColor = true;
+            // 
+            // tbBioMortCoeff
+            // 
+            this.tbBioMortCoeff.Location = new System.Drawing.Point(412, 362);
+            this.tbBioMortCoeff.Name = "tbBioMortCoeff";
+            this.tbBioMortCoeff.Size = new System.Drawing.Size(100, 22);
+            this.tbBioMortCoeff.TabIndex = 20;
+            // 
+            // tbBioRespCoeff
+            // 
+            this.tbBioRespCoeff.Location = new System.Drawing.Point(412, 330);
+            this.tbBioRespCoeff.Name = "tbBioRespCoeff";
+            this.tbBioRespCoeff.Size = new System.Drawing.Size(100, 22);
+            this.tbBioRespCoeff.TabIndex = 19;
+            // 
+            // tbBiozoneArea
+            // 
+            this.tbBiozoneArea.Location = new System.Drawing.Point(412, 298);
+            this.tbBiozoneArea.Name = "tbBiozoneArea";
+            this.tbBiozoneArea.Size = new System.Drawing.Size(100, 22);
+            this.tbBiozoneArea.TabIndex = 18;
+            // 
+            // tbBioThick
+            // 
+            this.tbBioThick.Location = new System.Drawing.Point(412, 266);
+            this.tbBioThick.Name = "tbBioThick";
+            this.tbBioThick.Size = new System.Drawing.Size(100, 22);
+            this.tbBioThick.TabIndex = 17;
+            // 
+            // tbInitBiomass
+            // 
+            this.tbInitBiomass.Location = new System.Drawing.Point(412, 234);
+            this.tbInitBiomass.Name = "tbInitBiomass";
+            this.tbInitBiomass.Size = new System.Drawing.Size(100, 22);
+            this.tbInitBiomass.TabIndex = 16;
+            // 
+            // tbTreatment3
+            // 
+            this.tbTreatment3.Location = new System.Drawing.Point(412, 202);
+            this.tbTreatment3.Name = "tbTreatment3";
+            this.tbTreatment3.Size = new System.Drawing.Size(100, 22);
+            this.tbTreatment3.TabIndex = 15;
+            // 
+            // tbTreatment2
+            // 
+            this.tbTreatment2.Location = new System.Drawing.Point(412, 170);
+            this.tbTreatment2.Name = "tbTreatment2";
+            this.tbTreatment2.Size = new System.Drawing.Size(100, 22);
+            this.tbTreatment2.TabIndex = 14;
+            // 
+            // tbTreatment1
+            // 
+            this.tbTreatment1.Location = new System.Drawing.Point(412, 138);
+            this.tbTreatment1.Name = "tbTreatment1";
+            this.tbTreatment1.Size = new System.Drawing.Size(100, 22);
+            this.tbTreatment1.TabIndex = 13;
             // 
             // tbPopSeptic
             // 
@@ -1439,6 +1513,11 @@
             // 
             // tpSoil
             // 
+            this.tpSoil.Controls.Add(this.dgInitialConc);
+            this.tpSoil.Controls.Add(this.dgSoilHydroCoeffs);
+            this.tpSoil.Controls.Add(this.cbSoilCoeffGroup);
+            this.tpSoil.Controls.Add(this.tbNumSoilLayers);
+            this.tpSoil.Controls.Add(this.label31);
             this.tpSoil.Location = new System.Drawing.Point(4, 46);
             this.tpSoil.Name = "tpSoil";
             this.tpSoil.Size = new System.Drawing.Size(667, 434);
@@ -1494,61 +1573,145 @@
             this.btnHelp.Text = "Help";
             this.btnHelp.UseVisualStyleBackColor = true;
             // 
-            // tbTreatment1
+            // label31
             // 
-            this.tbTreatment1.Location = new System.Drawing.Point(412, 138);
-            this.tbTreatment1.Name = "tbTreatment1";
-            this.tbTreatment1.Size = new System.Drawing.Size(100, 22);
-            this.tbTreatment1.TabIndex = 13;
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(78, 42);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(140, 16);
+            this.label31.TabIndex = 0;
+            this.label31.Text = "Number of Soil Layers:";
             // 
-            // tbTreatment2
+            // tbNumSoilLayers
             // 
-            this.tbTreatment2.Location = new System.Drawing.Point(412, 170);
-            this.tbTreatment2.Name = "tbTreatment2";
-            this.tbTreatment2.Size = new System.Drawing.Size(100, 22);
-            this.tbTreatment2.TabIndex = 14;
+            this.tbNumSoilLayers.Location = new System.Drawing.Point(217, 39);
+            this.tbNumSoilLayers.Name = "tbNumSoilLayers";
+            this.tbNumSoilLayers.Size = new System.Drawing.Size(38, 22);
+            this.tbNumSoilLayers.TabIndex = 1;
             // 
-            // tbTreatment3
+            // cbSoilCoeffGroup
             // 
-            this.tbTreatment3.Location = new System.Drawing.Point(412, 202);
-            this.tbTreatment3.Name = "tbTreatment3";
-            this.tbTreatment3.Size = new System.Drawing.Size(100, 22);
-            this.tbTreatment3.TabIndex = 15;
+            this.cbSoilCoeffGroup.FormattingEnabled = true;
+            this.cbSoilCoeffGroup.Items.AddRange(new object[] {
+            "Hydrology",
+            "Initial Concentrations",
+            "Adsorption",
+            "Mineral Composition",
+            "Inorganic Carbon"});
+            this.cbSoilCoeffGroup.Location = new System.Drawing.Point(303, 39);
+            this.cbSoilCoeffGroup.Name = "cbSoilCoeffGroup";
+            this.cbSoilCoeffGroup.Size = new System.Drawing.Size(274, 24);
+            this.cbSoilCoeffGroup.TabIndex = 2;
             // 
-            // tbInitBiomass
+            // dgSoilHydroCoeffs
             // 
-            this.tbInitBiomass.Location = new System.Drawing.Point(412, 234);
-            this.tbInitBiomass.Name = "tbInitBiomass";
-            this.tbInitBiomass.Size = new System.Drawing.Size(100, 22);
-            this.tbInitBiomass.TabIndex = 16;
+            this.dgSoilHydroCoeffs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgSoilHydroCoeffs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.area,
+            this.Thickness,
+            this.InitMoisture,
+            this.FieldCap,
+            this.SatMoisture,
+            this.HorHydCond,
+            this.VertHydCond,
+            this.RootDist,
+            this.Density,
+            this.SoilTort});
+            this.dgSoilHydroCoeffs.Location = new System.Drawing.Point(20, 104);
+            this.dgSoilHydroCoeffs.Name = "dgSoilHydroCoeffs";
+            this.dgSoilHydroCoeffs.Size = new System.Drawing.Size(628, 153);
+            this.dgSoilHydroCoeffs.TabIndex = 3;
             // 
-            // tbBioThick
+            // area
             // 
-            this.tbBioThick.Location = new System.Drawing.Point(412, 266);
-            this.tbBioThick.Name = "tbBioThick";
-            this.tbBioThick.Size = new System.Drawing.Size(100, 22);
-            this.tbBioThick.TabIndex = 17;
+            this.area.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.area.HeaderText = "Area (m2)";
+            this.area.Name = "area";
+            this.area.ReadOnly = true;
+            this.area.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.area.Width = 71;
             // 
-            // tbBiozoneArea
+            // Thickness
             // 
-            this.tbBiozoneArea.Location = new System.Drawing.Point(412, 298);
-            this.tbBiozoneArea.Name = "tbBiozoneArea";
-            this.tbBiozoneArea.Size = new System.Drawing.Size(100, 22);
-            this.tbBiozoneArea.TabIndex = 18;
+            this.Thickness.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Thickness.HeaderText = "Thickness (cm)";
+            this.Thickness.Name = "Thickness";
+            this.Thickness.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Thickness.Width = 93;
             // 
-            // tbBioRespCoeff
+            // InitMoisture
             // 
-            this.tbBioRespCoeff.Location = new System.Drawing.Point(412, 330);
-            this.tbBioRespCoeff.Name = "tbBioRespCoeff";
-            this.tbBioRespCoeff.Size = new System.Drawing.Size(100, 22);
-            this.tbBioRespCoeff.TabIndex = 19;
+            this.InitMoisture.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.InitMoisture.HeaderText = "Initial Moisture";
+            this.InitMoisture.Name = "InitMoisture";
+            this.InitMoisture.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.InitMoisture.Width = 88;
             // 
-            // tbBioMortCoeff
+            // FieldCap
             // 
-            this.tbBioMortCoeff.Location = new System.Drawing.Point(412, 362);
-            this.tbBioMortCoeff.Name = "tbBioMortCoeff";
-            this.tbBioMortCoeff.Size = new System.Drawing.Size(100, 22);
-            this.tbBioMortCoeff.TabIndex = 20;
+            this.FieldCap.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.FieldCap.HeaderText = "Field Capacity";
+            this.FieldCap.Name = "FieldCap";
+            this.FieldCap.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.FieldCap.Width = 87;
+            // 
+            // SatMoisture
+            // 
+            this.SatMoisture.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.SatMoisture.HeaderText = "Saturation Moisture";
+            this.SatMoisture.Name = "SatMoisture";
+            this.SatMoisture.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.SatMoisture.Width = 114;
+            // 
+            // HorHydCond
+            // 
+            this.HorHydCond.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.HorHydCond.HeaderText = "Horizontal Hydraulic Conductivity (cm/d)";
+            this.HorHydCond.Name = "HorHydCond";
+            this.HorHydCond.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.HorHydCond.Width = 187;
+            // 
+            // VertHydCond
+            // 
+            this.VertHydCond.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.VertHydCond.HeaderText = "Vertical Hydraulic Conductivity (cm/d)";
+            this.VertHydCond.Name = "VertHydCond";
+            this.VertHydCond.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.VertHydCond.Width = 174;
+            // 
+            // RootDist
+            // 
+            this.RootDist.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.RootDist.HeaderText = "Root Distribution";
+            this.RootDist.Name = "RootDist";
+            this.RootDist.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.RootDist.Width = 99;
+            // 
+            // Density
+            // 
+            this.Density.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Density.HeaderText = "Density (g/cm3)";
+            this.Density.Name = "Density";
+            this.Density.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Density.Width = 95;
+            // 
+            // SoilTort
+            // 
+            this.SoilTort.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.SoilTort.HeaderText = "Soil Tortuosity";
+            this.SoilTort.Name = "SoilTort";
+            this.SoilTort.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.SoilTort.Width = 86;
+            // 
+            // dgInitialConc
+            // 
+            this.dgInitialConc.AllowUserToAddRows = false;
+            this.dgInitialConc.AllowUserToDeleteRows = false;
+            this.dgInitialConc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgInitialConc.Location = new System.Drawing.Point(21, 105);
+            this.dgInitialConc.Name = "dgInitialConc";
+            this.dgInitialConc.Size = new System.Drawing.Size(626, 151);
+            this.dgInitialConc.TabIndex = 4;
             // 
             // FormCatch
             // 
@@ -1606,6 +1769,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgLivestockEx)).EndInit();
             this.tpSeptic.ResumeLayout(false);
             this.tpSeptic.PerformLayout();
+            this.tpSoil.ResumeLayout(false);
+            this.tpSoil.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgSoilHydroCoeffs)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgInitialConc)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1753,5 +1920,20 @@
         private System.Windows.Forms.TextBox tbTreatment3;
         private System.Windows.Forms.TextBox tbTreatment2;
         private System.Windows.Forms.TextBox tbTreatment1;
+        private System.Windows.Forms.DataGridView dgSoilHydroCoeffs;
+        private System.Windows.Forms.ComboBox cbSoilCoeffGroup;
+        private System.Windows.Forms.TextBox tbNumSoilLayers;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.DataGridViewTextBoxColumn area;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Thickness;
+        private System.Windows.Forms.DataGridViewTextBoxColumn InitMoisture;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FieldCap;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SatMoisture;
+        private System.Windows.Forms.DataGridViewTextBoxColumn HorHydCond;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VertHydCond;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RootDist;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Density;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SoilTort;
+        private System.Windows.Forms.DataGridView dgInitialConc;
     }
 }
