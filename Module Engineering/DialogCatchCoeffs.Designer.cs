@@ -164,14 +164,7 @@
             this.label20 = new System.Windows.Forms.Label();
             this.tpRxns = new System.Windows.Forms.TabPage();
             this.tpSoil = new System.Windows.Forms.TabPage();
-            this.tpMining = new System.Windows.Forms.TabPage();
-            this.tpCequalw2 = new System.Windows.Forms.TabPage();
-            this.btnOK = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnHelp = new System.Windows.Forms.Button();
-            this.label31 = new System.Windows.Forms.Label();
-            this.tbNumSoilLayers = new System.Windows.Forms.TextBox();
-            this.cbSoilCoeffGroup = new System.Windows.Forms.ComboBox();
+            this.dgInitialConc = new System.Windows.Forms.DataGridView();
             this.dgSoilHydroCoeffs = new System.Windows.Forms.DataGridView();
             this.area = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Thickness = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -183,7 +176,16 @@
             this.RootDist = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Density = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SoilTort = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgInitialConc = new System.Windows.Forms.DataGridView();
+            this.cbSoilCoeffGroup = new System.Windows.Forms.ComboBox();
+            this.tbNumSoilLayers = new System.Windows.Forms.TextBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.tpMining = new System.Windows.Forms.TabPage();
+            this.tpCequalw2 = new System.Windows.Forms.TabPage();
+            this.btnOK = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnHelp = new System.Windows.Forms.Button();
+            this.dgAdsorption = new System.Windows.Forms.DataGridView();
+            this.dgMineralComp = new System.Windows.Forms.DataGridView();
             this.tcCatchTabs.SuspendLayout();
             this.tpPhysData.SuspendLayout();
             this.gbSizeSlope.SuspendLayout();
@@ -209,8 +211,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgLivestockEx)).BeginInit();
             this.tpSeptic.SuspendLayout();
             this.tpSoil.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgSoilHydroCoeffs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgInitialConc)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgSoilHydroCoeffs)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgAdsorption)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgMineralComp)).BeginInit();
             this.SuspendLayout();
             // 
             // tcCatchTabs
@@ -1513,6 +1517,8 @@
             // 
             // tpSoil
             // 
+            this.tpSoil.Controls.Add(this.dgMineralComp);
+            this.tpSoil.Controls.Add(this.dgAdsorption);
             this.tpSoil.Controls.Add(this.dgInitialConc);
             this.tpSoil.Controls.Add(this.dgSoilHydroCoeffs);
             this.tpSoil.Controls.Add(this.cbSoilCoeffGroup);
@@ -1525,83 +1531,15 @@
             this.tpSoil.Text = "Soil Layers";
             this.tpSoil.UseVisualStyleBackColor = true;
             // 
-            // tpMining
+            // dgInitialConc
             // 
-            this.tpMining.Location = new System.Drawing.Point(4, 46);
-            this.tpMining.Name = "tpMining";
-            this.tpMining.Size = new System.Drawing.Size(667, 434);
-            this.tpMining.TabIndex = 12;
-            this.tpMining.Text = "Mining";
-            this.tpMining.UseVisualStyleBackColor = true;
-            // 
-            // tpCequalw2
-            // 
-            this.tpCequalw2.Location = new System.Drawing.Point(4, 46);
-            this.tpCequalw2.Name = "tpCequalw2";
-            this.tpCequalw2.Size = new System.Drawing.Size(667, 434);
-            this.tpCequalw2.TabIndex = 13;
-            this.tpCequalw2.Text = "CE-QUAL-W2";
-            this.tpCequalw2.UseVisualStyleBackColor = true;
-            // 
-            // btnOK
-            // 
-            this.btnOK.Location = new System.Drawing.Point(104, 507);
-            this.btnOK.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(137, 39);
-            this.btnOK.TabIndex = 11;
-            this.btnOK.Text = "OK";
-            this.btnOK.UseVisualStyleBackColor = true;
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Location = new System.Drawing.Point(268, 507);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(137, 39);
-            this.btnCancel.TabIndex = 12;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            // 
-            // btnHelp
-            // 
-            this.btnHelp.Location = new System.Drawing.Point(429, 507);
-            this.btnHelp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(137, 39);
-            this.btnHelp.TabIndex = 13;
-            this.btnHelp.Text = "Help";
-            this.btnHelp.UseVisualStyleBackColor = true;
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(78, 42);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(140, 16);
-            this.label31.TabIndex = 0;
-            this.label31.Text = "Number of Soil Layers:";
-            // 
-            // tbNumSoilLayers
-            // 
-            this.tbNumSoilLayers.Location = new System.Drawing.Point(217, 39);
-            this.tbNumSoilLayers.Name = "tbNumSoilLayers";
-            this.tbNumSoilLayers.Size = new System.Drawing.Size(38, 22);
-            this.tbNumSoilLayers.TabIndex = 1;
-            // 
-            // cbSoilCoeffGroup
-            // 
-            this.cbSoilCoeffGroup.FormattingEnabled = true;
-            this.cbSoilCoeffGroup.Items.AddRange(new object[] {
-            "Hydrology",
-            "Initial Concentrations",
-            "Adsorption",
-            "Mineral Composition",
-            "Inorganic Carbon"});
-            this.cbSoilCoeffGroup.Location = new System.Drawing.Point(303, 39);
-            this.cbSoilCoeffGroup.Name = "cbSoilCoeffGroup";
-            this.cbSoilCoeffGroup.Size = new System.Drawing.Size(274, 24);
-            this.cbSoilCoeffGroup.TabIndex = 2;
+            this.dgInitialConc.AllowUserToAddRows = false;
+            this.dgInitialConc.AllowUserToDeleteRows = false;
+            this.dgInitialConc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgInitialConc.Location = new System.Drawing.Point(21, 105);
+            this.dgInitialConc.Name = "dgInitialConc";
+            this.dgInitialConc.Size = new System.Drawing.Size(626, 151);
+            this.dgInitialConc.TabIndex = 4;
             // 
             // dgSoilHydroCoeffs
             // 
@@ -1629,7 +1567,7 @@
             this.area.Name = "area";
             this.area.ReadOnly = true;
             this.area.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.area.Width = 71;
+            this.area.Width = 41;
             // 
             // Thickness
             // 
@@ -1703,15 +1641,103 @@
             this.SoilTort.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.SoilTort.Width = 86;
             // 
-            // dgInitialConc
+            // cbSoilCoeffGroup
             // 
-            this.dgInitialConc.AllowUserToAddRows = false;
-            this.dgInitialConc.AllowUserToDeleteRows = false;
-            this.dgInitialConc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgInitialConc.Location = new System.Drawing.Point(21, 105);
-            this.dgInitialConc.Name = "dgInitialConc";
-            this.dgInitialConc.Size = new System.Drawing.Size(626, 151);
-            this.dgInitialConc.TabIndex = 4;
+            this.cbSoilCoeffGroup.FormattingEnabled = true;
+            this.cbSoilCoeffGroup.Items.AddRange(new object[] {
+            "Hydrology",
+            "Initial Concentrations",
+            "Adsorption",
+            "Mineral Composition",
+            "Inorganic Carbon"});
+            this.cbSoilCoeffGroup.Location = new System.Drawing.Point(303, 39);
+            this.cbSoilCoeffGroup.Name = "cbSoilCoeffGroup";
+            this.cbSoilCoeffGroup.Size = new System.Drawing.Size(274, 24);
+            this.cbSoilCoeffGroup.TabIndex = 2;
+            // 
+            // tbNumSoilLayers
+            // 
+            this.tbNumSoilLayers.Location = new System.Drawing.Point(217, 39);
+            this.tbNumSoilLayers.Name = "tbNumSoilLayers";
+            this.tbNumSoilLayers.Size = new System.Drawing.Size(38, 22);
+            this.tbNumSoilLayers.TabIndex = 1;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(78, 42);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(140, 16);
+            this.label31.TabIndex = 0;
+            this.label31.Text = "Number of Soil Layers:";
+            // 
+            // tpMining
+            // 
+            this.tpMining.Location = new System.Drawing.Point(4, 46);
+            this.tpMining.Name = "tpMining";
+            this.tpMining.Size = new System.Drawing.Size(667, 434);
+            this.tpMining.TabIndex = 12;
+            this.tpMining.Text = "Mining";
+            this.tpMining.UseVisualStyleBackColor = true;
+            // 
+            // tpCequalw2
+            // 
+            this.tpCequalw2.Location = new System.Drawing.Point(4, 46);
+            this.tpCequalw2.Name = "tpCequalw2";
+            this.tpCequalw2.Size = new System.Drawing.Size(667, 434);
+            this.tpCequalw2.TabIndex = 13;
+            this.tpCequalw2.Text = "CE-QUAL-W2";
+            this.tpCequalw2.UseVisualStyleBackColor = true;
+            // 
+            // btnOK
+            // 
+            this.btnOK.Location = new System.Drawing.Point(104, 507);
+            this.btnOK.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(137, 39);
+            this.btnOK.TabIndex = 11;
+            this.btnOK.Text = "OK";
+            this.btnOK.UseVisualStyleBackColor = true;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(268, 507);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(137, 39);
+            this.btnCancel.TabIndex = 12;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            // 
+            // btnHelp
+            // 
+            this.btnHelp.Location = new System.Drawing.Point(429, 507);
+            this.btnHelp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnHelp.Name = "btnHelp";
+            this.btnHelp.Size = new System.Drawing.Size(137, 39);
+            this.btnHelp.TabIndex = 13;
+            this.btnHelp.Text = "Help";
+            this.btnHelp.UseVisualStyleBackColor = true;
+            // 
+            // dgAdsorption
+            // 
+            this.dgAdsorption.AllowUserToAddRows = false;
+            this.dgAdsorption.AllowUserToDeleteRows = false;
+            this.dgAdsorption.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgAdsorption.Location = new System.Drawing.Point(21, 105);
+            this.dgAdsorption.Name = "dgAdsorption";
+            this.dgAdsorption.Size = new System.Drawing.Size(626, 151);
+            this.dgAdsorption.TabIndex = 5;
+            // 
+            // dgMineralComp
+            // 
+            this.dgMineralComp.AllowUserToAddRows = false;
+            this.dgMineralComp.AllowUserToDeleteRows = false;
+            this.dgMineralComp.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgMineralComp.Location = new System.Drawing.Point(22, 106);
+            this.dgMineralComp.Name = "dgMineralComp";
+            this.dgMineralComp.Size = new System.Drawing.Size(624, 149);
+            this.dgMineralComp.TabIndex = 6;
             // 
             // FormCatch
             // 
@@ -1771,8 +1797,10 @@
             this.tpSeptic.PerformLayout();
             this.tpSoil.ResumeLayout(false);
             this.tpSoil.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgSoilHydroCoeffs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgInitialConc)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgSoilHydroCoeffs)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgAdsorption)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgMineralComp)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1935,5 +1963,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Density;
         private System.Windows.Forms.DataGridViewTextBoxColumn SoilTort;
         private System.Windows.Forms.DataGridView dgInitialConc;
+        private System.Windows.Forms.DataGridView dgAdsorption;
+        private System.Windows.Forms.DataGridView dgMineralComp;
     }
 }

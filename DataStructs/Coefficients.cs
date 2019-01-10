@@ -300,7 +300,7 @@ namespace warmf {
         public double hydrogenXCoeff;
 
         public double exchangeCapacity;
-        public double maxPhosAdsorbion;
+        public double maxPhosAdsorption;
         public double density;
         public double tortuosity;
         public int CO2CalcMethod;
@@ -1133,6 +1133,7 @@ namespace warmf {
                         mineral.oxyConsumption = Double.TryParse(line.Substring(48, 8), out dblRes) ? dblRes : 0;
                         mineral.chemReactionProduct = ReadDoubleData(sr, "MNWTH", numChemicalParams);
                     }
+                    minerals.Add(mineral); //test for mineral
                 }
 
 				// Litter leachable ion params
@@ -1437,7 +1438,7 @@ namespace warmf {
                         line = sr.ReadLine();
                         if (TestLine(line, sr.LineNum, "COMP")) {
                             soil.exchangeCapacity = Double.TryParse(line.Substring(8, 8), out dblRes) ? dblRes : 0;
-                            soil.maxPhosAdsorbion = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0;
+                            soil.maxPhosAdsorption = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0;
                             soil.density = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : 0;
                             soil.tortuosity = Double.TryParse(line.Substring(32, 8), out dblRes) ? dblRes : 0;
                             soil.CO2CalcMethod = Int32.TryParse(line.Substring(40, 8), out intRes) ? intRes : 0;

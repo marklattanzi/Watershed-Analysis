@@ -34,7 +34,7 @@ namespace warmf
             List<string> landuselist = new List<string>();
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
-                landuselist.Add (Global.coe.landuse[ii].name.ToString());
+                landuselist.Add(Global.coe.landuse[ii].name.ToString());
             }
 
             //list of chemical and physical constituent names
@@ -125,12 +125,8 @@ namespace warmf
                     }
                 }
                 //Format datagridview
-                dgLandApp.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-                dgLandApp.AllowUserToAddRows = false;
-                dgLandApp.AllowUserToDeleteRows = false;
-                dgLandApp.AllowUserToOrderColumns = false;
-                dgLandApp.ReadOnly = false;
-
+                FormatDataGridView(dgLandApp);
+                
                 tbMaxAccTime.Text = catchment.bmp.maxFertAccumTime.ToString();
             }
 
@@ -156,12 +152,9 @@ namespace warmf
                 string Percent = catchment.landApplicationLoad[ii].ToString("F1");
                 dgLivestockEx.Rows.Insert(ii, luName, Percent);
             }
-            dgLivestockEx.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            dgLivestockEx.AllowUserToAddRows = false;
-            dgLivestockEx.AllowUserToDeleteRows = false;
-            dgLivestockEx.AllowUserToOrderColumns = false;
-            dgLivestockEx.ReadOnly = false;
 
+            FormatDataGridView(dgLivestockEx);
+            
             tbPctBuffered.Text = catchment.bufferingPct.ToString();
             tbBufferWidth.Text = catchment.bufferZoneWidth.ToString();
             tbBufferSlope.Text = catchment.bufferZoneSlope.ToString();
@@ -194,55 +187,110 @@ namespace warmf
             //Soil Layers tab
             tbNumSoilLayers.Text = catchment.numSoilLayers.ToString();
             cbSoilCoeffGroup.SelectedItem = "Hydrology";
-                //Hydrology coefficients displayed on load
-                    for (int ii = 0; ii < catchment.numSoilLayers; ii++)
-                        {
-                            string area = catchment.soils[ii].area.ToString();
-                            string thickness = catchment.soils[ii].thickness.ToString("F0");
-                            string moisture = catchment.soils[ii].moisture.ToString("F2");
-                            string fieldCap = catchment.soils[ii].fieldCapacity.ToString("F2");
-                            string satMoist = catchment.soils[ii].saturationMoisture.ToString("F2");
-                            string horizCond = catchment.soils[ii].horizHydraulicConduct.ToString("F0");
-                            string vertCond = catchment.soils[ii].vertHydraulicConduct.ToString("F0");
-                            string rootDist = catchment.soils[ii].evapTranspireFract.ToString("F2");
-                            string density = catchment.soils[ii].density.ToString("F1");
-                            string tortuosity = catchment.soils[ii].tortuosity.ToString("F0");
-                            dgSoilHydroCoeffs.Rows.Insert(ii, area, thickness, moisture, fieldCap, satMoist, horizCond, vertCond, rootDist, density, tortuosity);
-                        dgSoilHydroCoeffs.Rows[ii].HeaderCell.Value = "Soil Layer " + (ii+1).ToString();
-                        }
-                    dgSoilHydroCoeffs.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-                    dgSoilHydroCoeffs.AllowUserToAddRows = false;
-                    dgSoilHydroCoeffs.AllowUserToDeleteRows = false;
-                    dgSoilHydroCoeffs.AllowUserToOrderColumns = false;
-                    dgSoilHydroCoeffs.ReadOnly = false;
-                    dgSoilHydroCoeffs.Visible = false;
+            //Hydrology coefficients (displayed on load)
+            for (int ii = 0; ii < catchment.numSoilLayers; ii++)
+            {
+                string area = catchment.soils[ii].area.ToString();
+                string thickness = catchment.soils[ii].thickness.ToString("F0");
+                string moisture = catchment.soils[ii].moisture.ToString("F2");
+                string fieldCap = catchment.soils[ii].fieldCapacity.ToString("F2");
+                string satMoist = catchment.soils[ii].saturationMoisture.ToString("F2");
+                string horizCond = catchment.soils[ii].horizHydraulicConduct.ToString("F0");
+                string vertCond = catchment.soils[ii].vertHydraulicConduct.ToString("F0");
+                string rootDist = catchment.soils[ii].evapTranspireFract.ToString("F2");
+                string density = catchment.soils[ii].density.ToString("F1");
+                string tortuosity = catchment.soils[ii].tortuosity.ToString("F0");
+                dgSoilHydroCoeffs.Rows.Insert(ii, area, thickness, moisture, fieldCap, satMoist, horizCond, vertCond, rootDist, density, tortuosity);
+                dgSoilHydroCoeffs.Rows[ii].HeaderCell.Value = "Soil Layer " + (ii + 1).ToString();
+            }
+            FormatDataGridView(dgSoilHydroCoeffs);
             //Initial Concentrations
+            dgInitialConc.Columns.Add("Temp", "Temperature (degrees C)");
             for (int ii = 0; ii < iNumParams; ii++)
             {
-                dgInitialConc.Columns.Add(ConstitShortNames[ii], ConstitShortNames[ii].ToString() + " (" + ConstitUnits[ii].ToString() + ")");
+                dgInitialConc.Columns.Add(ConstitShortNames[ii], ConstitShortNames[ii].ToString() + " (" + ConstitUnits[ii].ToString().TrimEnd() + ")");
             }
             for (int ii = 0; ii < catchment.numSoilLayers; ii++)
             {
                 dgInitialConc.Rows.Insert(ii);
                 dgInitialConc.Rows[ii].HeaderCell.Value = "Soil Layer " + (ii + 1).ToString();
+                dgInitialConc.Rows[ii].Cells[0].Value = catchment.soils[ii].waterTemp.ToString();
                 for (int iParam = 0; iParam < iNumParams; iParam++)
                 {
-                    dgInitialConc.Rows[ii].Cells[iParam].Value = catchment.soils[ii].solutionConcen[iParam].ToString();
+                    dgInitialConc.Rows[ii].Cells[iParam + 1].Value = catchment.soils[ii].solutionConcen[iParam].ToString();
                 }
             }
-            dgInitialConc.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            dgInitialConc.AllowUserToAddRows = false;
-            dgInitialConc.AllowUserToDeleteRows = false;
-            dgInitialConc.AllowUserToOrderColumns = false;
-            dgInitialConc.ReadOnly = false;
-            dgInitialConc.Visible = true;
+            FormatDataGridView(dgInitialConc);
+            //Adsorption
+            //***************Adsorption is currently working differently than in WARMF v7****************
+            //***************We need to make some decisions here, and decide how to proceed**************
+            dgAdsorption.Columns.Add("CEC", "CEC (meq/100 g)");
+            dgAdsorption.Columns.Add("MaxP", "Max PO4 (mg/kg)");
+            for (int ii = 0; ii < iNumParams; ii++)
+            {
+                dgAdsorption.Columns.Add(ConstitShortNames[ii].ToString(), ConstitShortNames[ii].ToString().TrimEnd() + " (L/kg)");
+            }
+            for (int ii = 0; ii < catchment.numSoilLayers; ii++)
+            {
+                dgAdsorption.Rows.Insert(ii);
+                dgAdsorption.Rows[ii].HeaderCell.Value = "Soil Layer " + (ii + 1).ToString();
+                dgAdsorption.Rows[ii].Cells[0].Value = catchment.soils[ii].exchangeCapacity.ToString("F0");
+                dgAdsorption.Rows[ii].Cells[1].Value = catchment.soils[ii].maxPhosAdsorption.ToString("F0");
+                for (int iParam = 0; iParam < iNumParams; iParam++)
+                {
+                    dgAdsorption.Rows[ii].Cells[iParam + 2].Value = catchment.soils[ii].adsorptionIsotherm[iParam].ToString("F0");
+                }
+            }
+            List<int> HideCols = new List<int> { 0, 1, 13, 15, 16, 19, 20, 21, 22, 23, 24, 29, 30, 31, 32, 33, 34, 35, 36, 37 };
+            for (int ii = 0; ii < iNumParams; ii++)
+            {
+                if (HideCols.Contains(ii))
+                {
+                    dgAdsorption.Columns[ii + 2].Visible = false;
+                }
+            }
+            FormatDataGridView(dgAdsorption);
+            //Mineral Composition
+            for (int ii = 0; ii < Global.coe.numMinerals; ii++)
+            {
+                dgMineralComp.Columns.Add(Global.coe.minerals[ii].name.ToString(), Global.coe.minerals[ii].name.ToString());
+            }
+            for (int ii = 0; ii < catchment.numSoilLayers; ii++)
+            {
+                dgMineralComp.Rows.Insert(ii);
+                dgMineralComp.Rows[ii].HeaderCell.Value = "Soil Layer " + (ii + 1).ToString();
+                for (int iMineral = 0; iMineral < Global.coe.numMinerals; iMineral++)
+                {
+                    dgMineralComp.Rows[ii].Cells[iMineral].Value = catchment.soils[ii].weightFract[iMineral].ToString();
+                }
+            }
+            FormatDataGridView(dgMineralComp);
+            dgMineralComp.Visible = true;
+
             //Mining tab
 
             //CE-QUAL-W2 tab
 
         }
 
-        private void label5_Click(object sender, EventArgs e)
+        public void FormatDataGridView(DataGridView dgv)
+        {
+            dgv.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dgv.AllowUserToAddRows = false;
+            dgv.AllowUserToDeleteRows = false;
+            dgv.AllowUserToOrderColumns = false;
+            for (int ii = 0; ii < dgv.Columns.Count; ii++)
+            {
+                dgv.Columns[ii].SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+            dgv.ReadOnly = false;
+            dgv.Visible = false;
+        }
+
+
+
+            private void label5_Click(object sender, EventArgs e)
         {
 
         }
