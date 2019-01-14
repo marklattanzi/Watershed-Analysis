@@ -164,6 +164,8 @@
             this.label20 = new System.Windows.Forms.Label();
             this.tpRxns = new System.Windows.Forms.TabPage();
             this.tpSoil = new System.Windows.Forms.TabPage();
+            this.dgMineralComp = new System.Windows.Forms.DataGridView();
+            this.dgAdsorption = new System.Windows.Forms.DataGridView();
             this.dgInitialConc = new System.Windows.Forms.DataGridView();
             this.dgSoilHydroCoeffs = new System.Windows.Forms.DataGridView();
             this.area = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -184,8 +186,32 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
-            this.dgAdsorption = new System.Windows.Forms.DataGridView();
-            this.dgMineralComp = new System.Windows.Forms.DataGridView();
+            this.dgInorganicC = new System.Windows.Forms.DataGridView();
+            this.Option = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Factor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gbDeepMines = new System.Windows.Forms.GroupBox();
+            this.chbxDeepMines = new System.Windows.Forms.CheckBox();
+            this.btnDeepMinePermits = new System.Windows.Forms.Button();
+            this.gbSurfaceMines = new System.Windows.Forms.GroupBox();
+            this.label32 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.btnSurfaceMinePermits = new System.Windows.Forms.Button();
+            this.label33 = new System.Windows.Forms.Label();
+            this.dgSurfaceMines = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cbxWriteQUAL = new System.Windows.Forms.CheckBox();
+            this.gbQUALflow = new System.Windows.Forms.GroupBox();
+            this.gbQUALtemp = new System.Windows.Forms.GroupBox();
+            this.gbQUALconc = new System.Windows.Forms.GroupBox();
+            this.btnSelectFlow = new System.Windows.Forms.Button();
+            this.btnSelectTemp = new System.Windows.Forms.Button();
+            this.btnSelectConc = new System.Windows.Forms.Button();
             this.tcCatchTabs.SuspendLayout();
             this.tpPhysData.SuspendLayout();
             this.gbSizeSlope.SuspendLayout();
@@ -211,10 +237,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgLivestockEx)).BeginInit();
             this.tpSeptic.SuspendLayout();
             this.tpSoil.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgMineralComp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgAdsorption)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgInitialConc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgSoilHydroCoeffs)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgAdsorption)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgMineralComp)).BeginInit();
+            this.tpMining.SuspendLayout();
+            this.tpCequalw2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgInorganicC)).BeginInit();
+            this.gbDeepMines.SuspendLayout();
+            this.gbSurfaceMines.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgSurfaceMines)).BeginInit();
+            this.gbQUALflow.SuspendLayout();
+            this.gbQUALtemp.SuspendLayout();
+            this.gbQUALconc.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcCatchTabs
@@ -1517,19 +1552,40 @@
             // 
             // tpSoil
             // 
-            this.tpSoil.Controls.Add(this.dgMineralComp);
-            this.tpSoil.Controls.Add(this.dgAdsorption);
-            this.tpSoil.Controls.Add(this.dgInitialConc);
             this.tpSoil.Controls.Add(this.dgSoilHydroCoeffs);
             this.tpSoil.Controls.Add(this.cbSoilCoeffGroup);
             this.tpSoil.Controls.Add(this.tbNumSoilLayers);
             this.tpSoil.Controls.Add(this.label31);
+            this.tpSoil.Controls.Add(this.dgInorganicC);
+            this.tpSoil.Controls.Add(this.dgMineralComp);
+            this.tpSoil.Controls.Add(this.dgAdsorption);
+            this.tpSoil.Controls.Add(this.dgInitialConc);
             this.tpSoil.Location = new System.Drawing.Point(4, 46);
             this.tpSoil.Name = "tpSoil";
             this.tpSoil.Size = new System.Drawing.Size(667, 434);
             this.tpSoil.TabIndex = 11;
             this.tpSoil.Text = "Soil Layers";
             this.tpSoil.UseVisualStyleBackColor = true;
+            // 
+            // dgMineralComp
+            // 
+            this.dgMineralComp.AllowUserToAddRows = false;
+            this.dgMineralComp.AllowUserToDeleteRows = false;
+            this.dgMineralComp.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgMineralComp.Location = new System.Drawing.Point(22, 106);
+            this.dgMineralComp.Name = "dgMineralComp";
+            this.dgMineralComp.Size = new System.Drawing.Size(624, 149);
+            this.dgMineralComp.TabIndex = 6;
+            // 
+            // dgAdsorption
+            // 
+            this.dgAdsorption.AllowUserToAddRows = false;
+            this.dgAdsorption.AllowUserToDeleteRows = false;
+            this.dgAdsorption.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgAdsorption.Location = new System.Drawing.Point(21, 105);
+            this.dgAdsorption.Name = "dgAdsorption";
+            this.dgAdsorption.Size = new System.Drawing.Size(626, 151);
+            this.dgAdsorption.TabIndex = 5;
             // 
             // dgInitialConc
             // 
@@ -1673,6 +1729,8 @@
             // 
             // tpMining
             // 
+            this.tpMining.Controls.Add(this.gbSurfaceMines);
+            this.tpMining.Controls.Add(this.gbDeepMines);
             this.tpMining.Location = new System.Drawing.Point(4, 46);
             this.tpMining.Name = "tpMining";
             this.tpMining.Size = new System.Drawing.Size(667, 434);
@@ -1682,6 +1740,10 @@
             // 
             // tpCequalw2
             // 
+            this.tpCequalw2.Controls.Add(this.gbQUALtemp);
+            this.tpCequalw2.Controls.Add(this.gbQUALconc);
+            this.tpCequalw2.Controls.Add(this.gbQUALflow);
+            this.tpCequalw2.Controls.Add(this.cbxWriteQUAL);
             this.tpCequalw2.Location = new System.Drawing.Point(4, 46);
             this.tpCequalw2.Name = "tpCequalw2";
             this.tpCequalw2.Size = new System.Drawing.Size(667, 434);
@@ -1719,25 +1781,260 @@
             this.btnHelp.Text = "Help";
             this.btnHelp.UseVisualStyleBackColor = true;
             // 
-            // dgAdsorption
+            // dgInorganicC
             // 
-            this.dgAdsorption.AllowUserToAddRows = false;
-            this.dgAdsorption.AllowUserToDeleteRows = false;
-            this.dgAdsorption.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgAdsorption.Location = new System.Drawing.Point(21, 105);
-            this.dgAdsorption.Name = "dgAdsorption";
-            this.dgAdsorption.Size = new System.Drawing.Size(626, 151);
-            this.dgAdsorption.TabIndex = 5;
+            this.dgInorganicC.AllowUserToAddRows = false;
+            this.dgInorganicC.AllowUserToDeleteRows = false;
+            this.dgInorganicC.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgInorganicC.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgInorganicC.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Option,
+            this.Factor});
+            this.dgInorganicC.Location = new System.Drawing.Point(22, 105);
+            this.dgInorganicC.Name = "dgInorganicC";
+            this.dgInorganicC.Size = new System.Drawing.Size(625, 151);
+            this.dgInorganicC.TabIndex = 7;
             // 
-            // dgMineralComp
+            // Option
             // 
-            this.dgMineralComp.AllowUserToAddRows = false;
-            this.dgMineralComp.AllowUserToDeleteRows = false;
-            this.dgMineralComp.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgMineralComp.Location = new System.Drawing.Point(22, 106);
-            this.dgMineralComp.Name = "dgMineralComp";
-            this.dgMineralComp.Size = new System.Drawing.Size(624, 149);
-            this.dgMineralComp.TabIndex = 6;
+            this.Option.HeaderText = "Option";
+            this.Option.Items.AddRange(new object[] {
+            "Calculate",
+            "Atmospheric Equilibrium",
+            "Constant Concentration"});
+            this.Option.Name = "Option";
+            this.Option.Width = 52;
+            // 
+            // Factor
+            // 
+            this.Factor.HeaderText = "Factor";
+            this.Factor.Name = "Factor";
+            this.Factor.Width = 70;
+            // 
+            // gbDeepMines
+            // 
+            this.gbDeepMines.Controls.Add(this.btnDeepMinePermits);
+            this.gbDeepMines.Controls.Add(this.chbxDeepMines);
+            this.gbDeepMines.Location = new System.Drawing.Point(8, 43);
+            this.gbDeepMines.Name = "gbDeepMines";
+            this.gbDeepMines.Size = new System.Drawing.Size(656, 53);
+            this.gbDeepMines.TabIndex = 0;
+            this.gbDeepMines.TabStop = false;
+            this.gbDeepMines.Text = "Deep Mines";
+            // 
+            // chbxDeepMines
+            // 
+            this.chbxDeepMines.AutoSize = true;
+            this.chbxDeepMines.Location = new System.Drawing.Point(113, 21);
+            this.chbxDeepMines.Name = "chbxDeepMines";
+            this.chbxDeepMines.Size = new System.Drawing.Size(245, 20);
+            this.chbxDeepMines.TabIndex = 0;
+            this.chbxDeepMines.Text = "Bottom layer is deep mine overburden";
+            this.chbxDeepMines.UseVisualStyleBackColor = true;
+            // 
+            // btnDeepMinePermits
+            // 
+            this.btnDeepMinePermits.Enabled = false;
+            this.btnDeepMinePermits.Location = new System.Drawing.Point(378, 18);
+            this.btnDeepMinePermits.Name = "btnDeepMinePermits";
+            this.btnDeepMinePermits.Size = new System.Drawing.Size(109, 24);
+            this.btnDeepMinePermits.TabIndex = 1;
+            this.btnDeepMinePermits.Text = "Permits";
+            this.btnDeepMinePermits.UseVisualStyleBackColor = true;
+            // 
+            // gbSurfaceMines
+            // 
+            this.gbSurfaceMines.Controls.Add(this.dgSurfaceMines);
+            this.gbSurfaceMines.Controls.Add(this.label33);
+            this.gbSurfaceMines.Controls.Add(this.btnSurfaceMinePermits);
+            this.gbSurfaceMines.Controls.Add(this.comboBox1);
+            this.gbSurfaceMines.Controls.Add(this.label32);
+            this.gbSurfaceMines.Location = new System.Drawing.Point(8, 119);
+            this.gbSurfaceMines.Name = "gbSurfaceMines";
+            this.gbSurfaceMines.Size = new System.Drawing.Size(655, 203);
+            this.gbSurfaceMines.TabIndex = 1;
+            this.gbSurfaceMines.TabStop = false;
+            this.gbSurfaceMines.Text = "Surface Mines";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(6, 35);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(282, 16);
+            this.label32.TabIndex = 0;
+            this.label32.Text = "Bottom soil layer is surface mine overburden in:";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(312, 31);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(222, 24);
+            this.comboBox1.TabIndex = 1;
+            this.comboBox1.Text = "(no surface mining)";
+            // 
+            // btnSurfaceMinePermits
+            // 
+            this.btnSurfaceMinePermits.Enabled = false;
+            this.btnSurfaceMinePermits.Location = new System.Drawing.Point(559, 31);
+            this.btnSurfaceMinePermits.Name = "btnSurfaceMinePermits";
+            this.btnSurfaceMinePermits.Size = new System.Drawing.Size(92, 24);
+            this.btnSurfaceMinePermits.TabIndex = 2;
+            this.btnSurfaceMinePermits.Text = "Permits";
+            this.btnSurfaceMinePermits.UseVisualStyleBackColor = true;
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(189, 73);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(243, 16);
+            this.label33.TabIndex = 3;
+            this.label33.Text = "Surface mine overburden characteristics:";
+            // 
+            // dgSurfaceMines
+            // 
+            this.dgSurfaceMines.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgSurfaceMines.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4,
+            this.dataGridViewTextBoxColumn5,
+            this.dataGridViewTextBoxColumn6,
+            this.dataGridViewTextBoxColumn7,
+            this.dataGridViewTextBoxColumn8,
+            this.dataGridViewTextBoxColumn9});
+            this.dgSurfaceMines.Location = new System.Drawing.Point(9, 92);
+            this.dgSurfaceMines.Name = "dgSurfaceMines";
+            this.dgSurfaceMines.Size = new System.Drawing.Size(640, 105);
+            this.dgSurfaceMines.TabIndex = 9;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.dataGridViewTextBoxColumn3.HeaderText = "Area (m2)";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            this.dataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn3.Width = 71;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.dataGridViewTextBoxColumn4.HeaderText = "Thickness (cm)";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn4.Width = 93;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.dataGridViewTextBoxColumn5.HeaderText = "Initial Moisture";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn5.Width = 88;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.dataGridViewTextBoxColumn6.HeaderText = "Field Capacity";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn6.Width = 87;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.dataGridViewTextBoxColumn7.HeaderText = "Saturation Moisture";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            this.dataGridViewTextBoxColumn7.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn7.Width = 114;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.dataGridViewTextBoxColumn8.HeaderText = "Horizontal Hydraulic Conductivity (cm/d)";
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            this.dataGridViewTextBoxColumn8.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn8.Width = 187;
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.dataGridViewTextBoxColumn9.HeaderText = "Vertical Hydraulic Conductivity (cm/d)";
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn9.Width = 174;
+            // 
+            // cbxWriteQUAL
+            // 
+            this.cbxWriteQUAL.AutoSize = true;
+            this.cbxWriteQUAL.Location = new System.Drawing.Point(192, 127);
+            this.cbxWriteQUAL.Name = "cbxWriteQUAL";
+            this.cbxWriteQUAL.Size = new System.Drawing.Size(268, 20);
+            this.cbxWriteQUAL.TabIndex = 0;
+            this.cbxWriteQUAL.Text = "Write Output Files for CE-QUAL-W2 Input";
+            this.cbxWriteQUAL.UseVisualStyleBackColor = true;
+            // 
+            // gbQUALflow
+            // 
+            this.gbQUALflow.Controls.Add(this.btnSelectFlow);
+            this.gbQUALflow.Location = new System.Drawing.Point(68, 167);
+            this.gbQUALflow.Name = "gbQUALflow";
+            this.gbQUALflow.Size = new System.Drawing.Size(515, 58);
+            this.gbQUALflow.TabIndex = 1;
+            this.gbQUALflow.TabStop = false;
+            this.gbQUALflow.Text = "Flow File";
+            // 
+            // gbQUALtemp
+            // 
+            this.gbQUALtemp.Controls.Add(this.btnSelectTemp);
+            this.gbQUALtemp.Location = new System.Drawing.Point(68, 232);
+            this.gbQUALtemp.Name = "gbQUALtemp";
+            this.gbQUALtemp.Size = new System.Drawing.Size(515, 58);
+            this.gbQUALtemp.TabIndex = 2;
+            this.gbQUALtemp.TabStop = false;
+            this.gbQUALtemp.Text = "Temperature File";
+            // 
+            // gbQUALconc
+            // 
+            this.gbQUALconc.Controls.Add(this.btnSelectConc);
+            this.gbQUALconc.Location = new System.Drawing.Point(68, 297);
+            this.gbQUALconc.Name = "gbQUALconc";
+            this.gbQUALconc.Size = new System.Drawing.Size(515, 58);
+            this.gbQUALconc.TabIndex = 3;
+            this.gbQUALconc.TabStop = false;
+            this.gbQUALconc.Text = "Concentration File";
+            // 
+            // btnSelectFlow
+            // 
+            this.btnSelectFlow.Enabled = false;
+            this.btnSelectFlow.Location = new System.Drawing.Point(385, 17);
+            this.btnSelectFlow.Name = "btnSelectFlow";
+            this.btnSelectFlow.Size = new System.Drawing.Size(117, 31);
+            this.btnSelectFlow.TabIndex = 0;
+            this.btnSelectFlow.Text = "Select";
+            this.btnSelectFlow.UseVisualStyleBackColor = true;
+            // 
+            // btnSelectTemp
+            // 
+            this.btnSelectTemp.Enabled = false;
+            this.btnSelectTemp.Location = new System.Drawing.Point(385, 16);
+            this.btnSelectTemp.Name = "btnSelectTemp";
+            this.btnSelectTemp.Size = new System.Drawing.Size(117, 31);
+            this.btnSelectTemp.TabIndex = 0;
+            this.btnSelectTemp.Text = "Select";
+            this.btnSelectTemp.UseVisualStyleBackColor = true;
+            // 
+            // btnSelectConc
+            // 
+            this.btnSelectConc.Enabled = false;
+            this.btnSelectConc.Location = new System.Drawing.Point(385, 17);
+            this.btnSelectConc.Name = "btnSelectConc";
+            this.btnSelectConc.Size = new System.Drawing.Size(117, 31);
+            this.btnSelectConc.TabIndex = 0;
+            this.btnSelectConc.Text = "Select";
+            this.btnSelectConc.UseVisualStyleBackColor = true;
             // 
             // FormCatch
             // 
@@ -1797,10 +2094,22 @@
             this.tpSeptic.PerformLayout();
             this.tpSoil.ResumeLayout(false);
             this.tpSoil.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgMineralComp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgAdsorption)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgInitialConc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgSoilHydroCoeffs)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgAdsorption)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgMineralComp)).EndInit();
+            this.tpMining.ResumeLayout(false);
+            this.tpCequalw2.ResumeLayout(false);
+            this.tpCequalw2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgInorganicC)).EndInit();
+            this.gbDeepMines.ResumeLayout(false);
+            this.gbDeepMines.PerformLayout();
+            this.gbSurfaceMines.ResumeLayout(false);
+            this.gbSurfaceMines.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgSurfaceMines)).EndInit();
+            this.gbQUALflow.ResumeLayout(false);
+            this.gbQUALtemp.ResumeLayout(false);
+            this.gbQUALconc.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1965,5 +2274,31 @@
         private System.Windows.Forms.DataGridView dgInitialConc;
         private System.Windows.Forms.DataGridView dgAdsorption;
         private System.Windows.Forms.DataGridView dgMineralComp;
+        private System.Windows.Forms.DataGridView dgInorganicC;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Option;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Factor;
+        private System.Windows.Forms.GroupBox gbSurfaceMines;
+        private System.Windows.Forms.DataGridView dgSurfaceMines;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Button btnSurfaceMinePermits;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.GroupBox gbDeepMines;
+        private System.Windows.Forms.Button btnDeepMinePermits;
+        private System.Windows.Forms.CheckBox chbxDeepMines;
+        private System.Windows.Forms.GroupBox gbQUALtemp;
+        private System.Windows.Forms.Button btnSelectTemp;
+        private System.Windows.Forms.GroupBox gbQUALconc;
+        private System.Windows.Forms.Button btnSelectConc;
+        private System.Windows.Forms.GroupBox gbQUALflow;
+        private System.Windows.Forms.Button btnSelectFlow;
+        private System.Windows.Forms.CheckBox cbxWriteQUAL;
     }
 }

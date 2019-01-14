@@ -187,7 +187,7 @@ namespace warmf
             //Soil Layers tab
             tbNumSoilLayers.Text = catchment.numSoilLayers.ToString();
             cbSoilCoeffGroup.SelectedItem = "Hydrology";
-            //Hydrology coefficients (displayed on load)
+            //Soil Layers > Hydrology coefficients (displayed on load)
             for (int ii = 0; ii < catchment.numSoilLayers; ii++)
             {
                 string area = catchment.soils[ii].area.ToString();
@@ -204,7 +204,8 @@ namespace warmf
                 dgSoilHydroCoeffs.Rows[ii].HeaderCell.Value = "Soil Layer " + (ii + 1).ToString();
             }
             FormatDataGridView(dgSoilHydroCoeffs);
-            //Initial Concentrations
+            dgSoilHydroCoeffs.Visible = true;
+            //Soil Layers > Initial Concentrations
             dgInitialConc.Columns.Add("Temp", "Temperature (degrees C)");
             for (int ii = 0; ii < iNumParams; ii++)
             {
@@ -221,7 +222,7 @@ namespace warmf
                 }
             }
             FormatDataGridView(dgInitialConc);
-            //Adsorption
+            //Soil Layers > Adsorption
             //***************Adsorption is currently working differently than in WARMF v7****************
             //***************We need to make some decisions here, and decide how to proceed**************
             dgAdsorption.Columns.Add("CEC", "CEC (meq/100 g)");
@@ -250,7 +251,7 @@ namespace warmf
                 }
             }
             FormatDataGridView(dgAdsorption);
-            //Mineral Composition
+            //Soil Layers > Mineral Composition
             for (int ii = 0; ii < Global.coe.numMinerals; ii++)
             {
                 dgMineralComp.Columns.Add(Global.coe.minerals[ii].name.ToString(), Global.coe.minerals[ii].name.ToString());
@@ -265,7 +266,15 @@ namespace warmf
                 }
             }
             FormatDataGridView(dgMineralComp);
-            dgMineralComp.Visible = true;
+            //Soil Layers > Inorganic Carbon
+            for (int ii = 0; ii < catchment.numSoilLayers; ii++)
+            {
+                dgInorganicC.Rows.Insert(ii);
+                dgInorganicC.Rows[ii].HeaderCell.Value = "Soil Layer " + (ii + 1).ToString();
+                dgInorganicC.Rows[ii].Cells[0].Value = (dgInorganicC.Rows[ii].Cells[0] as DataGridViewComboBoxCell).Items[catchment.soils[ii].CO2CalcMethod - 1];
+                dgInorganicC.Rows[ii].Cells[1].Value = catchment.soils[ii].CO2ConcenFactor.ToString("F0");
+            }
+            FormatDataGridView(dgInorganicC);
 
             //Mining tab
 

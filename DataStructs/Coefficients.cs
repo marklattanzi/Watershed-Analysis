@@ -1442,6 +1442,7 @@ namespace warmf {
                             soil.density = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : 0;
                             soil.tortuosity = Double.TryParse(line.Substring(32, 8), out dblRes) ? dblRes : 0;
                             soil.CO2CalcMethod = Int32.TryParse(line.Substring(40, 8), out intRes) ? intRes : 0;
+                            soil.CO2ConcenFactor = Int32.TryParse(line.Substring(48, 8), out intRes) ? intRes : 0;
                         }
                         soil.weightFract = ReadDoubleData(sr, "COMP", numMinerals);
                         soil.solutionConcen = ReadDoubleData(sr, "SOL", numComponents);
