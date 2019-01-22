@@ -272,15 +272,6 @@
     <None Include="data\flo\WaterfordGC.flo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\logs\FILLDATA.LOG">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="data\logs\SEPTICSYS.LOG">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="data\logs\WARMF.LOG">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="data\met\X350Y081.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -771,6 +762,9 @@
   <ItemGroup>
     <Content Include="DLLs\EGIS.Controls.dll" />
     <Content Include="DLLs\EGIS.ShapeFileLib.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="data\logs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
