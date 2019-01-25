@@ -10,10 +10,10 @@ using System.Windows.Forms;
 
 namespace warmf
 {
-    public partial class FormCatch : Form
+    public partial class DialogCatchCoeffs : Form
     {
         FormMain parent;
-        public FormCatch(FormMain par )
+        public DialogCatchCoeffs(FormMain par )
         {
             InitializeComponent();
             this.parent = par;
@@ -322,6 +322,12 @@ namespace warmf
         private void label20_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnHelp_Click(object sender, EventArgs e)
+        {
+            // Launch browser to http://warmf.com/...
+            System.Diagnostics.Process.Start("http://warmf.com/home/index.php/engineering-module/catchments/");
         }
     }
 }

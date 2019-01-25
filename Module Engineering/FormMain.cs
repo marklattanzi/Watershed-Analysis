@@ -19,7 +19,8 @@ namespace warmf {
 		bool showMETStations = false;
 		
 		// sub forms of Engineering (Main) module
-		public FormCatch frmCatch;
+		public DialogCatchCoeffs dlgCatchCoeffs;
+        public DialogSystemCoeffs dlgSystemCoeffs;
 
 		public FormMain() {
 			InitializeComponent();
@@ -37,7 +38,8 @@ namespace warmf {
 			frmTMDL = new FormTMDL(this);
 
 			// sub forms of engr module form
-			frmCatch = new FormCatch(this); // used in Engr module to show catchment coefficients
+			dlgCatchCoeffs = new DialogCatchCoeffs(this); // used in Engr module to show catchment coefficients
+            dlgSystemCoeffs = new DialogSystemCoeffs(this);
 		}
 
 		private void FormMain_Load(object sender, EventArgs e) {
@@ -178,47 +180,55 @@ namespace warmf {
 			//return;
 
 			int recordIndex = frmMap.GetShapeIndexAtPixelCoord(0, e.Location, 8);
-			if (recordIndex >= 0) {
-				string[] recordAttributes = frmMap[0].GetAttributeFieldValues(recordIndex);
-				string[] attributeNames = frmMap[0].GetAttributeFieldNames();
-				StringBuilder sb = new StringBuilder();
-				int catchNum = 0;
-				for (int n = 0; n < attributeNames.Length; ++n) {
-					sb.Append(attributeNames[n]).Append(':').AppendLine(recordAttributes[n].Trim());
-					catchNum = Int32.Parse(recordAttributes[n]);
-				}
-				//MessageBox.Show(this, sb.ToString(), "record attributes", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+            if (recordIndex >= 0)
+            {
+                string[] recordAttributes = frmMap[0].GetAttributeFieldValues(recordIndex);
+                string[] attributeNames = frmMap[0].GetAttributeFieldNames();
+                StringBuilder sb = new StringBuilder();
+                int catchNum = 0;
+                for (int n = 0; n < attributeNames.Length; ++n)
+                {
+                    sb.Append(attributeNames[n]).Append(':').AppendLine(recordAttributes[n].Trim());
+                    catchNum = Int32.Parse(recordAttributes[n]);
+                }
+                //MessageBox.Show(this, sb.ToString(), "record attributes", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
 
-				// test of coefficients file read
-				int ii = 0;
-				while (Global.coe.catchments[ii].idNum != catchNum)
-					if (ii < Global.coe.numCatchments - 1)
-						ii++;
-					else {
-						Debug.WriteLine("No catchment found with IDnum = " + catchNum);
-						return;
-					}
+                //test of coefficients file read
+                int ii = 0;
+                while (Global.coe.catchments[ii].idNum != catchNum)
+                    if (ii < Global.coe.numCatchments - 1)
+                        ii++;
+                    else
+                    {
+                        Debug.WriteLine("No catchment found with IDnum = " + catchNum);
+                        return;
+                    }
 
-				sb.AppendLine("Name:" + Global.coe.catchments[ii].name);
-				sb.AppendLine("MET file:" + Global.coe.METFilename[Global.coe.catchments[ii].METFileNum]);
-				sb.AppendLine("Precipitation Weighting multiplier:" + Global.coe.catchments[ii].precipMultiplier);
-				sb.AppendLine("Average temperature lapse:" + Global.coe.catchments[ii].aveTempLapse);
-				sb.AppendLine("Altitudinal Temp Lapse:" + Global.coe.catchments[ii].altitudeTempLapse);
-				sb.AppendLine("Output to file?:" + Global.coe.catchments[ii].swOutputToFile);
-				sb.AppendLine("Air/rain chemistry file num" + Global.coe.catchments[ii].airRainChemFileNum);
-				sb.AppendLine("Particle/rain chemistry file num:" + Global.coe.catchments[ii].particleRainChemFileNum);
-				sb.AppendLine("Num soil layers:" + Global.coe.catchments[ii].numSoilLayers);
-				sb.AppendLine("Slope:" + Global.coe.catchments[ii].slope);
-				sb.AppendLine("Width:" + Global.coe.catchments[ii].width);
-				sb.AppendLine("Aspect:" + Global.coe.catchments[ii].aspect);
-				sb.AppendLine("Manning N:" + Global.coe.catchments[ii].ManningN);
-				sb.AppendLine("Detention storage:" + Global.coe.catchments[ii].detentionStorage);
+                //sb.AppendLine("Name:" + Global.coe.catchments[ii].name);
+                //sb.AppendLine("MET file:" + Global.coe.METFilename[Global.coe.catchments[ii].METFileNum]);
+                //sb.AppendLine("Precipitation Weighting multiplier:" + Global.coe.catchments[ii].precipMultiplier);
+                //sb.AppendLine("Average temperature lapse:" + Global.coe.catchments[ii].aveTempLapse);
+                //sb.AppendLine("Altitudinal Temp Lapse:" + Global.coe.catchments[ii].altitudeTempLapse);
+                //sb.AppendLine("Output to file?:" + Global.coe.catchments[ii].swOutputToFile);
+                //sb.AppendLine("Air/rain chemistry file num" + Global.coe.catchments[ii].airRainChemFileNum);
+                //sb.AppendLine("Particle/rain chemistry file num:" + Global.coe.catchments[ii].particleRainChemFileNum);
+                //sb.AppendLine("Num soil layers:" + Global.coe.catchments[ii].numSoilLayers);
+                //sb.AppendLine("Slope:" + Global.coe.catchments[ii].slope);
+                //sb.AppendLine("Width:" + Global.coe.catchments[ii].width);
+                //sb.AppendLine("Aspect:" + Global.coe.catchments[ii].aspect);
+                //sb.AppendLine("Manning N:" + Global.coe.catchments[ii].ManningN);
+                //sb.AppendLine("Detention storage:" + Global.coe.catchments[ii].detentionStorage);
 
-				WMDialog popup = new WMDialog("Shapefile Data", sb.ToString());
-				//popup.ShowDialog();
-				frmCatch.Populate(ii);
-				frmCatch.ShowDialog();
-			}
+                //WMDialog popup = new WMDialog("Shapefile Data", sb.ToString());
+                ////popup.ShowDialog();
+                dlgCatchCoeffs.Populate(ii);
+                dlgCatchCoeffs.ShowDialog();
+            }
+            else
+            {
+                dlgSystemCoeffs.Populate();
+                dlgSystemCoeffs.ShowDialog();
+            }
 		}
 
 		private void miFileExit_Click(object sender, EventArgs e) {

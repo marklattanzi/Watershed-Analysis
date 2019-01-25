@@ -53,6 +53,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Module Engineering\DialogSystemCoeffs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Module Engineering\DialogSystemCoeffs.Designer.cs">
+      <DependentUpon>DialogSystemCoeffs.cs</DependentUpon>
+    </Compile>
     <Compile Include="UtilityClasses\Extensions.cs" />
     <Compile Include="Module Engineering\DialogCatchCoeffs.cs">
       <SubType>Form</SubType>
@@ -111,6 +117,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Module Consensus\FormConsensus.resx">
       <DependentUpon>FormConsensus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Module Engineering\DialogSystemCoeffs.resx">
+      <DependentUpon>DialogSystemCoeffs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Module Manager\FormManager.resx">
       <DependentUpon>FormManager.cs</DependentUpon>
