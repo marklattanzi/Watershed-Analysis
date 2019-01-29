@@ -198,9 +198,9 @@ namespace warmf {
         public double productivity;
         public double maintRespRate;
         public double activeRespRate;
-        public double dryCollectEff;
+        public double dryCollEff;
         public double wetCollEff;
-        public double leafWgtRation;
+        public double leafWgtArea;
         public double canopyHeight;
         public double stomatalResist;
         public List<double> cropping;
@@ -1215,9 +1215,9 @@ namespace warmf {
                         lu.productivity = dnums[2];
                         lu.maintRespRate = dnums[3];
                         lu.activeRespRate = dnums[4];
-                        lu.dryCollectEff = dnums[5];
+                        lu.dryCollEff = dnums[5];
                         lu.wetCollEff = dnums[6];
-                        lu.leafWgtRation = dnums[7];
+                        lu.leafWgtArea = dnums[7];
 
                         dnums = ReadDoubleData(sr, "HEIGHT", 2);
                         lu.canopyHeight = dnums[0];
