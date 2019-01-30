@@ -70,8 +70,7 @@ namespace warmf
             //Land Uses
             DataGridViewColumn colValue = new DataGridViewTextBoxColumn();
             //Fraction Open in Winter
-            dgvOpenInWinter.Columns.Insert(0,colValue);
-            dgvOpenInWinter.Columns[0].HeaderText = "Value";
+            dgvOpenInWinter.Columns.Add("Value", "Value");
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
                 dgvOpenInWinter.Rows.Insert(ii);
@@ -82,20 +81,18 @@ namespace warmf
             }
             FormatDataGridView(dgvOpenInWinter);
             //Rainfall Detachment Factor
-            dgvRainfallDetachment.Columns.Insert(0, colValue);
-            dgvRainfallDetachment.Columns[0].HeaderText = "Value";
+            dgvRainfallDetachment.Columns.Add("Value", "Value");
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
-                dgvOpenInWinter.Rows.Insert(ii);
-                dgvOpenInWinter.Rows[ii].HeaderCell.Value =
+                dgvRainfallDetachment.Rows.Insert(ii);
+                dgvRainfallDetachment.Rows[ii].HeaderCell.Value =
                     Global.coe.landuse[ii].name;
-                dgvOpenInWinter.Rows[ii].Cells[0].Value =
-                    Global.coe.landuse[ii].openWinterFrac.ToString();
+                dgvRainfallDetachment.Rows[ii].Cells[0].Value =
+                    Global.coe.landuse[ii].rainDetachFactor.ToString();
             }
             FormatDataGridView(dgvRainfallDetachment);
             //Flow Detachment Factor
-            dgvFlowDetachment.Columns.Insert(0, colValue);
-            dgvFlowDetachment.Columns[0].HeaderText = "Value";
+            dgvFlowDetachment.Columns.Add("Value", "Value");
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
                 dgvFlowDetachment.Rows.Insert(ii);
@@ -106,8 +103,7 @@ namespace warmf
             }
             FormatDataGridView(dgvFlowDetachment);
             //Fraction Impervious
-            dgvFractionImpervious.Columns.Insert(0, colValue);
-            dgvFractionImpervious.Columns[0].HeaderText = "Value";
+            dgvFractionImpervious.Columns.Add("Value", "Value");
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
                 dgvFractionImpervious.Rows.Insert(ii);
@@ -118,8 +114,7 @@ namespace warmf
             }
             FormatDataGridView(dgvFractionImpervious);
             //Interception Storage
-            dgvInterceptionStorage.Columns.Insert(0, colValue);
-            dgvInterceptionStorage.Columns[0].HeaderText = "Value";
+            dgvInterceptionStorage.Columns.Add("Value", "Value");
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
                 dgvInterceptionStorage.Rows.Insert(ii);
@@ -130,8 +125,7 @@ namespace warmf
             }
             FormatDataGridView(dgvInterceptionStorage);
             //Long-Term Growth
-            dgvAnnGrowthMult.Columns.Insert(0, colValue);
-            dgvAnnGrowthMult.Columns[0].HeaderText = "Value";
+            dgvAnnGrowthMult.Columns.Add("Value", "Value");
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
                 dgvAnnGrowthMult.Rows.Insert(ii);
@@ -142,8 +136,7 @@ namespace warmf
             }
             FormatDataGridView(dgvAnnGrowthMult);
             //Leaf Growth Factor
-            dgvLeafGrowth.Columns.Insert(0, colValue);
-            dgvLeafGrowth.Columns[0].HeaderText = "Value";
+            dgvLeafGrowth.Columns.Add("Value", "Value");
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
                 dgvLeafGrowth.Rows.Insert(ii);
@@ -154,8 +147,7 @@ namespace warmf
             }
             FormatDataGridView(dgvLeafGrowth);
             //Productivity
-            dgvProductivity.Columns.Insert(0, colValue);
-            dgvProductivity.Columns[0].HeaderText = "Value";
+            dgvProductivity.Columns.Add("Value", "Value");
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
                 dgvProductivity.Rows.Insert(ii);
@@ -166,8 +158,7 @@ namespace warmf
             }
             FormatDataGridView(dgvProductivity);
             //Active Respiration
-            dgvActiveRespiration.Columns.Insert(0, colValue);
-            dgvActiveRespiration.Columns[0].HeaderText = "Value";
+            dgvActiveRespiration.Columns.Add("Value", "Value");
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
                 dgvActiveRespiration.Rows.Insert(ii);
@@ -178,8 +169,7 @@ namespace warmf
             }
             FormatDataGridView(dgvActiveRespiration);
             //Maintenance Respiration
-            dgvMaintenanceRespiration.Columns.Insert(0, colValue);
-            dgvMaintenanceRespiration.Columns[0].HeaderText = "Value";
+            dgvMaintenanceRespiration.Columns.Add("Value", "Value");
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
                 dgvMaintenanceRespiration.Rows.Insert(ii);
@@ -190,8 +180,7 @@ namespace warmf
             }
             FormatDataGridView(dgvMaintenanceRespiration);
             //Dry Collection Efficiency
-            dgvDryColEfficiency.Columns.Insert(0, colValue);
-            dgvDryColEfficiency.Columns[0].HeaderText = "Value";
+            dgvDryColEfficiency.Columns.Add("Value", "Value");
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
                 dgvDryColEfficiency.Rows.Insert(ii);
@@ -202,8 +191,7 @@ namespace warmf
             }
             FormatDataGridView(dgvDryColEfficiency);
             //Wet Collection Efficiency
-            dgvWetColEfficiency.Columns.Insert(0, colValue);
-            dgvWetColEfficiency.Columns[0].HeaderText = "Value";
+            dgvWetColEfficiency.Columns.Add("Value", "Value");
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
                 dgvWetColEfficiency.Rows.Insert(ii);
@@ -214,8 +202,7 @@ namespace warmf
             }
             FormatDataGridView(dgvWetColEfficiency);
             //Leaf Weight/Area
-            dgvLeafWeightArea.Columns.Insert(0, colValue);
-            dgvLeafWeightArea.Columns[0].HeaderText = "Value";
+            dgvLeafWeightArea.Columns.Add("Value", "Value");
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
                 dgvLeafWeightArea.Rows.Insert(ii);
@@ -226,8 +213,7 @@ namespace warmf
             }
             FormatDataGridView(dgvLeafWeightArea);
             //Canopy Height
-            dgvCanopyHeight.Columns.Insert(0, colValue);
-            dgvCanopyHeight.Columns[0].HeaderText = "Value";
+            dgvCanopyHeight.Columns.Add("Value", "Value");
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
                 dgvCanopyHeight.Rows.Insert(ii);
@@ -238,8 +224,7 @@ namespace warmf
             }
             FormatDataGridView(dgvCanopyHeight);
             //Stomatal Resistance
-            dgvStomatalResistance.Columns.Insert(0, colValue);
-            dgvStomatalResistance.Columns[0].HeaderText = "Value";
+            dgvStomatalResistance.Columns.Add("Value", "Value");
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
                 dgvStomatalResistance.Rows.Insert(ii);
@@ -250,6 +235,7 @@ namespace warmf
             }
             FormatDataGridView(dgvStomatalResistance);
             //Cropping Factor
+            AddMonthColumns(dgvCropFactor);
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
                 dgvCropFactor.Rows.Insert(ii);
@@ -263,6 +249,7 @@ namespace warmf
             }
             FormatDataGridView(dgvCropFactor);
             //Leaf Area Index
+            AddMonthColumns(dgvLeafAreaIndex);
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
                 dgvLeafAreaIndex.Rows.Insert(ii);
@@ -271,21 +258,172 @@ namespace warmf
                 for (int iMonth = 0; iMonth < 12; iMonth++)
                 {
                     dgvLeafAreaIndex.Rows[ii].Cells[iMonth].Value =
-                        Global.coe.landuse[ii].cropping[iMonth].ToString();
+                        Global.coe.landuse[ii].leafAreaIdx[iMonth].ToString();
                 }
             }
-            FormatDataGridView(dgvCropFactor);
+            FormatDataGridView(dgvLeafAreaIndex);
+            //Annual Uptake Distribution
+            AddMonthColumns(dgvAnnUptakeDist);
+            for (int ii = 0; ii < Global.coe.numLanduses; ii++)
+            {
+                dgvAnnUptakeDist.Rows.Insert(ii);
+                dgvAnnUptakeDist.Rows[ii].HeaderCell.Value =
+                    Global.coe.landuse[ii].name;
+                for (int iMonth = 0; iMonth < 12; iMonth++)
+                {
+                    dgvAnnUptakeDist.Rows[ii].Cells[iMonth].Value =
+                        Global.coe.landuse[ii].annualUptake[iMonth].ToString();
+                }
+            }
+            FormatDataGridView(dgvAnnUptakeDist);
+            //Litter Fall Rate
+            AddMonthColumns(dgvLitterFallRate);
+            for (int ii = 0; ii < Global.coe.numLanduses; ii++)
+            {
+                dgvLitterFallRate.Rows.Insert(ii);
+                dgvLitterFallRate.Rows[ii].HeaderCell.Value =
+                    Global.coe.landuse[ii].name;
+                for (int iMonth = 0; iMonth < 12; iMonth++)
+                {
+                    dgvLitterFallRate.Rows[ii].Cells[iMonth].Value =
+                        Global.coe.landuse[ii].litterFallRate[iMonth].ToString();
+                }
+            }
+            FormatDataGridView(dgvLitterFallRate);
+            //Exudation Rate
+            AddMonthColumns(dgvExudationRate);
+            for (int ii = 0; ii < Global.coe.numLanduses; ii++)
+            {
+                dgvExudationRate.Rows.Insert(ii);
+                dgvExudationRate.Rows[ii].HeaderCell.Value =
+                    Global.coe.landuse[ii].name;
+                for (int iMonth = 0; iMonth < 12; iMonth++)
+                {
+                    dgvExudationRate.Rows[ii].Cells[iMonth].Value =
+                        Global.coe.landuse[ii].exudationRate[iMonth].ToString();
+                }
+            }
+            FormatDataGridView(dgvExudationRate);
+            //Leaf Composition
+            for (int ii = 0; ii < Global.coe.numChemicalParams; ii++)
+            {
+                string sName = ConstitShortNames[ii];
+                string sUnits = ConstitUnits[ii];
+                dgvLeafComp.Columns.Add(sName, string.Concat(sName, ", ", sUnits));
+            }
+            for (int ii = 0; ii < Global.coe.numLanduses; ii++)
+            {
+                dgvLeafComp.Rows.Insert(ii);
+                dgvLeafComp.Rows[ii].HeaderCell.Value =
+                    Global.coe.landuse[ii].name;
+                for (int iConstit = 0; iConstit < Global.coe.numChemicalParams; iConstit++)
+                {
+                    dgvLeafComp.Rows[ii].Cells[iConstit].Value =
+                        Global.coe.landuse[ii].leafComp[iConstit].ToString();
+                }
+            }
+            FormatDataGridView(dgvLeafComp);
+            //Trunk Composition
+            for (int ii = 0; ii < Global.coe.numChemicalParams; ii++)
+            {
+                string sName = ConstitShortNames[ii];
+                string sUnits = ConstitUnits[ii];
+                dgvTrunkComp.Columns.Add(sName, string.Concat(sName, ", ", sUnits));
+            }
+            for (int ii = 0; ii < Global.coe.numLanduses; ii++)
+            {
+                dgvTrunkComp.Rows.Insert(ii);
+                dgvTrunkComp.Rows[ii].HeaderCell.Value =
+                    Global.coe.landuse[ii].name;
+                for (int iConstit = 0; iConstit < Global.coe.numChemicalParams; iConstit++)
+                {
+                    dgvTrunkComp.Rows[ii].Cells[iConstit].Value =
+                        Global.coe.landuse[ii].trunkComp[iConstit].ToString();
+                }
+            }
+            FormatDataGridView(dgvTrunkComp);
+
+            cbLandUseParameter.SelectedIndex = 0;
+            dgvOpenInWinter.BringToFront();
+
             //Snow/Ice
+            tbSnowFormTemp.Text = Global.coe.snow.formTemp.ToString();
+            tbSnowMeltTemp.Text = Global.coe.snow.meltTemp.ToString();
+            tbOpenAreaMelt.Text = Global.coe.snow.openAreaMeltRate.ToString();
+            tbForestAreaMelt.Text = Global.coe.snow.forestAreaMeltRate.ToString();
+            tbRainMelt.Text = Global.coe.snow.rainMeltRate.ToString();
+            tbSnowFieldCapacity.Text = Global.coe.snow.fieldCapacity.ToString();
+            tbSoluteFraction.Text = Global.coe.snow.soluteIceRetain.ToString();
+            tbSnowLeach.Text = Global.coe.snow.meltLeaching.ToString();
+            tbSnowNitrif.Text = Global.coe.snow.nitrificationRate.ToString();
+            tbOpenAreaSublim.Text = Global.coe.snow.openAreaSubRate.ToString();
+            tbForestAreaSublim.Text = Global.coe.snow.forestAreaSubRate.ToString();
 
             //Heat/Light
+            tbAtmTurbidity.Text = Global.coe.atmosphericTurbidity.ToString();
+            tbSoilTConduction.Text = Global.coe.soilThermalConduct.ToString();
+            tbSnowTConduction.Text = Global.coe.snow.thermalConduct.ToString();
+            tbIceTConduction.Text = Global.coe.snow.iceThermalConduct.ToString();
+            tbEvapMag.Text = Global.coe.evaporationScaling.ToString();
+            tbEvapSkew.Text = Global.coe.evaporationSeasonSkew.ToString();
+            tbSedimentShading.Text = Global.coe.sedimentShading.ToString();
+            tbAlgaeShading.Text = Global.coe.algaeShading.ToString();
+            tbDetritusShading.Text = Global.coe.detritusShading.ToString();
 
             //Canopy
+            tbStandingBiomass.Text = Global.coe.standingBiomass.ToString();
+            AddMonthColumns(dgvDepUptakeVelocity);
+            dgvDepUptakeVelocity.Rows.Insert(0, 2);
+            dgvDepUptakeVelocity.Rows[0].HeaderCell.Value = "Particle Deposition";
+            dgvDepUptakeVelocity.Rows[1].HeaderCell.Value = "Gas Uptake";
+            for (int iMonth = 0; iMonth < 12; iMonth++)
+            {
+                dgvDepUptakeVelocity.Rows[0].Cells[iMonth].Value =
+                    Global.coe.partDV[iMonth].ToString();
+                dgvDepUptakeVelocity.Rows[1].Cells[iMonth].Value =
+                    Global.coe.gasUptakeVelocity[iMonth].ToString();
+            }
 
             //Litter
+            tbLitterDecay.Text = Global.coe.litter.coarseLitterDecay.ToString();
+            tbFineLitterDecay.Text = Global.coe.litter.fineLitterDecay.ToString();
+            tbHumusDecay.Text = Global.coe.litter.humusDecay.ToString();
+            tbLitterLeachFract.Text = Global.coe.litter.courseLitterFrac.ToString();
+            tbFineLitterLeachFract.Text = Global.coe.litter.fineLitterFrac.ToString();
+            tbHumusLeachFract.Text = Global.coe.litter.humusFrac.ToString();
+            tbNonstructLeachFract.Text = Global.coe.litter.nonStructLeach.ToString();
 
             //Septic Systems
+            tbSepticFlow.Text = Global.coe.septic.failedFlow.ToString();
+            dgvSepticDischQual.Columns.Add("Type1", "Type 1");
+            dgvSepticDischQual.Columns.Add("Type2", "Type 2");
+            dgvSepticDischQual.Columns.Add("Type3", "Type 3");
+            for (int iConstit = 0; iConstit < Global.coe.numChemicalParams; iConstit++)
+            {
+                dgvSepticDischQual.Rows.Insert(iConstit);
+                dgvSepticDischQual.Rows[iConstit].HeaderCell.Value = ConstitNames[iConstit];
+                dgvSepticDischQual.Rows[iConstit].Cells[0].Value =
+                    Global.coe.septic.type1[iConstit].ToString();
+                dgvSepticDischQual.Rows[iConstit].Cells[1].Value =
+                    Global.coe.septic.type2[iConstit].ToString();
+                dgvSepticDischQual.Rows[iConstit].Cells[2].Value =
+                    Global.coe.septic.type3[iConstit].ToString();
+            }
+            FormatDataGridView(dgvTrunkComp);
 
             //Minerals
+            tbMolWeight.Text = Global.coe.minerals[0].molecularWgt.ToString();
+            tbWeatherRate.Text = Global.coe.minerals[0].weatheringRate.ToString();
+            tbPHdepend.Text = Global.coe.minerals[0].phDepend.ToString();
+            tbOconsumption.Text = Global.coe.minerals[0].oxyConsumption.ToString();
+            for (int iConstit = 0; iConstit < Global.coe.numChemicalParams; iConstit++)
+            {
+                dgvRxnProducts.Rows.Insert(iConstit);
+                dgvRxnProducts.Rows[iConstit].HeaderCell.Value = ConstitNames[iConstit];
+                dgvRxnProducts.Rows[iConstit].Cells[0].Value =
+                    Global.coe.minerals[0].chemReactionProduct[iConstit].ToString();
+            }
+            FormatDataGridView(dgvRxnProducts);
 
             //Sediment
 
@@ -410,6 +548,28 @@ namespace warmf
             }
             dgv.ReadOnly = false;
             dgv.Visible = true;
+        }
+
+        public void AddMonthColumns(DataGridView dgv)
+        {
+            dgv.Columns.Add("Jan", "January");
+            dgv.Columns.Add("Feb", "February");
+            dgv.Columns.Add("Mar", "March");
+            dgv.Columns.Add("Apr", "April");
+            dgv.Columns.Add("May", "May");
+            dgv.Columns.Add("Jun", "June");
+            dgv.Columns.Add("Jul", "July");
+            dgv.Columns.Add("Aug", "August");
+            dgv.Columns.Add("Sep", "September");
+            dgv.Columns.Add("Oct", "October");
+            dgv.Columns.Add("Nov", "November");
+            dgv.Columns.Add("Dec", "December");
+        }
+
+        private void cbMinerals_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int ii = cbMinerals.SelectedIndex;
+            
         }
     }
 }

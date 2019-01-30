@@ -626,7 +626,7 @@ namespace warmf {
         public List<double> courseDV;   // one per month
         public bool swGasDepositVelocity;
         //public List<double> gasDepositVelocity; // one per month  --unused MRL
-        public List<double> gasUptakeVeolicty;  // one per month
+        public List<double> gasUptakeVelocity;  // one per month
         public double heightWindSpeed;
         public double vonkar;
         public int numLanduses;
@@ -1183,7 +1183,7 @@ namespace warmf {
                 courseDV = ReadMonthlyDoubleData(sr, "COARSEDV");
                 swGasDepositVelocity = ReadOnOffSwitch(sr, "IVDGAS");
 //                gasDepositVelocity = readMonthlyDoubleData(sr, "NOXSOXVD");  // missing from Catawba file - MRL
-                gasUptakeVeolicty = ReadMonthlyDoubleData(sr, "NOXSOXVU");
+                gasUptakeVelocity = ReadMonthlyDoubleData(sr, "NOXSOXVU");
 
                 dnums = ReadDoubleData(sr, "HEIGHT", 2);
                 heightWindSpeed = dnums[0];
