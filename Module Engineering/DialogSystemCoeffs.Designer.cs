@@ -153,13 +153,47 @@
             this.label37 = new System.Windows.Forms.Label();
             this.cbMinerals = new System.Windows.Forms.ComboBox();
             this.tpSediment = new System.Windows.Forms.TabPage();
+            this.dgvSediment = new System.Windows.Forms.DataGridView();
             this.tpPhytoplankton = new System.Windows.Forms.TabPage();
+            this.dgvPhytoplankton = new System.Windows.Forms.DataGridView();
             this.tpPeriphyton = new System.Windows.Forms.TabPage();
             this.tpFoodWeb = new System.Windows.Forms.TabPage();
             this.tpParameters = new System.Windows.Forms.TabPage();
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
+            this.label43 = new System.Windows.Forms.Label();
+            this.label44 = new System.Windows.Forms.Label();
+            this.label45 = new System.Windows.Forms.Label();
+            this.label46 = new System.Windows.Forms.Label();
+            this.label47 = new System.Windows.Forms.Label();
+            this.label48 = new System.Windows.Forms.Label();
+            this.label49 = new System.Windows.Forms.Label();
+            this.label50 = new System.Windows.Forms.Label();
+            this.label51 = new System.Windows.Forms.Label();
+            this.label52 = new System.Windows.Forms.Label();
+            this.label53 = new System.Windows.Forms.Label();
+            this.label54 = new System.Windows.Forms.Label();
+            this.label55 = new System.Windows.Forms.Label();
+            this.label56 = new System.Windows.Forms.Label();
+            this.label57 = new System.Windows.Forms.Label();
+            this.label58 = new System.Windows.Forms.Label();
+            this.label59 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.tcSystemTabs.SuspendLayout();
             this.tpPhysicalData.SuspendLayout();
             this.tpLandUses.SuspendLayout();
@@ -202,6 +236,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvSepticDischQual)).BeginInit();
             this.tpMinerals.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRxnProducts)).BeginInit();
+            this.tpSediment.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSediment)).BeginInit();
+            this.tpPhytoplankton.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPhytoplankton)).BeginInit();
+            this.tpPeriphyton.SuspendLayout();
+            this.groupBox9.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcSystemTabs
@@ -1444,6 +1484,7 @@
             // 
             // tpSediment
             // 
+            this.tpSediment.Controls.Add(this.dgvSediment);
             this.tpSediment.Location = new System.Drawing.Point(4, 46);
             this.tpSediment.Margin = new System.Windows.Forms.Padding(4);
             this.tpSediment.Name = "tpSediment";
@@ -1452,8 +1493,21 @@
             this.tpSediment.Text = "Sediment";
             this.tpSediment.UseVisualStyleBackColor = true;
             // 
+            // dgvSediment
+            // 
+            this.dgvSediment.AllowUserToAddRows = false;
+            this.dgvSediment.AllowUserToDeleteRows = false;
+            this.dgvSediment.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSediment.Location = new System.Drawing.Point(194, 144);
+            this.dgvSediment.Name = "dgvSediment";
+            this.dgvSediment.Size = new System.Drawing.Size(360, 149);
+            this.dgvSediment.TabIndex = 0;
+            // 
             // tpPhytoplankton
             // 
+            this.tpPhytoplankton.Controls.Add(this.label44);
+            this.tpPhytoplankton.Controls.Add(this.label43);
+            this.tpPhytoplankton.Controls.Add(this.dgvPhytoplankton);
             this.tpPhytoplankton.Location = new System.Drawing.Point(4, 46);
             this.tpPhytoplankton.Margin = new System.Windows.Forms.Padding(4);
             this.tpPhytoplankton.Name = "tpPhytoplankton";
@@ -1462,8 +1516,40 @@
             this.tpPhytoplankton.Text = "Phytoplankton";
             this.tpPhytoplankton.UseVisualStyleBackColor = true;
             // 
+            // dgvPhytoplankton
+            // 
+            this.dgvPhytoplankton.AllowUserToAddRows = false;
+            this.dgvPhytoplankton.AllowUserToDeleteRows = false;
+            this.dgvPhytoplankton.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPhytoplankton.Location = new System.Drawing.Point(98, 87);
+            this.dgvPhytoplankton.Name = "dgvPhytoplankton";
+            this.dgvPhytoplankton.Size = new System.Drawing.Size(518, 310);
+            this.dgvPhytoplankton.TabIndex = 0;
+            // 
             // tpPeriphyton
             // 
+            this.tpPeriphyton.Controls.Add(this.groupBox9);
+            this.tpPeriphyton.Controls.Add(this.textBox14);
+            this.tpPeriphyton.Controls.Add(this.textBox13);
+            this.tpPeriphyton.Controls.Add(this.textBox8);
+            this.tpPeriphyton.Controls.Add(this.textBox7);
+            this.tpPeriphyton.Controls.Add(this.textBox6);
+            this.tpPeriphyton.Controls.Add(this.textBox5);
+            this.tpPeriphyton.Controls.Add(this.textBox4);
+            this.tpPeriphyton.Controls.Add(this.textBox3);
+            this.tpPeriphyton.Controls.Add(this.textBox2);
+            this.tpPeriphyton.Controls.Add(this.textBox1);
+            this.tpPeriphyton.Controls.Add(this.label59);
+            this.tpPeriphyton.Controls.Add(this.label58);
+            this.tpPeriphyton.Controls.Add(this.label57);
+            this.tpPeriphyton.Controls.Add(this.label52);
+            this.tpPeriphyton.Controls.Add(this.label51);
+            this.tpPeriphyton.Controls.Add(this.label50);
+            this.tpPeriphyton.Controls.Add(this.label49);
+            this.tpPeriphyton.Controls.Add(this.label48);
+            this.tpPeriphyton.Controls.Add(this.label47);
+            this.tpPeriphyton.Controls.Add(this.label46);
+            this.tpPeriphyton.Controls.Add(this.label45);
             this.tpPeriphyton.Location = new System.Drawing.Point(4, 46);
             this.tpPeriphyton.Margin = new System.Windows.Forms.Padding(4);
             this.tpPeriphyton.Name = "tpPeriphyton";
@@ -1523,6 +1609,276 @@
             this.btnOK.TabIndex = 14;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(235, 51);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(244, 16);
+            this.label43.TabIndex = 1;
+            this.label43.Text = "River Phytoplankton Growth Coefficients";
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Location = new System.Drawing.Point(108, 418);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(499, 16);
+            this.label44.TabIndex = 2;
+            this.label44.Text = "Note: Reservoir Phytoplankton Growth Coefficients are in the Reservoir Input Dial" +
+    "og";
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(12, 73);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(222, 16);
+            this.label45.TabIndex = 0;
+            this.label45.Text = "Endogenous Respiration Coefficient";
+            // 
+            // label46
+            // 
+            this.label46.Location = new System.Drawing.Point(12, 101);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(250, 35);
+            this.label46.TabIndex = 1;
+            this.label46.Text = "Endogenous Respiration Exponential Coefficient";
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(12, 144);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(157, 16);
+            this.label47.TabIndex = 2;
+            this.label47.Text = "Photorespiration Fraction";
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.Location = new System.Drawing.Point(12, 170);
+            this.label48.MaximumSize = new System.Drawing.Size(250, 35);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(207, 32);
+            this.label48.TabIndex = 3;
+            this.label48.Text = "Fraction Recycled of Grazed and Scoured Periphyton";
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(12, 212);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(211, 16);
+            this.label49.TabIndex = 4;
+            this.label49.Text = "Spatial Limit Half Saturation (g/m2)";
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Location = new System.Drawing.Point(12, 246);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(166, 16);
+            this.label50.TabIndex = 5;
+            this.label50.Text = "Spatial Limitation, Intercept";
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.Location = new System.Drawing.Point(12, 280);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(226, 16);
+            this.label51.TabIndex = 6;
+            this.label51.Text = "Scour Regression Coefficient (1/day)";
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Location = new System.Drawing.Point(12, 314);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(208, 16);
+            this.label52.TabIndex = 7;
+            this.label52.Text = "Scour Regression Exponent (1/m)";
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.Location = new System.Drawing.Point(12, 29);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(100, 16);
+            this.label53.TabIndex = 8;
+            this.label53.Text = "Nitrogen (mg/L)";
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.Location = new System.Drawing.Point(12, 63);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(121, 16);
+            this.label54.TabIndex = 9;
+            this.label54.Text = "Phosphorus (mg/L)";
+            // 
+            // label55
+            // 
+            this.label55.AutoSize = true;
+            this.label55.Location = new System.Drawing.Point(12, 97);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(89, 16);
+            this.label55.TabIndex = 10;
+            this.label55.Text = "Velocity (m/s)";
+            // 
+            // label56
+            // 
+            this.label56.AutoSize = true;
+            this.label56.Location = new System.Drawing.Point(12, 131);
+            this.label56.Name = "label56";
+            this.label56.Size = new System.Drawing.Size(145, 16);
+            this.label56.TabIndex = 11;
+            this.label56.Text = "Light Saturation (W/m2)";
+            // 
+            // label57
+            // 
+            this.label57.Location = new System.Drawing.Point(412, 271);
+            this.label57.MaximumSize = new System.Drawing.Size(200, 35);
+            this.label57.Name = "label57";
+            this.label57.Size = new System.Drawing.Size(150, 35);
+            this.label57.TabIndex = 12;
+            this.label57.Text = "Ratio Chlorophyll-a : Carbon";
+            // 
+            // label58
+            // 
+            this.label58.Location = new System.Drawing.Point(412, 305);
+            this.label58.MaximumSize = new System.Drawing.Size(200, 35);
+            this.label58.Name = "label58";
+            this.label58.Size = new System.Drawing.Size(150, 35);
+            this.label58.TabIndex = 13;
+            this.label58.Text = "Ammonia Preference Coefficient";
+            // 
+            // label59
+            // 
+            this.label59.AutoSize = true;
+            this.label59.Location = new System.Drawing.Point(76, 430);
+            this.label59.Name = "label59";
+            this.label59.Size = new System.Drawing.Size(546, 16);
+            this.label59.TabIndex = 14;
+            this.label59.Text = "Growth and mortality rates are specified for individual river segments in the riv" +
+    "er input dialog";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(257, 73);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 22);
+            this.textBox1.TabIndex = 15;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(257, 107);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(100, 22);
+            this.textBox2.TabIndex = 16;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(257, 141);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(100, 22);
+            this.textBox3.TabIndex = 17;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(257, 175);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(100, 22);
+            this.textBox4.TabIndex = 18;
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(257, 209);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(100, 22);
+            this.textBox5.TabIndex = 19;
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(257, 243);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(100, 22);
+            this.textBox6.TabIndex = 20;
+            // 
+            // textBox7
+            // 
+            this.textBox7.Location = new System.Drawing.Point(257, 277);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(100, 22);
+            this.textBox7.TabIndex = 21;
+            // 
+            // textBox8
+            // 
+            this.textBox8.Location = new System.Drawing.Point(257, 311);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(100, 22);
+            this.textBox8.TabIndex = 22;
+            // 
+            // textBox9
+            // 
+            this.textBox9.Location = new System.Drawing.Point(182, 26);
+            this.textBox9.Name = "textBox9";
+            this.textBox9.Size = new System.Drawing.Size(100, 22);
+            this.textBox9.TabIndex = 23;
+            // 
+            // textBox10
+            // 
+            this.textBox10.Location = new System.Drawing.Point(182, 60);
+            this.textBox10.Name = "textBox10";
+            this.textBox10.Size = new System.Drawing.Size(100, 22);
+            this.textBox10.TabIndex = 24;
+            // 
+            // textBox11
+            // 
+            this.textBox11.Location = new System.Drawing.Point(182, 94);
+            this.textBox11.Name = "textBox11";
+            this.textBox11.Size = new System.Drawing.Size(100, 22);
+            this.textBox11.TabIndex = 25;
+            // 
+            // textBox12
+            // 
+            this.textBox12.Location = new System.Drawing.Point(182, 128);
+            this.textBox12.Name = "textBox12";
+            this.textBox12.Size = new System.Drawing.Size(100, 22);
+            this.textBox12.TabIndex = 26;
+            // 
+            // textBox13
+            // 
+            this.textBox13.Location = new System.Drawing.Point(582, 277);
+            this.textBox13.Name = "textBox13";
+            this.textBox13.Size = new System.Drawing.Size(100, 22);
+            this.textBox13.TabIndex = 27;
+            // 
+            // textBox14
+            // 
+            this.textBox14.Location = new System.Drawing.Point(582, 311);
+            this.textBox14.Name = "textBox14";
+            this.textBox14.Size = new System.Drawing.Size(100, 22);
+            this.textBox14.TabIndex = 28;
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.textBox12);
+            this.groupBox9.Controls.Add(this.textBox11);
+            this.groupBox9.Controls.Add(this.textBox10);
+            this.groupBox9.Controls.Add(this.textBox9);
+            this.groupBox9.Controls.Add(this.label56);
+            this.groupBox9.Controls.Add(this.label55);
+            this.groupBox9.Controls.Add(this.label54);
+            this.groupBox9.Controls.Add(this.label53);
+            this.groupBox9.Location = new System.Drawing.Point(400, 81);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(294, 165);
+            this.groupBox9.TabIndex = 29;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Half Saturation Constants";
             // 
             // DialogSystemCoeffs
             // 
@@ -1595,6 +1951,15 @@
             this.tpMinerals.ResumeLayout(false);
             this.tpMinerals.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRxnProducts)).EndInit();
+            this.tpSediment.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSediment)).EndInit();
+            this.tpPhytoplankton.ResumeLayout(false);
+            this.tpPhytoplankton.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPhytoplankton)).EndInit();
+            this.tpPeriphyton.ResumeLayout(false);
+            this.tpPeriphyton.PerformLayout();
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1733,5 +2098,39 @@
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.ComboBox cbMinerals;
+        private System.Windows.Forms.DataGridView dgvSediment;
+        private System.Windows.Forms.DataGridView dgvPhytoplankton;
+        private System.Windows.Forms.Label label44;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.TextBox textBox10;
+        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.Label label56;
+        private System.Windows.Forms.Label label55;
+        private System.Windows.Forms.Label label54;
+        private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.TextBox textBox14;
+        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label59;
+        private System.Windows.Forms.Label label58;
+        private System.Windows.Forms.Label label57;
+        private System.Windows.Forms.Label label52;
+        private System.Windows.Forms.Label label51;
+        private System.Windows.Forms.Label label50;
+        private System.Windows.Forms.Label label49;
+        private System.Windows.Forms.Label label48;
+        private System.Windows.Forms.Label label47;
+        private System.Windows.Forms.Label label46;
+        private System.Windows.Forms.Label label45;
     }
 }
