@@ -155,45 +155,62 @@
             this.tpSediment = new System.Windows.Forms.TabPage();
             this.dgvSediment = new System.Windows.Forms.DataGridView();
             this.tpPhytoplankton = new System.Windows.Forms.TabPage();
+            this.label44 = new System.Windows.Forms.Label();
+            this.label43 = new System.Windows.Forms.Label();
             this.dgvPhytoplankton = new System.Windows.Forms.DataGridView();
             this.tpPeriphyton = new System.Windows.Forms.TabPage();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.tbLightHalfSat = new System.Windows.Forms.TextBox();
+            this.tbVelHalfSat = new System.Windows.Forms.TextBox();
+            this.tbPhalfSat = new System.Windows.Forms.TextBox();
+            this.tbNhalfSat = new System.Windows.Forms.TextBox();
+            this.label56 = new System.Windows.Forms.Label();
+            this.label55 = new System.Windows.Forms.Label();
+            this.label54 = new System.Windows.Forms.Label();
+            this.label53 = new System.Windows.Forms.Label();
+            this.tbAmmPrefCoeff = new System.Windows.Forms.TextBox();
+            this.tbChlCarbonRatio = new System.Windows.Forms.TextBox();
+            this.tbScourRegExp = new System.Windows.Forms.TextBox();
+            this.tbScourRegCoeff = new System.Windows.Forms.TextBox();
+            this.tbSpatLimitIntcpt = new System.Windows.Forms.TextBox();
+            this.tbSpatHalfSat = new System.Windows.Forms.TextBox();
+            this.tbRecycledFract = new System.Windows.Forms.TextBox();
+            this.tbPhotoRespFract = new System.Windows.Forms.TextBox();
+            this.tbEndRespExpCoeff = new System.Windows.Forms.TextBox();
+            this.tbEndRespCoeff = new System.Windows.Forms.TextBox();
+            this.label59 = new System.Windows.Forms.Label();
+            this.label58 = new System.Windows.Forms.Label();
+            this.label57 = new System.Windows.Forms.Label();
+            this.label52 = new System.Windows.Forms.Label();
+            this.label51 = new System.Windows.Forms.Label();
+            this.label50 = new System.Windows.Forms.Label();
+            this.label49 = new System.Windows.Forms.Label();
+            this.label48 = new System.Windows.Forms.Label();
+            this.label47 = new System.Windows.Forms.Label();
+            this.label46 = new System.Windows.Forms.Label();
+            this.label45 = new System.Windows.Forms.Label();
             this.tpFoodWeb = new System.Windows.Forms.TabPage();
+            this.label60 = new System.Windows.Forms.Label();
             this.tpParameters = new System.Windows.Forms.TabPage();
+            this.dgvGasDepVel = new System.Windows.Forms.DataGridView();
+            this.dgvReactionProds = new System.Windows.Forms.DataGridView();
+            this.dgvReactions = new System.Windows.Forms.DataGridView();
+            this.dgvComposition = new System.Windows.Forms.DataGridView();
+            this.dgvMultipliers = new System.Windows.Forms.DataGridView();
+            this.dgvSulfateSolubility = new System.Windows.Forms.DataGridView();
+            this.dgvHydroxideSolubility = new System.Windows.Forms.DataGridView();
+            this.dgvPhysicalData = new System.Windows.Forms.DataGridView();
+            this.dgvOutputControl = new System.Windows.Forms.DataGridView();
+            this.dgvNames = new System.Windows.Forms.DataGridView();
+            this.cbParameters = new System.Windows.Forms.ComboBox();
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
-            this.label43 = new System.Windows.Forms.Label();
-            this.label44 = new System.Windows.Forms.Label();
-            this.label45 = new System.Windows.Forms.Label();
-            this.label46 = new System.Windows.Forms.Label();
-            this.label47 = new System.Windows.Forms.Label();
-            this.label48 = new System.Windows.Forms.Label();
-            this.label49 = new System.Windows.Forms.Label();
-            this.label50 = new System.Windows.Forms.Label();
-            this.label51 = new System.Windows.Forms.Label();
-            this.label52 = new System.Windows.Forms.Label();
-            this.label53 = new System.Windows.Forms.Label();
-            this.label54 = new System.Windows.Forms.Label();
-            this.label55 = new System.Windows.Forms.Label();
-            this.label56 = new System.Windows.Forms.Label();
-            this.label57 = new System.Windows.Forms.Label();
-            this.label58 = new System.Windows.Forms.Label();
-            this.label59 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.textBox11 = new System.Windows.Forms.TextBox();
-            this.textBox12 = new System.Windows.Forms.TextBox();
-            this.textBox13 = new System.Windows.Forms.TextBox();
-            this.textBox14 = new System.Windows.Forms.TextBox();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.Master = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Catch = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Riv = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Res = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Load = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tcSystemTabs.SuspendLayout();
             this.tpPhysicalData.SuspendLayout();
             this.tpLandUses.SuspendLayout();
@@ -242,6 +259,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvPhytoplankton)).BeginInit();
             this.tpPeriphyton.SuspendLayout();
             this.groupBox9.SuspendLayout();
+            this.tpFoodWeb.SuspendLayout();
+            this.tpParameters.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvGasDepVel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReactionProds)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReactions)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvComposition)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMultipliers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSulfateSolubility)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHydroxideSolubility)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPhysicalData)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOutputControl)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvNames)).BeginInit();
             this.SuspendLayout();
             // 
             // tcSystemTabs
@@ -1471,11 +1500,6 @@
             // cbMinerals
             // 
             this.cbMinerals.FormattingEnabled = true;
-            this.cbMinerals.Items.AddRange(new object[] {
-            "Hornblende",
-            "Chlorite",
-            "Mica",
-            "Feldspar"});
             this.cbMinerals.Location = new System.Drawing.Point(57, 49);
             this.cbMinerals.Name = "cbMinerals";
             this.cbMinerals.Size = new System.Drawing.Size(225, 24);
@@ -1516,6 +1540,25 @@
             this.tpPhytoplankton.Text = "Phytoplankton";
             this.tpPhytoplankton.UseVisualStyleBackColor = true;
             // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Location = new System.Drawing.Point(108, 418);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(499, 16);
+            this.label44.TabIndex = 2;
+            this.label44.Text = "Note: Reservoir Phytoplankton Growth Coefficients are in the Reservoir Input Dial" +
+    "og";
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(235, 51);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(244, 16);
+            this.label43.TabIndex = 1;
+            this.label43.Text = "River Phytoplankton Growth Coefficients";
+            // 
             // dgvPhytoplankton
             // 
             this.dgvPhytoplankton.AllowUserToAddRows = false;
@@ -1529,16 +1572,16 @@
             // tpPeriphyton
             // 
             this.tpPeriphyton.Controls.Add(this.groupBox9);
-            this.tpPeriphyton.Controls.Add(this.textBox14);
-            this.tpPeriphyton.Controls.Add(this.textBox13);
-            this.tpPeriphyton.Controls.Add(this.textBox8);
-            this.tpPeriphyton.Controls.Add(this.textBox7);
-            this.tpPeriphyton.Controls.Add(this.textBox6);
-            this.tpPeriphyton.Controls.Add(this.textBox5);
-            this.tpPeriphyton.Controls.Add(this.textBox4);
-            this.tpPeriphyton.Controls.Add(this.textBox3);
-            this.tpPeriphyton.Controls.Add(this.textBox2);
-            this.tpPeriphyton.Controls.Add(this.textBox1);
+            this.tpPeriphyton.Controls.Add(this.tbAmmPrefCoeff);
+            this.tpPeriphyton.Controls.Add(this.tbChlCarbonRatio);
+            this.tpPeriphyton.Controls.Add(this.tbScourRegExp);
+            this.tpPeriphyton.Controls.Add(this.tbScourRegCoeff);
+            this.tpPeriphyton.Controls.Add(this.tbSpatLimitIntcpt);
+            this.tpPeriphyton.Controls.Add(this.tbSpatHalfSat);
+            this.tpPeriphyton.Controls.Add(this.tbRecycledFract);
+            this.tpPeriphyton.Controls.Add(this.tbPhotoRespFract);
+            this.tpPeriphyton.Controls.Add(this.tbEndRespExpCoeff);
+            this.tpPeriphyton.Controls.Add(this.tbEndRespCoeff);
             this.tpPeriphyton.Controls.Add(this.label59);
             this.tpPeriphyton.Controls.Add(this.label58);
             this.tpPeriphyton.Controls.Add(this.label57);
@@ -1558,8 +1601,260 @@
             this.tpPeriphyton.Text = "Periphyton";
             this.tpPeriphyton.UseVisualStyleBackColor = true;
             // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.tbLightHalfSat);
+            this.groupBox9.Controls.Add(this.tbVelHalfSat);
+            this.groupBox9.Controls.Add(this.tbPhalfSat);
+            this.groupBox9.Controls.Add(this.tbNhalfSat);
+            this.groupBox9.Controls.Add(this.label56);
+            this.groupBox9.Controls.Add(this.label55);
+            this.groupBox9.Controls.Add(this.label54);
+            this.groupBox9.Controls.Add(this.label53);
+            this.groupBox9.Location = new System.Drawing.Point(400, 81);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(294, 165);
+            this.groupBox9.TabIndex = 29;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Half Saturation Constants";
+            // 
+            // tbLightHalfSat
+            // 
+            this.tbLightHalfSat.Location = new System.Drawing.Point(182, 128);
+            this.tbLightHalfSat.Name = "tbLightHalfSat";
+            this.tbLightHalfSat.Size = new System.Drawing.Size(100, 22);
+            this.tbLightHalfSat.TabIndex = 26;
+            // 
+            // tbVelHalfSat
+            // 
+            this.tbVelHalfSat.Location = new System.Drawing.Point(182, 94);
+            this.tbVelHalfSat.Name = "tbVelHalfSat";
+            this.tbVelHalfSat.Size = new System.Drawing.Size(100, 22);
+            this.tbVelHalfSat.TabIndex = 25;
+            // 
+            // tbPhalfSat
+            // 
+            this.tbPhalfSat.Location = new System.Drawing.Point(182, 60);
+            this.tbPhalfSat.Name = "tbPhalfSat";
+            this.tbPhalfSat.Size = new System.Drawing.Size(100, 22);
+            this.tbPhalfSat.TabIndex = 24;
+            // 
+            // tbNhalfSat
+            // 
+            this.tbNhalfSat.Location = new System.Drawing.Point(182, 26);
+            this.tbNhalfSat.Name = "tbNhalfSat";
+            this.tbNhalfSat.Size = new System.Drawing.Size(100, 22);
+            this.tbNhalfSat.TabIndex = 23;
+            // 
+            // label56
+            // 
+            this.label56.AutoSize = true;
+            this.label56.Location = new System.Drawing.Point(12, 131);
+            this.label56.Name = "label56";
+            this.label56.Size = new System.Drawing.Size(145, 16);
+            this.label56.TabIndex = 11;
+            this.label56.Text = "Light Saturation (W/m2)";
+            // 
+            // label55
+            // 
+            this.label55.AutoSize = true;
+            this.label55.Location = new System.Drawing.Point(12, 97);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(89, 16);
+            this.label55.TabIndex = 10;
+            this.label55.Text = "Velocity (m/s)";
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.Location = new System.Drawing.Point(12, 63);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(121, 16);
+            this.label54.TabIndex = 9;
+            this.label54.Text = "Phosphorus (mg/L)";
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.Location = new System.Drawing.Point(12, 29);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(100, 16);
+            this.label53.TabIndex = 8;
+            this.label53.Text = "Nitrogen (mg/L)";
+            // 
+            // tbAmmPrefCoeff
+            // 
+            this.tbAmmPrefCoeff.Location = new System.Drawing.Point(582, 311);
+            this.tbAmmPrefCoeff.Name = "tbAmmPrefCoeff";
+            this.tbAmmPrefCoeff.Size = new System.Drawing.Size(100, 22);
+            this.tbAmmPrefCoeff.TabIndex = 28;
+            // 
+            // tbChlCarbonRatio
+            // 
+            this.tbChlCarbonRatio.Location = new System.Drawing.Point(582, 277);
+            this.tbChlCarbonRatio.Name = "tbChlCarbonRatio";
+            this.tbChlCarbonRatio.Size = new System.Drawing.Size(100, 22);
+            this.tbChlCarbonRatio.TabIndex = 27;
+            // 
+            // tbScourRegExp
+            // 
+            this.tbScourRegExp.Location = new System.Drawing.Point(257, 311);
+            this.tbScourRegExp.Name = "tbScourRegExp";
+            this.tbScourRegExp.Size = new System.Drawing.Size(100, 22);
+            this.tbScourRegExp.TabIndex = 22;
+            // 
+            // tbScourRegCoeff
+            // 
+            this.tbScourRegCoeff.Location = new System.Drawing.Point(257, 277);
+            this.tbScourRegCoeff.Name = "tbScourRegCoeff";
+            this.tbScourRegCoeff.Size = new System.Drawing.Size(100, 22);
+            this.tbScourRegCoeff.TabIndex = 21;
+            // 
+            // tbSpatLimitIntcpt
+            // 
+            this.tbSpatLimitIntcpt.Location = new System.Drawing.Point(257, 243);
+            this.tbSpatLimitIntcpt.Name = "tbSpatLimitIntcpt";
+            this.tbSpatLimitIntcpt.Size = new System.Drawing.Size(100, 22);
+            this.tbSpatLimitIntcpt.TabIndex = 20;
+            // 
+            // tbSpatHalfSat
+            // 
+            this.tbSpatHalfSat.Location = new System.Drawing.Point(257, 209);
+            this.tbSpatHalfSat.Name = "tbSpatHalfSat";
+            this.tbSpatHalfSat.Size = new System.Drawing.Size(100, 22);
+            this.tbSpatHalfSat.TabIndex = 19;
+            // 
+            // tbRecycledFract
+            // 
+            this.tbRecycledFract.Location = new System.Drawing.Point(257, 175);
+            this.tbRecycledFract.Name = "tbRecycledFract";
+            this.tbRecycledFract.Size = new System.Drawing.Size(100, 22);
+            this.tbRecycledFract.TabIndex = 18;
+            // 
+            // tbPhotoRespFract
+            // 
+            this.tbPhotoRespFract.Location = new System.Drawing.Point(257, 141);
+            this.tbPhotoRespFract.Name = "tbPhotoRespFract";
+            this.tbPhotoRespFract.Size = new System.Drawing.Size(100, 22);
+            this.tbPhotoRespFract.TabIndex = 17;
+            // 
+            // tbEndRespExpCoeff
+            // 
+            this.tbEndRespExpCoeff.Location = new System.Drawing.Point(257, 107);
+            this.tbEndRespExpCoeff.Name = "tbEndRespExpCoeff";
+            this.tbEndRespExpCoeff.Size = new System.Drawing.Size(100, 22);
+            this.tbEndRespExpCoeff.TabIndex = 16;
+            // 
+            // tbEndRespCoeff
+            // 
+            this.tbEndRespCoeff.Location = new System.Drawing.Point(257, 73);
+            this.tbEndRespCoeff.Name = "tbEndRespCoeff";
+            this.tbEndRespCoeff.Size = new System.Drawing.Size(100, 22);
+            this.tbEndRespCoeff.TabIndex = 15;
+            // 
+            // label59
+            // 
+            this.label59.AutoSize = true;
+            this.label59.Location = new System.Drawing.Point(76, 430);
+            this.label59.Name = "label59";
+            this.label59.Size = new System.Drawing.Size(546, 16);
+            this.label59.TabIndex = 14;
+            this.label59.Text = "Growth and mortality rates are specified for individual river segments in the riv" +
+    "er input dialog";
+            // 
+            // label58
+            // 
+            this.label58.Location = new System.Drawing.Point(412, 305);
+            this.label58.MaximumSize = new System.Drawing.Size(200, 35);
+            this.label58.Name = "label58";
+            this.label58.Size = new System.Drawing.Size(150, 35);
+            this.label58.TabIndex = 13;
+            this.label58.Text = "Ammonia Preference Coefficient";
+            // 
+            // label57
+            // 
+            this.label57.Location = new System.Drawing.Point(412, 271);
+            this.label57.MaximumSize = new System.Drawing.Size(200, 35);
+            this.label57.Name = "label57";
+            this.label57.Size = new System.Drawing.Size(150, 35);
+            this.label57.TabIndex = 12;
+            this.label57.Text = "Ratio Chlorophyll-a : Carbon";
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Location = new System.Drawing.Point(12, 314);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(208, 16);
+            this.label52.TabIndex = 7;
+            this.label52.Text = "Scour Regression Exponent (1/m)";
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.Location = new System.Drawing.Point(12, 280);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(226, 16);
+            this.label51.TabIndex = 6;
+            this.label51.Text = "Scour Regression Coefficient (1/day)";
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Location = new System.Drawing.Point(12, 246);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(166, 16);
+            this.label50.TabIndex = 5;
+            this.label50.Text = "Spatial Limitation, Intercept";
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(12, 212);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(211, 16);
+            this.label49.TabIndex = 4;
+            this.label49.Text = "Spatial Limit Half Saturation (g/m2)";
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.Location = new System.Drawing.Point(12, 170);
+            this.label48.MaximumSize = new System.Drawing.Size(250, 35);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(207, 32);
+            this.label48.TabIndex = 3;
+            this.label48.Text = "Fraction Recycled of Grazed and Scoured Periphyton";
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(12, 144);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(157, 16);
+            this.label47.TabIndex = 2;
+            this.label47.Text = "Photorespiration Fraction";
+            // 
+            // label46
+            // 
+            this.label46.Location = new System.Drawing.Point(12, 101);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(250, 35);
+            this.label46.TabIndex = 1;
+            this.label46.Text = "Endogenous Respiration Exponential Coefficient";
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(12, 73);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(222, 16);
+            this.label45.TabIndex = 0;
+            this.label45.Text = "Endogenous Respiration Coefficient";
+            // 
             // tpFoodWeb
             // 
+            this.tpFoodWeb.Controls.Add(this.label60);
             this.tpFoodWeb.Location = new System.Drawing.Point(4, 46);
             this.tpFoodWeb.Margin = new System.Windows.Forms.Padding(4);
             this.tpFoodWeb.Name = "tpFoodWeb";
@@ -1568,8 +1863,28 @@
             this.tpFoodWeb.Text = "Food Web";
             this.tpFoodWeb.UseVisualStyleBackColor = true;
             // 
+            // label60
+            // 
+            this.label60.AutoSize = true;
+            this.label60.Location = new System.Drawing.Point(133, 192);
+            this.label60.Name = "label60";
+            this.label60.Size = new System.Drawing.Size(444, 16);
+            this.label60.TabIndex = 0;
+            this.label60.Text = "Food web simulation has not been enabled for the current WARMF project";
+            // 
             // tpParameters
             // 
+            this.tpParameters.Controls.Add(this.dgvGasDepVel);
+            this.tpParameters.Controls.Add(this.dgvReactionProds);
+            this.tpParameters.Controls.Add(this.dgvReactions);
+            this.tpParameters.Controls.Add(this.dgvComposition);
+            this.tpParameters.Controls.Add(this.dgvMultipliers);
+            this.tpParameters.Controls.Add(this.dgvSulfateSolubility);
+            this.tpParameters.Controls.Add(this.dgvHydroxideSolubility);
+            this.tpParameters.Controls.Add(this.dgvPhysicalData);
+            this.tpParameters.Controls.Add(this.dgvOutputControl);
+            this.tpParameters.Controls.Add(this.dgvNames);
+            this.tpParameters.Controls.Add(this.cbParameters);
             this.tpParameters.Location = new System.Drawing.Point(4, 46);
             this.tpParameters.Margin = new System.Windows.Forms.Padding(4);
             this.tpParameters.Name = "tpParameters";
@@ -1577,6 +1892,134 @@
             this.tpParameters.TabIndex = 12;
             this.tpParameters.Text = "Parameters";
             this.tpParameters.UseVisualStyleBackColor = true;
+            // 
+            // dgvGasDepVel
+            // 
+            this.dgvGasDepVel.AllowUserToAddRows = false;
+            this.dgvGasDepVel.AllowUserToDeleteRows = false;
+            this.dgvGasDepVel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvGasDepVel.Location = new System.Drawing.Point(27, 75);
+            this.dgvGasDepVel.Name = "dgvGasDepVel";
+            this.dgvGasDepVel.Size = new System.Drawing.Size(656, 385);
+            this.dgvGasDepVel.TabIndex = 10;
+            // 
+            // dgvReactionProds
+            // 
+            this.dgvReactionProds.AllowUserToAddRows = false;
+            this.dgvReactionProds.AllowUserToDeleteRows = false;
+            this.dgvReactionProds.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvReactionProds.Location = new System.Drawing.Point(27, 75);
+            this.dgvReactionProds.Name = "dgvReactionProds";
+            this.dgvReactionProds.Size = new System.Drawing.Size(656, 385);
+            this.dgvReactionProds.TabIndex = 9;
+            // 
+            // dgvReactions
+            // 
+            this.dgvReactions.AllowUserToAddRows = false;
+            this.dgvReactions.AllowUserToDeleteRows = false;
+            this.dgvReactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvReactions.Location = new System.Drawing.Point(27, 75);
+            this.dgvReactions.Name = "dgvReactions";
+            this.dgvReactions.Size = new System.Drawing.Size(656, 385);
+            this.dgvReactions.TabIndex = 8;
+            // 
+            // dgvComposition
+            // 
+            this.dgvComposition.AllowUserToAddRows = false;
+            this.dgvComposition.AllowUserToDeleteRows = false;
+            this.dgvComposition.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvComposition.Location = new System.Drawing.Point(27, 75);
+            this.dgvComposition.Name = "dgvComposition";
+            this.dgvComposition.Size = new System.Drawing.Size(656, 385);
+            this.dgvComposition.TabIndex = 7;
+            // 
+            // dgvMultipliers
+            // 
+            this.dgvMultipliers.AllowUserToAddRows = false;
+            this.dgvMultipliers.AllowUserToDeleteRows = false;
+            this.dgvMultipliers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMultipliers.Location = new System.Drawing.Point(27, 75);
+            this.dgvMultipliers.Name = "dgvMultipliers";
+            this.dgvMultipliers.Size = new System.Drawing.Size(656, 385);
+            this.dgvMultipliers.TabIndex = 6;
+            // 
+            // dgvSulfateSolubility
+            // 
+            this.dgvSulfateSolubility.AllowUserToAddRows = false;
+            this.dgvSulfateSolubility.AllowUserToDeleteRows = false;
+            this.dgvSulfateSolubility.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSulfateSolubility.Location = new System.Drawing.Point(27, 75);
+            this.dgvSulfateSolubility.Name = "dgvSulfateSolubility";
+            this.dgvSulfateSolubility.Size = new System.Drawing.Size(656, 385);
+            this.dgvSulfateSolubility.TabIndex = 5;
+            // 
+            // dgvHydroxideSolubility
+            // 
+            this.dgvHydroxideSolubility.AllowUserToAddRows = false;
+            this.dgvHydroxideSolubility.AllowUserToDeleteRows = false;
+            this.dgvHydroxideSolubility.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvHydroxideSolubility.Location = new System.Drawing.Point(27, 75);
+            this.dgvHydroxideSolubility.Name = "dgvHydroxideSolubility";
+            this.dgvHydroxideSolubility.Size = new System.Drawing.Size(656, 385);
+            this.dgvHydroxideSolubility.TabIndex = 4;
+            // 
+            // dgvPhysicalData
+            // 
+            this.dgvPhysicalData.AllowUserToAddRows = false;
+            this.dgvPhysicalData.AllowUserToDeleteRows = false;
+            this.dgvPhysicalData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPhysicalData.Location = new System.Drawing.Point(27, 75);
+            this.dgvPhysicalData.Name = "dgvPhysicalData";
+            this.dgvPhysicalData.Size = new System.Drawing.Size(656, 385);
+            this.dgvPhysicalData.TabIndex = 3;
+            // 
+            // dgvOutputControl
+            // 
+            this.dgvOutputControl.AllowUserToAddRows = false;
+            this.dgvOutputControl.AllowUserToDeleteRows = false;
+            this.dgvOutputControl.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.dgvOutputControl.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvOutputControl.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Master,
+            this.Catch,
+            this.Riv,
+            this.Res,
+            this.Load});
+            this.dgvOutputControl.Location = new System.Drawing.Point(27, 75);
+            this.dgvOutputControl.Name = "dgvOutputControl";
+            this.dgvOutputControl.RowHeadersWidth = 200;
+            this.dgvOutputControl.Size = new System.Drawing.Size(656, 385);
+            this.dgvOutputControl.TabIndex = 2;
+            // 
+            // dgvNames
+            // 
+            this.dgvNames.AllowUserToAddRows = false;
+            this.dgvNames.AllowUserToDeleteRows = false;
+            this.dgvNames.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvNames.Location = new System.Drawing.Point(27, 75);
+            this.dgvNames.Name = "dgvNames";
+            this.dgvNames.Size = new System.Drawing.Size(656, 385);
+            this.dgvNames.TabIndex = 1;
+            // 
+            // cbParameters
+            // 
+            this.cbParameters.FormattingEnabled = true;
+            this.cbParameters.Items.AddRange(new object[] {
+            "Names",
+            "Output Control",
+            "Physical Data",
+            "Hydroxide Solubility",
+            "Sulfate Solubility",
+            "Multipliers",
+            "Composition",
+            "Reactions",
+            "Reaction Products (meq/meq)",
+            "Gaseous Deposition Velocity (cm/sec)"});
+            this.cbParameters.Location = new System.Drawing.Point(210, 28);
+            this.cbParameters.Name = "cbParameters";
+            this.cbParameters.Size = new System.Drawing.Size(302, 24);
+            this.cbParameters.TabIndex = 0;
+            this.cbParameters.SelectedIndexChanged += new System.EventHandler(this.cbParameters_SelectedIndexChanged);
             // 
             // btnHelp
             // 
@@ -1610,275 +2053,40 @@
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             // 
-            // label43
+            // Master
             // 
-            this.label43.AutoSize = true;
-            this.label43.Location = new System.Drawing.Point(235, 51);
-            this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(244, 16);
-            this.label43.TabIndex = 1;
-            this.label43.Text = "River Phytoplankton Growth Coefficients";
+            this.Master.Frozen = true;
+            this.Master.HeaderText = "Master";
+            this.Master.Name = "Master";
+            this.Master.Width = 55;
             // 
-            // label44
+            // Catch
             // 
-            this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(108, 418);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(499, 16);
-            this.label44.TabIndex = 2;
-            this.label44.Text = "Note: Reservoir Phytoplankton Growth Coefficients are in the Reservoir Input Dial" +
-    "og";
+            this.Catch.Frozen = true;
+            this.Catch.HeaderText = "Catchments";
+            this.Catch.Name = "Catch";
+            this.Catch.Width = 84;
             // 
-            // label45
+            // Riv
             // 
-            this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(12, 73);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(222, 16);
-            this.label45.TabIndex = 0;
-            this.label45.Text = "Endogenous Respiration Coefficient";
+            this.Riv.Frozen = true;
+            this.Riv.HeaderText = "Rivers";
+            this.Riv.Name = "Riv";
+            this.Riv.Width = 53;
             // 
-            // label46
+            // Res
             // 
-            this.label46.Location = new System.Drawing.Point(12, 101);
-            this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(250, 35);
-            this.label46.TabIndex = 1;
-            this.label46.Text = "Endogenous Respiration Exponential Coefficient";
+            this.Res.Frozen = true;
+            this.Res.HeaderText = "Reservoirs";
+            this.Res.Name = "Res";
+            this.Res.Width = 80;
             // 
-            // label47
+            // Load
             // 
-            this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(12, 144);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(157, 16);
-            this.label47.TabIndex = 2;
-            this.label47.Text = "Photorespiration Fraction";
-            // 
-            // label48
-            // 
-            this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(12, 170);
-            this.label48.MaximumSize = new System.Drawing.Size(250, 35);
-            this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(207, 32);
-            this.label48.TabIndex = 3;
-            this.label48.Text = "Fraction Recycled of Grazed and Scoured Periphyton";
-            // 
-            // label49
-            // 
-            this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(12, 212);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(211, 16);
-            this.label49.TabIndex = 4;
-            this.label49.Text = "Spatial Limit Half Saturation (g/m2)";
-            // 
-            // label50
-            // 
-            this.label50.AutoSize = true;
-            this.label50.Location = new System.Drawing.Point(12, 246);
-            this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(166, 16);
-            this.label50.TabIndex = 5;
-            this.label50.Text = "Spatial Limitation, Intercept";
-            // 
-            // label51
-            // 
-            this.label51.AutoSize = true;
-            this.label51.Location = new System.Drawing.Point(12, 280);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(226, 16);
-            this.label51.TabIndex = 6;
-            this.label51.Text = "Scour Regression Coefficient (1/day)";
-            // 
-            // label52
-            // 
-            this.label52.AutoSize = true;
-            this.label52.Location = new System.Drawing.Point(12, 314);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(208, 16);
-            this.label52.TabIndex = 7;
-            this.label52.Text = "Scour Regression Exponent (1/m)";
-            // 
-            // label53
-            // 
-            this.label53.AutoSize = true;
-            this.label53.Location = new System.Drawing.Point(12, 29);
-            this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(100, 16);
-            this.label53.TabIndex = 8;
-            this.label53.Text = "Nitrogen (mg/L)";
-            // 
-            // label54
-            // 
-            this.label54.AutoSize = true;
-            this.label54.Location = new System.Drawing.Point(12, 63);
-            this.label54.Name = "label54";
-            this.label54.Size = new System.Drawing.Size(121, 16);
-            this.label54.TabIndex = 9;
-            this.label54.Text = "Phosphorus (mg/L)";
-            // 
-            // label55
-            // 
-            this.label55.AutoSize = true;
-            this.label55.Location = new System.Drawing.Point(12, 97);
-            this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(89, 16);
-            this.label55.TabIndex = 10;
-            this.label55.Text = "Velocity (m/s)";
-            // 
-            // label56
-            // 
-            this.label56.AutoSize = true;
-            this.label56.Location = new System.Drawing.Point(12, 131);
-            this.label56.Name = "label56";
-            this.label56.Size = new System.Drawing.Size(145, 16);
-            this.label56.TabIndex = 11;
-            this.label56.Text = "Light Saturation (W/m2)";
-            // 
-            // label57
-            // 
-            this.label57.Location = new System.Drawing.Point(412, 271);
-            this.label57.MaximumSize = new System.Drawing.Size(200, 35);
-            this.label57.Name = "label57";
-            this.label57.Size = new System.Drawing.Size(150, 35);
-            this.label57.TabIndex = 12;
-            this.label57.Text = "Ratio Chlorophyll-a : Carbon";
-            // 
-            // label58
-            // 
-            this.label58.Location = new System.Drawing.Point(412, 305);
-            this.label58.MaximumSize = new System.Drawing.Size(200, 35);
-            this.label58.Name = "label58";
-            this.label58.Size = new System.Drawing.Size(150, 35);
-            this.label58.TabIndex = 13;
-            this.label58.Text = "Ammonia Preference Coefficient";
-            // 
-            // label59
-            // 
-            this.label59.AutoSize = true;
-            this.label59.Location = new System.Drawing.Point(76, 430);
-            this.label59.Name = "label59";
-            this.label59.Size = new System.Drawing.Size(546, 16);
-            this.label59.TabIndex = 14;
-            this.label59.Text = "Growth and mortality rates are specified for individual river segments in the riv" +
-    "er input dialog";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(257, 73);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 22);
-            this.textBox1.TabIndex = 15;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(257, 107);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 22);
-            this.textBox2.TabIndex = 16;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(257, 141);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 22);
-            this.textBox3.TabIndex = 17;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(257, 175);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 22);
-            this.textBox4.TabIndex = 18;
-            // 
-            // textBox5
-            // 
-            this.textBox5.Location = new System.Drawing.Point(257, 209);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 22);
-            this.textBox5.TabIndex = 19;
-            // 
-            // textBox6
-            // 
-            this.textBox6.Location = new System.Drawing.Point(257, 243);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(100, 22);
-            this.textBox6.TabIndex = 20;
-            // 
-            // textBox7
-            // 
-            this.textBox7.Location = new System.Drawing.Point(257, 277);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(100, 22);
-            this.textBox7.TabIndex = 21;
-            // 
-            // textBox8
-            // 
-            this.textBox8.Location = new System.Drawing.Point(257, 311);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(100, 22);
-            this.textBox8.TabIndex = 22;
-            // 
-            // textBox9
-            // 
-            this.textBox9.Location = new System.Drawing.Point(182, 26);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(100, 22);
-            this.textBox9.TabIndex = 23;
-            // 
-            // textBox10
-            // 
-            this.textBox10.Location = new System.Drawing.Point(182, 60);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(100, 22);
-            this.textBox10.TabIndex = 24;
-            // 
-            // textBox11
-            // 
-            this.textBox11.Location = new System.Drawing.Point(182, 94);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(100, 22);
-            this.textBox11.TabIndex = 25;
-            // 
-            // textBox12
-            // 
-            this.textBox12.Location = new System.Drawing.Point(182, 128);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(100, 22);
-            this.textBox12.TabIndex = 26;
-            // 
-            // textBox13
-            // 
-            this.textBox13.Location = new System.Drawing.Point(582, 277);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(100, 22);
-            this.textBox13.TabIndex = 27;
-            // 
-            // textBox14
-            // 
-            this.textBox14.Location = new System.Drawing.Point(582, 311);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(100, 22);
-            this.textBox14.TabIndex = 28;
-            // 
-            // groupBox9
-            // 
-            this.groupBox9.Controls.Add(this.textBox12);
-            this.groupBox9.Controls.Add(this.textBox11);
-            this.groupBox9.Controls.Add(this.textBox10);
-            this.groupBox9.Controls.Add(this.textBox9);
-            this.groupBox9.Controls.Add(this.label56);
-            this.groupBox9.Controls.Add(this.label55);
-            this.groupBox9.Controls.Add(this.label54);
-            this.groupBox9.Controls.Add(this.label53);
-            this.groupBox9.Location = new System.Drawing.Point(400, 81);
-            this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(294, 165);
-            this.groupBox9.TabIndex = 29;
-            this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "Half Saturation Constants";
+            this.Load.Frozen = true;
+            this.Load.HeaderText = "Loading";
+            this.Load.Name = "Load";
+            this.Load.Width = 63;
             // 
             // DialogSystemCoeffs
             // 
@@ -1960,6 +2168,19 @@
             this.tpPeriphyton.PerformLayout();
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
+            this.tpFoodWeb.ResumeLayout(false);
+            this.tpFoodWeb.PerformLayout();
+            this.tpParameters.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvGasDepVel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReactionProds)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReactions)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvComposition)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMultipliers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSulfateSolubility)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHydroxideSolubility)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPhysicalData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOutputControl)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvNames)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2103,24 +2324,24 @@
         private System.Windows.Forms.Label label44;
         private System.Windows.Forms.Label label43;
         private System.Windows.Forms.GroupBox groupBox9;
-        private System.Windows.Forms.TextBox textBox12;
-        private System.Windows.Forms.TextBox textBox11;
-        private System.Windows.Forms.TextBox textBox10;
-        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.TextBox tbLightHalfSat;
+        private System.Windows.Forms.TextBox tbVelHalfSat;
+        private System.Windows.Forms.TextBox tbPhalfSat;
+        private System.Windows.Forms.TextBox tbNhalfSat;
         private System.Windows.Forms.Label label56;
         private System.Windows.Forms.Label label55;
         private System.Windows.Forms.Label label54;
         private System.Windows.Forms.Label label53;
-        private System.Windows.Forms.TextBox textBox14;
-        private System.Windows.Forms.TextBox textBox13;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbAmmPrefCoeff;
+        private System.Windows.Forms.TextBox tbChlCarbonRatio;
+        private System.Windows.Forms.TextBox tbScourRegExp;
+        private System.Windows.Forms.TextBox tbScourRegCoeff;
+        private System.Windows.Forms.TextBox tbSpatLimitIntcpt;
+        private System.Windows.Forms.TextBox tbSpatHalfSat;
+        private System.Windows.Forms.TextBox tbRecycledFract;
+        private System.Windows.Forms.TextBox tbPhotoRespFract;
+        private System.Windows.Forms.TextBox tbEndRespExpCoeff;
+        private System.Windows.Forms.TextBox tbEndRespCoeff;
         private System.Windows.Forms.Label label59;
         private System.Windows.Forms.Label label58;
         private System.Windows.Forms.Label label57;
@@ -2132,5 +2353,22 @@
         private System.Windows.Forms.Label label47;
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.Label label60;
+        private System.Windows.Forms.DataGridView dgvGasDepVel;
+        private System.Windows.Forms.DataGridView dgvReactionProds;
+        private System.Windows.Forms.DataGridView dgvReactions;
+        private System.Windows.Forms.DataGridView dgvComposition;
+        private System.Windows.Forms.DataGridView dgvMultipliers;
+        private System.Windows.Forms.DataGridView dgvSulfateSolubility;
+        private System.Windows.Forms.DataGridView dgvHydroxideSolubility;
+        private System.Windows.Forms.DataGridView dgvPhysicalData;
+        private System.Windows.Forms.DataGridView dgvOutputControl;
+        private System.Windows.Forms.DataGridView dgvNames;
+        private System.Windows.Forms.ComboBox cbParameters;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Master;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Catch;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Riv;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Res;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Load;
     }
 }

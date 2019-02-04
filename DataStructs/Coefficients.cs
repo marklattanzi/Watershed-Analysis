@@ -129,7 +129,7 @@ namespace warmf {
 
     public struct Periphyton {
         public double recycledFraction;
-        public double volcityHalfSat;
+        public double velocityHalfSat;
         public double nitroHalfSat;
         public double phosHalfSat;
         public double lightSat;
@@ -1098,7 +1098,7 @@ namespace warmf {
                 peri = new Periphyton();
                 dnums = ReadDoubleData(sr, "PERIPH", 5);
                 peri.recycledFraction = dnums[0];
-                peri.volcityHalfSat = dnums[1];
+                peri.velocityHalfSat = dnums[1];
                 peri.nitroHalfSat = dnums[2];
                 peri.phosHalfSat = dnums[3];
                 peri.lightSat = dnums[4];

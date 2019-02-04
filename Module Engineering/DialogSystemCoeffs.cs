@@ -416,23 +416,21 @@ namespace warmf
             {
                 cbMinerals.Items.Add(Global.coe.minerals[ii].name.ToString());
             }
-            cbMinerals.SelectedIndex = 0;
-
-            tbMolWeight.Text = Global.coe.minerals[0].molecularWgt.ToString();
-            tbWeatherRate.Text = Global.coe.minerals[0].weatheringRate.ToString();
-            tbPHdepend.Text = Global.coe.minerals[0].phDepend.ToString();
-            tbOconsumption.Text = Global.coe.minerals[0].oxyConsumption.ToString();
+            dgvRxnProducts.Columns.Add("Value", "Value");
             for (int iConstit = 0; iConstit < Global.coe.numChemicalParams; iConstit++)
             {
                 dgvRxnProducts.Rows.Insert(iConstit);
                 dgvRxnProducts.Rows[iConstit].HeaderCell.Value = ConstitNames[iConstit];
-                dgvRxnProducts.Rows[iConstit].Cells[0].Value =
-                    Global.coe.minerals[0].chemReactionProduct[iConstit].ToString();
             }
             FormatDataGridView(dgvRxnProducts);
+            cbMinerals.SelectedIndex = 0;
+            tbMolWeight.Text = Global.coe.minerals[0].molecularWgt.ToString();
+            tbWeatherRate.Text = Global.coe.minerals[0].weatheringRate.ToString();
+            tbPHdepend.Text = Global.coe.minerals[0].phDepend.ToString();
+            tbOconsumption.Text = Global.coe.minerals[0].oxyConsumption.ToString();
 
             //Sediment (This is not truly dynamic, by the way. There is no name for each
-                //sediment class in the coe file, so row header cells are hard coded)
+            //sediment class in the coe file, so row header cells are hard coded)
             dgvSediment.Columns.Add("Size", "Size (mm)");
             dgvSediment.Columns.Add("SGrav", "Specific Gravity");
             dgvSediment.Rows.Add(3);
@@ -460,27 +458,142 @@ namespace warmf
             dgvPhytoplankton.Rows[2].HeaderCell.Value = "Silica Half-Saturation (mg/L)";
             dgvPhytoplankton.Rows[3].HeaderCell.Value = "Light Saturation (W/m2)";
             dgvPhytoplankton.Rows[4].HeaderCell.Value = "Lower Growth Temperature (C)";
-            dgvPhytoplankton.Rows[4].HeaderCell.Value = "Upper Growth Temperature (C)";
+            dgvPhytoplankton.Rows[5].HeaderCell.Value = "Upper Growth Temperature (C)";
             dgvPhytoplankton.Rows[6].HeaderCell.Value = "Optimum Growth Temperature (C)";
             for (int ii = 0; ii < dgvPhytoplankton.Columns.Count; ii++)
             {
                 dgvPhytoplankton.Rows[0].Cells[ii].Value = Global.coe.algaes[ii].nitroHalfSat.ToString();
-                dgvPhytoplankton.Rows[0].Cells[ii].Value = Global.coe.algaes[ii].phosHalfSat.ToString();
-                dgvPhytoplankton.Rows[0].Cells[ii].Value = Global.coe.algaes[ii].silicaHalfSat.ToString();
-                dgvPhytoplankton.Rows[0].Cells[ii].Value = Global.coe.algaes[ii].lightSat.ToString();
-                dgvPhytoplankton.Rows[0].Cells[ii].Value = Global.coe.algaes[ii].lowTempLimit.ToString();
-                dgvPhytoplankton.Rows[0].Cells[ii].Value = Global.coe.algaes[ii].highTempLimit.ToString();
-                dgvPhytoplankton.Rows[0].Cells[ii].Value = Global.coe.algaes[ii].optGrowTemp.ToString();
+                dgvPhytoplankton.Rows[1].Cells[ii].Value = Global.coe.algaes[ii].phosHalfSat.ToString();
+                dgvPhytoplankton.Rows[2].Cells[ii].Value = Global.coe.algaes[ii].silicaHalfSat.ToString();
+                dgvPhytoplankton.Rows[3].Cells[ii].Value = Global.coe.algaes[ii].lightSat.ToString();
+                dgvPhytoplankton.Rows[4].Cells[ii].Value = Global.coe.algaes[ii].lowTempLimit.ToString();
+                dgvPhytoplankton.Rows[5].Cells[ii].Value = Global.coe.algaes[ii].highTempLimit.ToString();
+                dgvPhytoplankton.Rows[6].Cells[ii].Value = Global.coe.algaes[ii].optGrowTemp.ToString();
             }
-           
+            FormatDataGridView(dgvPhytoplankton);
 
             //Periphyton
+            tbEndRespCoeff.Text = Global.coe.peri.endoRespirationCoef.ToString();
+            tbEndRespExpCoeff.Text = Global.coe.peri.endoRespirationExp.ToString();
+            tbPhotoRespFract.Text = Global.coe.peri.photoRespirationFraction.ToString();
+            tbRecycledFract.Text = Global.coe.peri.recycledFraction.ToString();
+            tbSpatHalfSat.Text = Global.coe.peri.spatialLimitHalfSat.ToString();
+            tbSpatLimitIntcpt.Text = Global.coe.peri.spatialLimitHalfSat.ToString();
+            tbSpatLimitIntcpt.Text = Global.coe.peri.spatialLimitIntercept.ToString();
+            tbScourRegCoeff.Text = Global.coe.peri.scourRegressionCoef.ToString();
+            tbScourRegExp.Text = Global.coe.peri.scourRegressionExp.ToString();
+            tbNhalfSat.Text = Global.coe.peri.nitroHalfSat.ToString();
+            tbPhalfSat.Text = Global.coe.peri.phosHalfSat.ToString();
+            tbVelHalfSat.Text = Global.coe.peri.velocityHalfSat.ToString();
+            tbLightHalfSat.Text = Global.coe.peri.lightSat.ToString();
+            //tbChlCarbonRatio.Text = Global.coe.peri.??
+            tbAmmPrefCoeff.Text = Global.coe.peri.ammoniaPref.ToString();
 
             //Food Web
+            //Needs to be added later, using an example that has food web dynamics activated
 
             //Parameters
-        }
+            //Names
+            int iCount = 0;
+            dgvNames.Columns.Add("abbrev", "Abbreviation");
+            dgvNames.Columns.Add("fortcode", "Fortran Code");
+            dgvNames.Columns.Add("units", "units");
+            for (int ii = 0; ii < Global.coe.numHydrologyParams; ii++)
+            {
+                dgvNames.Rows.Insert(iCount);
+                dgvNames.Rows[iCount].HeaderCell.Value = Global.coe.hydroConstits[ii].fullName.ToString();
+                dgvNames.Rows[iCount].Cells[0].Value = Global.coe.hydroConstits[ii].abbrevName.ToString();
+                dgvNames.Rows[iCount].Cells[1].Value = Global.coe.hydroConstits[ii].fortranCode.ToString();
+                dgvNames.Rows[iCount].Cells[2].Value = Global.coe.hydroConstits[ii].units.ToString();
+                iCount = iCount + 1;
+            }
+            for (int ii = 0; ii < Global.coe.numChemicalParams; ii++)
+            {
+                dgvNames.Rows.Insert(iCount);
+                dgvNames.Rows[iCount].HeaderCell.Value = Global.coe.chemConstits[ii].fullName.ToString();
+                dgvNames.Rows[iCount].Cells[0].Value = Global.coe.chemConstits[ii].abbrevName.ToString();
+                dgvNames.Rows[iCount].Cells[1].Value = Global.coe.chemConstits[ii].fortranCode.ToString();
+                dgvNames.Rows[iCount].Cells[2].Value = Global.coe.chemConstits[ii].units.ToString();
+                iCount = iCount + 1;
+            }
+            for (int ii = 0; ii < Global.coe.numPhysicalParams; ii++)
+            {
+                dgvNames.Rows.Insert(iCount);
+                dgvNames.Rows[iCount].HeaderCell.Value = Global.coe.physicalConstits[ii].fullName.ToString();
+                dgvNames.Rows[iCount].Cells[0].Value = Global.coe.physicalConstits[ii].abbrevName.ToString();
+                dgvNames.Rows[iCount].Cells[1].Value = Global.coe.physicalConstits[ii].fortranCode.ToString();
+                dgvNames.Rows[iCount].Cells[2].Value = Global.coe.physicalConstits[ii].units.ToString();
+                iCount = iCount + 1;
+            }
+            for (int ii = 0; ii < Global.coe.numCompositeParams; ii++)
+            {
+                dgvNames.Rows.Insert(iCount);
+                dgvNames.Rows[iCount].HeaderCell.Value = Global.coe.compositeConstits[ii].fullName.ToString();
+                dgvNames.Rows[iCount].Cells[0].Value = Global.coe.compositeConstits[ii].abbrevName.ToString();
+                dgvNames.Rows[iCount].Cells[1].Value = Global.coe.compositeConstits[ii].fortranCode.ToString();
+                dgvNames.Rows[iCount].Cells[2].Value = Global.coe.compositeConstits[ii].units.ToString();
+                iCount = iCount + 1;
+            }
+            //Output Control
+            iCount = 0;
+            for (int ii = 0; ii < Global.coe.numHydrologyParams; ii++)
+            {
+                dgvOutputControl.Rows.Insert(iCount);
+                dgvOutputControl.Rows[iCount].HeaderCell.Value = Global.coe.hydroConstits[ii].fullName.ToString();
+                dgvOutputControl.Rows[iCount].Cells[1].Value = Global.coe.hydroConstits[ii].swCatchmentInclude;
+                dgvOutputControl.Rows[iCount].Cells[2].Value = Global.coe.hydroConstits[ii].swRiverInclude;
+                dgvOutputControl.Rows[iCount].Cells[3].Value = Global.coe.hydroConstits[ii].swReservoirInclude;
+                dgvOutputControl.Rows[iCount].Cells[4].Value = Global.coe.hydroConstits[ii].swLoadingInclude;
+                iCount = iCount + 1;
+            }
+            for (int ii = 0; ii < Global.coe.numChemicalParams; ii++)
+            {
+                dgvOutputControl.Rows.Insert(iCount);
+                dgvOutputControl.Rows[iCount].HeaderCell.Value = Global.coe.chemConstits[ii].fullName.ToString();
+                dgvOutputControl.Rows[iCount].Cells[1].Value = Global.coe.chemConstits[ii].swCatchmentInclude;
+                dgvOutputControl.Rows[iCount].Cells[2].Value = Global.coe.chemConstits[ii].swRiverInclude;
+                dgvOutputControl.Rows[iCount].Cells[3].Value = Global.coe.chemConstits[ii].swReservoirInclude;
+                dgvOutputControl.Rows[iCount].Cells[4].Value = Global.coe.chemConstits[ii].swLoadingInclude;
+                iCount = iCount + 1;
+            }
+            for (int ii = 0; ii < Global.coe.numPhysicalParams; ii++)
+            {
+                dgvOutputControl.Rows.Insert(iCount);
+                dgvOutputControl.Rows[iCount].HeaderCell.Value = Global.coe.physicalConstits[ii].fullName.ToString();
+                dgvOutputControl.Rows[iCount].Cells[1].Value = Global.coe.physicalConstits[ii].swCatchmentInclude;
+                dgvOutputControl.Rows[iCount].Cells[2].Value = Global.coe.physicalConstits[ii].swRiverInclude;
+                dgvOutputControl.Rows[iCount].Cells[3].Value = Global.coe.physicalConstits[ii].swReservoirInclude;
+                dgvOutputControl.Rows[iCount].Cells[4].Value = Global.coe.physicalConstits[ii].swLoadingInclude;
+                iCount = iCount + 1;
+            }
+            for (int ii = 0; ii < Global.coe.numCompositeParams; ii++)
+            {
+                dgvOutputControl.Rows.Insert(iCount);
+                dgvOutputControl.Rows[iCount].HeaderCell.Value = Global.coe.compositeConstits[ii].fullName.ToString();
+                dgvOutputControl.Rows[iCount].Cells[1].Value = Global.coe.compositeConstits[ii].swCatchmentInclude;
+                dgvOutputControl.Rows[iCount].Cells[2].Value = Global.coe.compositeConstits[ii].swRiverInclude;
+                dgvOutputControl.Rows[iCount].Cells[3].Value = Global.coe.compositeConstits[ii].swReservoirInclude;
+                dgvOutputControl.Rows[iCount].Cells[4].Value = Global.coe.compositeConstits[ii].swLoadingInclude;
+                iCount = iCount + 1;
+            }
+            //Physical Data
 
+            //Hydroxide Solubility
+
+            //Sulfate Solubility
+
+            //Multipliers
+
+            //Composition
+
+            //Reactions
+
+            //Reaction Products
+
+            //Gaseous Deposition Velocity
+
+
+        }
         private void btnHelp_Click(object sender, EventArgs e)
         {
             // Launch browser to http://warmf.com/...
@@ -624,6 +737,21 @@ namespace warmf
                     Global.coe.minerals[ii].chemReactionProduct[iConstit].ToString();
             }
             FormatDataGridView(dgvRxnProducts);
+        }
+
+        private void cbParameters_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int ii = cbParameters.SelectedIndex;
+            if (ii == 0) { dgvNames.BringToFront(); } //Names
+            else if (ii == 1) { dgvOutputControl.BringToFront(); } //Output Control
+            else if (ii == 2) { dgvPhysicalData.BringToFront(); } //Physical Data
+            else if (ii == 3) { dgvHydroxideSolubility.BringToFront(); } //Hydroxide Solubility
+            else if (ii == 4) { dgvSulfateSolubility.BringToFront(); } //Sulfate Solubility
+            else if (ii == 5) { dgvMultipliers.BringToFront(); } //Multipliers
+            else if (ii == 6) { dgvComposition.BringToFront(); } //Composition
+            else if (ii == 7) { dgvReactions.BringToFront(); } //Reactions
+            else if (ii == 8) { dgvReactionProds.BringToFront(); } //Reaction Products
+            else { dgvGasDepVel.BringToFront(); } //Gaseous Deposition Velocity
         }
     }
 }
