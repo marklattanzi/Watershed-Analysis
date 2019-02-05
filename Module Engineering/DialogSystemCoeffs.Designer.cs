@@ -201,16 +201,20 @@
             this.dgvHydroxideSolubility = new System.Windows.Forms.DataGridView();
             this.dgvPhysicalData = new System.Windows.Forms.DataGridView();
             this.dgvOutputControl = new System.Windows.Forms.DataGridView();
-            this.dgvNames = new System.Windows.Forms.DataGridView();
-            this.cbParameters = new System.Windows.Forms.ComboBox();
-            this.btnHelp = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnOK = new System.Windows.Forms.Button();
             this.Master = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Catch = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Riv = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Res = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Load = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dgvNames = new System.Windows.Forms.DataGridView();
+            this.cbParameters = new System.Windows.Forms.ComboBox();
+            this.btnHelp = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnOK = new System.Windows.Forms.Button();
+            this.Charge = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Equiv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DryDep = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Advected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tcSystemTabs.SuspendLayout();
             this.tpPhysicalData.SuspendLayout();
             this.tpLandUses.SuspendLayout();
@@ -1968,6 +1972,11 @@
             this.dgvPhysicalData.AllowUserToAddRows = false;
             this.dgvPhysicalData.AllowUserToDeleteRows = false;
             this.dgvPhysicalData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPhysicalData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Charge,
+            this.Equiv,
+            this.DryDep,
+            this.Advected});
             this.dgvPhysicalData.Location = new System.Drawing.Point(27, 75);
             this.dgvPhysicalData.Name = "dgvPhysicalData";
             this.dgvPhysicalData.Size = new System.Drawing.Size(656, 385);
@@ -1990,6 +1999,41 @@
             this.dgvOutputControl.RowHeadersWidth = 200;
             this.dgvOutputControl.Size = new System.Drawing.Size(656, 385);
             this.dgvOutputControl.TabIndex = 2;
+            // 
+            // Master
+            // 
+            this.Master.Frozen = true;
+            this.Master.HeaderText = "Master";
+            this.Master.Name = "Master";
+            this.Master.Width = 55;
+            // 
+            // Catch
+            // 
+            this.Catch.Frozen = true;
+            this.Catch.HeaderText = "Catchments";
+            this.Catch.Name = "Catch";
+            this.Catch.Width = 84;
+            // 
+            // Riv
+            // 
+            this.Riv.Frozen = true;
+            this.Riv.HeaderText = "Rivers";
+            this.Riv.Name = "Riv";
+            this.Riv.Width = 53;
+            // 
+            // Res
+            // 
+            this.Res.Frozen = true;
+            this.Res.HeaderText = "Reservoirs";
+            this.Res.Name = "Res";
+            this.Res.Width = 80;
+            // 
+            // Load
+            // 
+            this.Load.Frozen = true;
+            this.Load.HeaderText = "Loading";
+            this.Load.Name = "Load";
+            this.Load.Width = 63;
             // 
             // dgvNames
             // 
@@ -2053,40 +2097,27 @@
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             // 
-            // Master
+            // Charge
             // 
-            this.Master.Frozen = true;
-            this.Master.HeaderText = "Master";
-            this.Master.Name = "Master";
-            this.Master.Width = 55;
+            this.Charge.Frozen = true;
+            this.Charge.HeaderText = "Charge";
+            this.Charge.Name = "Charge";
             // 
-            // Catch
+            // Equiv
             // 
-            this.Catch.Frozen = true;
-            this.Catch.HeaderText = "Catchments";
-            this.Catch.Name = "Catch";
-            this.Catch.Width = 84;
+            this.Equiv.Frozen = true;
+            this.Equiv.HeaderText = "Equivalent Weight (g/eq)";
+            this.Equiv.Name = "Equiv";
             // 
-            // Riv
+            // DryDep
             // 
-            this.Riv.Frozen = true;
-            this.Riv.HeaderText = "Rivers";
-            this.Riv.Name = "Riv";
-            this.Riv.Width = 53;
+            this.DryDep.HeaderText = "Dry Deposition";
+            this.DryDep.Name = "DryDep";
             // 
-            // Res
+            // Advected
             // 
-            this.Res.Frozen = true;
-            this.Res.HeaderText = "Reservoirs";
-            this.Res.Name = "Res";
-            this.Res.Width = 80;
-            // 
-            // Load
-            // 
-            this.Load.Frozen = true;
-            this.Load.HeaderText = "Loading";
-            this.Load.Name = "Load";
-            this.Load.Width = 63;
+            this.Advected.HeaderText = "Advected";
+            this.Advected.Name = "Advected";
             // 
             // DialogSystemCoeffs
             // 
@@ -2370,5 +2401,9 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn Riv;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Res;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Load;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Charge;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Equiv;
+        private System.Windows.Forms.DataGridViewComboBoxColumn DryDep;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Advected;
     }
 }

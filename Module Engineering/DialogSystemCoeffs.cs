@@ -576,21 +576,106 @@ namespace warmf
                 dgvOutputControl.Rows[iCount].Cells[4].Value = Global.coe.compositeConstits[ii].swLoadingInclude;
                 iCount = iCount + 1;
             }
-            //Physical Data
-
+            FormatDataGridView(dgvOutputControl);
+            //Physical Data (DGV Columns created in Dialog Designer)
+            ((DataGridViewComboBoxColumn)dgvPhysicalData.Columns[2]).Items.Add("Particulate");
+            ((DataGridViewComboBoxColumn)dgvPhysicalData.Columns[2]).Items.Add("Gaseous - Nutrient");
+            ((DataGridViewComboBoxColumn)dgvPhysicalData.Columns[2]).Items.Add("Gaseous - Pollutant");
+            iCount = 0;
+            for (int ii = 0; ii < Global.coe.numChemicalParams; ii++)
+            {
+                dgvPhysicalData.Rows.Insert(iCount);
+                dgvPhysicalData.Rows[iCount].HeaderCell.Value = Global.coe.chemConstits[ii].fullName.ToString();
+                dgvPhysicalData.Rows[iCount].Cells[0].Value = Global.coe.chemConstits[ii].electricalCharge.ToString();
+                dgvPhysicalData.Rows[iCount].Cells[1].Value = Global.coe.chemConstits[ii].massEquivalent.ToString();
+                if (Global.coe.chemConstits[ii].fullName == "pH")
+                {
+                    DataGridViewTextBoxCell c = new DataGridViewTextBoxCell();
+                    c.Value = "";
+                    DataGridViewTextBoxCell c2 = new DataGridViewTextBoxCell();
+                    c2.Value = "";
+                    dgvPhysicalData.Rows[iCount].Cells[2] = c;
+                    dgvPhysicalData.Rows[iCount].Cells[2].ReadOnly = true;
+                    dgvPhysicalData.Rows[iCount].Cells[3] = c2;
+                    dgvPhysicalData.Rows[iCount].Cells[3].ReadOnly = true;
+                }
+                else
+                {
+                    if (Global.coe.chemConstits[ii].dryDepositionForm == 0)
+                    {
+                        dgvPhysicalData.Rows[iCount].Cells[2].Value = "Particulate";
+                    }
+                    else if (Global.coe.chemConstits[ii].dryDepositionForm == 1)
+                    {
+                        dgvPhysicalData.Rows[iCount].Cells[2].Value = "Gaseous - Nutrient";
+                    }
+                    else
+                    {
+                        dgvPhysicalData.Rows[iCount].Cells[2].Value = "Gaseous - Pollutant";
+                    }
+                    dgvPhysicalData.Rows[iCount].Cells[3].Value = Global.coe.chemConstits[ii].swChemAdvection;
+                }
+                iCount = iCount + 1;
+            }
+            for (int ii = 0; ii < Global.coe.numPhysicalParams; ii++)
+            {
+                dgvPhysicalData.Rows.Insert(iCount);
+                dgvPhysicalData.Rows[iCount].HeaderCell.Value = Global.coe.physicalConstits[ii].fullName.ToString();
+                dgvPhysicalData.Rows[iCount].Cells[0].Value = Global.coe.physicalConstits[ii].electricalCharge.ToString();
+                dgvPhysicalData.Rows[iCount].Cells[1].Value = Global.coe.physicalConstits[ii].massEquivalent.ToString();
+                if (Global.coe.chemConstits[ii].dryDepositionForm == 0)
+                {
+                    dgvPhysicalData.Rows[iCount].Cells[2].Value = "Particulate";
+                }
+                else if (Global.coe.chemConstits[ii].dryDepositionForm == 1)
+                {
+                    dgvPhysicalData.Rows[iCount].Cells[2].Value = "Gaseous - Nutrient";
+                }
+                else
+                {
+                    dgvPhysicalData.Rows[iCount].Cells[2].Value = "Gaseous - Pollutant";
+                }
+                dgvPhysicalData.Rows[iCount].Cells[3].Value = Global.coe.physicalConstits[ii].swChemAdvection;
+                iCount = iCount + 1;
+            }
+            for (int ii = 0; ii < Global.coe.numCompositeParams; ii++)
+            {
+                dgvPhysicalData.Rows.Insert(iCount);
+                dgvPhysicalData.Rows[iCount].HeaderCell.Value = Global.coe.compositeConstits[ii].fullName.ToString();
+                dgvPhysicalData.Rows[iCount].Cells[0].Value = Global.coe.compositeConstits[ii].electricalCharge.ToString();
+                dgvPhysicalData.Rows[iCount].Cells[1].Value = Global.coe.compositeConstits[ii].massEquivalent.ToString();
+                DataGridViewTextBoxCell c = new DataGridViewTextBoxCell();
+                c.Value = "";
+                DataGridViewTextBoxCell c2 = new DataGridViewTextBoxCell();
+                c2.Value = "";
+                dgvPhysicalData.Rows[iCount].Cells[2] = c;
+                dgvPhysicalData.Rows[iCount].Cells[2].ReadOnly = true;
+                dgvPhysicalData.Rows[iCount].Cells[3] = c2;
+                dgvPhysicalData.Rows[iCount].Cells[3].ReadOnly = true;
+                iCount = iCount + 1;
+            }
+            FormatDataGridView(dgvPhysicalData);
             //Hydroxide Solubility
+            dgvHydroxideSolubility.Columns.Add("Cation", "Cation Valence");
+            dgvHydroxideSolubility.Columns.Add("Anion", "Anion Valence");
+            for (int ii = 0; ii < Global.coe.numChemicalParams; ii++)
+            {
+                dgvHydroxideSolubility.Rows.Insert(ii);
+                dgvHydroxideSolubility.Rows[ii].HeaderCell.Value = Global.coe.chemConstits[ii].fullName.ToString();
+                dgvHydroxideSolubility.Rows[ii].Cells[0].Value = Global.coe.chemConstits[ii].solubWithHydrox
+            }
 
             //Sulfate Solubility
 
-            //Multipliers
+                //Multipliers
 
-            //Composition
+                //Composition
 
-            //Reactions
+                //Reactions
 
-            //Reaction Products
+                //Reaction Products
 
-            //Gaseous Deposition Velocity
+                //Gaseous Deposition Velocity
 
 
         }
