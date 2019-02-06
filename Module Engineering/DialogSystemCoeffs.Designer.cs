@@ -200,6 +200,10 @@
             this.dgvSulfateSolubility = new System.Windows.Forms.DataGridView();
             this.dgvHydroxideSolubility = new System.Windows.Forms.DataGridView();
             this.dgvPhysicalData = new System.Windows.Forms.DataGridView();
+            this.Charge = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Equiv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DryDep = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Advected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dgvOutputControl = new System.Windows.Forms.DataGridView();
             this.Master = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Catch = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -211,10 +215,12 @@
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
-            this.Charge = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Equiv = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DryDep = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Advected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Reactant = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.AnoxicRxn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dissOlimit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UVmedRxn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Theta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LinkedRxn = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tcSystemTabs.SuspendLayout();
             this.tpPhysicalData.SuspendLayout();
             this.tpLandUses.SuspendLayout();
@@ -1922,6 +1928,13 @@
             this.dgvReactions.AllowUserToAddRows = false;
             this.dgvReactions.AllowUserToDeleteRows = false;
             this.dgvReactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvReactions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Reactant,
+            this.AnoxicRxn,
+            this.dissOlimit,
+            this.UVmedRxn,
+            this.Theta,
+            this.LinkedRxn});
             this.dgvReactions.Location = new System.Drawing.Point(27, 75);
             this.dgvReactions.Name = "dgvReactions";
             this.dgvReactions.Size = new System.Drawing.Size(656, 385);
@@ -1981,6 +1994,28 @@
             this.dgvPhysicalData.Name = "dgvPhysicalData";
             this.dgvPhysicalData.Size = new System.Drawing.Size(656, 385);
             this.dgvPhysicalData.TabIndex = 3;
+            // 
+            // Charge
+            // 
+            this.Charge.Frozen = true;
+            this.Charge.HeaderText = "Charge";
+            this.Charge.Name = "Charge";
+            // 
+            // Equiv
+            // 
+            this.Equiv.Frozen = true;
+            this.Equiv.HeaderText = "Equivalent Weight (g/eq)";
+            this.Equiv.Name = "Equiv";
+            // 
+            // DryDep
+            // 
+            this.DryDep.HeaderText = "Dry Deposition";
+            this.DryDep.Name = "DryDep";
+            // 
+            // Advected
+            // 
+            this.Advected.HeaderText = "Advected";
+            this.Advected.Name = "Advected";
             // 
             // dgvOutputControl
             // 
@@ -2097,27 +2132,37 @@
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             // 
-            // Charge
+            // Reactant
             // 
-            this.Charge.Frozen = true;
-            this.Charge.HeaderText = "Charge";
-            this.Charge.Name = "Charge";
+            this.Reactant.HeaderText = "Reactant";
+            this.Reactant.Name = "Reactant";
+            this.Reactant.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Reactant.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
-            // Equiv
+            // AnoxicRxn
             // 
-            this.Equiv.Frozen = true;
-            this.Equiv.HeaderText = "Equivalent Weight (g/eq)";
-            this.Equiv.Name = "Equiv";
+            this.AnoxicRxn.HeaderText = "Anoxic Reaction";
+            this.AnoxicRxn.Name = "AnoxicRxn";
             // 
-            // DryDep
+            // dissOlimit
             // 
-            this.DryDep.HeaderText = "Dry Deposition";
-            this.DryDep.Name = "DryDep";
+            this.dissOlimit.HeaderText = "D.O. Limit (mg/L)";
+            this.dissOlimit.Name = "dissOlimit";
             // 
-            // Advected
+            // UVmedRxn
             // 
-            this.Advected.HeaderText = "Advected";
-            this.Advected.Name = "Advected";
+            this.UVmedRxn.HeaderText = "UV Light Mediated";
+            this.UVmedRxn.Name = "UVmedRxn";
+            // 
+            // Theta
+            // 
+            this.Theta.HeaderText = "Theta";
+            this.Theta.Name = "Theta";
+            // 
+            // LinkedRxn
+            // 
+            this.LinkedRxn.HeaderText = "Linked Reaction";
+            this.LinkedRxn.Name = "LinkedRxn";
             // 
             // DialogSystemCoeffs
             // 
@@ -2405,5 +2450,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Equiv;
         private System.Windows.Forms.DataGridViewComboBoxColumn DryDep;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Advected;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Reactant;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn AnoxicRxn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dissOlimit;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn UVmedRxn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Theta;
+        private System.Windows.Forms.DataGridViewComboBoxColumn LinkedRxn;
     }
 }
