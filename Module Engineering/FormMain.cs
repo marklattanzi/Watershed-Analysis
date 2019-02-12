@@ -37,9 +37,10 @@ namespace warmf {
 			frmConsensus = new FormConsensus(this);
 			frmTMDL = new FormTMDL(this);
 
-			// sub forms of engr module form
-			dlgCatchCoeffs = new DialogCatchCoeffs(this); // used in Engr module to show catchment coefficients
-            dlgSystemCoeffs = new DialogSystemCoeffs(this);
+            // dialogs called from within the Engineering Module (River Coefficients,
+            // Catchment Coefficients, System Coefficients, Reservoir Coefficients)
+			dlgCatchCoeffs = new DialogCatchCoeffs(this); // used in Engineering module to show catchment coefficients
+            dlgSystemCoeffs = new DialogSystemCoeffs(this); //used in Engineering module to show the system coefficients
 		}
 
 		private void FormMain_Load(object sender, EventArgs e) {
@@ -69,8 +70,11 @@ namespace warmf {
 
 		private void LoadDefault() {
 			try {
-				OpenShapeFile(Global.DATA_DIR + "shp/Catawba.shp");
-			}
+                OpenShapeFile(Global.DATA_DIR + "shp/Catawba.shp");
+                //OpenShapeFile(Global.DATA_DIR + "shp/Catawba_Catchments.shp");
+                //OpenShapeFile(Global.DATA_DIR + "shp/Catawba_Rivers.shp");
+                //OpenShapeFile(Global.DATA_DIR + "shp/Catawba_Lakes.shp");
+            }
 			catch (Exception ex) {
 				MessageBox.Show(this, "Error : " + ex.Message);
 			}
@@ -142,16 +146,6 @@ namespace warmf {
 			shpFile.RenderSettings.IsSelectable = true;
 		}
 
-		/*  scroll wheel works without this.  --MRL
-        private void frmMap_MouseWheel(object sender, MouseEventArgs e) {
-            if (e.Delta > 0) {
-                miEditZoomIn_Click(sender, e);
-            }
-            else {
-                miEditZoomOut_Click(sender, e);
-            }
-        }*/
-
 		public void ShowForm(string name) {
 			//this.Hide();	// ENGR window is always visible - MRL
 			frmKnow.Hide();
@@ -172,12 +166,6 @@ namespace warmf {
 		}
 
 		private void frmMap_MouseClick(object sender, MouseEventArgs e) {
-
-			// for debugging
-			//Point clickPt = new Point(e.X, e.Y);	clickPt is in GIS coords
-			//PointD pt = frmMap.PixelCoordToGisPoint(clickPt);
-			//MessageBox.Show("Pixel point = "+pt.X+", "+pt.Y+" :" + "GIS X,Y point = " + pt.X + ", " + pt.Y);
-			//return;
 
 			int recordIndex = frmMap.GetShapeIndexAtPixelCoord(0, e.Location, 8);
             if (recordIndex >= 0)
@@ -204,23 +192,6 @@ namespace warmf {
                         return;
                     }
 
-                //sb.AppendLine("Name:" + Global.coe.catchments[ii].name);
-                //sb.AppendLine("MET file:" + Global.coe.METFilename[Global.coe.catchments[ii].METFileNum]);
-                //sb.AppendLine("Precipitation Weighting multiplier:" + Global.coe.catchments[ii].precipMultiplier);
-                //sb.AppendLine("Average temperature lapse:" + Global.coe.catchments[ii].aveTempLapse);
-                //sb.AppendLine("Altitudinal Temp Lapse:" + Global.coe.catchments[ii].altitudeTempLapse);
-                //sb.AppendLine("Output to file?:" + Global.coe.catchments[ii].swOutputToFile);
-                //sb.AppendLine("Air/rain chemistry file num" + Global.coe.catchments[ii].airRainChemFileNum);
-                //sb.AppendLine("Particle/rain chemistry file num:" + Global.coe.catchments[ii].particleRainChemFileNum);
-                //sb.AppendLine("Num soil layers:" + Global.coe.catchments[ii].numSoilLayers);
-                //sb.AppendLine("Slope:" + Global.coe.catchments[ii].slope);
-                //sb.AppendLine("Width:" + Global.coe.catchments[ii].width);
-                //sb.AppendLine("Aspect:" + Global.coe.catchments[ii].aspect);
-                //sb.AppendLine("Manning N:" + Global.coe.catchments[ii].ManningN);
-                //sb.AppendLine("Detention storage:" + Global.coe.catchments[ii].detentionStorage);
-
-                //WMDialog popup = new WMDialog("Shapefile Data", sb.ToString());
-                ////popup.ShowDialog();
                 dlgCatchCoeffs.Populate(ii);
                 dlgCatchCoeffs.ShowDialog();
             }
