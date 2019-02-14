@@ -8,13 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace warmf.Module_Engineering
+namespace warmf
 {
     public partial class DialogReservoirCoeffs : Form
     {
-        public DialogReservoirCoeffs()
+        FormMain parent;
+        public DialogReservoirCoeffs(FormMain par)
         {
             InitializeComponent();
+            this.parent = par;
+        }
+
+        public void Populate()
+        {
         }
     }
 }

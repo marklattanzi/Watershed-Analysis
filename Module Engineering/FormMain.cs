@@ -21,6 +21,7 @@ namespace warmf {
 		// sub forms of Engineering (Main) module
 		public DialogCatchCoeffs dlgCatchCoeffs;
         public DialogSystemCoeffs dlgSystemCoeffs;
+        public DialogReservoirCoeffs dlgReservoirCoeffs;
 
 		public FormMain() {
 			InitializeComponent();
@@ -41,7 +42,8 @@ namespace warmf {
             // Catchment Coefficients, System Coefficients, Reservoir Coefficients)
 			dlgCatchCoeffs = new DialogCatchCoeffs(this); // used in Engineering module to show catchment coefficients
             dlgSystemCoeffs = new DialogSystemCoeffs(this); //used in Engineering module to show the system coefficients
-		}
+            dlgReservoirCoeffs = new DialogReservoirCoeffs(this); //used in Engineering module to show the reservoir coefficients
+        }
 
 		private void FormMain_Load(object sender, EventArgs e) {
 			frmMap.Hide();
@@ -70,29 +72,56 @@ namespace warmf {
 
 		private void LoadDefault() {
 			try {
-                OpenShapeFile(Global.DATA_DIR + "shp/Catawba.shp");
-                //OpenShapeFile(Global.DATA_DIR + "shp/Catawba_Catchments.shp");
-                //OpenShapeFile(Global.DATA_DIR + "shp/Catawba_Rivers.shp");
-                //OpenShapeFile(Global.DATA_DIR + "shp/Catawba_Lakes.shp");
+                //Add catchments shapefile
+                this.frmMap.AddShapeFile(Global.DATA_DIR + "shp/Catchments.shp", "ShapeFile", "");
+                EGIS.ShapeFileLib.ShapeFile catchShapefile = this.frmMap[0];
+                catchShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
+                catchShapefile.RenderSettings.UseToolTip = true;
+                catchShapefile.RenderSettings.ToolTipFieldName = catchShapefile.RenderSettings.FieldName;
+                catchShapefile.RenderSettings.IsSelectable = true;
+                catchShapefile.RenderSettings.FillColor = Color.FromArgb(224,250,207);
+                catchShapefile.RenderSettings.OutlineColor = Color.FromArgb(178, 178, 178);
+                ////Add rivers shapefile
+                this.frmMap.AddShapeFile(Global.DATA_DIR + "shp/Rivers.shp", "ShapeFile", "");
+                EGIS.ShapeFileLib.ShapeFile riverShapefile = this.frmMap[1];
+                riverShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
+                riverShapefile.RenderSettings.UseToolTip = true;
+                riverShapefile.RenderSettings.ToolTipFieldName = catchShapefile.RenderSettings.FieldName;
+                riverShapefile.RenderSettings.IsSelectable = true;
+                riverShapefile.RenderSettings.LineType = LineType.Solid;
+                riverShapefile.RenderSettings.OutlineColor = Color.FromArgb(0, 0, 255);
+                //add reservoirs shapefile
+                this.frmMap.AddShapeFile(Global.DATA_DIR + "shp/Lakes.shp", "ShapeFile", "");
+                EGIS.ShapeFileLib.ShapeFile lakeShapefile = this.frmMap[2];
+                lakeShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
+                lakeShapefile.RenderSettings.UseToolTip = true;
+                lakeShapefile.RenderSettings.ToolTipFieldName = catchShapefile.RenderSettings.FieldName;
+                lakeShapefile.RenderSettings.IsSelectable = true;
+                lakeShapefile.RenderSettings.FillColor = Color.FromArgb(151, 219, 242);
+                lakeShapefile.RenderSettings.OutlineColor = Color.FromArgb(61, 101, 235);
             }
 			catch (Exception ex) {
 				MessageBox.Show(this, "Error : " + ex.Message);
 			}
 		}
 
-		private void miFileOpen_Click(object sender, EventArgs e) {
-			if (dlgFileOpen.ShowDialog(this) == DialogResult.OK) {
-				try {
-					OpenShapeFile(dlgFileOpen.FileName);
-				}
-				catch (Exception ex) {
-					MessageBox.Show(this, "Error : " + ex.Message);
-				}
-				SetupEngrModule();
-			}
-		}
+        private void miFileOpen_Click(object sender, EventArgs e)
+        {
+            if (dlgFileOpen.ShowDialog(this) == DialogResult.OK)
+            {
+                try
+                {
+                    //OpenShapeFile(dlgFileOpen.FileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(this, "Error : " + ex.Message);
+                }
+                SetupEngrModule();
+            }
+        }
 
-		private void SetupEngrModule() {
+        private void SetupEngrModule() {
 			pboxSplash.Hide();
 			frmMap.Show();
 			miFileClose.Visible = true;
@@ -127,26 +156,7 @@ namespace warmf {
 
 		}
 
-		private void OpenShapeFile(string filename) {
-			Logger.Info("Opening shape file " + filename);
-			// clear any shapefiles the map is currently displaying
-			this.frmMap.ClearShapeFiles();
-
-			// open the shapefile passing in the path, display name of the shapefile and
-			// the field name to be used when rendering the shapes (we use an empty string
-			// as the field name (3rd parameter) can not be null)
-			this.frmMap.AddShapeFile(filename, "ShapeFile", "");
-
-			// read the shapefile dbf field names and set the shapefiles's RenderSettings
-			// to use the first field to label the shapes.
-			EGIS.ShapeFileLib.ShapeFile shpFile = this.frmMap[0];
-			shpFile.RenderSettings.FieldName = shpFile.RenderSettings.DbfReader.GetFieldNames()[0];
-			shpFile.RenderSettings.UseToolTip = true;
-			shpFile.RenderSettings.ToolTipFieldName = shpFile.RenderSettings.FieldName;
-			shpFile.RenderSettings.IsSelectable = true;
-		}
-
-		public void ShowForm(string name) {
+        public void ShowForm(string name) {
 			//this.Hide();	// ENGR window is always visible - MRL
 			frmKnow.Hide();
 			frmData.Hide();
@@ -197,6 +207,9 @@ namespace warmf {
             }
             else
             {
+                //if not a catchment, check to see if a reservoir was clicked
+                recordIndex = frmMap.GetShapeIndexAtPixelCoord(2, e.Location, 8);
+
                 dlgSystemCoeffs.Populate();
                 dlgSystemCoeffs.ShowDialog();
             }

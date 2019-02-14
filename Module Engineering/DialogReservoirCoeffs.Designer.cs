@@ -1,4 +1,4 @@
-﻿namespace warmf.Module_Engineering
+﻿namespace warmf
 {
     partial class DialogReservoirCoeffs
     {
@@ -28,11 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.tcReservoirTabs = new System.Windows.Forms.TabControl();
             this.tpPhysicalData = new System.Windows.Forms.TabPage();
+            this.tbMaxElev = new System.Windows.Forms.TextBox();
+            this.tbMinElev = new System.Windows.Forms.TextBox();
+            this.tbInitElev = new System.Windows.Forms.TextBox();
+            this.tbResSegID = new System.Windows.Forms.TextBox();
+            this.tbName = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.tpStageFlow = new System.Windows.Forms.TabPage();
             this.tpReactions = new System.Windows.Forms.TabPage();
             this.tpPhytoplankton = new System.Windows.Forms.TabPage();
@@ -47,18 +60,14 @@
             this.tpStageArea = new System.Windows.Forms.TabPage();
             this.tpInOutFlow = new System.Windows.Forms.TabPage();
             this.tpMet = new System.Windows.Forms.TabPage();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.tbName = new System.Windows.Forms.TextBox();
-            this.tbResSegID = new System.Windows.Forms.TextBox();
-            this.tbInitElev = new System.Windows.Forms.TextBox();
-            this.tbMinElev = new System.Windows.Forms.TextBox();
-            this.tbMaxElev = new System.Windows.Forms.TextBox();
+            this.dgvStageArea = new System.Windows.Forms.DataGridView();
+            this.label6 = new System.Windows.Forms.Label();
+            this.chartStageFlow = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tcReservoirTabs.SuspendLayout();
             this.tpPhysicalData.SuspendLayout();
+            this.tpStageFlow.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStageArea)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartStageFlow)).BeginInit();
             this.SuspendLayout();
             // 
             // btnHelp
@@ -137,66 +146,152 @@
             this.tpPhysicalData.Text = "Physical Data";
             this.tpPhysicalData.UseVisualStyleBackColor = true;
             // 
+            // tbMaxElev
+            // 
+            this.tbMaxElev.Location = new System.Drawing.Point(420, 284);
+            this.tbMaxElev.Name = "tbMaxElev";
+            this.tbMaxElev.ReadOnly = true;
+            this.tbMaxElev.Size = new System.Drawing.Size(100, 22);
+            this.tbMaxElev.TabIndex = 9;
+            // 
+            // tbMinElev
+            // 
+            this.tbMinElev.Location = new System.Drawing.Point(420, 240);
+            this.tbMinElev.Name = "tbMinElev";
+            this.tbMinElev.ReadOnly = true;
+            this.tbMinElev.Size = new System.Drawing.Size(100, 22);
+            this.tbMinElev.TabIndex = 8;
+            // 
+            // tbInitElev
+            // 
+            this.tbInitElev.Location = new System.Drawing.Point(420, 196);
+            this.tbInitElev.Name = "tbInitElev";
+            this.tbInitElev.Size = new System.Drawing.Size(100, 22);
+            this.tbInitElev.TabIndex = 7;
+            // 
+            // tbResSegID
+            // 
+            this.tbResSegID.Location = new System.Drawing.Point(420, 152);
+            this.tbResSegID.Name = "tbResSegID";
+            this.tbResSegID.ReadOnly = true;
+            this.tbResSegID.Size = new System.Drawing.Size(100, 22);
+            this.tbResSegID.TabIndex = 6;
+            // 
+            // tbName
+            // 
+            this.tbName.Location = new System.Drawing.Point(265, 108);
+            this.tbName.Name = "tbName";
+            this.tbName.Size = new System.Drawing.Size(255, 22);
+            this.tbName.TabIndex = 5;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(200, 287);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(195, 16);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Maximum Surface Elevation (m)";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(200, 243);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(191, 16);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Minimum Surface Elevation (m)";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(200, 199);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(207, 16);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Initial Water Surface Elevation (m)";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(200, 155);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(143, 16);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Reservoir Segment ID:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(200, 111);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(45, 16);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Name";
+            // 
             // tpStageFlow
             // 
-            this.tpStageFlow.Location = new System.Drawing.Point(4, 25);
+            this.tpStageFlow.Controls.Add(this.chartStageFlow);
+            this.tpStageFlow.Controls.Add(this.label6);
+            this.tpStageFlow.Controls.Add(this.dgvStageArea);
+            this.tpStageFlow.Location = new System.Drawing.Point(4, 46);
             this.tpStageFlow.Name = "tpStageFlow";
             this.tpStageFlow.Padding = new System.Windows.Forms.Padding(3);
-            this.tpStageFlow.Size = new System.Drawing.Size(712, 446);
+            this.tpStageFlow.Size = new System.Drawing.Size(712, 425);
             this.tpStageFlow.TabIndex = 1;
             this.tpStageFlow.Text = "Stage-Flow";
             this.tpStageFlow.UseVisualStyleBackColor = true;
             // 
             // tpReactions
             // 
-            this.tpReactions.Location = new System.Drawing.Point(4, 25);
+            this.tpReactions.Location = new System.Drawing.Point(4, 46);
             this.tpReactions.Name = "tpReactions";
-            this.tpReactions.Size = new System.Drawing.Size(712, 446);
+            this.tpReactions.Size = new System.Drawing.Size(712, 425);
             this.tpReactions.TabIndex = 2;
             this.tpReactions.Text = "Reactions";
             this.tpReactions.UseVisualStyleBackColor = true;
             // 
             // tpPhytoplankton
             // 
-            this.tpPhytoplankton.Location = new System.Drawing.Point(4, 25);
+            this.tpPhytoplankton.Location = new System.Drawing.Point(4, 46);
             this.tpPhytoplankton.Name = "tpPhytoplankton";
-            this.tpPhytoplankton.Size = new System.Drawing.Size(712, 446);
+            this.tpPhytoplankton.Size = new System.Drawing.Size(712, 425);
             this.tpPhytoplankton.TabIndex = 3;
             this.tpPhytoplankton.Text = "Phytoplankton";
             this.tpPhytoplankton.UseVisualStyleBackColor = true;
             // 
             // tpHeatLight
             // 
-            this.tpHeatLight.Location = new System.Drawing.Point(4, 25);
+            this.tpHeatLight.Location = new System.Drawing.Point(4, 46);
             this.tpHeatLight.Name = "tpHeatLight";
-            this.tpHeatLight.Size = new System.Drawing.Size(712, 446);
+            this.tpHeatLight.Size = new System.Drawing.Size(712, 425);
             this.tpHeatLight.TabIndex = 4;
             this.tpHeatLight.Text = "Heat/Light";
             this.tpHeatLight.UseVisualStyleBackColor = true;
             // 
             // tpDiffusion
             // 
-            this.tpDiffusion.Location = new System.Drawing.Point(4, 25);
+            this.tpDiffusion.Location = new System.Drawing.Point(4, 46);
             this.tpDiffusion.Name = "tpDiffusion";
-            this.tpDiffusion.Size = new System.Drawing.Size(712, 446);
+            this.tpDiffusion.Size = new System.Drawing.Size(712, 425);
             this.tpDiffusion.TabIndex = 5;
             this.tpDiffusion.Text = "Diffusion";
             this.tpDiffusion.UseVisualStyleBackColor = true;
             // 
             // tpSediment
             // 
-            this.tpSediment.Location = new System.Drawing.Point(4, 25);
+            this.tpSediment.Location = new System.Drawing.Point(4, 46);
             this.tpSediment.Name = "tpSediment";
-            this.tpSediment.Size = new System.Drawing.Size(712, 446);
+            this.tpSediment.Size = new System.Drawing.Size(712, 425);
             this.tpSediment.TabIndex = 6;
             this.tpSediment.Text = "Sediment";
             this.tpSediment.UseVisualStyleBackColor = true;
             // 
             // tpInitTemp
             // 
-            this.tpInitTemp.Location = new System.Drawing.Point(4, 25);
+            this.tpInitTemp.Location = new System.Drawing.Point(4, 46);
             this.tpInitTemp.Name = "tpInitTemp";
-            this.tpInitTemp.Size = new System.Drawing.Size(712, 446);
+            this.tpInitTemp.Size = new System.Drawing.Size(712, 425);
             this.tpInitTemp.TabIndex = 7;
             this.tpInitTemp.Text = "Initial Temperature";
             this.tpInitTemp.UseVisualStyleBackColor = true;
@@ -264,88 +359,39 @@
             this.tpMet.Text = "Meteorology";
             this.tpMet.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // dgvStageArea
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(200, 111);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(45, 16);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Name";
+            this.dgvStageArea.AllowUserToAddRows = false;
+            this.dgvStageArea.AllowUserToDeleteRows = false;
+            this.dgvStageArea.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvStageArea.Location = new System.Drawing.Point(138, 135);
+            this.dgvStageArea.Name = "dgvStageArea";
+            this.dgvStageArea.Size = new System.Drawing.Size(136, 254);
+            this.dgvStageArea.TabIndex = 0;
             // 
-            // label2
+            // label6
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(200, 155);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(143, 16);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Reservoir Segment ID:";
+            this.label6.Location = new System.Drawing.Point(136, 79);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(138, 53);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Enter up to nine (9) pairs of stage-flow data below.";
             // 
-            // label3
+            // chartStageFlow
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(200, 199);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(207, 16);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Initial Water Surface Elevation (m)";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(200, 243);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(191, 16);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Minimum Surface Elevation (m)";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(200, 287);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(195, 16);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Maximum Surface Elevation (m)";
-            // 
-            // tbName
-            // 
-            this.tbName.Location = new System.Drawing.Point(265, 108);
-            this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(255, 22);
-            this.tbName.TabIndex = 5;
-            // 
-            // tbResSegID
-            // 
-            this.tbResSegID.Location = new System.Drawing.Point(420, 152);
-            this.tbResSegID.Name = "tbResSegID";
-            this.tbResSegID.ReadOnly = true;
-            this.tbResSegID.Size = new System.Drawing.Size(100, 22);
-            this.tbResSegID.TabIndex = 6;
-            // 
-            // tbInitElev
-            // 
-            this.tbInitElev.Location = new System.Drawing.Point(420, 196);
-            this.tbInitElev.Name = "tbInitElev";
-            this.tbInitElev.Size = new System.Drawing.Size(100, 22);
-            this.tbInitElev.TabIndex = 7;
-            // 
-            // tbMinElev
-            // 
-            this.tbMinElev.Location = new System.Drawing.Point(420, 240);
-            this.tbMinElev.Name = "tbMinElev";
-            this.tbMinElev.ReadOnly = true;
-            this.tbMinElev.Size = new System.Drawing.Size(100, 22);
-            this.tbMinElev.TabIndex = 8;
-            // 
-            // tbMaxElev
-            // 
-            this.tbMaxElev.Location = new System.Drawing.Point(420, 284);
-            this.tbMaxElev.Name = "tbMaxElev";
-            this.tbMaxElev.ReadOnly = true;
-            this.tbMaxElev.Size = new System.Drawing.Size(100, 22);
-            this.tbMaxElev.TabIndex = 9;
+            chartArea1.Name = "ChartArea1";
+            this.chartStageFlow.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartStageFlow.Legends.Add(legend1);
+            this.chartStageFlow.Location = new System.Drawing.Point(299, 81);
+            this.chartStageFlow.Name = "chartStageFlow";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chartStageFlow.Series.Add(series1);
+            this.chartStageFlow.Size = new System.Drawing.Size(327, 307);
+            this.chartStageFlow.TabIndex = 2;
+            this.chartStageFlow.Text = "chart1";
             // 
             // DialogReservoirCoeffs
             // 
@@ -361,6 +407,9 @@
             this.tcReservoirTabs.ResumeLayout(false);
             this.tpPhysicalData.ResumeLayout(false);
             this.tpPhysicalData.PerformLayout();
+            this.tpStageFlow.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStageArea)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartStageFlow)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -396,5 +445,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.DataGridView dgvStageArea;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartStageFlow;
     }
 }
