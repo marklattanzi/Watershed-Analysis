@@ -347,7 +347,7 @@ namespace warmf {
 				if (series.MarkerSize < 1) series.MarkerSize = 1;
 				if (series.MarkerSize > 7) series.MarkerSize = 7;
 
-				METFile.METGraphLabels labels;
+				METFile.GraphLabels labels;
 				labels = Array.Find(METFile.labels, item => item.key == dataName);
 				toolGraph.Titles.Add(labels.yaxis + " vs. " + labels.xaxis);
 				toolGraph.Titles[0].Font = new Font(toolGraph.Titles[0].Font.Name, 12, FontStyle.Bold);

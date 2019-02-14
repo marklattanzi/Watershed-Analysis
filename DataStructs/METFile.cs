@@ -8,14 +8,52 @@ using System.IO;
 using System.Windows.Forms;
 
 namespace warmf {
-	class METFile {
-		public string filename { get; set; }
-		public string shortName { get; set; }
-		public int version { get; set; }
-		public double latitude { get; set; }
-		public double longitude { get; set; }
+    class DataFile
+    {
+        public string filename { get; set; }
+        public string shortName { get; set; }
+        public int version { get; set; }
+        public double latitude { get; set; }
+        public double longitude { get; set; }
 
-		public List<DateTime> date;
+        public List<DateTime> date;
+        public List<string> comment;
+
+        public struct GraphLabels
+        {
+            public string key;
+            public string xaxis;
+            public string yaxis;
+        }
+
+        public bool ReadVersionLatLongName(ref STechStreamReader SR)
+        {
+            int intRes;
+            double dblRes;
+            string line;
+
+            line = SR.ReadLine();
+            if (line.StartsWith("VERSION"))
+                version = Int32.TryParse(line.Substring(8, 8), out intRes) ? intRes : 0;
+            else
+            {
+                Debug.WriteLine("Error in data file.  Version number is missing. Continuing.");
+                version = -1;
+
+                return false;
+            }
+
+            line = SR.ReadLine();
+            latitude = Double.TryParse(line.Substring(9, 10), out dblRes) ? dblRes : 0;
+            longitude = Double.TryParse(line.Substring(30, 10), out dblRes) ? dblRes : 0;
+            shortName = line.Substring(40);
+
+            return true;
+        }
+
+    }
+
+    class METFile : DataFile {
 		public List<double> precip;
 		public List<double> minTemp;
 		public List<double> maxTemp;
@@ -23,23 +61,16 @@ namespace warmf {
 		public List<double> dewPointTemp;
 		public List<double> airPressure;
 		public List<double> windSpeed;
-		public List<string> comment;
-
-		public struct METGraphLabels {
-			public string key;
-			public string xaxis;
-			public string yaxis;
-		}
 
 		// labels for graph in array; may be an easier way --MRL
-		public static readonly METGraphLabels[] labels = new METGraphLabels[] {
-				new METGraphLabels() { key="precip", xaxis="Time", yaxis="Precipitation (cm)"},
-				new METGraphLabels() { key="mintemp", xaxis="Time", yaxis="Minimum Temperature (C)"},
-				new METGraphLabels() { key="maxtemp", xaxis="Time", yaxis="Maximum Temperature (C)"},
-				new METGraphLabels() { key="cloud", xaxis="Time", yaxis="Cloud Cover"},
-				new METGraphLabels() { key="dewpoint", xaxis="Time", yaxis="Dew Point Temperature (C)"},
-				new METGraphLabels() { key="airpressure", xaxis="Time", yaxis="Air Pressure (mbar)"},
-				new METGraphLabels() { key="windspeed", xaxis="Time", yaxis="Wind Speed (meters/sec)"},
+		public static readonly GraphLabels[] labels = new GraphLabels[] {
+				new GraphLabels() { key="precip", xaxis="Time", yaxis="Precipitation (cm)"},
+				new GraphLabels() { key="mintemp", xaxis="Time", yaxis="Minimum Temperature (C)"},
+				new GraphLabels() { key="maxtemp", xaxis="Time", yaxis="Maximum Temperature (C)"},
+				new GraphLabels() { key="cloud", xaxis="Time", yaxis="Cloud Cover"},
+				new GraphLabels() { key="dewpoint", xaxis="Time", yaxis="Dew Point Temperature (C)"},
+				new GraphLabels() { key="airpressure", xaxis="Time", yaxis="Air Pressure (mbar)"},
+				new GraphLabels() { key="windspeed", xaxis="Time", yaxis="Wind Speed (meters/sec)"},
 		};
 
 		// methods
@@ -55,18 +86,7 @@ namespace warmf {
 				int day, month, year, hour, minute;
 				sr = new STechStreamReader(filename);
 
-				line = sr.ReadLine();
-				if (line.StartsWith("VERSION"))
-					version = Int32.TryParse(line.Substring(8, 8), out intRes) ? intRes : 0;
-				else {
-					Debug.WriteLine("Error in MET file.  Version number is missing. Continuing.");
-					version = -1;
-				}
-
-				line = sr.ReadLine();
-				latitude = Double.TryParse(line.Substring(9, 10), out dblRes) ? dblRes : 0;
-				longitude = Double.TryParse(line.Substring(30, 10), out dblRes) ? dblRes : 0;
-				shortName = line.Substring(40);
+                ReadVersionLatLongName(ref sr);
 
 				date = new List<DateTime>();
 				precip = new List<double>();
