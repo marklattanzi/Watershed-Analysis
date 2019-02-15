@@ -719,32 +719,21 @@
     <None Include="data\pts\SC0047864.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\shp\Catawba.dbf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="data\shp\Catawba.prj">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="data\shp\Catawba.shp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="data\shp\Catawba.shx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="data\shp\Catawba_Catchments.dbf" />
-    <None Include="data\shp\Catawba_Catchments.prj" />
-    <None Include="data\shp\Catawba_Catchments.shp" />
-    <None Include="data\shp\Catawba_Catchments.shx" />
-    <None Include="data\shp\Catawba_Lakes.cpg" />
-    <None Include="data\shp\Catawba_Lakes.dbf" />
-    <None Include="data\shp\Catawba_Lakes.shp" />
-    <None Include="data\shp\Catawba_Lakes.shx" />
-    <None Include="data\shp\Catawba_Rivers.cpg" />
-    <None Include="data\shp\Catawba_Rivers.dbf" />
-    <None Include="data\shp\Catawba_Rivers.sbn" />
-    <None Include="data\shp\Catawba_Rivers.sbx" />
-    <None Include="data\shp\Catawba_Rivers.shp" />
-    <None Include="data\shp\Catawba_Rivers.shx" />
+    <None Include="data\shp\Catchments.cpg" />
+    <None Include="data\shp\Catchments.dbf" />
+    <None Include="data\shp\Catchments.prj" />
+    <None Include="data\shp\Catchments.shp" />
+    <None Include="data\shp\Catchments.shx" />
+    <None Include="data\shp\Lakes.cpg" />
+    <None Include="data\shp\Lakes.dbf" />
+    <None Include="data\shp\Lakes.shp" />
+    <None Include="data\shp\Lakes.shx" />
+    <None Include="data\shp\Rivers.cpg" />
+    <None Include="data\shp\Rivers.dbf" />
+    <None Include="data\shp\Rivers.sbn" />
+    <None Include="data\shp\Rivers.sbx" />
+    <None Include="data\shp\Rivers.shp" />
+    <None Include="data\shp\Rivers.shx" />
     <None Include="data\tfiles\00000000.T01">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -792,7 +781,9 @@
     <None Include="Resources\splash.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="data\shp\Catawba_Rivers.shp.xml" />
+    <Content Include="data\shp\Catchments.shp.xml" />
+    <Content Include="data\shp\Lakes.shp.xml" />
+    <Content Include="data\shp\Rivers.shp.xml" />
     <Content Include="DLLs\EGIS.Controls.dll" />
     <Content Include="DLLs\EGIS.ShapeFileLib.dll" />
   </ItemGroup>

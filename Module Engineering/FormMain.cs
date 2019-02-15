@@ -72,7 +72,7 @@ namespace warmf {
 
 		private void LoadDefault() {
 			try {
-                //Add catchments shapefile
+                //Add catchments shapefile (shapefile [0])
                 this.frmMap.AddShapeFile(Global.DATA_DIR + "shp/Catchments.shp", "ShapeFile", "");
                 EGIS.ShapeFileLib.ShapeFile catchShapefile = this.frmMap[0];
                 catchShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
@@ -81,7 +81,7 @@ namespace warmf {
                 catchShapefile.RenderSettings.IsSelectable = true;
                 catchShapefile.RenderSettings.FillColor = Color.FromArgb(224,250,207);
                 catchShapefile.RenderSettings.OutlineColor = Color.FromArgb(178, 178, 178);
-                ////Add rivers shapefile
+                ////Add rivers shapefile (shapefile [1])
                 this.frmMap.AddShapeFile(Global.DATA_DIR + "shp/Rivers.shp", "ShapeFile", "");
                 EGIS.ShapeFileLib.ShapeFile riverShapefile = this.frmMap[1];
                 riverShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
@@ -90,7 +90,7 @@ namespace warmf {
                 riverShapefile.RenderSettings.IsSelectable = true;
                 riverShapefile.RenderSettings.LineType = LineType.Solid;
                 riverShapefile.RenderSettings.OutlineColor = Color.FromArgb(0, 0, 255);
-                //add reservoirs shapefile
+                //add reservoirs shapefile (shapefile [2])
                 this.frmMap.AddShapeFile(Global.DATA_DIR + "shp/Lakes.shp", "ShapeFile", "");
                 EGIS.ShapeFileLib.ShapeFile lakeShapefile = this.frmMap[2];
                 lakeShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
@@ -175,44 +175,79 @@ namespace warmf {
 			}
 		}
 
-		private void frmMap_MouseClick(object sender, MouseEventArgs e) {
+		private void frmMap_MouseDoubleClick(object sender, MouseEventArgs e) {
 
-			int recordIndex = frmMap.GetShapeIndexAtPixelCoord(0, e.Location, 8);
-            if (recordIndex >= 0)
+			int CatchmentRecordIndex = frmMap.GetShapeIndexAtPixelCoord(0, e.Location, 8);
+            int riverRecordIndex = frmMap.GetShapeIndexAtPixelCoord(1, e.Location, 8);
+            int reservoirRecordIndex = frmMap.GetShapeIndexAtPixelCoord(2, e.Location, 8);
+
+            if (riverRecordIndex >= 0) //River segment selected - River coefficients
             {
-                string[] recordAttributes = frmMap[0].GetAttributeFieldValues(recordIndex);
+                MessageBox.Show("River segment selected");
+            }
+            else if (CatchmentRecordIndex >= 0) //Catchment selected - Catchment coefficients
+            {
+                string[] recordAttributes = frmMap[0].GetAttributeFieldValues(CatchmentRecordIndex);
                 string[] attributeNames = frmMap[0].GetAttributeFieldNames();
-                StringBuilder sb = new StringBuilder();
-                int catchNum = 0;
-                for (int n = 0; n < attributeNames.Length; ++n)
+                int n = 0;
+                while (attributeNames[n] != "WARMF_ID") //test of shapefile attributes
                 {
-                    sb.Append(attributeNames[n]).Append(':').AppendLine(recordAttributes[n].Trim());
-                    catchNum = Int32.Parse(recordAttributes[n]);
+                    if (n < (attributeNames.Length - 1))
+                        n++;
+                    else
+                    {
+                        Debug.WriteLine("No WARMF_ID Field found in catchments attribute table");
+                        return;
+                    }
                 }
-                //MessageBox.Show(this, sb.ToString(), "record attributes", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
-
-                //test of coefficients file read
+                int catchID = Int32.Parse(recordAttributes[n]);
                 int ii = 0;
-                while (Global.coe.catchments[ii].idNum != catchNum)
+                while (Global.coe.catchments[ii].idNum != catchID) //test of coefficients file read
                     if (ii < Global.coe.numCatchments - 1)
                         ii++;
                     else
                     {
-                        Debug.WriteLine("No catchment found with IDnum = " + catchNum);
+                        Debug.WriteLine("No catchment found with IDnum = " + catchID);
                         return;
                     }
-
                 dlgCatchCoeffs.Populate(ii);
                 dlgCatchCoeffs.ShowDialog();
             }
-            else
+            else if (reservoirRecordIndex >= 0) //Reservoir segment selected - Reservoir coefficients
             {
-                //if not a catchment, check to see if a reservoir was clicked
-                recordIndex = frmMap.GetShapeIndexAtPixelCoord(2, e.Location, 8);
-
+                string[] recordAttributes = frmMap[2].GetAttributeFieldValues(CatchmentRecordIndex);
+                string[] attributeNames = frmMap[2].GetAttributeFieldNames();
+                int n = 0;
+                while (attributeNames[n] != "WARMF_ID") //test of shapefile attributes
+                {
+                    if (n < (attributeNames.Length - 1))
+                        n++;
+                    else
+                    {
+                        Debug.WriteLine("No WARMF_ID Field found in reservoirs attribute table");
+                        return;
+                    }
+                }
+                int reservoirID = Int32.Parse(recordAttributes[n]);
+                int ii = 0;
+                while (Global.coe.catchments[ii].idNum != reservoirID) //test of coefficients file read
+                    if (ii < Global.coe.numCatchments - 1)
+                        ii++;
+                    else
+                    {
+                        Debug.WriteLine("No reservoir found with IDnum = " + reservoirID);
+                        return;
+                    }
+                dlgReservoirCoeffs.Populate();
+                dlgReservoirCoeffs.ShowDialog();
+            }
+            else //System coefficients
+            {
                 dlgSystemCoeffs.Populate();
                 dlgSystemCoeffs.ShowDialog();
             }
+
+            
 		}
 
 		private void miFileExit_Click(object sender, EventArgs e) {

@@ -113,7 +113,7 @@
             this.frmMap.ZoomLevel = 1D;
             this.frmMap.ZoomToSelectedExtentWhenCtrlKeydown = false;
             this.frmMap.Load += new System.EventHandler(this.frmMap_Load);
-            this.frmMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.frmMap_MouseClick);
+            this.frmMap.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.frmMap_MouseDoubleClick);
             // 
             // mnuMain
             // 

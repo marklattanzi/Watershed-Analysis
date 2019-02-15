@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<metadata xml:lang="en"><Esri><CreaDate>20190212</CreaDate><CreaTime>14015200</CreaTime><ArcGISFormat>1.0</ArcGISFormat><SyncOnce>TRUE</SyncOnce><DataProperties><lineage><Process ToolSource="c:\program files (x86)\arcgis\desktop10.6\ArcToolbox\Toolboxes\Data Management Tools.tbx\PointsToLine" Date="20190212" Time="140152">PointsToLine river_points C:\Systech\WARMF_GUI\Watershed-Analysis\data\shp\Catawba_Rivers.shp River Node NO_CLOSE</Process></lineage></DataProperties></Esri></metadata>
