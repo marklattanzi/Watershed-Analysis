@@ -175,77 +175,88 @@ namespace warmf {
 			}
 		}
 
-		private void frmMap_MouseDoubleClick(object sender, MouseEventArgs e) {
+        private void frmMap_MapDoubleClick(object sender, EGIS.Controls.SFMap.MapDoubleClickedEventArgs e)
+        {
+            e.Cancel = true;
+        }
 
-			int CatchmentRecordIndex = frmMap.GetShapeIndexAtPixelCoord(0, e.Location, 8);
-            int riverRecordIndex = frmMap.GetShapeIndexAtPixelCoord(1, e.Location, 8);
-            int reservoirRecordIndex = frmMap.GetShapeIndexAtPixelCoord(2, e.Location, 8);
+        private void frmMap_MouseDoubleClick(object sender, MouseEventArgs e) {
 
-            if (riverRecordIndex >= 0) //River segment selected - River coefficients
+		int CatchmentRecordIndex = frmMap.GetShapeIndexAtPixelCoord(0, e.Location, 8);
+        int riverRecordIndex = frmMap.GetShapeIndexAtPixelCoord(1, e.Location, 8);
+        int reservoirRecordIndex = frmMap.GetShapeIndexAtPixelCoord(2, e.Location, 8);
+
+        if (riverRecordIndex >= 0) //River segment selected - River coefficients
+        {
+            MessageBox.Show("River segment selected");
+        }
+        else if (reservoirRecordIndex >= 0) //Reservoir segment selected - Reservoir coefficients
+        {
+            string[] recordAttributes = frmMap[2].GetAttributeFieldValues(reservoirRecordIndex);
+            string[] attributeNames = frmMap[2].GetAttributeFieldNames();
+            int n = 0;
+            while (attributeNames[n] != "WARMF_ID") //test of shapefile attributes
             {
-                MessageBox.Show("River segment selected");
-            }
-            else if (CatchmentRecordIndex >= 0) //Catchment selected - Catchment coefficients
-            {
-                string[] recordAttributes = frmMap[0].GetAttributeFieldValues(CatchmentRecordIndex);
-                string[] attributeNames = frmMap[0].GetAttributeFieldNames();
-                int n = 0;
-                while (attributeNames[n] != "WARMF_ID") //test of shapefile attributes
+                if (n < (attributeNames.Length - 1))
+                    n++;
+                else
                 {
-                    if (n < (attributeNames.Length - 1))
-                        n++;
-                    else
-                    {
-                        Debug.WriteLine("No WARMF_ID Field found in catchments attribute table");
-                        return;
-                    }
+                    Debug.WriteLine("No WARMF_ID Field found in reservoirs attribute table");
+                    return;
                 }
-                int catchID = Int32.Parse(recordAttributes[n]);
-                int ii = 0;
-                while (Global.coe.catchments[ii].idNum != catchID) //test of coefficients file read
-                    if (ii < Global.coe.numCatchments - 1)
-                        ii++;
+            }
+            int reservoirID = Int32.Parse(recordAttributes[n]);
+
+            int iRes = 0;
+            int iSeg = 0;
+            while (Global.coe.reservoirs[iRes].reservoirSegs[iSeg].idNum != reservoirID) //test of coefficients file read
+                if (iSeg < Global.coe.reservoirs[iRes].numSegments - 1)
+                    iSeg++;
+                else
+                    if (iRes < Global.coe.numReservoirs - 1)
+                        iRes++;
                     else
                     {
-                        Debug.WriteLine("No catchment found with IDnum = " + catchID);
-                        return;
+                    Debug.WriteLine("No reservoir found with IDnum = " + reservoirID);
+                    return;
                     }
-                dlgCatchCoeffs.Populate(ii);
-                dlgCatchCoeffs.ShowDialog();
-            }
-            else if (reservoirRecordIndex >= 0) //Reservoir segment selected - Reservoir coefficients
+            dlgReservoirCoeffs.Populate(iRes, iSeg);
+            dlgReservoirCoeffs.ShowDialog();
+        }
+        else if (CatchmentRecordIndex >= 0) //Catchment selected - Catchment coefficients
+        {
+            string[] recordAttributes = frmMap[0].GetAttributeFieldValues(CatchmentRecordIndex);
+            string[] attributeNames = frmMap[0].GetAttributeFieldNames();
+            int n = 0;
+            while (attributeNames[n] != "WARMF_ID") //test of shapefile attributes
             {
-                string[] recordAttributes = frmMap[2].GetAttributeFieldValues(CatchmentRecordIndex);
-                string[] attributeNames = frmMap[2].GetAttributeFieldNames();
-                int n = 0;
-                while (attributeNames[n] != "WARMF_ID") //test of shapefile attributes
+                if (n < (attributeNames.Length - 1))
+                    n++;
+                else
                 {
-                    if (n < (attributeNames.Length - 1))
-                        n++;
-                    else
-                    {
-                        Debug.WriteLine("No WARMF_ID Field found in reservoirs attribute table");
-                        return;
-                    }
+                    Debug.WriteLine("No WARMF_ID Field found in catchments attribute table");
+                    return;
                 }
-                int reservoirID = Int32.Parse(recordAttributes[n]);
-                int ii = 0;
-                while (Global.coe.catchments[ii].idNum != reservoirID) //test of coefficients file read
-                    if (ii < Global.coe.numCatchments - 1)
-                        ii++;
-                    else
-                    {
-                        Debug.WriteLine("No reservoir found with IDnum = " + reservoirID);
-                        return;
-                    }
-                dlgReservoirCoeffs.Populate();
-                dlgReservoirCoeffs.ShowDialog();
             }
-            else //System coefficients
-            {
-                dlgSystemCoeffs.Populate();
-                dlgSystemCoeffs.ShowDialog();
-            }
+            int catchID = Int32.Parse(recordAttributes[n]);
+            int ii = 0;
+            while (Global.coe.catchments[ii].idNum != catchID) //test of coefficients file read
+                if (ii < Global.coe.numCatchments - 1)
+                    ii++;
+                else
+                {
+                    Debug.WriteLine("No catchment found with IDnum = " + catchID);
+                    return;
+                }
+            dlgCatchCoeffs.Populate(ii);
+            dlgCatchCoeffs.ShowDialog();
+        }
+            
+        else //System coefficients
+        {
+            dlgSystemCoeffs.Populate();
+            dlgSystemCoeffs.ShowDialog();
+        }
 
             
 		}

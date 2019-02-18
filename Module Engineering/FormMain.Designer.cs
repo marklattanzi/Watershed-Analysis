@@ -114,6 +114,7 @@
             this.frmMap.ZoomToSelectedExtentWhenCtrlKeydown = false;
             this.frmMap.Load += new System.EventHandler(this.frmMap_Load);
             this.frmMap.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.frmMap_MouseDoubleClick);
+            this.frmMap.MapDoubleClick += new System.EventHandler<EGIS.Controls.SFMap.MapDoubleClickedEventArgs>(this.frmMap_MapDoubleClick);
             // 
             // mnuMain
             // 

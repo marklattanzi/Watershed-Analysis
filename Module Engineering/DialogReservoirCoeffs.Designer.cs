@@ -31,6 +31,9 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
@@ -47,6 +50,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tpStageFlow = new System.Windows.Forms.TabPage();
+            this.chartStageFlow = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.label6 = new System.Windows.Forms.Label();
+            this.dgvStageFlow = new System.Windows.Forms.DataGridView();
             this.tpReactions = new System.Windows.Forms.TabPage();
             this.tpPhytoplankton = new System.Windows.Forms.TabPage();
             this.tpHeatLight = new System.Windows.Forms.TabPage();
@@ -60,14 +66,17 @@
             this.tpStageArea = new System.Windows.Forms.TabPage();
             this.tpInOutFlow = new System.Windows.Forms.TabPage();
             this.tpMet = new System.Windows.Forms.TabPage();
+            this.chartStageArea = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.label7 = new System.Windows.Forms.Label();
             this.dgvStageArea = new System.Windows.Forms.DataGridView();
-            this.label6 = new System.Windows.Forms.Label();
-            this.chartStageFlow = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tcReservoirTabs.SuspendLayout();
             this.tpPhysicalData.SuspendLayout();
             this.tpStageFlow.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvStageArea)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartStageFlow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStageFlow)).BeginInit();
+            this.tpStageArea.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartStageArea)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStageArea)).BeginInit();
             this.SuspendLayout();
             // 
             // btnHelp
@@ -233,7 +242,7 @@
             // 
             this.tpStageFlow.Controls.Add(this.chartStageFlow);
             this.tpStageFlow.Controls.Add(this.label6);
-            this.tpStageFlow.Controls.Add(this.dgvStageArea);
+            this.tpStageFlow.Controls.Add(this.dgvStageFlow);
             this.tpStageFlow.Location = new System.Drawing.Point(4, 46);
             this.tpStageFlow.Name = "tpStageFlow";
             this.tpStageFlow.Padding = new System.Windows.Forms.Padding(3);
@@ -241,6 +250,40 @@
             this.tpStageFlow.TabIndex = 1;
             this.tpStageFlow.Text = "Stage-Flow";
             this.tpStageFlow.UseVisualStyleBackColor = true;
+            // 
+            // chartStageFlow
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chartStageFlow.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartStageFlow.Legends.Add(legend1);
+            this.chartStageFlow.Location = new System.Drawing.Point(299, 81);
+            this.chartStageFlow.Name = "chartStageFlow";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chartStageFlow.Series.Add(series1);
+            this.chartStageFlow.Size = new System.Drawing.Size(327, 307);
+            this.chartStageFlow.TabIndex = 2;
+            this.chartStageFlow.Text = "chart1";
+            // 
+            // label6
+            // 
+            this.label6.Location = new System.Drawing.Point(136, 79);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(138, 53);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Enter up to nine (9) pairs of stage-flow data below.";
+            // 
+            // dgvStageFlow
+            // 
+            this.dgvStageFlow.AllowUserToAddRows = false;
+            this.dgvStageFlow.AllowUserToDeleteRows = false;
+            this.dgvStageFlow.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvStageFlow.Location = new System.Drawing.Point(138, 135);
+            this.dgvStageFlow.Name = "dgvStageFlow";
+            this.dgvStageFlow.Size = new System.Drawing.Size(136, 254);
+            this.dgvStageFlow.TabIndex = 0;
             // 
             // tpReactions
             // 
@@ -334,6 +377,9 @@
             // 
             // tpStageArea
             // 
+            this.tpStageArea.Controls.Add(this.chartStageArea);
+            this.tpStageArea.Controls.Add(this.label7);
+            this.tpStageArea.Controls.Add(this.dgvStageArea);
             this.tpStageArea.Location = new System.Drawing.Point(4, 46);
             this.tpStageArea.Name = "tpStageArea";
             this.tpStageArea.Size = new System.Drawing.Size(712, 425);
@@ -359,39 +405,39 @@
             this.tpMet.Text = "Meteorology";
             this.tpMet.UseVisualStyleBackColor = true;
             // 
+            // chartStageArea
+            // 
+            chartArea2.Name = "ChartArea1";
+            this.chartStageArea.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chartStageArea.Legends.Add(legend2);
+            this.chartStageArea.Location = new System.Drawing.Point(274, 59);
+            this.chartStageArea.Name = "chartStageArea";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chartStageArea.Series.Add(series2);
+            this.chartStageArea.Size = new System.Drawing.Size(327, 307);
+            this.chartStageArea.TabIndex = 5;
+            this.chartStageArea.Text = "chart1";
+            // 
+            // label7
+            // 
+            this.label7.Location = new System.Drawing.Point(111, 57);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(138, 53);
+            this.label7.TabIndex = 4;
+            this.label7.Text = "Enter up to nine (9) pairs of stage-area data below.";
+            // 
             // dgvStageArea
             // 
             this.dgvStageArea.AllowUserToAddRows = false;
             this.dgvStageArea.AllowUserToDeleteRows = false;
             this.dgvStageArea.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvStageArea.Location = new System.Drawing.Point(138, 135);
+            this.dgvStageArea.Location = new System.Drawing.Point(113, 113);
             this.dgvStageArea.Name = "dgvStageArea";
             this.dgvStageArea.Size = new System.Drawing.Size(136, 254);
-            this.dgvStageArea.TabIndex = 0;
-            // 
-            // label6
-            // 
-            this.label6.Location = new System.Drawing.Point(136, 79);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(138, 53);
-            this.label6.TabIndex = 1;
-            this.label6.Text = "Enter up to nine (9) pairs of stage-flow data below.";
-            // 
-            // chartStageFlow
-            // 
-            chartArea1.Name = "ChartArea1";
-            this.chartStageFlow.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartStageFlow.Legends.Add(legend1);
-            this.chartStageFlow.Location = new System.Drawing.Point(299, 81);
-            this.chartStageFlow.Name = "chartStageFlow";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chartStageFlow.Series.Add(series1);
-            this.chartStageFlow.Size = new System.Drawing.Size(327, 307);
-            this.chartStageFlow.TabIndex = 2;
-            this.chartStageFlow.Text = "chart1";
+            this.dgvStageArea.TabIndex = 3;
             // 
             // DialogReservoirCoeffs
             // 
@@ -408,8 +454,11 @@
             this.tpPhysicalData.ResumeLayout(false);
             this.tpPhysicalData.PerformLayout();
             this.tpStageFlow.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvStageArea)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartStageFlow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStageFlow)).EndInit();
+            this.tpStageArea.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chartStageArea)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStageArea)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -446,7 +495,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.DataGridView dgvStageArea;
+        private System.Windows.Forms.DataGridView dgvStageFlow;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartStageFlow;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartStageArea;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.DataGridView dgvStageArea;
     }
 }
