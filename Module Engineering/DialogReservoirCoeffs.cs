@@ -80,7 +80,7 @@ namespace warmf
             tbSedThickness.Text = reservoirSeg.sedBottomThickness.ToString();
             tbSedDiffRate.Text = reservoirSeg.sedDiffusion.ToString();
             //Initial Concentrations
-            string strWaterUnits, strBedUnits;
+            string strWaterUnits, strShortUnits;
             dgvInitialConc.Columns.Add("water", "Water");
             dgvInitialConc.Columns.Add("waterunits", "Units");
             dgvInitialConc.Columns.Add("bed", "Bed");
@@ -93,25 +93,64 @@ namespace warmf
                 strWaterUnits = Global.coe.chemConstits[i].units;
                 dgvInitialConc.Rows[i].Cells["waterunits"].Value = strWaterUnits;
                 dgvInitialConc.Rows[i].Cells["bed"].Value = reservoirSeg.chemConBedSediment[i].ToString();
-                //need to finish this - convert water units to bed units - maybe through separate function?
-                dgvInitialConc.Rows[i].Cells["bedunits"].Value = "";
+                strShortUnits = strWaterUnits.Substring(0, 4);
+                if (String.Equals(strShortUnits, "mg/L", StringComparison.OrdinalIgnoreCase))
+                {
+                    dgvInitialConc.Rows[i].Cells["bedunits"].Value = strWaterUnits.Replace(strWaterUnits.Substring(0, 4), "mg/g");
+                }
+                else if (String.Equals(strShortUnits, "ug/L", StringComparison.OrdinalIgnoreCase))
+                {
+                    dgvInitialConc.Rows[i].Cells["bedunits"].Value = strWaterUnits.Replace(strWaterUnits.Substring(0, 4), "ug/g");
+                }
+                else
+                {
+                    dgvInitialConc.Rows[i].Cells["bedunits"].Value = strWaterUnits;
+                }
             }
+            int iRow = 0;
             for (int i = 0; i < Global.coe.numPhysicalParams; i++)
             {
+                iRow = i + Global.coe.numChemicalParams;
                 dgvInitialConc.Rows.Add();
-                dgvInitialConc.Rows[i + Global.coe.numChemicalParams].HeaderCell.Value = Global.coe.physicalConstits[i].fullName;
-                dgvInitialConc.Rows[i + Global.coe.numChemicalParams].Cells["water"].Value = reservoirSeg.chemConcentrations[i + Global.coe.numChemicalParams].ToString();
-                dgvInitialConc.Rows[i + Global.coe.numChemicalParams].Cells["waterunits"].Value = Global.coe.physicalConstits[i].units.ToString();
-                dgvInitialConc.Rows[i + Global.coe.numChemicalParams].Cells["bed"].Value = reservoirSeg.chemConBedSediment[i + Global.coe.numChemicalParams].ToString();
-                dgvInitialConc.Rows[i + Global.coe.numChemicalParams].Cells["bedunits"].Value = "";
+                dgvInitialConc.Rows[iRow].HeaderCell.Value = Global.coe.physicalConstits[i].fullName;
+                dgvInitialConc.Rows[iRow].Cells["water"].Value = reservoirSeg.chemConcentrations[i + Global.coe.numChemicalParams].ToString();
+                strWaterUnits = Global.coe.physicalConstits[i].units;
+                dgvInitialConc.Rows[iRow].Cells["waterunits"].Value = strWaterUnits;
+                dgvInitialConc.Rows[iRow].Cells["bed"].Value = reservoirSeg.chemConBedSediment[i + Global.coe.numChemicalParams].ToString();
+                strShortUnits = strWaterUnits.Substring(0, 4);
+                if (String.Equals(strShortUnits, "mg/L", StringComparison.OrdinalIgnoreCase))
+                {
+                    dgvInitialConc.Rows[iRow].Cells["bedunits"].Value = strWaterUnits.Replace(strWaterUnits.Substring(0, 4), "mg/g");
+                }    
+                else if (String.Equals(strShortUnits, "ug/L", StringComparison.OrdinalIgnoreCase))
+                {
+                    dgvInitialConc.Rows[iRow].Cells["bedunits"].Value = strWaterUnits.Replace(strWaterUnits.Substring(0, 4), "ug/g");
+                }
+                else
+                {
+                    dgvInitialConc.Rows[iRow].Cells["bedunits"].Value = strWaterUnits;
+                }
             }
+            List<int> hideRowsList = new List<int>() { 1, 2, 3, 14, 17, 21, 23, 24, 33, 38 };
+            foreach (int i in hideRowsList)
+                dgvInitialConc.Rows[i-1].Visible = false;
             FormatDataGridView(dgvInitialConc);
             //Point Sources
 
             //Adsorption
-
+            dgvAdsorption.Columns.Add("water", "Water");
+            dgvAdsorption.Columns.Add("bed", "Bed");
+            for (int i = 0; i < Global.coe.numChemicalParams; i++)
+            {
+                dgvAdsorption.Rows.Add();
+                dgvAdsorption.Rows[i].HeaderCell.Value = Global.coe.chemConstits[i].fullName;
+                dgvAdsorption.Rows[i].Cells["water"].Value = reservoir.waterAdsorpIsotherm[i].ToString();
+                dgvAdsorption.Rows[i].Cells["bed"].Value = reservoir.bedAdsorpIsotherm[i].ToString();
+            }
+            FormatDataGridView(dgvAdsorption);
             //Observed Data
-
+            tbObsWQFile.Text = reservoirSeg.obsWQFilename;
+            tbObsHydroFile.Text = reservoir.hydrologyFilename;
             //Stage-Area
             dgvStageArea.Columns.Add("Stage", "Stage (m)");
             //dgvStageArea.Columns["stage"].ValueType = ;
@@ -124,8 +163,6 @@ namespace warmf
                     reservoir.bathymetry[ii].area.ToString());
             }
             dgvStageArea.RowHeadersVisible = false;
-            FormatDataGridView(dgvStageArea);
-
             double dblX, dblY;
             chartStageArea.Series.Clear();
             chartStageArea.Series.Add("Area");
@@ -140,7 +177,7 @@ namespace warmf
                 dblY = Convert.ToDouble(dgvStageArea.Rows[i].Cells["Area"].Value);
                 chartStageArea.Series["Area"].Points.AddXY(dblX, dblY);           
             }
-            
+            FormatDataGridView(dgvStageArea);
             //Physical Data
             tbName.Text = reservoirSeg.name.ToString();
             tbResSegID.Text = reservoirSeg.idNum.ToString();
@@ -174,22 +211,6 @@ namespace warmf
             dgv.ReadOnly = false;
             dgv.Visible = true;
         }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void chart1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
         private void btnUpdateChart_Click(object sender, EventArgs e)
         {
             double dblX, dblY;
@@ -200,22 +221,33 @@ namespace warmf
                 dblY = Convert.ToDouble(dgvStageArea.Rows[i].Cells["Area"].Value);
                 chartStageArea.Series["Area"].Points.AddXY(dblX, dblY);
             }
-
+        }
+        private void btnSelectHydroFile_Click(object sender, EventArgs e)
+        {
+            OpenObsHydroFileDialog.InitialDirectory = "C:/Systech/WARMF_GUI/Watershed-Analysis/" + Global.DATA_DIR + "olh/";
+            if (OpenObsHydroFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                tbObsHydroFile.Text = OpenObsHydroFileDialog.FileName;
+            }
         }
 
-        private void tbResSegID_TextChanged(object sender, EventArgs e)
+        private void btnSelectWQfile_Click(object sender, EventArgs e)
         {
-
+            OpenObsWQfileDialog.InitialDirectory = "C:/Systech/WARMF_GUI/Watershed-Analysis/" + Global.DATA_DIR + "olc/";
+            if (OpenObsWQfileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                tbObsWQFile.Text = OpenObsWQfileDialog.FileName;
+            }
         }
 
-        private void label13_Click(object sender, EventArgs e)
+        private void btnClearHydroFile_Click(object sender, EventArgs e)
         {
-
+            tbObsHydroFile.Text = "";
         }
 
-        private void tpInitTemp_Click(object sender, EventArgs e)
+        private void btnClearWQfile_Click(object sender, EventArgs e)
         {
-
+            tbObsWQFile.Text = "";
         }
     }
 }

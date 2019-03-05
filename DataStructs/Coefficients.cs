@@ -1573,7 +1573,10 @@ namespace warmf {
 						reservoir.bathymetry.Add(sa);
 					}
 
-					reservoir.swAdjustResRelease = !ReadString(sr, "OBSDATA").Contains("0");
+                    line = sr.ReadLine();
+                    reservoir.swAdjustResRelease = !line.Substring(8, 8).Contains("0");
+                    reservoir.hydrologyFilename = line.Substring(16);
+                    //reservoir.swAdjustResRelease = !ReadString(sr, "OBSDATA").Contains("0");
 					reservoir.waterReactionRate = ReadDoubleData(sr, "REAC-H2O", numReactions);
 					reservoir.bedReactionRate = ReadDoubleData(sr, "REAC-BED", numReactions);
 					reservoir.waterAdsorpIsotherm = ReadDoubleData(sr, "ADSISO", numComponents);
