@@ -781,14 +781,13 @@
     <None Include="Resources\splash.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="data\logs\To-Do List.txt" />
     <Content Include="data\shp\Catchments.shp.xml" />
     <Content Include="data\shp\Lakes.shp.xml" />
     <Content Include="data\shp\Rivers.shp.xml" />
     <Content Include="DLLs\EGIS.Controls.dll" />
     <Content Include="DLLs\EGIS.ShapeFileLib.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="data\logs\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

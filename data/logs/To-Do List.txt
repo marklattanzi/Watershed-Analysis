@@ -1,0 +1,4 @@
+﻿1. add functionality to the stage-flow and stage-area tabs of the reservoir coefficients dialog
+	to insure that if the data are not ordered correctly, the data are sorted in the datagridview prior to saving
+
+2. 
