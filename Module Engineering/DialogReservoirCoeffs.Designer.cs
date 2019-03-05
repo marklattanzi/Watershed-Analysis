@@ -884,7 +884,7 @@
             this.btnClearWQfile.TabIndex = 2;
             this.btnClearWQfile.Text = "Clear";
             this.btnClearWQfile.UseVisualStyleBackColor = true;
-            this.btnClearWQfile.Click += new System.EventHandler(this.btnClearWQfile_Click);
+            this.btnClearWQfile.Click += new System.EventHandler(this.BtnClearWQfile_Click);
             // 
             // btnSelectWQfile
             // 
@@ -894,7 +894,7 @@
             this.btnSelectWQfile.TabIndex = 1;
             this.btnSelectWQfile.Text = "Select";
             this.btnSelectWQfile.UseVisualStyleBackColor = true;
-            this.btnSelectWQfile.Click += new System.EventHandler(this.btnSelectWQfile_Click);
+            this.btnSelectWQfile.Click += new System.EventHandler(this.BtnSelectWQfile_Click);
             // 
             // tbObsWQFile
             // 
@@ -924,7 +924,7 @@
             this.btnClearHydroFile.TabIndex = 2;
             this.btnClearHydroFile.Text = "Clear";
             this.btnClearHydroFile.UseVisualStyleBackColor = true;
-            this.btnClearHydroFile.Click += new System.EventHandler(this.btnClearHydroFile_Click);
+            this.btnClearHydroFile.Click += new System.EventHandler(this.BtnClearHydroFile_Click);
             // 
             // btnSelectHydroFile
             // 
@@ -934,7 +934,7 @@
             this.btnSelectHydroFile.TabIndex = 1;
             this.btnSelectHydroFile.Text = "Select";
             this.btnSelectHydroFile.UseVisualStyleBackColor = true;
-            this.btnSelectHydroFile.Click += new System.EventHandler(this.btnSelectHydroFile_Click);
+            this.btnSelectHydroFile.Click += new System.EventHandler(this.BtnSelectHydroFile_Click);
             // 
             // tbObsHydroFile
             // 
@@ -965,7 +965,7 @@
             this.btnUpdateChart.TabIndex = 6;
             this.btnUpdateChart.Text = "Update Chart";
             this.btnUpdateChart.UseVisualStyleBackColor = true;
-            this.btnUpdateChart.Click += new System.EventHandler(this.btnUpdateChart_Click);
+            this.btnUpdateChart.Click += new System.EventHandler(this.BtnUpdateChart_Click);
             // 
             // chartStageArea
             // 

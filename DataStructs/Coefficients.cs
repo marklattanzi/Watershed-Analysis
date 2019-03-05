@@ -692,7 +692,7 @@ namespace warmf {
 							jj++;
 						}
 					}
-					catch (Exception e) {
+					catch {
 						Debug.WriteLine("MISSING INTEGERS\nExpected " + num + " numbers on line " + sr.LineNum + "\nLine = |" + line + "|");
 					}
 
@@ -732,7 +732,7 @@ namespace warmf {
 							data.Add(Double.TryParse(line.Substring(8 * (jj + 1), 8), out dblRes) ? dblRes : 0);
 							jj++;
 						}
-					} catch (Exception e) {
+					} catch {
 						Debug.WriteLine("MISSING DOUBLES\nExpected "+num+" numbers on line " + sr.LineNum+"\nLine = |"+line+"|");
 					}
 				}
@@ -751,7 +751,7 @@ namespace warmf {
                 if (TestLine(line, sr.LineNum, lineAbbrev)) {
 					try {
 						return line.Substring(8);
-					} catch (Exception e) {
+					} catch {
 						// no string found on line,
 						Debug.WriteLine("MISSING STRING\nExpected a string on line " + sr.LineNum + "\nLine = |" + line + "|");
 						return "";

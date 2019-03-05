@@ -211,7 +211,7 @@ namespace warmf
             dgv.ReadOnly = false;
             dgv.Visible = true;
         }
-        private void btnUpdateChart_Click(object sender, EventArgs e)
+        private void BtnUpdateChart_Click(object sender, EventArgs e)
         {
             double dblX, dblY;
             chartStageArea.Series[0].Points.Clear();
@@ -222,30 +222,32 @@ namespace warmf
                 chartStageArea.Series["Area"].Points.AddXY(dblX, dblY);
             }
         }
-        private void btnSelectHydroFile_Click(object sender, EventArgs e)
+        private void BtnSelectHydroFile_Click(object sender, EventArgs e)
         {
-            OpenObsHydroFileDialog.InitialDirectory = "C:/Systech/WARMF_GUI/Watershed-Analysis/" + Global.DATA_DIR + "olh/";
+            OpenObsHydroFileDialog.InitialDirectory =
+                System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DATA_DIR, "olh\\");
             if (OpenObsHydroFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 tbObsHydroFile.Text = OpenObsHydroFileDialog.FileName;
             }
         }
 
-        private void btnSelectWQfile_Click(object sender, EventArgs e)
+        private void BtnSelectWQfile_Click(object sender, EventArgs e)
         {
-            OpenObsWQfileDialog.InitialDirectory = "C:/Systech/WARMF_GUI/Watershed-Analysis/" + Global.DATA_DIR + "olc/";
+            OpenObsWQfileDialog.InitialDirectory =
+                System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DATA_DIR, "olc\\");
             if (OpenObsWQfileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 tbObsWQFile.Text = OpenObsWQfileDialog.FileName;
             }
         }
 
-        private void btnClearHydroFile_Click(object sender, EventArgs e)
+        private void BtnClearHydroFile_Click(object sender, EventArgs e)
         {
             tbObsHydroFile.Text = "";
         }
 
-        private void btnClearWQfile_Click(object sender, EventArgs e)
+        private void BtnClearWQfile_Click(object sender, EventArgs e)
         {
             tbObsWQFile.Text = "";
         }
