@@ -388,7 +388,7 @@ namespace warmf
             tbLitterDecay.Text = Global.coe.litter.coarseLitterDecay.ToString();
             tbFineLitterDecay.Text = Global.coe.litter.fineLitterDecay.ToString();
             tbHumusDecay.Text = Global.coe.litter.humusDecay.ToString();
-            tbLitterLeachFract.Text = Global.coe.litter.courseLitterFrac.ToString();
+            tbLitterLeachFract.Text = Global.coe.litter.coarseLitterFrac.ToString();
             tbFineLitterLeachFract.Text = Global.coe.litter.fineLitterFrac.ToString();
             tbHumusLeachFract.Text = Global.coe.litter.humusFrac.ToString();
             tbNonstructLeachFract.Text = Global.coe.litter.nonStructLeach.ToString();

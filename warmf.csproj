@@ -788,6 +788,8 @@
     <Content Include="DLLs\EGIS.Controls.dll" />
     <Content Include="DLLs\EGIS.ShapeFileLib.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="data\cpa\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

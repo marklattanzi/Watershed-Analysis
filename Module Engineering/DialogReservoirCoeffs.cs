@@ -195,6 +195,12 @@ namespace warmf
             //Inflow/Outflow
 
             //Meteorology
+            tbMetFile.Text = Global.coe.METFilename[reservoir.METFilenum];
+            tbPrecipWeight.Text = reservoirSeg.precipWgtMult.ToString();
+            tbTempLapse.Text = reservoirSeg.tempLapse.ToString();
+            tbWindSpeedFactor.Text = reservoirSeg.windSpeedMult.ToString();
+            tbAirRainChemFile.Text = Global.coe.AIRFilename[reservoir.airRainChemFilenum];
+            //tbCoarseParticleChemFile --> I can't figure this one out - need to ask Joel about CPA files
         }
 
         public void FormatDataGridView(DataGridView dgv)
@@ -224,21 +230,27 @@ namespace warmf
         }
         private void BtnSelectHydroFile_Click(object sender, EventArgs e)
         {
-            OpenObsHydroFileDialog.InitialDirectory =
+            ReservoirOpenFileDialog.InitialDirectory =
                 System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DATA_DIR, "olh\\");
-            if (OpenObsHydroFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            ReservoirOpenFileDialog.Title = "Select Observed Lake Hydrology File";
+            ReservoirOpenFileDialog.Filter = "Observed Lake Hydrology Files | *.OLH";
+
+            if (ReservoirOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                tbObsHydroFile.Text = OpenObsHydroFileDialog.FileName;
+                tbObsHydroFile.Text = ReservoirOpenFileDialog.FileName;
             }
         }
 
         private void BtnSelectWQfile_Click(object sender, EventArgs e)
         {
-            OpenObsWQfileDialog.InitialDirectory =
+            ReservoirOpenFileDialog.InitialDirectory =
                 System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DATA_DIR, "olc\\");
-            if (OpenObsWQfileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            ReservoirOpenFileDialog.Title = "Select Observed Lake Chemistry File";
+            ReservoirOpenFileDialog.Filter = "Observed Lake Chemistry Files | *.OLC";
+
+            if (ReservoirOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                tbObsWQFile.Text = OpenObsWQfileDialog.FileName;
+                tbObsWQFile.Text = ReservoirOpenFileDialog.FileName;
             }
         }
 
@@ -250,6 +262,45 @@ namespace warmf
         private void BtnClearWQfile_Click(object sender, EventArgs e)
         {
             tbObsWQFile.Text = "";
+        }
+
+        private void BtnSelectMetFile_Click(object sender, EventArgs e)
+        {
+            ReservoirOpenFileDialog.InitialDirectory =
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DATA_DIR, "met\\");
+            ReservoirOpenFileDialog.Title = "Select Meteorology File";
+            ReservoirOpenFileDialog.Filter = "Meteorology Files | *.MET";
+
+            if (ReservoirOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                tbMetFile.Text = ReservoirOpenFileDialog.FileName;
+            }
+        }
+
+        private void BtnSelectRainChemFile_Click(object sender, EventArgs e)
+        {
+            ReservoirOpenFileDialog.InitialDirectory =
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DATA_DIR, "air\\");
+            ReservoirOpenFileDialog.Title = "Select Air and Rain Chemistry File";
+            ReservoirOpenFileDialog.Filter = "Air and Rain Chemistry Files | *.AIR";
+
+            if (ReservoirOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                tbAirRainChemFile.Text = ReservoirOpenFileDialog.FileName;
+            }
+        }
+
+        private void btnSelectCoarseParticleFile_Click(object sender, EventArgs e)
+        {
+            ReservoirOpenFileDialog.InitialDirectory =
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DATA_DIR, "cpa\\");
+            ReservoirOpenFileDialog.Title = "Select Coarse Particle Air Chemistry File";
+            ReservoirOpenFileDialog.Filter = "Coarse Particle Air Chemistry Files | *.CPA";
+
+            if (ReservoirOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                tbAirRainChemFile.Text = ReservoirOpenFileDialog.FileName;
+            }
         }
     }
 }

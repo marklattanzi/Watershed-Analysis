@@ -153,7 +153,7 @@ namespace warmf {
     }
 
     public struct Litter {
-        public double courseLitterFrac;
+        public double coarseLitterFrac;
         public double fineLitterFrac;
         public double humusFrac;
         public double nonStructLeach;
@@ -501,7 +501,7 @@ namespace warmf {
         public int METFilenum;
         public double elevation;
         public int airRainChemFilenum;
-        public int courseAirRainChemFilenum;
+        public int coarseAirPartFilenum;
         public string releaseFlowFilename;
 
         public List<StageFlow> spillway;
@@ -623,7 +623,7 @@ namespace warmf {
 
         // land use data
         public List<double> partDV;     // one per month
-        public List<double> courseDV;   // one per month
+        public List<double> coarseDV;   // one per month
         public bool swGasDepositVelocity;
         //public List<double> gasDepositVelocity; // one per month  --unused MRL
         public List<double> gasUptakeVelocity;  // one per month
@@ -1140,7 +1140,7 @@ namespace warmf {
 				line = ReadSpacerLine(sr, "LITTER & HUMUS");
                 litter = new Litter();
                 dnums = ReadDoubleData(sr, "FRLCH", 4);
-                litter.courseLitterFrac = dnums[0];
+                litter.coarseLitterFrac = dnums[0];
                 litter.fineLitterFrac = dnums[1];
                 litter.humusFrac = dnums[2];
                 litter.nonStructLeach = dnums[3];
@@ -1180,7 +1180,7 @@ namespace warmf {
 				line = ReadSpacerLine(sr, "CANOPY AND LAND USE");
                 // general land use params
                 partDV = ReadMonthlyDoubleData(sr, "PARTDV");
-                courseDV = ReadMonthlyDoubleData(sr, "COARSEDV");
+                coarseDV = ReadMonthlyDoubleData(sr, "COARSEDV");
                 swGasDepositVelocity = ReadOnOffSwitch(sr, "IVDGAS");
 //                gasDepositVelocity = readMonthlyDoubleData(sr, "NOXSOXVD");  // missing from Catawba file - MRL
                 gasUptakeVelocity = ReadMonthlyDoubleData(sr, "NOXSOXVU");
@@ -1552,7 +1552,7 @@ namespace warmf {
 					reservoir.METFilenum = Int32.TryParse(line.Substring(24, 8), out intRes) ? intRes : 0;
 					reservoir.elevation = Double.TryParse(line.Substring(32, 8), out dblRes) ? dblRes : 0;
 					reservoir.airRainChemFilenum = Int32.TryParse(line.Substring(40, 8), out intRes) ? intRes : 0;
-					reservoir.courseAirRainChemFilenum = Int32.TryParse(line.Substring(48, 8), out intRes) ? intRes : 0;
+					reservoir.coarseAirPartFilenum = Int32.TryParse(line.Substring(48, 8), out intRes) ? intRes : 0;
 					reservoir.releaseFlowFilename = line.Substring(56);
 
 					dnums = ReadDoubleData(sr, "STGFLO", 18);
