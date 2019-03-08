@@ -12,7 +12,10 @@ namespace warmf
 {
     public partial class DialogReservoirCoeffs : Form
     {
+        
         FormMain parent;
+        private List<PTSFile> pointSourceFiles;
+
         public DialogReservoirCoeffs(FormMain par)
         {
             InitializeComponent();
@@ -23,7 +26,7 @@ namespace warmf
         {
             ReservoirSeg reservoirSeg = Global.coe.reservoirs[iRes].reservoirSegs[iSeg];
             Reservoir reservoir = Global.coe.reservoirs[iRes];
-
+            
             Text = "Reservoir Segment " + Global.coe.reservoirs[iRes].reservoirSegs[iSeg].idNum + " Coefficients";
 
             //Stage-Flow
@@ -136,7 +139,46 @@ namespace warmf
                 dgvInitialConc.Rows[i-1].Visible = false;
             FormatDataGridView(dgvInitialConc);
             //Point Sources
-
+            if (reservoirSeg.numPointSrcs > 0)
+            {
+                pointSourceFiles = new List<PTSFile>();
+                for (int i = 0; i < reservoirSeg.numPointSrcs; i++)
+                {
+                    lbPointSources.Items.Add(Global.coe.PTSFilename[reservoirSeg.pointSrcFilenums[i] - 1]);
+                    PTSFile ptFile = new PTSFile(Global.coe.PTSFilename[reservoirSeg.pointSrcFilenums[0] - 1]);
+                    pointSourceFiles.Add(ptFile);
+                }
+                lbPointSources.SelectedIndex = 0;
+                PTSFile pFile = pointSourceFiles[lbPointSources.SelectedIndex];
+                pFile.ReadHeader();
+                if (pFile.swInternal == true)
+                {
+                    rbInternal.Checked = true;
+                    rbExternal.Checked = false;
+                    rbZero.Checked = false;
+                    rbZero.Enabled = false;
+                    rbAmbient.Checked = true;
+                    tbOutletElev.Text = pFile.outElevation.ToString();
+                    tbOutletWidth.Text = pFile.outWidth.ToString();
+                }
+                else
+                {
+                    rbInternal.Checked = false;
+                    rbExternal.Checked = true;
+                    rbZero.Checked = true;
+                    rbAmbient.Checked = false;
+                    rbAmbient.Enabled = false;
+                    tbOutletElev.Text = "";
+                    tbOutletElev.Enabled = false;
+                    tbOutletWidth.Text = "";
+                    tbOutletWidth.Enabled = false;
+                }
+                tbNPDESpermit.Text = pFile.npdesPermit;
+                
+            }
+            
+            
+           
             //Adsorption
             dgvAdsorption.Columns.Add("water", "Water");
             dgvAdsorption.Columns.Add("bed", "Bed");
@@ -195,12 +237,13 @@ namespace warmf
             //Inflow/Outflow
 
             //Meteorology
-            tbMetFile.Text = Global.coe.METFilename[reservoir.METFilenum];
+            tbMetFile.Text = Global.coe.METFilename[reservoir.METFilenum - 1];
             tbPrecipWeight.Text = reservoirSeg.precipWgtMult.ToString();
             tbTempLapse.Text = reservoirSeg.tempLapse.ToString();
             tbWindSpeedFactor.Text = reservoirSeg.windSpeedMult.ToString();
-            tbAirRainChemFile.Text = Global.coe.AIRFilename[reservoir.airRainChemFilenum];
-            //tbCoarseParticleChemFile --> I can't figure this one out - need to ask Joel about CPA files
+            tbAirRainChemFile.Text = Global.coe.AIRFilename[reservoir.airRainChemFilenum - 1];
+            //tbCoarseParticleChemFile --> I can't figure this one out - need to ask Joel about CPA files, since we've never used
+            //this functionality in any of the projects I've worked on.
         }
 
         public void FormatDataGridView(DataGridView dgv)
@@ -230,8 +273,8 @@ namespace warmf
         }
         private void BtnSelectHydroFile_Click(object sender, EventArgs e)
         {
-            ReservoirOpenFileDialog.InitialDirectory =
-                System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DATA_DIR, "olh\\");
+            ReservoirOpenFileDialog.InitialDirectory = Global.DIR.OLH;
+                //System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR_DATA, "olh\\");
             ReservoirOpenFileDialog.Title = "Select Observed Lake Hydrology File";
             ReservoirOpenFileDialog.Filter = "Observed Lake Hydrology Files | *.OLH";
 
@@ -244,7 +287,7 @@ namespace warmf
         private void BtnSelectWQfile_Click(object sender, EventArgs e)
         {
             ReservoirOpenFileDialog.InitialDirectory =
-                System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DATA_DIR, "olc\\");
+                System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.DATA, "olc\\");
             ReservoirOpenFileDialog.Title = "Select Observed Lake Chemistry File";
             ReservoirOpenFileDialog.Filter = "Observed Lake Chemistry Files | *.OLC";
 
@@ -267,7 +310,7 @@ namespace warmf
         private void BtnSelectMetFile_Click(object sender, EventArgs e)
         {
             ReservoirOpenFileDialog.InitialDirectory =
-               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DATA_DIR, "met\\");
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.DATA, "met\\");
             ReservoirOpenFileDialog.Title = "Select Meteorology File";
             ReservoirOpenFileDialog.Filter = "Meteorology Files | *.MET";
 
@@ -280,7 +323,7 @@ namespace warmf
         private void BtnSelectRainChemFile_Click(object sender, EventArgs e)
         {
             ReservoirOpenFileDialog.InitialDirectory =
-               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DATA_DIR, "air\\");
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.DATA, "air\\");
             ReservoirOpenFileDialog.Title = "Select Air and Rain Chemistry File";
             ReservoirOpenFileDialog.Filter = "Air and Rain Chemistry Files | *.AIR";
 
@@ -293,7 +336,7 @@ namespace warmf
         private void btnSelectCoarseParticleFile_Click(object sender, EventArgs e)
         {
             ReservoirOpenFileDialog.InitialDirectory =
-               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DATA_DIR, "cpa\\");
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.DATA, "cpa\\");
             ReservoirOpenFileDialog.Title = "Select Coarse Particle Air Chemistry File";
             ReservoirOpenFileDialog.Filter = "Coarse Particle Air Chemistry Files | *.CPA";
 
@@ -301,6 +344,24 @@ namespace warmf
             {
                 tbAirRainChemFile.Text = ReservoirOpenFileDialog.FileName;
             }
+        }
+
+        private void BtnAddPtSource_Click(object sender, EventArgs e)
+        {
+            ReservoirOpenFileDialog.InitialDirectory =
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.DATA, "pts\\");
+            ReservoirOpenFileDialog.Title = "Select Point Source File";
+            ReservoirOpenFileDialog.Filter = "Point Source Files | *.PTS";
+
+            if (ReservoirOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                lbPointSources.Items.Add(ReservoirOpenFileDialog.FileName);
+            }
+        }
+
+        private void BtnRemovePointSource_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

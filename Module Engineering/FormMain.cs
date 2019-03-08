@@ -25,8 +25,8 @@ namespace warmf {
 
 		public FormMain() {
 			InitializeComponent();
-
-			Logger.useTime = true;
+            
+            Logger.useTime = true;
 			Logger.Info("*********************************************************************************");
 			Logger.Info("Logging started");
 			Logger.useTime = false;
@@ -73,7 +73,7 @@ namespace warmf {
 		private void LoadDefault() {
 			try {
                 //Add catchments shapefile (shapefile [0])
-                this.frmMap.AddShapeFile(Global.DATA_DIR + "shp\\Catchments.shp", "ShapeFile", "");
+                this.frmMap.AddShapeFile(Global.DIR.DATA + "shp\\Catchments.shp", "ShapeFile", "");
                 EGIS.ShapeFileLib.ShapeFile catchShapefile = this.frmMap[0];
                 catchShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
                 catchShapefile.RenderSettings.UseToolTip = true;
@@ -82,7 +82,7 @@ namespace warmf {
                 catchShapefile.RenderSettings.FillColor = Color.FromArgb(224,250,207);
                 catchShapefile.RenderSettings.OutlineColor = Color.FromArgb(178, 178, 178);
                 ////Add rivers shapefile (shapefile [1])
-                this.frmMap.AddShapeFile(Global.DATA_DIR + "shp\\Rivers.shp", "ShapeFile", "");
+                this.frmMap.AddShapeFile(Global.DIR.DATA + "shp\\Rivers.shp", "ShapeFile", "");
                 EGIS.ShapeFileLib.ShapeFile riverShapefile = this.frmMap[1];
                 riverShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
                 riverShapefile.RenderSettings.UseToolTip = true;
@@ -91,7 +91,7 @@ namespace warmf {
                 riverShapefile.RenderSettings.LineType = LineType.Solid;
                 riverShapefile.RenderSettings.OutlineColor = Color.FromArgb(0, 0, 255);
                 //add reservoirs shapefile (shapefile [2])
-                this.frmMap.AddShapeFile(Global.DATA_DIR + "shp\\Lakes.shp", "ShapeFile", "");
+                this.frmMap.AddShapeFile(Global.DIR.DATA + "shp\\Lakes.shp", "ShapeFile", "");
                 EGIS.ShapeFileLib.ShapeFile lakeShapefile = this.frmMap[2];
                 lakeShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
                 lakeShapefile.RenderSettings.UseToolTip = true;
@@ -146,9 +146,9 @@ namespace warmf {
 			frmMap.Focus();
 
 			// read in Coefficients file
-			string fname = Global.DATA_DIR+"coe\\Catawba.coe";
-			//string fname = Global.DATA_DIR+"coe/Henn.coe";
-			//string fname = Global.DATA_DIR+"coe/SanJoaquin.coe";
+			string fname = Global.DIR.DATA+"coe\\Catawba.coe";
+			//string fname = Global.DIR_DATA+"coe/Henn.coe";
+			//string fname = Global.DIR_DATA+"coe/SanJoaquin.coe";
 
 			if (!Global.coe.ReadFile(fname)) {
 				MessageBox.Show(this, "Error reading coefficients file.", "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);

@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
@@ -102,6 +102,22 @@
             this.tpInitConc = new System.Windows.Forms.TabPage();
             this.dgvInitialConc = new System.Windows.Forms.DataGridView();
             this.tpPtSrcs = new System.Windows.Forms.TabPage();
+            this.tbNPDESpermit = new System.Windows.Forms.TextBox();
+            this.label34 = new System.Windows.Forms.Label();
+            this.tbOutletWidth = new System.Windows.Forms.TextBox();
+            this.tbOutletElev = new System.Windows.Forms.TextBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.rbAmbient = new System.Windows.Forms.RadioButton();
+            this.rbZero = new System.Windows.Forms.RadioButton();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.rbExternal = new System.Windows.Forms.RadioButton();
+            this.rbInternal = new System.Windows.Forms.RadioButton();
+            this.label31 = new System.Windows.Forms.Label();
+            this.BtnRemovePointSource = new System.Windows.Forms.Button();
+            this.BtnAddPtSource = new System.Windows.Forms.Button();
+            this.lbPointSources = new System.Windows.Forms.ListBox();
             this.tpAdsorption = new System.Windows.Forms.TabPage();
             this.label27 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
@@ -122,22 +138,22 @@
             this.dgvStageArea = new System.Windows.Forms.DataGridView();
             this.tpInOutFlow = new System.Windows.Forms.TabPage();
             this.tpMet = new System.Windows.Forms.TabPage();
-            this.ReservoirOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.tbMetFile = new System.Windows.Forms.TextBox();
-            this.BtnSelectMetFile = new System.Windows.Forms.Button();
-            this.tbAirRainChemFile = new System.Windows.Forms.TextBox();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.BtnSelectRainChemFile = new System.Windows.Forms.Button();
-            this.tbCoarseParticleChemFile = new System.Windows.Forms.TextBox();
+            this.tbTempLapse = new System.Windows.Forms.TextBox();
+            this.tbWindSpeedFactor = new System.Windows.Forms.TextBox();
+            this.tbPrecipWeight = new System.Windows.Forms.TextBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.btnSelectCoarseParticleFile = new System.Windows.Forms.Button();
-            this.label28 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
-            this.tbPrecipWeight = new System.Windows.Forms.TextBox();
-            this.tbWindSpeedFactor = new System.Windows.Forms.TextBox();
-            this.tbTempLapse = new System.Windows.Forms.TextBox();
+            this.tbCoarseParticleChemFile = new System.Windows.Forms.TextBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.BtnSelectRainChemFile = new System.Windows.Forms.Button();
+            this.tbAirRainChemFile = new System.Windows.Forms.TextBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.BtnSelectMetFile = new System.Windows.Forms.Button();
+            this.tbMetFile = new System.Windows.Forms.TextBox();
+            this.ReservoirOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tcReservoirTabs.SuspendLayout();
             this.tpPhysicalData.SuspendLayout();
             this.tpStageFlow.SuspendLayout();
@@ -157,6 +173,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvDepthTemp)).BeginInit();
             this.tpInitConc.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInitialConc)).BeginInit();
+            this.tpPtSrcs.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.tpAdsorption.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAdsorption)).BeginInit();
             this.tpObsData.SuspendLayout();
@@ -166,9 +185,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.chartStageArea)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStageArea)).BeginInit();
             this.tpMet.SuspendLayout();
-            this.groupBox5.SuspendLayout();
-            this.groupBox6.SuspendLayout();
             this.groupBox7.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnHelp
@@ -345,16 +364,16 @@
             // 
             // chartStageFlow
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartStageFlow.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartStageFlow.Legends.Add(legend1);
+            chartArea4.Name = "ChartArea1";
+            this.chartStageFlow.ChartAreas.Add(chartArea4);
+            legend2.Name = "Legend1";
+            this.chartStageFlow.Legends.Add(legend2);
             this.chartStageFlow.Location = new System.Drawing.Point(299, 81);
             this.chartStageFlow.Name = "chartStageFlow";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chartStageFlow.Series.Add(series1);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.chartStageFlow.Series.Add(series4);
             this.chartStageFlow.Size = new System.Drawing.Size(327, 307);
             this.chartStageFlow.TabIndex = 2;
             this.chartStageFlow.Text = "chart1";
@@ -771,15 +790,15 @@
             // 
             // chartDepthTemp
             // 
-            chartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea2.Name = "ChartArea1";
-            this.chartDepthTemp.ChartAreas.Add(chartArea2);
+            chartArea5.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea5.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea5.Name = "ChartArea1";
+            this.chartDepthTemp.ChartAreas.Add(chartArea5);
             this.chartDepthTemp.Location = new System.Drawing.Point(281, 32);
             this.chartDepthTemp.Name = "chartDepthTemp";
-            series2.ChartArea = "ChartArea1";
-            series2.Name = "Series1";
-            this.chartDepthTemp.Series.Add(series2);
+            series5.ChartArea = "ChartArea1";
+            series5.Name = "Series1";
+            this.chartDepthTemp.Series.Add(series5);
             this.chartDepthTemp.Size = new System.Drawing.Size(389, 313);
             this.chartDepthTemp.TabIndex = 9;
             this.chartDepthTemp.Text = "chart1";
@@ -824,12 +843,176 @@
             // 
             // tpPtSrcs
             // 
+            this.tpPtSrcs.Controls.Add(this.tbNPDESpermit);
+            this.tpPtSrcs.Controls.Add(this.label34);
+            this.tpPtSrcs.Controls.Add(this.tbOutletWidth);
+            this.tpPtSrcs.Controls.Add(this.tbOutletElev);
+            this.tpPtSrcs.Controls.Add(this.label33);
+            this.tpPtSrcs.Controls.Add(this.label32);
+            this.tpPtSrcs.Controls.Add(this.groupBox9);
+            this.tpPtSrcs.Controls.Add(this.groupBox8);
+            this.tpPtSrcs.Controls.Add(this.label31);
+            this.tpPtSrcs.Controls.Add(this.BtnRemovePointSource);
+            this.tpPtSrcs.Controls.Add(this.BtnAddPtSource);
+            this.tpPtSrcs.Controls.Add(this.lbPointSources);
             this.tpPtSrcs.Location = new System.Drawing.Point(4, 46);
             this.tpPtSrcs.Name = "tpPtSrcs";
             this.tpPtSrcs.Size = new System.Drawing.Size(712, 425);
             this.tpPtSrcs.TabIndex = 9;
             this.tpPtSrcs.Text = "Point Sources";
             this.tpPtSrcs.UseVisualStyleBackColor = true;
+            // 
+            // tbNPDESpermit
+            // 
+            this.tbNPDESpermit.Location = new System.Drawing.Point(358, 348);
+            this.tbNPDESpermit.Name = "tbNPDESpermit";
+            this.tbNPDESpermit.Size = new System.Drawing.Size(100, 22);
+            this.tbNPDESpermit.TabIndex = 13;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(256, 351);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(96, 16);
+            this.label34.TabIndex = 12;
+            this.label34.Text = "NPDES Permit";
+            // 
+            // tbOutletWidth
+            // 
+            this.tbOutletWidth.Location = new System.Drawing.Point(584, 296);
+            this.tbOutletWidth.Name = "tbOutletWidth";
+            this.tbOutletWidth.Size = new System.Drawing.Size(100, 22);
+            this.tbOutletWidth.TabIndex = 11;
+            // 
+            // tbOutletElev
+            // 
+            this.tbOutletElev.Location = new System.Drawing.Point(584, 270);
+            this.tbOutletElev.Name = "tbOutletElev";
+            this.tbOutletElev.Size = new System.Drawing.Size(100, 22);
+            this.tbOutletElev.TabIndex = 10;
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(460, 299);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(96, 16);
+            this.label33.TabIndex = 9;
+            this.label33.Text = "Outlet Width, m";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(460, 273);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(118, 16);
+            this.label32.TabIndex = 8;
+            this.label32.Text = "Outlet Elevation, m";
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.rbAmbient);
+            this.groupBox9.Controls.Add(this.rbZero);
+            this.groupBox9.Location = new System.Drawing.Point(243, 250);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(200, 73);
+            this.groupBox9.TabIndex = 7;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Unspecified Constituents";
+            // 
+            // rbAmbient
+            // 
+            this.rbAmbient.AutoSize = true;
+            this.rbAmbient.Location = new System.Drawing.Point(30, 47);
+            this.rbAmbient.Name = "rbAmbient";
+            this.rbAmbient.Size = new System.Drawing.Size(75, 20);
+            this.rbAmbient.TabIndex = 3;
+            this.rbAmbient.TabStop = true;
+            this.rbAmbient.Text = "Ambient";
+            this.rbAmbient.UseVisualStyleBackColor = true;
+            // 
+            // rbZero
+            // 
+            this.rbZero.AutoSize = true;
+            this.rbZero.Location = new System.Drawing.Point(30, 21);
+            this.rbZero.Name = "rbZero";
+            this.rbZero.Size = new System.Drawing.Size(54, 20);
+            this.rbZero.TabIndex = 2;
+            this.rbZero.TabStop = true;
+            this.rbZero.Text = "Zero";
+            this.rbZero.UseVisualStyleBackColor = true;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.rbExternal);
+            this.groupBox8.Controls.Add(this.rbInternal);
+            this.groupBox8.Location = new System.Drawing.Point(27, 250);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(200, 73);
+            this.groupBox8.TabIndex = 6;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Water Source";
+            // 
+            // rbExternal
+            // 
+            this.rbExternal.AutoSize = true;
+            this.rbExternal.Location = new System.Drawing.Point(24, 47);
+            this.rbExternal.Name = "rbExternal";
+            this.rbExternal.Size = new System.Drawing.Size(74, 20);
+            this.rbExternal.TabIndex = 1;
+            this.rbExternal.TabStop = true;
+            this.rbExternal.Text = "External";
+            this.rbExternal.UseVisualStyleBackColor = true;
+            // 
+            // rbInternal
+            // 
+            this.rbInternal.AutoSize = true;
+            this.rbInternal.Location = new System.Drawing.Point(24, 21);
+            this.rbInternal.Name = "rbInternal";
+            this.rbInternal.Size = new System.Drawing.Size(69, 20);
+            this.rbInternal.TabIndex = 0;
+            this.rbInternal.TabStop = true;
+            this.rbInternal.Text = "Internal";
+            this.rbInternal.UseVisualStyleBackColor = true;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(242, 221);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(230, 16);
+            this.label31.TabIndex = 5;
+            this.label31.Text = "Specify temperature and total loading";
+            // 
+            // BtnRemovePointSource
+            // 
+            this.BtnRemovePointSource.Location = new System.Drawing.Point(365, 155);
+            this.BtnRemovePointSource.Name = "BtnRemovePointSource";
+            this.BtnRemovePointSource.Size = new System.Drawing.Size(100, 30);
+            this.BtnRemovePointSource.TabIndex = 4;
+            this.BtnRemovePointSource.Text = "Remove";
+            this.BtnRemovePointSource.UseVisualStyleBackColor = true;
+            this.BtnRemovePointSource.Click += new System.EventHandler(this.BtnRemovePointSource_Click);
+            // 
+            // BtnAddPtSource
+            // 
+            this.BtnAddPtSource.Location = new System.Drawing.Point(248, 155);
+            this.BtnAddPtSource.Name = "BtnAddPtSource";
+            this.BtnAddPtSource.Size = new System.Drawing.Size(100, 30);
+            this.BtnAddPtSource.TabIndex = 3;
+            this.BtnAddPtSource.Text = "Add";
+            this.BtnAddPtSource.UseVisualStyleBackColor = true;
+            this.BtnAddPtSource.Click += new System.EventHandler(this.BtnAddPtSource_Click);
+            // 
+            // lbPointSources
+            // 
+            this.lbPointSources.FormattingEnabled = true;
+            this.lbPointSources.ItemHeight = 16;
+            this.lbPointSources.Location = new System.Drawing.Point(130, 12);
+            this.lbPointSources.Name = "lbPointSources";
+            this.lbPointSources.Size = new System.Drawing.Size(454, 132);
+            this.lbPointSources.TabIndex = 0;
             // 
             // tpAdsorption
             // 
@@ -987,15 +1170,15 @@
             // 
             // chartStageArea
             // 
-            chartArea3.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea3.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea3.Name = "ChartArea1";
-            this.chartStageArea.ChartAreas.Add(chartArea3);
+            chartArea6.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea6.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea6.Name = "ChartArea1";
+            this.chartStageArea.ChartAreas.Add(chartArea6);
             this.chartStageArea.Location = new System.Drawing.Point(285, 28);
             this.chartStageArea.Name = "chartStageArea";
-            series3.ChartArea = "ChartArea1";
-            series3.Name = "Series1";
-            this.chartStageArea.Series.Add(series3);
+            series6.ChartArea = "ChartArea1";
+            series6.Name = "Series1";
+            this.chartStageArea.Series.Add(series6);
             this.chartStageArea.Size = new System.Drawing.Size(389, 313);
             this.chartStageArea.TabIndex = 5;
             this.chartStageArea.Text = "chart1";
@@ -1045,75 +1228,53 @@
             this.tpMet.Text = "Meteorology";
             this.tpMet.UseVisualStyleBackColor = true;
             // 
-            // ReservoirOpenFileDialog
+            // tbTempLapse
             // 
-            this.ReservoirOpenFileDialog.Filter = "Observed Lake Hydrology Files | *.OLH";
+            this.tbTempLapse.Location = new System.Drawing.Point(367, 161);
+            this.tbTempLapse.Name = "tbTempLapse";
+            this.tbTempLapse.Size = new System.Drawing.Size(135, 22);
+            this.tbTempLapse.TabIndex = 8;
             // 
-            // groupBox5
+            // tbWindSpeedFactor
             // 
-            this.groupBox5.Controls.Add(this.BtnSelectMetFile);
-            this.groupBox5.Controls.Add(this.tbMetFile);
-            this.groupBox5.Location = new System.Drawing.Point(70, 37);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(555, 54);
-            this.groupBox5.TabIndex = 0;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Meteorological File";
+            this.tbWindSpeedFactor.Location = new System.Drawing.Point(367, 200);
+            this.tbWindSpeedFactor.Name = "tbWindSpeedFactor";
+            this.tbWindSpeedFactor.Size = new System.Drawing.Size(135, 22);
+            this.tbWindSpeedFactor.TabIndex = 7;
             // 
-            // tbMetFile
+            // tbPrecipWeight
             // 
-            this.tbMetFile.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbMetFile.Location = new System.Drawing.Point(31, 23);
-            this.tbMetFile.Name = "tbMetFile";
-            this.tbMetFile.Size = new System.Drawing.Size(379, 15);
-            this.tbMetFile.TabIndex = 0;
+            this.tbPrecipWeight.Location = new System.Drawing.Point(367, 122);
+            this.tbPrecipWeight.Name = "tbPrecipWeight";
+            this.tbPrecipWeight.Size = new System.Drawing.Size(135, 22);
+            this.tbPrecipWeight.TabIndex = 6;
             // 
-            // BtnSelectMetFile
+            // label30
             // 
-            this.BtnSelectMetFile.Location = new System.Drawing.Point(428, 19);
-            this.BtnSelectMetFile.Name = "BtnSelectMetFile";
-            this.BtnSelectMetFile.Size = new System.Drawing.Size(109, 22);
-            this.BtnSelectMetFile.TabIndex = 1;
-            this.BtnSelectMetFile.Text = "Select";
-            this.BtnSelectMetFile.UseVisualStyleBackColor = true;
-            this.BtnSelectMetFile.Click += new System.EventHandler(this.BtnSelectMetFile_Click);
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(175, 203);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(124, 16);
+            this.label30.TabIndex = 5;
+            this.label30.Text = "Wind Speed Factor";
             // 
-            // tbAirRainChemFile
+            // label29
             // 
-            this.tbAirRainChemFile.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbAirRainChemFile.Location = new System.Drawing.Point(31, 23);
-            this.tbAirRainChemFile.Name = "tbAirRainChemFile";
-            this.tbAirRainChemFile.Size = new System.Drawing.Size(379, 15);
-            this.tbAirRainChemFile.TabIndex = 0;
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(175, 164);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(147, 16);
+            this.label29.TabIndex = 4;
+            this.label29.Text = "Temperature Lapse (C)";
             // 
-            // groupBox6
+            // label28
             // 
-            this.groupBox6.Controls.Add(this.BtnSelectRainChemFile);
-            this.groupBox6.Controls.Add(this.tbAirRainChemFile);
-            this.groupBox6.Location = new System.Drawing.Point(70, 251);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(555, 54);
-            this.groupBox6.TabIndex = 2;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "General or Rain and Fine Particle Air Chemistry File";
-            // 
-            // BtnSelectRainChemFile
-            // 
-            this.BtnSelectRainChemFile.Location = new System.Drawing.Point(428, 19);
-            this.BtnSelectRainChemFile.Name = "BtnSelectRainChemFile";
-            this.BtnSelectRainChemFile.Size = new System.Drawing.Size(109, 22);
-            this.BtnSelectRainChemFile.TabIndex = 1;
-            this.BtnSelectRainChemFile.Text = "Select";
-            this.BtnSelectRainChemFile.UseVisualStyleBackColor = true;
-            this.BtnSelectRainChemFile.Click += new System.EventHandler(this.BtnSelectRainChemFile_Click);
-            // 
-            // tbCoarseParticleChemFile
-            // 
-            this.tbCoarseParticleChemFile.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbCoarseParticleChemFile.Location = new System.Drawing.Point(31, 23);
-            this.tbCoarseParticleChemFile.Name = "tbCoarseParticleChemFile";
-            this.tbCoarseParticleChemFile.Size = new System.Drawing.Size(379, 15);
-            this.tbCoarseParticleChemFile.TabIndex = 0;
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(175, 125);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(145, 16);
+            this.label28.TabIndex = 3;
+            this.label28.Text = "Precipitation Weighting";
             // 
             // groupBox7
             // 
@@ -1136,53 +1297,75 @@
             this.btnSelectCoarseParticleFile.UseVisualStyleBackColor = true;
             this.btnSelectCoarseParticleFile.Click += new System.EventHandler(this.btnSelectCoarseParticleFile_Click);
             // 
-            // label28
+            // tbCoarseParticleChemFile
             // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(175, 125);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(145, 16);
-            this.label28.TabIndex = 3;
-            this.label28.Text = "Precipitation Weighting";
+            this.tbCoarseParticleChemFile.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbCoarseParticleChemFile.Location = new System.Drawing.Point(31, 23);
+            this.tbCoarseParticleChemFile.Name = "tbCoarseParticleChemFile";
+            this.tbCoarseParticleChemFile.Size = new System.Drawing.Size(379, 15);
+            this.tbCoarseParticleChemFile.TabIndex = 0;
             // 
-            // label29
+            // groupBox6
             // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(175, 164);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(147, 16);
-            this.label29.TabIndex = 4;
-            this.label29.Text = "Temperature Lapse (C)";
+            this.groupBox6.Controls.Add(this.BtnSelectRainChemFile);
+            this.groupBox6.Controls.Add(this.tbAirRainChemFile);
+            this.groupBox6.Location = new System.Drawing.Point(70, 251);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(555, 54);
+            this.groupBox6.TabIndex = 2;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "General or Rain and Fine Particle Air Chemistry File";
             // 
-            // label30
+            // BtnSelectRainChemFile
             // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(175, 203);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(124, 16);
-            this.label30.TabIndex = 5;
-            this.label30.Text = "Wind Speed Factor";
+            this.BtnSelectRainChemFile.Location = new System.Drawing.Point(428, 19);
+            this.BtnSelectRainChemFile.Name = "BtnSelectRainChemFile";
+            this.BtnSelectRainChemFile.Size = new System.Drawing.Size(109, 22);
+            this.BtnSelectRainChemFile.TabIndex = 1;
+            this.BtnSelectRainChemFile.Text = "Select";
+            this.BtnSelectRainChemFile.UseVisualStyleBackColor = true;
+            this.BtnSelectRainChemFile.Click += new System.EventHandler(this.BtnSelectRainChemFile_Click);
             // 
-            // tbPrecipWeight
+            // tbAirRainChemFile
             // 
-            this.tbPrecipWeight.Location = new System.Drawing.Point(367, 122);
-            this.tbPrecipWeight.Name = "tbPrecipWeight";
-            this.tbPrecipWeight.Size = new System.Drawing.Size(135, 22);
-            this.tbPrecipWeight.TabIndex = 6;
+            this.tbAirRainChemFile.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbAirRainChemFile.Location = new System.Drawing.Point(31, 23);
+            this.tbAirRainChemFile.Name = "tbAirRainChemFile";
+            this.tbAirRainChemFile.Size = new System.Drawing.Size(379, 15);
+            this.tbAirRainChemFile.TabIndex = 0;
             // 
-            // tbWindSpeedFactor
+            // groupBox5
             // 
-            this.tbWindSpeedFactor.Location = new System.Drawing.Point(367, 200);
-            this.tbWindSpeedFactor.Name = "tbWindSpeedFactor";
-            this.tbWindSpeedFactor.Size = new System.Drawing.Size(135, 22);
-            this.tbWindSpeedFactor.TabIndex = 7;
+            this.groupBox5.Controls.Add(this.BtnSelectMetFile);
+            this.groupBox5.Controls.Add(this.tbMetFile);
+            this.groupBox5.Location = new System.Drawing.Point(70, 37);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(555, 54);
+            this.groupBox5.TabIndex = 0;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Meteorological File";
             // 
-            // tbTempLapse
+            // BtnSelectMetFile
             // 
-            this.tbTempLapse.Location = new System.Drawing.Point(367, 161);
-            this.tbTempLapse.Name = "tbTempLapse";
-            this.tbTempLapse.Size = new System.Drawing.Size(135, 22);
-            this.tbTempLapse.TabIndex = 8;
+            this.BtnSelectMetFile.Location = new System.Drawing.Point(428, 19);
+            this.BtnSelectMetFile.Name = "BtnSelectMetFile";
+            this.BtnSelectMetFile.Size = new System.Drawing.Size(109, 22);
+            this.BtnSelectMetFile.TabIndex = 1;
+            this.BtnSelectMetFile.Text = "Select";
+            this.BtnSelectMetFile.UseVisualStyleBackColor = true;
+            this.BtnSelectMetFile.Click += new System.EventHandler(this.BtnSelectMetFile_Click);
+            // 
+            // tbMetFile
+            // 
+            this.tbMetFile.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbMetFile.Location = new System.Drawing.Point(31, 23);
+            this.tbMetFile.Name = "tbMetFile";
+            this.tbMetFile.Size = new System.Drawing.Size(379, 15);
+            this.tbMetFile.TabIndex = 0;
+            // 
+            // ReservoirOpenFileDialog
+            // 
+            this.ReservoirOpenFileDialog.Filter = "Observed Lake Hydrology Files | *.OLH";
             // 
             // DialogReservoirCoeffs
             // 
@@ -1222,6 +1405,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvDepthTemp)).EndInit();
             this.tpInitConc.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvInitialConc)).EndInit();
+            this.tpPtSrcs.ResumeLayout(false);
+            this.tpPtSrcs.PerformLayout();
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
             this.tpAdsorption.ResumeLayout(false);
             this.tpAdsorption.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAdsorption)).EndInit();
@@ -1235,12 +1424,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvStageArea)).EndInit();
             this.tpMet.ResumeLayout(false);
             this.tpMet.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1350,5 +1539,21 @@
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Button BtnSelectMetFile;
         private System.Windows.Forms.TextBox tbMetFile;
+        private System.Windows.Forms.TextBox tbNPDESpermit;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.TextBox tbOutletWidth;
+        private System.Windows.Forms.TextBox tbOutletElev;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.RadioButton rbAmbient;
+        private System.Windows.Forms.RadioButton rbZero;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.RadioButton rbExternal;
+        private System.Windows.Forms.RadioButton rbInternal;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Button BtnRemovePointSource;
+        private System.Windows.Forms.Button BtnAddPtSource;
+        private System.Windows.Forms.ListBox lbPointSources;
     }
 }
