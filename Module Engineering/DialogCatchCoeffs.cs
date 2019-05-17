@@ -19,11 +19,6 @@ namespace warmf
             this.parent = par;
         }
       
-        private void FormCatch_Load(object sender, EventArgs e)
-        {
-
-        }
-
         public void Populate(int cnum)
         {
             Catchment catchment = Global.coe.catchments[cnum];
@@ -107,7 +102,16 @@ namespace warmf
                 //populate datagridview
                 for (int iParam = 0; iParam < iNumParams; iParam++)
                 {
-                    string NameUnit = ConstitNames[iParam].ToString() + " (" + ConstitUnits[iParam].ToString().Trim() + ")";
+                    string Units = ConstitUnits[iParam].Trim();
+                    if (Units.Contains("mg/l"))
+                    {
+                        Units = " (" + Units.Replace("mg/l", "kg/ha") + ")";
+                    }
+                    else if (Units.Contains("#/100 ml"))
+                    {
+                        Units = " (" + Units.Replace("#/100 ml", "10^6 #/ha") + ")";
+                    }
+                    string NameUnit = ConstitNames[iParam] + Units;
                     dgLandApp.Rows.Insert(iParam);
                     dgLandApp.Rows[iParam].HeaderCell.Value = NameUnit.ToString();
                     for (int iMonth = 0; iMonth < 12; iMonth++)
@@ -222,6 +226,8 @@ namespace warmf
                 }
             }
             FormatDataGridView(dgInitialConc);
+            dgInitialConc.Visible = false;
+
             //Soil Layers > Adsorption
             //***************Adsorption is currently working differently than in WARMF v7****************
             //***************We need to make some decisions here, and decide how to proceed**************
@@ -251,6 +257,8 @@ namespace warmf
                 }
             }
             FormatDataGridView(dgAdsorption);
+            dgAdsorption.Visible = false;
+
             //Soil Layers > Mineral Composition
             for (int ii = 0; ii < Global.coe.numMinerals; ii++)
             {
@@ -266,6 +274,8 @@ namespace warmf
                 }
             }
             FormatDataGridView(dgMineralComp);
+            dgMineralComp.Visible = false;
+
             //Soil Layers > Inorganic Carbon
             for (int ii = 0; ii < catchment.numSoilLayers; ii++)
             {
@@ -275,6 +285,7 @@ namespace warmf
                 dgInorganicC.Rows[ii].Cells[1].Value = catchment.soils[ii].CO2ConcenFactor.ToString("F0");
             }
             FormatDataGridView(dgInorganicC);
+            dgInorganicC.Visible = false;
 
             //Mining tab
 
@@ -294,40 +305,42 @@ namespace warmf
                 dgv.Columns[ii].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
             dgv.ReadOnly = false;
-            dgv.Visible = false;
-        }
-
-
-
-            private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void label5_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label13_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label20_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void btnHelp_Click(object sender, EventArgs e)
         {
             // Launch browser to http://warmf.com/...
             System.Diagnostics.Process.Start("http://warmf.com/home/index.php/engineering-module/catchments/");
+        }
+
+        private void cbSoilCoeffGroup_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int Index = cbSoilCoeffGroup.SelectedIndex;
+            if (Index == 0) //Hydrology
+            {
+                dgSoilHydroCoeffs.Visible = true;
+                dgSoilHydroCoeffs.BringToFront();
+            }
+            else if (Index == 1) //Initial Concentrations
+            {
+                dgInitialConc.Visible = true;
+                dgInitialConc.BringToFront();
+            }
+            else if (Index == 2) //Adsorption
+            {
+                dgAdsorption.Visible = true;
+                dgAdsorption.BringToFront();
+            }
+            else if (Index == 3) //Mineral Composition
+            {
+                dgMineralComp.Visible = true;
+                dgMineralComp.BringToFront();
+            }
+            else //Inorganic Carbon
+            {
+                dgInorganicC.Visible = true;
+                dgInorganicC.BringToFront();
+            }
         }
     }
 }

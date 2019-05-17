@@ -1536,7 +1536,9 @@ namespace warmf {
 					river.bedAdsorpConcentration = ReadDoubleData(sr, "BEDC", numComponents);
 					river.waterAdsorpIsotherm = ReadDoubleData(sr, "STRA", numComponents);
 					river.bedAdsorpIsotherm = ReadDoubleData(sr, "BEDA", numComponents);
-				}
+
+                    rivers.Add(river);
+                }
 
 
 				// RESERVOIRS

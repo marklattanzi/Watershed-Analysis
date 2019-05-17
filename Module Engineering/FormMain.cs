@@ -73,7 +73,7 @@ namespace warmf {
 		private void LoadDefault() {
 			try {
                 //Add catchments shapefile (shapefile [0])
-                this.frmMap.AddShapeFile(Global.DIR.DATA + "shp\\Catchments.shp", "ShapeFile", "");
+                this.frmMap.AddShapeFile(Global.DIR.SHP + "Catchments.shp", "ShapeFile", "");
                 EGIS.ShapeFileLib.ShapeFile catchShapefile = this.frmMap[0];
                 catchShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
                 catchShapefile.RenderSettings.UseToolTip = true;
@@ -82,7 +82,7 @@ namespace warmf {
                 catchShapefile.RenderSettings.FillColor = Color.FromArgb(224,250,207);
                 catchShapefile.RenderSettings.OutlineColor = Color.FromArgb(178, 178, 178);
                 ////Add rivers shapefile (shapefile [1])
-                this.frmMap.AddShapeFile(Global.DIR.DATA + "shp\\Rivers.shp", "ShapeFile", "");
+                this.frmMap.AddShapeFile(Global.DIR.SHP + "Rivers.shp", "ShapeFile", "");
                 EGIS.ShapeFileLib.ShapeFile riverShapefile = this.frmMap[1];
                 riverShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
                 riverShapefile.RenderSettings.UseToolTip = true;
@@ -91,7 +91,7 @@ namespace warmf {
                 riverShapefile.RenderSettings.LineType = LineType.Solid;
                 riverShapefile.RenderSettings.OutlineColor = Color.FromArgb(0, 0, 255);
                 //add reservoirs shapefile (shapefile [2])
-                this.frmMap.AddShapeFile(Global.DIR.DATA + "shp\\Lakes.shp", "ShapeFile", "");
+                this.frmMap.AddShapeFile(Global.DIR.SHP + "Lakes.shp", "ShapeFile", "");
                 EGIS.ShapeFileLib.ShapeFile lakeShapefile = this.frmMap[2];
                 lakeShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
                 lakeShapefile.RenderSettings.UseToolTip = true;
@@ -146,7 +146,7 @@ namespace warmf {
 			frmMap.Focus();
 
 			// read in Coefficients file
-			string fname = Global.DIR.DATA+"coe\\Catawba.coe";
+			string fname = Global.DIR.COE +"Catawba.coe";
 			//string fname = Global.DIR_DATA+"coe/Henn.coe";
 			//string fname = Global.DIR_DATA+"coe/SanJoaquin.coe";
 
@@ -188,7 +188,32 @@ namespace warmf {
 
         if (riverRecordIndex >= 0) //River segment selected - River coefficients
         {
-            MessageBox.Show("River segment selected");
+            string[] recordAttributes = frmMap[1].GetAttributeFieldValues(riverRecordIndex);
+            string[] attributeNames = frmMap[1].GetAttributeFieldNames();
+            int n = 0;
+            while (attributeNames[n] != "WARMF_ID") //test of shapefile attributes
+            {
+                if (n < (attributeNames.Length - 1))
+                    n++;
+                else
+                {
+                    Debug.WriteLine("No WARMF_ID Field found in catchments attribute table");
+                    return;
+                }
+            }
+            int riverID = Int32.Parse(recordAttributes[n]);
+            int ii = 0;
+            while (Global.coe.rivers[ii].idNum != riverID) //test of coefficients file read
+                if (ii < Global.coe.numRivers - 1)
+                    ii++;
+                else
+                {
+                    Debug.WriteLine("No river found with IDnum = " + riverID);
+                    return;
+                }
+            
+            //.Populate(ii);
+            //dlgCatchCoeffs.ShowDialog();
         }
         else if (reservoirRecordIndex >= 0) //Reservoir segment selected - Reservoir coefficients
         {

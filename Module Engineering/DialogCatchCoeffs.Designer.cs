@@ -949,7 +949,6 @@
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.Size = new System.Drawing.Size(630, 110);
             this.dataGridView1.TabIndex = 11;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // ColIrrSource
             // 
@@ -1082,7 +1081,6 @@
             this.label5.Size = new System.Drawing.Size(128, 16);
             this.label5.TabIndex = 0;
             this.label5.Text = "Soil Erosivity Factor:";
-            this.label5.Click += new System.EventHandler(this.label5_Click_1);
             // 
             // tpBMPs
             // 
@@ -1260,7 +1258,6 @@
             this.label13.Size = new System.Drawing.Size(102, 16);
             this.label13.TabIndex = 1;
             this.label13.Text = "Buffer Width (m)";
-            this.label13.Click += new System.EventHandler(this.label13_Click);
             // 
             // label12
             // 
@@ -1539,7 +1536,6 @@
             this.label20.Size = new System.Drawing.Size(128, 16);
             this.label20.TabIndex = 0;
             this.label20.Text = "Discharge Soil Layer";
-            this.label20.Click += new System.EventHandler(this.label20_Click);
             // 
             // tpRxns
             // 
@@ -1680,6 +1676,7 @@
             this.cbSoilCoeffGroup.Name = "cbSoilCoeffGroup";
             this.cbSoilCoeffGroup.Size = new System.Drawing.Size(274, 24);
             this.cbSoilCoeffGroup.TabIndex = 2;
+            this.cbSoilCoeffGroup.SelectedIndexChanged += new System.EventHandler(this.cbSoilCoeffGroup_SelectedIndexChanged);
             // 
             // tbNumSoilLayers
             // 
@@ -2018,6 +2015,7 @@
             // 
             // btnCancel
             // 
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(268, 507);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCancel.Name = "btnCancel";
@@ -2053,7 +2051,6 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "DialogCatchCoeffs";
             this.Text = "Catchment xxx Coefficients";
-            this.Load += new System.EventHandler(this.FormCatch_Load);
             this.tcCatchTabs.ResumeLayout(false);
             this.tpPhysData.ResumeLayout(false);
             this.tpPhysData.PerformLayout();
