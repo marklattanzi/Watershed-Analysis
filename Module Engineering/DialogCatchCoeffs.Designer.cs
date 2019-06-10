@@ -164,6 +164,7 @@
             this.label20 = new System.Windows.Forms.Label();
             this.tpRxns = new System.Windows.Forms.TabPage();
             this.tpSoil = new System.Windows.Forms.TabPage();
+            this.lblSoilHydroCoeffs = new System.Windows.Forms.Label();
             this.dgSoilHydroCoeffs = new System.Windows.Forms.DataGridView();
             this.area = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Thickness = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -212,6 +213,18 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
+            this.lbPointSources = new System.Windows.Forms.ListBox();
+            this.btnAddPTS = new System.Windows.Forms.Button();
+            this.btnRemovePTS = new System.Windows.Forms.Button();
+            this.label34 = new System.Windows.Forms.Label();
+            this.rbtnInternal = new System.Windows.Forms.RadioButton();
+            this.rbtnExternal = new System.Windows.Forms.RadioButton();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.rbtnAmbient = new System.Windows.Forms.RadioButton();
+            this.rbtnZero = new System.Windows.Forms.RadioButton();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.label35 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
             this.tcCatchTabs.SuspendLayout();
             this.tpPhysData.SuspendLayout();
             this.gbSizeSlope.SuspendLayout();
@@ -235,6 +248,7 @@
             this.gbBufferZone.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgLivestockEx)).BeginInit();
+            this.tpPtSrc.SuspendLayout();
             this.tpSeptic.SuspendLayout();
             this.tpSoil.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgSoilHydroCoeffs)).BeginInit();
@@ -250,6 +264,8 @@
             this.gbQUALtemp.SuspendLayout();
             this.gbQUALconc.SuspendLayout();
             this.gbQUALflow.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcCatchTabs
@@ -1316,6 +1332,14 @@
             // 
             // tpPtSrc
             // 
+            this.tpPtSrc.Controls.Add(this.textBox3);
+            this.tpPtSrc.Controls.Add(this.label35);
+            this.tpPtSrc.Controls.Add(this.groupBox7);
+            this.tpPtSrc.Controls.Add(this.groupBox6);
+            this.tpPtSrc.Controls.Add(this.label34);
+            this.tpPtSrc.Controls.Add(this.btnRemovePTS);
+            this.tpPtSrc.Controls.Add(this.btnAddPTS);
+            this.tpPtSrc.Controls.Add(this.lbPointSources);
             this.tpPtSrc.Location = new System.Drawing.Point(4, 46);
             this.tpPtSrc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tpPtSrc.Name = "tpPtSrc";
@@ -1548,6 +1572,7 @@
             // 
             // tpSoil
             // 
+            this.tpSoil.Controls.Add(this.lblSoilHydroCoeffs);
             this.tpSoil.Controls.Add(this.dgSoilHydroCoeffs);
             this.tpSoil.Controls.Add(this.cbSoilCoeffGroup);
             this.tpSoil.Controls.Add(this.tbNumSoilLayers);
@@ -1563,6 +1588,15 @@
             this.tpSoil.Text = "Soil Layers";
             this.tpSoil.UseVisualStyleBackColor = true;
             // 
+            // lblSoilHydroCoeffs
+            // 
+            this.lblSoilHydroCoeffs.AutoSize = true;
+            this.lblSoilHydroCoeffs.Location = new System.Drawing.Point(26, 101);
+            this.lblSoilHydroCoeffs.Name = "lblSoilHydroCoeffs";
+            this.lblSoilHydroCoeffs.Size = new System.Drawing.Size(49, 16);
+            this.lblSoilHydroCoeffs.TabIndex = 8;
+            this.lblSoilHydroCoeffs.Text = "label34";
+            // 
             // dgSoilHydroCoeffs
             // 
             this.dgSoilHydroCoeffs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -1577,7 +1611,7 @@
             this.RootDist,
             this.Density,
             this.SoilTort});
-            this.dgSoilHydroCoeffs.Location = new System.Drawing.Point(20, 104);
+            this.dgSoilHydroCoeffs.Location = new System.Drawing.Point(20, 191);
             this.dgSoilHydroCoeffs.Name = "dgSoilHydroCoeffs";
             this.dgSoilHydroCoeffs.Size = new System.Drawing.Size(628, 153);
             this.dgSoilHydroCoeffs.TabIndex = 3;
@@ -1703,7 +1737,7 @@
             this.dgInorganicC.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Option,
             this.Factor});
-            this.dgInorganicC.Location = new System.Drawing.Point(22, 105);
+            this.dgInorganicC.Location = new System.Drawing.Point(22, 193);
             this.dgInorganicC.Name = "dgInorganicC";
             this.dgInorganicC.Size = new System.Drawing.Size(625, 151);
             this.dgInorganicC.TabIndex = 7;
@@ -1729,7 +1763,7 @@
             this.dgMineralComp.AllowUserToAddRows = false;
             this.dgMineralComp.AllowUserToDeleteRows = false;
             this.dgMineralComp.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgMineralComp.Location = new System.Drawing.Point(22, 106);
+            this.dgMineralComp.Location = new System.Drawing.Point(22, 193);
             this.dgMineralComp.Name = "dgMineralComp";
             this.dgMineralComp.Size = new System.Drawing.Size(624, 149);
             this.dgMineralComp.TabIndex = 6;
@@ -1739,7 +1773,7 @@
             this.dgAdsorption.AllowUserToAddRows = false;
             this.dgAdsorption.AllowUserToDeleteRows = false;
             this.dgAdsorption.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgAdsorption.Location = new System.Drawing.Point(21, 105);
+            this.dgAdsorption.Location = new System.Drawing.Point(21, 193);
             this.dgAdsorption.Name = "dgAdsorption";
             this.dgAdsorption.Size = new System.Drawing.Size(626, 151);
             this.dgAdsorption.TabIndex = 5;
@@ -1749,7 +1783,7 @@
             this.dgInitialConc.AllowUserToAddRows = false;
             this.dgInitialConc.AllowUserToDeleteRows = false;
             this.dgInitialConc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgInitialConc.Location = new System.Drawing.Point(21, 105);
+            this.dgInitialConc.Location = new System.Drawing.Point(21, 193);
             this.dgInitialConc.Name = "dgInitialConc";
             this.dgInitialConc.Size = new System.Drawing.Size(626, 151);
             this.dgInitialConc.TabIndex = 4;
@@ -2035,6 +2069,125 @@
             this.btnHelp.UseVisualStyleBackColor = true;
             this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
+            // lbPointSources
+            // 
+            this.lbPointSources.FormattingEnabled = true;
+            this.lbPointSources.ItemHeight = 16;
+            this.lbPointSources.Location = new System.Drawing.Point(129, 13);
+            this.lbPointSources.Name = "lbPointSources";
+            this.lbPointSources.Size = new System.Drawing.Size(395, 164);
+            this.lbPointSources.TabIndex = 0;
+            // 
+            // btnAddPTS
+            // 
+            this.btnAddPTS.Location = new System.Drawing.Point(200, 188);
+            this.btnAddPTS.Name = "btnAddPTS";
+            this.btnAddPTS.Size = new System.Drawing.Size(122, 31);
+            this.btnAddPTS.TabIndex = 2;
+            this.btnAddPTS.Text = "Add";
+            this.btnAddPTS.UseVisualStyleBackColor = true;
+            // 
+            // btnRemovePTS
+            // 
+            this.btnRemovePTS.Location = new System.Drawing.Point(330, 188);
+            this.btnRemovePTS.Name = "btnRemovePTS";
+            this.btnRemovePTS.Size = new System.Drawing.Size(122, 31);
+            this.btnRemovePTS.TabIndex = 3;
+            this.btnRemovePTS.Text = "Remove";
+            this.btnRemovePTS.UseVisualStyleBackColor = true;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(128, 242);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(378, 16);
+            this.label34.TabIndex = 4;
+            this.label34.Text = "Water source information corresponds to seleected point source";
+            // 
+            // rbtnInternal
+            // 
+            this.rbtnInternal.AutoSize = true;
+            this.rbtnInternal.Location = new System.Drawing.Point(16, 23);
+            this.rbtnInternal.Name = "rbtnInternal";
+            this.rbtnInternal.Size = new System.Drawing.Size(68, 20);
+            this.rbtnInternal.TabIndex = 7;
+            this.rbtnInternal.TabStop = true;
+            this.rbtnInternal.Text = "Internal";
+            this.rbtnInternal.UseVisualStyleBackColor = true;
+            // 
+            // rbtnExternal
+            // 
+            this.rbtnExternal.AutoSize = true;
+            this.rbtnExternal.Location = new System.Drawing.Point(16, 49);
+            this.rbtnExternal.Name = "rbtnExternal";
+            this.rbtnExternal.Size = new System.Drawing.Size(74, 20);
+            this.rbtnExternal.TabIndex = 8;
+            this.rbtnExternal.TabStop = true;
+            this.rbtnExternal.Text = "External";
+            this.rbtnExternal.UseVisualStyleBackColor = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.rbtnExternal);
+            this.groupBox6.Controls.Add(this.rbtnInternal);
+            this.groupBox6.Location = new System.Drawing.Point(144, 281);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(176, 82);
+            this.groupBox6.TabIndex = 11;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Water Source";
+            // 
+            // rbtnAmbient
+            // 
+            this.rbtnAmbient.AutoSize = true;
+            this.rbtnAmbient.Location = new System.Drawing.Point(16, 49);
+            this.rbtnAmbient.Name = "rbtnAmbient";
+            this.rbtnAmbient.Size = new System.Drawing.Size(74, 20);
+            this.rbtnAmbient.TabIndex = 8;
+            this.rbtnAmbient.TabStop = true;
+            this.rbtnAmbient.Text = "Ambient";
+            this.rbtnAmbient.UseVisualStyleBackColor = true;
+            // 
+            // rbtnZero
+            // 
+            this.rbtnZero.AutoSize = true;
+            this.rbtnZero.Location = new System.Drawing.Point(16, 23);
+            this.rbtnZero.Name = "rbtnZero";
+            this.rbtnZero.Size = new System.Drawing.Size(51, 20);
+            this.rbtnZero.TabIndex = 7;
+            this.rbtnZero.TabStop = true;
+            this.rbtnZero.Text = "Zero";
+            this.rbtnZero.UseVisualStyleBackColor = true;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.rbtnAmbient);
+            this.groupBox7.Controls.Add(this.rbtnZero);
+            this.groupBox7.Location = new System.Drawing.Point(330, 281);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(176, 82);
+            this.groupBox7.TabIndex = 12;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Unspecified Constituents";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.CausesValidation = false;
+            this.label35.Location = new System.Drawing.Point(176, 383);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(144, 16);
+            this.label35.TabIndex = 13;
+            this.label35.Text = "NPDES Permit Number";
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(332, 380);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(173, 22);
+            this.textBox3.TabIndex = 14;
+            // 
             // DialogCatchCoeffs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -2089,6 +2242,8 @@
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgLivestockEx)).EndInit();
+            this.tpPtSrc.ResumeLayout(false);
+            this.tpPtSrc.PerformLayout();
             this.tpSeptic.ResumeLayout(false);
             this.tpSeptic.PerformLayout();
             this.tpSoil.ResumeLayout(false);
@@ -2109,6 +2264,10 @@
             this.gbQUALtemp.ResumeLayout(false);
             this.gbQUALconc.ResumeLayout(false);
             this.gbQUALflow.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2299,5 +2458,18 @@
         private System.Windows.Forms.GroupBox gbQUALflow;
         private System.Windows.Forms.Button btnSelectFlow;
         private System.Windows.Forms.CheckBox cbxWriteQUAL;
+        private System.Windows.Forms.Label lblSoilHydroCoeffs;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.RadioButton rbtnAmbient;
+        private System.Windows.Forms.RadioButton rbtnZero;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.RadioButton rbtnExternal;
+        private System.Windows.Forms.RadioButton rbtnInternal;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Button btnRemovePTS;
+        private System.Windows.Forms.Button btnAddPTS;
+        private System.Windows.Forms.ListBox lbPointSources;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label label35;
     }
 }

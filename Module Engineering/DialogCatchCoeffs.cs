@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace warmf
 {
@@ -171,6 +172,18 @@ namespace warmf
             tbDetVolume.Text = catchment.bmp.detentionPondVol.ToString();
 
             //Point Sources tab
+            //Warning: this code block was constructed without having a case to test - probably contains errors!!
+            if (catchment.numPointSources > 0)
+            {
+                for (int ii = 0; ii < catchment.numPointSources; ii++)
+                    lbPointSources.Items.Add(Global.coe.PTSFilename[catchment.pointSources[ii]]);
+                lbPointSources.SelectedIndex = 0;
+                StreamReader reader = File.OpenText(Global.DIR.PTS);
+                string line;
+
+            }
+            
+
 
             //Pumping tab
 
