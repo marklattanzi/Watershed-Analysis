@@ -159,12 +159,12 @@ PTSFILESSc0033651.PTS
 PTSFILESSc0038113.PTS
 AIRFILE        1
 AIRFILE Cranberry.AIR
-FILES   Catawba_forProgramming.CAT
-FILES   Catawba_forProgramming.RIV
-FILES   Catawba_forProgramming.LAK
-FILES   Catawba_forProgramming.PSM
-FILES   Catawba_forProgramming.WST
-FILES   Catawba_forProgramming.OUT
+FILES   Catawba_SC_June2018.CAT
+FILES   Catawba_SC_June2018.RIV
+FILES   Catawba_SC_June2018.LAK
+FILES   Catawba_SC_June2018.PSM
+FILES   Catawba_SC_June2018.WST
+FILES   Catawba_SC_June2018.OUT
 ******** SYSTEM COEFFICIENTS ******
 TOL        0.001   0.001   0.001   0.001
 TAREA   4.4097E9 466.279
@@ -19513,8 +19513,7 @@ STOCK706       0       0       0       0       0       0
 IRRIG706       0       0       0       0       0       0       0       0       0
 IRRIG706       0       0       0       0       0       0
 NLUPONDS       0
-PTSOURCE       3
-PTSOURCE      15      14      16
+PTSOURCE       0
 PUMPFROM       0
 PUMPTO         0
 SEPTIC         1    1389     100       0       0       0       2       0    0.18

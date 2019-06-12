@@ -178,9 +178,7 @@ namespace warmf
                 for (int ii = 0; ii < catchment.numPointSources; ii++)
                     lbPointSources.Items.Add(Global.coe.PTSFilename[catchment.pointSources[ii]]);
                 lbPointSources.SelectedIndex = 0;
-                StreamReader reader = File.OpenText(Global.DIR.PTS);
-                string line;
-
+                PointSourceWaterSourceInfo();
             }
             
 
@@ -304,6 +302,19 @@ namespace warmf
 
             //CE-QUAL-W2 tab
 
+        }
+
+        public void PointSourceWaterSourceInfo()
+        {
+            StreamReader reader = File.OpenText(Global.DIR.PTS + lbPointSources.GetItemText(lbPointSources.SelectedItem));
+            reader.ReadLine();
+            reader.ReadLine();
+            string line = reader.ReadLine();
+            if (line.Substring(8, 8).Contains("1"))
+                rbtnInternal.Checked = true;
+            else
+                rbtnExternal.Checked = true;
+            tbNPDESnum.Text = line.Substring(33, 8);
         }
 
         public void FormatDataGridView(DataGridView dgv)

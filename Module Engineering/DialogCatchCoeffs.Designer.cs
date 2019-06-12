@@ -139,6 +139,18 @@
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label11 = new System.Windows.Forms.Label();
             this.tpPtSrc = new System.Windows.Forms.TabPage();
+            this.tbNPDESnum = new System.Windows.Forms.TextBox();
+            this.label35 = new System.Windows.Forms.Label();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.rbtnAmbient = new System.Windows.Forms.RadioButton();
+            this.rbtnZero = new System.Windows.Forms.RadioButton();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.rbtnExternal = new System.Windows.Forms.RadioButton();
+            this.rbtnInternal = new System.Windows.Forms.RadioButton();
+            this.label34 = new System.Windows.Forms.Label();
+            this.btnRemovePTS = new System.Windows.Forms.Button();
+            this.btnAddPTS = new System.Windows.Forms.Button();
+            this.lbPointSources = new System.Windows.Forms.ListBox();
             this.tpPumping = new System.Windows.Forms.TabPage();
             this.tpSeptic = new System.Windows.Forms.TabPage();
             this.tbBioMortCoeff = new System.Windows.Forms.TextBox();
@@ -213,18 +225,6 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
-            this.lbPointSources = new System.Windows.Forms.ListBox();
-            this.btnAddPTS = new System.Windows.Forms.Button();
-            this.btnRemovePTS = new System.Windows.Forms.Button();
-            this.label34 = new System.Windows.Forms.Label();
-            this.rbtnInternal = new System.Windows.Forms.RadioButton();
-            this.rbtnExternal = new System.Windows.Forms.RadioButton();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.rbtnAmbient = new System.Windows.Forms.RadioButton();
-            this.rbtnZero = new System.Windows.Forms.RadioButton();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.label35 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
             this.tcCatchTabs.SuspendLayout();
             this.tpPhysData.SuspendLayout();
             this.gbSizeSlope.SuspendLayout();
@@ -249,6 +249,8 @@
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgLivestockEx)).BeginInit();
             this.tpPtSrc.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.tpSeptic.SuspendLayout();
             this.tpSoil.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgSoilHydroCoeffs)).BeginInit();
@@ -264,8 +266,6 @@
             this.gbQUALtemp.SuspendLayout();
             this.gbQUALconc.SuspendLayout();
             this.gbQUALflow.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcCatchTabs
@@ -1332,7 +1332,7 @@
             // 
             // tpPtSrc
             // 
-            this.tpPtSrc.Controls.Add(this.textBox3);
+            this.tpPtSrc.Controls.Add(this.tbNPDESnum);
             this.tpPtSrc.Controls.Add(this.label35);
             this.tpPtSrc.Controls.Add(this.groupBox7);
             this.tpPtSrc.Controls.Add(this.groupBox6);
@@ -1348,6 +1348,125 @@
             this.tpPtSrc.TabIndex = 7;
             this.tpPtSrc.Text = "Point Sources";
             this.tpPtSrc.UseVisualStyleBackColor = true;
+            // 
+            // tbNPDESnum
+            // 
+            this.tbNPDESnum.Location = new System.Drawing.Point(332, 380);
+            this.tbNPDESnum.Name = "tbNPDESnum";
+            this.tbNPDESnum.Size = new System.Drawing.Size(173, 22);
+            this.tbNPDESnum.TabIndex = 14;
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.CausesValidation = false;
+            this.label35.Location = new System.Drawing.Point(176, 383);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(144, 16);
+            this.label35.TabIndex = 13;
+            this.label35.Text = "NPDES Permit Number";
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.rbtnAmbient);
+            this.groupBox7.Controls.Add(this.rbtnZero);
+            this.groupBox7.Location = new System.Drawing.Point(330, 281);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(176, 82);
+            this.groupBox7.TabIndex = 12;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Unspecified Constituents";
+            // 
+            // rbtnAmbient
+            // 
+            this.rbtnAmbient.AutoSize = true;
+            this.rbtnAmbient.Location = new System.Drawing.Point(16, 49);
+            this.rbtnAmbient.Name = "rbtnAmbient";
+            this.rbtnAmbient.Size = new System.Drawing.Size(74, 20);
+            this.rbtnAmbient.TabIndex = 8;
+            this.rbtnAmbient.TabStop = true;
+            this.rbtnAmbient.Text = "Ambient";
+            this.rbtnAmbient.UseVisualStyleBackColor = true;
+            // 
+            // rbtnZero
+            // 
+            this.rbtnZero.AutoSize = true;
+            this.rbtnZero.Location = new System.Drawing.Point(16, 23);
+            this.rbtnZero.Name = "rbtnZero";
+            this.rbtnZero.Size = new System.Drawing.Size(51, 20);
+            this.rbtnZero.TabIndex = 7;
+            this.rbtnZero.TabStop = true;
+            this.rbtnZero.Text = "Zero";
+            this.rbtnZero.UseVisualStyleBackColor = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.rbtnExternal);
+            this.groupBox6.Controls.Add(this.rbtnInternal);
+            this.groupBox6.Location = new System.Drawing.Point(144, 281);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(176, 82);
+            this.groupBox6.TabIndex = 11;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Water Source";
+            // 
+            // rbtnExternal
+            // 
+            this.rbtnExternal.AutoSize = true;
+            this.rbtnExternal.Location = new System.Drawing.Point(16, 49);
+            this.rbtnExternal.Name = "rbtnExternal";
+            this.rbtnExternal.Size = new System.Drawing.Size(74, 20);
+            this.rbtnExternal.TabIndex = 8;
+            this.rbtnExternal.TabStop = true;
+            this.rbtnExternal.Text = "External";
+            this.rbtnExternal.UseVisualStyleBackColor = true;
+            // 
+            // rbtnInternal
+            // 
+            this.rbtnInternal.AutoSize = true;
+            this.rbtnInternal.Location = new System.Drawing.Point(16, 23);
+            this.rbtnInternal.Name = "rbtnInternal";
+            this.rbtnInternal.Size = new System.Drawing.Size(68, 20);
+            this.rbtnInternal.TabIndex = 7;
+            this.rbtnInternal.TabStop = true;
+            this.rbtnInternal.Text = "Internal";
+            this.rbtnInternal.UseVisualStyleBackColor = true;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(128, 242);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(378, 16);
+            this.label34.TabIndex = 4;
+            this.label34.Text = "Water source information corresponds to seleected point source";
+            // 
+            // btnRemovePTS
+            // 
+            this.btnRemovePTS.Location = new System.Drawing.Point(330, 188);
+            this.btnRemovePTS.Name = "btnRemovePTS";
+            this.btnRemovePTS.Size = new System.Drawing.Size(122, 31);
+            this.btnRemovePTS.TabIndex = 3;
+            this.btnRemovePTS.Text = "Remove";
+            this.btnRemovePTS.UseVisualStyleBackColor = true;
+            // 
+            // btnAddPTS
+            // 
+            this.btnAddPTS.Location = new System.Drawing.Point(200, 188);
+            this.btnAddPTS.Name = "btnAddPTS";
+            this.btnAddPTS.Size = new System.Drawing.Size(122, 31);
+            this.btnAddPTS.TabIndex = 2;
+            this.btnAddPTS.Text = "Add";
+            this.btnAddPTS.UseVisualStyleBackColor = true;
+            // 
+            // lbPointSources
+            // 
+            this.lbPointSources.FormattingEnabled = true;
+            this.lbPointSources.ItemHeight = 16;
+            this.lbPointSources.Location = new System.Drawing.Point(129, 13);
+            this.lbPointSources.Name = "lbPointSources";
+            this.lbPointSources.Size = new System.Drawing.Size(395, 164);
+            this.lbPointSources.TabIndex = 0;
             // 
             // tpPumping
             // 
@@ -2069,125 +2188,6 @@
             this.btnHelp.UseVisualStyleBackColor = true;
             this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
-            // lbPointSources
-            // 
-            this.lbPointSources.FormattingEnabled = true;
-            this.lbPointSources.ItemHeight = 16;
-            this.lbPointSources.Location = new System.Drawing.Point(129, 13);
-            this.lbPointSources.Name = "lbPointSources";
-            this.lbPointSources.Size = new System.Drawing.Size(395, 164);
-            this.lbPointSources.TabIndex = 0;
-            // 
-            // btnAddPTS
-            // 
-            this.btnAddPTS.Location = new System.Drawing.Point(200, 188);
-            this.btnAddPTS.Name = "btnAddPTS";
-            this.btnAddPTS.Size = new System.Drawing.Size(122, 31);
-            this.btnAddPTS.TabIndex = 2;
-            this.btnAddPTS.Text = "Add";
-            this.btnAddPTS.UseVisualStyleBackColor = true;
-            // 
-            // btnRemovePTS
-            // 
-            this.btnRemovePTS.Location = new System.Drawing.Point(330, 188);
-            this.btnRemovePTS.Name = "btnRemovePTS";
-            this.btnRemovePTS.Size = new System.Drawing.Size(122, 31);
-            this.btnRemovePTS.TabIndex = 3;
-            this.btnRemovePTS.Text = "Remove";
-            this.btnRemovePTS.UseVisualStyleBackColor = true;
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(128, 242);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(378, 16);
-            this.label34.TabIndex = 4;
-            this.label34.Text = "Water source information corresponds to seleected point source";
-            // 
-            // rbtnInternal
-            // 
-            this.rbtnInternal.AutoSize = true;
-            this.rbtnInternal.Location = new System.Drawing.Point(16, 23);
-            this.rbtnInternal.Name = "rbtnInternal";
-            this.rbtnInternal.Size = new System.Drawing.Size(68, 20);
-            this.rbtnInternal.TabIndex = 7;
-            this.rbtnInternal.TabStop = true;
-            this.rbtnInternal.Text = "Internal";
-            this.rbtnInternal.UseVisualStyleBackColor = true;
-            // 
-            // rbtnExternal
-            // 
-            this.rbtnExternal.AutoSize = true;
-            this.rbtnExternal.Location = new System.Drawing.Point(16, 49);
-            this.rbtnExternal.Name = "rbtnExternal";
-            this.rbtnExternal.Size = new System.Drawing.Size(74, 20);
-            this.rbtnExternal.TabIndex = 8;
-            this.rbtnExternal.TabStop = true;
-            this.rbtnExternal.Text = "External";
-            this.rbtnExternal.UseVisualStyleBackColor = true;
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.rbtnExternal);
-            this.groupBox6.Controls.Add(this.rbtnInternal);
-            this.groupBox6.Location = new System.Drawing.Point(144, 281);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(176, 82);
-            this.groupBox6.TabIndex = 11;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Water Source";
-            // 
-            // rbtnAmbient
-            // 
-            this.rbtnAmbient.AutoSize = true;
-            this.rbtnAmbient.Location = new System.Drawing.Point(16, 49);
-            this.rbtnAmbient.Name = "rbtnAmbient";
-            this.rbtnAmbient.Size = new System.Drawing.Size(74, 20);
-            this.rbtnAmbient.TabIndex = 8;
-            this.rbtnAmbient.TabStop = true;
-            this.rbtnAmbient.Text = "Ambient";
-            this.rbtnAmbient.UseVisualStyleBackColor = true;
-            // 
-            // rbtnZero
-            // 
-            this.rbtnZero.AutoSize = true;
-            this.rbtnZero.Location = new System.Drawing.Point(16, 23);
-            this.rbtnZero.Name = "rbtnZero";
-            this.rbtnZero.Size = new System.Drawing.Size(51, 20);
-            this.rbtnZero.TabIndex = 7;
-            this.rbtnZero.TabStop = true;
-            this.rbtnZero.Text = "Zero";
-            this.rbtnZero.UseVisualStyleBackColor = true;
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.rbtnAmbient);
-            this.groupBox7.Controls.Add(this.rbtnZero);
-            this.groupBox7.Location = new System.Drawing.Point(330, 281);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(176, 82);
-            this.groupBox7.TabIndex = 12;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Unspecified Constituents";
-            // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.CausesValidation = false;
-            this.label35.Location = new System.Drawing.Point(176, 383);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(144, 16);
-            this.label35.TabIndex = 13;
-            this.label35.Text = "NPDES Permit Number";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(332, 380);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(173, 22);
-            this.textBox3.TabIndex = 14;
-            // 
             // DialogCatchCoeffs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -2244,6 +2244,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgLivestockEx)).EndInit();
             this.tpPtSrc.ResumeLayout(false);
             this.tpPtSrc.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.tpSeptic.ResumeLayout(false);
             this.tpSeptic.PerformLayout();
             this.tpSoil.ResumeLayout(false);
@@ -2264,10 +2268,6 @@
             this.gbQUALtemp.ResumeLayout(false);
             this.gbQUALconc.ResumeLayout(false);
             this.gbQUALflow.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2469,7 +2469,7 @@
         private System.Windows.Forms.Button btnRemovePTS;
         private System.Windows.Forms.Button btnAddPTS;
         private System.Windows.Forms.ListBox lbPointSources;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox tbNPDESnum;
         private System.Windows.Forms.Label label35;
     }
 }

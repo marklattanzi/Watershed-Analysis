@@ -169,9 +169,7 @@
     <None Include="data\air\Cranberry.AIR">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\coe\Catawba.coe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="data\coe\Catawba.COE" />
     <None Include="data\coe\Henn.coe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
