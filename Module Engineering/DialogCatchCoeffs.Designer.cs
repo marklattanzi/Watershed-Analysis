@@ -2195,7 +2195,7 @@
             this.AutoScroll = true;
             this.AutoScrollMargin = new System.Drawing.Size(5, 5);
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(695, 564);
+            this.ClientSize = new System.Drawing.Size(684, 564);
             this.Controls.Add(this.btnHelp);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);

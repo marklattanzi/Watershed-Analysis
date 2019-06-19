@@ -17,8 +17,9 @@ namespace warmf {
 
 		// what's on the map
 		bool showMETStations = false;
-		
-		// sub forms of Engineering (Main) module
+
+        // sub forms of Engineering (Main) module
+        public DialogRiverCoeffs dlgRiverCoeffs;
 		public DialogCatchCoeffs dlgCatchCoeffs;
         public DialogSystemCoeffs dlgSystemCoeffs;
         public DialogReservoirCoeffs dlgReservoirCoeffs;
@@ -40,7 +41,8 @@ namespace warmf {
 
             // dialogs called from within the Engineering Module (River Coefficients,
             // Catchment Coefficients, System Coefficients, Reservoir Coefficients)
-			dlgCatchCoeffs = new DialogCatchCoeffs(this); // used in Engineering module to show catchment coefficients
+            dlgRiverCoeffs = new DialogRiverCoeffs(this); // used in Engineering module to show river coefficients
+            dlgCatchCoeffs = new DialogCatchCoeffs(this); // used in Engineering module to show catchment coefficients
             dlgSystemCoeffs = new DialogSystemCoeffs(this); //used in Engineering module to show the system coefficients
             dlgReservoirCoeffs = new DialogReservoirCoeffs(this); //used in Engineering module to show the reservoir coefficients
         }
@@ -212,8 +214,8 @@ namespace warmf {
                     return;
                 }
             
-            //.Populate(ii);
-            //dlgCatchCoeffs.ShowDialog();
+            dlgRiverCoeffs.Populate(ii);
+            dlgRiverCoeffs.ShowDialog();
         }
         else if (reservoirRecordIndex >= 0) //Reservoir segment selected - Reservoir coefficients
         {
