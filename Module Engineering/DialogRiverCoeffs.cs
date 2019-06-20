@@ -61,5 +61,10 @@ namespace warmf
             tbName.Text = river.name;
 
         }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

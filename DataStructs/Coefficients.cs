@@ -381,6 +381,7 @@ namespace warmf {
 
         public bool swIncludeOutput;
         public bool swIsSubwaterBoundary;
+        public bool swViewManagerOutput;
         public string name;
 
         public double impoundArea;
@@ -1473,7 +1474,8 @@ namespace warmf {
 					line = sr.ReadLine();
 					river.swIncludeOutput = !line.Substring(8, 8).Contains("0");
 					river.swIsSubwaterBoundary = !line.Substring(16, 8).Contains("0");
-					river.name = line.Substring(24);
+                    river.swViewManagerOutput = !line.Substring(24, 8).Contains("0");
+					river.name = line.Substring(32);
 
 					dnums = ReadDoubleData(sr, "IMPO", 5);
 					river.impoundArea = dnums[0];
