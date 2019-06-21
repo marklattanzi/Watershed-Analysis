@@ -59,12 +59,55 @@ namespace warmf
 
             //Physical Data Tab
             tbName.Text = river.name;
+            tbStreamID.Text = river.idNum.ToString();
+            tbUpElevation.Text = river.upElevation.ToString();
+            tbDownElevation.Text = river.downElevation.ToString();
+            tbLength.Text = river.length.ToString();
+            tbDepth.Text = river.depth.ToString();
+            tbImpArea.Text = river.impoundArea.ToString();
+            tbImpVolume.Text = river.impoundVol.ToString();
+            tbManningsN.Text = river.ManningN.ToString();
 
+            //Stage-Width
+            chartStageWidth.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            //var chartArea = new ChartArea("MyChart");
+            //chartArea.AxisX.Title = "xxx";
+            //chartArea.AxisY.Title = "yyy";
+            for (int i = 0; i < 9; i++)
+            {
+                string Stage = river.segment[i].stage.ToString("F2");
+                string Width = river.segment[i].width.ToString("F1");
+                dgvStageWidth.Rows.Insert(i, Stage, Width);
+                chartStageWidth.Series[0].Points.AddXY(Width, Stage);
+            }
+            
+            //Diversions
+
+
+            //Point Sources
+
+
+            //Reactions
+
+
+            //Sediment
+
+
+            //Initial Concentrations
+
+
+            //Adsorption
+
+
+            //Observed Data
+
+
+            //CE-QUAL-W2
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
+        //private void label3_Click(object sender, EventArgs e)
+        //{
 
-        }
+        //}
     }
 }
