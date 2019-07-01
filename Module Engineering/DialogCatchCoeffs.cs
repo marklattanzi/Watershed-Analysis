@@ -150,7 +150,7 @@ namespace warmf
             tbSilt.Text = catchment.sediment.secondPartSizePct.ToString();
             tbSand.Text = catchment.sediment.thirdPartSizePct.ToString();
 
-            //BMP's tab
+            //BMP's tab...
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
                 string luName = Global.coe.landuse[ii].name;
