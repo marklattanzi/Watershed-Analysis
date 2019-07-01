@@ -30,7 +30,7 @@ namespace warmf {
 		};
 
 		// methods
-		public METFile(string fname) { filename = fname; }
+		public METFile(string fname) { filename = fname; NumParameters = 7;}
 
 		public bool ReadMETFile() {
 			STechStreamReader sr = null;
@@ -40,9 +40,10 @@ namespace warmf {
 				double dblRes;
 				string line;
 				int day, month, year, hour, minute;
-				sr = new STechStreamReader(filename);
-
-                ReadVersionLatLongName(ref sr);
+                DataLine thisDataLine;
+                sr = new STechStreamReader(filename);
+                
+                ReadHeader(ref sr);
 
 				date = new List<DateTime>();
 				precip = new List<double>();
@@ -53,24 +54,21 @@ namespace warmf {
 				airPressure = new List<double>();
 				windSpeed = new List<double>();
 				comment = new List<string>();
-
+                thisDataLine = new DataLine();
 				line = sr.ReadLine();
 				while (line != null) {
-					day = Int32.TryParse(line.Substring(0, 2), out intRes) ? intRes : 0;
-					month = Int32.TryParse(line.Substring(2, 2), out intRes) ? intRes : 0;
-					year = Int32.TryParse(line.Substring(4, 4), out intRes) ? intRes : 0;
-					hour = Int32.TryParse(line.Substring(9, 2), out intRes) ? intRes : 0;
-					minute = Int32.TryParse(line.Substring(11, 2), out intRes) ? intRes : 0;
-					date.Add(new DateTime(year, month, day, hour, minute, 0));
-					precip.Add(Double.TryParse(line.Substring(13, 8), out dblRes) ? dblRes : 0);
-					minTemp.Add(Double.TryParse(line.Substring(21, 8), out dblRes) ? dblRes : 0);
-					maxTemp.Add(Double.TryParse(line.Substring(29, 8), out dblRes) ? dblRes : 0);
-					cloudCover.Add(Double.TryParse(line.Substring(37, 8), out dblRes) ? dblRes : 0);
-					dewPointTemp.Add(Double.TryParse(line.Substring(45, 8), out dblRes) ? dblRes : 0);
-					airPressure.Add(Double.TryParse(line.Substring(53, 8), out dblRes) ? dblRes : 0);
-					windSpeed.Add(Double.TryParse(line.Substring(61, 8), out dblRes) ? dblRes : 0);
-					comment.Add(line.Substring(69));
-					line = sr.ReadLine();
+                    thisDataLine.ParseString(line, NumParameters);
+                    TheData.Add(thisDataLine);
+                    date.Add(TheData[TheData.Count - 1].Date);
+                    precip.Add(TheData[TheData.Count - 1].Values[0]);
+                    minTemp.Add(TheData[TheData.Count - 1].Values[1]);
+                    maxTemp.Add(TheData[TheData.Count - 1].Values[2]);
+                    cloudCover.Add(TheData[TheData.Count - 1].Values[3]);
+                    dewPointTemp.Add(TheData[TheData.Count - 1].Values[4]);
+                    airPressure.Add(TheData[TheData.Count - 1].Values[5]);
+                    windSpeed.Add(TheData[TheData.Count - 1].Values[6]);
+                    comment.Add(TheData[TheData.Count - 1].Source);
+                    line = sr.ReadLine();
 				}
 			}
 			catch (Exception e) {
