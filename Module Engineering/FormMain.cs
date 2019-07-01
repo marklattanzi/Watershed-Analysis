@@ -23,6 +23,7 @@ namespace warmf {
 		public DialogCatchCoeffs dlgCatchCoeffs;
         public DialogSystemCoeffs dlgSystemCoeffs;
         public DialogReservoirCoeffs dlgReservoirCoeffs;
+        public DialogOutput dlgOutput;
 
 		public FormMain() {
 			InitializeComponent();
@@ -45,6 +46,7 @@ namespace warmf {
             dlgCatchCoeffs = new DialogCatchCoeffs(this); // used in Engineering module to show catchment coefficients
             dlgSystemCoeffs = new DialogSystemCoeffs(this); //used in Engineering module to show the system coefficients
             dlgReservoirCoeffs = new DialogReservoirCoeffs(this); //used in Engineering module to show the reservoir coefficients
+            dlgOutput = new DialogOutput(this); //used to display output
         }
 
 		private void FormMain_Load(object sender, EventArgs e) {
@@ -396,6 +398,16 @@ namespace warmf {
 			}
 				
 		}
-	}
+
+        private void miModeOutput_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void miTopMode_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
 }
 

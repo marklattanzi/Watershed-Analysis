@@ -103,7 +103,7 @@
             this.frmMap.CentrePoint2D = ((EGIS.ShapeFileLib.PointD)(resources.GetObject("frmMap.CentrePoint2D")));
             this.frmMap.Location = new System.Drawing.Point(15, 30);
             this.frmMap.MapBackColor = System.Drawing.SystemColors.Control;
-            this.frmMap.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.frmMap.Margin = new System.Windows.Forms.Padding(6);
             this.frmMap.Name = "frmMap";
             this.frmMap.PanSelectMode = EGIS.Controls.PanSelectMode.Pan;
             this.frmMap.RenderQuality = EGIS.ShapeFileLib.RenderQuality.Auto;
@@ -112,9 +112,9 @@
             this.frmMap.UseMercatorProjection = false;
             this.frmMap.ZoomLevel = 1D;
             this.frmMap.ZoomToSelectedExtentWhenCtrlKeydown = false;
+            this.frmMap.MapDoubleClick += new System.EventHandler<EGIS.Controls.SFMap.MapDoubleClickedEventArgs>(this.frmMap_MapDoubleClick);
             this.frmMap.Load += new System.EventHandler(this.frmMap_Load);
             this.frmMap.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.frmMap_MouseDoubleClick);
-            this.frmMap.MapDoubleClick += new System.EventHandler<EGIS.Controls.SFMap.MapDoubleClickedEventArgs>(this.frmMap_MapDoubleClick);
             // 
             // mnuMain
             // 
@@ -330,9 +330,11 @@
             this.miTopMode.Name = "miTopMode";
             this.miTopMode.Size = new System.Drawing.Size(50, 22);
             this.miTopMode.Text = "&Mode";
+            this.miTopMode.Click += new System.EventHandler(this.miTopMode_Click);
             // 
             // miModeInput
             // 
+            this.miModeInput.BackColor = System.Drawing.SystemColors.Highlight;
             this.miModeInput.Name = "miModeInput";
             this.miModeInput.Size = new System.Drawing.Size(230, 22);
             this.miModeInput.Text = "Input";
@@ -342,6 +344,7 @@
             this.miModeOutput.Name = "miModeOutput";
             this.miModeOutput.Size = new System.Drawing.Size(230, 22);
             this.miModeOutput.Text = "Output";
+            this.miModeOutput.Click += new System.EventHandler(this.miModeOutput_Click);
             // 
             // miModeFluxOutput
             // 
@@ -551,7 +554,7 @@
             this.pboxSplash.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pboxSplash.Image = global::warmf.Properties.Resources.splash;
             this.pboxSplash.Location = new System.Drawing.Point(84, 87);
-            this.pboxSplash.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pboxSplash.Margin = new System.Windows.Forms.Padding(2);
             this.pboxSplash.Name = "pboxSplash";
             this.pboxSplash.Size = new System.Drawing.Size(768, 399);
             this.pboxSplash.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -581,7 +584,7 @@
             this.Controls.Add(this.frmMap);
             this.Controls.Add(this.mnuMain);
             this.MainMenuStrip = this.mnuMain;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormMain";
             this.Text = "Watershed Analysis Risk Management Framework";
             this.Load += new System.EventHandler(this.FormMain_Load);

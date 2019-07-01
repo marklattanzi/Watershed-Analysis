@@ -73,6 +73,12 @@
     <Compile Include="Module Engineering\DialogRiverCoeffs.Designer.cs">
       <DependentUpon>DialogRiverCoeffs.cs</DependentUpon>
     </Compile>
+    <Compile Include="Module Engineering\DialogOutput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Module Engineering\DialogOutput.Designer.cs">
+      <DependentUpon>DialogOutput.cs</DependentUpon>
+    </Compile>
     <Compile Include="UtilityClasses\Extensions.cs" />
     <Compile Include="Module Engineering\DialogCatchCoeffs.cs">
       <SubType>Form</SubType>
@@ -131,6 +137,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Module Consensus\FormConsensus.resx">
       <DependentUpon>FormConsensus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Module Engineering\DialogOutput.resx">
+      <DependentUpon>DialogOutput.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Module Engineering\DialogReservoirCoeffs.resx">
       <DependentUpon>DialogReservoirCoeffs.cs</DependentUpon>
