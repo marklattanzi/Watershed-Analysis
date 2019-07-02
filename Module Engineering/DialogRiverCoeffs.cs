@@ -69,18 +69,37 @@ namespace warmf
             tbManningsN.Text = river.ManningN.ToString();
 
             //Stage-Width
-            chartStageWidth.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            //var chartArea = new ChartArea("MyChart");
-            //chartArea.AxisX.Title = "xxx";
-            //chartArea.AxisY.Title = "yyy";
             for (int i = 0; i < 9; i++)
             {
                 string Stage = river.segment[i].stage.ToString("F2");
                 string Width = river.segment[i].width.ToString("F1");
                 dgvStageWidth.Rows.Insert(i, Stage, Width);
-                chartStageWidth.Series[0].Points.AddXY(Width, Stage);
             }
+
+            chartStageWidth.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.LightGray;
+            chartStageWidth.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
+            chartStageWidth.Series[0].XValueMember = dgvStageWidth.Columns[1].DataPropertyName;
+            chartStageWidth.Series[0].YValueMembers = dgvStageWidth.Columns[0].DataPropertyName;
+            chartStageWidth.DataSource = dgvStageWidth.DataSource;
+
+            chartStageWidth.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             
+            //chartStageWidth.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series());
+            //for (int i = 0; i < 9; i++)
+            //{
+            //    string Stage = river.segment[i].stage.ToString("F2");
+            //    string Width = river.segment[i].width.ToString("F1");
+            //    dgvStageWidth.Rows.Insert(i, Stage, Width);
+            //    chartStageWidth.Series[0].Points.AddXY(Width, Stage);
+            //}
+            //chartStageWidth.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            //chartStageWidth.ChartAreas[0].AxisX.Title = "Stage (m)";
+            //chartStageWidth.ChartAreas[0].AxisX.TitleAlignment = StringAlignment.Center;
+            ////chartStageWidth.ChartAreas[0].AxisX.label
+            //chartStageWidth.ChartAreas[0].AxisY.Title = "Width (m)";
+            //chartStageWidth.ChartAreas[0].AxisY.TitleAlignment = StringAlignment.Center;
+            //chartStageWidth.ChartAreas[0].AxisY.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
+
             //Diversions
 
 

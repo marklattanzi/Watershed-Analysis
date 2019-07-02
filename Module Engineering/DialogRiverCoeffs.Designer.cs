@@ -57,6 +57,11 @@
             this.tbName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tpStageWidth = new System.Windows.Forms.TabPage();
+            this.chartStageWidth = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.label10 = new System.Windows.Forms.Label();
+            this.dgvStageWidth = new System.Windows.Forms.DataGridView();
+            this.Stage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.width = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tpDiversions = new System.Windows.Forms.TabPage();
             this.tpPointSources = new System.Windows.Forms.TabPage();
             this.tpReactions = new System.Windows.Forms.TabPage();
@@ -68,11 +73,6 @@
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
-            this.dgvStageWidth = new System.Windows.Forms.DataGridView();
-            this.label10 = new System.Windows.Forms.Label();
-            this.Stage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.width = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.chartStageWidth = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tcRiverTabs.SuspendLayout();
             this.tpPhysicalData.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -80,8 +80,8 @@
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tpStageWidth.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvStageWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartStageWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStageWidth)).BeginInit();
             this.SuspendLayout();
             // 
             // tcRiverTabs
@@ -328,6 +328,62 @@
             this.tpStageWidth.Text = "Stage - Width";
             this.tpStageWidth.UseVisualStyleBackColor = true;
             // 
+            // chartStageWidth
+            // 
+            customLabel1.Text = "Width (m)";
+            chartArea1.AxisX.CustomLabels.Add(customLabel1);
+            customLabel2.Text = "Stage (m)";
+            chartArea1.AxisY.CustomLabels.Add(customLabel2);
+            chartArea1.Name = "ChartArea1";
+            chartArea1.Position.Auto = false;
+            chartArea1.Position.Height = 80F;
+            chartArea1.Position.Width = 100F;
+            chartArea1.Position.Y = 5F;
+            this.chartStageWidth.ChartAreas.Add(chartArea1);
+            this.chartStageWidth.Location = new System.Drawing.Point(235, 79);
+            this.chartStageWidth.Name = "chartStageWidth";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Name = "Stage";
+            this.chartStageWidth.Series.Add(series1);
+            this.chartStageWidth.Size = new System.Drawing.Size(403, 355);
+            this.chartStageWidth.TabIndex = 2;
+            this.chartStageWidth.Text = "chart1";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(26, 67);
+            this.label10.MaximumSize = new System.Drawing.Size(200, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(189, 26);
+            this.label10.TabIndex = 1;
+            this.label10.Text = "Enter up to 9 pairs of stage-width data below";
+            // 
+            // dgvStageWidth
+            // 
+            this.dgvStageWidth.AllowUserToAddRows = false;
+            this.dgvStageWidth.AllowUserToDeleteRows = false;
+            this.dgvStageWidth.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvStageWidth.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Stage,
+            this.width});
+            this.dgvStageWidth.Location = new System.Drawing.Point(29, 96);
+            this.dgvStageWidth.Name = "dgvStageWidth";
+            this.dgvStageWidth.RowHeadersVisible = false;
+            this.dgvStageWidth.Size = new System.Drawing.Size(200, 279);
+            this.dgvStageWidth.TabIndex = 0;
+            // 
+            // Stage
+            // 
+            this.Stage.HeaderText = "Stage (m)";
+            this.Stage.Name = "Stage";
+            // 
+            // width
+            // 
+            this.width.HeaderText = "Width (m)";
+            this.width.Name = "width";
+            // 
             // tpDiversions
             // 
             this.tpDiversions.Location = new System.Drawing.Point(4, 40);
@@ -431,57 +487,6 @@
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             // 
-            // dgvStageWidth
-            // 
-            this.dgvStageWidth.AllowUserToAddRows = false;
-            this.dgvStageWidth.AllowUserToDeleteRows = false;
-            this.dgvStageWidth.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvStageWidth.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Stage,
-            this.width});
-            this.dgvStageWidth.Location = new System.Drawing.Point(76, 96);
-            this.dgvStageWidth.Name = "dgvStageWidth";
-            this.dgvStageWidth.RowHeadersVisible = false;
-            this.dgvStageWidth.Size = new System.Drawing.Size(200, 279);
-            this.dgvStageWidth.TabIndex = 0;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(73, 67);
-            this.label10.MaximumSize = new System.Drawing.Size(200, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(189, 26);
-            this.label10.TabIndex = 1;
-            this.label10.Text = "Enter up to 9 pairs of stage-width data below";
-            // 
-            // Stage
-            // 
-            this.Stage.HeaderText = "Stage (m)";
-            this.Stage.Name = "Stage";
-            // 
-            // width
-            // 
-            this.width.HeaderText = "Width (m)";
-            this.width.Name = "width";
-            // 
-            // chartStageWidth
-            // 
-            customLabel1.Text = "Width (m)";
-            chartArea1.AxisX.CustomLabels.Add(customLabel1);
-            customLabel2.Text = "Stage (m)";
-            chartArea1.AxisY.CustomLabels.Add(customLabel2);
-            chartArea1.Name = "ChartArea1";
-            this.chartStageWidth.ChartAreas.Add(chartArea1);
-            this.chartStageWidth.Location = new System.Drawing.Point(298, 69);
-            this.chartStageWidth.Name = "chartStageWidth";
-            series1.ChartArea = "ChartArea1";
-            series1.Name = "Series1";
-            this.chartStageWidth.Series.Add(series1);
-            this.chartStageWidth.Size = new System.Drawing.Size(300, 305);
-            this.chartStageWidth.TabIndex = 2;
-            this.chartStageWidth.Text = "chart1";
-            // 
             // DialogRiverCoeffs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -506,8 +511,8 @@
             this.groupBox1.PerformLayout();
             this.tpStageWidth.ResumeLayout(false);
             this.tpStageWidth.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvStageWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartStageWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStageWidth)).EndInit();
             this.ResumeLayout(false);
 
         }

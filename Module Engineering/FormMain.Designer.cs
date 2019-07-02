@@ -330,7 +330,6 @@
             this.miTopMode.Name = "miTopMode";
             this.miTopMode.Size = new System.Drawing.Size(50, 22);
             this.miTopMode.Text = "&Mode";
-            this.miTopMode.Click += new System.EventHandler(this.miTopMode_Click);
             // 
             // miModeInput
             // 
@@ -338,6 +337,7 @@
             this.miModeInput.Name = "miModeInput";
             this.miModeInput.Size = new System.Drawing.Size(230, 22);
             this.miModeInput.Text = "Input";
+            this.miModeInput.Click += new System.EventHandler(this.miModeInput_Click);
             // 
             // miModeOutput
             // 
@@ -351,12 +351,14 @@
             this.miModeFluxOutput.Name = "miModeFluxOutput";
             this.miModeFluxOutput.Size = new System.Drawing.Size(230, 22);
             this.miModeFluxOutput.Text = "Flux Output";
+            this.miModeFluxOutput.Click += new System.EventHandler(this.miModeFluxOutput_Click);
             // 
             // miModeLongGowdyOutput
             // 
             this.miModeLongGowdyOutput.Name = "miModeLongGowdyOutput";
             this.miModeLongGowdyOutput.Size = new System.Drawing.Size(230, 22);
             this.miModeLongGowdyOutput.Text = "Longitudinal / Gowdy Output";
+            this.miModeLongGowdyOutput.Click += new System.EventHandler(this.miModeLongGowdyOutput_Click);
             // 
             // miTopScenario
             // 
