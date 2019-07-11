@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel1 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
-            System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel2 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tcRiverTabs = new System.Windows.Forms.TabControl();
             this.tpPhysicalData = new System.Windows.Forms.TabPage();
@@ -73,6 +71,7 @@
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
+            this.btnRedrawChart = new System.Windows.Forms.Button();
             this.tcRiverTabs.SuspendLayout();
             this.tpPhysicalData.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -317,6 +316,7 @@
             // 
             // tpStageWidth
             // 
+            this.tpStageWidth.Controls.Add(this.btnRedrawChart);
             this.tpStageWidth.Controls.Add(this.chartStageWidth);
             this.tpStageWidth.Controls.Add(this.label10);
             this.tpStageWidth.Controls.Add(this.dgvStageWidth);
@@ -330,21 +330,12 @@
             // 
             // chartStageWidth
             // 
-            customLabel1.Text = "Width (m)";
-            chartArea1.AxisX.CustomLabels.Add(customLabel1);
-            customLabel2.Text = "Stage (m)";
-            chartArea1.AxisY.CustomLabels.Add(customLabel2);
             chartArea1.Name = "ChartArea1";
-            chartArea1.Position.Auto = false;
-            chartArea1.Position.Height = 80F;
-            chartArea1.Position.Width = 100F;
-            chartArea1.Position.Y = 5F;
             this.chartStageWidth.ChartAreas.Add(chartArea1);
             this.chartStageWidth.Location = new System.Drawing.Point(235, 79);
             this.chartStageWidth.Name = "chartStageWidth";
             series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Name = "Stage";
+            series1.Name = "SeriesStageWidth";
             this.chartStageWidth.Series.Add(series1);
             this.chartStageWidth.Size = new System.Drawing.Size(403, 355);
             this.chartStageWidth.TabIndex = 2;
@@ -371,7 +362,7 @@
             this.dgvStageWidth.Location = new System.Drawing.Point(29, 96);
             this.dgvStageWidth.Name = "dgvStageWidth";
             this.dgvStageWidth.RowHeadersVisible = false;
-            this.dgvStageWidth.Size = new System.Drawing.Size(200, 279);
+            this.dgvStageWidth.Size = new System.Drawing.Size(200, 258);
             this.dgvStageWidth.TabIndex = 0;
             // 
             // Stage
@@ -487,6 +478,17 @@
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             // 
+            // btnRedrawChart
+            // 
+            this.btnRedrawChart.Location = new System.Drawing.Point(57, 361);
+            this.btnRedrawChart.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnRedrawChart.Name = "btnRedrawChart";
+            this.btnRedrawChart.Size = new System.Drawing.Size(137, 39);
+            this.btnRedrawChart.TabIndex = 15;
+            this.btnRedrawChart.Text = "Redraw Chart";
+            this.btnRedrawChart.UseVisualStyleBackColor = true;
+            this.btnRedrawChart.Click += new System.EventHandler(this.btnRedrawChart_Click);
+            // 
             // DialogRiverCoeffs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -560,5 +562,6 @@
         private System.Windows.Forms.DataGridView dgvStageWidth;
         private System.Windows.Forms.DataGridViewTextBoxColumn Stage;
         private System.Windows.Forms.DataGridViewTextBoxColumn width;
+        private System.Windows.Forms.Button btnRedrawChart;
     }
 }
