@@ -191,7 +191,6 @@ namespace warmf
             tbObsHydroFile.Text = reservoir.hydrologyFilename;
             //Stage-Area
             dgvStageArea.Columns.Add("Stage", "Stage (m)");
-            //dgvStageArea.Columns["stage"].ValueType = ;
             dgvStageArea.Columns["stage"].SortMode = DataGridViewColumnSortMode.Automatic;
             dgvStageArea.Columns.Add("Area", "Area (m2)");
             for (int ii = 0; ii < 9; ii++)
@@ -205,7 +204,6 @@ namespace warmf
             chartStageArea.Series.Clear();
             chartStageArea.Series.Add("Area");
             chartStageArea.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            //chartStageArea.Series[0].LegendText = "Area (m2)";
             chartStageArea.ChartAreas[0].AxisX.Title = "Stage (m)";
             chartStageArea.ChartAreas[0].AxisY.Title = "Area (m2)";
             chartStageArea.ChartAreas[0].AxisY.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
