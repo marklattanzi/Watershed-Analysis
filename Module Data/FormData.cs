@@ -422,20 +422,20 @@ namespace warmf {
 					toolDataGrid.Columns[ii].Width = colWidths[ii];
 				}
 
-				for (int ii = 0; ii < met.date.Count(); ii++) {
-					string[] row = new string[]
-						{   ii.ToString(),
-							met.date[ii].ToString("MM/dd/yyyy"),
-							met.date[ii].ToString("HH:mm"),
-							met.precip[ii].ToString(),
-							met.minTemp[ii].ToString(),
-							met.maxTemp[ii].ToString(),
-							met.cloudCover[ii].ToString(),
-							met.dewPointTemp[ii].ToString(),
-							met.airPressure[ii].ToString(),
-							met.windSpeed[ii].ToString(),
-							met.comment[ii].ToString()
-						};
+                // Load data values into spreadsheet
+                // Each row is an array of strings
+                // Compile each row as one string and then split it into an array
+                char[] charSeparators = new char[] { '\n' };
+                for (int ii = 0; ii < met.TheData.Count(); ii++)
+                {
+                    // Row number, date, and time
+                    string unsplitRow = ii.ToString() + "\n" + met.TheData[ii].Date.ToString("MM/dd/yyyy") + "\n" + met.TheData[ii].Date.ToString("HH:mm");
+                    // Data values
+                    for (int jj = 0; jj < met.NumParameters; jj++)
+                        unsplitRow = unsplitRow + "\n" + met.TheData[ii].Values[jj].ToString();
+                    // Data source
+                    unsplitRow = unsplitRow + "\n" + met.TheData[ii].Source;
+                    string[] row = unsplitRow.Split(charSeparators);
 					toolDataGrid.Rows.Add(row);
 				}
 				fileInTable = met.filename;
