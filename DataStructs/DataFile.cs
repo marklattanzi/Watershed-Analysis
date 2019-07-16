@@ -35,6 +35,18 @@ namespace warmf
 
             return true;
         }
+
+        public bool WriteDataLine(ref STechStreamWriter SW)
+        {
+            SW.Write("{0:ddMMyyyy HHmm}", Convert.ToDateTime(Date.ToString()));
+            for (int ii = 0; ii < Values.Count(); ii++)
+            {
+                SW.Write("{1,8:0.###}", Values[ii]);
+            }
+            SW.WriteLine(Source);
+
+            return true;
+        }
     }
 
     // The DataFile class stores the entire contents of a time series data file
@@ -94,7 +106,34 @@ namespace warmf
             return ReadVersionLatLongName(ref SR);
         }
 
-        
+        public bool WriteVersionLatLongName(ref STechStreamWriter SW)
+        {
+            try
+            {
+                SW.WriteLine("VERSION {0, 8}", version);
+                SW.WriteLine("Latitude:{0, 10:F4} Longitude:{1,10:F4}{2}", latitude, longitude, shortName);
+            }
+            catch (Exception e)
+            {
+                if (SW != null)
+                    Debug.WriteLine("Error writing MET file {0} at line {1} ", filename, SW.LineNum);
+                else
+                    Debug.WriteLine("Error writing MET file {0}.  Problem with file creation.", filename);
+                return true;
+            }
+
+            return true;
+        }
+
+        public bool WriteData(ref STechStreamWriter SW)
+        {
+            for (int ii = 0; ii < TheData.Count(); ii++)
+            {
+                TheData[ii].WriteDataLine(ref SW);
+            }
+
+            return true;
+        }
 
     }
 }

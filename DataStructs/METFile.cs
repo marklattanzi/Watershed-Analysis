@@ -54,9 +54,9 @@ namespace warmf {
 				airPressure = new List<double>();
 				windSpeed = new List<double>();
 				comment = new List<string>();
-                thisDataLine = new DataLine();
 				line = sr.ReadLine();
 				while (line != null) {
+                    thisDataLine = new DataLine();
                     thisDataLine.ParseString(line, NumParameters);
                     TheData.Add(thisDataLine);
                     date.Add(TheData[TheData.Count - 1].Date);
@@ -85,21 +85,20 @@ namespace warmf {
 			STechStreamWriter sw = null;
 			try {
 				sw = new STechStreamWriter(filename, false);
-				sw.WriteLine("VERSION {0, 8}", version);
-				sw.WriteLine("Latitude:{0, 10:F4} Longitude:{1,10:F4}{2}", latitude, longitude, shortName);
-				for (int ii=0; ii < date.Count(); ii++) {
-					sw.WriteLine("{0:ddMMyyyy HHmm}{1,8:0.###}{2,8:0.#}{3,8:0.#}{4,8:0.##}{5,8:0.#}{6,8:0.#}{7,8:0.#}{8}",
-						Convert.ToDateTime(date[ii].ToString()),
-						precip[ii], 
-						minTemp[ii], 
-						maxTemp[ii], 
-						cloudCover[ii], 
-						dewPointTemp[ii], 
-						airPressure[ii], 
-						windSpeed[ii], 
-						comment[ii]);
-				}
-				sw.Close();
+                WriteVersionLatLongName(ref sw);
+				for (int ii=0; ii < TheData.Count(); ii++) {
+                    sw.WriteLine("{0:ddMMyyyy HHmm}{1,8:0.###}{2,8:0.#}{3,8:0.#}{4,8:0.##}{5,8:0.#}{6,8:0.#}{7,8:0.#}{8}",
+                        Convert.ToDateTime(date[ii].ToString()),
+                        TheData[ii].Values[0],
+                        TheData[ii].Values[1],
+                        TheData[ii].Values[2],
+                        TheData[ii].Values[3],
+                        TheData[ii].Values[4],
+                        TheData[ii].Values[5],
+                        TheData[ii].Values[6],
+                        TheData[ii].Source);
+                }
+                sw.Close();
 				return true;
 			}
 			catch (Exception e) {
