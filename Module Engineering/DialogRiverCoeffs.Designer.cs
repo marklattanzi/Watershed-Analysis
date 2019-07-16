@@ -55,13 +55,36 @@
             this.tbName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tpStageWidth = new System.Windows.Forms.TabPage();
+            this.btnRedrawChart = new System.Windows.Forms.Button();
             this.chartStageWidth = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label10 = new System.Windows.Forms.Label();
             this.dgvStageWidth = new System.Windows.Forms.DataGridView();
             this.Stage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.width = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tpDiversions = new System.Windows.Forms.TabPage();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tbMinRiverFlow = new System.Windows.Forms.TextBox();
+            this.btnToRemove = new System.Windows.Forms.Button();
+            this.btnFromRemove = new System.Windows.Forms.Button();
+            this.btnToAdd = new System.Windows.Forms.Button();
+            this.btnFromAdd = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.lbDiversionsTo = new System.Windows.Forms.ListBox();
+            this.lbDiversionsFrom = new System.Windows.Forms.ListBox();
             this.tpPointSources = new System.Windows.Forms.TabPage();
+            this.tbNPDESNumber = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.rbUnspecAmbient = new System.Windows.Forms.RadioButton();
+            this.rbUnspecZero = new System.Windows.Forms.RadioButton();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.rbSourceExternal = new System.Windows.Forms.RadioButton();
+            this.rbSourceInternal = new System.Windows.Forms.RadioButton();
+            this.label15 = new System.Windows.Forms.Label();
+            this.btnRemovePTS = new System.Windows.Forms.Button();
+            this.btnAddPTS = new System.Windows.Forms.Button();
+            this.lbPointSources = new System.Windows.Forms.ListBox();
             this.tpReactions = new System.Windows.Forms.TabPage();
             this.tpSediment = new System.Windows.Forms.TabPage();
             this.tpInitialConcs = new System.Windows.Forms.TabPage();
@@ -71,7 +94,14 @@
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
-            this.btnRedrawChart = new System.Windows.Forms.Button();
+            this.RiverOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.dgvReactionRates = new System.Windows.Forms.DataGridView();
+            this.tbAerationFactor = new System.Windows.Forms.TextBox();
+            this.tbConvHeatFactor = new System.Windows.Forms.TextBox();
+            this.tbPrecipitateSettling = new System.Windows.Forms.TextBox();
             this.tcRiverTabs.SuspendLayout();
             this.tpPhysicalData.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -81,6 +111,12 @@
             this.tpStageWidth.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartStageWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStageWidth)).BeginInit();
+            this.tpDiversions.SuspendLayout();
+            this.tpPointSources.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.tpReactions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReactionRates)).BeginInit();
             this.SuspendLayout();
             // 
             // tcRiverTabs
@@ -328,6 +364,17 @@
             this.tpStageWidth.Text = "Stage - Width";
             this.tpStageWidth.UseVisualStyleBackColor = true;
             // 
+            // btnRedrawChart
+            // 
+            this.btnRedrawChart.Location = new System.Drawing.Point(57, 361);
+            this.btnRedrawChart.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnRedrawChart.Name = "btnRedrawChart";
+            this.btnRedrawChart.Size = new System.Drawing.Size(137, 39);
+            this.btnRedrawChart.TabIndex = 15;
+            this.btnRedrawChart.Text = "Redraw Chart";
+            this.btnRedrawChart.UseVisualStyleBackColor = true;
+            this.btnRedrawChart.Click += new System.EventHandler(this.btnRedrawChart_Click);
+            // 
             // chartStageWidth
             // 
             chartArea1.Name = "ChartArea1";
@@ -377,6 +424,16 @@
             // 
             // tpDiversions
             // 
+            this.tpDiversions.Controls.Add(this.label13);
+            this.tpDiversions.Controls.Add(this.tbMinRiverFlow);
+            this.tpDiversions.Controls.Add(this.btnToRemove);
+            this.tpDiversions.Controls.Add(this.btnFromRemove);
+            this.tpDiversions.Controls.Add(this.btnToAdd);
+            this.tpDiversions.Controls.Add(this.btnFromAdd);
+            this.tpDiversions.Controls.Add(this.label12);
+            this.tpDiversions.Controls.Add(this.label11);
+            this.tpDiversions.Controls.Add(this.lbDiversionsTo);
+            this.tpDiversions.Controls.Add(this.lbDiversionsFrom);
             this.tpDiversions.Location = new System.Drawing.Point(4, 40);
             this.tpDiversions.Name = "tpDiversions";
             this.tpDiversions.Size = new System.Drawing.Size(667, 440);
@@ -384,8 +441,110 @@
             this.tpDiversions.Text = "Diversions";
             this.tpDiversions.UseVisualStyleBackColor = true;
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(206, 393);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(126, 13);
+            this.label13.TabIndex = 9;
+            this.label13.Text = "Minimum River Flow, cms";
+            // 
+            // tbMinRiverFlow
+            // 
+            this.tbMinRiverFlow.Location = new System.Drawing.Point(338, 390);
+            this.tbMinRiverFlow.Name = "tbMinRiverFlow";
+            this.tbMinRiverFlow.Size = new System.Drawing.Size(100, 20);
+            this.tbMinRiverFlow.TabIndex = 8;
+            // 
+            // btnToRemove
+            // 
+            this.btnToRemove.Enabled = false;
+            this.btnToRemove.Location = new System.Drawing.Point(499, 346);
+            this.btnToRemove.Name = "btnToRemove";
+            this.btnToRemove.Size = new System.Drawing.Size(75, 23);
+            this.btnToRemove.TabIndex = 7;
+            this.btnToRemove.Text = "Remove";
+            this.btnToRemove.UseVisualStyleBackColor = true;
+            this.btnToRemove.Click += new System.EventHandler(this.btnToRemove_Click);
+            // 
+            // btnFromRemove
+            // 
+            this.btnFromRemove.Enabled = false;
+            this.btnFromRemove.Location = new System.Drawing.Point(174, 346);
+            this.btnFromRemove.Name = "btnFromRemove";
+            this.btnFromRemove.Size = new System.Drawing.Size(75, 23);
+            this.btnFromRemove.TabIndex = 6;
+            this.btnFromRemove.Text = "Remove";
+            this.btnFromRemove.UseVisualStyleBackColor = true;
+            this.btnFromRemove.Click += new System.EventHandler(this.btnFromRemove_Click);
+            // 
+            // btnToAdd
+            // 
+            this.btnToAdd.Location = new System.Drawing.Point(418, 346);
+            this.btnToAdd.Name = "btnToAdd";
+            this.btnToAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnToAdd.TabIndex = 5;
+            this.btnToAdd.Text = "Add";
+            this.btnToAdd.UseVisualStyleBackColor = true;
+            this.btnToAdd.Click += new System.EventHandler(this.btnToAdd_Click);
+            // 
+            // btnFromAdd
+            // 
+            this.btnFromAdd.Location = new System.Drawing.Point(93, 346);
+            this.btnFromAdd.Name = "btnFromAdd";
+            this.btnFromAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnFromAdd.TabIndex = 4;
+            this.btnFromAdd.Text = "Add";
+            this.btnFromAdd.UseVisualStyleBackColor = true;
+            this.btnFromAdd.Click += new System.EventHandler(this.btnFromAdd_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(335, 30);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(148, 13);
+            this.label12.TabIndex = 3;
+            this.label12.Text = "Diversions To River Segment:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(16, 30);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(158, 13);
+            this.label11.TabIndex = 2;
+            this.label11.Text = "Diversions From River Segment:";
+            // 
+            // lbDiversionsTo
+            // 
+            this.lbDiversionsTo.FormattingEnabled = true;
+            this.lbDiversionsTo.Location = new System.Drawing.Point(338, 46);
+            this.lbDiversionsTo.Name = "lbDiversionsTo";
+            this.lbDiversionsTo.Size = new System.Drawing.Size(311, 277);
+            this.lbDiversionsTo.TabIndex = 1;
+            this.lbDiversionsTo.SelectedIndexChanged += new System.EventHandler(this.lbDiversionsTo_SelectedIndexChanged);
+            // 
+            // lbDiversionsFrom
+            // 
+            this.lbDiversionsFrom.FormattingEnabled = true;
+            this.lbDiversionsFrom.Location = new System.Drawing.Point(19, 46);
+            this.lbDiversionsFrom.Name = "lbDiversionsFrom";
+            this.lbDiversionsFrom.Size = new System.Drawing.Size(311, 277);
+            this.lbDiversionsFrom.TabIndex = 0;
+            this.lbDiversionsFrom.SelectedIndexChanged += new System.EventHandler(this.lbDiversionsFrom_SelectedIndexChanged);
+            // 
             // tpPointSources
             // 
+            this.tpPointSources.Controls.Add(this.tbNPDESNumber);
+            this.tpPointSources.Controls.Add(this.label14);
+            this.tpPointSources.Controls.Add(this.groupBox6);
+            this.tpPointSources.Controls.Add(this.groupBox5);
+            this.tpPointSources.Controls.Add(this.label15);
+            this.tpPointSources.Controls.Add(this.btnRemovePTS);
+            this.tpPointSources.Controls.Add(this.btnAddPTS);
+            this.tpPointSources.Controls.Add(this.lbPointSources);
             this.tpPointSources.Location = new System.Drawing.Point(4, 40);
             this.tpPointSources.Name = "tpPointSources";
             this.tpPointSources.Size = new System.Drawing.Size(667, 440);
@@ -393,8 +552,136 @@
             this.tpPointSources.Text = "Point Sources";
             this.tpPointSources.UseVisualStyleBackColor = true;
             // 
+            // tbNPDESNumber
+            // 
+            this.tbNPDESNumber.Location = new System.Drawing.Point(337, 392);
+            this.tbNPDESNumber.Name = "tbNPDESNumber";
+            this.tbNPDESNumber.Size = new System.Drawing.Size(100, 20);
+            this.tbNPDESNumber.TabIndex = 18;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(215, 395);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(116, 13);
+            this.label14.TabIndex = 17;
+            this.label14.Text = "NPDES Permit Number";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.rbUnspecAmbient);
+            this.groupBox6.Controls.Add(this.rbUnspecZero);
+            this.groupBox6.Location = new System.Drawing.Point(337, 303);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(170, 72);
+            this.groupBox6.TabIndex = 16;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Unspecified Constituents";
+            // 
+            // rbUnspecAmbient
+            // 
+            this.rbUnspecAmbient.AutoSize = true;
+            this.rbUnspecAmbient.Location = new System.Drawing.Point(6, 42);
+            this.rbUnspecAmbient.Name = "rbUnspecAmbient";
+            this.rbUnspecAmbient.Size = new System.Drawing.Size(63, 17);
+            this.rbUnspecAmbient.TabIndex = 14;
+            this.rbUnspecAmbient.TabStop = true;
+            this.rbUnspecAmbient.Text = "Ambient";
+            this.rbUnspecAmbient.UseVisualStyleBackColor = true;
+            // 
+            // rbUnspecZero
+            // 
+            this.rbUnspecZero.AutoSize = true;
+            this.rbUnspecZero.Location = new System.Drawing.Point(6, 19);
+            this.rbUnspecZero.Name = "rbUnspecZero";
+            this.rbUnspecZero.Size = new System.Drawing.Size(47, 17);
+            this.rbUnspecZero.TabIndex = 13;
+            this.rbUnspecZero.TabStop = true;
+            this.rbUnspecZero.Text = "Zero";
+            this.rbUnspecZero.UseVisualStyleBackColor = true;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.rbSourceExternal);
+            this.groupBox5.Controls.Add(this.rbSourceInternal);
+            this.groupBox5.Location = new System.Drawing.Point(161, 302);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(170, 73);
+            this.groupBox5.TabIndex = 15;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Water Source";
+            // 
+            // rbSourceExternal
+            // 
+            this.rbSourceExternal.AutoSize = true;
+            this.rbSourceExternal.Location = new System.Drawing.Point(6, 42);
+            this.rbSourceExternal.Name = "rbSourceExternal";
+            this.rbSourceExternal.Size = new System.Drawing.Size(63, 17);
+            this.rbSourceExternal.TabIndex = 12;
+            this.rbSourceExternal.TabStop = true;
+            this.rbSourceExternal.Text = "External";
+            this.rbSourceExternal.UseVisualStyleBackColor = true;
+            // 
+            // rbSourceInternal
+            // 
+            this.rbSourceInternal.AutoSize = true;
+            this.rbSourceInternal.Location = new System.Drawing.Point(6, 19);
+            this.rbSourceInternal.Name = "rbSourceInternal";
+            this.rbSourceInternal.Size = new System.Drawing.Size(60, 17);
+            this.rbSourceInternal.TabIndex = 11;
+            this.rbSourceInternal.TabStop = true;
+            this.rbSourceInternal.Text = "Internal";
+            this.rbSourceInternal.UseVisualStyleBackColor = true;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(175, 272);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(321, 13);
+            this.label15.TabIndex = 10;
+            this.label15.Text = "Water source Information corresponds to the selected point source";
+            // 
+            // btnRemovePTS
+            // 
+            this.btnRemovePTS.Enabled = false;
+            this.btnRemovePTS.Location = new System.Drawing.Point(337, 228);
+            this.btnRemovePTS.Name = "btnRemovePTS";
+            this.btnRemovePTS.Size = new System.Drawing.Size(75, 23);
+            this.btnRemovePTS.TabIndex = 8;
+            this.btnRemovePTS.Text = "Remove";
+            this.btnRemovePTS.UseVisualStyleBackColor = true;
+            this.btnRemovePTS.Click += new System.EventHandler(this.btnRemovePTS_Click);
+            // 
+            // btnAddPTS
+            // 
+            this.btnAddPTS.Location = new System.Drawing.Point(256, 228);
+            this.btnAddPTS.Name = "btnAddPTS";
+            this.btnAddPTS.Size = new System.Drawing.Size(75, 23);
+            this.btnAddPTS.TabIndex = 7;
+            this.btnAddPTS.Text = "Add";
+            this.btnAddPTS.UseVisualStyleBackColor = true;
+            this.btnAddPTS.Click += new System.EventHandler(this.btnAddPTS_Click);
+            // 
+            // lbPointSources
+            // 
+            this.lbPointSources.FormattingEnabled = true;
+            this.lbPointSources.Location = new System.Drawing.Point(24, 23);
+            this.lbPointSources.Name = "lbPointSources";
+            this.lbPointSources.Size = new System.Drawing.Size(616, 199);
+            this.lbPointSources.TabIndex = 0;
+            this.lbPointSources.SelectedIndexChanged += new System.EventHandler(this.lbPointSources_SelectedIndexChanged);
+            // 
             // tpReactions
             // 
+            this.tpReactions.Controls.Add(this.tbPrecipitateSettling);
+            this.tpReactions.Controls.Add(this.tbConvHeatFactor);
+            this.tpReactions.Controls.Add(this.tbAerationFactor);
+            this.tpReactions.Controls.Add(this.dgvReactionRates);
+            this.tpReactions.Controls.Add(this.label18);
+            this.tpReactions.Controls.Add(this.label17);
+            this.tpReactions.Controls.Add(this.label16);
             this.tpReactions.Location = new System.Drawing.Point(4, 40);
             this.tpReactions.Name = "tpReactions";
             this.tpReactions.Size = new System.Drawing.Size(667, 440);
@@ -478,16 +765,63 @@
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             // 
-            // btnRedrawChart
+            // label16
             // 
-            this.btnRedrawChart.Location = new System.Drawing.Point(57, 361);
-            this.btnRedrawChart.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnRedrawChart.Name = "btnRedrawChart";
-            this.btnRedrawChart.Size = new System.Drawing.Size(137, 39);
-            this.btnRedrawChart.TabIndex = 15;
-            this.btnRedrawChart.Text = "Redraw Chart";
-            this.btnRedrawChart.UseVisualStyleBackColor = true;
-            this.btnRedrawChart.Click += new System.EventHandler(this.btnRedrawChart_Click);
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(434, 55);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(79, 13);
+            this.label16.TabIndex = 0;
+            this.label16.Text = "Aeration Factor";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(434, 212);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(131, 13);
+            this.label17.TabIndex = 1;
+            this.label17.Text = "Precipitate Settling, m/day";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(434, 128);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(120, 13);
+            this.label18.TabIndex = 2;
+            this.label18.Text = "Convective Heat Factor";
+            // 
+            // dgvReactionRates
+            // 
+            this.dgvReactionRates.AllowUserToAddRows = false;
+            this.dgvReactionRates.AllowUserToDeleteRows = false;
+            this.dgvReactionRates.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvReactionRates.Location = new System.Drawing.Point(19, 55);
+            this.dgvReactionRates.Name = "dgvReactionRates";
+            this.dgvReactionRates.Size = new System.Drawing.Size(393, 370);
+            this.dgvReactionRates.TabIndex = 3;
+            // 
+            // tbAerationFactor
+            // 
+            this.tbAerationFactor.Location = new System.Drawing.Point(474, 89);
+            this.tbAerationFactor.Name = "tbAerationFactor";
+            this.tbAerationFactor.Size = new System.Drawing.Size(154, 20);
+            this.tbAerationFactor.TabIndex = 4;
+            // 
+            // tbConvHeatFactor
+            // 
+            this.tbConvHeatFactor.Location = new System.Drawing.Point(474, 163);
+            this.tbConvHeatFactor.Name = "tbConvHeatFactor";
+            this.tbConvHeatFactor.Size = new System.Drawing.Size(154, 20);
+            this.tbConvHeatFactor.TabIndex = 5;
+            // 
+            // tbPrecipitateSettling
+            // 
+            this.tbPrecipitateSettling.Location = new System.Drawing.Point(474, 252);
+            this.tbPrecipitateSettling.Name = "tbPrecipitateSettling";
+            this.tbPrecipitateSettling.Size = new System.Drawing.Size(154, 20);
+            this.tbPrecipitateSettling.TabIndex = 6;
             // 
             // DialogRiverCoeffs
             // 
@@ -515,6 +849,17 @@
             this.tpStageWidth.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartStageWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStageWidth)).EndInit();
+            this.tpDiversions.ResumeLayout(false);
+            this.tpDiversions.PerformLayout();
+            this.tpPointSources.ResumeLayout(false);
+            this.tpPointSources.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.tpReactions.ResumeLayout(false);
+            this.tpReactions.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReactionRates)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -563,5 +908,35 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Stage;
         private System.Windows.Forms.DataGridViewTextBoxColumn width;
         private System.Windows.Forms.Button btnRedrawChart;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox tbMinRiverFlow;
+        private System.Windows.Forms.Button btnToRemove;
+        private System.Windows.Forms.Button btnFromRemove;
+        private System.Windows.Forms.Button btnToAdd;
+        private System.Windows.Forms.Button btnFromAdd;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ListBox lbDiversionsTo;
+        private System.Windows.Forms.ListBox lbDiversionsFrom;
+        private System.Windows.Forms.TextBox tbNPDESNumber;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.RadioButton rbUnspecAmbient;
+        private System.Windows.Forms.RadioButton rbUnspecZero;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.RadioButton rbSourceExternal;
+        private System.Windows.Forms.RadioButton rbSourceInternal;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Button btnRemovePTS;
+        private System.Windows.Forms.Button btnAddPTS;
+        private System.Windows.Forms.ListBox lbPointSources;
+        private System.Windows.Forms.OpenFileDialog RiverOpenFileDialog;
+        private System.Windows.Forms.TextBox tbPrecipitateSettling;
+        private System.Windows.Forms.TextBox tbConvHeatFactor;
+        private System.Windows.Forms.TextBox tbAerationFactor;
+        private System.Windows.Forms.DataGridView dgvReactionRates;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label16;
     }
 }
