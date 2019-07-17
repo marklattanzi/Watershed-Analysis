@@ -113,26 +113,106 @@ namespace warmf
                 }
                 lbPointSources.SelectedIndex = 0;
                 PointSourceInfo(lbPointSources.SelectedIndex);
-
             }
 
-        //Reactions
+            //Reactions
+            for (int i = 0; i < Global.coe.numReactions; i++)
+            {
+                dgvReactions.Rows.Add();
+                dgvReactions.Rows[i].HeaderCell.Value = Global.coe.reactions[i].name + ", " + Global.coe.reactions[i].units;
+                dgvReactions.Rows[i].Cells["water"].Value = river.waterReactionRate[i].ToString();
+                dgvReactions.Rows[i].Cells["bed"].Value = river.bedReactionRate[i].ToString();
+            }
+            tbAerationFactor.Text = river.reaerationRateMult.ToString();
+            tbConvHeatFactor.Text = river.convectiveHeatFactor.ToString();
+            tbPrecipitateSettling.Text = river.precipSettleRate.ToString();
+
+            //Sediment
+            tbInitSedDepth.Text = river.sedBedDepth.ToString("F");
+            tbBedDiffRate.Text = river.sedDiffusionRate.ToString("F");
+            tbDetachVelMult.Text = river.sedDetachVelMult.ToString("F");
+            tbDetachVelExp.Text = river.sedDetachVelExp.ToString("F");
+            tbVegFactor.Text = river.sedVegFactor.ToString("F");
+            tbBankStabilityFactor.Text = river.sedBankStabFactor.ToString("F");
+            //number of sediment particle sizes is not flexible in current code. Consider revising?
+            dgvBedParticleContent.Rows.Add();
+            dgvBedParticleContent.Rows[0].HeaderCell.Value = "Clay";
+            dgvBedParticleContent.Rows[0].Cells[0].Value = (river.sedFirstPartSizePct * 100).ToString("F");
+            dgvBedParticleContent.Rows.Add();
+            dgvBedParticleContent.Rows[1].HeaderCell.Value = "Silt";
+            dgvBedParticleContent.Rows[1].Cells[0].Value = (river.sedSecondPartSizePct * 100).ToString("F");
+            dgvBedParticleContent.Rows.Add();
+            dgvBedParticleContent.Rows[2].HeaderCell.Value = "Sand";
+            dgvBedParticleContent.Rows[2].Cells[0].Value = (river.sedFirstPartSizePct * 100).ToString("F");
+
+            //Initial Concentrations
+            string strWaterUnits, strShortUnits;
+            dgvRiverInitConcs.Columns.Add("water", "Water");
+            dgvRiverInitConcs.Columns.Add("waterunits", "Units");
+            dgvRiverInitConcs.Columns["waterunits"].ReadOnly = true;
+            dgvRiverInitConcs.Columns.Add("bed", "Bed");
+            dgvRiverInitConcs.Columns.Add("bedunits", "Units");
+            dgvRiverInitConcs.Columns["bedunits"].ReadOnly = true;
+            for (int i = 0; i < Global.coe.numChemicalParams; i++)
+            {
+                dgvRiverInitConcs.Rows.Add();
+                dgvRiverInitConcs.Rows[i].HeaderCell.Value = Global.coe.chemConstits[i].fullName;
+                dgvRiverInitConcs.Rows[i].Cells["water"].Value = river.componentConcentration[i].ToString();
+                strWaterUnits = Global.coe.chemConstits[i].units;
+                dgvRiverInitConcs.Rows[i].Cells["waterunits"].Value = strWaterUnits;
+                dgvRiverInitConcs.Rows[i].Cells["bed"].Value = river.bedAdsorpConcentration[i].ToString();
+                strShortUnits = strWaterUnits.Substring(0, 4);
+                if (String.Equals(strShortUnits, "mg/L", StringComparison.OrdinalIgnoreCase))
+                {
+                    dgvRiverInitConcs.Rows[i].Cells["bedunits"].Value = strWaterUnits.Replace(strWaterUnits.Substring(0, 4), "mg/g");
+                }
+                else if (String.Equals(strShortUnits, "ug/L", StringComparison.OrdinalIgnoreCase))
+                {
+                    dgvRiverInitConcs.Rows[i].Cells["bedunits"].Value = strWaterUnits.Replace(strWaterUnits.Substring(0, 4), "ug/g");
+                }
+                else
+                {
+                    dgvRiverInitConcs.Rows[i].Cells["bedunits"].Value = strWaterUnits;
+                }
+            }
+            int iRow = 0;
+            for (int i = 0; i < Global.coe.numPhysicalParams; i++)
+            {
+                iRow = i + Global.coe.numChemicalParams;
+                dgvRiverInitConcs.Rows.Add();
+                dgvRiverInitConcs.Rows[iRow].HeaderCell.Value = Global.coe.physicalConstits[i].fullName;
+                dgvRiverInitConcs.Rows[iRow].Cells["water"].Value = river.componentConcentration[i + Global.coe.numChemicalParams].ToString();
+                strWaterUnits = Global.coe.physicalConstits[i].units;
+                dgvRiverInitConcs.Rows[iRow].Cells["waterunits"].Value = strWaterUnits;
+                dgvRiverInitConcs.Rows[iRow].Cells["bed"].Value = river.bedAdsorpConcentration[i + Global.coe.numChemicalParams].ToString();
+                strShortUnits = strWaterUnits.Substring(0, 4);
+                if (String.Equals(strShortUnits, "mg/L", StringComparison.OrdinalIgnoreCase))
+                {
+                    dgvRiverInitConcs.Rows[iRow].Cells["bedunits"].Value = strWaterUnits.Replace(strWaterUnits.Substring(0, 4), "mg/g");
+                }
+                else if (String.Equals(strShortUnits, "ug/L", StringComparison.OrdinalIgnoreCase))
+                {
+                    dgvRiverInitConcs.Rows[iRow].Cells["bedunits"].Value = strWaterUnits.Replace(strWaterUnits.Substring(0, 4), "ug/g");
+                }
+                else
+                {
+                    dgvRiverInitConcs.Rows[iRow].Cells["bedunits"].Value = strWaterUnits;
+                }
+            }
+            List<int> hideRowsList = new List<int>() { 1, 2, 3, 14, 17, 21, 23, 24, 33, 38 };
+            foreach (int i in hideRowsList)
+                dgvRiverInitConcs.Rows[i - 1].Visible = false;
+            dgvRiverInitConcs.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders);
+            dgvRiverInitConcs.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.DisplayedCells);
+
+            //Adsorption
 
 
-        //Sediment
+            //Observed Data
 
 
-        //Initial Concentrations
-
-
-        //Adsorption
-
-
-        //Observed Data
-
-
-        //CE-QUAL-W2
-    }
+            //CE-QUAL-W2
+        }
 
         private void btnRedrawChart_Click(object sender, EventArgs e)
         {
