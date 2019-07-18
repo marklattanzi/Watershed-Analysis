@@ -442,17 +442,10 @@ namespace warmf {
         // need to change to creating a new shpfile layer on frmMap and show/hide it - MRL
         private void DrawMETStations(Graphics g)
         {
-            List<METFile> mFiles = new List<METFile>();
             for (int ii = 0; ii < Global.coe.numMETFiles; ii++)
             {
                 METFile met = new METFile("data/met/" + Global.coe.METFilename[ii]);
-                met.ReadMETFile();  // for better performance, we could just read MET file headers with new method - MRL
-                mFiles.Add(met);
-            }
-
-            for (int ii = 0; ii < Global.coe.numMETFiles; ii++)
-            {
-                METFile met = mFiles[ii];
+                met.ReadFile();  // for better performance, we could just read MET file headers with new method - MRL
                 DrawMarker(g, met.longitude, met.latitude);
             }
         }
