@@ -38,10 +38,11 @@ namespace warmf
 
         public bool WriteDataLine(ref STechStreamWriter SW)
         {
-            SW.Write("{0:ddMMyyyy HHmm}", Convert.ToDateTime(Date.ToString()));
+//            SW.Write("{0:ddMMyyyy HHmm}", Convert.ToDateTime(Date.ToString("ddMMyyyy HHmm")));
+            SW.Write("{0}", Date.ToString("ddMMyyyy HHmm"));
             for (int ii = 0; ii < Values.Count(); ii++)
             {
-                SW.Write("{1,8:0.###}", Values[ii]);
+                SW.Write("{1,8:0.######}", Values[ii]);
             }
             SW.WriteLine(Source);
 
@@ -63,8 +64,6 @@ namespace warmf
         public double latitude { get; set; }
         public double longitude { get; set; }
 
-        public List<DateTime> date;
-        public List<string> comment;
         public List<DataLine> TheData;
 
         public DataFile() { NumLines = 0; NumParameters = 0; NumGroups = 1; TheData = new List<DataLine>(); }
@@ -106,6 +105,42 @@ namespace warmf
             return ReadVersionLatLongName(ref SR);
         }
 
+        public bool ReadFile()
+        {
+            STechStreamReader sr = null;
+
+            try
+            {
+                int intRes;
+                double dblRes;
+                string line;
+                int day, month, year, hour, minute;
+                DataLine thisDataLine;
+                sr = new STechStreamReader(filename);
+
+                ReadHeader(ref sr);
+
+                line = sr.ReadLine();
+                while (line != null)
+                {
+                    thisDataLine = new DataLine();
+                    thisDataLine.ParseString(line, NumParameters);
+                    TheData.Add(thisDataLine);
+                    line = sr.ReadLine();
+                }
+            }
+            catch (Exception e)
+            {
+                if (sr != null)
+                    Debug.WriteLine("Error in data file.  Badly formatted data at line = " + sr.LineNum);
+                else
+                    Debug.WriteLine("Error opening StreamReader for data file " + filename);
+                return false;
+            }
+            return true;
+
+        }
+
         public bool WriteVersionLatLongName(ref STechStreamWriter SW)
         {
             try
@@ -125,6 +160,11 @@ namespace warmf
             return true;
         }
 
+        public bool WriteHeader(ref STechStreamWriter SW)
+        {
+            return WriteVersionLatLongName(ref SW);
+        }
+
         public bool WriteData(ref STechStreamWriter SW)
         {
             for (int ii = 0; ii < TheData.Count(); ii++)
@@ -133,6 +173,41 @@ namespace warmf
             }
 
             return true;
+        }
+
+        public bool WriteFile()
+        {
+            STechStreamWriter sw = null;
+            try
+            {
+                sw = new STechStreamWriter(filename, false);
+                WriteHeader(ref sw);
+                for (int ii = 0; ii < TheData.Count(); ii++)
+                {
+//                    TheData[ii].WriteDataLine(ref sw);
+                    sw.WriteLine("{0:ddMMyyyy HHmm}{1,8:0.###}{2,8:0.#}{3,8:0.#}{4,8:0.##}{5,8:0.#}{6,8:0.#}{7,8:0.#}{8}",
+                        Convert.ToDateTime(TheData[ii].Date.ToString()),
+                        TheData[ii].Values[0],
+                        TheData[ii].Values[1],
+                        TheData[ii].Values[2],
+                        TheData[ii].Values[3],
+                        TheData[ii].Values[4],
+                        TheData[ii].Values[5],
+                        TheData[ii].Values[6],
+                        TheData[ii].Source);
+                }
+                sw.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                if (sw != null)
+                    Debug.WriteLine("Error writing MET file {0} at line {1} ", filename, sw.LineNum);
+                else
+                    Debug.WriteLine("Error writing MET file {0}.  Problem with file creation.", filename);
+                return true;
+            }
+
         }
 
     }

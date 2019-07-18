@@ -161,7 +161,7 @@ namespace warmf {
 					if (cboxFilename.SelectedIndex != -1) {
 						string filename = Global.DIR.MET + Global.coe.METFilename[cboxFilename.SelectedIndex];
 						met = new METFile(filename);
-						if (met.ReadMETFile()) {
+						if (met.ReadFile()) {
 							ShowHeaderData();
 							if (radioGraph.Checked)
 								PlotMETData();
@@ -203,22 +203,19 @@ namespace warmf {
 			double dblRes;
 			needToSave = true;
 			Double.TryParse(toolDataGrid[e.ColumnIndex, e.RowIndex].Value.ToString(), out dblRes);
-			switch (e.ColumnIndex) {
-				case 1:  // date change
-					met.date[e.RowIndex] = Convert.ToDateTime(toolDataGrid[e.ColumnIndex, e.RowIndex].Value + " " + toolDataGrid[e.RowIndex, e.ColumnIndex + 1].Value);
-					break;
-				case 2:  // time change
-					met.date[e.RowIndex] = Convert.ToDateTime(toolDataGrid[e.ColumnIndex, e.RowIndex - 1].Value + " " + toolDataGrid[e.RowIndex, e.ColumnIndex].Value);
-					break;
-				case 3: met.precip[e.RowIndex] = dblRes; break;
-				case 4: met.minTemp[e.RowIndex] = dblRes; break;
-				case 5: met.maxTemp[e.RowIndex] = dblRes; break;
-				case 6: met.cloudCover[e.RowIndex] = dblRes; break;
-				case 7: met.dewPointTemp[e.RowIndex] = dblRes; break;
-				case 8: met.airPressure[e.RowIndex] = dblRes; break;
-				case 9: met.windSpeed[e.RowIndex] = dblRes; break;
-				case 10: met.comment[e.RowIndex] = toolDataGrid[e.ColumnIndex, e.RowIndex].Value.ToString(); break;
-			}
+
+            // Date changed
+            if (e.ColumnIndex == 1)
+                met.TheData[e.RowIndex].Date = Convert.ToDateTime(toolDataGrid[e.ColumnIndex, e.RowIndex].Value + " " + toolDataGrid[e.RowIndex, e.ColumnIndex + 1].Value);
+            // Time changed
+            else if (e.ColumnIndex == 2)
+                met.TheData[e.RowIndex].Date = Convert.ToDateTime(toolDataGrid[e.ColumnIndex, e.RowIndex - 1].Value + " " + toolDataGrid[e.RowIndex, e.ColumnIndex].Value);
+            // Data source
+            else if (e.ColumnIndex == met.NumParameters + 3)
+                met.TheData[e.RowIndex].Source = toolDataGrid[e.ColumnIndex, e.RowIndex].Value.ToString();
+            // Data values
+            else if (e.ColumnIndex > 2)
+                met.TheData[e.RowIndex].Values[e.ColumnIndex - 3] = dblRes;
 		}
 
 		// changed name text box
@@ -295,7 +292,7 @@ namespace warmf {
 			dialog.setLabels("Save", "Discard");
 			dialog.ShowDialog();
 			if (dialog.Result == 1) {
-				met.WriteMETFile();
+				met.WriteFile();
 			}
 			return dialog.Result;
 		}
@@ -310,19 +307,22 @@ namespace warmf {
 
 		// plots MET file data
 		private void PlotMETData() {
-			List<double> data = null;
-
 			if (cboxData.SelectedIndex != -1) {
-				string dataName = METFile.labels[cboxData.SelectedIndex].key;
-				switch (dataName) {
-					case "precip": data = met.precip; break;
-					case "mintemp": data = met.minTemp; break;
-					case "maxtemp": data = met.maxTemp; break;
-					case "cloud": data = met.cloudCover; break;
-					case "dewpoint": data = met.dewPointTemp; break;
-					case "airpressure": data = met.airPressure; break;
-					case "windspeed": data = met.windSpeed; break;
-				};
+                // Copy data for the selected parameter to a List of double
+                List<double> data = new List<double>();
+                if (cboxData.SelectedIndex < met.NumParameters)
+                {
+                    for (int ii = 0; ii < met.TheData.Count(); ii++)
+                        data.Add(met.TheData[ii].Values[cboxData.SelectedIndex]);
+                }
+                // For some reason, the selection in the combo box exceeds the number of parameters (shouldn't happen)
+                else
+                {
+                    for (int ii = 0; ii < met.TheData.Count(); ii++)
+                        data.Add(-999);
+                }
+
+                string dataName = METFile.labels[cboxData.SelectedIndex].key;
 
 				toolGraph.Titles.Clear();
 				toolGraph.ChartAreas[0].AxisY.StripLines.Clear();
@@ -353,7 +353,7 @@ namespace warmf {
 				toolGraph.Titles[0].Font = new Font(toolGraph.Titles[0].Font.Name, 12, FontStyle.Bold);
 				toolGraph.Palette = ChartColorPalette.Berry;
 				for (int ii = 0; ii < len; ii++)
-					series.Points.AddXY(met.date[ii].ToString("yyyy"), data[ii]);
+					series.Points.AddXY(met.TheData[ii].Date.ToString("yyyy"), data[ii]);
 				toolGraph.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Months;
 				toolGraph.ChartAreas[0].AxisX.Interval = 12;
 
