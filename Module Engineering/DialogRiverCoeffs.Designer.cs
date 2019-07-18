@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tcRiverTabs = new System.Windows.Forms.TabControl();
             this.tpPhysicalData = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -86,6 +86,13 @@
             this.btnAddPTS = new System.Windows.Forms.Button();
             this.lbPointSources = new System.Windows.Forms.ListBox();
             this.tpReactions = new System.Windows.Forms.TabPage();
+            this.tbPrecipitateSettling = new System.Windows.Forms.TextBox();
+            this.tbConvHeatFactor = new System.Windows.Forms.TextBox();
+            this.tbAerationFactor = new System.Windows.Forms.TextBox();
+            this.dgvReactions = new System.Windows.Forms.DataGridView();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             this.tpSediment = new System.Windows.Forms.TabPage();
             this.tpInitialConcs = new System.Windows.Forms.TabPage();
             this.tpAdsorption = new System.Windows.Forms.TabPage();
@@ -95,13 +102,25 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.RiverOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.dgvReactionRates = new System.Windows.Forms.DataGridView();
-            this.tbAerationFactor = new System.Windows.Forms.TextBox();
-            this.tbConvHeatFactor = new System.Windows.Forms.TextBox();
-            this.tbPrecipitateSettling = new System.Windows.Forms.TextBox();
+            this.Water = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Bed = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.tbInitSedDepth = new System.Windows.Forms.TextBox();
+            this.tbBedDiffRate = new System.Windows.Forms.TextBox();
+            this.tbDetachVelMult = new System.Windows.Forms.TextBox();
+            this.tbDetachVelExp = new System.Windows.Forms.TextBox();
+            this.tbVegFactor = new System.Windows.Forms.TextBox();
+            this.tbBankStabilityFactor = new System.Windows.Forms.TextBox();
+            this.dgvBedParticleContent = new System.Windows.Forms.DataGridView();
+            this.label26 = new System.Windows.Forms.Label();
+            this.SedContent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvRiverInitConcs = new System.Windows.Forms.DataGridView();
             this.tcRiverTabs.SuspendLayout();
             this.tpPhysicalData.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -116,7 +135,11 @@
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.tpReactions.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvReactionRates)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReactions)).BeginInit();
+            this.tpSediment.SuspendLayout();
+            this.tpInitialConcs.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBedParticleContent)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRiverInitConcs)).BeginInit();
             this.SuspendLayout();
             // 
             // tcRiverTabs
@@ -377,13 +400,13 @@
             // 
             // chartStageWidth
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartStageWidth.ChartAreas.Add(chartArea1);
+            chartArea4.Name = "ChartArea1";
+            this.chartStageWidth.ChartAreas.Add(chartArea4);
             this.chartStageWidth.Location = new System.Drawing.Point(235, 79);
             this.chartStageWidth.Name = "chartStageWidth";
-            series1.ChartArea = "ChartArea1";
-            series1.Name = "SeriesStageWidth";
-            this.chartStageWidth.Series.Add(series1);
+            series4.ChartArea = "ChartArea1";
+            series4.Name = "SeriesStageWidth";
+            this.chartStageWidth.Series.Add(series4);
             this.chartStageWidth.Size = new System.Drawing.Size(403, 355);
             this.chartStageWidth.TabIndex = 2;
             this.chartStageWidth.Text = "chart1";
@@ -675,10 +698,11 @@
             // 
             // tpReactions
             // 
+            this.tpReactions.Controls.Add(this.label19);
             this.tpReactions.Controls.Add(this.tbPrecipitateSettling);
             this.tpReactions.Controls.Add(this.tbConvHeatFactor);
             this.tpReactions.Controls.Add(this.tbAerationFactor);
-            this.tpReactions.Controls.Add(this.dgvReactionRates);
+            this.tpReactions.Controls.Add(this.dgvReactions);
             this.tpReactions.Controls.Add(this.label18);
             this.tpReactions.Controls.Add(this.label17);
             this.tpReactions.Controls.Add(this.label16);
@@ -689,8 +713,83 @@
             this.tpReactions.Text = "Reactions";
             this.tpReactions.UseVisualStyleBackColor = true;
             // 
+            // tbPrecipitateSettling
+            // 
+            this.tbPrecipitateSettling.Location = new System.Drawing.Point(474, 251);
+            this.tbPrecipitateSettling.Name = "tbPrecipitateSettling";
+            this.tbPrecipitateSettling.Size = new System.Drawing.Size(154, 20);
+            this.tbPrecipitateSettling.TabIndex = 6;
+            // 
+            // tbConvHeatFactor
+            // 
+            this.tbConvHeatFactor.Location = new System.Drawing.Point(474, 170);
+            this.tbConvHeatFactor.Name = "tbConvHeatFactor";
+            this.tbConvHeatFactor.Size = new System.Drawing.Size(154, 20);
+            this.tbConvHeatFactor.TabIndex = 5;
+            // 
+            // tbAerationFactor
+            // 
+            this.tbAerationFactor.Location = new System.Drawing.Point(474, 89);
+            this.tbAerationFactor.Name = "tbAerationFactor";
+            this.tbAerationFactor.Size = new System.Drawing.Size(154, 20);
+            this.tbAerationFactor.TabIndex = 4;
+            // 
+            // dgvReactions
+            // 
+            this.dgvReactions.AllowUserToAddRows = false;
+            this.dgvReactions.AllowUserToDeleteRows = false;
+            this.dgvReactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvReactions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Water,
+            this.Bed});
+            this.dgvReactions.Location = new System.Drawing.Point(19, 55);
+            this.dgvReactions.Name = "dgvReactions";
+            this.dgvReactions.Size = new System.Drawing.Size(393, 370);
+            this.dgvReactions.TabIndex = 3;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(434, 133);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(120, 13);
+            this.label18.TabIndex = 2;
+            this.label18.Text = "Convective Heat Factor";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(434, 211);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(131, 13);
+            this.label17.TabIndex = 1;
+            this.label17.Text = "Precipitate Settling, m/day";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(434, 55);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(79, 13);
+            this.label16.TabIndex = 0;
+            this.label16.Text = "Aeration Factor";
+            // 
             // tpSediment
             // 
+            this.tpSediment.Controls.Add(this.label26);
+            this.tpSediment.Controls.Add(this.dgvBedParticleContent);
+            this.tpSediment.Controls.Add(this.tbBankStabilityFactor);
+            this.tpSediment.Controls.Add(this.tbVegFactor);
+            this.tpSediment.Controls.Add(this.tbDetachVelExp);
+            this.tpSediment.Controls.Add(this.tbDetachVelMult);
+            this.tpSediment.Controls.Add(this.tbBedDiffRate);
+            this.tpSediment.Controls.Add(this.tbInitSedDepth);
+            this.tpSediment.Controls.Add(this.label25);
+            this.tpSediment.Controls.Add(this.label24);
+            this.tpSediment.Controls.Add(this.label23);
+            this.tpSediment.Controls.Add(this.label22);
+            this.tpSediment.Controls.Add(this.label21);
+            this.tpSediment.Controls.Add(this.label20);
             this.tpSediment.Location = new System.Drawing.Point(4, 40);
             this.tpSediment.Name = "tpSediment";
             this.tpSediment.Size = new System.Drawing.Size(667, 440);
@@ -700,6 +799,7 @@
             // 
             // tpInitialConcs
             // 
+            this.tpInitialConcs.Controls.Add(this.dgvRiverInitConcs);
             this.tpInitialConcs.Location = new System.Drawing.Point(4, 40);
             this.tpInitialConcs.Name = "tpInitialConcs";
             this.tpInitialConcs.Size = new System.Drawing.Size(667, 440);
@@ -765,63 +865,159 @@
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             // 
-            // label16
+            // Water
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(434, 55);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(79, 13);
-            this.label16.TabIndex = 0;
-            this.label16.Text = "Aeration Factor";
+            this.Water.HeaderText = "Water";
+            this.Water.Name = "Water";
             // 
-            // label17
+            // Bed
             // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(434, 212);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(131, 13);
-            this.label17.TabIndex = 1;
-            this.label17.Text = "Precipitate Settling, m/day";
+            this.Bed.HeaderText = "Bed";
+            this.Bed.Name = "Bed";
             // 
-            // label18
+            // label19
             // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(434, 128);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(120, 13);
-            this.label18.TabIndex = 2;
-            this.label18.Text = "Convective Heat Factor";
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(22, 35);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(81, 13);
+            this.label19.TabIndex = 7;
+            this.label19.Text = "Reaction Rates";
             // 
-            // dgvReactionRates
+            // label20
             // 
-            this.dgvReactionRates.AllowUserToAddRows = false;
-            this.dgvReactionRates.AllowUserToDeleteRows = false;
-            this.dgvReactionRates.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvReactionRates.Location = new System.Drawing.Point(19, 55);
-            this.dgvReactionRates.Name = "dgvReactionRates";
-            this.dgvReactionRates.Size = new System.Drawing.Size(393, 370);
-            this.dgvReactionRates.TabIndex = 3;
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(181, 40);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(124, 13);
+            this.label20.TabIndex = 0;
+            this.label20.Text = "Initial Sediment Depth, m";
             // 
-            // tbAerationFactor
+            // label21
             // 
-            this.tbAerationFactor.Location = new System.Drawing.Point(474, 89);
-            this.tbAerationFactor.Name = "tbAerationFactor";
-            this.tbAerationFactor.Size = new System.Drawing.Size(154, 20);
-            this.tbAerationFactor.TabIndex = 4;
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(181, 74);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(127, 13);
+            this.label21.TabIndex = 1;
+            this.label21.Text = "Bed Diffusion Rate, m2/d";
             // 
-            // tbConvHeatFactor
+            // label22
             // 
-            this.tbConvHeatFactor.Location = new System.Drawing.Point(474, 163);
-            this.tbConvHeatFactor.Name = "tbConvHeatFactor";
-            this.tbConvHeatFactor.Size = new System.Drawing.Size(154, 20);
-            this.tbConvHeatFactor.TabIndex = 5;
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(181, 108);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(149, 13);
+            this.label22.TabIndex = 2;
+            this.label22.Text = "Detachment Velocity Multiplier";
             // 
-            // tbPrecipitateSettling
+            // label23
             // 
-            this.tbPrecipitateSettling.Location = new System.Drawing.Point(474, 252);
-            this.tbPrecipitateSettling.Name = "tbPrecipitateSettling";
-            this.tbPrecipitateSettling.Size = new System.Drawing.Size(154, 20);
-            this.tbPrecipitateSettling.TabIndex = 6;
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(181, 142);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(153, 13);
+            this.label23.TabIndex = 3;
+            this.label23.Text = "Detachment Velocity Exponent";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(181, 176);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(91, 13);
+            this.label24.TabIndex = 4;
+            this.label24.Text = "Vegetation Factor";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(181, 210);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(104, 13);
+            this.label25.TabIndex = 5;
+            this.label25.Text = "Bank Stability Factor";
+            // 
+            // tbInitSedDepth
+            // 
+            this.tbInitSedDepth.Location = new System.Drawing.Point(375, 37);
+            this.tbInitSedDepth.Name = "tbInitSedDepth";
+            this.tbInitSedDepth.Size = new System.Drawing.Size(100, 20);
+            this.tbInitSedDepth.TabIndex = 6;
+            // 
+            // tbBedDiffRate
+            // 
+            this.tbBedDiffRate.Location = new System.Drawing.Point(375, 71);
+            this.tbBedDiffRate.Name = "tbBedDiffRate";
+            this.tbBedDiffRate.Size = new System.Drawing.Size(100, 20);
+            this.tbBedDiffRate.TabIndex = 7;
+            // 
+            // tbDetachVelMult
+            // 
+            this.tbDetachVelMult.Location = new System.Drawing.Point(375, 105);
+            this.tbDetachVelMult.Name = "tbDetachVelMult";
+            this.tbDetachVelMult.Size = new System.Drawing.Size(100, 20);
+            this.tbDetachVelMult.TabIndex = 8;
+            // 
+            // tbDetachVelExp
+            // 
+            this.tbDetachVelExp.Location = new System.Drawing.Point(375, 139);
+            this.tbDetachVelExp.Name = "tbDetachVelExp";
+            this.tbDetachVelExp.Size = new System.Drawing.Size(100, 20);
+            this.tbDetachVelExp.TabIndex = 9;
+            // 
+            // tbVegFactor
+            // 
+            this.tbVegFactor.Location = new System.Drawing.Point(375, 173);
+            this.tbVegFactor.Name = "tbVegFactor";
+            this.tbVegFactor.Size = new System.Drawing.Size(100, 20);
+            this.tbVegFactor.TabIndex = 10;
+            // 
+            // tbBankStabilityFactor
+            // 
+            this.tbBankStabilityFactor.Location = new System.Drawing.Point(375, 207);
+            this.tbBankStabilityFactor.Name = "tbBankStabilityFactor";
+            this.tbBankStabilityFactor.Size = new System.Drawing.Size(100, 20);
+            this.tbBankStabilityFactor.TabIndex = 11;
+            // 
+            // dgvBedParticleContent
+            // 
+            this.dgvBedParticleContent.AllowUserToAddRows = false;
+            this.dgvBedParticleContent.AllowUserToDeleteRows = false;
+            this.dgvBedParticleContent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvBedParticleContent.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.SedContent});
+            this.dgvBedParticleContent.Location = new System.Drawing.Point(244, 283);
+            this.dgvBedParticleContent.Name = "dgvBedParticleContent";
+            this.dgvBedParticleContent.Size = new System.Drawing.Size(182, 80);
+            this.dgvBedParticleContent.TabIndex = 12;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(241, 267);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(121, 13);
+            this.label26.TabIndex = 13;
+            this.label26.Text = "Bed Particle Content (%)";
+            // 
+            // SedContent
+            // 
+            this.SedContent.HeaderText = "Percent";
+            this.SedContent.Name = "SedContent";
+            // 
+            // dgvRiverInitConcs
+            // 
+            this.dgvRiverInitConcs.AllowUserToAddRows = false;
+            this.dgvRiverInitConcs.AllowUserToDeleteRows = false;
+            this.dgvRiverInitConcs.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvRiverInitConcs.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvRiverInitConcs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvRiverInitConcs.Location = new System.Drawing.Point(7, 8);
+            this.dgvRiverInitConcs.Name = "dgvRiverInitConcs";
+            this.dgvRiverInitConcs.RowHeadersWidth = 150;
+            this.dgvRiverInitConcs.Size = new System.Drawing.Size(648, 421);
+            this.dgvRiverInitConcs.TabIndex = 0;
             // 
             // DialogRiverCoeffs
             // 
@@ -859,7 +1055,12 @@
             this.groupBox5.PerformLayout();
             this.tpReactions.ResumeLayout(false);
             this.tpReactions.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvReactionRates)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReactions)).EndInit();
+            this.tpSediment.ResumeLayout(false);
+            this.tpSediment.PerformLayout();
+            this.tpInitialConcs.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBedParticleContent)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRiverInitConcs)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -934,9 +1135,28 @@
         private System.Windows.Forms.TextBox tbPrecipitateSettling;
         private System.Windows.Forms.TextBox tbConvHeatFactor;
         private System.Windows.Forms.TextBox tbAerationFactor;
-        private System.Windows.Forms.DataGridView dgvReactionRates;
+        private System.Windows.Forms.DataGridView dgvReactions;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Water;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Bed;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.DataGridView dgvBedParticleContent;
+        private System.Windows.Forms.TextBox tbBankStabilityFactor;
+        private System.Windows.Forms.TextBox tbVegFactor;
+        private System.Windows.Forms.TextBox tbDetachVelExp;
+        private System.Windows.Forms.TextBox tbDetachVelMult;
+        private System.Windows.Forms.TextBox tbBedDiffRate;
+        private System.Windows.Forms.TextBox tbInitSedDepth;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SedContent;
+        private System.Windows.Forms.DataGridView dgvRiverInitConcs;
     }
 }
