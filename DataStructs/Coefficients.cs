@@ -368,6 +368,17 @@ namespace warmf {
         public double width;
     }
 
+    public struct SimulationOverride
+    {
+        public bool swUseObsData;
+        public int hydroInterpPeriod;
+        public int waterQualityInterpPeriod;
+        public int monthAverageMethod;
+        public int tdsAdjustmentPriority;
+        public int alkAdjustmentPriority;
+        public int phAdjustmentPriority;
+    }
+
     public struct River {
         public int idNum;
         public double depth;
@@ -400,6 +411,8 @@ namespace warmf {
         public List<int> divFilenumTo;
         public int numPointSrcs;
         public List<int> pointSrcFilenum;
+
+        public SimulationOverride overrideSimulation;
 
         public string hydrologyFilename;
 
@@ -1506,8 +1519,15 @@ namespace warmf {
 					river.numPointSrcs = ReadInt(sr, "PTSOURCE");
 					if (river.numPointSrcs > 0)
 						river.pointSrcFilenum = ReadIntData(sr, "PTSOURCE", river.numPointSrcs);
-					nums = ReadIntData(sr, "OBSW", 7);  // not in spec...  MRL
-					river.hydrologyFilename = ReadString(sr, "OBSD");
+					nums = ReadIntData(sr, "OBSW", 7);
+                    river.overrideSimulation.swUseObsData = nums[0] != 0;
+                    river.overrideSimulation.hydroInterpPeriod = nums[1];
+                    river.overrideSimulation.waterQualityInterpPeriod = nums[2];
+                    river.overrideSimulation.monthAverageMethod = nums[3];
+                    river.overrideSimulation.tdsAdjustmentPriority = nums[4];
+                    river.overrideSimulation.alkAdjustmentPriority = nums[5];
+                    river.overrideSimulation.phAdjustmentPriority = nums[6];
+                    river.hydrologyFilename = ReadString(sr, "OBSD");
 					dnums = ReadDoubleData(sr, "SEDIMENT", 6);
 					river.sedDetachVelMult = dnums[0];
 					river.sedDetachVelExp = dnums[1];

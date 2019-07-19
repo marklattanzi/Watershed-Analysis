@@ -215,12 +215,36 @@ namespace warmf
             }
 
             //Observed Data
-            if (string.IsNullOrWhiteSpace(tbObsHydroFile.Text) && string.IsNullOrWhiteSpace(tbObsWaterQualFile.Text))
+            tbObsHydroFile.Text = river.hydrologyFilename;
+            tbObsWaterQualFile.Text = river.waterQualFilename;
+            if (river.overrideSimulation.swUseObsData == true)
             {
-                
+                cbSimulationOverride.Checked = true;
+                tbHydroInterpPd.Text = river.overrideSimulation.hydroInterpPeriod.ToString();
+                tbWQInterpPd.Text = river.overrideSimulation.waterQualityInterpPeriod.ToString();
+                if (river.overrideSimulation.monthAverageMethod == 1)
+                {
+                    rbAvgSimulation.Checked = true;
+                    rbAverageData.Checked = false;
+                }
+                else
+                {
+                    rbAvgSimulation.Checked = false;
+                    rbAverageData.Checked = true;
+                }
             }
+            tbPriorityTDS.Text = river.overrideSimulation.tdsAdjustmentPriority.ToString();
+            tbPriorityAlkalinity.Text = river.overrideSimulation.alkAdjustmentPriority.ToString();
+            tbPriorityPh.Text = river.overrideSimulation.phAdjustmentPriority.ToString();
 
             //CE-QUAL-W2
+            if (river.numCEQW2Files == 3)
+            {
+                cbWriteCEQUALoutput.Checked = true;
+                tbCEQUALflowFile.Text = river.flowInputFilename;
+                tbCEQUALtempFile.Text = river.tempInputFilename;
+                tbCEQUALconcFile.Text = river.waterQualInputFilename; 
+            }
         }
 
         private void btnRedrawChart_Click(object sender, EventArgs e)
@@ -347,6 +371,104 @@ namespace warmf
                 gbCEQUALW2chem.Enabled = false;
                 gbCEQUALW2flow.Enabled = false;
                 gbCEQUALW2temp.Enabled = false;
+            }
+        }
+
+        private void btnSelectORH_Click(object sender, EventArgs e)
+        {
+            RiverOpenFileDialog.InitialDirectory =
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.ORH);
+            RiverOpenFileDialog.Title = "Select Observed Hydrology File";
+            RiverOpenFileDialog.Filter = "Observed Hydrology Files | *.ORH";
+
+            if (RiverOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                tbObsHydroFile.Text = RiverOpenFileDialog.SafeFileName;
+            }
+        }
+
+        private void btnClearORH_Click(object sender, EventArgs e)
+        {
+            tbObsHydroFile.Text = null;
+        }
+
+        private void btnSelectORC_Click(object sender, EventArgs e)
+        {
+            RiverOpenFileDialog.InitialDirectory =
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.ORC);
+            RiverOpenFileDialog.Title = "Select Observed Water Quality File";
+            RiverOpenFileDialog.Filter = "Observed River Chemistry Files | *.ORC";
+
+            if (RiverOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                tbObsWaterQualFile.Text = RiverOpenFileDialog.SafeFileName;
+            }
+        }
+
+        private void btnClearORC_Click(object sender, EventArgs e)
+        {
+            tbObsWaterQualFile.Text = null;
+        }
+
+        private void tbObsHydroFile_TextChanged(object sender, EventArgs e)
+        {
+            CheckSimulationOverride();
+        }
+
+        private void tbObsWaterQualFile_TextChanged(object sender, EventArgs e)
+        {
+            CheckSimulationOverride();
+        }
+
+        public void CheckSimulationOverride()
+        {
+            if (string.IsNullOrWhiteSpace(tbObsHydroFile.Text) || string.IsNullOrEmpty(tbObsHydroFile.Text))
+                gbObsAsInput.Enabled = false;
+            else
+            {
+                if (string.IsNullOrWhiteSpace(tbObsWaterQualFile.Text) || string.IsNullOrEmpty(tbObsWaterQualFile.Text))
+                    gbObsAsInput.Enabled = false;
+                else
+                    gbObsAsInput.Enabled = true;
+            }
+        }
+
+        private void btnSelectFlowFile_Click(object sender, EventArgs e)
+        {
+            RiverOpenFileDialog.InitialDirectory =
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.NPT);
+            RiverOpenFileDialog.Title = "Select CE-QUAL-W2 Flow File";
+            RiverOpenFileDialog.Filter = "CE-QUAL-W2 Control File | *.NPT";
+
+            if (RiverOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                tbCEQUALflowFile.Text = RiverOpenFileDialog.SafeFileName;
+            }
+        }
+
+        private void btnSelectTempFile_Click(object sender, EventArgs e)
+        {
+            RiverOpenFileDialog.InitialDirectory =
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.NPT);
+            RiverOpenFileDialog.Title = "Select CE-QUAL-W2 Temp File";
+            RiverOpenFileDialog.Filter = "CE-QUAL-W2 Control File | *.NPT";
+
+            if (RiverOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                tbCEQUALtempFile.Text = RiverOpenFileDialog.SafeFileName;
+            }
+        }
+
+        private void btnSelectChemFile_Click(object sender, EventArgs e)
+        {
+            RiverOpenFileDialog.InitialDirectory =
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.NPT);
+            RiverOpenFileDialog.Title = "Select CE-QUAL-W2 Concentration File";
+            RiverOpenFileDialog.Filter = "CE-QUAL-W2 Control File | *.NPT";
+
+            if (RiverOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                tbCEQUALconcFile.Text = RiverOpenFileDialog.SafeFileName;
             }
         }
     }

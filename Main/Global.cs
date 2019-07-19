@@ -23,6 +23,7 @@ namespace warmf {
             public static string ORH = System.IO.Path.Combine(Global.DIR.ROOT, Global.DIR.DATA, "orh\\");
             public static string PTS = System.IO.Path.Combine(Global.DIR.ROOT, Global.DIR.DATA, "pts\\");
             public static string SHP = System.IO.Path.Combine(Global.DIR.ROOT, Global.DIR.DATA, "shp\\");
+            public static string NPT = System.IO.Path.Combine(Global.DIR.ROOT, Global.DIR.DATA, "npt\\");
         }
         public static Coefficients coe = new Coefficients();	// so we can access coefficients from anywhere - may not be necessary...  MRL
 	}

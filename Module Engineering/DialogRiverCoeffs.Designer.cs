@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tcRiverTabs = new System.Windows.Forms.TabControl();
             this.tpPhysicalData = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -115,52 +115,52 @@
             this.tpInitialConcs = new System.Windows.Forms.TabPage();
             this.dgvRiverInitConcs = new System.Windows.Forms.DataGridView();
             this.tpAdsorption = new System.Windows.Forms.TabPage();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.dgvAdsorption = new System.Windows.Forms.DataGridView();
             this.tpObsData = new System.Windows.Forms.TabPage();
+            this.gbObsAsInput = new System.Windows.Forms.GroupBox();
+            this.gbMonthAveraging = new System.Windows.Forms.GroupBox();
+            this.rbAverageData = new System.Windows.Forms.RadioButton();
+            this.rbAvgSimulation = new System.Windows.Forms.RadioButton();
+            this.label32 = new System.Windows.Forms.Label();
+            this.gbAdjustPriority = new System.Windows.Forms.GroupBox();
+            this.tbPriorityPh = new System.Windows.Forms.TextBox();
+            this.tbPriorityAlkalinity = new System.Windows.Forms.TextBox();
+            this.tbPriorityTDS = new System.Windows.Forms.TextBox();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.gbMaxInterpPeriod = new System.Windows.Forms.GroupBox();
+            this.tbWQInterpPd = new System.Windows.Forms.TextBox();
+            this.tbHydroInterpPd = new System.Windows.Forms.TextBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.cbSimulationOverride = new System.Windows.Forms.CheckBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.tbObsWaterQualFile = new System.Windows.Forms.TextBox();
+            this.btnClearORC = new System.Windows.Forms.Button();
+            this.btnSelectORC = new System.Windows.Forms.Button();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.btnClearORH = new System.Windows.Forms.Button();
+            this.btnSelectORH = new System.Windows.Forms.Button();
+            this.tbObsHydroFile = new System.Windows.Forms.TextBox();
             this.tpCEQUALW2 = new System.Windows.Forms.TabPage();
+            this.gbCEQUALW2chem = new System.Windows.Forms.GroupBox();
+            this.btnSelectChemFile = new System.Windows.Forms.Button();
+            this.tbCEQUALconcFile = new System.Windows.Forms.TextBox();
+            this.gbCEQUALW2temp = new System.Windows.Forms.GroupBox();
+            this.btnSelectTempFile = new System.Windows.Forms.Button();
+            this.tbCEQUALtempFile = new System.Windows.Forms.TextBox();
+            this.gbCEQUALW2flow = new System.Windows.Forms.GroupBox();
+            this.btnSelectFlowFile = new System.Windows.Forms.Button();
+            this.tbCEQUALflowFile = new System.Windows.Forms.TextBox();
+            this.label35 = new System.Windows.Forms.Label();
+            this.cbWriteCEQUALoutput = new System.Windows.Forms.CheckBox();
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.RiverOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.dgvAdsorption = new System.Windows.Forms.DataGridView();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.tbObsHydroFile = new System.Windows.Forms.TextBox();
-            this.btnSelectORH = new System.Windows.Forms.Button();
-            this.btnSelectORC = new System.Windows.Forms.Button();
-            this.btnClearORH = new System.Windows.Forms.Button();
-            this.btnClearORC = new System.Windows.Forms.Button();
-            this.tbObsWaterQualFile = new System.Windows.Forms.TextBox();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
-            this.label31 = new System.Windows.Forms.Label();
-            this.tbHydroInterpPd = new System.Windows.Forms.TextBox();
-            this.tbWQInterpPd = new System.Windows.Forms.TextBox();
-            this.label32 = new System.Windows.Forms.Label();
-            this.label33 = new System.Windows.Forms.Label();
-            this.label34 = new System.Windows.Forms.Label();
-            this.rbAvgSimulation = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.gbMaxInterpPeriod = new System.Windows.Forms.GroupBox();
-            this.gbAdjustPriority = new System.Windows.Forms.GroupBox();
-            this.gbMonthAveraging = new System.Windows.Forms.GroupBox();
-            this.tbPriorityTDS = new System.Windows.Forms.TextBox();
-            this.tbPriorityAlkalinity = new System.Windows.Forms.TextBox();
-            this.tbPriorityPh = new System.Windows.Forms.TextBox();
-            this.cbWriteCEQUALoutput = new System.Windows.Forms.CheckBox();
-            this.label35 = new System.Windows.Forms.Label();
-            this.tbCEQUALflowFile = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.gbCEQUALW2flow = new System.Windows.Forms.GroupBox();
-            this.gbCEQUALW2temp = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.tbCEQUALtempFile = new System.Windows.Forms.TextBox();
-            this.gbCEQUALW2chem = new System.Windows.Forms.GroupBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.tbCEQUALconcFile = new System.Windows.Forms.TextBox();
             this.tcRiverTabs.SuspendLayout();
             this.tpPhysicalData.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -181,18 +181,18 @@
             this.tpInitialConcs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRiverInitConcs)).BeginInit();
             this.tpAdsorption.SuspendLayout();
-            this.tpObsData.SuspendLayout();
-            this.tpCEQUALW2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAdsorption)).BeginInit();
-            this.groupBox7.SuspendLayout();
-            this.groupBox8.SuspendLayout();
-            this.groupBox9.SuspendLayout();
-            this.gbMaxInterpPeriod.SuspendLayout();
-            this.gbAdjustPriority.SuspendLayout();
+            this.tpObsData.SuspendLayout();
+            this.gbObsAsInput.SuspendLayout();
             this.gbMonthAveraging.SuspendLayout();
-            this.gbCEQUALW2flow.SuspendLayout();
-            this.gbCEQUALW2temp.SuspendLayout();
+            this.gbAdjustPriority.SuspendLayout();
+            this.gbMaxInterpPeriod.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.tpCEQUALW2.SuspendLayout();
             this.gbCEQUALW2chem.SuspendLayout();
+            this.gbCEQUALW2temp.SuspendLayout();
+            this.gbCEQUALW2flow.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcRiverTabs
@@ -453,13 +453,13 @@
             // 
             // chartStageWidth
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartStageWidth.ChartAreas.Add(chartArea1);
+            chartArea4.Name = "ChartArea1";
+            this.chartStageWidth.ChartAreas.Add(chartArea4);
             this.chartStageWidth.Location = new System.Drawing.Point(235, 79);
             this.chartStageWidth.Name = "chartStageWidth";
-            series1.ChartArea = "ChartArea1";
-            series1.Name = "SeriesStageWidth";
-            this.chartStageWidth.Series.Add(series1);
+            series4.ChartArea = "ChartArea1";
+            series4.Name = "SeriesStageWidth";
+            this.chartStageWidth.Series.Add(series4);
             this.chartStageWidth.Size = new System.Drawing.Size(403, 355);
             this.chartStageWidth.TabIndex = 2;
             this.chartStageWidth.Text = "chart1";
@@ -1026,9 +1026,38 @@
             this.tpAdsorption.Text = "Adsorption";
             this.tpAdsorption.UseVisualStyleBackColor = true;
             // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(17, 388);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(545, 13);
+            this.label28.TabIndex = 2;
+            this.label28.Text = "Note: Adsorption isotherms should be changed with discretion. They should not var" +
+    "y within a subwatershed region.";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(17, 31);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(134, 13);
+            this.label27.TabIndex = 1;
+            this.label27.Text = "Adsorption Isotherms, L/kg";
+            // 
+            // dgvAdsorption
+            // 
+            this.dgvAdsorption.AllowUserToAddRows = false;
+            this.dgvAdsorption.AllowUserToDeleteRows = false;
+            this.dgvAdsorption.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAdsorption.Location = new System.Drawing.Point(20, 47);
+            this.dgvAdsorption.Name = "dgvAdsorption";
+            this.dgvAdsorption.Size = new System.Drawing.Size(623, 338);
+            this.dgvAdsorption.TabIndex = 0;
+            // 
             // tpObsData
             // 
-            this.tpObsData.Controls.Add(this.groupBox9);
+            this.tpObsData.Controls.Add(this.gbObsAsInput);
             this.tpObsData.Controls.Add(this.groupBox8);
             this.tpObsData.Controls.Add(this.groupBox7);
             this.tpObsData.Location = new System.Drawing.Point(4, 40);
@@ -1037,6 +1066,261 @@
             this.tpObsData.TabIndex = 8;
             this.tpObsData.Text = "Observed Data";
             this.tpObsData.UseVisualStyleBackColor = true;
+            // 
+            // gbObsAsInput
+            // 
+            this.gbObsAsInput.Controls.Add(this.gbMonthAveraging);
+            this.gbObsAsInput.Controls.Add(this.gbAdjustPriority);
+            this.gbObsAsInput.Controls.Add(this.gbMaxInterpPeriod);
+            this.gbObsAsInput.Controls.Add(this.cbSimulationOverride);
+            this.gbObsAsInput.Location = new System.Drawing.Point(28, 182);
+            this.gbObsAsInput.Name = "gbObsAsInput";
+            this.gbObsAsInput.Size = new System.Drawing.Size(604, 235);
+            this.gbObsAsInput.TabIndex = 23;
+            this.gbObsAsInput.TabStop = false;
+            this.gbObsAsInput.Text = "Use Observed Data as Model Input";
+            // 
+            // gbMonthAveraging
+            // 
+            this.gbMonthAveraging.Controls.Add(this.rbAverageData);
+            this.gbMonthAveraging.Controls.Add(this.rbAvgSimulation);
+            this.gbMonthAveraging.Controls.Add(this.label32);
+            this.gbMonthAveraging.Location = new System.Drawing.Point(23, 115);
+            this.gbMonthAveraging.Name = "gbMonthAveraging";
+            this.gbMonthAveraging.Size = new System.Drawing.Size(552, 46);
+            this.gbMonthAveraging.TabIndex = 25;
+            this.gbMonthAveraging.TabStop = false;
+            // 
+            // rbAverageData
+            // 
+            this.rbAverageData.AutoSize = true;
+            this.rbAverageData.Location = new System.Drawing.Point(346, 19);
+            this.rbAverageData.Name = "rbAverageData";
+            this.rbAverageData.Size = new System.Drawing.Size(161, 17);
+            this.rbAverageData.TabIndex = 22;
+            this.rbAverageData.TabStop = true;
+            this.rbAverageData.Text = "Entire Period of Data Record";
+            this.rbAverageData.UseVisualStyleBackColor = true;
+            // 
+            // rbAvgSimulation
+            // 
+            this.rbAvgSimulation.AutoSize = true;
+            this.rbAvgSimulation.Location = new System.Drawing.Point(185, 19);
+            this.rbAvgSimulation.Name = "rbAvgSimulation";
+            this.rbAvgSimulation.Size = new System.Drawing.Size(132, 17);
+            this.rbAvgSimulation.TabIndex = 21;
+            this.rbAvgSimulation.TabStop = true;
+            this.rbAvgSimulation.Text = "Simulation Time Period";
+            this.rbAvgSimulation.UseVisualStyleBackColor = true;
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(27, 21);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(137, 13);
+            this.label32.TabIndex = 18;
+            this.label32.Text = "Monthly Averaging Method:";
+            // 
+            // gbAdjustPriority
+            // 
+            this.gbAdjustPriority.Controls.Add(this.tbPriorityPh);
+            this.gbAdjustPriority.Controls.Add(this.tbPriorityAlkalinity);
+            this.gbAdjustPriority.Controls.Add(this.tbPriorityTDS);
+            this.gbAdjustPriority.Controls.Add(this.label34);
+            this.gbAdjustPriority.Controls.Add(this.label33);
+            this.gbAdjustPriority.Controls.Add(this.label31);
+            this.gbAdjustPriority.Location = new System.Drawing.Point(22, 171);
+            this.gbAdjustPriority.Name = "gbAdjustPriority";
+            this.gbAdjustPriority.Size = new System.Drawing.Size(554, 50);
+            this.gbAdjustPriority.TabIndex = 24;
+            this.gbAdjustPriority.TabStop = false;
+            this.gbAdjustPriority.Text = "Adjustment Priorities (Rank parameters 1, 2, and 3)";
+            // 
+            // tbPriorityPh
+            // 
+            this.tbPriorityPh.Location = new System.Drawing.Point(390, 17);
+            this.tbPriorityPh.Name = "tbPriorityPh";
+            this.tbPriorityPh.Size = new System.Drawing.Size(31, 20);
+            this.tbPriorityPh.TabIndex = 23;
+            // 
+            // tbPriorityAlkalinity
+            // 
+            this.tbPriorityAlkalinity.Location = new System.Drawing.Point(267, 17);
+            this.tbPriorityAlkalinity.Name = "tbPriorityAlkalinity";
+            this.tbPriorityAlkalinity.Size = new System.Drawing.Size(31, 20);
+            this.tbPriorityAlkalinity.TabIndex = 22;
+            // 
+            // tbPriorityTDS
+            // 
+            this.tbPriorityTDS.Location = new System.Drawing.Point(144, 17);
+            this.tbPriorityTDS.Name = "tbPriorityTDS";
+            this.tbPriorityTDS.Size = new System.Drawing.Size(31, 20);
+            this.tbPriorityTDS.TabIndex = 21;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(363, 21);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(21, 13);
+            this.label34.TabIndex = 20;
+            this.label34.Text = "pH";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(213, 21);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(48, 13);
+            this.label33.TabIndex = 19;
+            this.label33.Text = "Alkalinity";
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(27, 21);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(111, 13);
+            this.label31.TabIndex = 15;
+            this.label31.Text = "Total Dissolved Solids";
+            // 
+            // gbMaxInterpPeriod
+            // 
+            this.gbMaxInterpPeriod.Controls.Add(this.tbWQInterpPd);
+            this.gbMaxInterpPeriod.Controls.Add(this.tbHydroInterpPd);
+            this.gbMaxInterpPeriod.Controls.Add(this.label30);
+            this.gbMaxInterpPeriod.Controls.Add(this.label29);
+            this.gbMaxInterpPeriod.Location = new System.Drawing.Point(22, 57);
+            this.gbMaxInterpPeriod.Name = "gbMaxInterpPeriod";
+            this.gbMaxInterpPeriod.Size = new System.Drawing.Size(554, 50);
+            this.gbMaxInterpPeriod.TabIndex = 23;
+            this.gbMaxInterpPeriod.TabStop = false;
+            this.gbMaxInterpPeriod.Text = "Maximum Interpolation Period, days";
+            // 
+            // tbWQInterpPd
+            // 
+            this.tbWQInterpPd.Location = new System.Drawing.Point(347, 20);
+            this.tbWQInterpPd.Name = "tbWQInterpPd";
+            this.tbWQInterpPd.Size = new System.Drawing.Size(100, 20);
+            this.tbWQInterpPd.TabIndex = 17;
+            // 
+            // tbHydroInterpPd
+            // 
+            this.tbHydroInterpPd.Location = new System.Drawing.Point(99, 20);
+            this.tbHydroInterpPd.Name = "tbHydroInterpPd";
+            this.tbHydroInterpPd.Size = new System.Drawing.Size(100, 20);
+            this.tbHydroInterpPd.TabIndex = 16;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(233, 24);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(71, 13);
+            this.label30.TabIndex = 14;
+            this.label30.Text = "Water Quality";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(27, 24);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(54, 13);
+            this.label29.TabIndex = 13;
+            this.label29.Text = "Hydrology";
+            // 
+            // cbSimulationOverride
+            // 
+            this.cbSimulationOverride.AutoSize = true;
+            this.cbSimulationOverride.Location = new System.Drawing.Point(22, 26);
+            this.cbSimulationOverride.Name = "cbSimulationOverride";
+            this.cbSimulationOverride.Size = new System.Drawing.Size(321, 17);
+            this.cbSimulationOverride.TabIndex = 12;
+            this.cbSimulationOverride.Text = "Override simulated flow and water quality with observed values";
+            this.cbSimulationOverride.UseVisualStyleBackColor = true;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.tbObsWaterQualFile);
+            this.groupBox8.Controls.Add(this.btnClearORC);
+            this.groupBox8.Controls.Add(this.btnSelectORC);
+            this.groupBox8.Location = new System.Drawing.Point(28, 99);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(605, 64);
+            this.groupBox8.TabIndex = 11;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Observed Water Quality File (.ORC)";
+            // 
+            // tbObsWaterQualFile
+            // 
+            this.tbObsWaterQualFile.Location = new System.Drawing.Point(13, 25);
+            this.tbObsWaterQualFile.Name = "tbObsWaterQualFile";
+            this.tbObsWaterQualFile.ReadOnly = true;
+            this.tbObsWaterQualFile.Size = new System.Drawing.Size(415, 20);
+            this.tbObsWaterQualFile.TabIndex = 9;
+            this.tbObsWaterQualFile.TextChanged += new System.EventHandler(this.tbObsWaterQualFile_TextChanged);
+            // 
+            // btnClearORC
+            // 
+            this.btnClearORC.Location = new System.Drawing.Point(515, 24);
+            this.btnClearORC.Name = "btnClearORC";
+            this.btnClearORC.Size = new System.Drawing.Size(75, 23);
+            this.btnClearORC.TabIndex = 8;
+            this.btnClearORC.Text = "Clear";
+            this.btnClearORC.UseVisualStyleBackColor = true;
+            this.btnClearORC.Click += new System.EventHandler(this.btnClearORC_Click);
+            // 
+            // btnSelectORC
+            // 
+            this.btnSelectORC.Location = new System.Drawing.Point(434, 24);
+            this.btnSelectORC.Name = "btnSelectORC";
+            this.btnSelectORC.Size = new System.Drawing.Size(75, 23);
+            this.btnSelectORC.TabIndex = 6;
+            this.btnSelectORC.Text = "Select";
+            this.btnSelectORC.UseVisualStyleBackColor = true;
+            this.btnSelectORC.Click += new System.EventHandler(this.btnSelectORC_Click);
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.btnClearORH);
+            this.groupBox7.Controls.Add(this.btnSelectORH);
+            this.groupBox7.Controls.Add(this.tbObsHydroFile);
+            this.groupBox7.Location = new System.Drawing.Point(28, 16);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(605, 64);
+            this.groupBox7.TabIndex = 10;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Observed Hydrology File (.ORH)";
+            // 
+            // btnClearORH
+            // 
+            this.btnClearORH.Location = new System.Drawing.Point(516, 23);
+            this.btnClearORH.Name = "btnClearORH";
+            this.btnClearORH.Size = new System.Drawing.Size(75, 23);
+            this.btnClearORH.TabIndex = 7;
+            this.btnClearORH.Text = "Clear";
+            this.btnClearORH.UseVisualStyleBackColor = true;
+            this.btnClearORH.Click += new System.EventHandler(this.btnClearORH_Click);
+            // 
+            // btnSelectORH
+            // 
+            this.btnSelectORH.Location = new System.Drawing.Point(435, 23);
+            this.btnSelectORH.Name = "btnSelectORH";
+            this.btnSelectORH.Size = new System.Drawing.Size(75, 23);
+            this.btnSelectORH.TabIndex = 5;
+            this.btnSelectORH.Text = "Select";
+            this.btnSelectORH.UseVisualStyleBackColor = true;
+            this.btnSelectORH.Click += new System.EventHandler(this.btnSelectORH_Click);
+            // 
+            // tbObsHydroFile
+            // 
+            this.tbObsHydroFile.Location = new System.Drawing.Point(14, 24);
+            this.tbObsHydroFile.Name = "tbObsHydroFile";
+            this.tbObsHydroFile.ReadOnly = true;
+            this.tbObsHydroFile.Size = new System.Drawing.Size(415, 20);
+            this.tbObsHydroFile.TabIndex = 0;
+            this.tbObsHydroFile.TextChanged += new System.EventHandler(this.tbObsHydroFile_TextChanged);
             // 
             // tpCEQUALW2
             // 
@@ -1051,6 +1335,115 @@
             this.tpCEQUALW2.TabIndex = 9;
             this.tpCEQUALW2.Text = "CE-QUAL-W2";
             this.tpCEQUALW2.UseVisualStyleBackColor = true;
+            // 
+            // gbCEQUALW2chem
+            // 
+            this.gbCEQUALW2chem.Controls.Add(this.btnSelectChemFile);
+            this.gbCEQUALW2chem.Controls.Add(this.tbCEQUALconcFile);
+            this.gbCEQUALW2chem.Enabled = false;
+            this.gbCEQUALW2chem.Location = new System.Drawing.Point(76, 243);
+            this.gbCEQUALW2chem.Name = "gbCEQUALW2chem";
+            this.gbCEQUALW2chem.Size = new System.Drawing.Size(510, 60);
+            this.gbCEQUALW2chem.TabIndex = 9;
+            this.gbCEQUALW2chem.TabStop = false;
+            this.gbCEQUALW2chem.Text = "Chemical Concentration File";
+            // 
+            // btnSelectChemFile
+            // 
+            this.btnSelectChemFile.Location = new System.Drawing.Point(420, 21);
+            this.btnSelectChemFile.Name = "btnSelectChemFile";
+            this.btnSelectChemFile.Size = new System.Drawing.Size(75, 23);
+            this.btnSelectChemFile.TabIndex = 7;
+            this.btnSelectChemFile.Text = "Select";
+            this.btnSelectChemFile.UseVisualStyleBackColor = true;
+            this.btnSelectChemFile.Click += new System.EventHandler(this.btnSelectChemFile_Click);
+            // 
+            // tbCEQUALconcFile
+            // 
+            this.tbCEQUALconcFile.Location = new System.Drawing.Point(18, 23);
+            this.tbCEQUALconcFile.Name = "tbCEQUALconcFile";
+            this.tbCEQUALconcFile.ReadOnly = true;
+            this.tbCEQUALconcFile.Size = new System.Drawing.Size(396, 20);
+            this.tbCEQUALconcFile.TabIndex = 2;
+            // 
+            // gbCEQUALW2temp
+            // 
+            this.gbCEQUALW2temp.Controls.Add(this.btnSelectTempFile);
+            this.gbCEQUALW2temp.Controls.Add(this.tbCEQUALtempFile);
+            this.gbCEQUALW2temp.Enabled = false;
+            this.gbCEQUALW2temp.Location = new System.Drawing.Point(76, 177);
+            this.gbCEQUALW2temp.Name = "gbCEQUALW2temp";
+            this.gbCEQUALW2temp.Size = new System.Drawing.Size(510, 60);
+            this.gbCEQUALW2temp.TabIndex = 9;
+            this.gbCEQUALW2temp.TabStop = false;
+            this.gbCEQUALW2temp.Text = "Temperature File";
+            // 
+            // btnSelectTempFile
+            // 
+            this.btnSelectTempFile.Location = new System.Drawing.Point(420, 21);
+            this.btnSelectTempFile.Name = "btnSelectTempFile";
+            this.btnSelectTempFile.Size = new System.Drawing.Size(75, 23);
+            this.btnSelectTempFile.TabIndex = 7;
+            this.btnSelectTempFile.Text = "Select";
+            this.btnSelectTempFile.UseVisualStyleBackColor = true;
+            this.btnSelectTempFile.Click += new System.EventHandler(this.btnSelectTempFile_Click);
+            // 
+            // tbCEQUALtempFile
+            // 
+            this.tbCEQUALtempFile.Location = new System.Drawing.Point(18, 23);
+            this.tbCEQUALtempFile.Name = "tbCEQUALtempFile";
+            this.tbCEQUALtempFile.ReadOnly = true;
+            this.tbCEQUALtempFile.Size = new System.Drawing.Size(396, 20);
+            this.tbCEQUALtempFile.TabIndex = 2;
+            // 
+            // gbCEQUALW2flow
+            // 
+            this.gbCEQUALW2flow.Controls.Add(this.btnSelectFlowFile);
+            this.gbCEQUALW2flow.Controls.Add(this.tbCEQUALflowFile);
+            this.gbCEQUALW2flow.Enabled = false;
+            this.gbCEQUALW2flow.Location = new System.Drawing.Point(76, 111);
+            this.gbCEQUALW2flow.Name = "gbCEQUALW2flow";
+            this.gbCEQUALW2flow.Size = new System.Drawing.Size(510, 60);
+            this.gbCEQUALW2flow.TabIndex = 8;
+            this.gbCEQUALW2flow.TabStop = false;
+            this.gbCEQUALW2flow.Text = "Flow File";
+            // 
+            // btnSelectFlowFile
+            // 
+            this.btnSelectFlowFile.Location = new System.Drawing.Point(420, 21);
+            this.btnSelectFlowFile.Name = "btnSelectFlowFile";
+            this.btnSelectFlowFile.Size = new System.Drawing.Size(75, 23);
+            this.btnSelectFlowFile.TabIndex = 7;
+            this.btnSelectFlowFile.Text = "Select";
+            this.btnSelectFlowFile.UseVisualStyleBackColor = true;
+            this.btnSelectFlowFile.Click += new System.EventHandler(this.btnSelectFlowFile_Click);
+            // 
+            // tbCEQUALflowFile
+            // 
+            this.tbCEQUALflowFile.Location = new System.Drawing.Point(18, 23);
+            this.tbCEQUALflowFile.Name = "tbCEQUALflowFile";
+            this.tbCEQUALflowFile.ReadOnly = true;
+            this.tbCEQUALflowFile.Size = new System.Drawing.Size(396, 20);
+            this.tbCEQUALflowFile.TabIndex = 2;
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(97, 86);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(202, 13);
+            this.label35.TabIndex = 1;
+            this.label35.Text = "Write Output Files for CE-QUAL-W2 Input";
+            // 
+            // cbWriteCEQUALoutput
+            // 
+            this.cbWriteCEQUALoutput.AutoSize = true;
+            this.cbWriteCEQUALoutput.Location = new System.Drawing.Point(76, 85);
+            this.cbWriteCEQUALoutput.Name = "cbWriteCEQUALoutput";
+            this.cbWriteCEQUALoutput.Size = new System.Drawing.Size(15, 14);
+            this.cbWriteCEQUALoutput.TabIndex = 0;
+            this.cbWriteCEQUALoutput.UseVisualStyleBackColor = true;
+            this.cbWriteCEQUALoutput.CheckedChanged += new System.EventHandler(this.cbWriteCEQUALoutput_CheckedChanged);
             // 
             // btnHelp
             // 
@@ -1082,386 +1475,6 @@
             this.btnOK.TabIndex = 14;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
-            // 
-            // dgvAdsorption
-            // 
-            this.dgvAdsorption.AllowUserToAddRows = false;
-            this.dgvAdsorption.AllowUserToDeleteRows = false;
-            this.dgvAdsorption.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAdsorption.Location = new System.Drawing.Point(20, 47);
-            this.dgvAdsorption.Name = "dgvAdsorption";
-            this.dgvAdsorption.Size = new System.Drawing.Size(623, 338);
-            this.dgvAdsorption.TabIndex = 0;
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(17, 31);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(134, 13);
-            this.label27.TabIndex = 1;
-            this.label27.Text = "Adsorption Isotherms, L/kg";
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(17, 388);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(545, 13);
-            this.label28.TabIndex = 2;
-            this.label28.Text = "Note: Adsorption isotherms should be changed with discretion. They should not var" +
-    "y within a subwatershed region.";
-            // 
-            // tbObsHydroFile
-            // 
-            this.tbObsHydroFile.Location = new System.Drawing.Point(14, 24);
-            this.tbObsHydroFile.Name = "tbObsHydroFile";
-            this.tbObsHydroFile.Size = new System.Drawing.Size(415, 20);
-            this.tbObsHydroFile.TabIndex = 0;
-            // 
-            // btnSelectORH
-            // 
-            this.btnSelectORH.Location = new System.Drawing.Point(435, 23);
-            this.btnSelectORH.Name = "btnSelectORH";
-            this.btnSelectORH.Size = new System.Drawing.Size(75, 23);
-            this.btnSelectORH.TabIndex = 5;
-            this.btnSelectORH.Text = "Select";
-            this.btnSelectORH.UseVisualStyleBackColor = true;
-            // 
-            // btnSelectORC
-            // 
-            this.btnSelectORC.Location = new System.Drawing.Point(434, 24);
-            this.btnSelectORC.Name = "btnSelectORC";
-            this.btnSelectORC.Size = new System.Drawing.Size(75, 23);
-            this.btnSelectORC.TabIndex = 6;
-            this.btnSelectORC.Text = "Select";
-            this.btnSelectORC.UseVisualStyleBackColor = true;
-            // 
-            // btnClearORH
-            // 
-            this.btnClearORH.Location = new System.Drawing.Point(516, 23);
-            this.btnClearORH.Name = "btnClearORH";
-            this.btnClearORH.Size = new System.Drawing.Size(75, 23);
-            this.btnClearORH.TabIndex = 7;
-            this.btnClearORH.Text = "Clear";
-            this.btnClearORH.UseVisualStyleBackColor = true;
-            // 
-            // btnClearORC
-            // 
-            this.btnClearORC.Location = new System.Drawing.Point(515, 24);
-            this.btnClearORC.Name = "btnClearORC";
-            this.btnClearORC.Size = new System.Drawing.Size(75, 23);
-            this.btnClearORC.TabIndex = 8;
-            this.btnClearORC.Text = "Clear";
-            this.btnClearORC.UseVisualStyleBackColor = true;
-            // 
-            // tbObsWaterQualFile
-            // 
-            this.tbObsWaterQualFile.Location = new System.Drawing.Point(13, 25);
-            this.tbObsWaterQualFile.Name = "tbObsWaterQualFile";
-            this.tbObsWaterQualFile.Size = new System.Drawing.Size(415, 20);
-            this.tbObsWaterQualFile.TabIndex = 9;
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.btnClearORH);
-            this.groupBox7.Controls.Add(this.btnSelectORH);
-            this.groupBox7.Controls.Add(this.tbObsHydroFile);
-            this.groupBox7.Location = new System.Drawing.Point(28, 16);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(605, 64);
-            this.groupBox7.TabIndex = 10;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Observed Hydrology File (.ORH)";
-            // 
-            // groupBox8
-            // 
-            this.groupBox8.Controls.Add(this.tbObsWaterQualFile);
-            this.groupBox8.Controls.Add(this.btnClearORC);
-            this.groupBox8.Controls.Add(this.btnSelectORC);
-            this.groupBox8.Location = new System.Drawing.Point(28, 99);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(605, 64);
-            this.groupBox8.TabIndex = 11;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Observed Water Quality File (.ORC)";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Enabled = false;
-            this.checkBox1.Location = new System.Drawing.Point(22, 26);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(321, 17);
-            this.checkBox1.TabIndex = 12;
-            this.checkBox1.Text = "Override simulated flow and water quality with observed values";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(27, 24);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(54, 13);
-            this.label29.TabIndex = 13;
-            this.label29.Text = "Hydrology";
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(233, 24);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(71, 13);
-            this.label30.TabIndex = 14;
-            this.label30.Text = "Water Quality";
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(27, 21);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(111, 13);
-            this.label31.TabIndex = 15;
-            this.label31.Text = "Total Dissolved Solids";
-            // 
-            // tbHydroInterpPd
-            // 
-            this.tbHydroInterpPd.Location = new System.Drawing.Point(99, 20);
-            this.tbHydroInterpPd.Name = "tbHydroInterpPd";
-            this.tbHydroInterpPd.Size = new System.Drawing.Size(100, 20);
-            this.tbHydroInterpPd.TabIndex = 16;
-            // 
-            // tbWQInterpPd
-            // 
-            this.tbWQInterpPd.Location = new System.Drawing.Point(347, 20);
-            this.tbWQInterpPd.Name = "tbWQInterpPd";
-            this.tbWQInterpPd.Size = new System.Drawing.Size(100, 20);
-            this.tbWQInterpPd.TabIndex = 17;
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(27, 21);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(137, 13);
-            this.label32.TabIndex = 18;
-            this.label32.Text = "Monthly Averaging Method:";
-            // 
-            // label33
-            // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(213, 21);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(48, 13);
-            this.label33.TabIndex = 19;
-            this.label33.Text = "Alkalinity";
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(363, 21);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(21, 13);
-            this.label34.TabIndex = 20;
-            this.label34.Text = "pH";
-            // 
-            // rbAvgSimulation
-            // 
-            this.rbAvgSimulation.AutoSize = true;
-            this.rbAvgSimulation.Location = new System.Drawing.Point(185, 19);
-            this.rbAvgSimulation.Name = "rbAvgSimulation";
-            this.rbAvgSimulation.Size = new System.Drawing.Size(132, 17);
-            this.rbAvgSimulation.TabIndex = 21;
-            this.rbAvgSimulation.TabStop = true;
-            this.rbAvgSimulation.Text = "Simulation Time Period";
-            this.rbAvgSimulation.UseVisualStyleBackColor = true;
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(346, 19);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(161, 17);
-            this.radioButton1.TabIndex = 22;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Entire Period of Data Record";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // groupBox9
-            // 
-            this.groupBox9.Controls.Add(this.gbMonthAveraging);
-            this.groupBox9.Controls.Add(this.gbAdjustPriority);
-            this.groupBox9.Controls.Add(this.gbMaxInterpPeriod);
-            this.groupBox9.Controls.Add(this.checkBox1);
-            this.groupBox9.Location = new System.Drawing.Point(28, 182);
-            this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(604, 235);
-            this.groupBox9.TabIndex = 23;
-            this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "Use Observed Data as Model Input";
-            // 
-            // gbMaxInterpPeriod
-            // 
-            this.gbMaxInterpPeriod.Controls.Add(this.tbWQInterpPd);
-            this.gbMaxInterpPeriod.Controls.Add(this.tbHydroInterpPd);
-            this.gbMaxInterpPeriod.Controls.Add(this.label30);
-            this.gbMaxInterpPeriod.Controls.Add(this.label29);
-            this.gbMaxInterpPeriod.Location = new System.Drawing.Point(22, 57);
-            this.gbMaxInterpPeriod.Name = "gbMaxInterpPeriod";
-            this.gbMaxInterpPeriod.Size = new System.Drawing.Size(554, 50);
-            this.gbMaxInterpPeriod.TabIndex = 23;
-            this.gbMaxInterpPeriod.TabStop = false;
-            this.gbMaxInterpPeriod.Text = "Maximum Interpolation Period, days";
-            // 
-            // gbAdjustPriority
-            // 
-            this.gbAdjustPriority.Controls.Add(this.tbPriorityPh);
-            this.gbAdjustPriority.Controls.Add(this.tbPriorityAlkalinity);
-            this.gbAdjustPriority.Controls.Add(this.tbPriorityTDS);
-            this.gbAdjustPriority.Controls.Add(this.label34);
-            this.gbAdjustPriority.Controls.Add(this.label33);
-            this.gbAdjustPriority.Controls.Add(this.label31);
-            this.gbAdjustPriority.Location = new System.Drawing.Point(22, 171);
-            this.gbAdjustPriority.Name = "gbAdjustPriority";
-            this.gbAdjustPriority.Size = new System.Drawing.Size(554, 50);
-            this.gbAdjustPriority.TabIndex = 24;
-            this.gbAdjustPriority.TabStop = false;
-            this.gbAdjustPriority.Text = "Adjustment Priorities (Rank parameters 1, 2, and 3)";
-            // 
-            // gbMonthAveraging
-            // 
-            this.gbMonthAveraging.Controls.Add(this.radioButton1);
-            this.gbMonthAveraging.Controls.Add(this.rbAvgSimulation);
-            this.gbMonthAveraging.Controls.Add(this.label32);
-            this.gbMonthAveraging.Location = new System.Drawing.Point(23, 115);
-            this.gbMonthAveraging.Name = "gbMonthAveraging";
-            this.gbMonthAveraging.Size = new System.Drawing.Size(552, 46);
-            this.gbMonthAveraging.TabIndex = 25;
-            this.gbMonthAveraging.TabStop = false;
-            // 
-            // tbPriorityTDS
-            // 
-            this.tbPriorityTDS.Location = new System.Drawing.Point(144, 17);
-            this.tbPriorityTDS.Name = "tbPriorityTDS";
-            this.tbPriorityTDS.Size = new System.Drawing.Size(31, 20);
-            this.tbPriorityTDS.TabIndex = 21;
-            // 
-            // tbPriorityAlkalinity
-            // 
-            this.tbPriorityAlkalinity.Location = new System.Drawing.Point(267, 17);
-            this.tbPriorityAlkalinity.Name = "tbPriorityAlkalinity";
-            this.tbPriorityAlkalinity.Size = new System.Drawing.Size(31, 20);
-            this.tbPriorityAlkalinity.TabIndex = 22;
-            // 
-            // tbPriorityPh
-            // 
-            this.tbPriorityPh.Location = new System.Drawing.Point(390, 17);
-            this.tbPriorityPh.Name = "tbPriorityPh";
-            this.tbPriorityPh.Size = new System.Drawing.Size(31, 20);
-            this.tbPriorityPh.TabIndex = 23;
-            // 
-            // cbWriteCEQUALoutput
-            // 
-            this.cbWriteCEQUALoutput.AutoSize = true;
-            this.cbWriteCEQUALoutput.Location = new System.Drawing.Point(76, 85);
-            this.cbWriteCEQUALoutput.Name = "cbWriteCEQUALoutput";
-            this.cbWriteCEQUALoutput.Size = new System.Drawing.Size(15, 14);
-            this.cbWriteCEQUALoutput.TabIndex = 0;
-            this.cbWriteCEQUALoutput.UseVisualStyleBackColor = true;
-            this.cbWriteCEQUALoutput.CheckedChanged += new System.EventHandler(this.cbWriteCEQUALoutput_CheckedChanged);
-            // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(97, 86);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(202, 13);
-            this.label35.TabIndex = 1;
-            this.label35.Text = "Write Output Files for CE-QUAL-W2 Input";
-            // 
-            // tbCEQUALflowFile
-            // 
-            this.tbCEQUALflowFile.Location = new System.Drawing.Point(18, 23);
-            this.tbCEQUALflowFile.Name = "tbCEQUALflowFile";
-            this.tbCEQUALflowFile.Size = new System.Drawing.Size(396, 20);
-            this.tbCEQUALflowFile.TabIndex = 2;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(420, 21);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Select";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // gbCEQUALW2flow
-            // 
-            this.gbCEQUALW2flow.Controls.Add(this.button1);
-            this.gbCEQUALW2flow.Controls.Add(this.tbCEQUALflowFile);
-            this.gbCEQUALW2flow.Enabled = false;
-            this.gbCEQUALW2flow.Location = new System.Drawing.Point(76, 111);
-            this.gbCEQUALW2flow.Name = "gbCEQUALW2flow";
-            this.gbCEQUALW2flow.Size = new System.Drawing.Size(510, 60);
-            this.gbCEQUALW2flow.TabIndex = 8;
-            this.gbCEQUALW2flow.TabStop = false;
-            this.gbCEQUALW2flow.Text = "Flow File";
-            // 
-            // gbCEQUALW2temp
-            // 
-            this.gbCEQUALW2temp.Controls.Add(this.button2);
-            this.gbCEQUALW2temp.Controls.Add(this.tbCEQUALtempFile);
-            this.gbCEQUALW2temp.Enabled = false;
-            this.gbCEQUALW2temp.Location = new System.Drawing.Point(76, 177);
-            this.gbCEQUALW2temp.Name = "gbCEQUALW2temp";
-            this.gbCEQUALW2temp.Size = new System.Drawing.Size(510, 60);
-            this.gbCEQUALW2temp.TabIndex = 9;
-            this.gbCEQUALW2temp.TabStop = false;
-            this.gbCEQUALW2temp.Text = "Temperature File";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(420, 21);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Select";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // tbCEQUALtempFile
-            // 
-            this.tbCEQUALtempFile.Location = new System.Drawing.Point(18, 23);
-            this.tbCEQUALtempFile.Name = "tbCEQUALtempFile";
-            this.tbCEQUALtempFile.Size = new System.Drawing.Size(396, 20);
-            this.tbCEQUALtempFile.TabIndex = 2;
-            // 
-            // gbCEQUALW2chem
-            // 
-            this.gbCEQUALW2chem.Controls.Add(this.button3);
-            this.gbCEQUALW2chem.Controls.Add(this.tbCEQUALconcFile);
-            this.gbCEQUALW2chem.Enabled = false;
-            this.gbCEQUALW2chem.Location = new System.Drawing.Point(76, 243);
-            this.gbCEQUALW2chem.Name = "gbCEQUALW2chem";
-            this.gbCEQUALW2chem.Size = new System.Drawing.Size(510, 60);
-            this.gbCEQUALW2chem.TabIndex = 9;
-            this.gbCEQUALW2chem.TabStop = false;
-            this.gbCEQUALW2chem.Text = "Chemical Concentration File";
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(420, 21);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 7;
-            this.button3.Text = "Select";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // tbCEQUALconcFile
-            // 
-            this.tbCEQUALconcFile.Location = new System.Drawing.Point(18, 23);
-            this.tbCEQUALconcFile.Name = "tbCEQUALconcFile";
-            this.tbCEQUALconcFile.Size = new System.Drawing.Size(396, 20);
-            this.tbCEQUALconcFile.TabIndex = 2;
             // 
             // DialogRiverCoeffs
             // 
@@ -1507,28 +1520,28 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvRiverInitConcs)).EndInit();
             this.tpAdsorption.ResumeLayout(false);
             this.tpAdsorption.PerformLayout();
-            this.tpObsData.ResumeLayout(false);
-            this.tpCEQUALW2.ResumeLayout(false);
-            this.tpCEQUALW2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAdsorption)).EndInit();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
-            this.groupBox9.ResumeLayout(false);
-            this.groupBox9.PerformLayout();
-            this.gbMaxInterpPeriod.ResumeLayout(false);
-            this.gbMaxInterpPeriod.PerformLayout();
-            this.gbAdjustPriority.ResumeLayout(false);
-            this.gbAdjustPriority.PerformLayout();
+            this.tpObsData.ResumeLayout(false);
+            this.gbObsAsInput.ResumeLayout(false);
+            this.gbObsAsInput.PerformLayout();
             this.gbMonthAveraging.ResumeLayout(false);
             this.gbMonthAveraging.PerformLayout();
-            this.gbCEQUALW2flow.ResumeLayout(false);
-            this.gbCEQUALW2flow.PerformLayout();
-            this.gbCEQUALW2temp.ResumeLayout(false);
-            this.gbCEQUALW2temp.PerformLayout();
+            this.gbAdjustPriority.ResumeLayout(false);
+            this.gbAdjustPriority.PerformLayout();
+            this.gbMaxInterpPeriod.ResumeLayout(false);
+            this.gbMaxInterpPeriod.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            this.tpCEQUALW2.ResumeLayout(false);
+            this.tpCEQUALW2.PerformLayout();
             this.gbCEQUALW2chem.ResumeLayout(false);
             this.gbCEQUALW2chem.PerformLayout();
+            this.gbCEQUALW2temp.ResumeLayout(false);
+            this.gbCEQUALW2temp.PerformLayout();
+            this.gbCEQUALW2flow.ResumeLayout(false);
+            this.gbCEQUALW2flow.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1629,9 +1642,9 @@
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.DataGridView dgvAdsorption;
-        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.GroupBox gbObsAsInput;
         private System.Windows.Forms.GroupBox gbMonthAveraging;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton rbAverageData;
         private System.Windows.Forms.RadioButton rbAvgSimulation;
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.GroupBox gbAdjustPriority;
@@ -1646,7 +1659,7 @@
         private System.Windows.Forms.TextBox tbHydroInterpPd;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox cbSimulationOverride;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.TextBox tbObsWaterQualFile;
         private System.Windows.Forms.Button btnClearORC;
@@ -1656,13 +1669,13 @@
         private System.Windows.Forms.Button btnSelectORH;
         private System.Windows.Forms.TextBox tbObsHydroFile;
         private System.Windows.Forms.GroupBox gbCEQUALW2chem;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnSelectChemFile;
         private System.Windows.Forms.TextBox tbCEQUALconcFile;
         private System.Windows.Forms.GroupBox gbCEQUALW2temp;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnSelectTempFile;
         private System.Windows.Forms.TextBox tbCEQUALtempFile;
         private System.Windows.Forms.GroupBox gbCEQUALW2flow;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSelectFlowFile;
         private System.Windows.Forms.TextBox tbCEQUALflowFile;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.CheckBox cbWriteCEQUALoutput;
