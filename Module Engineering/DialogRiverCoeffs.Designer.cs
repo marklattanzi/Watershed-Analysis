@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tcRiverTabs = new System.Windows.Forms.TabControl();
             this.tpPhysicalData = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -453,13 +453,13 @@
             // 
             // chartStageWidth
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chartStageWidth.ChartAreas.Add(chartArea4);
+            chartArea1.Name = "ChartArea1";
+            this.chartStageWidth.ChartAreas.Add(chartArea1);
             this.chartStageWidth.Location = new System.Drawing.Point(235, 79);
             this.chartStageWidth.Name = "chartStageWidth";
-            series4.ChartArea = "ChartArea1";
-            series4.Name = "SeriesStageWidth";
-            this.chartStageWidth.Series.Add(series4);
+            series1.ChartArea = "ChartArea1";
+            series1.Name = "SeriesStageWidth";
+            this.chartStageWidth.Series.Add(series1);
             this.chartStageWidth.Size = new System.Drawing.Size(403, 355);
             this.chartStageWidth.TabIndex = 2;
             this.chartStageWidth.Text = "chart1";
@@ -478,6 +478,8 @@
             // 
             this.dgvStageWidth.AllowUserToAddRows = false;
             this.dgvStageWidth.AllowUserToDeleteRows = false;
+            this.dgvStageWidth.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvStageWidth.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvStageWidth.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvStageWidth.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Stage,
@@ -492,11 +494,13 @@
             // 
             this.Stage.HeaderText = "Stage (m)";
             this.Stage.Name = "Stage";
+            this.Stage.Width = 77;
             // 
             // width
             // 
             this.width.HeaderText = "Width (m)";
             this.width.Name = "width";
+            this.width.Width = 77;
             // 
             // tpDiversions
             // 
@@ -800,12 +804,15 @@
             // 
             this.dgvReactions.AllowUserToAddRows = false;
             this.dgvReactions.AllowUserToDeleteRows = false;
+            this.dgvReactions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvReactions.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvReactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvReactions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Water,
             this.Bed});
             this.dgvReactions.Location = new System.Drawing.Point(19, 55);
             this.dgvReactions.Name = "dgvReactions";
+            this.dgvReactions.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.dgvReactions.Size = new System.Drawing.Size(393, 370);
             this.dgvReactions.TabIndex = 3;
             // 
@@ -813,11 +820,13 @@
             // 
             this.Water.HeaderText = "Water";
             this.Water.Name = "Water";
+            this.Water.Width = 61;
             // 
             // Bed
             // 
             this.Bed.HeaderText = "Bed";
             this.Bed.Name = "Bed";
+            this.Bed.Width = 51;
             // 
             // label18
             // 
@@ -885,9 +894,10 @@
             this.dgvBedParticleContent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvBedParticleContent.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.SedContent});
-            this.dgvBedParticleContent.Location = new System.Drawing.Point(244, 283);
+            this.dgvBedParticleContent.Location = new System.Drawing.Point(184, 283);
             this.dgvBedParticleContent.Name = "dgvBedParticleContent";
-            this.dgvBedParticleContent.Size = new System.Drawing.Size(182, 80);
+            this.dgvBedParticleContent.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
+            this.dgvBedParticleContent.Size = new System.Drawing.Size(291, 107);
             this.dgvBedParticleContent.TabIndex = 12;
             // 
             // SedContent
@@ -1010,7 +1020,7 @@
             this.dgvRiverInitConcs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRiverInitConcs.Location = new System.Drawing.Point(7, 8);
             this.dgvRiverInitConcs.Name = "dgvRiverInitConcs";
-            this.dgvRiverInitConcs.RowHeadersWidth = 150;
+            this.dgvRiverInitConcs.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.dgvRiverInitConcs.Size = new System.Drawing.Size(648, 421);
             this.dgvRiverInitConcs.TabIndex = 0;
             // 
@@ -1049,9 +1059,12 @@
             // 
             this.dgvAdsorption.AllowUserToAddRows = false;
             this.dgvAdsorption.AllowUserToDeleteRows = false;
+            this.dgvAdsorption.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvAdsorption.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvAdsorption.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAdsorption.Location = new System.Drawing.Point(20, 47);
             this.dgvAdsorption.Name = "dgvAdsorption";
+            this.dgvAdsorption.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.dgvAdsorption.Size = new System.Drawing.Size(623, 338);
             this.dgvAdsorption.TabIndex = 0;
             // 
@@ -1486,7 +1499,7 @@
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.tcRiverTabs);
             this.Name = "DialogRiverCoeffs";
-            this.Text = "Form1";
+            this.Text = "River Coefficients";
             this.tcRiverTabs.ResumeLayout(false);
             this.tpPhysicalData.ResumeLayout(false);
             this.tpPhysicalData.PerformLayout();

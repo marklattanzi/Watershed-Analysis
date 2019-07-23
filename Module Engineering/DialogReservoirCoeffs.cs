@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace warmf
 {
@@ -26,10 +27,22 @@ namespace warmf
         {
             ReservoirSeg reservoirSeg = Global.coe.reservoirs[iRes].reservoirSegs[iSeg];
             Reservoir reservoir = Global.coe.reservoirs[iRes];
-            
+
             Text = "Reservoir Segment " + Global.coe.reservoirs[iRes].reservoirSegs[iSeg].idNum + " Coefficients";
 
             //Stage-Flow
+            ChartArea chrtareaStageFlow = chartStageFlow.ChartAreas["ChartArea1"];
+            Series seriesStageFlow = chartStageFlow.Series["seriesStageFlow"];
+            seriesStageFlow.ChartType = SeriesChartType.Line;
+            chrtareaStageFlow.AxisX.MajorGrid.LineColor = Color.LightGray;
+            chrtareaStageFlow.AxisX.Title = "Stage (m)";
+            chrtareaStageFlow.AxisY.MajorGrid.LineColor = Color.LightGray;
+            chrtareaStageFlow.AxisY.Title = "Flow (m3/sec)";
+            for (int i = 0; i < 9; i++)
+            {
+                dgvStageFlow.Rows.Insert(i, reservoir.spillway[i].stage.ToString(), reservoir.spillway[i].flow.ToString());
+                seriesStageFlow.Points.AddXY(reservoir.spillway[i].stage, reservoir.spillway[i].flow);
+            }
 
             //Reactions
             dgvReactions.Columns.Add("water", "Water");
@@ -42,6 +55,7 @@ namespace warmf
                 dgvReactions.Rows[i].Cells["bed"].Value = reservoir.bedReactionRate[i].ToString();
             }
             FormatDataGridView(dgvReactions);
+            
             //Phytoplankton
             //Hard-coding some of the datagridview setup, because I think the phytoplankton species are hard coded in the model - check with Joel
             //Columns: Blue-green, Diatoms, Green algae
@@ -65,10 +79,12 @@ namespace warmf
             dgvPhytoplankton.Rows[6].HeaderCell.Value = "Optimum Growth Temperature, C";
             for (int i = 0; i < 3; i++) dgvPhytoplankton.Rows[6].Cells[i].Value = reservoir.algae[i].optGrowTemp.ToString();
             FormatDataGridView(dgvPhytoplankton);
+            
             //Heat/Light
             tbRadiationAbsorbed.Text = reservoirSeg.radiationFraction.ToString();
             tbRadiationFractionDepth.Text = reservoirSeg.radiationFractionDepth.ToString();
             tbSecchiDepth.Text = reservoirSeg.SecchiDiskDepth.ToString();
+            
             //Diffusion
             tbInflowEntrainment.Text = reservoirSeg.inflowEntrain.ToString();
             tbMinNegDensGrad.Text = reservoirSeg.minNegDensity.ToString();
@@ -79,9 +95,11 @@ namespace warmf
             tbDensityCriticalGradient.Text = reservoirSeg.criticalDensityGradient.ToString();
             tbDensityMaxDiff.Text = reservoirSeg.densityGradMaxDiffCoef.ToString();
             tbDensityAttenuationExponent.Text = reservoirSeg.densityGradExp.ToString();
+            
             //Sediment
             tbSedThickness.Text = reservoirSeg.sedBottomThickness.ToString();
             tbSedDiffRate.Text = reservoirSeg.sedDiffusion.ToString();
+            
             //Initial Concentrations
             string strWaterUnits, strShortUnits;
             dgvInitialConc.Columns.Add("water", "Water");
@@ -138,6 +156,7 @@ namespace warmf
             foreach (int i in hideRowsList)
                 dgvInitialConc.Rows[i-1].Visible = false;
             FormatDataGridView(dgvInitialConc);
+            
             //Point Sources
             if (reservoirSeg.numPointSrcs > 0)
             {
@@ -175,6 +194,7 @@ namespace warmf
                 }
                 tbNPDESpermit.Text = pFile.npdesPermit;  
             }
+            
             //Adsorption
             dgvAdsorption.Columns.Add("water", "Water");
             dgvAdsorption.Columns.Add("bed", "Bed");
@@ -186,48 +206,40 @@ namespace warmf
                 dgvAdsorption.Rows[i].Cells["bed"].Value = reservoir.bedAdsorpIsotherm[i].ToString();
             }
             FormatDataGridView(dgvAdsorption);
+            
             //Observed Data
             tbObsWQFile.Text = reservoirSeg.obsWQFilename;
             tbObsHydroFile.Text = reservoir.hydrologyFilename;
+
             //Stage-Area
-            dgvStageArea.Columns.Add("Stage", "Stage (m)");
-            dgvStageArea.Columns["stage"].SortMode = DataGridViewColumnSortMode.Automatic;
-            dgvStageArea.Columns.Add("Area", "Area (m2)");
-            for (int ii = 0; ii < 9; ii++)
+            ChartArea chrtareaStageArea = chartStageArea.ChartAreas["ChartArea1"];
+            Series seriesStageArea = chartStageArea.Series["seriesStageArea"];
+            seriesStageArea.ChartType = SeriesChartType.Line;
+            chrtareaStageArea.AxisX.MajorGrid.LineColor = Color.LightGray;
+            chrtareaStageArea.AxisX.Title = "Stage (m)";
+            chrtareaStageArea.AxisY.MajorGrid.LineColor = Color.LightGray;
+            chrtareaStageArea.AxisY.Title = "Area (m2)";
+            for (int i = 0; i < 9; i++)
             {
-                dgvStageArea.Rows.Insert(ii,
-                    reservoir.bathymetry[ii].stage.ToString(),
-                    reservoir.bathymetry[ii].area.ToString());
+                dgvStageArea.Rows.Insert(i, reservoir.bathymetry[i].stage.ToString(), reservoir.bathymetry[i].area.ToString());
+                seriesStageArea.Points.AddXY(reservoir.bathymetry[i].stage, reservoir.bathymetry[i].area);
             }
-            dgvStageArea.RowHeadersVisible = false;
-            double dblX, dblY;
-            chartStageArea.Series.Clear();
-            chartStageArea.Series.Add("Area");
-            chartStageArea.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            chartStageArea.ChartAreas[0].AxisX.Title = "Stage (m)";
-            chartStageArea.ChartAreas[0].AxisY.Title = "Area (m2)";
-            chartStageArea.ChartAreas[0].AxisY.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
-            for (int i = 0; i < dgvStageArea.Rows.Count; i++)
-            {
-                dblX = Convert.ToDouble(dgvStageArea.Rows[i].Cells["Stage"].Value);
-                dblY = Convert.ToDouble(dgvStageArea.Rows[i].Cells["Area"].Value);
-                chartStageArea.Series["Area"].Points.AddXY(dblX, dblY);           
-            }
-            FormatDataGridView(dgvStageArea);
+
             //Physical Data
             tbName.Text = reservoirSeg.name.ToString();
             tbResSegID.Text = reservoirSeg.idNum.ToString();
             tbInitElev.Text = reservoir.elevation.ToString();
-            double Min = Convert.ToDouble(dgvStageArea.Rows[0].Cells["Stage"].Value);
-            double Max = Convert.ToDouble(dgvStageArea.Rows[0].Cells["Stage"].Value);
+            double Min = Convert.ToDouble(dgvStageArea.Rows[0].Cells[0].Value);
+            double Max = Convert.ToDouble(dgvStageArea.Rows[0].Cells[0].Value);
             for (int i = 1; i < dgvStageArea.Rows.Count; i++)
             {
-                double Val = Convert.ToDouble(dgvStageArea.Rows[i].Cells["Stage"].Value);
+                double Val = Convert.ToDouble(dgvStageArea.Rows[i].Cells[0].Value);
                 Min = Math.Min(Val, Min);
                 Max = Math.Max(Val, Max);
             }
             tbMinElev.Text = Min.ToString();
             tbMaxElev.Text = Max.ToString();
+
             //Inflow/Outflow
 
             //Meteorology
@@ -256,14 +268,7 @@ namespace warmf
         }
         private void BtnUpdateChart_Click(object sender, EventArgs e)
         {
-            double dblX, dblY;
-            chartStageArea.Series[0].Points.Clear();
-            for (int i = 0; i < dgvStageArea.Rows.Count; i++)
-            {
-                dblX = Convert.ToDouble(dgvStageArea.Rows[i].Cells["Stage"].Value);
-                dblY = Convert.ToDouble(dgvStageArea.Rows[i].Cells["Area"].Value);
-                chartStageArea.Series["Area"].Points.AddXY(dblX, dblY);
-            }
+            
         }
         private void BtnSelectHydroFile_Click(object sender, EventArgs e)
         {
@@ -355,6 +360,29 @@ namespace warmf
         private void BtnRemovePointSource_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnRedrawStageFlowChart_Click(object sender, EventArgs e)
+        {
+            chartStageFlow.Series["seriesStageFlow"].Points.Clear();
+            for (int i = 0; i < dgvStageFlow.Rows.Count; i++)
+            {
+                double dblX = Convert.ToDouble(dgvStageFlow.Rows[i].Cells[0].Value); //Stage
+                double dblY = Convert.ToDouble(dgvStageFlow.Rows[i].Cells[1].Value); //Flow
+                chartStageFlow.Series["seriesStageFlow"].Points.AddXY(dblX, dblY);
+            }
+        }
+
+        private void btnRedrawStageArea_Click(object sender, EventArgs e)
+        {
+            double dblX, dblY;
+            chartStageArea.Series[0].Points.Clear();
+            for (int i = 0; i < dgvStageArea.Rows.Count; i++)
+            {
+                dblX = Convert.ToDouble(dgvStageArea.Rows[i].Cells["Stage"].Value);
+                dblY = Convert.ToDouble(dgvStageArea.Rows[i].Cells["Area"].Value);
+                chartStageArea.Series["seriesStageArea"].Points.AddXY(dblX, dblY);
+            }
         }
     }
 }
