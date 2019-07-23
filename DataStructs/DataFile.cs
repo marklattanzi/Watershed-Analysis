@@ -38,11 +38,11 @@ namespace warmf
 
         public bool WriteDataLine(ref STechStreamWriter SW)
         {
-//            SW.Write("{0:ddMMyyyy HHmm}", Convert.ToDateTime(Date.ToString("ddMMyyyy HHmm")));
+            // Write the date and time using a 24-hour clock
             SW.Write("{0}", Date.ToString("ddMMyyyy HHmm"));
             for (int ii = 0; ii < Values.Count(); ii++)
             {
-                SW.Write("{1,8:0.######}", Values[ii]);
+                SW.WriteDouble(Values[ii]);
             }
             SW.WriteLine(Source);
 
@@ -57,6 +57,7 @@ namespace warmf
         public int NumLines;
         public int NumParameters;
         public int NumGroups;
+        public List<string> ParameterNames;
 
         public string filename { get; set; }
         public string shortName { get; set; }
@@ -182,9 +183,9 @@ namespace warmf
             {
                 sw = new STechStreamWriter(filename, false);
                 WriteHeader(ref sw);
-                for (int ii = 0; ii < TheData.Count(); ii++)
+                WriteData(ref sw);
+/*                for (int ii = 0; ii < TheData.Count(); ii++)
                 {
-//                    TheData[ii].WriteDataLine(ref sw);
                     sw.WriteLine("{0:ddMMyyyy HHmm}{1,8:0.###}{2,8:0.#}{3,8:0.#}{4,8:0.##}{5,8:0.#}{6,8:0.#}{7,8:0.#}{8}",
                         Convert.ToDateTime(TheData[ii].Date.ToString()),
                         TheData[ii].Values[0],
@@ -195,7 +196,7 @@ namespace warmf
                         TheData[ii].Values[5],
                         TheData[ii].Values[6],
                         TheData[ii].Source);
-                }
+                }*/
                 sw.Close();
                 return true;
             }
