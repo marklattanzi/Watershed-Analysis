@@ -472,6 +472,7 @@ namespace warmf {
         public double bottomElevation;
         public bool swOutputResults;
         public int numOutlets;
+        public int numDiversionsTo;
         public string name;
         public List<ReservoirOutlet> outlets;
         public int numPointSrcs;
@@ -1600,6 +1601,8 @@ namespace warmf {
                     line = sr.ReadLine();
                     reservoir.swAdjustResRelease = !line.Substring(8, 8).Contains("0");
                     reservoir.hydrologyFilename = line.Substring(16);
+                    //just uncommented following line..
+
                     //reservoir.swAdjustResRelease = !ReadString(sr, "OBSDATA").Contains("0");
 					reservoir.waterReactionRate = ReadDoubleData(sr, "REAC-H2O", numReactions);
 					reservoir.bedReactionRate = ReadDoubleData(sr, "REAC-BED", numReactions);
@@ -1715,7 +1718,13 @@ namespace warmf {
 						seg.upstreamCatchIDs = ReadIntData(sr, "ICATOL", 9);
 						seg.upstreamRiverIDs = ReadIntData(sr, "IRVTOL", 9);
 						seg.upstreamCatchIDs = ReadIntData(sr, "ILKTOL", 9);
-						seg.diversionToFilenums = ReadIntData(sr, "DIVTO", 1);	// how many nums?  need to fix readData routines - MRL
+                        //Scott adding code here...
+                        nums = ReadIntData(sr, "DIVTO", 9);
+                        seg.numDiversionsTo = nums[0];
+                        for (int i = 0; i < seg.numDiversionsTo; i++)
+                        {
+                            seg.diversionToFilenums[i] = nums[i + 1];
+                        }
 						seg.obsWQFilename = ReadString(sr, "OBSDATA");
 						reservoir.reservoirSegs.Add(seg);
 					}

@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
@@ -134,21 +134,25 @@
             this.btnSelectHydroFile = new System.Windows.Forms.Button();
             this.tbObsHydroFile = new System.Windows.Forms.TextBox();
             this.tpStageArea = new System.Windows.Forms.TabPage();
+            this.chartStageArea = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.btnRedrawStageArea = new System.Windows.Forms.Button();
             this.dgvStageArea = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label7 = new System.Windows.Forms.Label();
             this.tpInOutFlow = new System.Windows.Forms.TabPage();
+            this.lbDiversionsToReservoir = new System.Windows.Forms.ListBox();
             this.label36 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
-            this.chkReleaseAdjustment = new System.Windows.Forms.CheckBox();
-            this.btnRemoveDiversion = new System.Windows.Forms.Button();
-            this.btnAddDiversion = new System.Windows.Forms.Button();
-            this.dgvDiversionsTo = new System.Windows.Forms.DataGridView();
+            this.cbReleaseAdjustment = new System.Windows.Forms.CheckBox();
+            this.btnRemoveDiversionTo = new System.Windows.Forms.Button();
+            this.btnAddDiversionTo = new System.Windows.Forms.Button();
             this.BtnRemoveOutflow = new System.Windows.Forms.Button();
             this.BtnAddOutflow = new System.Windows.Forms.Button();
-            this.dgvOutflowsFrom = new System.Windows.Forms.DataGridView();
+            this.dgvOutflowsFromReservoir = new System.Windows.Forms.DataGridView();
+            this.Elevation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Width = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tpMet = new System.Windows.Forms.TabPage();
             this.tbTempLapse = new System.Windows.Forms.TextBox();
             this.tbWindSpeedFactor = new System.Windows.Forms.TextBox();
@@ -166,7 +170,6 @@
             this.BtnSelectMetFile = new System.Windows.Forms.Button();
             this.tbMetFile = new System.Windows.Forms.TextBox();
             this.ReservoirOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.chartStageArea = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tcReservoirTabs.SuspendLayout();
             this.tpPhysicalData.SuspendLayout();
             this.tpStageFlow.SuspendLayout();
@@ -195,15 +198,14 @@
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tpStageArea.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartStageArea)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStageArea)).BeginInit();
             this.tpInOutFlow.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDiversionsTo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvOutflowsFrom)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOutflowsFromReservoir)).BeginInit();
             this.tpMet.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartStageArea)).BeginInit();
             this.SuspendLayout();
             // 
             // btnHelp
@@ -381,13 +383,13 @@
             // 
             // chartStageFlow
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartStageFlow.ChartAreas.Add(chartArea1);
+            chartArea10.Name = "ChartArea1";
+            this.chartStageFlow.ChartAreas.Add(chartArea10);
             this.chartStageFlow.Location = new System.Drawing.Point(276, 29);
             this.chartStageFlow.Name = "chartStageFlow";
-            series1.ChartArea = "ChartArea1";
-            series1.Name = "seriesStageFlow";
-            this.chartStageFlow.Series.Add(series1);
+            series10.ChartArea = "ChartArea1";
+            series10.Name = "seriesStageFlow";
+            this.chartStageFlow.Series.Add(series10);
             this.chartStageFlow.Size = new System.Drawing.Size(403, 355);
             this.chartStageFlow.TabIndex = 17;
             this.chartStageFlow.Text = "chart1";
@@ -831,15 +833,15 @@
             // 
             // chartDepthTemp
             // 
-            chartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea2.Name = "ChartArea1";
-            this.chartDepthTemp.ChartAreas.Add(chartArea2);
+            chartArea11.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea11.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea11.Name = "ChartArea1";
+            this.chartDepthTemp.ChartAreas.Add(chartArea11);
             this.chartDepthTemp.Location = new System.Drawing.Point(281, 32);
             this.chartDepthTemp.Name = "chartDepthTemp";
-            series2.ChartArea = "ChartArea1";
-            series2.Name = "Series1";
-            this.chartDepthTemp.Series.Add(series2);
+            series11.ChartArea = "ChartArea1";
+            series11.Name = "Series1";
+            this.chartDepthTemp.Series.Add(series11);
             this.chartDepthTemp.Size = new System.Drawing.Size(389, 313);
             this.chartDepthTemp.TabIndex = 9;
             this.chartDepthTemp.Text = "chart1";
@@ -1203,6 +1205,19 @@
             this.tpStageArea.Text = "Stage-Area";
             this.tpStageArea.UseVisualStyleBackColor = true;
             // 
+            // chartStageArea
+            // 
+            chartArea12.Name = "ChartArea1";
+            this.chartStageArea.ChartAreas.Add(chartArea12);
+            this.chartStageArea.Location = new System.Drawing.Point(279, 15);
+            this.chartStageArea.Name = "chartStageArea";
+            series12.ChartArea = "ChartArea1";
+            series12.Name = "seriesStageArea";
+            this.chartStageArea.Series.Add(series12);
+            this.chartStageArea.Size = new System.Drawing.Size(403, 355);
+            this.chartStageArea.TabIndex = 20;
+            this.chartStageArea.Text = "chart1";
+            // 
             // btnRedrawStageArea
             // 
             this.btnRedrawStageArea.Location = new System.Drawing.Point(63, 345);
@@ -1248,15 +1263,15 @@
             // 
             // tpInOutFlow
             // 
+            this.tpInOutFlow.Controls.Add(this.lbDiversionsToReservoir);
             this.tpInOutFlow.Controls.Add(this.label36);
             this.tpInOutFlow.Controls.Add(this.label35);
-            this.tpInOutFlow.Controls.Add(this.chkReleaseAdjustment);
-            this.tpInOutFlow.Controls.Add(this.btnRemoveDiversion);
-            this.tpInOutFlow.Controls.Add(this.btnAddDiversion);
-            this.tpInOutFlow.Controls.Add(this.dgvDiversionsTo);
+            this.tpInOutFlow.Controls.Add(this.cbReleaseAdjustment);
+            this.tpInOutFlow.Controls.Add(this.btnRemoveDiversionTo);
+            this.tpInOutFlow.Controls.Add(this.btnAddDiversionTo);
             this.tpInOutFlow.Controls.Add(this.BtnRemoveOutflow);
             this.tpInOutFlow.Controls.Add(this.BtnAddOutflow);
-            this.tpInOutFlow.Controls.Add(this.dgvOutflowsFrom);
+            this.tpInOutFlow.Controls.Add(this.dgvOutflowsFromReservoir);
             this.tpInOutFlow.Location = new System.Drawing.Point(4, 46);
             this.tpInOutFlow.Name = "tpInOutFlow";
             this.tpInOutFlow.Size = new System.Drawing.Size(712, 425);
@@ -1264,10 +1279,20 @@
             this.tpInOutFlow.Text = "Inflow/Outflow";
             this.tpInOutFlow.UseVisualStyleBackColor = true;
             // 
+            // lbDiversionsToReservoir
+            // 
+            this.lbDiversionsToReservoir.FormattingEnabled = true;
+            this.lbDiversionsToReservoir.ItemHeight = 16;
+            this.lbDiversionsToReservoir.Location = new System.Drawing.Point(30, 223);
+            this.lbDiversionsToReservoir.Name = "lbDiversionsToReservoir";
+            this.lbDiversionsToReservoir.Size = new System.Drawing.Size(534, 148);
+            this.lbDiversionsToReservoir.TabIndex = 10;
+            this.lbDiversionsToReservoir.SelectedIndexChanged += new System.EventHandler(this.lbDiversionsToReservoir_SelectedIndexChanged);
+            // 
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(27, 213);
+            this.label36.Location = new System.Drawing.Point(30, 204);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(151, 16);
             this.label36.TabIndex = 9;
@@ -1276,77 +1301,99 @@
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(27, 21);
+            this.label35.Location = new System.Drawing.Point(30, 21);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(157, 16);
             this.label35.TabIndex = 8;
             this.label35.Text = "Outflows From Reservoir:";
             // 
-            // chkReleaseAdjustment
+            // cbReleaseAdjustment
             // 
-            this.chkReleaseAdjustment.AutoSize = true;
-            this.chkReleaseAdjustment.Location = new System.Drawing.Point(30, 383);
-            this.chkReleaseAdjustment.Name = "chkReleaseAdjustment";
-            this.chkReleaseAdjustment.Size = new System.Drawing.Size(392, 20);
-            this.chkReleaseAdjustment.TabIndex = 7;
-            this.chkReleaseAdjustment.Text = "Use release adjustment method to  match observed elevation";
-            this.chkReleaseAdjustment.UseVisualStyleBackColor = true;
+            this.cbReleaseAdjustment.AutoSize = true;
+            this.cbReleaseAdjustment.Location = new System.Drawing.Point(30, 383);
+            this.cbReleaseAdjustment.Name = "cbReleaseAdjustment";
+            this.cbReleaseAdjustment.Size = new System.Drawing.Size(392, 20);
+            this.cbReleaseAdjustment.TabIndex = 7;
+            this.cbReleaseAdjustment.Text = "Use release adjustment method to  match observed elevation";
+            this.cbReleaseAdjustment.UseVisualStyleBackColor = true;
             // 
-            // btnRemoveDiversion
+            // btnRemoveDiversionTo
             // 
-            this.btnRemoveDiversion.Location = new System.Drawing.Point(583, 305);
-            this.btnRemoveDiversion.Name = "btnRemoveDiversion";
-            this.btnRemoveDiversion.Size = new System.Drawing.Size(100, 30);
-            this.btnRemoveDiversion.TabIndex = 6;
-            this.btnRemoveDiversion.Text = "Remove";
-            this.btnRemoveDiversion.UseVisualStyleBackColor = true;
+            this.btnRemoveDiversionTo.Enabled = false;
+            this.btnRemoveDiversionTo.Location = new System.Drawing.Point(583, 305);
+            this.btnRemoveDiversionTo.Name = "btnRemoveDiversionTo";
+            this.btnRemoveDiversionTo.Size = new System.Drawing.Size(100, 30);
+            this.btnRemoveDiversionTo.TabIndex = 6;
+            this.btnRemoveDiversionTo.Text = "Remove";
+            this.btnRemoveDiversionTo.UseVisualStyleBackColor = true;
+            this.btnRemoveDiversionTo.Click += new System.EventHandler(this.btnRemoveDiversionTo_Click);
             // 
-            // btnAddDiversion
+            // btnAddDiversionTo
             // 
-            this.btnAddDiversion.Location = new System.Drawing.Point(583, 260);
-            this.btnAddDiversion.Name = "btnAddDiversion";
-            this.btnAddDiversion.Size = new System.Drawing.Size(100, 30);
-            this.btnAddDiversion.TabIndex = 5;
-            this.btnAddDiversion.Text = "Add";
-            this.btnAddDiversion.UseVisualStyleBackColor = true;
-            // 
-            // dgvDiversionsTo
-            // 
-            this.dgvDiversionsTo.AllowUserToAddRows = false;
-            this.dgvDiversionsTo.AllowUserToDeleteRows = false;
-            this.dgvDiversionsTo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDiversionsTo.Location = new System.Drawing.Point(30, 232);
-            this.dgvDiversionsTo.Name = "dgvDiversionsTo";
-            this.dgvDiversionsTo.Size = new System.Drawing.Size(538, 131);
-            this.dgvDiversionsTo.TabIndex = 4;
+            this.btnAddDiversionTo.Location = new System.Drawing.Point(583, 260);
+            this.btnAddDiversionTo.Name = "btnAddDiversionTo";
+            this.btnAddDiversionTo.Size = new System.Drawing.Size(100, 30);
+            this.btnAddDiversionTo.TabIndex = 5;
+            this.btnAddDiversionTo.Text = "Add";
+            this.btnAddDiversionTo.UseVisualStyleBackColor = true;
+            this.btnAddDiversionTo.Click += new System.EventHandler(this.btnAddDiversionTo_Click);
             // 
             // BtnRemoveOutflow
             // 
-            this.BtnRemoveOutflow.Location = new System.Drawing.Point(583, 112);
+            this.BtnRemoveOutflow.Enabled = false;
+            this.BtnRemoveOutflow.Location = new System.Drawing.Point(583, 126);
             this.BtnRemoveOutflow.Name = "BtnRemoveOutflow";
             this.BtnRemoveOutflow.Size = new System.Drawing.Size(100, 30);
             this.BtnRemoveOutflow.TabIndex = 3;
             this.BtnRemoveOutflow.Text = "Remove";
             this.BtnRemoveOutflow.UseVisualStyleBackColor = true;
+            this.BtnRemoveOutflow.Click += new System.EventHandler(this.BtnRemoveOutflow_Click);
             // 
             // BtnAddOutflow
             // 
-            this.BtnAddOutflow.Location = new System.Drawing.Point(583, 67);
+            this.BtnAddOutflow.Location = new System.Drawing.Point(583, 81);
             this.BtnAddOutflow.Name = "BtnAddOutflow";
             this.BtnAddOutflow.Size = new System.Drawing.Size(100, 30);
             this.BtnAddOutflow.TabIndex = 2;
             this.BtnAddOutflow.Text = "Add";
             this.BtnAddOutflow.UseVisualStyleBackColor = true;
+            this.BtnAddOutflow.Click += new System.EventHandler(this.BtnAddOutflow_Click);
             // 
-            // dgvOutflowsFrom
+            // dgvOutflowsFromReservoir
             // 
-            this.dgvOutflowsFrom.AllowUserToAddRows = false;
-            this.dgvOutflowsFrom.AllowUserToDeleteRows = false;
-            this.dgvOutflowsFrom.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvOutflowsFrom.Location = new System.Drawing.Point(30, 40);
-            this.dgvOutflowsFrom.Name = "dgvOutflowsFrom";
-            this.dgvOutflowsFrom.Size = new System.Drawing.Size(538, 131);
-            this.dgvOutflowsFrom.TabIndex = 0;
+            this.dgvOutflowsFromReservoir.AllowUserToAddRows = false;
+            this.dgvOutflowsFromReservoir.AllowUserToDeleteRows = false;
+            this.dgvOutflowsFromReservoir.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvOutflowsFromReservoir.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Elevation,
+            this.Width,
+            this.Type});
+            this.dgvOutflowsFromReservoir.Location = new System.Drawing.Point(30, 40);
+            this.dgvOutflowsFromReservoir.Name = "dgvOutflowsFromReservoir";
+            this.dgvOutflowsFromReservoir.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
+            this.dgvOutflowsFromReservoir.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvOutflowsFromReservoir.Size = new System.Drawing.Size(538, 157);
+            this.dgvOutflowsFromReservoir.TabIndex = 0;
+            this.dgvOutflowsFromReservoir.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOutflowsFromReservoir_SelectionChanged);
+            // 
+            // Elevation
+            // 
+            this.Elevation.HeaderText = "Elevation, m";
+            this.Elevation.Name = "Elevation";
+            this.Elevation.Width = 125;
+            // 
+            // Width
+            // 
+            this.Width.HeaderText = "Width, m";
+            this.Width.Name = "Width";
+            // 
+            // Type
+            // 
+            this.Type.HeaderText = "Outlet Type";
+            this.Type.Items.AddRange(new object[] {
+            "Release",
+            "Diversion"});
+            this.Type.Name = "Type";
             // 
             // tpMet
             // 
@@ -1508,19 +1555,6 @@
             // 
             this.ReservoirOpenFileDialog.Filter = "Observed Lake Hydrology Files | *.OLH";
             // 
-            // chartStageArea
-            // 
-            chartArea3.Name = "ChartArea1";
-            this.chartStageArea.ChartAreas.Add(chartArea3);
-            this.chartStageArea.Location = new System.Drawing.Point(279, 15);
-            this.chartStageArea.Name = "chartStageArea";
-            series3.ChartArea = "ChartArea1";
-            series3.Name = "seriesStageArea";
-            this.chartStageArea.Series.Add(series3);
-            this.chartStageArea.Size = new System.Drawing.Size(403, 355);
-            this.chartStageArea.TabIndex = 20;
-            this.chartStageArea.Text = "chart1";
-            // 
             // DialogReservoirCoeffs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1574,11 +1608,11 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.tpStageArea.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chartStageArea)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStageArea)).EndInit();
             this.tpInOutFlow.ResumeLayout(false);
             this.tpInOutFlow.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDiversionsTo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvOutflowsFrom)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOutflowsFromReservoir)).EndInit();
             this.tpMet.ResumeLayout(false);
             this.tpMet.PerformLayout();
             this.groupBox7.ResumeLayout(false);
@@ -1587,7 +1621,6 @@
             this.groupBox6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartStageArea)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1709,15 +1742,14 @@
         private System.Windows.Forms.Button BtnRemovePointSource;
         private System.Windows.Forms.Button BtnAddPtSource;
         private System.Windows.Forms.ListBox lbPointSources;
-        private System.Windows.Forms.DataGridView dgvOutflowsFrom;
-        private System.Windows.Forms.Button btnRemoveDiversion;
-        private System.Windows.Forms.Button btnAddDiversion;
-        private System.Windows.Forms.DataGridView dgvDiversionsTo;
+        private System.Windows.Forms.DataGridView dgvOutflowsFromReservoir;
+        private System.Windows.Forms.Button btnRemoveDiversionTo;
+        private System.Windows.Forms.Button btnAddDiversionTo;
         private System.Windows.Forms.Button BtnRemoveOutflow;
         private System.Windows.Forms.Button BtnAddOutflow;
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.CheckBox chkReleaseAdjustment;
+        private System.Windows.Forms.CheckBox cbReleaseAdjustment;
         private System.Windows.Forms.DataGridViewTextBoxColumn Stage;
         private System.Windows.Forms.DataGridViewTextBoxColumn Flow;
         private System.Windows.Forms.Button btnRedrawStageFlowChart;
@@ -1727,5 +1759,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartStageFlow;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartStageArea;
+        private System.Windows.Forms.ListBox lbDiversionsToReservoir;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Elevation;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Width;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Type;
     }
 }

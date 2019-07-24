@@ -241,6 +241,37 @@ namespace warmf
             tbMaxElev.Text = Max.ToString();
 
             //Inflow/Outflow
+            dgvOutflowsFromReservoir.Rows.Add(); //first one is always an uncontrolled spillway
+            dgvOutflowsFromReservoir.Rows[0].HeaderCell.Value = reservoirSeg.outlets[0].managedFlowFilename;
+            dgvOutflowsFromReservoir.Rows[0].Cells[0].Value = reservoirSeg.outlets[0].elevation.ToString();
+            dgvOutflowsFromReservoir.Rows[0].Cells[1].Value = reservoirSeg.outlets[0].width.ToString();
+            dgvOutflowsFromReservoir.Rows[0].Cells[2].Value = "Release";
+            if (reservoirSeg.numOutlets > 0)
+            {
+                for (int i = 1; i < reservoirSeg.numOutlets + 1; i++)
+                {
+                    dgvOutflowsFromReservoir.Rows.Add();
+                    dgvOutflowsFromReservoir.Rows[i].HeaderCell.Value = reservoirSeg.outlets[i].managedFlowFilename;
+                    dgvOutflowsFromReservoir.Rows[i].Cells[0].Value = reservoirSeg.outlets[i].elevation.ToString();
+                    dgvOutflowsFromReservoir.Rows[i].Cells[1].Value = reservoirSeg.outlets[i].width.ToString();
+                    if (reservoirSeg.outlets[i].outletType == 0)
+                        dgvOutflowsFromReservoir.Rows[i].Cells[2].Value = "Release";
+                    else
+                        dgvOutflowsFromReservoir.Rows[i].Cells[2].Value = "Diversion";
+                }
+            }
+            if (reservoir.swAdjustResRelease == true)
+                cbReleaseAdjustment.Checked = true;
+            else
+                cbReleaseAdjustment.Checked = false;
+            
+            if (reservoirSeg.numDiversionsTo > 0)
+            {
+                for (int i = 1; i < reservoirSeg.diversionToFilenums.Count + 1; i++)
+                {
+                    lbDiversionsToReservoir.Items.Add(Global.coe.DIVData[reservoirSeg.diversionToFilenums[i]].filename);
+                }
+            }
 
             //Meteorology
             tbMetFile.Text = Global.coe.METFilename[reservoir.METFilenum - 1];
@@ -382,6 +413,69 @@ namespace warmf
                 dblX = Convert.ToDouble(dgvStageArea.Rows[i].Cells["Stage"].Value);
                 dblY = Convert.ToDouble(dgvStageArea.Rows[i].Cells["Area"].Value);
                 chartStageArea.Series["seriesStageArea"].Points.AddXY(dblX, dblY);
+            }
+        }
+
+        private void BtnAddOutflow_Click(object sender, EventArgs e)
+        {
+            ReservoirOpenFileDialog.InitialDirectory =
+                System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.FLO);
+            ReservoirOpenFileDialog.Title = "Select Managed Flow File";
+            ReservoirOpenFileDialog.Filter = "Managed Flow Files | *.FLO";
+
+            if (ReservoirOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                int rowCount = dgvOutflowsFromReservoir.Rows.Count;
+                dgvOutflowsFromReservoir.Rows.Add();
+                dgvOutflowsFromReservoir.Rows[rowCount].HeaderCell.Value = ReservoirOpenFileDialog.SafeFileName;
+                dgvOutflowsFromReservoir.Rows[rowCount].Cells[0].Value =
+                    dgvOutflowsFromReservoir.Rows[rowCount - 1].Cells[0].Value.ToString();
+                dgvOutflowsFromReservoir.Rows[rowCount].Cells[1].Value =
+                    dgvOutflowsFromReservoir.Rows[rowCount - 1].Cells[1].Value.ToString();
+                dgvOutflowsFromReservoir.Rows[rowCount].Cells[2].Value = "Diversion";
+            }
+        }
+
+        private void dgvOutflowsFromReservoir_SelectionChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvOutflowsFromReservoir.SelectedRows.Count > 0)
+                BtnRemoveOutflow.Enabled = true;
+            else
+                BtnRemoveOutflow.Enabled = false;
+        }
+
+        private void BtnRemoveOutflow_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dgvOutflowsFromReservoir.SelectedRows)
+            {
+                dgvOutflowsFromReservoir.Rows.RemoveAt(row.Index);
+            }
+        }
+
+        private void btnAddDiversionTo_Click(object sender, EventArgs e)
+        {
+            ReservoirOpenFileDialog.InitialDirectory =
+                System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.FLO);
+            ReservoirOpenFileDialog.Title = "Select Managed Flow File";
+            ReservoirOpenFileDialog.Filter = "Managed Flow Files | *.FLO";
+
+            if (ReservoirOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                lbDiversionsToReservoir.Items.Add(ReservoirOpenFileDialog.SafeFileName);
+        }
+
+        private void lbDiversionsToReservoir_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbDiversionsToReservoir.SelectedItems.Count > 0)
+                btnRemoveDiversionTo.Enabled = true;
+            else
+                btnRemoveDiversionTo.Enabled = false;
+        }
+
+        private void btnRemoveDiversionTo_Click(object sender, EventArgs e)
+        {
+            while (lbDiversionsToReservoir.SelectedItems.Count > 0)
+            {
+                lbDiversionsToReservoir.Items.Remove(lbDiversionsToReservoir.SelectedItems[0]);
             }
         }
     }
