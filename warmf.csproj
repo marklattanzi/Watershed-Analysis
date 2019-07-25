@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataStructs\ObsFile.cs" />
     <Compile Include="DataStructs\PTSFile.cs" />
     <Compile Include="DataStructs\DataFile.cs" />
     <Compile Include="Module Engineering\DialogReservoirCoeffs.cs">

@@ -67,7 +67,7 @@ namespace warmf
 
         public List<DataLine> TheData;
 
-        public DataFile() { NumLines = 0; NumParameters = 0; NumGroups = 1; TheData = new List<DataLine>(); }
+        public DataFile() { NumLines = 0; NumParameters = 0; NumGroups = 1; ParameterNames = new List<string>();  TheData = new List<DataLine>(); }
 
         public struct GraphLabels
         {

@@ -12,9 +12,10 @@ using System.Windows.Forms.DataVisualization.Charting;
 namespace warmf {
 	public partial class FormData : Form {
 		FormMain parent;
-		METFile met;
-		bool needToSave;
+		DataFile activeData;
+        bool needToSave;
 		string fileInTable;
+        static readonly string xAxisLabel = "Time";
 
 		public static readonly string[] PlotFileTypes = new string[] {
 			"Meterology", "Air Quality", "Observed Hydrology", "Observed Water Quality", "Managed Flow", "Point Sources", "Pictures"
@@ -126,10 +127,8 @@ namespace warmf {
 				case 0: // MET
 					for (int ii = 0; ii < Global.coe.numMETFiles; ii++)
 						cboxFilename.Items.Add(Global.coe.METFilename[ii]);
-					for (int ii = 0; ii < 7; ii++)
-						cboxData.Items.Add(METFile.labels[ii].yaxis);
 
-					cboxFilename.SelectedIndex = -1;
+                    cboxFilename.SelectedIndex = -1;
 					cboxData.SelectedIndex = -1;
 					break;
 				case 1: // AIR QUALITY
@@ -160,10 +159,12 @@ namespace warmf {
 					SaveFormData();
 					if (cboxFilename.SelectedIndex != -1) {
 						string filename = Global.DIR.MET + Global.coe.METFilename[cboxFilename.SelectedIndex];
-						met = new METFile(filename);
-						if (met.ReadFile()) {
-							ShowHeaderData();
-							if (radioGraph.Checked)
+                        activeData = new METFile(filename);
+                        if (activeData.ReadFile()) {
+                            ShowHeaderData();
+                            for (int ii = 0; ii < activeData.NumParameters; ii++)
+                                cboxData.Items.Add(activeData.ParameterNames[ii]);
+                            if (radioGraph.Checked)
 								PlotMETData();
 							else
 								FillMETTable();
@@ -206,41 +207,41 @@ namespace warmf {
 
             // Date changed
             if (e.ColumnIndex == 1)
-                met.TheData[e.RowIndex].Date = Convert.ToDateTime(toolDataGrid[e.ColumnIndex, e.RowIndex].Value + " " + toolDataGrid[e.RowIndex, e.ColumnIndex + 1].Value);
+                activeData.TheData[e.RowIndex].Date = Convert.ToDateTime(toolDataGrid[e.ColumnIndex, e.RowIndex].Value + " " + toolDataGrid[e.RowIndex, e.ColumnIndex + 1].Value);
             // Time changed
             else if (e.ColumnIndex == 2)
-                met.TheData[e.RowIndex].Date = Convert.ToDateTime(toolDataGrid[e.ColumnIndex, e.RowIndex - 1].Value + " " + toolDataGrid[e.RowIndex, e.ColumnIndex].Value);
+                activeData.TheData[e.RowIndex].Date = Convert.ToDateTime(toolDataGrid[e.ColumnIndex, e.RowIndex - 1].Value + " " + toolDataGrid[e.RowIndex, e.ColumnIndex].Value);
             // Data source
-            else if (e.ColumnIndex == met.NumParameters + 3)
-                met.TheData[e.RowIndex].Source = toolDataGrid[e.ColumnIndex, e.RowIndex].Value.ToString();
+            else if (e.ColumnIndex == activeData.NumParameters + 3)
+                activeData.TheData[e.RowIndex].Source = toolDataGrid[e.ColumnIndex, e.RowIndex].Value.ToString();
             // Data values
             else if (e.ColumnIndex > 2)
-                met.TheData[e.RowIndex].Values[e.ColumnIndex - 3] = dblRes;
+                activeData.TheData[e.RowIndex].Values[e.ColumnIndex - 3] = dblRes;
 		}
 
 		// changed name text box
 		private void tboxName_TextChanged(object sender, EventArgs e) {
 			needToSave = true;
-			met.shortName = tboxName.Text;
+			activeData.shortName = tboxName.Text;
 		}
 
 		// validate text boxes
 		private void validateTextBoxes() {
 			double dblRes;
 			if (Double.TryParse(tboxLatitude.Text, out dblRes)) {
-				met.latitude = dblRes;
+				activeData.latitude = dblRes;
 			}
 			else {
-				tboxLatitude.Text = met.latitude.ToString();
+				tboxLatitude.Text = activeData.latitude.ToString();
 				WMDialog dialog = new WMDialog("Data Error", "Error in latitude data.  Reverting to file data.", false);
 				dialog.ShowDialog();
 			}
 
 			if (Double.TryParse(tboxLongitude.Text, out dblRes)) {
-				met.longitude = dblRes;
+				activeData.longitude = dblRes;
 			}
 			else {
-				tboxLongitude.Text = met.longitude.ToString();
+				tboxLongitude.Text = activeData.longitude.ToString();
 				WMDialog dialog = new WMDialog("Data Error", "Error in longitude data.  Reverting to file data.", false);
 				dialog.ShowDialog();
 			}
@@ -292,16 +293,16 @@ namespace warmf {
 			dialog.setLabels("Save", "Discard");
 			dialog.ShowDialog();
 			if (dialog.Result == 1) {
-				met.WriteFile();
+				activeData.WriteFile();
 			}
 			return dialog.Result;
 		}
 
 		// display METfile header data on form
 		private void ShowHeaderData() {
-			tboxName.Text = met.shortName;
-			tboxLatitude.Text = met.latitude.ToString();
-			tboxLongitude.Text = met.longitude.ToString();
+			tboxName.Text = activeData.shortName;
+			tboxLatitude.Text = activeData.latitude.ToString();
+			tboxLongitude.Text = activeData.longitude.ToString();
 			needToSave = false;
 		}
 
@@ -310,19 +311,19 @@ namespace warmf {
 			if (cboxData.SelectedIndex != -1) {
                 // Copy data for the selected parameter to a List of double
                 List<double> data = new List<double>();
-                if (cboxData.SelectedIndex < met.NumParameters)
+                if (cboxData.SelectedIndex < activeData.NumParameters)
                 {
-                    for (int ii = 0; ii < met.TheData.Count(); ii++)
-                        data.Add(met.TheData[ii].Values[cboxData.SelectedIndex]);
+                    for (int ii = 0; ii < activeData.TheData.Count(); ii++)
+                        data.Add(activeData.TheData[ii].Values[cboxData.SelectedIndex]);
                 }
                 // For some reason, the selection in the combo box exceeds the number of parameters (shouldn't happen)
                 else
                 {
-                    for (int ii = 0; ii < met.TheData.Count(); ii++)
+                    for (int ii = 0; ii < activeData.TheData.Count(); ii++)
                         data.Add(-999);
                 }
 
-                string dataName = METFile.labels[cboxData.SelectedIndex].key;
+//                string dataName = METFile.labels[cboxData.SelectedIndex].key;
 
 				toolGraph.Titles.Clear();
 				toolGraph.ChartAreas[0].AxisY.StripLines.Clear();
@@ -347,22 +348,20 @@ namespace warmf {
 				if (series.MarkerSize < 1) series.MarkerSize = 1;
 				if (series.MarkerSize > 7) series.MarkerSize = 7;
 
-				METFile.GraphLabels labels;
-				labels = Array.Find(METFile.labels, item => item.key == dataName);
-				toolGraph.Titles.Add(labels.yaxis + " vs. " + labels.xaxis);
-				toolGraph.Titles[0].Font = new Font(toolGraph.Titles[0].Font.Name, 12, FontStyle.Bold);
+                toolGraph.Titles.Add(activeData.ParameterNames[cboxData.SelectedIndex] + " vs. " + xAxisLabel);
+                toolGraph.Titles[0].Font = new Font(toolGraph.Titles[0].Font.Name, 12, FontStyle.Bold);
 				toolGraph.Palette = ChartColorPalette.Berry;
 				for (int ii = 0; ii < len; ii++)
-					series.Points.AddXY(met.TheData[ii].Date.ToString("yyyy"), data[ii]);
+					series.Points.AddXY(activeData.TheData[ii].Date.ToString("yyyy"), data[ii]);
 				toolGraph.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Months;
 				toolGraph.ChartAreas[0].AxisX.Interval = 12;
 
 				toolGraph.ChartAreas[0].AxisY.Minimum = Extensions.GetMinimum(data);
 				toolGraph.ChartAreas[0].AxisY.Maximum = Extensions.GetMaximum(data);
 				toolGraph.ChartAreas[0].AxisY.LabelStyle.Angle = -90;
-				toolGraph.ChartAreas[0].AxisX.Title = labels.xaxis;
-				toolGraph.ChartAreas[0].AxisY.Title = labels.yaxis;
-				toolGraph.ChartAreas[0].AxisX.TitleFont = new Font(toolGraph.ChartAreas[0].AxisX.TitleFont.Name, 12, FontStyle.Bold);
+                toolGraph.ChartAreas[0].AxisX.Title = xAxisLabel;
+                toolGraph.ChartAreas[0].AxisY.Title = activeData.ParameterNames[cboxData.SelectedIndex];
+                toolGraph.ChartAreas[0].AxisX.TitleFont = new Font(toolGraph.ChartAreas[0].AxisX.TitleFont.Name, 12, FontStyle.Bold);
 				toolGraph.ChartAreas[0].AxisY.TitleFont = new Font(toolGraph.ChartAreas[0].AxisY.TitleFont.Name, 12, FontStyle.Bold);
 
 				// plot average
@@ -400,7 +399,7 @@ namespace warmf {
 		// fills MET file data table
 		private void FillMETTable() {
 			if (needToSave) return;
-			if (toolDataGrid.RowCount != 0 && met.filename == fileInTable) return;
+			if (toolDataGrid.RowCount != 0 && activeData.filename == fileInTable) return;
 
 			toolDataGrid.Rows.Clear();
 			if (cboxFilename.SelectedIndex != -1) {
@@ -426,19 +425,19 @@ namespace warmf {
                 // Each row is an array of strings
                 // Compile each row as one string and then split it into an array
                 char[] charSeparators = new char[] { '\n' };
-                for (int ii = 0; ii < met.TheData.Count(); ii++)
+                for (int ii = 0; ii < activeData.TheData.Count(); ii++)
                 {
                     // Row number, date, and time
-                    string unsplitRow = ii.ToString() + "\n" + met.TheData[ii].Date.ToString("MM/dd/yyyy") + "\n" + met.TheData[ii].Date.ToString("HH:mm");
+                    string unsplitRow = ii.ToString() + "\n" + activeData.TheData[ii].Date.ToString("MM/dd/yyyy") + "\n" + activeData.TheData[ii].Date.ToString("HH:mm");
                     // Data values
-                    for (int jj = 0; jj < met.NumParameters; jj++)
-                        unsplitRow = unsplitRow + "\n" + met.TheData[ii].Values[jj].ToString();
+                    for (int jj = 0; jj < activeData.NumParameters; jj++)
+                        unsplitRow = unsplitRow + "\n" + activeData.TheData[ii].Values[jj].ToString();
                     // Data source
-                    unsplitRow = unsplitRow + "\n" + met.TheData[ii].Source;
+                    unsplitRow = unsplitRow + "\n" + activeData.TheData[ii].Source;
                     string[] row = unsplitRow.Split(charSeparators);
 					toolDataGrid.Rows.Add(row);
 				}
-				fileInTable = met.filename;
+				fileInTable = activeData.filename;
 			}
 		}
 	}
