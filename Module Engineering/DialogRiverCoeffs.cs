@@ -213,6 +213,8 @@ namespace warmf
                 dgvAdsorption.Rows[i].Cells["water"].Value = river.waterAdsorpIsotherm[i].ToString();
                 dgvAdsorption.Rows[i].Cells["bed"].Value = river.bedAdsorpIsotherm[i].ToString();
             }
+            foreach (int i in hideRowsList)
+                dgvAdsorption.Rows[i - 1].Visible = false;
 
             //Observed Data
             tbObsHydroFile.Text = river.hydrologyFilename;
