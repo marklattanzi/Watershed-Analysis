@@ -215,16 +215,21 @@
             this.btnDeepMinePermits = new System.Windows.Forms.Button();
             this.chbxDeepMines = new System.Windows.Forms.CheckBox();
             this.tpCequalw2 = new System.Windows.Forms.TabPage();
-            this.gbQUALtemp = new System.Windows.Forms.GroupBox();
-            this.btnSelectTemp = new System.Windows.Forms.Button();
-            this.gbQUALconc = new System.Windows.Forms.GroupBox();
-            this.btnSelectConc = new System.Windows.Forms.Button();
-            this.gbQUALflow = new System.Windows.Forms.GroupBox();
-            this.btnSelectFlow = new System.Windows.Forms.Button();
-            this.cbxWriteQUAL = new System.Windows.Forms.CheckBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
+            this.CatchmentOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.gbCEQUALW2chem = new System.Windows.Forms.GroupBox();
+            this.btnSelectChemFile = new System.Windows.Forms.Button();
+            this.tbCEQUALconcFile = new System.Windows.Forms.TextBox();
+            this.gbCEQUALW2temp = new System.Windows.Forms.GroupBox();
+            this.btnSelectTempFile = new System.Windows.Forms.Button();
+            this.tbCEQUALtempFile = new System.Windows.Forms.TextBox();
+            this.gbCEQUALW2flow = new System.Windows.Forms.GroupBox();
+            this.btnSelectFlowFile = new System.Windows.Forms.Button();
+            this.tbCEQUALflowFile = new System.Windows.Forms.TextBox();
+            this.label36 = new System.Windows.Forms.Label();
+            this.cbWriteCEQUALoutput = new System.Windows.Forms.CheckBox();
             this.tcCatchTabs.SuspendLayout();
             this.tpPhysData.SuspendLayout();
             this.gbSizeSlope.SuspendLayout();
@@ -263,9 +268,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgSurfaceMines)).BeginInit();
             this.gbDeepMines.SuspendLayout();
             this.tpCequalw2.SuspendLayout();
-            this.gbQUALtemp.SuspendLayout();
-            this.gbQUALconc.SuspendLayout();
-            this.gbQUALflow.SuspendLayout();
+            this.gbCEQUALW2chem.SuspendLayout();
+            this.gbCEQUALW2temp.SuspendLayout();
+            this.gbCEQUALW2flow.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcCatchTabs
@@ -565,6 +570,7 @@
             this.btnSelectPartAir.TabIndex = 1;
             this.btnSelectPartAir.Text = "Select";
             this.btnSelectPartAir.UseVisualStyleBackColor = true;
+            this.btnSelectPartAir.Click += new System.EventHandler(this.btnSelectPartAir_Click);
             // 
             // tbPartAir
             // 
@@ -572,7 +578,7 @@
             this.tbPartAir.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbPartAir.Location = new System.Drawing.Point(53, 23);
             this.tbPartAir.Name = "tbPartAir";
-            this.tbPartAir.Size = new System.Drawing.Size(229, 15);
+            this.tbPartAir.Size = new System.Drawing.Size(343, 15);
             this.tbPartAir.TabIndex = 0;
             // 
             // gbFineAir
@@ -594,14 +600,15 @@
             this.btnSelectAir.TabIndex = 1;
             this.btnSelectAir.Text = "Select";
             this.btnSelectAir.UseVisualStyleBackColor = true;
+            this.btnSelectAir.Click += new System.EventHandler(this.btnSelectAir_Click);
             // 
             // tbAirFile
             // 
             this.tbAirFile.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.tbAirFile.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbAirFile.Location = new System.Drawing.Point(53, 23);
+            this.tbAirFile.Location = new System.Drawing.Point(53, 25);
             this.tbAirFile.Name = "tbAirFile";
-            this.tbAirFile.Size = new System.Drawing.Size(229, 15);
+            this.tbAirFile.Size = new System.Drawing.Size(343, 15);
             this.tbAirFile.TabIndex = 0;
             // 
             // gbMetFile
@@ -623,6 +630,7 @@
             this.btnSelectMet.TabIndex = 1;
             this.btnSelectMet.Text = "Select";
             this.btnSelectMet.UseVisualStyleBackColor = true;
+            this.btnSelectMet.Click += new System.EventHandler(this.btnSelectMet_Click);
             // 
             // tbMetFile
             // 
@@ -630,7 +638,7 @@
             this.tbMetFile.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbMetFile.Location = new System.Drawing.Point(53, 23);
             this.tbMetFile.Name = "tbMetFile";
-            this.tbMetFile.Size = new System.Drawing.Size(229, 15);
+            this.tbMetFile.Size = new System.Drawing.Size(343, 15);
             this.tbMetFile.TabIndex = 0;
             // 
             // tpLandUses
@@ -694,6 +702,7 @@
             this.cbLanduse.Name = "cbLanduse";
             this.cbLanduse.Size = new System.Drawing.Size(229, 24);
             this.cbLanduse.TabIndex = 4;
+            this.cbLanduse.SelectedIndexChanged += new System.EventHandler(this.cbLanduse_SelectedIndexChanged);
             // 
             // lblLanduse
             // 
@@ -1449,6 +1458,7 @@
             this.btnRemovePTS.TabIndex = 3;
             this.btnRemovePTS.Text = "Remove";
             this.btnRemovePTS.UseVisualStyleBackColor = true;
+            this.btnRemovePTS.Click += new System.EventHandler(this.btnRemovePTS_Click);
             // 
             // btnAddPTS
             // 
@@ -1458,6 +1468,7 @@
             this.btnAddPTS.TabIndex = 2;
             this.btnAddPTS.Text = "Add";
             this.btnAddPTS.UseVisualStyleBackColor = true;
+            this.btnAddPTS.Click += new System.EventHandler(this.btnAddPTS_Click);
             // 
             // lbPointSources
             // 
@@ -2075,86 +2086,17 @@
             // 
             // tpCequalw2
             // 
-            this.tpCequalw2.Controls.Add(this.gbQUALtemp);
-            this.tpCequalw2.Controls.Add(this.gbQUALconc);
-            this.tpCequalw2.Controls.Add(this.gbQUALflow);
-            this.tpCequalw2.Controls.Add(this.cbxWriteQUAL);
+            this.tpCequalw2.Controls.Add(this.gbCEQUALW2chem);
+            this.tpCequalw2.Controls.Add(this.gbCEQUALW2temp);
+            this.tpCequalw2.Controls.Add(this.gbCEQUALW2flow);
+            this.tpCequalw2.Controls.Add(this.label36);
+            this.tpCequalw2.Controls.Add(this.cbWriteCEQUALoutput);
             this.tpCequalw2.Location = new System.Drawing.Point(4, 46);
             this.tpCequalw2.Name = "tpCequalw2";
             this.tpCequalw2.Size = new System.Drawing.Size(667, 434);
             this.tpCequalw2.TabIndex = 13;
             this.tpCequalw2.Text = "CE-QUAL-W2";
             this.tpCequalw2.UseVisualStyleBackColor = true;
-            // 
-            // gbQUALtemp
-            // 
-            this.gbQUALtemp.Controls.Add(this.btnSelectTemp);
-            this.gbQUALtemp.Location = new System.Drawing.Point(68, 232);
-            this.gbQUALtemp.Name = "gbQUALtemp";
-            this.gbQUALtemp.Size = new System.Drawing.Size(515, 58);
-            this.gbQUALtemp.TabIndex = 2;
-            this.gbQUALtemp.TabStop = false;
-            this.gbQUALtemp.Text = "Temperature File";
-            // 
-            // btnSelectTemp
-            // 
-            this.btnSelectTemp.Enabled = false;
-            this.btnSelectTemp.Location = new System.Drawing.Point(385, 16);
-            this.btnSelectTemp.Name = "btnSelectTemp";
-            this.btnSelectTemp.Size = new System.Drawing.Size(117, 31);
-            this.btnSelectTemp.TabIndex = 0;
-            this.btnSelectTemp.Text = "Select";
-            this.btnSelectTemp.UseVisualStyleBackColor = true;
-            // 
-            // gbQUALconc
-            // 
-            this.gbQUALconc.Controls.Add(this.btnSelectConc);
-            this.gbQUALconc.Location = new System.Drawing.Point(68, 297);
-            this.gbQUALconc.Name = "gbQUALconc";
-            this.gbQUALconc.Size = new System.Drawing.Size(515, 58);
-            this.gbQUALconc.TabIndex = 3;
-            this.gbQUALconc.TabStop = false;
-            this.gbQUALconc.Text = "Concentration File";
-            // 
-            // btnSelectConc
-            // 
-            this.btnSelectConc.Enabled = false;
-            this.btnSelectConc.Location = new System.Drawing.Point(385, 17);
-            this.btnSelectConc.Name = "btnSelectConc";
-            this.btnSelectConc.Size = new System.Drawing.Size(117, 31);
-            this.btnSelectConc.TabIndex = 0;
-            this.btnSelectConc.Text = "Select";
-            this.btnSelectConc.UseVisualStyleBackColor = true;
-            // 
-            // gbQUALflow
-            // 
-            this.gbQUALflow.Controls.Add(this.btnSelectFlow);
-            this.gbQUALflow.Location = new System.Drawing.Point(68, 167);
-            this.gbQUALflow.Name = "gbQUALflow";
-            this.gbQUALflow.Size = new System.Drawing.Size(515, 58);
-            this.gbQUALflow.TabIndex = 1;
-            this.gbQUALflow.TabStop = false;
-            this.gbQUALflow.Text = "Flow File";
-            // 
-            // btnSelectFlow
-            // 
-            this.btnSelectFlow.Enabled = false;
-            this.btnSelectFlow.Location = new System.Drawing.Point(385, 17);
-            this.btnSelectFlow.Name = "btnSelectFlow";
-            this.btnSelectFlow.Size = new System.Drawing.Size(117, 31);
-            this.btnSelectFlow.TabIndex = 0;
-            this.btnSelectFlow.Text = "Select";
-            this.btnSelectFlow.UseVisualStyleBackColor = true;
-            // 
-            // cbxWriteQUAL
-            // 
-            this.cbxWriteQUAL.AutoSize = true;
-            this.cbxWriteQUAL.Location = new System.Drawing.Point(192, 127);
-            this.cbxWriteQUAL.Name = "cbxWriteQUAL";
-            this.cbxWriteQUAL.Size = new System.Drawing.Size(268, 20);
-            this.cbxWriteQUAL.TabIndex = 0;
-            this.cbxWriteQUAL.Text = "Write Output Files for CE-QUAL-W2 Input";
-            this.cbxWriteQUAL.UseVisualStyleBackColor = true;
             // 
             // btnOK
             // 
@@ -2187,6 +2129,115 @@
             this.btnHelp.Text = "Help";
             this.btnHelp.UseVisualStyleBackColor = true;
             this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
+            // 
+            // CatchmentOpenFileDialog
+            // 
+            this.CatchmentOpenFileDialog.FileName = "openFileDialog1";
+            // 
+            // gbCEQUALW2chem
+            // 
+            this.gbCEQUALW2chem.Controls.Add(this.btnSelectChemFile);
+            this.gbCEQUALW2chem.Controls.Add(this.tbCEQUALconcFile);
+            this.gbCEQUALW2chem.Enabled = false;
+            this.gbCEQUALW2chem.Location = new System.Drawing.Point(78, 266);
+            this.gbCEQUALW2chem.Name = "gbCEQUALW2chem";
+            this.gbCEQUALW2chem.Size = new System.Drawing.Size(510, 60);
+            this.gbCEQUALW2chem.TabIndex = 13;
+            this.gbCEQUALW2chem.TabStop = false;
+            this.gbCEQUALW2chem.Text = "Chemical Concentration File";
+            // 
+            // btnSelectChemFile
+            // 
+            this.btnSelectChemFile.Location = new System.Drawing.Point(420, 21);
+            this.btnSelectChemFile.Name = "btnSelectChemFile";
+            this.btnSelectChemFile.Size = new System.Drawing.Size(75, 23);
+            this.btnSelectChemFile.TabIndex = 7;
+            this.btnSelectChemFile.Text = "Select";
+            this.btnSelectChemFile.UseVisualStyleBackColor = true;
+            // 
+            // tbCEQUALconcFile
+            // 
+            this.tbCEQUALconcFile.Location = new System.Drawing.Point(18, 23);
+            this.tbCEQUALconcFile.Name = "tbCEQUALconcFile";
+            this.tbCEQUALconcFile.ReadOnly = true;
+            this.tbCEQUALconcFile.Size = new System.Drawing.Size(396, 22);
+            this.tbCEQUALconcFile.TabIndex = 2;
+            // 
+            // gbCEQUALW2temp
+            // 
+            this.gbCEQUALW2temp.Controls.Add(this.btnSelectTempFile);
+            this.gbCEQUALW2temp.Controls.Add(this.tbCEQUALtempFile);
+            this.gbCEQUALW2temp.Enabled = false;
+            this.gbCEQUALW2temp.Location = new System.Drawing.Point(78, 200);
+            this.gbCEQUALW2temp.Name = "gbCEQUALW2temp";
+            this.gbCEQUALW2temp.Size = new System.Drawing.Size(510, 60);
+            this.gbCEQUALW2temp.TabIndex = 14;
+            this.gbCEQUALW2temp.TabStop = false;
+            this.gbCEQUALW2temp.Text = "Temperature File";
+            // 
+            // btnSelectTempFile
+            // 
+            this.btnSelectTempFile.Location = new System.Drawing.Point(420, 21);
+            this.btnSelectTempFile.Name = "btnSelectTempFile";
+            this.btnSelectTempFile.Size = new System.Drawing.Size(75, 23);
+            this.btnSelectTempFile.TabIndex = 7;
+            this.btnSelectTempFile.Text = "Select";
+            this.btnSelectTempFile.UseVisualStyleBackColor = true;
+            // 
+            // tbCEQUALtempFile
+            // 
+            this.tbCEQUALtempFile.Location = new System.Drawing.Point(18, 23);
+            this.tbCEQUALtempFile.Name = "tbCEQUALtempFile";
+            this.tbCEQUALtempFile.ReadOnly = true;
+            this.tbCEQUALtempFile.Size = new System.Drawing.Size(396, 22);
+            this.tbCEQUALtempFile.TabIndex = 2;
+            // 
+            // gbCEQUALW2flow
+            // 
+            this.gbCEQUALW2flow.Controls.Add(this.btnSelectFlowFile);
+            this.gbCEQUALW2flow.Controls.Add(this.tbCEQUALflowFile);
+            this.gbCEQUALW2flow.Enabled = false;
+            this.gbCEQUALW2flow.Location = new System.Drawing.Point(78, 134);
+            this.gbCEQUALW2flow.Name = "gbCEQUALW2flow";
+            this.gbCEQUALW2flow.Size = new System.Drawing.Size(510, 60);
+            this.gbCEQUALW2flow.TabIndex = 12;
+            this.gbCEQUALW2flow.TabStop = false;
+            this.gbCEQUALW2flow.Text = "Flow File";
+            // 
+            // btnSelectFlowFile
+            // 
+            this.btnSelectFlowFile.Location = new System.Drawing.Point(420, 21);
+            this.btnSelectFlowFile.Name = "btnSelectFlowFile";
+            this.btnSelectFlowFile.Size = new System.Drawing.Size(75, 23);
+            this.btnSelectFlowFile.TabIndex = 7;
+            this.btnSelectFlowFile.Text = "Select";
+            this.btnSelectFlowFile.UseVisualStyleBackColor = true;
+            // 
+            // tbCEQUALflowFile
+            // 
+            this.tbCEQUALflowFile.Location = new System.Drawing.Point(18, 23);
+            this.tbCEQUALflowFile.Name = "tbCEQUALflowFile";
+            this.tbCEQUALflowFile.ReadOnly = true;
+            this.tbCEQUALflowFile.Size = new System.Drawing.Size(396, 22);
+            this.tbCEQUALflowFile.TabIndex = 2;
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(99, 109);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(249, 16);
+            this.label36.TabIndex = 11;
+            this.label36.Text = "Write Output Files for CE-QUAL-W2 Input";
+            // 
+            // cbWriteCEQUALoutput
+            // 
+            this.cbWriteCEQUALoutput.AutoSize = true;
+            this.cbWriteCEQUALoutput.Location = new System.Drawing.Point(78, 108);
+            this.cbWriteCEQUALoutput.Name = "cbWriteCEQUALoutput";
+            this.cbWriteCEQUALoutput.Size = new System.Drawing.Size(15, 14);
+            this.cbWriteCEQUALoutput.TabIndex = 10;
+            this.cbWriteCEQUALoutput.UseVisualStyleBackColor = true;
             // 
             // DialogCatchCoeffs
             // 
@@ -2265,9 +2316,12 @@
             this.gbDeepMines.PerformLayout();
             this.tpCequalw2.ResumeLayout(false);
             this.tpCequalw2.PerformLayout();
-            this.gbQUALtemp.ResumeLayout(false);
-            this.gbQUALconc.ResumeLayout(false);
-            this.gbQUALflow.ResumeLayout(false);
+            this.gbCEQUALW2chem.ResumeLayout(false);
+            this.gbCEQUALW2chem.PerformLayout();
+            this.gbCEQUALW2temp.ResumeLayout(false);
+            this.gbCEQUALW2temp.PerformLayout();
+            this.gbCEQUALW2flow.ResumeLayout(false);
+            this.gbCEQUALW2flow.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2451,13 +2505,6 @@
         private System.Windows.Forms.GroupBox gbDeepMines;
         private System.Windows.Forms.Button btnDeepMinePermits;
         private System.Windows.Forms.CheckBox chbxDeepMines;
-        private System.Windows.Forms.GroupBox gbQUALtemp;
-        private System.Windows.Forms.Button btnSelectTemp;
-        private System.Windows.Forms.GroupBox gbQUALconc;
-        private System.Windows.Forms.Button btnSelectConc;
-        private System.Windows.Forms.GroupBox gbQUALflow;
-        private System.Windows.Forms.Button btnSelectFlow;
-        private System.Windows.Forms.CheckBox cbxWriteQUAL;
         private System.Windows.Forms.Label lblSoilHydroCoeffs;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.RadioButton rbtnAmbient;
@@ -2471,5 +2518,17 @@
         private System.Windows.Forms.ListBox lbPointSources;
         private System.Windows.Forms.TextBox tbNPDESnum;
         private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.OpenFileDialog CatchmentOpenFileDialog;
+        private System.Windows.Forms.GroupBox gbCEQUALW2chem;
+        private System.Windows.Forms.Button btnSelectChemFile;
+        private System.Windows.Forms.TextBox tbCEQUALconcFile;
+        private System.Windows.Forms.GroupBox gbCEQUALW2temp;
+        private System.Windows.Forms.Button btnSelectTempFile;
+        private System.Windows.Forms.TextBox tbCEQUALtempFile;
+        private System.Windows.Forms.GroupBox gbCEQUALW2flow;
+        private System.Windows.Forms.Button btnSelectFlowFile;
+        private System.Windows.Forms.TextBox tbCEQUALflowFile;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.CheckBox cbWriteCEQUALoutput;
     }
 }

@@ -778,7 +778,6 @@ namespace warmf {
             return line;    // return entire line if no line code
         }
 
-
 		// read an (ignored) line into a string
 		public string ReadSpacerLine(STechStreamReader sr, string text) {
 			string line;
@@ -1748,6 +1747,30 @@ namespace warmf {
                 Debug.WriteLine("COE exception at line " + sr.LineNum + ": " + e.ToString());
                 return false;
             }
+        }
+
+        public int GetCatchmentNumberFromID(int id)
+        {
+            for (int i = 0; i < catchments.Count; i++)
+            {
+                if (catchments[i].idNum == id)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public int GetPTSNumberFromName(string name)
+        {
+            for (int i = 0; i < numPTSFiles; i++)
+            {
+                if (PTSFilename[i] == name)
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
 
         public bool WriteFile() {

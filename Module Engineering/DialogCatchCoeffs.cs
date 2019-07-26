@@ -94,47 +94,38 @@ namespace warmf
             //Land Application tab
             cbLanduse.Items.Clear();
             cbLanduse.Items.AddRange(landuselist.ToArray());
-            cbLanduse.SelectedIndex = 7;
-
-            int iFertPlanNum = catchment.fertPlanNum[cbLanduse.SelectedIndex];
             int iNumParams = Global.coe.numChemicalParams + Global.coe.numPhysicalParams;
-            if (dgLandApp.Rows.Count == 0)
+            
+            for (int iParam = 0; iParam < iNumParams; iParam++) //add blank rows to datagridview (row headers labeled)
             {
-                //populate datagridview
-                for (int iParam = 0; iParam < iNumParams; iParam++)
+                string Units = ConstitUnits[iParam].Trim();
+                if (Units.Contains("mg/l"))
                 {
-                    string Units = ConstitUnits[iParam].Trim();
-                    if (Units.Contains("mg/l"))
-                    {
-                        Units = " (" + Units.Replace("mg/l", "kg/ha") + ")";
-                    }
-                    else if (Units.Contains("#/100 ml"))
-                    {
-                        Units = " (" + Units.Replace("#/100 ml", "10^6 #/ha") + ")";
-                    }
-                    string NameUnit = ConstitNames[iParam] + Units;
-                    dgLandApp.Rows.Insert(iParam);
-                    dgLandApp.Rows[iParam].HeaderCell.Value = NameUnit.ToString();
-                    for (int iMonth = 0; iMonth < 12; iMonth++)
-                    {
-                        dgLandApp.Rows[iParam].Cells[iMonth].Value = Global.coe.landuse[cbLanduse.SelectedIndex].fertPlanApplication[iFertPlanNum][iMonth][iParam];
-                    }
+                    Units = " (" + Units.Replace("mg/l", "kg/ha") + ")";
                 }
-                //hide chemical and physical parameters that aren't applicable
-                List<int> HideList = new List<int> { 0, 1, 2, 15, 16, 20, 22, 23, 24, 29, 30, 31, 32, 37 };
-                for (int ii = 0; ii < iNumParams; ii++)
+                else if (Units.Contains("#/100 ml"))
                 {
-                    if (HideList.Contains(ii))
-                    {
-                        dgLandApp.Rows[ii].Visible = false;
-                    }
+                    Units = " (" + Units.Replace("#/100 ml", "10^6 #/ha") + ")";
                 }
-                //Format datagridview
-                FormatDataGridView(dgLandApp);
+                string NameUnit = ConstitNames[iParam] + Units;
+                dgLandApp.Rows.Insert(iParam);
+                dgLandApp.Rows[iParam].HeaderCell.Value = NameUnit.ToString();
                 
-                tbMaxAccTime.Text = catchment.bmp.maxFertAccumTime.ToString();
             }
+            
+            List<int> HideList = new List<int> { 0, 1, 2, 15, 16, 20, 22, 23, 24, 29, 30, 31, 32, 37 };
+            for (int ii = 0; ii < iNumParams; ii++) //hide chemical and physical parameters that aren't applicable
+            {
+                if (HideList.Contains(ii))
+                {
+                    dgLandApp.Rows[ii].Visible = false;
+                }
+            }
+            cbLanduse.SelectedIndex = 7;
+            FormatDataGridView(dgLandApp); //Format datagridview
 
+            tbMaxAccTime.Text = catchment.bmp.maxFertAccumTime.ToString();
+            
             //Irrigation tab - Tabled for now - there is no irrigation in the Catawba watershed...
             //cbIrrLandUse.Items.Clear();
             //cbIrrLandUse.Items.AddRange(landuselist.ToArray());
@@ -150,7 +141,7 @@ namespace warmf
             tbSilt.Text = catchment.sediment.secondPartSizePct.ToString();
             tbSand.Text = catchment.sediment.thirdPartSizePct.ToString();
 
-            //BMP's tab...
+            //BMP's tab
             for (int ii = 0; ii < Global.coe.numLanduses; ii++)
             {
                 string luName = Global.coe.landuse[ii].name;
@@ -178,7 +169,7 @@ namespace warmf
                 for (int ii = 0; ii < catchment.numPointSources; ii++)
                     lbPointSources.Items.Add(Global.coe.PTSFilename[catchment.pointSources[ii]]);
                 lbPointSources.SelectedIndex = 0;
-                PointSourceWaterSourceInfo();
+                PointSourceInfo(lbPointSources.SelectedIndex);
             }
             
 
@@ -299,22 +290,40 @@ namespace warmf
             dgInorganicC.Visible = false;
 
             //Mining tab
+            //Dialog is set up in the designer, but no code for functionality yet
+            tpMining.Hide();
 
             //CE-QUAL-W2 tab
-
+            if (catchment.mining.numCEQW2Files == 3)
+            {
+                cbWriteCEQUALoutput.Checked = true;
+                tbCEQUALflowFile.Text = catchment.mining.flowInputFilename;
+                tbCEQUALtempFile.Text = catchment.mining.tempInputFilename;
+                tbCEQUALconcFile.Text = catchment.mining.waterQualInputFilename;
+            }
         }
 
-        public void PointSourceWaterSourceInfo()
+        public void PointSourceInfo(int FileIndex)
         {
-            StreamReader reader = File.OpenText(Global.DIR.PTS + lbPointSources.GetItemText(lbPointSources.SelectedItem));
-            reader.ReadLine();
-            reader.ReadLine();
-            string line = reader.ReadLine();
-            if (line.Substring(8, 8).Contains("1"))
-                rbtnInternal.Checked = true;
+            PTSFile pFile = Global.coe.PTSFilenamepointSourceFiles[FileIndex];
+            pFile.ReadHeader();
+            if (pFile.swInternal == true)
+            {
+                rbSourceInternal.Checked = true;
+                rbSourceExternal.Checked = false;
+                rbUnspecZero.Checked = false;
+                rbUnspecZero.Enabled = false;
+                rbUnspecAmbient.Checked = true;
+            }
             else
-                rbtnExternal.Checked = true;
-            tbNPDESnum.Text = line.Substring(33, 8);
+            {
+                rbSourceInternal.Checked = false;
+                rbSourceExternal.Checked = true;
+                rbUnspecZero.Checked = true;
+                rbUnspecAmbient.Checked = false;
+                rbUnspecAmbient.Enabled = false;
+            }
+            tbNPDESNumber.Text = pFile.npdesPermit;
         }
 
         public void FormatDataGridView(DataGridView dgv)
@@ -365,6 +374,138 @@ namespace warmf
                 dgInorganicC.Visible = true;
                 dgInorganicC.BringToFront();
             }
+        }
+
+        private void btnSelectMet_Click(object sender, EventArgs e)
+        {
+            CatchmentOpenFileDialog.InitialDirectory =
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.MET);
+            CatchmentOpenFileDialog.Title = "Select Meteorology File";
+            CatchmentOpenFileDialog.Filter = "Meteorology Files | *.MET";
+
+            if (CatchmentOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                tbMetFile.Text = CatchmentOpenFileDialog.FileName;
+            }
+        }
+
+        private void btnSelectAir_Click(object sender, EventArgs e)
+        {
+            CatchmentOpenFileDialog.InitialDirectory =
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.AIR);
+            CatchmentOpenFileDialog.Title = "Select Air and Rain Chemistry File";
+            CatchmentOpenFileDialog.Filter = "Air and Rain Chemistry Files | *.AIR";
+
+            if (CatchmentOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                tbAirFile.Text = CatchmentOpenFileDialog.FileName;
+            }
+        }
+
+        private void btnSelectPartAir_Click(object sender, EventArgs e)
+        {
+            CatchmentOpenFileDialog.InitialDirectory =
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.CPA);
+            CatchmentOpenFileDialog.Title = "Select Coarse Particle Air Chemistry File";
+            CatchmentOpenFileDialog.Filter = "Coarse Particle Air Chemistry Files | *.CPA";
+
+            if (CatchmentOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                tbPartAir.Text = CatchmentOpenFileDialog.FileName;
+            }
+        }
+
+        private void cbWriteCEQUALoutput_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbWriteCEQUALoutput.Checked == true)
+            {
+                gbCEQUALW2chem.Enabled = true;
+                gbCEQUALW2flow.Enabled = true;
+                gbCEQUALW2temp.Enabled = true;
+            }
+            else
+            {
+                gbCEQUALW2chem.Enabled = false;
+                gbCEQUALW2flow.Enabled = false;
+                gbCEQUALW2temp.Enabled = false;
+            }
+        }
+
+        private void btnSelectFlowFile_Click(object sender, EventArgs e)
+        {
+            CatchmentOpenFileDialog.InitialDirectory =
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.NPT);
+            CatchmentOpenFileDialog.Title = "Select CE-QUAL-W2 Flow File";
+            CatchmentOpenFileDialog.Filter = "CE-QUAL-W2 Control File | *.NPT";
+
+            if (CatchmentOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                tbCEQUALflowFile.Text = CatchmentOpenFileDialog.SafeFileName;
+            }
+        }
+
+        private void btnSelectTempFile_Click(object sender, EventArgs e)
+        {
+            CatchmentOpenFileDialog.InitialDirectory =
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.NPT);
+            CatchmentOpenFileDialog.Title = "Select CE-QUAL-W2 Temp File";
+            CatchmentOpenFileDialog.Filter = "CE-QUAL-W2 Control File | *.NPT";
+
+            if (CatchmentOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                tbCEQUALtempFile.Text = CatchmentOpenFileDialog.SafeFileName;
+            }
+        }
+
+        private void btnSelectChemFile_Click(object sender, EventArgs e)
+        {
+            CatchmentOpenFileDialog.InitialDirectory =
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.NPT);
+            CatchmentOpenFileDialog.Title = "Select CE-QUAL-W2 Concentration File";
+            CatchmentOpenFileDialog.Filter = "CE-QUAL-W2 Control File | *.NPT";
+
+            if (CatchmentOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                tbCEQUALconcFile.Text = CatchmentOpenFileDialog.SafeFileName;
+            }
+        }
+
+        private void cbLanduse_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            PopLandAppGrid();
+        }
+
+        private void PopLandAppGrid()
+        {
+            int Index = cbLanduse.SelectedIndex;
+            int catchID = Convert.ToInt32(tbCatchID.Text);
+            int catchNum = Global.coe.GetCatchmentNumberFromID(catchID);
+            int iFertPlanNum = Global.coe.catchments[catchNum].fertPlanNum[cbLanduse.SelectedIndex];
+            int iNumParams = Global.coe.numChemicalParams + Global.coe.numPhysicalParams;
+
+            //make sure we have a catchment number
+            if (catchNum < 0)
+            {
+                return;
+            }
+
+            for (int iParam = 0; iParam < iNumParams; iParam++)
+            {
+                for (int iMonth = 0; iMonth < 12; iMonth++)
+                {
+                    dgLandApp.Rows[iParam].Cells[iMonth].Value = Global.coe.landuse[cbLanduse.SelectedIndex].fertPlanApplication[iFertPlanNum][iMonth][iParam];
+                }
+            }
+        }
+
+        private void btnAddPTS_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnRemovePTS_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
