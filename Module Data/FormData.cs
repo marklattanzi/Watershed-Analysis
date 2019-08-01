@@ -81,110 +81,149 @@ namespace warmf {
 		// these routines need to be updated for other file types (than MET) --MRL
 		// pick data to graph
 		private void PlotGraph() {
-			switch (cboxTypeOfFile.SelectedIndex) {
-				case 0: // MET
-					PlotMETData();
-					break;
-				case 1: // AIR QUALITY
-					break;
-				case 2: // OBSERVED HYDROLOGY
-					break;
-				case 3: // OBSERVED WATER QUALITY
-					break;
-				case 4: // MANAGED FLOW
-					break;
-				case 5: // POINT SOURCES
-					break;
-				case 6: // PICTURES
-					break;
-			}
-		}
+            /*			switch (cboxTypeOfFile.SelectedIndex) {
+                            case 0: // MET
+                                PlotData();
+                                break;
+                            case 1: // AIR QUALITY
+                                break;
+                            case 2: // OBSERVED HYDROLOGY
+                                break;
+                            case 3: // OBSERVED WATER QUALITY
+                                break;
+                            case 4: // MANAGED FLOW
+                                break;
+                            case 5: // POINT SOURCES
+                                break;
+                            case 6: // PICTURES
+                                break;
+                        }*/
+            PlotData();
+    }
 
-		// pick data to display in table
-		private void FillTable() {
-			switch (cboxTypeOfFile.SelectedIndex) {
-				case 0: // MET
-					FillMETTable();
-					break;
-				case 1: // AIR QUALITY
-					break;
-				case 2: // OBSERVED HYDROLOGY
-					break;
-				case 3: // OBSERVED WATER QUALITY
-					break;
-				case 4: // MANAGED FLOW
-					break;
-				case 5: // POINT SOURCES
-					break;
-				case 6: // PICTURES
-					break;
-			}
-		}
+    // populate Filename and Data selectors based on Type of Data File picked
+    private void PopulateSelectors(int dataIdx) {
+            // Clear existing lists of files and data parameters
+            cboxFilename.Items.Clear();
+            cboxData.Items.Clear();
 
-		// populate Filename and Data selectors based on Type of Data File picked
-		private void PopulateSelectors(int dataIdx) {
-			switch (dataIdx) {
+            switch (dataIdx) {
 				case 0: // MET
 					for (int ii = 0; ii < Global.coe.numMETFiles; ii++)
 						cboxFilename.Items.Add(Global.coe.METFilename[ii]);
-
-                    cboxFilename.SelectedIndex = -1;
-					cboxData.SelectedIndex = -1;
 					break;
 				case 1: // AIR QUALITY
-					break;
+                    for (int ii = 0; ii < Global.coe.numAIRFiles; ii++)
+                        cboxFilename.Items.Add(Global.coe.AIRFilename[ii]);
+                    break;
 				case 2: // OBSERVED HYDROLOGY
-					break;
+                    // Catchment prescribed ponding depth files
+                    for (int ii = 0; ii < Global.coe.catchments.Count(); ii++)
+                        if (Global.coe.catchments[ii].nluPonds > 0)
+                            for (int jj = 0; jj < Global.coe.catchments[ii].pondFilename.Count(); jj++)
+                                cboxFilename.Items.Add(Global.coe.catchments[ii].pondFilename[jj]);
+                    // River observed flow files
+                    for (int ii = 0; ii < Global.coe.rivers.Count(); ii++)
+                        if (!String.IsNullOrWhiteSpace(Global.coe.rivers[ii].hydrologyFilename))
+                            cboxFilename.Items.Add(Global.coe.rivers[ii].hydrologyFilename);
+                    // Reservoir observed volume / surface elevation files
+                    for (int ii = 0; ii < Global.coe.reservoirs.Count(); ii++)
+                        if (!String.IsNullOrWhiteSpace(Global.coe.reservoirs[ii].hydrologyFilename))
+                            cboxFilename.Items.Add(Global.coe.reservoirs[ii].hydrologyFilename);
+                    break;
 				case 3: // OBSERVED WATER QUALITY
-					break;
+                    // River observed water quality files
+                    for (int ii = 0; ii < Global.coe.rivers.Count(); ii++)
+                        if (!String.IsNullOrWhiteSpace(Global.coe.rivers[ii].hydrologyFilename))
+                            cboxFilename.Items.Add(Global.coe.rivers[ii].waterQualFilename);
+                    // Reservoir observed volume / surface elevation files
+                    for (int ii = 0; ii < Global.coe.reservoirs.Count(); ii++)
+                        for (int jj = 0; jj < Global.coe.reservoirs[ii].reservoirSegs.Count(); jj++)
+                            if (!String.IsNullOrWhiteSpace(Global.coe.reservoirs[ii].reservoirSegs[jj].obsWQFilename))
+                                cboxFilename.Items.Add(Global.coe.reservoirs[ii].reservoirSegs[jj].obsWQFilename);
+                    break;
 				case 4: // MANAGED FLOW
+                    for (int ii = 0; ii < Global.coe.numDIVFiles; ii++)
+                        cboxFilename.Items.Add(Global.coe.DIVData[ii].filename);
+                    break;
+                case 5: // POINT SOURCES
+                    for (int ii = 0; ii < Global.coe.numPTSFiles; ii++)
+                        cboxFilename.Items.Add(Global.coe.PTSFilename[ii]);
+                    break;
+                case 6: // PICTURES
 					break;
-				case 5: // POINT SOURCES
-					break;
-				case 6: // PICTURES
-					break;
-			}
-		}
 
-		// Type of Data File selector handler
-		private void cboxTypeOfFile_SelectedIndexChanged(object sender, EventArgs e) {
+            }
+            // Initially have no file selected
+            cboxFilename.SelectedIndex = -1;
+            cboxData.SelectedIndex = -1;
+        }
+
+        // Type of Data File selector handler
+        private void cboxTypeOfFile_SelectedIndexChanged(object sender, EventArgs e) {
 			SaveFormData();
-			PopulateSelectors(cboxTypeOfFile.SelectedIndex);
+
+            // Clear existing strings from file names and parameter combobox
+            cboxFilename.Items.Clear();
+            cboxData.Items.Clear();
+
+            PopulateSelectors(cboxTypeOfFile.SelectedIndex);
 		}
 
 		// Filename selector handler
 		private void cboxFilename_SelectedIndexChanged(object sender, EventArgs e) {
-			switch (cboxTypeOfFile.SelectedIndex) {
-				case 0: // MET
-					SaveFormData();
-					if (cboxFilename.SelectedIndex != -1) {
-						string filename = Global.DIR.MET + Global.coe.METFilename[cboxFilename.SelectedIndex];
+            SaveFormData();
+            string selectedString = cboxFilename.Text;
+
+            // Clear the combo box with the parameters
+            cboxData.Items.Clear();
+
+            if (!String.IsNullOrEmpty(selectedString))
+            {
+                string filename;
+
+                switch (cboxTypeOfFile.SelectedIndex)
+                {
+                    case 0: // MET
+                        filename = Global.DIR.MET + Global.coe.METFilename[cboxFilename.SelectedIndex];
                         activeData = new METFile(filename);
-                        if (activeData.ReadFile()) {
-                            ShowHeaderData();
-                            for (int ii = 0; ii < activeData.NumParameters; ii++)
-                                cboxData.Items.Add(activeData.ParameterNames[ii]);
-                            if (radioGraph.Checked)
-								PlotMETData();
-							else
-								FillMETTable();
-						}
-					}
-					break;
-				case 1: // AIR QUALITY
-					break;
-				case 2: // OBSERVED HYDROLOGY
-					break;
-				case 3: // OBSERVED WATER QUALITY
-					break;
-				case 4: // MANAGED FLOW
-					break;
-				case 5: // POINT SOURCES
-					break;
-				case 6: // PICTURES
-					break;
-			}
-		}
+                        break;
+                    case 1: // AIR QUALITY
+                        filename = Global.DIR.AIR + Global.coe.AIRFilename[cboxFilename.SelectedIndex];
+                        activeData = new AIRFile(filename);
+                        break;
+                    case 2: // OBSERVED HYDROLOGY
+                        filename = Global.DIR.ORH + selectedString;
+                        activeData = new ObservedFile(filename);
+                        break;
+                    case 3: // OBSERVED WATER QUALITY
+                        filename = Global.DIR.ORC + selectedString;
+                        activeData = new ObservedFile(filename);
+                        break;
+                    case 4: // MANAGED FLOW
+                        filename = Global.DIR.FLO + selectedString;
+                        activeData = new FLOFile(filename);
+                        break;
+                    case 5: // POINT SOURCES
+                        filename = Global.DIR.PTS + selectedString;
+                        activeData = new PTSFile(filename);
+                        break;
+                    case 6: // PICTURES
+                        break;
+                }
+
+                if (activeData.ReadFile())
+                 {
+                    ShowHeaderData();
+                    for (int ii = 0; ii < activeData.NumParameters; ii++)
+                        cboxData.Items.Add(activeData.ParameterNames[ii]);
+                    if (radioGraph.Checked)
+                        PlotData();
+                    else
+                        FillTable();
+                }
+            }
+        }
 
 		// Data element selector handler
 		private void cboxData_SelectedIndexChanged(object sender, EventArgs e) {
@@ -306,8 +345,8 @@ namespace warmf {
 			needToSave = false;
 		}
 
-		// plots MET file data
-		private void PlotMETData() {
+		// plots file data
+		private void PlotData() {
 			if (cboxData.SelectedIndex != -1) {
                 // Copy data for the selected parameter to a List of double
                 List<double> data = new List<double>();
@@ -396,29 +435,30 @@ namespace warmf {
 			}
 		}
 
-		// fills MET file data table
-		private void FillMETTable() {
+		// fills file data table
+		private void FillTable() {
 			if (needToSave) return;
 			if (toolDataGrid.RowCount != 0 && activeData.filename == fileInTable) return;
 
 			toolDataGrid.Rows.Clear();
 			if (cboxFilename.SelectedIndex != -1) {
-				toolDataGrid.ColumnCount = 11;
+				toolDataGrid.ColumnCount = activeData.NumParameters + 4;
 				toolDataGrid.Columns[0].Name = "Line Num";
 				toolDataGrid.Columns[1].Name = "Date";
 				toolDataGrid.Columns[2].Name = "Time";
-				toolDataGrid.Columns[3].Name = "Precipitation";
-				toolDataGrid.Columns[4].Name = "Min Temperature";
-				toolDataGrid.Columns[5].Name = "Max Temperature";
-				toolDataGrid.Columns[6].Name = "Cloud Cover";
-				toolDataGrid.Columns[7].Name = "Dew Point Temperature";
-				toolDataGrid.Columns[8].Name = "Air Pressure";
-				toolDataGrid.Columns[9].Name = "Wind Speed";
-				toolDataGrid.Columns[10].Name = "Data Source";
+                for (int ii = 0; ii < activeData.NumParameters; ii++)
+                    toolDataGrid.Columns[3 + ii].Name = activeData.ParameterNames[ii];
+				toolDataGrid.Columns[activeData.NumParameters + 3].Name = "Data Source";
 
-				int[] colWidths = new int[] { 70, 70, 50, 120, 120, 120, 120, 120, 120, 120, 120 };
-				for (int ii = 0; ii < 11; ii++) {
-					toolDataGrid.Columns[ii].Width = colWidths[ii];
+                // Row number and date columns
+                toolDataGrid.Columns[0].Width = 70;
+                toolDataGrid.Columns[1].Width = 70;
+                // Time column
+                toolDataGrid.Columns[2].Width = 50;
+                // Data columns and data source column
+                for (int ii = 3; ii <= 3 + activeData.NumParameters; ii++)
+                {
+					toolDataGrid.Columns[ii].Width = 120;
 				}
 
                 // Load data values into spreadsheet

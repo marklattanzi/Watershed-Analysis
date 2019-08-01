@@ -305,7 +305,7 @@ namespace warmf
 
         public void PointSourceInfo(int FileIndex)
         {
-            PTSFile pFile = Global.coe.PTSFilenamepointSourceFiles[FileIndex];
+/*            PTSFile pFile = Global.coe.PTSFilename[FileIndex];
             pFile.ReadHeader();
             if (pFile.swInternal == true)
             {
@@ -323,7 +323,7 @@ namespace warmf
                 rbUnspecAmbient.Checked = false;
                 rbUnspecAmbient.Enabled = false;
             }
-            tbNPDESNumber.Text = pFile.npdesPermit;
+            tbNPDESNumber.Text = pFile.npdesPermit;*/
         }
 
         public void FormatDataGridView(DataGridView dgv)

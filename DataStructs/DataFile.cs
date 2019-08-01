@@ -12,18 +12,34 @@ namespace warmf
     {
         public DateTime Date { get; set; }
         public List<double> Values;
+        public List<double> SecondaryValues;
         public string Source;
+
+        public bool ParseDate(string TheString)
+        {
+            int intRes;
+
+            int day = Int32.TryParse(TheString.Substring(0, 2), out intRes) ? intRes : 0;
+            int month = Int32.TryParse(TheString.Substring(2, 2), out intRes) ? intRes : 0;
+            int year = Int32.TryParse(TheString.Substring(4, 4), out intRes) ? intRes : 0;
+            int hour = Int32.TryParse(TheString.Substring(9, 2), out intRes) ? intRes : 0;
+            int minute = Int32.TryParse(TheString.Substring(11, 2), out intRes) ? intRes : 0;
+            Date = new DateTime(year, month, day, hour, minute, 0);
+
+            return true;
+        }
 
         public bool ParseString(string TheString, int NumValues)
         {
             int intRes, day, month, year, hour, minute;
 
-            day = Int32.TryParse(TheString.Substring(0, 2), out intRes) ? intRes : 0;
+            ParseDate(TheString);
+/*            day = Int32.TryParse(TheString.Substring(0, 2), out intRes) ? intRes : 0;
             month = Int32.TryParse(TheString.Substring(2, 2), out intRes) ? intRes : 0;
             year = Int32.TryParse(TheString.Substring(4, 4), out intRes) ? intRes : 0;
             hour = Int32.TryParse(TheString.Substring(9, 2), out intRes) ? intRes : 0;
             minute = Int32.TryParse(TheString.Substring(11, 2), out intRes) ? intRes : 0;
-            Date = new DateTime(year, month, day, hour, minute, 0);
+            Date = new DateTime(year, month, day, hour, minute, 0);*/
 
             double dblRes;
             Values = new List<double>();
@@ -31,7 +47,7 @@ namespace warmf
             {
                 Values.Add(Double.TryParse(TheString.Substring(13 + 8 * i, 8), out dblRes) ? dblRes : 0);
             }
-            Source = TheString.Substring(69);
+            Source = TheString.Substring(13 + 8 * NumValues);
 
             return true;
         }
@@ -58,6 +74,7 @@ namespace warmf
         public int NumParameters;
         public int NumGroups;
         public List<string> ParameterNames;
+        public List<string> ParameterCodes;
 
         public string filename { get; set; }
         public string shortName { get; set; }
@@ -67,7 +84,14 @@ namespace warmf
 
         public List<DataLine> TheData;
 
-        public DataFile() { NumLines = 0; NumParameters = 0; NumGroups = 1; ParameterNames = new List<string>();  TheData = new List<DataLine>(); }
+        public DataFile()
+        {
+            NumLines = 0;
+            NumParameters = 0;
+            NumGroups = 1;
+            ParameterNames = new List<string>();
+            ParameterCodes = new List<string>();
+            TheData = new List<DataLine>(); }
 
         public struct GraphLabels
         {
@@ -101,12 +125,37 @@ namespace warmf
             return true;
         }
 
-        public bool ReadHeader(ref STechStreamReader SR)
+        public virtual bool ReadHeader(ref STechStreamReader SR)
         {
             return ReadVersionLatLongName(ref SR);
         }
 
-        public bool ReadFile()
+        // Reads the number and codes of parameters
+        public bool ReadParameters(ref STechStreamReader SR)
+        {
+            try
+            { 
+                string line = SR.ReadLine();
+                Int32.TryParse(line.Substring(5, 8), out NumParameters);
+                for (int ii = 0; ii < NumParameters; ii++)
+                {
+                    ParameterCodes.Add(line.Substring(13 + 8 * ii, 8));
+                    ParameterNames.Add(Global.coe.GetParameterNameFromCode(ParameterCodes[ii]));
+                }
+            }
+            catch (Exception e)
+            {
+                if (SR != null)
+                    Debug.WriteLine("Error in data file.  Badly formatted data at line = " + SR.LineNum);
+                else
+                    Debug.WriteLine("Error opening StreamReader for data file " + filename);
+                return false;
+            }
+
+            return true;
+        }
+
+        public virtual bool ReadFile()
         {
             STechStreamReader sr = null;
 
@@ -161,7 +210,7 @@ namespace warmf
             return true;
         }
 
-        public bool WriteHeader(ref STechStreamWriter SW)
+        public virtual bool WriteHeader(ref STechStreamWriter SW)
         {
             return WriteVersionLatLongName(ref SW);
         }

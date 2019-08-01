@@ -14,11 +14,11 @@ namespace warmf {
             public const string DATA = "data\\";
             public static string AIR = System.IO.Path.Combine(Global.DIR.ROOT, Global.DIR.DATA, "air\\");
             public static string COE = System.IO.Path.Combine(Global.DIR.ROOT, Global.DIR.DATA, "coe\\");
-            public static string CPA = System.IO.Path.Combine(Global.DIR.ROOT, Global.DIR.DATA, "cpa\\");
+            public static string CPA = System.IO.Path.Combine(Global.DIR.ROOT, Global.DIR.DATA, "air\\");
             public static string FLO = System.IO.Path.Combine(Global.DIR.ROOT, Global.DIR.DATA, "flo\\");
             public static string MET = System.IO.Path.Combine(Global.DIR.ROOT, Global.DIR.DATA, "met\\");
-            public static string OLC = System.IO.Path.Combine(Global.DIR.ROOT, Global.DIR.DATA, "olc\\");
-            public static string OLH = System.IO.Path.Combine(Global.DIR.ROOT, Global.DIR.DATA, "olh\\");
+            public static string OLC = System.IO.Path.Combine(Global.DIR.ROOT, Global.DIR.DATA, "orc\\");
+            public static string OLH = System.IO.Path.Combine(Global.DIR.ROOT, Global.DIR.DATA, "orh\\");
             public static string ORC = System.IO.Path.Combine(Global.DIR.ROOT, Global.DIR.DATA, "orc\\");
             public static string ORH = System.IO.Path.Combine(Global.DIR.ROOT, Global.DIR.DATA, "orh\\");
             public static string PTS = System.IO.Path.Combine(Global.DIR.ROOT, Global.DIR.DATA, "pts\\");

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 
 namespace warmf {
@@ -12,7 +13,7 @@ namespace warmf {
         public List<double> monthlyFlow;
     }
 
-    public struct HydrologyConstits {
+    public class HydrologyConstits {
         public string fortranCode;
         public bool swIncludeInOutput;
         public string units;
@@ -24,68 +25,8 @@ namespace warmf {
         public bool swLoadingInclude;
     }
 
-    public struct ChemicalConstits {
-        public string fortranCode;
-        public bool swIncludeInOutput;
-        public string units;
-        public string abbrevName;
-        public string fullName;
-        public bool swCatchmentInclude;
-        public bool swRiverInclude;
-        public bool swReservoirInclude;
-        public bool swLoadingInclude;
-        public double electricalCharge;
-        public double massEquivalent;
-        public double loadingUnitConversion;
-        public string loadingUnits;
-        public double airRainMult;
-        public double pointSourceMult;
-        public double nonpointSourceMult;
-        public double solubWithSulfate;
-        public double stoichChemWithSulfate;
-        public double stoichSulfateWithChem;
-        public double solubWithHydrox;
-        public double stoichChemWithHydrox;
-        public double stoichHydroxWithChem;
-        public bool swLoadingTMDL;
-        public int dryDepositionForm;
-        public bool swChemAdvection;
-        public List<double> gasDepositVelocity;
-    }
-
-    public struct PhysicalConstits {
-        public string fortranCode;
-        public bool swIncludeInOutput;
-        public string units;
-        public string abbrevName;
-        public string fullName;
-        public bool swCatchmentInclude;
-        public bool swRiverInclude;
-        public bool swReservoirInclude;
-        public bool swLoadingInclude;
-        public double electricalCharge;
-        public double massEquivalent;
-        public double loadingUnitConversion;
-        public string loadingUnits;
-        public double airRainMult;
-        public double pointSourceMult;
-        public double nonpointSourceMult;
-        public bool swLoadingTMDL;
-        public int dryDepositionForm;
-        public bool swChemAdvection;
-        public List<double> gasDepositVelocity;
-    }
-
-    public struct CompositeConstits {
-        public string fortranCode;
-        public bool swIncludeInOutput;
-        public string units;
-        public string abbrevName;
-        public string fullName;
-        public bool swCatchmentInclude;
-        public bool swRiverInclude;
-        public bool swReservoirInclude;
-        public bool swLoadingInclude;
+    public class CompositeConstits : HydrologyConstits
+    {
         public double electricalCharge;
         public double massEquivalent;
         public double loadingUnitConversion;
@@ -96,6 +37,27 @@ namespace warmf {
         public bool swIncludePrecipConstits;
 
         public List<double> componentTotalMass;
+    }
+
+    public class PhysicalConstits : CompositeConstits
+    {
+        public double airRainMult;
+        public double pointSourceMult;
+        public double nonpointSourceMult;
+        public bool swLoadingTMDL;
+        public int dryDepositionForm;
+        public bool swChemAdvection;
+        public List<double> gasDepositVelocity;
+    }
+
+    public class ChemicalConstits : PhysicalConstits
+    {
+        public double solubWithSulfate;
+        public double stoichChemWithSulfate;
+        public double stoichSulfateWithChem;
+        public double solubWithHydrox;
+        public double stoichChemWithHydrox;
+        public double stoichHydroxWithChem;
     }
 
     public struct Reaction {
@@ -622,6 +584,7 @@ namespace warmf {
         public List<ChemicalConstits> chemConstits;
         public List<PhysicalConstits> physicalConstits;
         public List<CompositeConstits> compositeConstits;
+        public List<HydrologyConstits> AllConstits;
         public List<Reaction> reactions;
         public List<Sediment> sediments;
         public List<Algae> algaes;
@@ -904,6 +867,7 @@ namespace warmf {
                 airBalancingIons = nums[1];
 
                 // Hydrology
+                AllConstits = new List<HydrologyConstits>();
                 hydroConstits = new List<HydrologyConstits>();
                 numHydrologyParams = ReadInt(sr, "CONSTITS");
                 for (int ii = 0; ii < numHydrologyParams; ii++) {
@@ -923,6 +887,7 @@ namespace warmf {
                         hydro.swLoadingInclude = nums[3] != 0;
                     }
                     hydroConstits.Add(hydro);
+                    AllConstits.Add(hydro);
                 }
 
                 // Chemical
@@ -971,6 +936,7 @@ namespace warmf {
                         chem.gasDepositVelocity = ReadMonthlyDoubleData(sr, "CHEMICAL");
                     }
                     chemConstits.Add(chem);
+                    AllConstits.Add(chem);
                 }
 
                 // Physical
@@ -1013,6 +979,7 @@ namespace warmf {
                         physical.gasDepositVelocity = ReadMonthlyDoubleData(sr, "PHYSICAL");
                     }
                     physicalConstits.Add(physical);
+                    AllConstits.Add(physical);
                 }
 
                 numComponents = numChemicalParams + numPhysicalParams;
@@ -1052,6 +1019,7 @@ namespace warmf {
                         composite.componentTotalMass = ReadDoubleData(sr, "COMPONEN", numComponents);
                     }
                     compositeConstits.Add(composite);
+                    AllConstits.Add(composite);
                 }
 
                 // Reactions
@@ -1771,6 +1739,36 @@ namespace warmf {
                 }
             }
             return -1;
+        }
+
+        // Returns the ordinal number of the constituent from the master list of all constituents 
+        // (first hydro, them chemical, physical, and composite)
+        public int GetParameterNumberFromCode(string TheCode)
+        {
+            int totalNumConstits = numHydrologyParams + numChemicalParams + numPhysicalParams + numCompositeParams;
+            for (int ii = 0; ii < totalNumConstits; ii++)
+                if (String.Compare(TheCode, AllConstits[ii].fortranCode, new CultureInfo("en-US"), System.Globalization.CompareOptions.IgnoreSymbols) == 0)
+                    return ii;
+
+            return -1;
+        }
+
+        public string GetParameterNameFromCode(string TheCode)
+        {
+            int parameterNumber = GetParameterNumberFromCode(TheCode);
+            if (parameterNumber >= 0)
+               return AllConstits[parameterNumber].fullName;
+
+            return TheCode;
+        }
+
+        public string GetParameterNameAndUnitsFromCode(string TheCode)
+        {
+            int parameterNumber = GetParameterNumberFromCode(TheCode);
+            if (parameterNumber >= 0)
+                return AllConstits[parameterNumber].fullName + ", " + AllConstits[parameterNumber].units;
+
+            return TheCode;
         }
 
         public bool WriteFile() {

@@ -29,13 +29,7 @@ namespace warmf
             try
             {
                 sr = new STechStreamReader(Global.DIR.PTS + filename);
-                ReadVersionLatLongName(ref sr);
-                line = sr.ReadLine();
-                swInternal = line.Substring(0, 8).Contains("0");
-                unspecified = Int32.TryParse(line.Substring(8, 8), out intRes) ? intRes : -1;
-                outElevation = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : -1;
-                outWidth = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : -1;
-                npdesPermit = line.Substring(32);
+                ReadHeader(ref sr);
             }
             catch (Exception e)
             {
@@ -46,6 +40,32 @@ namespace warmf
                 return false;
             }
             return true;
+        }
+
+        public override bool ReadHeader(ref STechStreamReader SR)
+        {
+            base.ReadHeader(ref SR);
+            try
+            {
+                int intRes;
+                double dblRes;
+                string line = SR.ReadLine();
+                swInternal = line.Substring(0, 8).Contains("0");
+                unspecified = Int32.TryParse(line.Substring(8, 8), out intRes) ? intRes : -1;
+                outElevation = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : -1;
+                outWidth = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : -1;
+                npdesPermit = line.Substring(32);
+            }
+            catch (Exception e)
+            {
+                if (SR != null)
+                    Debug.WriteLine("Error in PTS file.  Badly formatted data at line = " + SR.LineNum);
+                else
+                    Debug.WriteLine("Error opening StreamReader for PTS file " + filename);
+                return false;
+            }
+
+            return ReadParameters(ref SR);
         }
 
         public bool ReadFile()

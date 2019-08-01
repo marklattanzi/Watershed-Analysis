@@ -18,5 +18,12 @@ namespace warmf
             filename = fname;
         }
 
+        public override bool ReadHeader(ref STechStreamReader SR)
+        {
+            base.ReadHeader(ref SR);
+
+            return ReadParameters(ref SR);
+        }
+
     }
 }
