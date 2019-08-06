@@ -14,6 +14,8 @@ namespace warmf
     public partial class DialogCatchCoeffs : Form
     {
         FormMain parent;
+        private List<PTSFile> pointSourceFiles;
+
         public DialogCatchCoeffs(FormMain par )
         {
             InitializeComponent();
@@ -114,14 +116,15 @@ namespace warmf
             }
             
             List<int> HideList = new List<int> { 0, 1, 2, 15, 16, 20, 22, 23, 24, 29, 30, 31, 32, 37 };
-            for (int ii = 0; ii < iNumParams; ii++) //hide chemical and physical parameters that aren't applicable
+            for (int i = 0; i < iNumParams; i++) //hide chemical and physical parameters that aren't applicable
             {
-                if (HideList.Contains(ii))
+                if (HideList.Contains(i))
                 {
-                    dgLandApp.Rows[ii].Visible = false;
+                    dgLandApp.Rows[i].Visible = false;
                 }
             }
-            cbLanduse.SelectedIndex = 7;
+
+            cbLanduse.SelectedIndex = 0;
             FormatDataGridView(dgLandApp); //Format datagridview
 
             tbMaxAccTime.Text = catchment.bmp.maxFertAccumTime.ToString();
@@ -166,13 +169,16 @@ namespace warmf
             //Warning: this code block was constructed without having a case to test - probably contains errors!!
             if (catchment.numPointSources > 0)
             {
-                for (int ii = 0; ii < catchment.numPointSources; ii++)
-                    lbPointSources.Items.Add(Global.coe.PTSFilename[catchment.pointSources[ii]]);
+                pointSourceFiles = new List<PTSFile>();
+                for (int i = 0; i < catchment.numPointSources; i++)
+                {
+                    lbPointSources.Items.Add(Global.coe.PTSFilename[catchment.pointSources[i] - 1]);
+                    PTSFile ptFile = new PTSFile(Global.coe.PTSFilename[catchment.pointSources[i] - 1]);
+                    pointSourceFiles.Add(ptFile);
+                }
                 lbPointSources.SelectedIndex = 0;
                 PointSourceInfo(lbPointSources.SelectedIndex);
             }
-            
-
 
             //Pumping tab
 
@@ -305,7 +311,7 @@ namespace warmf
 
         public void PointSourceInfo(int FileIndex)
         {
-/*            PTSFile pFile = Global.coe.PTSFilename[FileIndex];
+            PTSFile pFile = pointSourceFiles[FileIndex];
             pFile.ReadHeader();
             if (pFile.swInternal == true)
             {
@@ -323,7 +329,7 @@ namespace warmf
                 rbUnspecAmbient.Checked = false;
                 rbUnspecAmbient.Enabled = false;
             }
-            tbNPDESNumber.Text = pFile.npdesPermit;*/
+            tbNPDESNumber.Text = pFile.npdesPermit;
         }
 
         public void FormatDataGridView(DataGridView dgv)
@@ -500,12 +506,31 @@ namespace warmf
 
         private void btnAddPTS_Click(object sender, EventArgs e)
         {
+            CatchmentOpenFileDialog.InitialDirectory =
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.PTS);
+            CatchmentOpenFileDialog.Title = "Select Point Source File";
+            CatchmentOpenFileDialog.Filter = "Point Source | *.PTS";
 
+            if (CatchmentOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                lbPointSources.Items.Add(CatchmentOpenFileDialog.SafeFileName);
+            }
         }
 
         private void btnRemovePTS_Click(object sender, EventArgs e)
         {
 
         }
+
+        private void lbPointSources_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbPointSources.SelectedItem != null)
+            {
+                PointSourceInfo(lbPointSources.SelectedIndex);
+                btnRemovePTS.Enabled = true;
+            }
+        }
+
+
     }
 }

@@ -213,8 +213,14 @@ namespace warmf
                 dgvAdsorption.Rows[i].Cells["water"].Value = river.waterAdsorpIsotherm[i].ToString();
                 dgvAdsorption.Rows[i].Cells["bed"].Value = river.bedAdsorpIsotherm[i].ToString();
             }
-            foreach (int i in hideRowsList)
-                dgvAdsorption.Rows[i - 1].Visible = false;
+            List<int> HideCols = new List<int> { 0, 1, 2, 13 };
+            for (int i = 0; i < Global.coe.numChemicalParams; i++)
+            {
+                if (HideCols.Contains(i))
+                {
+                    dgvAdsorption.Rows[i].Visible = false;
+                }
+            }
 
             //Observed Data
             tbObsHydroFile.Text = river.hydrologyFilename;
@@ -337,7 +343,7 @@ namespace warmf
             }  
         }
 
-        public void PointSourceInfo(int FileIndex)
+        private void PointSourceInfo(int FileIndex)
         {
             PTSFile pFile = pointSourceFiles[FileIndex];
             pFile.ReadHeader();
