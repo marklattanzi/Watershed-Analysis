@@ -181,6 +181,21 @@ namespace warmf
             }
 
             //Pumping tab
+            //Warning: this code block was constructed without having a case to test - probably contains errors!!
+            if (catchment.numPumpFromSchedules > 0)
+            {
+                for (int i = 0; i < catchment.numPumpFromSchedules; i++)
+                {
+                    lbPumpingFrom.Items.Add(Global.coe.DIVData[catchment.pumpFromDivFile[i] - 1].filename);
+                }
+            }
+            if (catchment.numPumpToSchedules > 0)
+            {
+                for (int i = 0; i < catchment.numPumpToSchedules; i++)
+                {
+                    lbPumpingTo.Items.Add(Global.coe.DIVData[catchment.pumpToDivFile[i] - 1].filename);
+                }
+            }
 
             //Septic Systems tab
             tbDischargeSoilLayer.Text = catchment.septic.soilLayer.ToString();
@@ -195,6 +210,15 @@ namespace warmf
             tbBioMortCoeff.Text = catchment.septic.biomassMortRate.ToString();
 
             //Reactions tab
+            for (int i = 0; i < Global.coe.numReactions; i++)
+            {
+                dgvReactions.Rows.Add();
+                dgvReactions.Rows[i].HeaderCell.Value = Global.coe.reactions[i].name + ", " + Global.coe.reactions[i].units;
+                dgvReactions.Rows[i].Cells["soil"].Value = catchment.reactions.soilReactionRate[i].ToString();
+                dgvReactions.Rows[i].Cells["surface"].Value = catchment.reactions.surfaceReactionRate[i].ToString();
+                dgvReactions.Rows[i].Cells["canopy"].Value = catchment.reactions.canopyReactionRate[i].ToString();
+                dgvReactions.Rows[i].Cells["biozone"].Value = catchment.reactions.biozoneReactionRate[i].ToString();
+            }
 
             //Soil Layers tab
             tbNumSoilLayers.Text = catchment.numSoilLayers.ToString();
@@ -297,7 +321,8 @@ namespace warmf
 
             //Mining tab
             //Dialog is set up in the designer, but no code for functionality yet
-            tpMining.Hide();
+            //Deleted from collection at runtime.
+            tcCatchTabs.TabPages.RemoveByKey("tpMining");
 
             //CE-QUAL-W2 tab
             if (catchment.mining.numCEQW2Files == 3)
@@ -531,6 +556,50 @@ namespace warmf
             }
         }
 
+        private void btnFromRemove_Click(object sender, EventArgs e)
+        {
+            lbPumpingFrom.Items.Remove(lbPumpingFrom.SelectedItem);
+        }
 
+        private void btnToRemove_Click(object sender, EventArgs e)
+        {
+            lbPumpingTo.Items.Remove(lbPumpingTo.SelectedItem);
+        }
+
+        private void lbPumpingTo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnToRemove.Enabled = true;
+        }
+
+        private void lbPumpingFrom_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnFromRemove.Enabled = true;
+        }
+
+        private void btnFromAdd_Click(object sender, EventArgs e)
+        {
+            CatchmentOpenFileDialog.InitialDirectory =
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.FLO);
+            CatchmentOpenFileDialog.Title = "Select Managed Flow File";
+            CatchmentOpenFileDialog.Filter = "Managed Flow | *.FLO";
+
+            if (CatchmentOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                lbPumpingFrom.Items.Add(CatchmentOpenFileDialog.SafeFileName);
+            }
+        }
+
+        private void btnToAdd_Click(object sender, EventArgs e)
+        {
+            CatchmentOpenFileDialog.InitialDirectory =
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.FLO);
+            CatchmentOpenFileDialog.Title = "Select Managed Flow File";
+            CatchmentOpenFileDialog.Filter = "Managed Flow | *.FLO";
+
+            if (CatchmentOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                lbPumpingTo.Items.Add(CatchmentOpenFileDialog.SafeFileName);
+            }
+        }
     }
 }

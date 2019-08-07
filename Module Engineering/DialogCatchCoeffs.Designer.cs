@@ -230,6 +230,21 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
             this.CatchmentOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.btnToRemove = new System.Windows.Forms.Button();
+            this.btnFromRemove = new System.Windows.Forms.Button();
+            this.btnToAdd = new System.Windows.Forms.Button();
+            this.btnFromAdd = new System.Windows.Forms.Button();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.lbPumpingTo = new System.Windows.Forms.ListBox();
+            this.lbPumpingFrom = new System.Windows.Forms.ListBox();
+            this.dgvReactions = new System.Windows.Forms.DataGridView();
+            this.Soil = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Surface = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Canopy = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Biozone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label39 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
             this.tcCatchTabs.SuspendLayout();
             this.tpPhysData.SuspendLayout();
             this.gbSizeSlope.SuspendLayout();
@@ -256,7 +271,9 @@
             this.tpPtSrc.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            this.tpPumping.SuspendLayout();
             this.tpSeptic.SuspendLayout();
+            this.tpRxns.SuspendLayout();
             this.tpSoil.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgSoilHydroCoeffs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgInorganicC)).BeginInit();
@@ -271,6 +288,7 @@
             this.gbCEQUALW2chem.SuspendLayout();
             this.gbCEQUALW2temp.SuspendLayout();
             this.gbCEQUALW2flow.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReactions)).BeginInit();
             this.SuspendLayout();
             // 
             // tcCatchTabs
@@ -1483,6 +1501,14 @@
             // 
             // tpPumping
             // 
+            this.tpPumping.Controls.Add(this.btnToRemove);
+            this.tpPumping.Controls.Add(this.btnFromRemove);
+            this.tpPumping.Controls.Add(this.btnToAdd);
+            this.tpPumping.Controls.Add(this.btnFromAdd);
+            this.tpPumping.Controls.Add(this.label37);
+            this.tpPumping.Controls.Add(this.label38);
+            this.tpPumping.Controls.Add(this.lbPumpingTo);
+            this.tpPumping.Controls.Add(this.lbPumpingFrom);
             this.tpPumping.Location = new System.Drawing.Point(4, 46);
             this.tpPumping.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tpPumping.Name = "tpPumping";
@@ -1695,6 +1721,9 @@
             // 
             // tpRxns
             // 
+            this.tpRxns.Controls.Add(this.label40);
+            this.tpRxns.Controls.Add(this.label39);
+            this.tpRxns.Controls.Add(this.dgvReactions);
             this.tpRxns.Location = new System.Drawing.Point(4, 46);
             this.tpRxns.Name = "tpRxns";
             this.tpRxns.Size = new System.Drawing.Size(667, 434);
@@ -2241,6 +2270,140 @@
             // 
             this.CatchmentOpenFileDialog.FileName = "openFileDialog1";
             // 
+            // btnToRemove
+            // 
+            this.btnToRemove.Enabled = false;
+            this.btnToRemove.Location = new System.Drawing.Point(500, 364);
+            this.btnToRemove.Name = "btnToRemove";
+            this.btnToRemove.Size = new System.Drawing.Size(75, 23);
+            this.btnToRemove.TabIndex = 15;
+            this.btnToRemove.Text = "Remove";
+            this.btnToRemove.UseVisualStyleBackColor = true;
+            this.btnToRemove.Click += new System.EventHandler(this.btnToRemove_Click);
+            // 
+            // btnFromRemove
+            // 
+            this.btnFromRemove.Enabled = false;
+            this.btnFromRemove.Location = new System.Drawing.Point(175, 364);
+            this.btnFromRemove.Name = "btnFromRemove";
+            this.btnFromRemove.Size = new System.Drawing.Size(75, 23);
+            this.btnFromRemove.TabIndex = 14;
+            this.btnFromRemove.Text = "Remove";
+            this.btnFromRemove.UseVisualStyleBackColor = true;
+            this.btnFromRemove.Click += new System.EventHandler(this.btnFromRemove_Click);
+            // 
+            // btnToAdd
+            // 
+            this.btnToAdd.Location = new System.Drawing.Point(419, 364);
+            this.btnToAdd.Name = "btnToAdd";
+            this.btnToAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnToAdd.TabIndex = 13;
+            this.btnToAdd.Text = "Add";
+            this.btnToAdd.UseVisualStyleBackColor = true;
+            this.btnToAdd.Click += new System.EventHandler(this.btnToAdd_Click);
+            // 
+            // btnFromAdd
+            // 
+            this.btnFromAdd.Location = new System.Drawing.Point(94, 364);
+            this.btnFromAdd.Name = "btnFromAdd";
+            this.btnFromAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnFromAdd.TabIndex = 12;
+            this.btnFromAdd.Text = "Add";
+            this.btnFromAdd.UseVisualStyleBackColor = true;
+            this.btnFromAdd.Click += new System.EventHandler(this.btnFromAdd_Click);
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(336, 48);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(147, 16);
+            this.label37.TabIndex = 11;
+            this.label37.Text = "Pumping To Catchment:";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(17, 48);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(164, 16);
+            this.label38.TabIndex = 10;
+            this.label38.Text = "Pumping From Catchment:";
+            // 
+            // lbPumpingTo
+            // 
+            this.lbPumpingTo.FormattingEnabled = true;
+            this.lbPumpingTo.ItemHeight = 16;
+            this.lbPumpingTo.Location = new System.Drawing.Point(339, 64);
+            this.lbPumpingTo.Name = "lbPumpingTo";
+            this.lbPumpingTo.Size = new System.Drawing.Size(311, 276);
+            this.lbPumpingTo.TabIndex = 9;
+            this.lbPumpingTo.SelectedIndexChanged += new System.EventHandler(this.lbPumpingTo_SelectedIndexChanged);
+            // 
+            // lbPumpingFrom
+            // 
+            this.lbPumpingFrom.FormattingEnabled = true;
+            this.lbPumpingFrom.ItemHeight = 16;
+            this.lbPumpingFrom.Location = new System.Drawing.Point(20, 64);
+            this.lbPumpingFrom.Name = "lbPumpingFrom";
+            this.lbPumpingFrom.Size = new System.Drawing.Size(311, 276);
+            this.lbPumpingFrom.TabIndex = 8;
+            this.lbPumpingFrom.SelectedIndexChanged += new System.EventHandler(this.lbPumpingFrom_SelectedIndexChanged);
+            // 
+            // dgvReactions
+            // 
+            this.dgvReactions.AllowUserToAddRows = false;
+            this.dgvReactions.AllowUserToDeleteRows = false;
+            this.dgvReactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvReactions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Soil,
+            this.Surface,
+            this.Canopy,
+            this.Biozone});
+            this.dgvReactions.Location = new System.Drawing.Point(21, 38);
+            this.dgvReactions.Name = "dgvReactions";
+            this.dgvReactions.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dgvReactions.Size = new System.Drawing.Size(624, 351);
+            this.dgvReactions.TabIndex = 0;
+            // 
+            // Soil
+            // 
+            this.Soil.HeaderText = "Soil";
+            this.Soil.Name = "Soil";
+            // 
+            // Surface
+            // 
+            this.Surface.HeaderText = "Surface";
+            this.Surface.Name = "Surface";
+            // 
+            // Canopy
+            // 
+            this.Canopy.HeaderText = "Canopy";
+            this.Canopy.Name = "Canopy";
+            // 
+            // Biozone
+            // 
+            this.Biozone.HeaderText = "Biozone";
+            this.Biozone.Name = "Biozone";
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(18, 19);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(101, 16);
+            this.label39.TabIndex = 1;
+            this.label39.Text = "Reaction Rates:";
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(18, 392);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(360, 16);
+            this.label40.TabIndex = 2;
+            this.label40.Text = "Note: Biozone reaction rates are rate coefficients (cm3/mg-d)";
+            // 
             // DialogCatchCoeffs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -2301,8 +2464,12 @@
             this.groupBox7.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
+            this.tpPumping.ResumeLayout(false);
+            this.tpPumping.PerformLayout();
             this.tpSeptic.ResumeLayout(false);
             this.tpSeptic.PerformLayout();
+            this.tpRxns.ResumeLayout(false);
+            this.tpRxns.PerformLayout();
             this.tpSoil.ResumeLayout(false);
             this.tpSoil.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgSoilHydroCoeffs)).EndInit();
@@ -2324,6 +2491,7 @@
             this.gbCEQUALW2temp.PerformLayout();
             this.gbCEQUALW2flow.ResumeLayout(false);
             this.gbCEQUALW2flow.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReactions)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2532,5 +2700,20 @@
         private System.Windows.Forms.TextBox tbCEQUALflowFile;
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.CheckBox cbWriteCEQUALoutput;
+        private System.Windows.Forms.Button btnToRemove;
+        private System.Windows.Forms.Button btnFromRemove;
+        private System.Windows.Forms.Button btnToAdd;
+        private System.Windows.Forms.Button btnFromAdd;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.ListBox lbPumpingTo;
+        private System.Windows.Forms.ListBox lbPumpingFrom;
+        private System.Windows.Forms.DataGridView dgvReactions;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Soil;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Surface;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Canopy;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Biozone;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.Label label39;
     }
 }

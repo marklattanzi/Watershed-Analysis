@@ -211,6 +211,14 @@ namespace warmf {
         public string mineOutFilename;
     }
 
+    public struct CatchReactions
+    {
+        public List<double> soilReactionRate;
+        public List<double> surfaceReactionRate;
+        public List<double> canopyReactionRate;
+        public List<double> biozoneReactionRate;
+    }
+
     public struct CatchMining {
         public bool swIsLowSoilDeepMineOverburden;
         public int surfaceMineLanduseNum;
@@ -233,10 +241,10 @@ namespace warmf {
         public double fineLitterWgtFraction;
         public double humusWgtFraction;
 
-        public List<double> soilReactionRate;
-        public List<double> surfaceReactionRate;
-        public List<double> canopyReactionRate;
-        public List<double> biozoneReactionRate;
+        //public List<double> soilReactionRate;
+        //public List<double> surfaceReactionRate;
+        //public List<double> canopyReactionRate;
+        //public List<double> biozoneReactionRate;
 
         public int numCEQW2Files;
         public string flowInputFilename;
@@ -322,6 +330,7 @@ namespace warmf {
         public double overlandFlowSeepage;
 
         public CatchMining mining;
+        public CatchReactions reactions;
         public List<Soil> soils;
     }
 
@@ -1384,10 +1393,12 @@ namespace warmf {
                     catchData.mining.humusWgtFraction = dnums[0];
 
                     // reaction rates
-                    catchData.mining.soilReactionRate = ReadDoubleData(sr, "REACSOIL", numReactions);
-                    catchData.mining.surfaceReactionRate = ReadDoubleData(sr, "REACSURF", numReactions);
-                    catchData.mining.canopyReactionRate = ReadDoubleData(sr, "REACCNPY", numReactions);
-                    catchData.mining.biozoneReactionRate = ReadDoubleData(sr, "REACBIOZ", numReactions);
+                    catchData.reactions.soilReactionRate = ReadDoubleData(sr, "REACSOIL", numReactions);
+                    catchData.reactions.surfaceReactionRate = ReadDoubleData(sr, "REACSURF", numReactions);
+                    catchData.reactions.canopyReactionRate = ReadDoubleData(sr, "REACCNPY", numReactions);
+                    catchData.reactions.biozoneReactionRate = ReadDoubleData(sr, "REACBIOZ", numReactions);
+
+                    //CE-QUAL-W2
                     catchData.mining.numCEQW2Files = ReadInt(sr, "W2FILES");
                     if (catchData.mining.numCEQW2Files == 3) {
                         catchData.mining.flowInputFilename = ReadString(sr, "W2FILES");
