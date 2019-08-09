@@ -19,5 +19,18 @@ namespace warmf
             InitializeComponent();
             this.parent = par;
         }
+
+        public void Populate(string featureType, int cnum)
+        {
+            if (featureType == "River")
+            {
+                Text = featureType + " " + Global.coe.rivers[cnum].idNum + " Output";
+            }
+            else if (featureType == "Catchment")
+            {
+                Text = featureType + " " + Global.coe.catchments[cnum].idNum + " Output";
+            }
+            
+        }
     }
 }

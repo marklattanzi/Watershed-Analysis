@@ -235,6 +235,7 @@ namespace warmf {
                 }
                 else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
                 {
+                    dlgOutput.Populate("River", ii);
                     dlgOutput.ShowDialog();
                 }
                 else
@@ -280,6 +281,7 @@ namespace warmf {
                 }
                 else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
                 {
+                    //need to populate the dialog - but is it the same dialog as is used for catchments and rivers?
                     dlgOutput.ShowDialog();
                 }
                 else
@@ -319,6 +321,7 @@ namespace warmf {
                 }
                 else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
                 {
+                    dlgOutput.Populate("Catchment", ii);
                     dlgOutput.ShowDialog();
                 }
                 else
