@@ -21,9 +21,9 @@ namespace warmf
 
         public bool ReadHeader()
         {
-            string line;
-            int intRes;
-            double dblRes;
+            //string line;
+            //int intRes;
+            //double dblRes;
 
             STechStreamReader sr = null;
             try

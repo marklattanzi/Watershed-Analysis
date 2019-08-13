@@ -181,580 +181,583 @@
     <EmbeddedResource Include="UtilityClasses\WMDialog.resx">
       <DependentUpon>WMDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="data\air\Candor.AIR">
+    <None Include="data\input\air\Candor.AIR">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\air\Coweeta.AIR">
+    <None Include="data\input\air\Coweeta.AIR">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\air\Cranberry.AIR">
+    <None Include="data\input\air\Cranberry.AIR">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\coe\Catawba.COE" />
-    <None Include="data\coe\Henn.coe">
+    <None Include="data\input\cat\Catawba_SC_June2018.CAT" />
+    <None Include="data\input\coe\Catawba.COE" />
+    <None Include="data\input\coe\Henn.coe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\coe\SanJoaquin.coe">
+    <None Include="data\input\coe\SanJoaquin.coe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="data\ctl\model.ctl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flowout\FLOWQOUT.0018">
+    <None Include="data\Output\flowout\FLOWQOUT.0018">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flowout\FLOWQOUT.0039">
+    <None Include="data\Output\flowout\FLOWQOUT.0039">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flowout\FLOWQOUT.0048">
+    <None Include="data\Output\flowout\FLOWQOUT.0048">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flowout\FLOWQOUT.0087">
+    <None Include="data\Output\flowout\FLOWQOUT.0087">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flowout\FLOWQOUT.0595">
+    <None Include="data\Output\flowout\FLOWQOUT.0595">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flowout\FLOWQOUT.0711">
+    <None Include="data\Output\flowout\FLOWQOUT.0711">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flowout\FLOWQOUT.1562">
+    <None Include="data\Output\flowout\FLOWQOUT.1562">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flowout\FLOWQOUT.1563">
+    <None Include="data\Output\flowout\FLOWQOUT.1563">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flowout\FLOWQOUT.1567">
+    <None Include="data\Output\flowout\FLOWQOUT.1567">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flowout\FLOWQOUT.2292">
+    <None Include="data\Output\flowout\FLOWQOUT.2292">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\Carolinas_Lakes_GC.FLO">
+    <None Include="data\input\flo\Carolinas_Lakes_GC.FLO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\Cedar_Creek_Spillage.FLO">
+    <None Include="data\input\flo\Cedar_Creek_Spillage.FLO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\Cedar_Creek_Turbine.FLO">
+    <None Include="data\input\flo\Cedar_Creek_Turbine.FLO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\Chester_GC.FLO">
+    <None Include="data\input\flo\Chester_GC.FLO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\Chester_Metro_Catawba_WTP.FLO">
+    <None Include="data\input\flo\Chester_Metro_Catawba_WTP.FLO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\FishingCrk_Spillage.flo">
+    <None Include="data\input\flo\FishingCrk_Spillage.flo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\FishingCrk_Turbine.FLO">
+    <None Include="data\input\flo\FishingCrk_Turbine.FLO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\Great_Falls_Spillage.FLO">
+    <None Include="data\input\flo\Great_Falls_Spillage.FLO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\Great_Falls_Turbine.FLO">
+    <None Include="data\input\flo\Great_Falls_Turbine.FLO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\Greens_Rock_Hill.FLO">
+    <None Include="data\input\flo\Greens_Rock_Hill.FLO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\hoechst.flo">
+    <None Include="data\input\flo\hoechst.flo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\HooperGC.flo">
+    <None Include="data\input\flo\HooperGC.flo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\HooperIrrig.flo">
+    <None Include="data\input\flo\HooperIrrig.flo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\Lancaster_City_FCR.FLO">
+    <None Include="data\input\flo\Lancaster_City_FCR.FLO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\Lancaster_City_WTP.FLO">
+    <None Include="data\input\flo\Lancaster_City_WTP.FLO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\Lancaster_Cnty_Catawba_WTP.FLO">
+    <None Include="data\input\flo\Lancaster_Cnty_Catawba_WTP.FLO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\Lancaster_Cnty_Intake_2.FLO">
+    <None Include="data\input\flo\Lancaster_Cnty_Intake_2.FLO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\Nations_Ford_Chem.FLO">
+    <None Include="data\input\flo\Nations_Ford_Chem.FLO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\Resolute.FLO">
+    <None Include="data\input\flo\Resolute.FLO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\RMInd.flo">
+    <None Include="data\input\flo\RMInd.flo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\R_H_Catawba_WTP.FLO">
+    <None Include="data\input\flo\R_H_Catawba_WTP.FLO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\SpgGr_Complex.flo">
+    <None Include="data\input\flo\SpgGr_Complex.flo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\Wateree_CamdenWFP.FLO">
+    <None Include="data\input\flo\Wateree_CamdenWFP.FLO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\Wateree_LugoffWFP.FLO">
+    <None Include="data\input\flo\Wateree_LugoffWFP.FLO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\Wateree_Spillage.FLO">
+    <None Include="data\input\flo\Wateree_Spillage.FLO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\Wateree_Turbine.FLO">
+    <None Include="data\input\flo\Wateree_Turbine.FLO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\flo\WaterfordGC.flo">
+    <None Include="data\input\flo\WaterfordGC.flo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X350Y081.MET">
+    <None Include="data\Output\lak\Catawba_SC_June2018.LAK" />
+    <None Include="data\input\met\X350Y081.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X351Y076.MET">
+    <None Include="data\input\met\X351Y076.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X351Y077.MET">
+    <None Include="data\input\met\X351Y077.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X351Y078.MET">
+    <None Include="data\input\met\X351Y078.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X351Y079.MET">
+    <None Include="data\input\met\X351Y079.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X351Y080.MET">
+    <None Include="data\input\met\X351Y080.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X351Y081.MET">
+    <None Include="data\input\met\X351Y081.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X352Y075.MET">
+    <None Include="data\input\met\X352Y075.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X352Y076.MET">
+    <None Include="data\input\met\X352Y076.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X352Y077.MET">
+    <None Include="data\input\met\X352Y077.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X352Y078.MET">
+    <None Include="data\input\met\X352Y078.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X352Y079.MET">
+    <None Include="data\input\met\X352Y079.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X352Y080.MET">
+    <None Include="data\input\met\X352Y080.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X352Y081.MET">
+    <None Include="data\input\met\X352Y081.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X353Y075.MET">
+    <None Include="data\input\met\X353Y075.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X353Y076.MET">
+    <None Include="data\input\met\X353Y076.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X353Y077.MET">
+    <None Include="data\input\met\X353Y077.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X353Y078.MET">
+    <None Include="data\input\met\X353Y078.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X353Y079.MET">
+    <None Include="data\input\met\X353Y079.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X353Y080.MET">
+    <None Include="data\input\met\X353Y080.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X353Y081.MET">
+    <None Include="data\input\met\X353Y081.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X353Y082.MET">
+    <None Include="data\input\met\X353Y082.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X353Y083.MET">
+    <None Include="data\input\met\X353Y083.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X354Y075.MET">
+    <None Include="data\input\met\X354Y075.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X354Y076.MET">
+    <None Include="data\input\met\X354Y076.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X354Y077.MET">
+    <None Include="data\input\met\X354Y077.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X354Y078.MET">
+    <None Include="data\input\met\X354Y078.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X354Y079.MET">
+    <None Include="data\input\met\X354Y079.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X354Y080.MET">
+    <None Include="data\input\met\X354Y080.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X354Y081.MET">
+    <None Include="data\input\met\X354Y081.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X354Y082.MET">
+    <None Include="data\input\met\X354Y082.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X354Y083.MET">
+    <None Include="data\input\met\X354Y083.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X355Y075.MET">
+    <None Include="data\input\met\X355Y075.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X355Y076.MET">
+    <None Include="data\input\met\X355Y076.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X355Y077.MET">
+    <None Include="data\input\met\X355Y077.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X355Y078.MET">
+    <None Include="data\input\met\X355Y078.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X355Y079.MET">
+    <None Include="data\input\met\X355Y079.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X355Y080.MET">
+    <None Include="data\input\met\X355Y080.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X355Y081.MET">
+    <None Include="data\input\met\X355Y081.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X355Y082.MET">
+    <None Include="data\input\met\X355Y082.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X355Y083.MET">
+    <None Include="data\input\met\X355Y083.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X356Y078.MET">
+    <None Include="data\input\met\X356Y078.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X356Y079.MET">
+    <None Include="data\input\met\X356Y079.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X356Y080.MET">
+    <None Include="data\input\met\X356Y080.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\met\X356Y081.MET">
+    <None Include="data\input\met\X356Y081.MET">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\olc\CCR_CW-033.OLC">
+    <None Include="data\input\olc\CCR_CW-033.OLC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\olc\FishingCrkRes.OLC">
+    <None Include="data\input\olc\FishingCrkRes.OLC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\olc\GreatFallsRes.OLC">
+    <None Include="data\input\olc\GreatFallsRes.OLC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\olc\LWateree_CL-089.OLC">
+    <None Include="data\input\olc\LWateree_CL-089.OLC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\olc\LWateree_CW-207.olc">
+    <None Include="data\input\olc\LWateree_CW-207.olc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\olc\LWateree_CW-208.OLC">
+    <None Include="data\input\olc\LWateree_CW-208.OLC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\olc\LWateree_RL-11040.olc">
+    <None Include="data\input\olc\LWateree_RL-11040.olc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\olh\CedarCrkRes.OLH">
+    <None Include="data\input\olh\CedarCrkRes.OLH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\olh\FishingCrkRes.OLH">
+    <None Include="data\input\olh\FishingCrkRes.OLH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\olh\GreatFallsRes.OLH">
+    <None Include="data\input\olh\GreatFallsRes.OLH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\olh\LWateree.OLH">
+    <None Include="data\input\olh\LWateree.OLH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\BeaverCrk_S-28-13.ORC">
+    <None Include="data\input\orc\BeaverCrk_S-28-13.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\CaneCrk_S-29-50.ORC">
+    <None Include="data\input\orc\CaneCrk_S-29-50.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\CatawbaLansford.orc">
+    <None Include="data\input\orc\CatawbaLansford.orc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\Catawba_Rvr_US-21.ORC">
+    <None Include="data\input\orc\Catawba_Rvr_US-21.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\CatRvr_CW-041.ORC">
+    <None Include="data\input\orc\CatRvr_CW-041.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\CedarCrkRes_TR.ORC">
+    <None Include="data\input\orc\CedarCrkRes_TR.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\FishingCrkRes_CW-016.ORC">
+    <None Include="data\input\orc\FishingCrkRes_CW-016.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\FishingCrkRes_TR.ORC">
+    <None Include="data\input\orc\FishingCrkRes_TR.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\FishingCrk_SC-49.ORC">
+    <None Include="data\input\orc\FishingCrk_SC-49.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\Fishing_Crk_S-12-77.ORC">
+    <None Include="data\input\orc\Fishing_Crk_S-12-77.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\Great_Falls_TR.ORC">
+    <None Include="data\input\orc\Great_Falls_TR.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\IrwinCrk_abv_WWTP.ORC">
+    <None Include="data\input\orc\IrwinCrk_abv_WWTP.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\LitSugarCrk_NC-51.ORC">
+    <None Include="data\input\orc\LitSugarCrk_NC-51.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\LitWatereeCrk_S-20-41.ORC">
+    <None Include="data\input\orc\LitWatereeCrk_S-20-41.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\LSugarCrk_NC-51.ORC">
+    <None Include="data\input\orc\LSugarCrk_NC-51.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\LWateree_CW-231.ORC">
+    <None Include="data\input\orc\LWateree_CW-231.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\McAlpineCrk_abv_WWTP.ORC">
+    <None Include="data\input\orc\McAlpineCrk_abv_WWTP.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\McAlpineCrk_S-29-64.ORC">
+    <None Include="data\input\orc\McAlpineCrk_S-29-64.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\McAlpineCrk_SardisRd.ORC">
+    <None Include="data\input\orc\McAlpineCrk_SardisRd.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\RockyCrk_S-12-138.ORC">
+    <None Include="data\input\orc\RockyCrk_S-12-138.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\SixMileCrk_MarvinRd.ORC">
+    <None Include="data\input\orc\SixMileCrk_MarvinRd.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\SixMileCrk_SMullisRd.ORC">
+    <None Include="data\input\orc\SixMileCrk_SMullisRd.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\SteeleCrk_Carowinds.ORC">
+    <None Include="data\input\orc\SteeleCrk_Carowinds.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\SugarCrk_NC-51.ORC">
+    <None Include="data\input\orc\SugarCrk_NC-51.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\SugarCrk_S-46-36.ORC">
+    <None Include="data\input\orc\SugarCrk_S-46-36.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\SugarCrk_SC-160.ORC">
+    <None Include="data\input\orc\SugarCrk_SC-160.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\TwelveMileCrk_NC-16.ORC">
+    <None Include="data\input\orc\TwelveMileCrk_NC-16.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\TwelveMile_S-29-55.ORC">
+    <None Include="data\input\orc\TwelveMile_S-29-55.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\WatereeCrk_US-21.ORC">
+    <None Include="data\input\orc\WatereeCrk_US-21.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orc\Wylie_Boundary2017.ORC">
+    <None Include="data\input\orc\Wylie_Boundary2017.ORC">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orh\Irwin.orh">
+    <None Include="data\input\orh\Irwin.orh">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orh\USGS021459367.ORH">
+    <None Include="data\input\orh\USGS021459367.ORH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orh\USGS02146000.ORH">
+    <None Include="data\input\orh\USGS02146000.ORH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orh\USGS02146211.ORH">
+    <None Include="data\input\orh\USGS02146211.ORH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orh\USGS02146300.ORH">
+    <None Include="data\input\orh\USGS02146300.ORH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orh\USGS02146381.ORH">
+    <None Include="data\input\orh\USGS02146381.ORH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orh\USGS02146409.ORH">
+    <None Include="data\input\orh\USGS02146409.ORH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orh\USGS02146530.ORH">
+    <None Include="data\input\orh\USGS02146530.ORH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orh\USGS02146600.ORH">
+    <None Include="data\input\orh\USGS02146600.ORH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orh\USGS02146700.ORH">
+    <None Include="data\input\orh\USGS02146700.ORH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orh\USGS02146750.ORH">
+    <None Include="data\input\orh\USGS02146750.ORH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orh\USGS0214678175.ORH">
+    <None Include="data\input\orh\USGS0214678175.ORH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orh\USGS02146800.ORH">
+    <None Include="data\input\orh\USGS02146800.ORH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orh\USGS0214685800.ORH">
+    <None Include="data\input\orh\USGS0214685800.ORH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orh\USGS02147020.ORH">
+    <None Include="data\input\orh\USGS02147020.ORH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orh\USGS02147126.ORH">
+    <None Include="data\input\orh\USGS02147126.ORH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orh\USGS021473415.ORH">
+    <None Include="data\input\orh\USGS021473415.ORH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orh\USGS021473428.ORH">
+    <None Include="data\input\orh\USGS021473428.ORH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orh\USGS021475000.ORH">
+    <None Include="data\input\orh\USGS021475000.ORH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\orh\Wylie_Boundary.ORH">
+    <None Include="data\input\orh\Wylie_Boundary.ORH">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\Nc0024937.pts">
+    <None Include="data\input\pts\Nc0024937.pts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\Nc0024945.pts">
+    <None Include="data\input\pts\Nc0024945.pts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\NC0024970.PTS">
+    <None Include="data\input\pts\NC0024970.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\Nc0029181.pts">
+    <None Include="data\input\pts\Nc0029181.pts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\NC0085359.pts">
+    <None Include="data\input\pts\NC0085359.pts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\SC0001015.PTS">
+    <None Include="data\input\pts\SC0001015.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\SC0001741.PTS">
+    <None Include="data\input\pts\SC0001741.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\Sc0001783.pts">
+    <None Include="data\input\pts\Sc0001783.pts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\sc0001783_2.pts">
+    <None Include="data\input\pts\sc0001783_2.pts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\sc0001783_3.pts">
+    <None Include="data\input\pts\sc0001783_3.pts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\Sc0003255.pts">
+    <None Include="data\input\pts\Sc0003255.pts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\SC0020371.PTS">
+    <None Include="data\input\pts\SC0020371.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\SC0020443.PTS">
+    <None Include="data\input\pts\SC0020443.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\SC0021211.PTS">
+    <None Include="data\input\pts\SC0021211.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\Sc0027111.PTS">
+    <None Include="data\input\pts\Sc0027111.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\SC0027146.PTS">
+    <None Include="data\input\pts\SC0027146.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\SC0027189.PTS">
+    <None Include="data\input\pts\SC0027189.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\Sc0027341.pts">
+    <None Include="data\input\pts\Sc0027341.pts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\Sc0027383.pts">
+    <None Include="data\input\pts\Sc0027383.pts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\Sc0027391.pts">
+    <None Include="data\input\pts\Sc0027391.pts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\SC0028622.PTS">
+    <None Include="data\input\pts\SC0028622.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\Sc0029572.pts">
+    <None Include="data\input\pts\Sc0029572.pts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\SC0030112.PTS">
+    <None Include="data\input\pts\SC0030112.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\SC0032417.PTS">
+    <None Include="data\input\pts\SC0032417.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\Sc0033651.PTS">
+    <None Include="data\input\pts\Sc0033651.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\Sc0035661.pts">
+    <None Include="data\input\pts\Sc0035661.pts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\Sc0035980.PTS">
+    <None Include="data\input\pts\Sc0035980.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\SC0036056.PTS">
+    <None Include="data\input\pts\SC0036056.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\Sc0038113.PTS">
+    <None Include="data\input\pts\Sc0038113.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\SC0038156.PTS">
+    <None Include="data\input\pts\SC0038156.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\Sc0039217.PTS">
+    <None Include="data\input\pts\Sc0039217.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\Sc0041670.PTS">
+    <None Include="data\input\pts\Sc0041670.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\Sc0041807.PTS">
+    <None Include="data\input\pts\Sc0041807.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\Sc0041904.pts">
+    <None Include="data\input\pts\Sc0041904.pts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\Sc0044440.pts">
+    <None Include="data\input\pts\Sc0044440.pts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\SC0046892.PTS">
+    <None Include="data\input\pts\SC0046892.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\pts\SC0047864.PTS">
+    <None Include="data\input\pts\SC0047864.PTS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\shp\Catchments.cpg" />
-    <None Include="data\shp\Catchments.dbf" />
-    <None Include="data\shp\Catchments.prj" />
-    <None Include="data\shp\Catchments.shp" />
-    <None Include="data\shp\Catchments.shx" />
-    <None Include="data\shp\Lakes.cpg" />
-    <None Include="data\shp\Lakes.dbf" />
-    <None Include="data\shp\Lakes.shp" />
-    <None Include="data\shp\Lakes.shx" />
-    <None Include="data\shp\Rivers.cpg" />
-    <None Include="data\shp\Rivers.dbf" />
-    <None Include="data\shp\Rivers.sbn" />
-    <None Include="data\shp\Rivers.sbx" />
-    <None Include="data\shp\Rivers.shp" />
-    <None Include="data\shp\Rivers.shx" />
+    <None Include="data\Output\riv\Catawba_SC_June2018.RIV" />
+    <None Include="data\input\shp\Catchments.cpg" />
+    <None Include="data\input\shp\Catchments.dbf" />
+    <None Include="data\input\shp\Catchments.prj" />
+    <None Include="data\input\shp\Catchments.shp" />
+    <None Include="data\input\shp\Catchments.shx" />
+    <None Include="data\input\shp\Lakes.cpg" />
+    <None Include="data\input\shp\Lakes.dbf" />
+    <None Include="data\input\shp\Lakes.shp" />
+    <None Include="data\input\shp\Lakes.shx" />
+    <None Include="data\input\shp\Rivers.cpg" />
+    <None Include="data\input\shp\Rivers.dbf" />
+    <None Include="data\input\shp\Rivers.sbn" />
+    <None Include="data\input\shp\Rivers.sbx" />
+    <None Include="data\input\shp\Rivers.shp" />
+    <None Include="data\input\shp\Rivers.shx" />
     <None Include="data\tfiles\00000000.T01">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -802,10 +805,10 @@
     <None Include="Resources\splash.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="data\logs\To-Do List.txt" />
-    <Content Include="data\shp\Catchments.shp.xml" />
-    <Content Include="data\shp\Lakes.shp.xml" />
-    <Content Include="data\shp\Rivers.shp.xml" />
+    <Content Include="data\Output\logs\To-Do List.txt" />
+    <Content Include="data\input\shp\Catchments.shp.xml" />
+    <Content Include="data\input\shp\Lakes.shp.xml" />
+    <Content Include="data\input\shp\Rivers.shp.xml" />
     <Content Include="DLLs\EGIS.Controls.dll" />
     <Content Include="DLLs\EGIS.ShapeFileLib.dll" />
   </ItemGroup>
