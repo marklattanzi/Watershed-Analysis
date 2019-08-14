@@ -21,10 +21,6 @@ namespace warmf
 
         public bool ReadHeader()
         {
-            //string line;
-            //int intRes;
-            //double dblRes;
-
             STechStreamReader sr = null;
             try
             {
@@ -68,25 +64,25 @@ namespace warmf
             return ReadParameters(ref SR);
         }
 
-        public bool ReadFile()
-        {
-            STechStreamReader sr = null;
+        //public bool ReadFile()
+        //{
+        //    STechStreamReader sr = null;
 
-            try
-            {
-                //int intRes;
-                //double dblRes;
-                //string line;
-                //int day, month, year, hour, minute;
-                //sr = new STechStreamReader(filename);
+        //    try
+        //    {
+        //        //int intRes;
+        //        //double dblRes;
+        //        //string line;
+        //        //int day, month, year, hour, minute;
+        //        //sr = new STechStreamReader(filename);
 
-                //ReadVersionLatLongName(ref sr);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
+        //        //ReadVersionLatLongName(ref sr);
+        //        return true;
+        //    }
+        //    catch
+        //    {
+        //        return false;
+        //    }
+        //}
     }
 }

@@ -1782,6 +1782,14 @@ namespace warmf {
             return TheCode;
         }
 
+        public string GetParameterNameAndUnitsFromNumber(int num)
+        {
+            if (num >= 0 && num < AllConstits.Count)
+                return AllConstits[num].fullName + ", " + AllConstits[num].units;
+
+            return "";
+        }   
+
         public bool WriteFile() {
 			return true;
 		}

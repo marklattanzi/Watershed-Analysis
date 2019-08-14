@@ -31,7 +31,7 @@ namespace warmf
 
         public bool ParseString(string TheString, int NumValues)
         {
-            int intRes, day, month, year, hour, minute;
+            //int intRes, day, month, year, hour, minute;
 
             ParseDate(TheString);
 /*            day = Int32.TryParse(TheString.Substring(0, 2), out intRes) ? intRes : 0;
@@ -161,10 +161,10 @@ namespace warmf
 
             try
             {
-                int intRes;
-                double dblRes;
+                //int intRes;
+                //double dblRes;
                 string line;
-                int day, month, year, hour, minute;
+                //int day, month, year, hour, minute;
                 DataLine thisDataLine;
                 sr = new STechStreamReader(filename);
 
