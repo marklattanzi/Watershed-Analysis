@@ -2,10 +2,12 @@
 using System.IO;
 using System.Windows.Forms;
 
+
 namespace warmf
 {
     public partial class DialogOutput : Form
     {
+        public static Output catchmentOutput = new Output();
         FormMain parent;
 
         public DialogOutput(FormMain par)
@@ -36,45 +38,12 @@ namespace warmf
                 }
                 cbOutputType.SelectedIndex = 1;
 
-                //Output Parameters
-                int iCount = 0;
-                string strNameUnits;
-                for (int i = 0; i < Global.coe.numHydrologyParams; i++)
-                {
-                    if (Global.coe.hydroConstits[i].swCatchmentInclude==true)
-                    {
-                        strNameUnits = Global.coe.hydroConstits[i].fullName + ", " + Global.coe.hydroConstits[i].units;
-                        lbOutputParameters.Items.Add(strNameUnits);
-                    }
-                    iCount = iCount + 1;
-                }
-                for (int i = 0; i < Global.coe.numChemicalParams; i++)
-                {
-                    if (Global.coe.chemConstits[i].swCatchmentInclude==true)
-                    {
-                        strNameUnits = Global.coe.chemConstits[i].fullName + ", " + Global.coe.chemConstits[i].units;
-                        lbOutputParameters.Items.Add(strNameUnits);
-                    }
-                    iCount = iCount + 1;
-                }
-                for (int i = 0; i < Global.coe.numPhysicalParams; i++)
-                {
-                    if (Global.coe.physicalConstits[i].swCatchmentInclude==true)
-                    {
-                        strNameUnits = Global.coe.physicalConstits[i].fullName + ", " + Global.coe.physicalConstits[i].units;
-                        lbOutputParameters.Items.Add(strNameUnits);
-                    }
-                    iCount = iCount + 1;
-                }
-                for (int i = 0; i < Global.coe.numCompositeParams; i++)
-                {
-                    if (Global.coe.compositeConstits[i].swCatchmentInclude==true)
-                    {
-                        strNameUnits = Global.coe.compositeConstits[i].fullName + ", " + Global.coe.compositeConstits[i].units;
-                        lbOutputParameters.Items.Add(strNameUnits);
-                    }
-                    iCount = iCount + 1;
-                }
+                //Read the .CAT file (for selected catchment) into memory
+                catchmentOutput.ReadCAT(Global.DIR.CAT + "Catawba_SC_June2018.CAT", catchment.idNum);
+                
+                //Populate listbox containing output parameters
+                lbOutputParameters.DataSource = catchmentOutput.constituentNameUnits;
+                
                 //Show Observations (Hide for catchments)
                 chkShowObservations.Hide();
             }

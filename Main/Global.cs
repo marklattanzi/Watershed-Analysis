@@ -36,6 +36,7 @@ namespace warmf {
             public static string CAT = System.IO.Path.Combine(OUTPUT, "cat\\");
             public static string LAK = System.IO.Path.Combine(OUTPUT, "lak\\");
         }
-        public static Coefficients coe = new Coefficients();	// so we can access coefficients from anywhere - may not be necessary...  MRL
+        public static Coefficients coe = new Coefficients(); // so we can access coefficients from anywhere - may not be necessary...  MRL
+
 	}
 }

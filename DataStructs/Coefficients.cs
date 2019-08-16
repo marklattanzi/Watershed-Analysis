@@ -1760,7 +1760,6 @@ namespace warmf {
             for (int ii = 0; ii < totalNumConstits; ii++)
                 if (String.Compare(TheCode, AllConstits[ii].fortranCode, new CultureInfo("en-US"), System.Globalization.CompareOptions.IgnoreSymbols) == 0)
                     return ii;
-
             return -1;
         }
 
@@ -1784,10 +1783,15 @@ namespace warmf {
 
         public string GetParameterNameAndUnitsFromNumber(int num)
         {
+            string strResult;
             if (num >= 0 && num < AllConstits.Count)
-                return AllConstits[num].fullName + ", " + AllConstits[num].units;
-
-            return "";
+            {
+                strResult = AllConstits[num].fullName + ", " + AllConstits[num].units;
+                strResult = strResult.Trim();
+                return strResult;
+            }  
+            else
+                return "";
         }   
 
         public bool WriteFile() {

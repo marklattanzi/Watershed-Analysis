@@ -815,6 +815,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\cpa\" />
+    <Folder Include="data\Output\cat\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
