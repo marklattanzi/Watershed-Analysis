@@ -28,9 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.cbOutputType = new System.Windows.Forms.ComboBox();
             this.lbOutputParameters = new System.Windows.Forms.ListBox();
             this.chkShowObservations = new System.Windows.Forms.CheckBox();
@@ -40,10 +39,10 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chartOutput = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartOutput)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,6 +61,7 @@
             this.lbOutputParameters.Name = "lbOutputParameters";
             this.lbOutputParameters.Size = new System.Drawing.Size(200, 303);
             this.lbOutputParameters.TabIndex = 1;
+            this.lbOutputParameters.SelectedIndexChanged += new System.EventHandler(this.lbOutputParameters_SelectedIndexChanged);
             // 
             // chkShowObservations
             // 
@@ -128,21 +128,19 @@
             this.comboBox2.Size = new System.Drawing.Size(234, 21);
             this.comboBox2.TabIndex = 8;
             // 
-            // chart1
+            // chartOutput
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(221, 13);
-            this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(569, 325);
-            this.chart1.TabIndex = 9;
-            this.chart1.Text = "chart1";
+            chartArea2.Name = "ChartArea1";
+            this.chartOutput.ChartAreas.Add(chartArea2);
+            this.chartOutput.Location = new System.Drawing.Point(221, 13);
+            this.chartOutput.Name = "chartOutput";
+            series2.ChartArea = "ChartArea1";
+            series2.IsVisibleInLegend = false;
+            series2.Name = "SeriesOutput";
+            this.chartOutput.Series.Add(series2);
+            this.chartOutput.Size = new System.Drawing.Size(569, 325);
+            this.chartOutput.TabIndex = 9;
+            this.chartOutput.Text = "chart1";
             // 
             // groupBox1
             // 
@@ -174,14 +172,14 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.chart1);
+            this.Controls.Add(this.chartOutput);
             this.Controls.Add(this.btnStatistics);
             this.Controls.Add(this.chkShowObservations);
             this.Controls.Add(this.lbOutputParameters);
             this.Controls.Add(this.cbOutputType);
             this.Name = "DialogOutput";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartOutput)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -200,7 +198,7 @@
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartOutput;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button1;
     }

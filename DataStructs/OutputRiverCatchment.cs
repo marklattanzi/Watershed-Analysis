@@ -10,7 +10,7 @@ namespace warmf {
         public List<int> constituentNumbers;
         public List<string> constituentNameUnits = new List<string>();
         public List<int> entityNumbers;
-        public List<List<double>> output = new List<List<double>>();
+        public List<float>[] output; //array of lists - one list for each output constituent
 
         //Output methods
         //Read the .CAT File
@@ -21,8 +21,8 @@ namespace warmf {
                 int tempParameterNumber, parameterNumber;
                 string nameUnits;
                 int outputID;
-                List<double>timestepOutput = new List<double>();
                 long outputPosition = -1;
+                byte[] bytes;
 
                 if (File.Exists(fileName))
                 {
@@ -36,12 +36,16 @@ namespace warmf {
                         startDateYear = reader.ReadInt32();
                         numConstits = reader.ReadInt32();
 
-                        //get list of parameters in CAT
+                        //dimension the output array
+                        output = new List<float>[numConstits];
+
+                        //get list of parameters in CAT and initialize each list in output array
                         for (int i = 0; i < numConstits; i++)
                         {
                             parameterNumber = reader.ReadInt32();
                             nameUnits = Global.coe.GetParameterNameAndUnitsFromNumber(parameterNumber + tempParameterNumber);
                             constituentNameUnits.Add(nameUnits);
+                            output[i] = new List<float>();
                         }
 
                         numCatchOutputs = reader.ReadInt32();
@@ -57,7 +61,7 @@ namespace warmf {
 
                         for (int i = 0; i < (numSimDays*timeStepPerDay); i++)
                         {
-                            reader.ReadInt32(); //Day number
+                            int temp = reader.ReadInt32(); //Day number
                             for (int j = 0; j < numCatchOutputs; j++)//loop through catchment outputs until you find the right position
                             {
                                 reader.ReadInt32();
@@ -65,10 +69,9 @@ namespace warmf {
                                 {
                                     for (int k = 0; k < numConstits; k++)
                                     {
-                                        timestepOutput.Add(reader.ReadDouble());
+                                        bytes = reader.ReadBytes(4);
+                                        output[k].Add(BitConverter.ToSingle(bytes,0));
                                     }
-                                    output.Add(timestepOutput);
-                                    timestepOutput.Clear();//cant actually do this...How to solve?
                                 }
                             }
                             
@@ -76,7 +79,8 @@ namespace warmf {
 
 
                     }
-                }
+                
+}
                 return true;
             }
             catch (Exception e)
@@ -85,6 +89,8 @@ namespace warmf {
                 return false;
             }
         }
+
+        
     }
 
     

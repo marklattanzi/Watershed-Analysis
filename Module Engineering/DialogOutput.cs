@@ -1,6 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
+using System.Diagnostics;
+
 
 
 namespace warmf
@@ -19,7 +22,6 @@ namespace warmf
         public void Populate(string featureType, int cnum)
         {
             
-
             if (featureType == "River")
             {
                 Text = featureType + " " + Global.coe.rivers[cnum].idNum + " Output";
@@ -43,13 +45,31 @@ namespace warmf
                 
                 //Populate listbox containing output parameters
                 lbOutputParameters.DataSource = catchmentOutput.constituentNameUnits;
-                
+                lbOutputParameters.SelectedIndex = 0;
+
                 //Show Observations (Hide for catchments)
                 chkShowObservations.Hide();
             }
-            
         }
 
-        
+        private void lbOutputParameters_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            chartOutput.Series["SeriesOutput"].Points.Clear();
+            //DateTime startdate = new DateTime(catchmentOutput.startDateYear, catchmentOutput.startDateMonth, catchmentOutput.startDateDay);
+            double timeStep = new double();
+            timeStep = 24 / catchmentOutput.timeStepPerDay;
+            DateTime xValue = new DateTime(catchmentOutput.startDateYear, catchmentOutput.startDateMonth, catchmentOutput.startDateDay, 0, 0, 0);
+            Single yValue = new float();
+
+            for (int i = 0; i < (catchmentOutput.output[lbOutputParameters.SelectedIndex].Count); i++)
+            {
+                //x values (date/time)
+                xValue = xValue.AddHours(timeStep);
+                //y values (time series output)
+                yValue = catchmentOutput.output[lbOutputParameters.SelectedIndex][i];
+            }
+            chartOutput.Series["SeriesOutput"].Points.AddXY(xValue, yValue);
+
+        }
     }
 }
