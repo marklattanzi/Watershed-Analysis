@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using System.Drawing;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Diagnostics;
 
@@ -49,6 +50,15 @@ namespace warmf
 
                 //Show Observations (Hide for catchments)
                 chkShowObservations.Hide();
+
+                //format the output graph (populated on lbOutputParameters_SelectedIndexChanged event)
+                ChartArea chartArea1 = chartOutput.ChartAreas["ChartArea1"];
+                Series series1 = chartOutput.Series["SeriesOutput"];
+                series1.ChartType = SeriesChartType.Line;
+                chartArea1.AxisX.MajorGrid.LineColor = Color.LightGray;
+                chartArea1.AxisX.Title = "Date";
+                chartArea1.AxisY.MajorGrid.LineColor = Color.LightGray;
+                
             }
         }
 
@@ -67,9 +77,12 @@ namespace warmf
                 xValue = xValue.AddHours(timeStep);
                 //y values (time series output)
                 yValue = catchmentOutput.output[lbOutputParameters.SelectedIndex][i];
+                if (yValue != -999)
+                {
+                    chartOutput.Series["SeriesOutput"].Points.AddXY(xValue, yValue);
+                }
             }
-            chartOutput.Series["SeriesOutput"].Points.AddXY(xValue, yValue);
-
+            chartOutput.ChartAreas["ChartArea1"].AxisY.Title = catchmentOutput.constituentNameUnits[lbOutputParameters.SelectedIndex];
         }
     }
 }

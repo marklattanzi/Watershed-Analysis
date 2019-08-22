@@ -55,32 +55,27 @@ namespace warmf {
                             outputID = outputID % 65536;
                             if (outputID == catchID && outputID > 0)
                             {
-                                outputPosition = i+1; //combined output for now
+                                outputPosition = i + 1; //combined output for now
                             }
                         }
 
-                        for (int i = 0; i < (numSimDays*timeStepPerDay); i++)
+                        for (int i = 0; i < (numSimDays * timeStepPerDay); i++)
                         {
                             int temp = reader.ReadInt32(); //Day number
                             for (int j = 0; j < numCatchOutputs; j++)//loop through catchment outputs until you find the right position
                             {
-                                reader.ReadInt32();
-                                if (j==outputPosition)
+                                for (int k = 0; k < numConstits; k++)
                                 {
-                                    for (int k = 0; k < numConstits; k++)
+                                    bytes = reader.ReadBytes(4);
+                                    if (j == outputPosition)
                                     {
-                                        bytes = reader.ReadBytes(4);
-                                        output[k].Add(BitConverter.ToSingle(bytes,0));
-                                    }
+                                        output[k].Add(BitConverter.ToSingle(bytes, 0));
+                                    } 
                                 }
                             }
-                            
                         }
-
-
                     }
-                
-}
+                }
                 return true;
             }
             catch (Exception e)
@@ -88,10 +83,6 @@ namespace warmf {
                 Debug.WriteLine("CAT file read failure: " + e.ToString());
                 return false;
             }
-        }
-
-        
-    }
-
-    
+        }   
+    }   
 }

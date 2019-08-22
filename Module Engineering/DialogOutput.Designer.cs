@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.cbOutputType = new System.Windows.Forms.ComboBox();
             this.lbOutputParameters = new System.Windows.Forms.ListBox();
             this.chkShowObservations = new System.Windows.Forms.CheckBox();
@@ -130,14 +130,15 @@
             // 
             // chartOutput
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartOutput.ChartAreas.Add(chartArea2);
+            chartArea1.Name = "ChartArea1";
+            this.chartOutput.ChartAreas.Add(chartArea1);
             this.chartOutput.Location = new System.Drawing.Point(221, 13);
             this.chartOutput.Name = "chartOutput";
-            series2.ChartArea = "ChartArea1";
-            series2.IsVisibleInLegend = false;
-            series2.Name = "SeriesOutput";
-            this.chartOutput.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.IsVisibleInLegend = false;
+            series1.Name = "SeriesOutput";
+            this.chartOutput.Series.Add(series1);
             this.chartOutput.Size = new System.Drawing.Size(569, 325);
             this.chartOutput.TabIndex = 9;
             this.chartOutput.Text = "chart1";
