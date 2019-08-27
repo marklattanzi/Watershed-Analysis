@@ -5,12 +5,12 @@ using System.IO;
 
 namespace warmf {
     public class Output {
-        public int numSimDays, timeStepPerDay, numConstits, numEntities, numCatchOutputs;
+        public int numSimDays, timeStepPerDay, numConstits, numEntities, numOutputs, numCatchOutputs;
         public int startDateDay, startDateMonth, startDateYear;
         public List<int> constituentNumbers;
         public List<string> constituentNameUnits = new List<string>();
         public List<int> entityNumbers;
-        public List<float>[] output; //array of lists - one list for each output constituent
+        public List<float>[,] output; //2d array of lists - one list for each output (combined, surface, soil layer 1, etc) - constituent combination
 
         //Output methods
         //Read the .CAT File
@@ -23,6 +23,8 @@ namespace warmf {
                 int outputID;
                 long outputPosition = -1;
                 byte[] bytes;
+                Boolean positionSet;
+
 
                 if (File.Exists(fileName))
                 {
@@ -37,32 +39,41 @@ namespace warmf {
                         numConstits = reader.ReadInt32();
 
                         //dimension the output array
-                        output = new List<float>[numConstits];
+                        numCatchOutputs = Global.coe.catchments[catchID].numSoilLayers + 2;
+                        output = new List<float>[numCatchOutputs,numConstits];
 
                         //get list of parameters in CAT and initialize each list in output array
-                        for (int i = 0; i < numConstits; i++)
-                        {
-                            parameterNumber = reader.ReadInt32();
-                            nameUnits = Global.coe.GetParameterNameAndUnitsFromNumber(parameterNumber + tempParameterNumber);
-                            constituentNameUnits.Add(nameUnits);
-                            output[i] = new List<float>();
-                        }
-
-                        numCatchOutputs = reader.ReadInt32();
                         for (int i = 0; i < numCatchOutputs; i++)
+                        {
+                            for (int j = 0; j < numConstits; j++)
+                            {
+                                parameterNumber = reader.ReadInt32();
+                                nameUnits = Global.coe.GetParameterNameAndUnitsFromNumber(parameterNumber + tempParameterNumber);
+                                constituentNameUnits.Add(nameUnits);
+                                output[i,j] = new List<float>();
+                            }
+                        }
+                        
+                        //find the position of the first desired output within the CAT file
+                        //(first output is surface runoff, then combined output, then each soil layer)
+                        
+                        numOutputs = reader.ReadInt32();
+                        positionSet = false;
+                        for (int i = 0; i < numOutputs; i++)
                         {
                             outputID = reader.ReadInt32();
                             outputID = outputID % 65536;
-                            if (outputID == catchID && outputID > 0)
+                            if (outputID == catchID && outputID > 0 && positionSet == false)
                             {
-                                outputPosition = i + 1; //combined output for now
+                                outputPosition = i; //combined output for now
+                                positionSet = true;
                             }
                         }
 
                         for (int i = 0; i < (numSimDays * timeStepPerDay); i++)
                         {
-                            int temp = reader.ReadInt32(); //Day number
-                            for (int j = 0; j < numCatchOutputs; j++)//loop through catchment outputs until you find the right position
+                            int temp = reader.ReadInt32(); //Day number (not used for anything)
+                            for (int j = 0; j < numOutputs; j++)//loop through catchment outputs until you find the right position
                             {
                                 for (int k = 0; k < numConstits; k++)
                                 {
