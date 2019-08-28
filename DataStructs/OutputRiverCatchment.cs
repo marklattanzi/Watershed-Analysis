@@ -24,6 +24,7 @@ namespace warmf {
                 long outputPosition = -1;
                 byte[] bytes;
                 Boolean positionSet;
+                int catchNumber = Global.coe.GetCatchmentNumberFromID(catchID);
 
 
                 if (File.Exists(fileName))
@@ -37,26 +38,28 @@ namespace warmf {
                         startDateMonth = reader.ReadInt32();
                         startDateYear = reader.ReadInt32();
                         numConstits = reader.ReadInt32();
-
-                        //dimension the output array
-                        numCatchOutputs = Global.coe.catchments[catchID].numSoilLayers + 2;
+                        
+                        //dimension and initialize the catchment output array
+                        numCatchOutputs = Global.coe.catchments[catchNumber].numSoilLayers + 2;
                         output = new List<float>[numCatchOutputs,numConstits];
-
-                        //get list of parameters in CAT and initialize each list in output array
                         for (int i = 0; i < numCatchOutputs; i++)
                         {
                             for (int j = 0; j < numConstits; j++)
                             {
-                                parameterNumber = reader.ReadInt32();
-                                nameUnits = Global.coe.GetParameterNameAndUnitsFromNumber(parameterNumber + tempParameterNumber);
-                                constituentNameUnits.Add(nameUnits);
-                                output[i,j] = new List<float>();
+                                output[i, j] = new List<float>();
                             }
+                        }
+
+                        //get list of parameters in CAT
+                        for (int j = 0; j < numConstits; j++)
+                        {
+                            parameterNumber = reader.ReadInt32();
+                            nameUnits = Global.coe.GetParameterNameAndUnitsFromNumber(parameterNumber + tempParameterNumber);
+                            constituentNameUnits.Add(nameUnits);
                         }
                         
                         //find the position of the first desired output within the CAT file
                         //(first output is surface runoff, then combined output, then each soil layer)
-                        
                         numOutputs = reader.ReadInt32();
                         positionSet = false;
                         for (int i = 0; i < numOutputs; i++)
@@ -65,24 +68,27 @@ namespace warmf {
                             outputID = outputID % 65536;
                             if (outputID == catchID && outputID > 0 && positionSet == false)
                             {
-                                outputPosition = i; //combined output for now
+                                outputPosition = i;
                                 positionSet = true;
                             }
                         }
 
                         for (int i = 0; i < (numSimDays * timeStepPerDay); i++)
                         {
+                            int i2 = 0;
                             int temp = reader.ReadInt32(); //Day number (not used for anything)
                             for (int j = 0; j < numOutputs; j++)//loop through catchment outputs until you find the right position
                             {
                                 for (int k = 0; k < numConstits; k++)
                                 {
                                     bytes = reader.ReadBytes(4);
-                                    if (j == outputPosition)
+                                    if (j >= outputPosition && j < (outputPosition + numCatchOutputs))
                                     {
-                                        output[k].Add(BitConverter.ToSingle(bytes, 0));
+                                        output[i2,k].Add(BitConverter.ToSingle(bytes, 0));   
                                     } 
                                 }
+                                if (j >= outputPosition && j < (outputPosition + numCatchOutputs))
+                                    i2 = i2 + 1;
                             }
                         }
                     }

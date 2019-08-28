@@ -53,6 +53,7 @@
             this.cbOutputType.Name = "cbOutputType";
             this.cbOutputType.Size = new System.Drawing.Size(200, 21);
             this.cbOutputType.TabIndex = 0;
+            this.cbOutputType.SelectionChangeCommitted += new System.EventHandler(this.cbOutputType_SelectionChangeCommitted);
             // 
             // lbOutputParameters
             // 
