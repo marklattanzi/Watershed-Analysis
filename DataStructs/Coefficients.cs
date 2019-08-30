@@ -1740,6 +1740,18 @@ namespace warmf {
             return -1;
         }
 
+        public int GetRiverNumberFromID(int id)
+        {
+            for (int i = 0; i < rivers.Count; i++)
+            {
+                if (rivers[i].idNum == id)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
         public int GetPTSNumberFromName(string name)
         {
             for (int i = 0; i < numPTSFiles; i++)

@@ -73,6 +73,7 @@
             this.chkShowObservations.TabIndex = 2;
             this.chkShowObservations.Text = "Show Observations";
             this.chkShowObservations.UseVisualStyleBackColor = true;
+            this.chkShowObservations.CheckedChanged += new System.EventHandler(this.chkShowObservations_CheckedChanged);
             // 
             // btnStatistics
             // 

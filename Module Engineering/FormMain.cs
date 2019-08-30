@@ -44,11 +44,11 @@ namespace warmf {
 
             // dialogs called from within the Engineering Module (River Coefficients,
             // Catchment Coefficients, System Coefficients, Reservoir Coefficients)
-            dlgRiverCoeffs = new DialogRiverCoeffs(this); // used in Engineering module to show river coefficients
-            dlgCatchCoeffs = new DialogCatchCoeffs(this); // used in Engineering module to show catchment coefficients
-            dlgSystemCoeffs = new DialogSystemCoeffs(this); //used in Engineering module to show the system coefficients
-            dlgReservoirCoeffs = new DialogReservoirCoeffs(this); //used in Engineering module to show the reservoir coefficients
-            dlgOutput = new DialogOutput(this); //used to display output
+            //dlgRiverCoeffs = new DialogRiverCoeffs(this); // used in Engineering module to show river coefficients
+            //dlgCatchCoeffs = new DialogCatchCoeffs(this); // used in Engineering module to show catchment coefficients
+            //dlgSystemCoeffs = new DialogSystemCoeffs(this); //used in Engineering module to show the system coefficients
+            //dlgReservoirCoeffs = new DialogReservoirCoeffs(this); //used in Engineering module to show the reservoir coefficients
+            //dlgOutput = new DialogOutput(this); //used to display output
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -160,8 +160,6 @@ namespace warmf {
 
             // read in Coefficients file
             string fname = Global.DIR.COE + "Catawba.coe";
-            //string fname = Global.DIR_DATA+"coe/Henn.coe";
-            //string fname = Global.DIR_DATA+"coe/SanJoaquin.coe";
 
             if (!Global.coe.ReadFile(fname))
             {
@@ -230,13 +228,19 @@ namespace warmf {
                     }
                 if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
                 {
-                    dlgRiverCoeffs.Populate(ii);
-                    dlgRiverCoeffs.ShowDialog();
+                    using (dlgRiverCoeffs = new DialogRiverCoeffs(this))
+                    {
+                        dlgRiverCoeffs.Populate(ii);
+                        dlgRiverCoeffs.ShowDialog();
+                    }
                 }
                 else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
                 {
-                    dlgOutput.Populate("River", ii);
-                    dlgOutput.ShowDialog();
+                    using (dlgOutput = new DialogOutput(this))
+                    {
+                        dlgOutput.Populate("River", ii);
+                        dlgOutput.ShowDialog();
+                    }
                 }
                 else
                 {
@@ -276,13 +280,19 @@ namespace warmf {
                     }
                 if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
                 {
-                    dlgReservoirCoeffs.Populate(iRes, iSeg);
-                    dlgReservoirCoeffs.ShowDialog();
+                    using (dlgReservoirCoeffs = new DialogReservoirCoeffs(this))
+                    {
+                        dlgReservoirCoeffs.Populate(iRes, iSeg);
+                        dlgReservoirCoeffs.ShowDialog();
+                    }
                 }
                 else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
                 {
                     //need to populate the dialog - but is it the same dialog as is used for catchments and rivers?
-                    dlgOutput.ShowDialog();
+                    using (dlgOutput = new DialogOutput(this))
+                    {
+                        dlgOutput.ShowDialog();
+                    }
                 }
                 else
                 {
@@ -316,13 +326,19 @@ namespace warmf {
                     }
                 if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
                 {
-                    dlgCatchCoeffs.Populate(ii);
-                    dlgCatchCoeffs.ShowDialog();
+                    using (dlgCatchCoeffs = new DialogCatchCoeffs(this))
+                    {
+                        dlgCatchCoeffs.Populate(ii);
+                        dlgCatchCoeffs.ShowDialog();
+                    }
                 }
                 else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
                 {
-                    dlgOutput.Populate("Catchment", ii);
-                    dlgOutput.ShowDialog();
+                    using (dlgOutput = new DialogOutput(this))
+                    {
+                        dlgOutput.Populate("Catchment", ii);
+                        dlgOutput.ShowDialog();
+                    } 
                 }
                 else
                 {
@@ -334,8 +350,11 @@ namespace warmf {
             {
                 if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
                 {
-                    dlgSystemCoeffs.Populate();
-                    dlgSystemCoeffs.ShowDialog();
+                    using (dlgSystemCoeffs = new DialogSystemCoeffs(this))
+                    {
+                        dlgSystemCoeffs.Populate();
+                        dlgSystemCoeffs.ShowDialog();
+                    }
                 }
                 else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
                 {
@@ -346,8 +365,6 @@ namespace warmf {
                     MessageBox.Show("Gowdy or Herr Output Selected");
                 }
             }
-
-
         }
 
         private void miFileExit_Click(object sender, EventArgs e)
