@@ -1763,16 +1763,38 @@ namespace warmf {
             }
             return -1;
         }
-
-        // Returns the ordinal number of the constituent from the master list of all constituents 
-        // (first hydro, them chemical, physical, and composite)
+        
         public int GetParameterNumberFromCode(string TheCode)
+        // Returns the ordinal number of the constituent from the master list of all constituents 
+        // (first hydro, then chemical, physical, and composite)
         {
             int totalNumConstits = numHydrologyParams + numChemicalParams + numPhysicalParams + numCompositeParams;
             for (int ii = 0; ii < totalNumConstits; ii++)
                 if (String.Compare(TheCode, AllConstits[ii].fortranCode, new CultureInfo("en-US"), System.Globalization.CompareOptions.IgnoreSymbols) == 0)
                     return ii;
             return -1;
+        }
+
+        public string GetParameterCodeFromName(string name)
+        {
+            int totalNumConstits = numHydrologyParams + numChemicalParams + numPhysicalParams + numCompositeParams;
+            for (int ii = 0; ii < totalNumConstits; ii++)
+                if (String.Compare(name, AllConstits[ii].fortranCode, new CultureInfo("en-US"), System.Globalization.CompareOptions.IgnoreSymbols) == 0)
+                    return AllConstits[ii].fortranCode;
+            return "";
+        }
+
+        public string GetParameterCodeFromNumber(int num)
+        {
+            string strResult;
+            if (num >= 0 && num < AllConstits.Count)
+            {
+                strResult = AllConstits[num].fortranCode;
+                strResult = strResult.Trim();
+                return strResult;
+            }
+            else
+                return "";
         }
 
         public string GetParameterNameFromCode(string TheCode)
@@ -1806,7 +1828,8 @@ namespace warmf {
                 return "";
         }   
 
-        public bool WriteFile() {
+        public bool WriteFile()
+        {
 			return true;
 		}
     }

@@ -91,7 +91,8 @@ namespace warmf
             NumGroups = 1;
             ParameterNames = new List<string>();
             ParameterCodes = new List<string>();
-            TheData = new List<DataLine>(); }
+            TheData = new List<DataLine>();
+        }
 
         public struct GraphLabels
         {

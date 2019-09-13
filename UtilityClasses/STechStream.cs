@@ -91,7 +91,6 @@ namespace warmf {
             // Value < -1.0E10: 3 sig figs, 2 unsigned digits for exponential
             else
                 doubleString = Value.ToString("0.##E00");
-
             // Fill in spaces left of the number if it is less than 8 digits
             doubleString = doubleString.PadLeft(8);
             Write("{0}", doubleString);

@@ -14,6 +14,10 @@ namespace warmf
         public static Output scenarioOutput = new Output();
         public static River river = new River();
         public static Catchment catchment = new Catchment();
+
+        ObservedFile hydroData = new ObservedFile(Global.DIR.ORH + river.hydrologyFilename);
+        ObservedFile wqData = new ObservedFile(Global.DIR.ORC + river.waterQualFilename);
+
         public bool loading;
         FormMain parent;
 
@@ -43,6 +47,20 @@ namespace warmf
 
                 //Show Observations (show for rivers)
                 chkShowObservations.Show();
+
+                //Read observations into memory
+                if (river.hydrologyFilename != "") 
+                {
+                    //ObservedFile hydroData = new ObservedFile(Global.DIR.ORH + river.hydrologyFilename);
+                    hydroData.ReadFile();
+                    //chkShowObservations.Checked = true;
+                }
+                if (river.waterQualFilename != "")
+                {
+                    //ObservedFile wqData = new ObservedFile(Global.DIR.ORC + river.waterQualFilename);
+                    wqData.ReadFile();
+                    //chkShowObservations.Checked = true;
+                }
             }
             else if (featureType == "Catchment")
             {
@@ -62,7 +80,7 @@ namespace warmf
                     cbOutputType.Items.Add("Soil Layer " + (i + 1));
                 }
 
-                //Show Observations (Hide for catchments)
+                //Hide the "Show Observations" checkbox
                 chkShowObservations.Hide();
             }
 
@@ -78,8 +96,8 @@ namespace warmf
             chartArea1.AxisY.MajorGrid.LineColor = Color.LightGray;
 
             //select output type and chemical parameter
-            cbOutputType.SelectedIndex = 1;
-            lbOutputParameters.SelectedIndex = 0;
+            //cbOutputType.SelectedIndex = 1;
+            //lbOutputParameters.SelectedIndex = 0;
 
             loading = false;
         }
@@ -90,9 +108,15 @@ namespace warmf
             double timeStep = new double();
             timeStep = 24 / scenarioOutput.timeStepPerDay;
             DateTime xValue = new DateTime(scenarioOutput.startDateYear, scenarioOutput.startDateMonth, scenarioOutput.startDateDay, 0, 0, 0);
+            DateTime startDate = new DateTime();
+            DateTime endDate = new DateTime();
             Single yValue = new float();
             int index1, index2;
+            string dataType;
+            int position;
 
+            startDate = xValue;
+            
             if (loading == true)
             {
                 if (this.Text.Contains("River") == true)
@@ -124,6 +148,46 @@ namespace warmf
                 }
             }
             chartOutput.ChartAreas["ChartArea1"].AxisY.Title = scenarioOutput.constituentNameUnits[lbOutputParameters.SelectedIndex];
+            endDate = xValue;
+
+            if (chkShowObservations.Checked) //show observed data
+            {
+                //does Fortran code for selected parameter exist in observed datafile(s)
+                dataType = "";
+                for (int i = 0; i < hydroData.NumParameters; i++)
+                {
+                    if (hydroData.ParameterCodes[i] == scenarioOutput.constituentFortranCode[lbOutputParameters.SelectedIndex])
+                    {
+                        dataType = "Hydrology";
+                        position = i;
+                        break;
+                    }
+                }
+                if (dataType == "")
+                {
+                    for (int i = 0; i < wqData.NumParameters; i++)
+                    {
+                        if (wqData.ParameterCodes[i] == scenarioOutput.constituentFortranCode[lbOutputParameters.SelectedIndex])
+                        {
+                            dataType = "Water Quality";
+                            position = i;
+                            break;
+                        }
+                    }
+                }
+
+                //if observed data exist, add data to the chart
+                if (dataType=="Hydrology")
+                {
+                    
+                }
+                else if (dataType == "Water Quality")
+                {
+
+                }
+
+                
+            }
         }
 
         private void cbOutputType_SelectionChangeCommitted(object sender, EventArgs e)
@@ -171,8 +235,24 @@ namespace warmf
         {
             if (chkShowObservations.Checked == true)
             {
-                string HydroFileName = river.hydrologyFilename;
-                string waterQualityFileName = river.waterQualFilename;
+                if (loading == false)
+                {
+                    string fortranCode = scenarioOutput.constituentFortranCode[lbOutputParameters.SelectedIndex];
+                    //check if observed data exist for selected parameter
+                    for (int i = 0; i < ; i++)
+                    {
+
+                    }
+                }
+                
+
+                //if (lbOutputParameters.SelectedIndex != -1)
+                //{
+                //    string fortranCode = scenarioOutput.constituentFortranCode[lbOutputParameters.SelectedIndex];
+                //}
+                
+                
+
             }
             else
             {

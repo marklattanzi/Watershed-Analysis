@@ -67,6 +67,8 @@
             // chkShowObservations
             // 
             this.chkShowObservations.AutoSize = true;
+            this.chkShowObservations.Checked = true;
+            this.chkShowObservations.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkShowObservations.Location = new System.Drawing.Point(11, 345);
             this.chkShowObservations.Name = "chkShowObservations";
             this.chkShowObservations.Size = new System.Drawing.Size(118, 17);
