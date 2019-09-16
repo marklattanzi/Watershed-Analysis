@@ -30,6 +30,7 @@
         {
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.cbOutputType = new System.Windows.Forms.ComboBox();
             this.lbOutputParameters = new System.Windows.Forms.ListBox();
             this.chkShowObservations = new System.Windows.Forms.CheckBox();
@@ -142,7 +143,14 @@
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series1.IsVisibleInLegend = false;
             series1.Name = "SeriesOutput";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series2.MarkerBorderColor = System.Drawing.Color.Red;
+            series2.MarkerColor = System.Drawing.Color.White;
+            series2.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series2.Name = "SeriesObserved";
             this.chartOutput.Series.Add(series1);
+            this.chartOutput.Series.Add(series2);
             this.chartOutput.Size = new System.Drawing.Size(569, 325);
             this.chartOutput.TabIndex = 9;
             this.chartOutput.Text = "chart1";
