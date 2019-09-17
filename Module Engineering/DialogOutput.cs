@@ -37,9 +37,17 @@ namespace warmf
                 Text = featureType + " " + river.idNum + " Output";
 
                 //Observed data files
-                hydroData = new ObservedFile(Global.DIR.ORH + river.hydrologyFilename);
-                wqData = new ObservedFile(Global.DIR.ORC + river.waterQualFilename);
-
+                if (river.hydrologyFilename != "")
+                {
+                    hydroData = new ObservedFile(Global.DIR.ORH + river.hydrologyFilename);
+                    hydroData.ReadFile();
+                }
+                if (river.waterQualFilename != "")
+                {
+                    wqData = new ObservedFile(Global.DIR.ORC + river.waterQualFilename);
+                    wqData.ReadFile();
+                }
+                
                 //Read the .RIV file (for selected river) into memory
                 scenarioOutput.ReadOutput(Global.DIR.RIV + "Catawba_SC_June2018.RIV", river.idNum);
 
@@ -50,20 +58,6 @@ namespace warmf
 
                 //Show Observations (show for rivers)
                 chkShowObservations.Show();
-
-                //Read observations into memory
-                if (river.hydrologyFilename != "") 
-                {
-                    //ObservedFile hydroData = new ObservedFile(Global.DIR.ORH + river.hydrologyFilename);
-                    hydroData.ReadFile();
-                    //chkShowObservations.Checked = true;
-                }
-                if (river.waterQualFilename != "")
-                {
-                    //ObservedFile wqData = new ObservedFile(Global.DIR.ORC + river.waterQualFilename);
-                    wqData.ReadFile();
-                    //chkShowObservations.Checked = true;
-                }
             }
             else if (featureType == "Catchment")
             {
@@ -108,16 +102,14 @@ namespace warmf
         private void lbOutputParameters_SelectedIndexChanged(object sender, EventArgs e)
         {
             chartOutput.Series["SeriesOutput"].Points.Clear();
+            chartOutput.Series["SeriesObserved"].Points.Clear();
             double timeStep = new double();
-            double observedValue;
             timeStep = 24 / scenarioOutput.timeStepPerDay;
             DateTime xValue = new DateTime(scenarioOutput.startDateYear, scenarioOutput.startDateMonth, scenarioOutput.startDateDay, 0, 0, 0);
             DateTime startDate = new DateTime();
             DateTime endDate = new DateTime();
             Single yValue = new float();
             int index1, index2;
-            string dataType;
-            int position;
 
             startDate = xValue;
             
@@ -125,12 +117,13 @@ namespace warmf
             {
                 if (this.Text.Contains("River") == true)
                 {
-                    index1 = 0; //water column for river output
+                    index1 = 1; //water column for river output
                 }
                 else
                 {
-                    index1 = 1; //combined output for catchments
+                    index1 = catchment.numSoilLayers + 2 - 1; //combined output for catchments
                 }
+                cbOutputType.SelectedIndex = index1;
                 index2 = 0; //first output parameter
             }
             else
@@ -156,55 +149,46 @@ namespace warmf
 
             if (chkShowObservations.Checked) //show observed data
             {
-                //does Fortran code for selected parameter exist in observed datafile(s)
-                dataType = "";
-                for (int i = 0; i < hydroData.NumParameters; i++)
+                if (hydroData != null) //does a ORH file exist
                 {
-                    if (hydroData.ParameterCodes[i].Trim() == scenarioOutput.constituentFortranCode[lbOutputParameters.SelectedIndex].Trim())
+                    for (int i = 0; i < hydroData.NumParameters; i++)
                     {
-                        dataType = "Hydrology";
-                        position = i;
-                        break;
-                    }
-                }
-                if (dataType == "")
-                {
-                    for (int i = 0; i < wqData.NumParameters; i++)
-                    {
-                        if (wqData.ParameterCodes[i] == scenarioOutput.constituentFortranCode[lbOutputParameters.SelectedIndex])
+                        //does Fortran code for selected parameter exist in ORH file
+                        if (hydroData.ParameterCodes[i].Trim() == scenarioOutput.constituentFortranCode[lbOutputParameters.SelectedIndex].Trim())
                         {
-                            dataType = "Water Quality";
-                            position = i;
+                            for (int j = 0; j < hydroData.TheData.Count; j++) //add data to chart
+                            {
+                                if (hydroData.TheData[j].Date > startDate && hydroData.TheData[j].Date < endDate)
+                                {
+                                    xValue = hydroData.TheData[j].Date;
+                                    yValue = Convert.ToSingle(hydroData.TheData[j].Values[i]);
+                                    chartOutput.Series["SeriesObserved"].Points.AddXY(xValue, yValue);
+                                }
+                            }
                             break;
                         }
                     }
                 }
-
-                //if observed data exist, add data to the chart
-                if (dataType=="Hydrology")
+                if (wqData != null && chartOutput.Series["SeriesObserved"].Points.Count == 0) //ORC exists, and parameter not found in ORH
                 {
-                    for (int i = 0; i < hydroData.TheData.Count; i++)
+                    for (int i = 0; i < wqData.NumParameters; i++)
                     {
-                        if (hydroData.TheData[i].Date > startDate && hydroData.TheData[i].Date < endDate)
+                        //does Fortran code for selected parameter exist in ORC file
+                        if (wqData.ParameterCodes[i].Trim() == scenarioOutput.constituentFortranCode[lbOutputParameters.SelectedIndex].Trim())
                         {
-                            xValue = hydroData.TheData[i].Date;
-                            yValue = Convert.ToSingle(hydroData.TheData[i].Values[position]);
-                            chartOutput.Series["SeriesObserved"].Points.AddXY(xValue, yValue);
+                            for (int j = 0; j < wqData.TheData.Count; j++) //add data to chart
+                            {
+                                if (wqData.TheData[j].Date > startDate && wqData.TheData[j].Date < endDate)
+                                {
+                                    xValue = wqData.TheData[j].Date;
+                                    yValue = Convert.ToSingle(wqData.TheData[j].Values[i]);
+                                    chartOutput.Series["SeriesObserved"].Points.AddXY(xValue, yValue);
+                                }
+                            }
+                            break;
                         }
                     }
                 }
-                else if (dataType == "Water Quality")
-                {
-                    for (int i = 0; i < wqData.TheData.Count; i++)
-                    {
-                        if (wqData.TheData[i].Date > startDate && wqData.TheData[i].Date < endDate)
-                        {
-
-                        }
-                    }
-                }
-
-                
             }
         }
 

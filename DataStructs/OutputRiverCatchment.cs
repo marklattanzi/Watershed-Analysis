@@ -85,13 +85,13 @@ namespace warmf
                             }
                         }
 
-                        for (int i = 0; i < (numSimDays * timeStepPerDay); i++)
+                        for (int i = 0; i < (numSimDays * timeStepPerDay); i++) //for each timestep
                         {
                             int i2 = 0;
                             int temp = reader.ReadInt32(); //Day number (not used for anything)
-                            for (int j = 0; j < numOutputs; j++)//loop through outputs until you find the right position
+                            for (int j = 0; j < numOutputs; j++) //loop through outputs
                             {
-                                for (int k = 0; k < numConstits; k++)
+                                for (int k = 0; k < numConstits; k++) //loop through constituents
                                 {
                                     bytes = reader.ReadBytes(4);
                                     if (j >= outputPosition && j < (outputPosition + numFeatureOutputs))

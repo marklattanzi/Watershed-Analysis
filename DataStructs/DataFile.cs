@@ -162,10 +162,7 @@ namespace warmf
 
             try
             {
-                //int intRes;
-                //double dblRes;
-                string line;
-                //int day, month, year, hour, minute;
+                string line;               
                 DataLine thisDataLine;
                 sr = new STechStreamReader(filename);
 
