@@ -133,7 +133,8 @@ namespace warmf
                 xValue = xValue.AddHours(timeStep);
             }
             chartOutput.ChartAreas["ChartArea1"].AxisY.Title = scenarioOutput.constituentNameUnits[lbOutputParameters.SelectedIndex];
-
+            chartOutput.Series["SeriesOutput"].LegendText = "Scenario Output";
+           
             endDate = xValue;
 
             if (chkShowObservations.Checked) //show observed data
@@ -147,7 +148,7 @@ namespace warmf
                         {
                             for (int j = 0; j < hydroData.TheData.Count; j++) //add data to chart
                             {
-                                if (hydroData.TheData[j].Date > startDate && hydroData.TheData[j].Date < endDate)
+                                if (hydroData.TheData[j].Date >= startDate && hydroData.TheData[j].Date <= endDate)
                                 {
                                     xValue = hydroData.TheData[j].Date;
                                     yValue = Convert.ToSingle(hydroData.TheData[j].Values[i]);
@@ -167,7 +168,7 @@ namespace warmf
                         {
                             for (int j = 0; j < wqData.TheData.Count; j++) //add data to chart
                             {
-                                if (wqData.TheData[j].Date > startDate && wqData.TheData[j].Date < endDate)
+                                if (wqData.TheData[j].Date >= startDate && wqData.TheData[j].Date <= endDate)
                                 {
                                     xValue = wqData.TheData[j].Date;
                                     yValue = Convert.ToSingle(wqData.TheData[j].Values[i]);
@@ -178,6 +179,7 @@ namespace warmf
                         }
                     }
                 }
+                chartOutput.Series["SeriesObserved"].LegendText = "Observations";
             }
         }
 
@@ -194,6 +196,16 @@ namespace warmf
                 {
                     chkShowObservations.Checked = false;
                     chkShowObservations.Enabled = false;
+                    chartOutput.Series["SeriesObserved"].IsVisibleInLegend = false;
+                }
+                else
+                {
+                    chkShowObservations.Enabled = true;
+                    if (river.waterQualFilename != "" || river.hydrologyFilename != "")
+                    {
+                        chkShowObservations.Checked = true;
+                        chartOutput.Series["SeriesObserved"].IsVisibleInLegend = true;
+                    }
                 }
             }
             ChartTheData();
@@ -201,6 +213,7 @@ namespace warmf
 
         private void chkShowObservations_CheckedChanged(object sender, EventArgs e)
         {
+            ChartTheData();
         }   
     }
 }
