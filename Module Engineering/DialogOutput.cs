@@ -16,8 +16,6 @@ namespace warmf
         public static Catchment catchment = new Catchment();
         ObservedFile hydroData;
         ObservedFile wqData;
-
-        public bool loading;
         FormMain parent;
 
         public DialogOutput(FormMain par)
@@ -28,7 +26,6 @@ namespace warmf
 
         public void Populate(string featureType, int cnum)
         {
-            loading = true;
             
             if (featureType == "River")
             {
@@ -51,11 +48,12 @@ namespace warmf
                 //Read the .RIV file (for selected river) into memory
                 scenarioOutput.ReadOutput(Global.DIR.RIV + "Catawba_SC_June2018.RIV", river.idNum);
 
-                //Output Types
+                //Output Types (add function places item at bottom of list)
+                //****Don't change the order here, as it corresponds with the output order in the RIV file****
                 cbOutputType.Items.Clear();
-                cbOutputType.Items.Add("Water Column");
                 cbOutputType.Items.Add("Bed Sediment");
-
+                cbOutputType.Items.Add("Water Column");
+                
                 //Show Observations (show for rivers)
                 chkShowObservations.Show();
             }
@@ -84,22 +82,27 @@ namespace warmf
             //Populate listbox containing output parameters
             lbOutputParameters.DataSource = scenarioOutput.constituentNameUnits;
 
-            //format the output graph (populated on lbOutputParameters_SelectedIndexChanged event)
+            //format the output graph (populated on ChartTheData)
             ChartArea chartArea1 = chartOutput.ChartAreas["ChartArea1"];
             Series series1 = chartOutput.Series["SeriesOutput"];
+            Series series2 = chartOutput.Series["SeriesObserved"];
             series1.ChartType = SeriesChartType.Line;
             chartArea1.AxisX.MajorGrid.LineColor = Color.LightGray;
             chartArea1.AxisX.Title = "Date";
             chartArea1.AxisY.MajorGrid.LineColor = Color.LightGray;
 
             //select output type and chemical parameter
-            //cbOutputType.SelectedIndex = 1;
-            //lbOutputParameters.SelectedIndex = 0;
+            cbOutputType.SelectedIndex = 1;
+            lbOutputParameters.SelectedIndex = 0;
 
-            loading = false;
+            //chart the data
+            ChartTheData();
+
+            //add SelectedIndexChanged event handler
+            this.lbOutputParameters.SelectedIndexChanged += new System.EventHandler(this.lbOutputParameters_SelectedIndexChanged);
         }
 
-        private void lbOutputParameters_SelectedIndexChanged(object sender, EventArgs e)
+        public void ChartTheData()
         {
             chartOutput.Series["SeriesOutput"].Points.Clear();
             chartOutput.Series["SeriesObserved"].Points.Clear();
@@ -108,43 +111,29 @@ namespace warmf
             DateTime xValue = new DateTime(scenarioOutput.startDateYear, scenarioOutput.startDateMonth, scenarioOutput.startDateDay, 0, 0, 0);
             DateTime startDate = new DateTime();
             DateTime endDate = new DateTime();
-            Single yValue = new float();
-            int index1, index2;
+            float yValue = new float();
+            int indexOutputType, indexParameter;
 
             startDate = xValue;
-            
-            if (loading == true)
-            {
-                if (this.Text.Contains("River") == true)
-                {
-                    index1 = 1; //water column for river output
-                }
-                else
-                {
-                    index1 = catchment.numSoilLayers + 2 - 1; //combined output for catchments
-                }
-                cbOutputType.SelectedIndex = index1;
-                index2 = 0; //first output parameter
-            }
-            else
-            {
-                index1 = cbOutputType.SelectedIndex; //output type
-                index2 = lbOutputParameters.SelectedIndex; //parameter
-            }
 
-            for (int i = 0; i < (scenarioOutput.output[index1, index2].Count); i++)
+            indexOutputType = cbOutputType.SelectedIndex; //output type
+            indexParameter = lbOutputParameters.SelectedIndex; //parameter
+
+            for (int i = 0; i < (scenarioOutput.output[indexOutputType, indexParameter].Count); i++)
             {
-                //x values (date/time)
-                xValue = xValue.AddHours(timeStep);
                 //y values (time series output)
-                yValue = scenarioOutput.output[index1, index2][i];
+                yValue = scenarioOutput.output[indexOutputType, indexParameter][i];
 
                 if (yValue != -999)
                 {
                     chartOutput.Series["SeriesOutput"].Points.AddXY(xValue, yValue);
                 }
+
+                //increment x value
+                xValue = xValue.AddHours(timeStep);
             }
             chartOutput.ChartAreas["ChartArea1"].AxisY.Title = scenarioOutput.constituentNameUnits[lbOutputParameters.SelectedIndex];
+
             endDate = xValue;
 
             if (chkShowObservations.Checked) //show observed data
@@ -192,74 +181,26 @@ namespace warmf
             }
         }
 
+        private void lbOutputParameters_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ChartTheData();
+        }
+
         private void cbOutputType_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            chartOutput.Series["SeriesOutput"].Points.Clear();
-            double timeStep = new double();
-            timeStep = 24 / scenarioOutput.timeStepPerDay;
-            DateTime xValue = new DateTime(scenarioOutput.startDateYear, scenarioOutput.startDateMonth, scenarioOutput.startDateDay, 0, 0, 0);
-            Single yValue = new float();
-            int index1, index2;
-
-            if (loading == true)
+            if (this.Text.Contains("River")) //Output types for rivers
             {
-                if (this.Text.Contains("River") == true)
+                if (cbOutputType.SelectedItem.ToString() == "Bed Sediment")
                 {
-                    index1 = 0; //water column for river output
-                }
-                else
-                {
-                    index1 = 1; //combined output for catchments
-                }
-                index2 = 0; //first output parameter
-            }
-            else
-            {
-                index1 = cbOutputType.SelectedIndex; //output type
-                index2 = lbOutputParameters.SelectedIndex; //parameter
-            }
-
-            for (int i = 0; i < (scenarioOutput.output[index1, index2].Count); i++)
-            {
-                //x values (date/time)
-                xValue = xValue.AddHours(timeStep);
-                //y values (time series output)
-                yValue = scenarioOutput.output[index1, index2][i];
-                if (yValue != -999)
-                {
-                    chartOutput.Series["SeriesOutput"].Points.AddXY(xValue, yValue);
+                    chkShowObservations.Checked = false;
+                    chkShowObservations.Enabled = false;
                 }
             }
-            chartOutput.ChartAreas["ChartArea1"].AxisY.Title = scenarioOutput.constituentNameUnits[lbOutputParameters.SelectedIndex];
+            ChartTheData();
         }
 
         private void chkShowObservations_CheckedChanged(object sender, EventArgs e)
         {
-            if (chkShowObservations.Checked == true)
-            {
-                if (loading == false)
-                {
-                    string fortranCode = scenarioOutput.constituentFortranCode[lbOutputParameters.SelectedIndex];
-                    //check if observed data exist for selected parameter
-                    //for (int i = 0; i < ; i++)
-                    //{
-
-                    //}
-                }
-                
-
-                //if (lbOutputParameters.SelectedIndex != -1)
-                //{
-                //    string fortranCode = scenarioOutput.constituentFortranCode[lbOutputParameters.SelectedIndex];
-                //}
-                
-                
-
-            }
-            else
-            {
-
-            }
-        }
+        }   
     }
 }

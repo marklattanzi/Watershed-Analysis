@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows.Forms;
 
 namespace warmf
 {
@@ -23,12 +24,11 @@ namespace warmf
             {
                 int tempParameterNumber, parameterNumber;
                 string nameUnits, fortranCode;
-                int outputID;
+                int outputID, segmentID, outputFraction, fractionCount;
                 long outputPosition = -1;
-                byte[] bytes;
+                float result;
                 Boolean positionSet;
-                int entityNumber;
-
+                
                 if (File.Exists(fileName))
                 {
                     using (BinaryReader reader = new BinaryReader(File.Open(fileName, FileMode.Open)))
@@ -40,26 +40,8 @@ namespace warmf
                         startDateMonth = reader.ReadInt32();
                         startDateYear = reader.ReadInt32();
                         numConstits = reader.ReadInt32();
-                        if (fileName.Contains(".CAT") == true) //catchment output
-                        {
-                            entityNumber = Global.coe.GetCatchmentNumberFromID(entityID);
-                            numFeatureOutputs = Global.coe.catchments[entityNumber].numSoilLayers + 2;
-                        }
-                        else //river output
-                        {
-                            entityNumber = Global.coe.GetRiverNumberFromID(entityID);
-                            numFeatureOutputs = 2; //two outputs per river segment: water column and bed sediment
-                        }
 
-                        //dimension and initialize the output array
-                        output = new List<float>[numFeatureOutputs, numConstits];
-                        for (int i = 0; i < numFeatureOutputs; i++)
-                        {
-                            for (int j = 0; j < numConstits; j++)
-                            {
-                                output[i, j] = new List<float>();
-                            }
-                        }
+                    
 
                         //get lists of name and units, and Fortran code for each parameter in output file
                         for (int j = 0; j < numConstits; j++)
@@ -74,14 +56,30 @@ namespace warmf
                         //find the position of the first desired output within the output file
                         numOutputs = reader.ReadInt32();
                         positionSet = false;
+                        fractionCount = 0;
                         for (int i = 0; i < numOutputs; i++)
                         {
                             outputID = reader.ReadInt32();
-                            outputID = outputID % 65536;
-                            if (outputID == entityNumber && outputID > 0 && positionSet == false)
+                            segmentID = outputID % 65536;
+                            outputFraction = outputID / 65536;
+                            if (segmentID == entityID)
                             {
-                                outputPosition = i;
+                                if (positionSet==false) //first fraction for segment
+                                {
+                                    outputPosition = i;
+                                }
                                 positionSet = true;
+                                fractionCount = fractionCount + 1;
+                            }
+                        }
+
+                        //dimension and initialize the output array
+                        output = new List<float>[fractionCount, numConstits];
+                        for (int i = 0; i < fractionCount; i++)
+                        {
+                            for (int j = 0; j < numConstits; j++)
+                            {
+                                output[i, j] = new List<float>();
                             }
                         }
 
@@ -93,13 +91,13 @@ namespace warmf
                             {
                                 for (int k = 0; k < numConstits; k++) //loop through constituents
                                 {
-                                    bytes = reader.ReadBytes(4);
-                                    if (j >= outputPosition && j < (outputPosition + numFeatureOutputs))
+                                    result = reader.ReadSingle();
+                                    if (j >= outputPosition && j < (outputPosition + fractionCount))
                                     {
-                                        output[i2, k].Add(BitConverter.ToSingle(bytes, 0));
+                                        output[i2, k].Add(result);
                                     }
                                 }
-                                if (j >= outputPosition && j < (outputPosition + numFeatureOutputs))
+                                if (j >= outputPosition && j < (outputPosition + fractionCount))
                                     i2 = i2 + 1;
                             }
                         }
@@ -112,10 +110,12 @@ namespace warmf
                 if (fileName.Contains(".CAT") == true) //catchment output
                 {
                     Debug.WriteLine("CAT file read failure: " + e.ToString());
+                    MessageBox.Show("CAT file read Failure: " + e.ToString());
                 }
                 else //river output
                 {
                     Debug.WriteLine("RIV file read failure: " + e.ToString());
+                    MessageBox.Show("RIV file read failure: " + e.ToString());
                 }
                 return false;
             }

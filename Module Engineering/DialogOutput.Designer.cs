@@ -63,7 +63,6 @@
             this.lbOutputParameters.Name = "lbOutputParameters";
             this.lbOutputParameters.Size = new System.Drawing.Size(200, 303);
             this.lbOutputParameters.TabIndex = 1;
-            this.lbOutputParameters.SelectedIndexChanged += new System.EventHandler(this.lbOutputParameters_SelectedIndexChanged);
             // 
             // chkShowObservations
             // 
