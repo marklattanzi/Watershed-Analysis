@@ -41,8 +41,6 @@ namespace warmf
                         startDateYear = reader.ReadInt32();
                         numConstits = reader.ReadInt32();
 
-                    
-
                         //get lists of name and units, and Fortran code for each parameter in output file
                         for (int j = 0; j < numConstits; j++)
                         {

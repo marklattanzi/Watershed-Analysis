@@ -24,6 +24,16 @@ namespace warmf {
 			base.WriteLine();
 		}
 
+        // Writes a left-justified string, and pads if less than 8 characters
+        public void WriteString(string Value)
+        {
+            if (Value.Length < 8)
+            {
+                Value = Value.PadRight(8);
+            }
+            Write(Value);
+        }
+
         // Writes an integer in an 8 character field
         public void WriteInt(int Value)
         {
@@ -103,5 +113,7 @@ namespace warmf {
             else
                 Write("{0}", "OFF     ");
         }
+
+        public void WriteMonthlyDoubleData(sw)
     }
 }

@@ -1728,6 +1728,125 @@ namespace warmf {
             }
         }
 
+        public bool WriteFile(string filename) {
+            
+            Logger.Info("Writing coefficients file " + filename);
+            STechStreamWriter sw = null;
+            try
+            {
+                sw = new STechStreamWriter(filename);
+                
+                //version
+                sw.WriteString("VERSION");
+                sw.WriteInt(version);
+                sw.WriteLine();
+                
+                //scenario description
+                sw.WriteString(scenarioDescription);
+                sw.WriteLine();
+                
+                //begin date
+                sw.WriteString("BEGDATE");
+                sw.WriteInt(begDate.Day);
+                sw.WriteInt(begDate.Month);
+                sw.WriteInt(begDate.Year);
+                sw.WriteLine();
+
+                //end date
+                sw.WriteString("ENDDATE");
+                sw.WriteInt(endDate.Day);
+                sw.WriteInt(endDate.Month);
+                sw.WriteInt(endDate.Year);
+                sw.WriteLine();
+
+                //spacer line
+                sw.WriteLine("********  NCATCH    NSEG NRESSEG NRESERV  PERDAY  NLOOPS AUTOCAL LOADING********");
+
+                // numbers of objects in model
+                sw.WriteString("SYSTEM");
+                sw.WriteInt(numCatchments);
+                sw.WriteInt(numRivers);
+                sw.WriteInt(numReservoirSegs);
+                sw.WriteInt(numReservoirs);
+                sw.WriteInt(numTimeStepsPerDay);
+                sw.WriteInt(numSimLoops);
+                sw.WriteInt(numAutoCalibrationLoops);
+                sw.WriteOnOffSwitch(swCalculateLoading);
+                sw.WriteLine();
+
+                //simulation switches
+                sw.WriteString("QUAL =");
+                sw.WriteOnOffSwitch(swWaterQualSim);
+                sw.WriteLine();
+                sw.WriteString("SEEPS =");
+                sw.WriteOnOffSwitch(swLakeSeepageSim);
+                sw.WriteLine();
+                sw.WriteString("SEDMNT=");
+                sw.WriteOnOffSwitch(swSedimentSim);
+                sw.WriteLine();
+                sw.WriteString("FERTLZ=");
+                sw.WriteOnOffSwitch(swFertSim);
+                sw.WriteLine();
+                sw.WriteString("POINTS=");
+                sw.WriteOnOffSwitch(swPointSrcSim);
+                sw.WriteLine();
+                sw.WriteString("CHECKS=");
+                sw.WriteOnOffSwitch(swInputCoeffChecks);
+                sw.WriteLine();
+
+                //warm start
+                sw.WriteString("WARMST");
+                if (swStartupFile)
+                {
+                    sw.WriteInt(1);
+                    sw.WriteString(startupFileName);
+                }
+                else sw.WriteInt(0);
+                sw.WriteLine();
+
+                //MET files
+                sw.WriteString("METFILE");
+                sw.WriteInt(numMETFiles);
+                sw.WriteLine();
+                for (int i = 0; i < numMETFiles; i++)
+                {
+                    sw.WriteString("METFILE");
+                    sw.WriteString(METFilename[i]);
+                    sw.WriteLine();
+                }
+
+                //diversion files (.FLO)
+                sw.WriteString("DIVFILES");
+                sw.WriteInt(numDIVFiles);
+                sw.WriteLine();
+                for (int i = 0; i < numDIVFiles; i++)
+                {
+                    sw.WriteString("DIVFILES");
+                    sw.WriteDouble(DIVData[i].flowDivertedMultiplier);
+                    sw.WriteDouble(DIVData[i].flowCap);
+                    if (DIVData[i].swUseMonthFlows)                    
+                        sw.WriteInt(0);
+                    else
+                        sw.WriteInt(1);
+                    sw.WriteString("");
+                    sw.WriteString(DIVData[i].filename);
+                    sw.WriteLine();
+                }
+
+
+
+
+                sw.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("COE write exception at line " + sw.LineNum + ": " + e.ToString());
+                return false;
+            }
+        }
+
+
         public int GetCatchmentNumberFromID(int id)
         {
             for (int i = 0; i < catchments.Count; i++)
