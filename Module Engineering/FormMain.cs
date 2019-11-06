@@ -523,6 +523,11 @@ namespace warmf {
             miModeLongGowdyOutput.BackColor = System.Drawing.SystemColors.Highlight;
             miModeOutput.BackColor = System.Drawing.SystemColors.Control;
         }
+
+        private void miScenarioSave_Click(object sender, EventArgs e)
+        {
+            Global.coe.WriteFile("c:/temp/testWriteCOE.COE");
+        }
     }
 }
 

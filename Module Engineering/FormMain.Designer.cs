@@ -400,6 +400,7 @@
             this.miScenarioSave.Name = "miScenarioSave";
             this.miScenarioSave.Size = new System.Drawing.Size(181, 22);
             this.miScenarioSave.Text = "Save";
+            this.miScenarioSave.Click += new System.EventHandler(this.miScenarioSave_Click);
             // 
             // miScenarioSaveAs
             // 

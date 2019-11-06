@@ -561,7 +561,7 @@ namespace warmf {
         public string riverOutFilename;
         public string reservoirOutFilename;
         public string loadingOutFilename;
-        public string warmfstartOutFilename;
+        public string warmstartOutFilename;
         public string textOutFilename;
 
         // system coefficients
@@ -848,7 +848,7 @@ namespace warmf {
                 riverOutFilename = ReadString(sr, "FILES");
                 reservoirOutFilename = ReadString(sr, "FILES");
                 loadingOutFilename = ReadString(sr, "FILES");
-                warmfstartOutFilename = ReadString(sr, "FILES");
+                warmstartOutFilename = ReadString(sr, "FILES");
                 textOutFilename = ReadString(sr, "FILES");
 
 				// System coefficients
@@ -1728,8 +1728,87 @@ namespace warmf {
             }
         }
 
-        public bool WriteFile(string filename) {
-            
+        // writes out monthly doubles - 9 per line
+        public void WriteMonthlyDoubleData(STechStreamWriter sw, string lineAbbrev, List<double> dblValues)
+        {
+            sw.WriteString(lineAbbrev);
+            for (int i = 0; i < 12; i++)
+            {
+                if (dblValues[i] == -999)
+                {
+                    sw.WriteInt(Convert.ToInt32(dblValues[i]));
+                }
+                else
+                {
+                    sw.WriteDouble(dblValues[i]);
+                }
+                if (i == 8)
+                {
+                    sw.WriteLine();
+                    sw.WriteString(lineAbbrev);
+                }
+            }
+            sw.WriteLine();
+        }
+
+        // write out monthly integers - 9 per line
+        public void WriteMonthlyIntData(STechStreamWriter sw, string lineAbbrev, List<int> intValues)
+        {
+            sw.WriteString(lineAbbrev);
+            for (int i = 0; i < 12; i++)
+            {
+                sw.WriteInt(intValues[i]);
+                if (i == 8)
+                {
+                    sw.WriteLine();
+                    sw.WriteString(lineAbbrev);
+                }
+            }
+            sw.WriteLine();
+        }
+
+        // reads in doubles - 9 per line
+        public void WriteDoubleData(STechStreamWriter sw, string lineAbbrev, List<double> dblValues)
+        {
+            double dblRes;
+        
+            string line;
+            int linesToWrite;
+            dblRes = Convert.ToDouble(dblValues.Count / 9);
+            linesToWrite = Convert.ToInt16(Math.Ceiling(dblRes / 9));
+
+            List<double> data = new List<double>();
+            for (int nlines = 0; nlines < linesToRead; nlines++)
+            {
+                line = sr.ReadLine();
+                if (TestLine(line, sr.LineNum, lineAbbrev))
+                {
+                    int jj = 0;
+                    try
+                    {
+                        while (nlines * 9 + jj < num && jj < 9)
+                        {
+                            data.Add(Double.TryParse(line.Substring(8 * (jj + 1), 8), out dblRes) ? dblRes : 0);
+                            jj++;
+                        }
+                    }
+                    catch
+                    {
+                        Debug.WriteLine("MISSING DOUBLES\nExpected " + num + " numbers on line " + sr.LineNum + "\nLine = |" + line + "|");
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine("Expected line code " + lineAbbrev + ". Saw line code " + line.Substring(0, 8) + " at line " + sr.LineNum);
+                    data.Add(0);
+                }
+            }
+            return data;
+        }
+
+        // write out the coefficients file
+        public bool WriteFile(string filename)
+        {
             Logger.Info("Writing coefficients file " + filename);
             STechStreamWriter sw = null;
             try
@@ -1771,7 +1850,7 @@ namespace warmf {
                 sw.WriteInt(numTimeStepsPerDay);
                 sw.WriteInt(numSimLoops);
                 sw.WriteInt(numAutoCalibrationLoops);
-                sw.WriteOnOffSwitch(swCalculateLoading);
+                sw.WriteOnOffas1or0(swCalculateLoading);
                 sw.WriteLine();
 
                 //simulation switches
@@ -1831,7 +1910,240 @@ namespace warmf {
                     sw.WriteString("");
                     sw.WriteString(DIVData[i].filename);
                     sw.WriteLine();
+                    WriteMonthlyDoubleData(sw, "DIVFILES", DIVData[i].monthlyFlow);
                 }
+
+                //PTS files
+                sw.WriteString("PTSFILES");
+                sw.WriteInt(numPTSFiles);
+                sw.WriteLine();
+                for (int i = 0; i < numPTSFiles; i++)
+                {
+                    sw.WriteString("PTSFILES");
+                    sw.WriteString(PTSFilename[i]);
+                    sw.WriteLine();
+                }
+
+                //AIR files
+                sw.WriteString("AIRFILE");
+                sw.WriteInt(numAIRFiles);
+                sw.WriteLine();
+                for (int i = 0; i < numAIRFiles; i++)
+                {
+                    sw.WriteString("AIRFILE");
+                    sw.WriteString(AIRFilename[i]);
+                    sw.WriteLine();
+                }
+
+                //run files
+                sw.WriteString("FILES");
+                sw.WriteString(catchmentOutFilename);
+                sw.WriteLine();
+                sw.WriteString("FILES");
+                sw.WriteString(riverOutFilename);
+                sw.WriteLine();
+                sw.WriteString("FILES");
+                sw.WriteString(reservoirOutFilename);
+                sw.WriteLine();
+                sw.WriteString("FILES");
+                sw.WriteString(loadingOutFilename);
+                sw.WriteLine();
+                sw.WriteString("FILES");
+                sw.WriteString(warmstartOutFilename);
+                sw.WriteLine();
+                sw.WriteString("FILES");
+                sw.WriteString(textOutFilename);
+                sw.WriteLine();
+
+                //System coefficients
+                sw.WriteLine("******** SYSTEM COEFFICIENTS ******");
+                sw.WriteString("TOL");
+                sw.WriteDouble(tolerancePH);
+                sw.WriteDouble(0.0); //this value isn't used
+                sw.WriteDouble(toleranceCation1);
+                sw.WriteDouble(toleranceCation2);
+                sw.WriteLine();
+
+                sw.WriteString("TAREA");
+                sw.WriteDouble(watershedArea);
+                sw.WriteDouble(watershedElevation);
+                sw.WriteLine();
+
+                sw.WriteString("EVPMAX");
+                sw.WriteDouble(latitude);
+                sw.WriteDouble(longitude);
+                sw.WriteDouble(evaporationScaling);
+                sw.WriteDouble(evaporationSeasonSkew);
+                sw.WriteDouble(atmosphericTurbidity);
+                sw.WriteDouble(0.0); //another place holder for un-used data
+                sw.WriteLine();
+
+                sw.WriteString("RKCONV");
+                sw.WriteDouble(soilThermalConduct);
+                sw.WriteLine();
+
+                sw.WriteString("RINPUT");
+                sw.WriteInt(rainBalancingIons);
+                sw.WriteInt(airBalancingIons);
+                sw.WriteLine();
+
+                //hydrology constituents
+                sw.WriteString("CONSTITS");
+                sw.WriteInt(numHydrologyParams);
+                sw.WriteLine();
+
+                for (int i = 0; i < numHydrologyParams; i++)
+                {
+                    sw.WriteString("CONSTIT");
+                    sw.WriteString(hydroConstits[i].fortranCode);
+                    sw.WriteOnOffas1or0(hydroConstits[i].swIncludeInOutput);
+                    sw.WriteString16(hydroConstits[i].units);
+                    sw.WriteString16(hydroConstits[i].abbrevName);
+                    sw.WriteString(hydroConstits[i].fullName);
+                    sw.WriteLine();
+
+                    sw.WriteString("CONSTIT");
+                    sw.WriteOnOffas1or0(hydroConstits[i].swCatchmentInclude);
+                    sw.WriteOnOffas1or0(hydroConstits[i].swRiverInclude);
+                    sw.WriteOnOffas1or0(hydroConstits[i].swReservoirInclude);
+                    sw.WriteOnOffas1or0(hydroConstits[i].swLoadingInclude);
+                    sw.WriteLine();
+                }
+
+                //chemical constituents
+                sw.WriteString("CONSTITS");
+                sw.WriteInt(numChemicalParams);
+                sw.WriteLine();
+
+                for (int i = 0; i < numChemicalParams; i++)
+                {
+                    sw.WriteString("CHEMICAL");
+                    sw.WriteString(chemConstits[i].fortranCode);
+                    sw.WriteOnOffas1or0(chemConstits[i].swIncludeInOutput);
+                    sw.WriteString16(chemConstits[i].units);
+                    sw.WriteString16(chemConstits[i].abbrevName);
+                    sw.WriteString(chemConstits[i].fullName);
+                    sw.WriteLine();
+
+                    sw.WriteString("CHEMICAL");
+                    sw.WriteOnOffas1or0(chemConstits[i].swCatchmentInclude);
+                    sw.WriteOnOffas1or0(chemConstits[i].swRiverInclude);
+                    sw.WriteOnOffas1or0(chemConstits[i].swReservoirInclude);
+                    sw.WriteOnOffas1or0(chemConstits[i].swLoadingInclude);
+                    sw.WriteLine();
+
+                    sw.WriteString("CHEMICAL");
+                    sw.WriteDouble(chemConstits[i].electricalCharge);
+                    sw.WriteDouble(chemConstits[i].massEquivalent);
+                    sw.WriteDouble(chemConstits[i].loadingUnitConversion);
+                    sw.WriteString(chemConstits[i].loadingUnits);
+                    sw.WriteLine();
+
+                    sw.WriteString("CHEMICAL");
+                    sw.WriteDouble(chemConstits[i].airRainMult);
+                    sw.WriteDouble(chemConstits[i].pointSourceMult);
+                    sw.WriteDouble(chemConstits[i].nonpointSourceMult);
+                    sw.WriteDouble(chemConstits[i].solubWithSulfate);
+                    sw.WriteDouble(chemConstits[i].stoichChemWithSulfate);
+                    sw.WriteDouble(chemConstits[i].stoichSulfateWithChem);
+                    sw.WriteDouble(chemConstits[i].solubWithHydrox);
+                    sw.WriteDouble(chemConstits[i].stoichChemWithHydrox);
+                    sw.WriteDouble(chemConstits[i].stoichHydroxWithChem);
+                    sw.WriteLine();
+
+                    sw.WriteString("CHEMICAL");
+                    sw.WriteOnOffas1or0(chemConstits[i].swLoadingTMDL);
+                    sw.WriteInt(chemConstits[i].dryDepositionForm);
+                    sw.WriteOnOffas1or0(chemConstits[i].swChemAdvection);
+                    sw.WriteLine();
+
+                    WriteMonthlyDoubleData(sw, "CHEMICAL", chemConstits[i].gasDepositVelocity);
+                }
+
+                //physical constituents
+                sw.WriteString("CONSTITS");
+                sw.WriteInt(numPhysicalParams);
+                sw.WriteLine();
+
+                for (int i = 0; i < numPhysicalParams; i++)
+                {
+                    sw.WriteString("PHYSICAL");
+                    sw.WriteString(physicalConstits[i].fortranCode);
+                    sw.WriteOnOffas1or0(physicalConstits[i].swIncludeInOutput);
+                    sw.WriteString16(physicalConstits[i].units);
+                    sw.WriteString16(physicalConstits[i].abbrevName);
+                    sw.WriteString(physicalConstits[i].fullName);
+                    sw.WriteLine();
+
+                    sw.WriteString("PHYSICAL");
+                    sw.WriteOnOffas1or0(physicalConstits[i].swCatchmentInclude);
+                    sw.WriteOnOffas1or0(physicalConstits[i].swRiverInclude);
+                    sw.WriteOnOffas1or0(physicalConstits[i].swReservoirInclude);
+                    sw.WriteOnOffas1or0(physicalConstits[i].swLoadingInclude);
+                    sw.WriteLine();
+
+                    sw.WriteString("PHYSICAL");
+                    sw.WriteDouble(physicalConstits[i].electricalCharge);
+                    sw.WriteDouble(physicalConstits[i].massEquivalent);
+                    sw.WriteDouble(physicalConstits[i].loadingUnitConversion);
+                    sw.WriteString(physicalConstits[i].loadingUnits);
+                    sw.WriteLine();
+
+                    sw.WriteString("PHYSICAL");
+                    sw.WriteDouble(physicalConstits[i].airRainMult);
+                    sw.WriteDouble(physicalConstits[i].pointSourceMult);
+                    sw.WriteDouble(physicalConstits[i].nonpointSourceMult);
+                    sw.WriteLine();
+
+                    sw.WriteString("PHYSICAL");
+                    sw.WriteOnOffas1or0(physicalConstits[i].swLoadingTMDL);
+                    sw.WriteInt(physicalConstits[i].dryDepositionForm);
+                    sw.WriteOnOffas1or0(physicalConstits[i].swChemAdvection);
+                    sw.WriteLine();
+
+                    WriteMonthlyDoubleData(sw, "PHYSICAL", physicalConstits[i].gasDepositVelocity);
+                }
+
+                //composite constituents
+                sw.WriteString("CONSTITS");
+                sw.WriteInt(numCompositeParams);
+                sw.WriteLine();
+
+                for (int i = 0; i < numCompositeParams; i++)
+                {
+                    sw.WriteString("COMPOSIT");
+                    sw.WriteString(compositeConstits[i].fortranCode);
+                    sw.WriteOnOffas1or0(compositeConstits[i].swIncludeInOutput);
+                    sw.WriteString16(compositeConstits[i].units);
+                    sw.WriteString16(compositeConstits[i].abbrevName);
+                    sw.WriteString(compositeConstits[i].fullName);
+                    sw.WriteLine();
+
+                    sw.WriteString("COMPOSIT");
+                    sw.WriteOnOffas1or0(compositeConstits[i].swCatchmentInclude);
+                    sw.WriteOnOffas1or0(compositeConstits[i].swRiverInclude);
+                    sw.WriteOnOffas1or0(compositeConstits[i].swReservoirInclude);
+                    sw.WriteOnOffas1or0(compositeConstits[i].swLoadingInclude);
+                    sw.WriteLine();
+
+                    sw.WriteString("COMPOSIT");
+                    sw.WriteDouble(compositeConstits[i].electricalCharge);
+                    sw.WriteDouble(compositeConstits[i].massEquivalent);
+                    sw.WriteDouble(compositeConstits[i].loadingUnitConversion);
+                    sw.WriteString(compositeConstits[i].loadingUnits);
+                    sw.WriteLine();
+
+                    sw.WriteString("COMPOSIT");
+                    sw.WriteOnOffas1or0(compositeConstits[i].swIncludeDissolvedConstits);
+                    sw.WriteOnOffas1or0(compositeConstits[i].swIncludeAdsorbedConstits);
+                    sw.WriteOnOffas1or0(compositeConstits[i].swIncludePrecipConstits);
+                    sw.WriteLine();
+
+                    
+                }
+
+
+
 
 
 
@@ -1845,7 +2157,6 @@ namespace warmf {
                 return false;
             }
         }
-
 
         public int GetCatchmentNumberFromID(int id)
         {
@@ -1946,10 +2257,5 @@ namespace warmf {
             else
                 return "";
         }   
-
-        public bool WriteFile()
-        {
-			return true;
-		}
     }
 }

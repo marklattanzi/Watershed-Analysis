@@ -19,10 +19,17 @@ namespace warmf {
 		public STechStreamWriter(string filename) : base(filename) { LineNum = 0; }
 		public STechStreamWriter(string filename, bool append) : base(filename, append) { }
 
-		public override void WriteLine() {
+		public override void WriteLine()
+        {
 			LineNum++;
 			base.WriteLine();
 		}
+
+        public override void WriteLine(string value)
+        {
+            LineNum++;
+            base.WriteLine(value);
+        }
 
         // Writes a left-justified string, and pads if less than 8 characters
         public void WriteString(string Value)
@@ -30,6 +37,16 @@ namespace warmf {
             if (Value.Length < 8)
             {
                 Value = Value.PadRight(8);
+            }
+            Write(Value);
+        }
+
+        // Writes a left-justified string, and pads if less than 8 characters
+        public void WriteString16(string Value)
+        {
+            if (Value.Length < 16)
+            {
+                Value = Value.PadRight(16);
             }
             Write(Value);
         }
@@ -106,6 +123,7 @@ namespace warmf {
             Write("{0}", doubleString);
         }
 
+        // Writes On (true) and Off (false)
         public void WriteOnOffSwitch(bool Value)
         {
             if (Value)
@@ -114,6 +132,13 @@ namespace warmf {
                 Write("{0}", "OFF     ");
         }
 
-        public void WriteMonthlyDoubleData(sw)
+        // Writes 1 (true) and 0 (false)
+        public void WriteOnOffas1or0(bool Value)
+        {
+            if (Value)
+                WriteInt(1);
+            else
+                WriteInt(0);
+        }
     }
 }
