@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections.Generic;
@@ -527,6 +528,34 @@ namespace warmf {
         private void miScenarioSave_Click(object sender, EventArgs e)
         {
             Global.coe.WriteFile("c:/temp/testWriteCOE.COE");
+        }
+
+        private void miScenarioCompare_Click(object sender, EventArgs e)
+        {
+            StreamReader newCOE = new StreamReader("c:/temp/testWriteCOE.COE");
+            StreamReader oldCOE = new StreamReader("C:/Systech/WARMF_GUI/Watershed-Analysis/data/input/coe/Catawba.COE");
+            string newCOEline, oldCOEline;
+            int result, i;
+
+            i = 1;
+            newCOEline = newCOE.ReadLine();
+            while (newCOEline != null)
+            {
+                oldCOEline = oldCOE.ReadLine();
+                result = string.Compare(newCOEline, oldCOEline);
+                if (result != 0)
+                {
+                    if (MessageBox.Show("Line " + i + " error." + Environment.NewLine + 
+                        "New: '" + newCOEline + "'" + Environment.NewLine +
+                        "Old: '" + oldCOEline + "'" + Environment.NewLine +
+                        "Do you want to continue?", "Comparison Fail", MessageBoxButtons.YesNo) == DialogResult.No)
+                    {
+                        return;
+                    } 
+                }
+                i++;
+                newCOEline = newCOE.ReadLine();
+            }
         }
     }
 }

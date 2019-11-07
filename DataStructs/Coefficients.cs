@@ -854,14 +854,14 @@ namespace warmf {
 				// System coefficients
 				line = ReadSpacerLine(sr, "****");
                 dnums = ReadDoubleData(sr, "TOL", 4);
-                tolerancePH = nums[0];
+                tolerancePH = dnums[0];
                 // nums[1] is unused;
-                toleranceCation1 = nums[2];
-                toleranceCation2 = nums[3];
+                toleranceCation1 = dnums[2];
+                toleranceCation2 = dnums[3];
 
                 dnums = ReadDoubleData(sr, "TAREA", 2);
-                watershedArea = nums[0];
-                watershedElevation = nums[1];
+                watershedArea = dnums[0];
+                watershedElevation = dnums[1];
 
                 dnums = ReadDoubleData(sr, "EVPMAX", 5);
                 latitude = dnums[0];
@@ -979,6 +979,7 @@ namespace warmf {
                         physical.airRainMult = dnums[0];
                         physical.pointSourceMult = dnums[1];
                         physical.nonpointSourceMult = dnums[2];
+                        //There should be more here - SAS
 
                         nums = ReadIntData(sr, "PHYSICAL", 3);
                         physical.swLoadingTMDL = nums[0] != 0;
@@ -1767,43 +1768,42 @@ namespace warmf {
             sw.WriteLine();
         }
 
-        // reads in doubles - 9 per line
+        // writes doubles from a list- 9 per line
         public void WriteDoubleData(STechStreamWriter sw, string lineAbbrev, List<double> dblValues)
         {
             double dblRes;
-        
-            string line;
-            int linesToWrite;
-            dblRes = Convert.ToDouble(dblValues.Count / 9);
-            linesToWrite = Convert.ToInt16(Math.Ceiling(dblRes / 9));
+            int numValues, linesToWrite, i;
 
-            List<double> data = new List<double>();
-            for (int nlines = 0; nlines < linesToRead; nlines++)
+            numValues = dblValues.Count;
+            dblRes = (double)numValues / 9;
+            linesToWrite = Convert.ToInt16(Math.Ceiling(dblRes));
+
+            i = 0;
+
+            for (int j = 0; j < linesToWrite; j++)
             {
-                line = sr.ReadLine();
-                if (TestLine(line, sr.LineNum, lineAbbrev))
+                if (j < (linesToWrite - 1)) //all full lines
                 {
-                    int jj = 0;
-                    try
+                    sw.WriteString(lineAbbrev);
+                    for (int k = 0; k < 9; k++)
                     {
-                        while (nlines * 9 + jj < num && jj < 9)
-                        {
-                            data.Add(Double.TryParse(line.Substring(8 * (jj + 1), 8), out dblRes) ? dblRes : 0);
-                            jj++;
-                        }
+                        sw.WriteDouble(dblValues[i]);
+                        i++;
                     }
-                    catch
-                    {
-                        Debug.WriteLine("MISSING DOUBLES\nExpected " + num + " numbers on line " + sr.LineNum + "\nLine = |" + line + "|");
-                    }
+                    sw.WriteLine();
                 }
-                else
+                else //last line
                 {
-                    Debug.WriteLine("Expected line code " + lineAbbrev + ". Saw line code " + line.Substring(0, 8) + " at line " + sr.LineNum);
-                    data.Add(0);
+                    sw.WriteString(lineAbbrev);
+                    while (i < dblValues.Count)
+                    {
+                        sw.WriteDouble(dblValues[i]);
+                        i++;
+                    }
+                    sw.WriteLine();
+                    return;                    
                 }
             }
-            return data;
         }
 
         // write out the coefficients file
@@ -1854,7 +1854,7 @@ namespace warmf {
                 sw.WriteLine();
 
                 //simulation switches
-                sw.WriteString("QUAL =");
+                sw.WriteString("QUAL  =");
                 sw.WriteOnOffSwitch(swWaterQualSim);
                 sw.WriteLine();
                 sw.WriteString("SEEPS =");
@@ -1903,14 +1903,11 @@ namespace warmf {
                     sw.WriteString("DIVFILES");
                     sw.WriteDouble(DIVData[i].flowDivertedMultiplier);
                     sw.WriteDouble(DIVData[i].flowCap);
-                    if (DIVData[i].swUseMonthFlows)                    
-                        sw.WriteInt(0);
-                    else
-                        sw.WriteInt(1);
-                    sw.WriteString("");
+                    sw.WriteOnOffas1or0(DIVData[i].swUseMonthFlows);
+                    sw.WriteInt(0); //Value not used - entered 0 as placeholder - SAS
                     sw.WriteString(DIVData[i].filename);
                     sw.WriteLine();
-                    WriteMonthlyDoubleData(sw, "DIVFILES", DIVData[i].monthlyFlow);
+                    WriteDoubleData(sw, "DIVFILES", DIVData[i].monthlyFlow);
                 }
 
                 //PTS files
@@ -1959,7 +1956,7 @@ namespace warmf {
                 sw.WriteLine("******** SYSTEM COEFFICIENTS ******");
                 sw.WriteString("TOL");
                 sw.WriteDouble(tolerancePH);
-                sw.WriteDouble(0.0); //this value isn't used
+                sw.WriteDouble(0.0); //this value isn't currently used - SAS
                 sw.WriteDouble(toleranceCation1);
                 sw.WriteDouble(toleranceCation2);
                 sw.WriteLine();
@@ -2057,7 +2054,7 @@ namespace warmf {
                     sw.WriteOnOffas1or0(chemConstits[i].swChemAdvection);
                     sw.WriteLine();
 
-                    WriteMonthlyDoubleData(sw, "CHEMICAL", chemConstits[i].gasDepositVelocity);
+                    WriteDoubleData(sw, "CHEMICAL", chemConstits[i].gasDepositVelocity);
                 }
 
                 //physical constituents
@@ -2093,6 +2090,7 @@ namespace warmf {
                     sw.WriteDouble(physicalConstits[i].airRainMult);
                     sw.WriteDouble(physicalConstits[i].pointSourceMult);
                     sw.WriteDouble(physicalConstits[i].nonpointSourceMult);
+                    //There should be more here - SAS
                     sw.WriteLine();
 
                     sw.WriteString("PHYSICAL");
@@ -2101,7 +2099,7 @@ namespace warmf {
                     sw.WriteOnOffas1or0(physicalConstits[i].swChemAdvection);
                     sw.WriteLine();
 
-                    WriteMonthlyDoubleData(sw, "PHYSICAL", physicalConstits[i].gasDepositVelocity);
+                    WriteDoubleData(sw, "PHYSICAL", physicalConstits[i].gasDepositVelocity);
                 }
 
                 //composite constituents
@@ -2139,10 +2137,10 @@ namespace warmf {
                     sw.WriteOnOffas1or0(compositeConstits[i].swIncludePrecipConstits);
                     sw.WriteLine();
 
-                    
+                    WriteDoubleData(sw, "COMPONEN", compositeConstits[i].componentTotalMass);
                 }
 
-
+                // Reactions
 
 
 

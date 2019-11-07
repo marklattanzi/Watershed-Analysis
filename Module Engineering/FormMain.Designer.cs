@@ -442,6 +442,7 @@
             this.miScenarioCompare.Name = "miScenarioCompare";
             this.miScenarioCompare.Size = new System.Drawing.Size(181, 22);
             this.miScenarioCompare.Text = "Compare";
+            this.miScenarioCompare.Click += new System.EventHandler(this.miScenarioCompare_Click);
             // 
             // miTopDocument
             // 
