@@ -979,7 +979,7 @@ namespace warmf {
                         physical.airRainMult = dnums[0];
                         physical.pointSourceMult = dnums[1];
                         physical.nonpointSourceMult = dnums[2];
-                        //There should be more here - SAS
+                        //There are six unused spots here - SAS
 
                         nums = ReadIntData(sr, "PHYSICAL", 3);
                         physical.swLoadingTMDL = nums[0] != 0;
@@ -2090,7 +2090,7 @@ namespace warmf {
                     sw.WriteDouble(physicalConstits[i].airRainMult);
                     sw.WriteDouble(physicalConstits[i].pointSourceMult);
                     sw.WriteDouble(physicalConstits[i].nonpointSourceMult);
-                    //There should be more here - SAS
+                    //There are six unused spots here - SAS
                     sw.WriteLine();
 
                     sw.WriteString("PHYSICAL");
@@ -2141,9 +2141,148 @@ namespace warmf {
                 }
 
                 // Reactions
+                sw.WriteString("REACTION");
+                sw.WriteInt(numReactions);
+                sw.WriteLine();
 
+                for (int i = 0; i < numReactions; i++)
+                {
+                    sw.WriteString("REACTION");
+                    sw.WriteInt(reactions[i].primReactantNumber);
+                    sw.WriteOnOffas1or0(reactions[i].swIsAnoxic);
+                    sw.WriteDouble(reactions[i].dissolvedOxyLimit);
+                    sw.WriteOnOffas1or0(reactions[i].swIsUVCatalysis);
+                    sw.WriteInt(reactions[i].numLinkedReactions);
+                    sw.WriteDouble(reactions[i].tempCorrectCoeff);
+                    sw.WriteString(reactions[i].fortranCode);
+                    sw.WriteString(reactions[i].units);
+                    sw.WriteString(reactions[i].name);
+                    sw.WriteLine();
 
+                    WriteDoubleData(sw, "STOICH", reactions[i].stoich);
+                }
 
+                //Sediments
+                sw.WriteLine("******** SEDIMENT ********");
+                sw.WriteString("NPART");
+                sw.WriteInt(numSedParticleSizes);
+                sw.WriteInt(numSedWashLoadParticles);
+                sw.WriteLine();
+
+                for (int i = 0; i < numSedParticleSizes; i++)
+                {
+                    sw.WriteString("SEDIMEN" + Convert.ToString(i + 1));
+                    sw.WriteDouble(sediments[i].grainSize);
+                    sw.WriteDouble(sediments[i].specGravity);
+                    sw.WriteDouble(sediments[i].settlingRate);
+                    sw.WriteLine();
+                }
+
+                //Algae and Periphyton
+                sw.WriteLine("******** ALGAE & PERIPHYTON COEFFICIENTS ********");
+                for (int i = 0; i < numAlgae; i++)
+                {
+                    sw.WriteString("WQCOEF" + Convert.ToString(i + 1));
+                    sw.WriteDouble(algaes[i].nitroHalfSat);
+                    sw.WriteDouble(algaes[i].phosHalfSat);
+                    sw.WriteDouble(algaes[i].silicaHalfSat);
+                    sw.WriteDouble(algaes[i].lightSat);
+                    sw.WriteDouble(algaes[i].lowTempLimit);
+                    sw.WriteDouble(algaes[i].highTempLimit);
+                    sw.WriteDouble(algaes[i].optGrowTemp);
+                    sw.WriteLine();
+                }
+
+                sw.WriteString("PERIPH");
+                sw.WriteDouble(peri.recycledFraction);
+                sw.WriteDouble(peri.velocityHalfSat);
+                sw.WriteDouble(peri.nitroHalfSat);
+                sw.WriteDouble(peri.phosHalfSat);
+                sw.WriteDouble(peri.lightSat);
+                sw.WriteLine();
+
+                sw.WriteString("PERIPH");
+                sw.WriteDouble(peri.scourRegressionCoef);
+                sw.WriteDouble(peri.scourRegressionExp);
+                sw.WriteDouble(peri.ammoniaPref);
+                sw.WriteDouble(peri.spatialLimitHalfSat);
+                sw.WriteDouble(peri.spatialLimitIntercept);
+                sw.WriteDouble(peri.endoRespirationCoef);
+                sw.WriteDouble(peri.endoRespirationExp);
+                sw.WriteDouble(peri.photoRespirationFraction);
+                sw.WriteLine();
+
+                sw.WriteString("SHADING");
+                sw.WriteDouble(sedimentShading);
+                sw.WriteDouble(algaeShading);
+                sw.WriteDouble(detritusShading);
+                sw.WriteLine();
+
+                //Minerals
+                sw.WriteLine("******** MINERALS ********");
+                sw.WriteString("NMNRLS");
+                sw.WriteInt(numMinerals);
+                sw.WriteLine();
+                for (int i = 0; i < numMinerals; i++)
+                {
+                    sw.WriteString("NMNRL" + Convert.ToString(i + 1));
+                    sw.WriteString16(minerals[i].name);
+                    sw.WriteDouble(minerals[i].molecularWgt);
+                    sw.WriteDouble(minerals[i].phDepend);
+                    sw.WriteDouble(minerals[i].weatheringRate);
+                    sw.WriteDouble(minerals[i].oxyConsumption);
+                    sw.WriteLine();
+
+                    WriteDoubleData(sw, "MNWTH" + Convert.ToString(i + 1), minerals[i].chemReactionProduct);
+                }
+
+                //Litter and humus
+                sw.WriteLine("******** LITTER & HUMUS REACTIONS ********");
+                sw.WriteString("FRLCH");
+                sw.WriteDouble(litter.coarseLitterFrac);
+                sw.WriteDouble(litter.fineLitterFrac);
+                sw.WriteDouble(litter.humusFrac);
+                sw.WriteDouble(litter.nonStructLeach);
+                sw.WriteLine();
+
+                sw.WriteString("RATES");
+                sw.WriteDouble(litter.coarseLitterDecay);
+                sw.WriteDouble(litter.fineLitterDecay);
+                sw.WriteDouble(litter.humusDecay);
+                sw.WriteLine();
+
+                //Snow and ice
+                sw.WriteLine("******** SNOW AND ICE COEFFICIENTS ********");
+                sw.WriteString("SNOW");
+                sw.WriteDouble(snow.formTemp);
+                sw.WriteDouble(snow.openAreaSubRate);
+                sw.WriteDouble(snow.forestAreaSubRate);
+                sw.WriteDouble(snow.initialDepth);
+                sw.WriteDouble(snow.openAreaMeltRate);
+                sw.WriteDouble(snow.forestAreaMeltRate);
+                sw.WriteDouble(snow.fieldCapacity);
+                sw.WriteDouble(snow.meltTemp);
+                sw.WriteDouble(snow.rainMeltRate);
+                sw.WriteLine();
+
+                sw.WriteString("SNOWLCH");
+                sw.WriteDouble(snow.thermalConduct);
+                sw.WriteDouble(snow.iceThermalConduct);
+                sw.WriteDouble(snow.meltLeaching);
+                sw.WriteDouble(snow.nitrificationRate);
+                sw.WriteDouble(0); //There is an unused spot here - SAS
+                sw.WriteLine();
+
+                //Septic
+                sw.WriteString("SEPTIC");
+                sw.WriteDouble(septic.failedFlow);
+                sw.WriteLine();
+
+                WriteDoubleData(sw, "SEPTIC", septic.type1);
+                WriteDoubleData(sw, "SEPTIC", septic.type2);
+                WriteDoubleData(sw, "SEPTIC", septic.type3);
+
+                //Land use data
 
 
                 sw.Close();

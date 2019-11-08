@@ -541,7 +541,8 @@ namespace warmf {
             newCOEline = newCOE.ReadLine();
             while (newCOEline != null)
             {
-                oldCOEline = oldCOE.ReadLine();
+                newCOEline.TrimEnd();
+                oldCOEline = oldCOE.ReadLine().TrimEnd();
                 result = string.Compare(newCOEline, oldCOEline);
                 if (result != 0)
                 {
