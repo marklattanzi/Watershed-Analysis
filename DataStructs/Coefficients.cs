@@ -612,7 +612,7 @@ namespace warmf {
         public List<double> partDV;     // one per month
         public List<double> coarseDV;   // one per month
         public bool swGasDepositVelocity;
-        //public List<double> gasDepositVelocity; // one per month  --unused MRL
+        public List<double> gasDepositVelocity; // one per month  --unused MRL
         public List<double> gasUptakeVelocity;  // one per month
         public double heightWindSpeed;
         public double vonkar;
@@ -1174,7 +1174,11 @@ namespace warmf {
                 partDV = ReadMonthlyDoubleData(sr, "PARTDV");
                 coarseDV = ReadMonthlyDoubleData(sr, "COARSEDV");
                 swGasDepositVelocity = ReadOnOffSwitch(sr, "IVDGAS");
-//                gasDepositVelocity = readMonthlyDoubleData(sr, "NOXSOXVD");  // missing from Catawba file - MRL
+                if (swGasDepositVelocity==true)
+                {
+                    gasDepositVelocity = ReadMonthlyDoubleData(sr, "NOXSOXVD");
+                }
+                  
                 gasUptakeVelocity = ReadMonthlyDoubleData(sr, "NOXSOXVU");
 
                 dnums = ReadDoubleData(sr, "HEIGHT", 2);
@@ -1729,44 +1733,44 @@ namespace warmf {
             }
         }
 
-        // writes out monthly doubles - 9 per line
-        public void WriteMonthlyDoubleData(STechStreamWriter sw, string lineAbbrev, List<double> dblValues)
-        {
-            sw.WriteString(lineAbbrev);
-            for (int i = 0; i < 12; i++)
-            {
-                if (dblValues[i] == -999)
-                {
-                    sw.WriteInt(Convert.ToInt32(dblValues[i]));
-                }
-                else
-                {
-                    sw.WriteDouble(dblValues[i]);
-                }
-                if (i == 8)
-                {
-                    sw.WriteLine();
-                    sw.WriteString(lineAbbrev);
-                }
-            }
-            sw.WriteLine();
-        }
+        //// writes out monthly doubles - 9 per line
+        //public void WriteMonthlyDoubleData(STechStreamWriter sw, string lineAbbrev, List<double> dblValues)
+        //{
+        //    sw.WriteString(lineAbbrev);
+        //    for (int i = 0; i < 12; i++)
+        //    {
+        //        if (dblValues[i] == -999)
+        //        {
+        //            sw.WriteInt(Convert.ToInt32(dblValues[i]));
+        //        }
+        //        else
+        //        {
+        //            sw.WriteDouble(dblValues[i]);
+        //        }
+        //        if (i == 8)
+        //        {
+        //            sw.WriteLine();
+        //            sw.WriteString(lineAbbrev);
+        //        }
+        //    }
+        //    sw.WriteLine();
+        //}
 
-        // write out monthly integers - 9 per line
-        public void WriteMonthlyIntData(STechStreamWriter sw, string lineAbbrev, List<int> intValues)
-        {
-            sw.WriteString(lineAbbrev);
-            for (int i = 0; i < 12; i++)
-            {
-                sw.WriteInt(intValues[i]);
-                if (i == 8)
-                {
-                    sw.WriteLine();
-                    sw.WriteString(lineAbbrev);
-                }
-            }
-            sw.WriteLine();
-        }
+        //// write out monthly integers - 9 per line
+        //public void WriteMonthlyIntData(STechStreamWriter sw, string lineAbbrev, List<int> intValues)
+        //{
+        //    sw.WriteString(lineAbbrev);
+        //    for (int i = 0; i < 12; i++)
+        //    {
+        //        sw.WriteInt(intValues[i]);
+        //        if (i == 8)
+        //        {
+        //            sw.WriteLine();
+        //            sw.WriteString(lineAbbrev);
+        //        }
+        //    }
+        //    sw.WriteLine();
+        //}
 
         // writes doubles from a list- 9 per line
         public void WriteDoubleData(STechStreamWriter sw, string lineAbbrev, List<double> dblValues)
@@ -1802,6 +1806,44 @@ namespace warmf {
                     }
                     sw.WriteLine();
                     return;                    
+                }
+            }
+        }
+
+        // writes integers from a list- 9 per line
+        public void WriteIntData(STechStreamWriter sw, string lineAbbrev, List<int> intValues)
+        {
+            double dblRes;
+            int numValues, linesToWrite, i;
+
+            numValues = intValues.Count;
+            dblRes = (double)numValues / 9;
+            linesToWrite = Convert.ToInt16(Math.Ceiling(dblRes));
+
+            i = 0;
+
+            for (int j = 0; j < linesToWrite; j++)
+            {
+                if (j < (linesToWrite - 1)) //all full lines
+                {
+                    sw.WriteString(lineAbbrev);
+                    for (int k = 0; k < 9; k++)
+                    {
+                        sw.WriteInt(intValues[i]);
+                        i++;
+                    }
+                    sw.WriteLine();
+                }
+                else //last line
+                {
+                    sw.WriteString(lineAbbrev);
+                    while (i < intValues.Count)
+                    {
+                        sw.WriteInt(intValues[i]);
+                        i++;
+                    }
+                    sw.WriteLine();
+                    return;
                 }
             }
         }
@@ -2283,6 +2325,129 @@ namespace warmf {
                 WriteDoubleData(sw, "SEPTIC", septic.type3);
 
                 //Land use data
+                sw.WriteLine("********CANOPY AND LAND USE********");
+                
+                //General landuse parameters
+                WriteDoubleData(sw, "PARTDV", partDV);
+                WriteDoubleData(sw, "COARSEDV", coarseDV);
+
+                sw.WriteString("IVDGAS");
+                sw.WriteOnOffSwitch(swGasDepositVelocity);
+                sw.WriteLine();
+
+                if (swGasDepositVelocity==true)
+                {
+                    WriteDoubleData(sw, "NOXSOXVD", gasDepositVelocity);
+                }
+                WriteDoubleData(sw, "NOXSOXVU", gasUptakeVelocity);
+
+                sw.WriteString("HEIGHT");
+                sw.WriteDouble(heightWindSpeed);
+                sw.WriteDouble(vonkar);
+                sw.WriteLine();
+
+                sw.WriteString("NITRIFYR");
+                sw.WriteInt(numLanduses);
+                sw.WriteDouble(standingBiomass);
+                sw.WriteLine();
+
+                //land use individual data
+                for (int i = 0; i < numLanduses; i++)
+                {
+                    sw.WriteLine("******** LAND USE TYPE ********");
+
+                    sw.WriteString("INTCEPT");
+                    sw.WriteDouble(landuse[i].openWinterFrac);
+                    sw.WriteDouble(landuse[i].imperviousFrac);
+                    sw.WriteDouble(landuse[i].maxPotentInceptStorage);
+                    sw.WriteString(landuse[i].name);
+                    sw.WriteLine();
+
+                    sw.WriteString("EROSION");
+                    sw.WriteDouble(landuse[i].rainDetachFactor);
+                    sw.WriteDouble(landuse[i].flowDetachFactor);
+                    sw.WriteLine();
+
+                    sw.WriteString("GROWTH");
+                    sw.WriteDouble(landuse[i].annualGrowMult);
+                    sw.WriteDouble(landuse[i].leafGrowFactor);
+                    sw.WriteDouble(landuse[i].productivity);
+                    sw.WriteDouble(landuse[i].maintRespRate);
+                    sw.WriteDouble(landuse[i].activeRespRate);
+                    sw.WriteDouble(landuse[i].dryCollEff);
+                    sw.WriteDouble(landuse[i].wetCollEff);
+                    sw.WriteDouble(landuse[i].leafWgtArea);
+                    sw.WriteLine();
+
+                    sw.WriteString("HEIGHT");
+                    sw.WriteDouble(landuse[i].canopyHeight);
+                    sw.WriteDouble(landuse[i].stomatalResist);
+                    sw.WriteLine();
+
+                    WriteDoubleData(sw, "CROPPING", landuse[i].cropping);
+                    WriteDoubleData(sw, "LAID", landuse[i].leafAreaIdx);
+                    WriteDoubleData(sw, "UDISTD", landuse[i].annualUptake);
+                    WriteDoubleData(sw, "LFD", landuse[i].litterFallRate);
+                    WriteDoubleData(sw, "BETAD", landuse[i].exudationRate);
+                    WriteDoubleData(sw, "LFCMPD1", landuse[i].leafComp);
+                    WriteDoubleData(sw, "TRCMPD", landuse[i].trunkComp);
+
+                    sw.WriteString("FERTLZ");
+                    sw.WriteInt(landuse[i].numFertPlans);
+                    sw.WriteLine();
+                    for (int j = 0; j < landuse[i].numFertPlans; j++)
+                    {
+                        for (int k = 0; k < 12; k++)
+                        {
+                            WriteDoubleData(sw, "FERTLZ", landuse[i].fertPlanApplication[j][k]);
+                        }
+                    }
+                }
+
+                //Catchments
+                sw.WriteLine("******** CATCHMENT COEFFICIENTS ********");
+                for (int i = 0; i < numCatchments; i++)
+                {
+                    sw.WriteLine("++++++++ CATCHMENT " + catchments[i].idNum.ToString() + " ++++++++");
+                    sw.WriteString("CATCH" + catchments[i].idNum.ToString());
+                    sw.WriteInt(catchments[i].idNum);
+                    sw.WriteInt(catchments[i].METFileNum);
+                    sw.WriteDouble(catchments[i].precipMultiplier);
+                    sw.WriteDouble(catchments[i].aveTempLapse);
+                    sw.WriteDouble(catchments[i].altitudeTempLapse);
+                    sw.WriteOnOffas1or0(catchments[i].swOutputToFile);
+                    sw.WriteInt(catchments[i].airRainChemFileNum);
+                    sw.WriteInt(catchments[i].particleRainChemFileNum);
+                    sw.WriteString(catchments[i].name);
+                    sw.WriteLine();
+
+                    sw.WriteString("CATCH" + catchments[i].idNum.ToString());
+                    sw.WriteInt(catchments[i].numSoilLayers);
+                    sw.WriteDouble(catchments[i].slope);
+                    sw.WriteDouble(catchments[i].width);
+                    sw.WriteDouble(catchments[i].aspect);
+                    sw.WriteDouble(catchments[i].ManningN);
+                    sw.WriteDouble(catchments[i].detentionStorage);
+                    sw.WriteLine();
+
+                    WriteIntData(sw, "ICAT" + catchments[i].idNum.ToString(), catchments[i].upstreamCatchmentNum);
+
+                    WriteDoubleData(sw, "CATC" + catchments[i].idNum.ToString(), catchments[i].landUsePercent);
+
+
+
+                }
+
+
+
+
+
+
+
+
+
+
+
 
 
                 sw.Close();

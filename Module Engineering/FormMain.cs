@@ -536,13 +536,14 @@ namespace warmf {
             StreamReader oldCOE = new StreamReader("C:/Systech/WARMF_GUI/Watershed-Analysis/data/input/coe/Catawba.COE");
             string newCOEline, oldCOEline;
             int result, i;
+            char[] trimChars = { ' ' };
 
             i = 1;
             newCOEline = newCOE.ReadLine();
             while (newCOEline != null)
             {
-                newCOEline.TrimEnd();
-                oldCOEline = oldCOE.ReadLine().TrimEnd();
+                newCOEline.TrimEnd(trimChars);
+                oldCOEline = oldCOE.ReadLine().TrimEnd(trimChars);
                 result = string.Compare(newCOEline, oldCOEline);
                 if (result != 0)
                 {
