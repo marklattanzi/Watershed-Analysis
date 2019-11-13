@@ -306,7 +306,7 @@ namespace warmf {
         public List<int> fertPlanNum;
         public List<double> landApplicationLoad;
         public List<int> numIrrigationSources;
-        public List<List<double>> irrigationSource;
+        public List<List<double>> irrigationSource; 
         public List<double> irrigationSourcePercent;
 
         public int nluPonds;
@@ -1278,6 +1278,7 @@ namespace warmf {
                     catchData.numIrrigationSources = ReadIntData(sr, "IRRI", numLanduses);
 
                     // for each land use, get number of irrigation sources and fraction of area
+                    // This is not written correctly - need to test with a coe that has irrigation sources - SAS 11/13/19
                     for (int jj=0; jj<numLanduses; jj++) {
                         catchData.irrigationSource = new List<List<double>>();
                         if (catchData.numIrrigationSources[jj] > 0) {
@@ -1325,7 +1326,7 @@ namespace warmf {
                     catchData.sediment.secondPartSizePct = dnums[2];
                     catchData.sediment.thirdPartSizePct = dnums[3];
 
-                    // Best practices
+                    // Best management practices
                     dnums = ReadDoubleData(sr, "BMP", 5);
                     catchData.bmp = new CatchBMP();
                     catchData.bmp.streetSweepFreq = dnums[0];
@@ -1334,7 +1335,7 @@ namespace warmf {
                     catchData.bmp.detentionPondVol = dnums[3];
                     catchData.bmp.maxFertAccumTime = dnums[4];
 
-                    // buffering/seeps
+                    // stream bank buffers
                     dnums = ReadDoubleData(sr, "BUFFZONE", 4);
                     catchData.bufferingPct = dnums[0];
                     catchData.bufferZoneWidth = dnums[1];
@@ -1440,7 +1441,7 @@ namespace warmf {
                             soil.density = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : 0;
                             soil.tortuosity = Double.TryParse(line.Substring(32, 8), out dblRes) ? dblRes : 0;
                             soil.CO2CalcMethod = Int32.TryParse(line.Substring(40, 8), out intRes) ? intRes : 0;
-                            soil.CO2ConcenFactor = Int32.TryParse(line.Substring(48, 8), out intRes) ? intRes : 0;
+                            soil.CO2ConcenFactor = Double.TryParse(line.Substring(48, 8), out dblRes) ? dblRes : 0;
                         }
                         soil.weightFract = ReadDoubleData(sr, "COMP", numMinerals);
                         soil.solutionConcen = ReadDoubleData(sr, "SOL", numComponents);
@@ -1732,45 +1733,6 @@ namespace warmf {
                 return false;
             }
         }
-
-        //// writes out monthly doubles - 9 per line
-        //public void WriteMonthlyDoubleData(STechStreamWriter sw, string lineAbbrev, List<double> dblValues)
-        //{
-        //    sw.WriteString(lineAbbrev);
-        //    for (int i = 0; i < 12; i++)
-        //    {
-        //        if (dblValues[i] == -999)
-        //        {
-        //            sw.WriteInt(Convert.ToInt32(dblValues[i]));
-        //        }
-        //        else
-        //        {
-        //            sw.WriteDouble(dblValues[i]);
-        //        }
-        //        if (i == 8)
-        //        {
-        //            sw.WriteLine();
-        //            sw.WriteString(lineAbbrev);
-        //        }
-        //    }
-        //    sw.WriteLine();
-        //}
-
-        //// write out monthly integers - 9 per line
-        //public void WriteMonthlyIntData(STechStreamWriter sw, string lineAbbrev, List<int> intValues)
-        //{
-        //    sw.WriteString(lineAbbrev);
-        //    for (int i = 0; i < 12; i++)
-        //    {
-        //        sw.WriteInt(intValues[i]);
-        //        if (i == 8)
-        //        {
-        //            sw.WriteLine();
-        //            sw.WriteString(lineAbbrev);
-        //        }
-        //    }
-        //    sw.WriteLine();
-        //}
 
         // writes doubles from a list- 9 per line
         public void WriteDoubleData(STechStreamWriter sw, string lineAbbrev, List<double> dblValues)
@@ -2430,20 +2392,479 @@ namespace warmf {
                     sw.WriteDouble(catchments[i].detentionStorage);
                     sw.WriteLine();
 
+                    //Upstream catchments
                     WriteIntData(sw, "ICAT" + catchments[i].idNum.ToString(), catchments[i].upstreamCatchmentNum);
 
+                    //Land use percentages
                     WriteDoubleData(sw, "CATC" + catchments[i].idNum.ToString(), catchments[i].landUsePercent);
 
+                    //fertilization plan for each land use
+                    WriteIntData(sw, "CATC" + catchments[i].idNum.ToString(), catchments[i].fertPlanNum);
+
+                    //land application
+                    WriteDoubleData(sw, "STOC" + catchments[i].idNum.ToString(), catchments[i].landApplicationLoad);
+
+                    //number of irrigation sources
+                    WriteIntData(sw, "IRRI" + catchments[i].idNum.ToString(), catchments[i].numIrrigationSources);
+
+                    // for each land use, write number of irrigation sources and fraction of area
+                    // this code needs to be expanded using a coe that has irrigation sources - SAS 11/13/19
+                    for (int j = 0; j < numLanduses; j++)
+                    {
+                        if (catchments[i].numIrrigationSources[j] > 0)
+                        {
+                            sw.WriteString("IRRLAN" + j.ToString());
+                            for (int k = 0; k < catchments[i].numIrrigationSources[j]; k++)
+                            {
+                                //sw.WriteInt(catchments[i].irrigationSource[k]);
+                                //sw.WriteDouble(catchments[i].irrigationSourcePercent[k]);
+                            }
+                        }
+                    }
+
+                    //Land use ponding - used for AMD applications, so currently no test COE - SAS 11/13/19
+                    sw.WriteString("NLUPONDS");
+                    sw.WriteInt(catchments[i].nluPonds);
+                    sw.WriteLine();
+                    if (catchments[i].nluPonds > 0)
+                    {
+                        for (int j = 0; j < catchments[i].nluPonds; j++)
+                        {
+                            sw.WriteString("PONDFILE");
+                            sw.WriteString(catchments[i].pondFilename[j]);
+                            sw.WriteLine();
+                        }
+                    }
+
+                    // point sources
+                    sw.WriteString("PTSOURCE");
+                    sw.WriteInt(catchments[i].numPointSources);
+                    sw.WriteLine();
+                    if (catchments[i].numPointSources > 0)
+                    {
+                        WriteIntData(sw, "PTSOURCE", catchments[i].pointSources);
+                    }
+
+                    // pumping
+                    sw.WriteString("PUMPFROM");
+                    sw.WriteInt(catchments[i].numPumpFromSchedules);
+                    sw.WriteLine();
+                    if (catchments[i].numPumpFromSchedules > 0)
+                        WriteIntData(sw, "PUMPFROM", catchments[i].pumpFromDivFile);
+                    sw.WriteString("PUMPTO");
+                    sw.WriteInt(catchments[i].numPumpToSchedules);
+                    sw.WriteLine();
+                    if (catchments[i].numPumpToSchedules > 0)
+                        WriteIntData(sw, "PUMPTO", catchments[i].pumpToDivFile);
+
+                    // septic
+                    sw.WriteString("SEPTIC");
+                    sw.WriteDouble(catchments[i].septic.soilLayer);
+                    sw.WriteDouble(catchments[i].septic.population);
+                    sw.WriteDouble(catchments[i].septic.standardPct);
+                    sw.WriteDouble(catchments[i].septic.advancedPct);
+                    sw.WriteDouble(catchments[i].septic.failingPct);
+                    sw.WriteDouble(catchments[i].septic.initialBiomass);
+                    sw.WriteDouble(catchments[i].septic.thickness);
+                    sw.WriteDouble(catchments[i].septic.area);
+                    sw.WriteDouble(catchments[i].septic.biomassRespRate);
+                    sw.WriteLine();
+                    sw.WriteString("SEPTIC");
+                    sw.WriteDouble(catchments[i].septic.biomassMortRate);
+                    sw.WriteLine();
+
+                    // sediment
+                    sw.WriteString("SEDIMENT");
+                    sw.WriteDouble(catchments[i].sediment.erosivity);
+                    sw.WriteDouble(catchments[i].sediment.firstPartSizePct);
+                    sw.WriteDouble(catchments[i].sediment.secondPartSizePct);
+                    sw.WriteDouble(catchments[i].sediment.thirdPartSizePct);
+                    sw.WriteLine();
+
+                    // Best managment practices
+                    sw.WriteString("BMP");
+                    sw.WriteDouble(catchments[i].bmp.streetSweepFreq);
+                    sw.WriteDouble(catchments[i].bmp.streetSweepEff);
+                    sw.WriteDouble(catchments[i].bmp.divertedImpervFlow);
+                    sw.WriteDouble(catchments[i].bmp.detentionPondVol);
+                    sw.WriteDouble(catchments[i].bmp.maxFertAccumTime);
+                    sw.WriteLine();
+
+                    // stream bank buffers
+                    sw.WriteString("BUFFZONE");
+                    sw.WriteDouble(catchments[i].bufferingPct);
+                    sw.WriteDouble(catchments[i].bufferZoneWidth);
+                    sw.WriteDouble(catchments[i].bufferZoneSlope);
+                    sw.WriteDouble(catchments[i].bufferManningN);
+                    sw.WriteLine();
+
+                    // seeps
+                    sw.WriteString("SEEPS");
+                    sw.WriteDouble(catchments[i].soilLayerSeepage);
+                    sw.WriteDouble(catchments[i].overlandFlowSeepage);
+                    sw.WriteLine();
+
+                    // mining
+                    sw.WriteString("MINING");
+                    sw.WriteOnOffas1or0(catchments[i].mining.swIsLowSoilDeepMineOverburden);
+                    sw.WriteInt(catchments[i].mining.surfaceMineLanduseNum);
+                    sw.WriteDouble(catchments[i].mining.depthSpoils);
+                    sw.WriteDouble(catchments[i].mining.soilMoisture);
+                    sw.WriteDouble(catchments[i].mining.fieldCapacity);
+                    sw.WriteDouble(catchments[i].mining.saturationMoisture);
+                    sw.WriteDouble(catchments[i].mining.horizHydraulicConduct);
+                    sw.WriteDouble(catchments[i].mining.vertHydraulicConduct);
+                    sw.WriteDouble(catchments[i].mining.ferroIonOxyidationRate);
+                    sw.WriteLine();
+
+                    // deep mines
+                    sw.WriteString("MINEPERM");
+                    sw.WriteInt(catchments[i].mining.numDeepMineDischarges);
+                    sw.WriteOnOffas1or0(catchments[i].mining.swAreDeepConcentrationsMax);
+                    sw.WriteLine();
+                    for (int j = 0; j < catchments[i].mining.numDeepMineDischarges; j++)
+                    {
+                        sw.WriteString("MINEPERM");
+                        sw.WriteDouble(catchments[i].mining.deepMines[j].areaFraction);
+                        sw.WriteString(catchments[i].mining.deepMines[j].name);
+                        sw.WriteLine();
+
+                        WriteDoubleData(sw, "MINECONC", catchments[i].mining.deepMines[j].concentrationLimit);
+
+                        sw.WriteString("MINEOUT");
+                        sw.WriteString(catchments[i].mining.deepMines[j].mineOutFilename);
+                        sw.WriteLine();
+                    }
+
+                    // surface mines
+                    sw.WriteString("MINEPERM");
+                    sw.WriteInt(catchments[i].mining.numSurfaceMineDischarges);
+                    sw.WriteOnOffas1or0(catchments[i].mining.swAreSurfaceConcentrationsMax);
+                    sw.WriteLine();
+                    for (int j = 0; j < catchments[i].mining.numSurfaceMineDischarges; j++)
+                    {
+                        sw.WriteString("MINEPERM");
+                        sw.WriteDouble(catchments[i].mining.surfaceMines[j].areaFraction);
+                        sw.WriteString(catchments[i].mining.surfaceMines[j].name);
+                        sw.WriteLine();
+
+                        WriteDoubleData(sw, "MINECONC", catchments[i].mining.surfaceMines[j].concentrationLimit);
+
+                        sw.WriteString("MINEOUT");
+                        sw.WriteString(catchments[i].mining.surfaceMines[j].mineOutFilename);
+                        sw.WriteLine();
+                    }
+
+                    // litter weights
+                    sw.WriteString("XLIT");
+                    sw.WriteDouble(catchments[i].mining.coarseLitterWgtFraction);
+                    sw.WriteDouble(catchments[i].mining.fineLitterWgtFraction);
+                    sw.WriteDouble(catchments[i].mining.humusWgtFraction);
+                    sw.WriteLine();
+
+                    //reaction rates
+                    WriteDoubleData(sw, "REACSOIL", catchments[i].reactions.soilReactionRate);
+                    WriteDoubleData(sw, "REACSURF", catchments[i].reactions.surfaceReactionRate);
+                    WriteDoubleData(sw, "REACCNPY", catchments[i].reactions.canopyReactionRate);
+                    WriteDoubleData(sw, "REACBIOZ", catchments[i].reactions.biozoneReactionRate);
+
+                    //CE-QUAL-W2
+                    sw.WriteString("W2FILES");
+                    sw.WriteInt(catchments[i].mining.numCEQW2Files);
+                    sw.WriteLine();
+                    if (catchments[i].mining.numCEQW2Files == 3)
+                    {
+                        sw.WriteString("W2FILES");
+                        sw.WriteString(catchments[i].mining.flowInputFilename);
+                        sw.WriteLine();
+                        sw.WriteString("W2FILES");
+                        sw.WriteString(catchments[i].mining.tempInputFilename);
+                        sw.WriteLine();
+                        sw.WriteString("W2FILES");
+                        sw.WriteString(catchments[i].mining.waterQualInputFilename);
+                        sw.WriteLine();
+                    }
+
+                    // soil layers
+                    for (int j = 0; j < catchments[i].numSoilLayers; j++)
+                    {
+                        sw.WriteString("LAYER" + (j + 1).ToString());
+                        sw.WriteDouble(catchments[i].soils[j].area);
+                        sw.WriteDouble(catchments[i].soils[j].thickness);
+                        sw.WriteDouble(catchments[i].soils[j].moisture);
+                        sw.WriteDouble(catchments[i].soils[j].fieldCapacity);
+                        sw.WriteDouble(catchments[i].soils[j].saturationMoisture);
+                        sw.WriteDouble(catchments[i].soils[j].horizHydraulicConduct);
+                        sw.WriteDouble(catchments[i].soils[j].vertHydraulicConduct);
+                        sw.WriteDouble(catchments[i].soils[j].evapTranspireFract);
+                        sw.WriteDouble(catchments[i].soils[j].waterTemp);
+                        sw.WriteLine();
+
+                        sw.WriteString("CKCAMG" + (j + 1).ToString());
+                        sw.WriteDouble(catchments[i].soils[j].magnesiumXCoeff);
+                        sw.WriteDouble(catchments[i].soils[j].sodiumXCoeff);
+                        sw.WriteDouble(catchments[i].soils[j].potassiumXCoeff);
+                        sw.WriteDouble(catchments[i].soils[j].ammoniaXCoeff);
+                        sw.WriteDouble(catchments[i].soils[j].hydrogenXCoeff);
+                        sw.WriteLine();
+
+                        sw.WriteString("COMP" + (j + 1).ToString());
+                        sw.WriteDouble(catchments[i].soils[j].exchangeCapacity);
+                        sw.WriteDouble(catchments[i].soils[j].maxPhosAdsorption);
+                        sw.WriteDouble(catchments[i].soils[j].density);
+                        sw.WriteDouble(catchments[i].soils[j].tortuosity);
+                        sw.WriteInt(catchments[i].soils[j].CO2CalcMethod);
+                        sw.WriteDouble(catchments[i].soils[j].CO2ConcenFactor);
+                        sw.WriteLine();
+
+                        WriteDoubleData(sw, "COMP" + (j + 1).ToString(), catchments[i].soils[j].weightFract);
+                        WriteDoubleData(sw, "SOL" + (j + 1).ToString(), catchments[i].soils[j].solutionConcen);
+                        WriteDoubleData(sw, "ADS" + (j + 1).ToString(), catchments[i].soils[j].adsorptionIsotherm);
+                    }
+                }
+
+                //Rivers
+                sw.WriteLine("******** RIVER COEFFICIENTS ********");
+                for (int i = 0; i < numRivers; i++)
+                {
+                    sw.WriteLine("++++++++ RIVER " + rivers[i].idNum.ToString() + " ++++++++");
+
+                    sw.WriteString("STRE" + rivers[i].idNum.ToString());
+                    sw.WriteInt(rivers[i].idNum);
+                    sw.WriteDouble(rivers[i].depth);
+                    sw.WriteDouble(rivers[i].length);
+                    sw.WriteDouble(rivers[i].upElevation);
+                    sw.WriteDouble(rivers[i].downElevation);
+                    sw.WriteDouble(rivers[i].ManningN);
+                    sw.WriteDouble(rivers[i].temp);
+                    sw.WriteDouble(rivers[i].convectiveHeatFactor);
+                    sw.WriteDouble(rivers[i].minFlow);
+                    sw.WriteLine();
+
+                    sw.WriteString("ELEV" + rivers[i].idNum.ToString());
+                    sw.WriteOnOffas1or0(rivers[i].swIncludeOutput);
+                    sw.WriteOnOffas1or0(rivers[i].swIsSubwaterBoundary);
+                    sw.WriteOnOffas1or0(rivers[i].swViewManagerOutput);
+                    sw.WriteString(rivers[i].name);
+                    sw.WriteLine();
+
+                    sw.WriteString("IMPO" + rivers[i].idNum.ToString());
+                    sw.WriteDouble(rivers[i].impoundArea);
+                    sw.WriteDouble(rivers[i].impoundVol);
+                    sw.WriteDouble(rivers[i].freezingTemp);
+                    sw.WriteDouble(rivers[i].meltingTemp);
+                    sw.WriteDouble(rivers[i].iceCalcAve);
+                    sw.WriteLine();
+
+                    sw.WriteString("STAR" + rivers[i].idNum.ToString());
+                    int k = 0;
+                    for (int j = 0; j < 9; j++)
+                    {
+                        sw.WriteDouble(rivers[i].segment[j].stage);
+                        k++;
+                        if (k == 9)
+                        {
+                            sw.WriteLine();
+                            sw.WriteString("STAR" + rivers[i].idNum.ToString());
+                        }
+                        sw.WriteDouble(rivers[i].segment[j].width);
+                        k++;
+                        if (k == 9)
+                        {
+                            sw.WriteLine();
+                            sw.WriteString("STAR" + rivers[i].idNum.ToString());
+                        }
+                    }
+                    sw.WriteLine();
+
+                    //upstream catchments (9 max)
+                    WriteIntData(sw, "ICAT" + rivers[i].idNum.ToString(), rivers[i].upstreamCatch);
+
+                    //upstream rivers (9 max)
+                    WriteIntData(sw, "IRVT" + rivers[i].idNum.ToString(), rivers[i].upstreamRiver);
+
+                    //upstream reservoirs (9 max)
+                    WriteIntData(sw, "ILKT" + rivers[i].idNum.ToString(), rivers[i].upstreamReservoir);
+
+                    sw.WriteString("DIVFROM");
+                    sw.WriteInt(rivers[i].numDiversionsFrom);
+                    if (rivers[i].numDiversionsFrom > 0)
+                    {
+                        WriteIntData(sw, "DIVFROM", rivers[i].divFilenumFrom);
+                    }
+
+                    sw.WriteString("DIVTO");
+                    sw.WriteInt(rivers[i].numDiversionsTo);
+                    if (rivers[i].numDiversionsTo > 0)
+                    {
+                        WriteIntData(sw, "DIVTO", rivers[i].divFilenumTo);
+                    }
+
+                    sw.WriteString("PTSOURCE");
+                    sw.WriteInt(rivers[i].numPointSrcs);
+                    if (rivers[i].numPointSrcs > 0)
+                    {
+                        WriteIntData(sw, "PTSOURCE", rivers[i].pointSrcFilenum);
+                    }
+
+                    sw.WriteString("OBSW" + rivers[i].idNum.ToString());
+                    sw.WriteOnOffas1or0(rivers[i].overrideSimulation.swUseObsData);
+                    sw.WriteInt(rivers[i].overrideSimulation.hydroInterpPeriod);
+                    sw.WriteInt(rivers[i].overrideSimulation.waterQualityInterpPeriod);
+                    sw.WriteInt(rivers[i].overrideSimulation.monthAverageMethod);
+                    sw.WriteInt(rivers[i].overrideSimulation.tdsAdjustmentPriority);
+                    sw.WriteInt(rivers[i].overrideSimulation.alkAdjustmentPriority);
+                    sw.WriteInt(rivers[i].overrideSimulation.phAdjustmentPriority);
+                    sw.WriteLine();
+
+                    sw.WriteString("OBSD" + rivers[i].idNum.ToString());
+                    sw.WriteString(rivers[i].hydrologyFilename);
+                    sw.WriteLine();
+
+                    sw.WriteString("SEDIMENT");
+                    sw.WriteDouble(rivers[i].sedDetachVelMult);
+                    sw.WriteDouble(rivers[i].sedDetachVelExp);
+                    sw.WriteDouble(rivers[i].sedBedDepth);
+                    sw.WriteDouble(rivers[i].sedVegFactor);
+                    sw.WriteDouble(rivers[i].sedBankStabFactor);
+                    sw.WriteDouble(rivers[i].sedDiffusionRate);
+                    sw.WriteLine();
+
+                    sw.WriteString("SEDTYPES");
+                    sw.WriteDouble(rivers[i].sedFirstPartSizePct);
+                    sw.WriteDouble(rivers[i].sedSecondPartSizePct);
+                    sw.WriteDouble(rivers[i].sedThirdPartSizePct);
+                    sw.WriteLine();
+
+                    sw.WriteString("AIRK" + rivers[i].idNum.ToString());
+                    sw.WriteDouble(rivers[i].reaerationRateMult);
+                    sw.WriteDouble(rivers[i].sedOxygenDemand);
+                    sw.WriteDouble(rivers[i].precipSettleRate);
+                    sw.WriteLine();
+
+                    //reactions
+                    WriteDoubleData(sw, "REAC-H2O", rivers[i].waterReactionRate);
+                    WriteDoubleData(sw, "REAC-BED", rivers[i].bedReactionRate);
+
+                    //water quality observations
+                    sw.WriteString("OBSD" + rivers[i].idNum.ToString());
+                    sw.WriteString(rivers[i].waterQualFilename);
+                    sw.WriteLine();
+
+                    //CEQUALW2
+                    sw.WriteString("W2FILES");
+                    sw.WriteInt(rivers[i].numCEQW2Files);
+                    sw.WriteLine();
+                    if (rivers[i].numCEQW2Files == 3)
+                    {
+                        sw.WriteString("W2FILES");
+                        sw.WriteString(rivers[i].flowInputFilename);
+                        sw.WriteLine();
+                        sw.WriteString("W2FILES");
+                        sw.WriteString(rivers[i].tempInputFilename);
+                        sw.WriteLine();
+                        sw.WriteString("W2FILES");
+                        sw.WriteString(rivers[i].waterQualInputFilename);
+                        sw.WriteLine();
+                    }
+
+                    //initial water column concentrations
+                    WriteDoubleData(sw, "STRC" + rivers[i].idNum.ToString(), rivers[i].componentConcentration);
+
+                    //initial bed adsorbed concentrations
+                    WriteDoubleData(sw, "BEDC" + rivers[i].idNum.ToString(), rivers[i].bedAdsorpConcentration);
+
+                    //water column adsorption isotherms
+                    WriteDoubleData(sw, "STRA" + rivers[i].idNum.ToString(), rivers[i].waterAdsorpIsotherm);
+
+                    //bed adsorption isotherms
+                    WriteDoubleData(sw, "BEDA" + rivers[i].idNum.ToString(), rivers[i].bedAdsorpIsotherm);
 
 
                 }
 
+                //Reservoirs
+                sw.WriteLine("******** LAKE COEFFICIENTS ********");
+                for (int i = 0; i < numReservoirs; i++)
+                {
+                    sw.WriteLine("++++++++ RESERVOIR " + i.ToString() + " ++++++++");
+
+                    sw.WriteString("DEPTH" + (i + 1).ToString());
+                    sw.WriteInt(reservoirs[i].idNum);
+                    sw.WriteInt(reservoirs[i].numSegments);
+                    sw.WriteOnOffas1or0(reservoirs[i].swCalcPseudo);
+                    sw.WriteInt(reservoirs[i].METFilenum);
+                    sw.WriteDouble(reservoirs[i].elevation);
+                    sw.WriteInt(reservoirs[i].airRainChemFilenum);
+                    sw.WriteInt(reservoirs[i].coarseAirPartFilenum);
+                    sw.WriteString(reservoirs[i].releaseFlowFilename);
+                    sw.WriteLine();
+
+                    //Stage-discharge
+                    sw.WriteString("STGFLO");
+                    int k = 0;
+                    for (int j = 0; j < 9; j++)
+                    {
+                        sw.WriteDouble(reservoirs[i].spillway[j].stage);
+                        k++;
+                        if (k == 9)
+                        {
+                            sw.WriteLine();
+                            sw.WriteString("STGFLO");
+                        }
+                        sw.WriteDouble(reservoirs[i].spillway[j].flow);
+                        k++;
+                        if (k == 9)
+                        {
+                            sw.WriteLine();
+                            sw.WriteString("STGFLO");
+                        }
+                    }
+                    sw.WriteLine();
+
+                    //Stage-area
+                    sw.WriteString("TOTSTA");
+                    k = 0;
+                    for (int j = 0; j < 9; j++)
+                    {
+                        sw.WriteDouble(reservoirs[i].bathymetry[j].stage);
+                        k++;
+                        if (k == 9)
+                        {
+                            sw.WriteLine();
+                            sw.WriteString("TOTSTA");
+                        }
+                        sw.WriteDouble(reservoirs[i].bathymetry[j].area);
+                        k++;
+                        if (k == 9)
+                        {
+                            sw.WriteLine();
+                            sw.WriteString("TOTSTA");
+                        }
+                    }
+                    sw.WriteLine();
+
+                    //Observed reservoir hydrology
+                    sw.WriteString("OBSDATA");
+                    sw.WriteOnOffas1or0(reservoirs[i].swAdjustResRelease);
+                    sw.WriteString(reservoirs[i].hydrologyFilename);
+
+                    //water column reactions
+                    WriteDoubleData(sw, "REAC-H2O", reservoirs[i].waterReactionRate);
+
+                    //bed sediment reactions
+                    WriteDoubleData(sw, "REAC-BED", reservoirs[i].bedReactionRate);
+
+                    //water adsorption isotherms
+                    WriteDoubleData(sw, "ADSISO", reservoirs[i].waterAdsorpIsotherm);
+
+                    //bed adsorption isotherms
+                    WriteDoubleData(sw, "ADSISO", reservoirs[i].bedAdsorpIsotherm);
+
+                    //algae (3 types)
 
 
-
-
-
-
+                }
 
 
 
