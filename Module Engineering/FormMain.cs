@@ -162,7 +162,7 @@ namespace warmf {
             // read in Coefficients file
             string fname = Global.DIR.COE + "Catawba.coe";
 
-            if (!Global.coe.ReadFile(fname))
+            if (!Global.coe.ReadCOE(fname))
             {
                 MessageBox.Show(this, "Error reading coefficients file.", "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
             }
@@ -527,14 +527,15 @@ namespace warmf {
 
         private void miScenarioSave_Click(object sender, EventArgs e)
         {
-            Global.coe.WriteFile("c:/temp/testWriteCOE.COE");
+            Global.coe.WriteCOE("c:/temp/testWriteCOE.COE");
         }
 
         private void miScenarioCompare_Click(object sender, EventArgs e)
         {
             StreamReader newCOE = new StreamReader("c:/temp/testWriteCOE.COE");
             StreamReader oldCOE = new StreamReader("C:/Systech/WARMF_GUI/Watershed-Analysis/data/input/coe/Catawba.COE");
-            string newCOEline, oldCOEline;
+            StreamWriter swErrors = new StreamWriter("c:/temp/COEErrors.txt");
+            string newCOEline, oldCOEline, newCOElineTrim;
             int result, i;
             char[] trimChars = { ' ' };
 
@@ -542,22 +543,30 @@ namespace warmf {
             newCOEline = newCOE.ReadLine();
             while (newCOEline != null)
             {
-                newCOEline.TrimEnd(trimChars);
+                newCOElineTrim = newCOEline.TrimEnd(trimChars);
                 oldCOEline = oldCOE.ReadLine().TrimEnd(trimChars);
-                result = string.Compare(newCOEline, oldCOEline);
+                result = string.Compare(newCOElineTrim, oldCOEline);
                 if (result != 0)
                 {
-                    if (MessageBox.Show("Line " + i + " error." + Environment.NewLine + 
-                        "New: '" + newCOEline + "'" + Environment.NewLine +
-                        "Old: '" + oldCOEline + "'" + Environment.NewLine +
-                        "Do you want to continue?", "Comparison Fail", MessageBoxButtons.YesNo) == DialogResult.No)
-                    {
-                        return;
-                    } 
+                    swErrors.WriteLine("Line " + i.ToString());
+                    swErrors.WriteLine("Old: " + oldCOEline);
+                    swErrors.WriteLine("New: " + newCOElineTrim);
+                    swErrors.WriteLine();
+
+                    //Display via message box
+                    //if (MessageBox.Show("Line " + i + " error." + Environment.NewLine + 
+                    //    "New: '" + newCOEline + "'" + Environment.NewLine +
+                    //    "Old: '" + oldCOEline + "'" + Environment.NewLine +
+                    //    "Do you want to continue?", "Comparison Fail", MessageBoxButtons.YesNo) == DialogResult.No)
+                    //{
+                    //    return;
+                    //} 
                 }
                 i++;
                 newCOEline = newCOE.ReadLine();
             }
+            MessageBox.Show("No further discrepancies were found" + Environment.NewLine + "Lines Reviewed: " + i.ToString()
+                , "Comparison Complete",MessageBoxButtons.OK);
         }
     }
 }

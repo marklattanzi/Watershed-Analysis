@@ -64,7 +64,7 @@ namespace warmf
             return ReadParameters(ref SR);
         }
 
-        //public bool ReadFile()
+        //public bool ReadCOE()
         //{
         //    STechStreamReader sr = null;
 
