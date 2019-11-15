@@ -1351,13 +1351,13 @@ namespace warmf {
                     if (TestLine(line, sr.LineNum, "MINING")) {
                         catchData.mining.swIsLowSoilDeepMineOverburden = !line.Substring(8, 8).Contains("0");
                         catchData.mining.surfaceMineLanduseNum = Int32.TryParse(line.Substring(16, 8), out intRes) ? intRes : 0;
-                        catchData.mining.depthSpoils = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0;
-                        catchData.mining.soilMoisture = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : 0;
-                        catchData.mining.fieldCapacity = Double.TryParse(line.Substring(32, 8), out dblRes) ? dblRes : 0;
-                        catchData.mining.saturationMoisture = Double.TryParse(line.Substring(40, 8), out dblRes) ? dblRes : 0;
-                        catchData.mining.horizHydraulicConduct = Double.TryParse(line.Substring(48, 8), out dblRes) ? dblRes : 0;
-                        catchData.mining.vertHydraulicConduct = Double.TryParse(line.Substring(56, 8), out dblRes) ? dblRes : 0;
-                        catchData.mining.ferroIonOxyidationRate = Double.TryParse(line.Substring(64, 8), out dblRes) ? dblRes : 0;
+                        catchData.mining.depthSpoils = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : 0;
+                        catchData.mining.soilMoisture = Double.TryParse(line.Substring(32, 8), out dblRes) ? dblRes : 0;
+                        catchData.mining.fieldCapacity = Double.TryParse(line.Substring(40, 8), out dblRes) ? dblRes : 0;
+                        catchData.mining.saturationMoisture = Double.TryParse(line.Substring(48, 8), out dblRes) ? dblRes : 0;
+                        catchData.mining.horizHydraulicConduct = Double.TryParse(line.Substring(56, 8), out dblRes) ? dblRes : 0;
+                        catchData.mining.vertHydraulicConduct = Double.TryParse(line.Substring(64, 8), out dblRes) ? dblRes : 0;
+                        //catchData.mining.ferroIonOxyidationRate = Double.TryParse(line.Substring(72, 8), out dblRes) ? dblRes : 0;
                     }
                     
                     // deep mines
@@ -1395,8 +1395,8 @@ namespace warmf {
                     // litter weights
                     dnums = ReadDoubleData(sr, "XLIT", 3);
                     catchData.mining.coarseLitterWgtFraction = dnums[0];
-                    catchData.mining.fineLitterWgtFraction = dnums[0];
-                    catchData.mining.humusWgtFraction = dnums[0];
+                    catchData.mining.fineLitterWgtFraction = dnums[1];
+                    catchData.mining.humusWgtFraction = dnums[2];
 
                     // reaction rates
                     catchData.reactions.soilReactionRate = ReadDoubleData(sr, "REACSOIL", numReactions);
@@ -2693,6 +2693,7 @@ namespace warmf {
 
                     sw.WriteString("DIVFROM");
                     sw.WriteInt(rivers[i].numDiversionsFrom);
+                    sw.WriteLine();
                     if (rivers[i].numDiversionsFrom > 0)
                     {
                         WriteIntData(sw, "DIVFROM", rivers[i].divFilenumFrom);
@@ -2700,6 +2701,7 @@ namespace warmf {
 
                     sw.WriteString("DIVTO");
                     sw.WriteInt(rivers[i].numDiversionsTo);
+                    sw.WriteLine();
                     if (rivers[i].numDiversionsTo > 0)
                     {
                         WriteIntData(sw, "DIVTO", rivers[i].divFilenumTo);
@@ -2707,6 +2709,7 @@ namespace warmf {
 
                     sw.WriteString("PTSOURCE");
                     sw.WriteInt(rivers[i].numPointSrcs);
+                    sw.WriteLine();
                     if (rivers[i].numPointSrcs > 0)
                     {
                         WriteIntData(sw, "PTSOURCE", rivers[i].pointSrcFilenum);
@@ -2853,6 +2856,7 @@ namespace warmf {
                     sw.WriteString("OBSDATA");
                     sw.WriteOnOffas1or0(reservoirs[i].swAdjustResRelease);
                     sw.WriteString(reservoirs[i].hydrologyFilename);
+                    sw.WriteLine();
 
                     //water column reactions
                     WriteDoubleData(sw, "REAC-H2O", reservoirs[i].waterReactionRate);
