@@ -26,6 +26,7 @@ namespace warmf {
         public DialogSystemCoeffs dlgSystemCoeffs;
         public DialogReservoirCoeffs dlgReservoirCoeffs;
         public DialogOutput dlgOutput;
+        public DialogRunSimulation dlgRunSimulation;
 
         public FormMain()
         {
@@ -567,6 +568,16 @@ namespace warmf {
             }
             MessageBox.Show("No further discrepancies were found" + Environment.NewLine + "Lines Reviewed: " + i.ToString()
                 , "Comparison Complete",MessageBoxButtons.OK);
+        }
+
+        private void miScenarioRun_Click(object sender, EventArgs e)
+        {
+            using (dlgRunSimulation = new DialogRunSimulation(this))
+            {
+                dlgRunSimulation.Populate();
+                dlgRunSimulation.ShowDialog();
+            }
+            
         }
     }
 }

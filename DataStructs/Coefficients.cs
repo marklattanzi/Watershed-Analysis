@@ -442,6 +442,7 @@ namespace warmf {
         public int idNum;
         public double bottomElevation;
         public bool swOutputResults;
+        public bool swIsSubwaterBoundary;
         public int numOutlets;
         public int numDiversionsTo;
         public string name;
@@ -1702,7 +1703,7 @@ namespace warmf {
 						seg.upstreamCatchIDs = ReadIntData(sr, "ICATOL", 9);
 						seg.upstreamRiverIDs = ReadIntData(sr, "IRVTOL", 9);
 						seg.upstreamLakeIDs = ReadIntData(sr, "ILKTOL", 9);
-                        //Scott adding code here...
+                        
                         nums = ReadIntData(sr, "DIVTO", 9);
                         seg.numDiversionsTo = nums[0];
                         for (int i = 0; i < seg.numDiversionsTo; i++)
@@ -1710,7 +1711,15 @@ namespace warmf {
                             seg.diversionToFilenums[i] = nums[i + 1];
                         }
 						seg.obsWQFilename = ReadString(sr, "OBSDATA");
-						reservoir.reservoirSegs.Add(seg);
+
+                        //last (downstream-most) segment of a reservoir is always a subwatershed boundary
+                        //parameter is not written to or read from COE
+                        if (jj == reservoir.numSegments - 1)
+                            seg.swIsSubwaterBoundary = true;
+                        else
+                            seg.swIsSubwaterBoundary = false;
+
+                        reservoir.reservoirSegs.Add(seg);
 					}
 					reservoirs.Add(reservoir);
 

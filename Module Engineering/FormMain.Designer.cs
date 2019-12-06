@@ -383,6 +383,7 @@
             this.miScenarioRun.Name = "miScenarioRun";
             this.miScenarioRun.Size = new System.Drawing.Size(181, 22);
             this.miScenarioRun.Text = "Run";
+            this.miScenarioRun.Click += new System.EventHandler(this.miScenarioRun_Click);
             // 
             // toolStripSeparator4
             // 

@@ -16,7 +16,7 @@ namespace warmf
         FormMain parent;
         private List<PTSFile> pointSourceFiles;
 
-        public DialogCatchCoeffs(FormMain par )
+        public DialogCatchCoeffs(FormMain par)
         {
             InitializeComponent();
             this.parent = par;
