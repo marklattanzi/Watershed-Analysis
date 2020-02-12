@@ -54,6 +54,9 @@
             this.btnSelectWst = new System.Windows.Forms.Button();
             this.tbWarmStartFile = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btnHelp = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnRun = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudTimeStepsPerDay)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -203,7 +206,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(369, 39);
+            this.label4.Location = new System.Drawing.Point(300, 33);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(97, 15);
             this.label4.TabIndex = 12;
@@ -213,7 +216,7 @@
             // 
             this.lbSubwatersheds.FormattingEnabled = true;
             this.lbSubwatersheds.ItemHeight = 15;
-            this.lbSubwatersheds.Location = new System.Drawing.Point(372, 57);
+            this.lbSubwatersheds.Location = new System.Drawing.Point(303, 51);
             this.lbSubwatersheds.Name = "lbSubwatersheds";
             this.lbSubwatersheds.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.lbSubwatersheds.Size = new System.Drawing.Size(355, 94);
@@ -266,7 +269,7 @@
             // 
             // btnSelectAll
             // 
-            this.btnSelectAll.Location = new System.Drawing.Point(435, 161);
+            this.btnSelectAll.Location = new System.Drawing.Point(366, 155);
             this.btnSelectAll.Name = "btnSelectAll";
             this.btnSelectAll.Size = new System.Drawing.Size(108, 25);
             this.btnSelectAll.TabIndex = 17;
@@ -275,7 +278,7 @@
             // 
             // btnClearSelection
             // 
-            this.btnClearSelection.Location = new System.Drawing.Point(549, 161);
+            this.btnClearSelection.Location = new System.Drawing.Point(480, 155);
             this.btnClearSelection.Name = "btnClearSelection";
             this.btnClearSelection.Size = new System.Drawing.Size(108, 25);
             this.btnClearSelection.TabIndex = 18;
@@ -287,7 +290,7 @@
             this.groupBox3.Controls.Add(this.nudLoops);
             this.groupBox3.Controls.Add(this.lblNumLoops);
             this.groupBox3.Controls.Add(this.chbxHydrologyAutocalibration);
-            this.groupBox3.Location = new System.Drawing.Point(373, 200);
+            this.groupBox3.Location = new System.Drawing.Point(304, 183);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(354, 80);
             this.groupBox3.TabIndex = 19;
@@ -296,7 +299,7 @@
             // chbxLoadingData
             // 
             this.chbxLoadingData.AutoSize = true;
-            this.chbxLoadingData.Location = new System.Drawing.Point(370, 322);
+            this.chbxLoadingData.Location = new System.Drawing.Point(304, 271);
             this.chbxLoadingData.Name = "chbxLoadingData";
             this.chbxLoadingData.Size = new System.Drawing.Size(154, 19);
             this.chbxLoadingData.TabIndex = 20;
@@ -348,18 +351,53 @@
             this.groupBox4.Controls.Add(this.btnSelectWst);
             this.groupBox4.Controls.Add(this.lblWarmStartFile);
             this.groupBox4.Controls.Add(this.chbxWarmStart);
-            this.groupBox4.Location = new System.Drawing.Point(39, 355);
+            this.groupBox4.Location = new System.Drawing.Point(43, 310);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(529, 103);
+            this.groupBox4.Size = new System.Drawing.Size(506, 103);
             this.groupBox4.TabIndex = 25;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Initial Simulation Conditions";
+            // 
+            // btnHelp
+            // 
+            this.btnHelp.Location = new System.Drawing.Point(441, 431);
+            this.btnHelp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnHelp.Name = "btnHelp";
+            this.btnHelp.Size = new System.Drawing.Size(137, 39);
+            this.btnHelp.TabIndex = 28;
+            this.btnHelp.Text = "Help";
+            this.btnHelp.UseVisualStyleBackColor = true;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(280, 431);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(137, 39);
+            this.btnCancel.TabIndex = 27;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            // 
+            // btnRun
+            // 
+            this.btnRun.Location = new System.Drawing.Point(116, 431);
+            this.btnRun.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnRun.Name = "btnRun";
+            this.btnRun.Size = new System.Drawing.Size(137, 39);
+            this.btnRun.TabIndex = 26;
+            this.btnRun.Text = "Run";
+            this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
             // DialogRunSimulation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(933, 519);
+            this.ClientSize = new System.Drawing.Size(694, 486);
+            this.Controls.Add(this.btnHelp);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnRun);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.chbxLoadingData);
             this.Controls.Add(this.groupBox3);
@@ -414,5 +452,8 @@
         private System.Windows.Forms.Button btnSelectWst;
         private System.Windows.Forms.TextBox tbWarmStartFile;
         private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button btnHelp;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnRun;
     }
 }

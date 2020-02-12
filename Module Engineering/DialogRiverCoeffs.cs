@@ -479,5 +479,10 @@ namespace warmf
                 tbCEQUALconcFile.Text = RiverOpenFileDialog.SafeFileName;
             }
         }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
