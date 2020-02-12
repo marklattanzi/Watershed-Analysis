@@ -15,18 +15,27 @@ namespace warmf
             filename = fname;
         }
 
-        public override bool ReadHeader(ref STechStreamReader SR)
+        public override bool ReadParameters(ref STechStreamReader SR)
         {
-            base.ReadHeader(ref SR);
-
             try
             {
+                string flowFortranCode = "MFLO";
                 string line = SR.ReadLine();
                 Int32.TryParse(line.Substring(5, 8), out NumParameters);
                 for (int ii = 0; ii < NumParameters; ii++)
                 {
-                    ParameterCodes.Add("MFLO");
-                    ParameterNames.Add(Global.coe.GetParameterNameFromCode(ParameterCodes[ii]));
+                    string nameString = line.Substring(13 + 8 * ii, 8);
+                    if (String.IsNullOrWhiteSpace(nameString))
+                        ParameterCodes.Add(flowFortranCode + "    ");
+                    else
+                        ParameterCodes.Add(nameString);
+
+                    // Remove trailing spaces from the name of the diversion
+                    if (nameString.Contains(flowFortranCode))
+                        nameString = "";
+                    else
+                        nameString = nameString.Trim() + " ";
+                    ParameterNames.Add(nameString + Global.coe.GetParameterNameAndUnitsFromCode(flowFortranCode));
                 }
             }
             catch (Exception e)
@@ -40,7 +49,6 @@ namespace warmf
 
             return true;
         }
-
     }
 }
 

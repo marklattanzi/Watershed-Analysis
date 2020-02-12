@@ -25,5 +25,16 @@ namespace warmf {
             ParameterNames.Add("Wind Speed, m/s");
         }
 
+        // Overridden ReadParameters routine to do nothing
+        public override bool ReadParameters(ref STechStreamReader SW)
+        {
+            return true;
+        }
+
+        // Overridden WriteParameters routine to do nothing
+        public override bool WriteParameters(ref STechStreamWriter SW)
+        {
+            return true;
+        }
     }
 }

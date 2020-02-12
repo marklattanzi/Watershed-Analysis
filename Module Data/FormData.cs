@@ -78,26 +78,8 @@ namespace warmf {
 			if (radioGraph.Checked) PlotGraph();
 		}
 
-		// these routines need to be updated for other file types (than MET) --MRL
-		// pick data to graph
+		// PlotGraph is a relic - calls to it can be changed to PlotData
 		private void PlotGraph() {
-            /*			switch (cboxTypeOfFile.SelectedIndex) {
-                            case 0: // MET
-                                PlotData();
-                                break;
-                            case 1: // AIR QUALITY
-                                break;
-                            case 2: // OBSERVED HYDROLOGY
-                                break;
-                            case 3: // OBSERVED WATER QUALITY
-                                break;
-                            case 4: // MANAGED FLOW
-                                break;
-                            case 5: // POINT SOURCES
-                                break;
-                            case 6: // PICTURES
-                                break;
-                        }*/
             PlotData();
     }
 
@@ -134,7 +116,7 @@ namespace warmf {
 				case 3: // OBSERVED WATER QUALITY
                     // River observed water quality files
                     for (int ii = 0; ii < Global.coe.rivers.Count(); ii++)
-                        if (!String.IsNullOrWhiteSpace(Global.coe.rivers[ii].hydrologyFilename))
+                        if (!String.IsNullOrWhiteSpace(Global.coe.rivers[ii].waterQualFilename))
                             cboxFilename.Items.Add(Global.coe.rivers[ii].waterQualFilename);
                     // Reservoir observed volume / surface elevation files
                     for (int ii = 0; ii < Global.coe.reservoirs.Count(); ii++)
