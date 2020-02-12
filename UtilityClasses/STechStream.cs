@@ -19,10 +19,37 @@ namespace warmf {
 		public STechStreamWriter(string filename) : base(filename) { LineNum = 0; }
 		public STechStreamWriter(string filename, bool append) : base(filename, append) { }
 
-		public override void WriteLine() {
+		public override void WriteLine()
+        {
 			LineNum++;
 			base.WriteLine();
 		}
+
+        public override void WriteLine(string value)
+        {
+            LineNum++;
+            base.WriteLine(value);
+        }
+
+        // Writes a left-justified string, and pads if less than 8 characters
+        public void WriteString(string Value)
+        {
+            if (Value.Length < 8)
+            {
+                Value = Value.PadRight(8);
+            }
+            Write(Value);
+        }
+
+        // Writes a left-justified string, and pads if less than 8 characters
+        public void WriteString16(string Value)
+        {
+            if (Value.Length < 16)
+            {
+                Value = Value.PadRight(16);
+            }
+            Write(Value);
+        }
 
         // Writes a boolean as 1 or 0
         public void WriteBool(bool Value)
@@ -100,18 +127,27 @@ namespace warmf {
             // Value < -1.0E10: 3 sig figs, 2 unsigned digits for exponential
             else
                 doubleString = Value.ToString("0.##E00");
-
             // Fill in spaces left of the number if it is less than 8 digits
             doubleString = doubleString.PadLeft(8);
             Write("{0}", doubleString);
         }
 
+        // Writes On (true) and Off (false)
         public void WriteOnOffSwitch(bool Value)
         {
             if (Value)
                 Write("{0}", "ON      ");
             else
                 Write("{0}", "OFF     ");
+        }
+
+        // Writes 1 (true) and 0 (false)
+        public void WriteOnOffas1or0(bool Value)
+        {
+            if (Value)
+                WriteInt(1);
+            else
+                WriteInt(0);
         }
     }
 }

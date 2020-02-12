@@ -383,6 +383,7 @@
             this.miScenarioRun.Name = "miScenarioRun";
             this.miScenarioRun.Size = new System.Drawing.Size(181, 22);
             this.miScenarioRun.Text = "Run";
+            this.miScenarioRun.Click += new System.EventHandler(this.miScenarioRun_Click);
             // 
             // toolStripSeparator4
             // 
@@ -400,6 +401,7 @@
             this.miScenarioSave.Name = "miScenarioSave";
             this.miScenarioSave.Size = new System.Drawing.Size(181, 22);
             this.miScenarioSave.Text = "Save";
+            this.miScenarioSave.Click += new System.EventHandler(this.miScenarioSave_Click);
             // 
             // miScenarioSaveAs
             // 
@@ -441,6 +443,7 @@
             this.miScenarioCompare.Name = "miScenarioCompare";
             this.miScenarioCompare.Size = new System.Drawing.Size(181, 22);
             this.miScenarioCompare.Text = "Compare";
+            this.miScenarioCompare.Click += new System.EventHandler(this.miScenarioCompare_Click);
             // 
             // miTopDocument
             // 

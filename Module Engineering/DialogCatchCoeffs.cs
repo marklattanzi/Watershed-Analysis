@@ -14,7 +14,9 @@ namespace warmf
     public partial class DialogCatchCoeffs : Form
     {
         FormMain parent;
-        public DialogCatchCoeffs(FormMain par )
+        private List<PTSFile> pointSourceFiles;
+
+        public DialogCatchCoeffs(FormMain par)
         {
             InitializeComponent();
             this.parent = par;
@@ -114,14 +116,15 @@ namespace warmf
             }
             
             List<int> HideList = new List<int> { 0, 1, 2, 15, 16, 20, 22, 23, 24, 29, 30, 31, 32, 37 };
-            for (int ii = 0; ii < iNumParams; ii++) //hide chemical and physical parameters that aren't applicable
+            for (int i = 0; i < iNumParams; i++) //hide chemical and physical parameters that aren't applicable
             {
-                if (HideList.Contains(ii))
+                if (HideList.Contains(i))
                 {
-                    dgLandApp.Rows[ii].Visible = false;
+                    dgLandApp.Rows[i].Visible = false;
                 }
             }
-            cbLanduse.SelectedIndex = 7;
+
+            cbLanduse.SelectedIndex = 0;
             FormatDataGridView(dgLandApp); //Format datagridview
 
             tbMaxAccTime.Text = catchment.bmp.maxFertAccumTime.ToString();
@@ -166,15 +169,33 @@ namespace warmf
             //Warning: this code block was constructed without having a case to test - probably contains errors!!
             if (catchment.numPointSources > 0)
             {
-                for (int ii = 0; ii < catchment.numPointSources; ii++)
-                    lbPointSources.Items.Add(Global.coe.PTSFilename[catchment.pointSources[ii]]);
+                pointSourceFiles = new List<PTSFile>();
+                for (int i = 0; i < catchment.numPointSources; i++)
+                {
+                    lbPointSources.Items.Add(Global.coe.PTSFilename[catchment.pointSources[i] - 1]);
+                    PTSFile ptFile = new PTSFile(Global.coe.PTSFilename[catchment.pointSources[i] - 1]);
+                    pointSourceFiles.Add(ptFile);
+                }
                 lbPointSources.SelectedIndex = 0;
                 PointSourceInfo(lbPointSources.SelectedIndex);
             }
-            
-
 
             //Pumping tab
+            //Warning: this code block was constructed without having a case to test - probably contains errors!!
+            if (catchment.numPumpFromSchedules > 0)
+            {
+                for (int i = 0; i < catchment.numPumpFromSchedules; i++)
+                {
+                    lbPumpingFrom.Items.Add(Global.coe.DIVData[catchment.pumpFromDivFile[i] - 1].filename);
+                }
+            }
+            if (catchment.numPumpToSchedules > 0)
+            {
+                for (int i = 0; i < catchment.numPumpToSchedules; i++)
+                {
+                    lbPumpingTo.Items.Add(Global.coe.DIVData[catchment.pumpToDivFile[i] - 1].filename);
+                }
+            }
 
             //Septic Systems tab
             tbDischargeSoilLayer.Text = catchment.septic.soilLayer.ToString();
@@ -189,6 +210,15 @@ namespace warmf
             tbBioMortCoeff.Text = catchment.septic.biomassMortRate.ToString();
 
             //Reactions tab
+            for (int i = 0; i < Global.coe.numReactions; i++)
+            {
+                dgvReactions.Rows.Add();
+                dgvReactions.Rows[i].HeaderCell.Value = Global.coe.reactions[i].name + ", " + Global.coe.reactions[i].units;
+                dgvReactions.Rows[i].Cells["soil"].Value = catchment.reactions.soilReactionRate[i].ToString();
+                dgvReactions.Rows[i].Cells["surface"].Value = catchment.reactions.surfaceReactionRate[i].ToString();
+                dgvReactions.Rows[i].Cells["canopy"].Value = catchment.reactions.canopyReactionRate[i].ToString();
+                dgvReactions.Rows[i].Cells["biozone"].Value = catchment.reactions.biozoneReactionRate[i].ToString();
+            }
 
             //Soil Layers tab
             tbNumSoilLayers.Text = catchment.numSoilLayers.ToString();
@@ -291,7 +321,8 @@ namespace warmf
 
             //Mining tab
             //Dialog is set up in the designer, but no code for functionality yet
-            tpMining.Hide();
+            //Deleted from collection at runtime.
+            tcCatchTabs.TabPages.RemoveByKey("tpMining");
 
             //CE-QUAL-W2 tab
             if (catchment.mining.numCEQW2Files == 3)
@@ -305,7 +336,7 @@ namespace warmf
 
         public void PointSourceInfo(int FileIndex)
         {
-/*            PTSFile pFile = Global.coe.PTSFilename[FileIndex];
+            PTSFile pFile = pointSourceFiles[FileIndex];
             pFile.ReadHeader();
             if (pFile.swInternal == true)
             {
@@ -323,7 +354,7 @@ namespace warmf
                 rbUnspecAmbient.Checked = false;
                 rbUnspecAmbient.Enabled = false;
             }
-            tbNPDESNumber.Text = pFile.npdesPermit;*/
+            tbNPDESNumber.Text = pFile.npdesPermit;
         }
 
         public void FormatDataGridView(DataGridView dgv)
@@ -500,12 +531,75 @@ namespace warmf
 
         private void btnAddPTS_Click(object sender, EventArgs e)
         {
+            CatchmentOpenFileDialog.InitialDirectory =
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.PTS);
+            CatchmentOpenFileDialog.Title = "Select Point Source File";
+            CatchmentOpenFileDialog.Filter = "Point Source | *.PTS";
 
+            if (CatchmentOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                lbPointSources.Items.Add(CatchmentOpenFileDialog.SafeFileName);
+            }
         }
 
         private void btnRemovePTS_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void lbPointSources_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbPointSources.SelectedItem != null)
+            {
+                PointSourceInfo(lbPointSources.SelectedIndex);
+                btnRemovePTS.Enabled = true;
+            }
+        }
+
+        private void btnFromRemove_Click(object sender, EventArgs e)
+        {
+            lbPumpingFrom.Items.Remove(lbPumpingFrom.SelectedItem);
+        }
+
+        private void btnToRemove_Click(object sender, EventArgs e)
+        {
+            lbPumpingTo.Items.Remove(lbPumpingTo.SelectedItem);
+        }
+
+        private void lbPumpingTo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnToRemove.Enabled = true;
+        }
+
+        private void lbPumpingFrom_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnFromRemove.Enabled = true;
+        }
+
+        private void btnFromAdd_Click(object sender, EventArgs e)
+        {
+            CatchmentOpenFileDialog.InitialDirectory =
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.FLO);
+            CatchmentOpenFileDialog.Title = "Select Managed Flow File";
+            CatchmentOpenFileDialog.Filter = "Managed Flow | *.FLO";
+
+            if (CatchmentOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                lbPumpingFrom.Items.Add(CatchmentOpenFileDialog.SafeFileName);
+            }
+        }
+
+        private void btnToAdd_Click(object sender, EventArgs e)
+        {
+            CatchmentOpenFileDialog.InitialDirectory =
+               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Global.DIR.FLO);
+            CatchmentOpenFileDialog.Title = "Select Managed Flow File";
+            CatchmentOpenFileDialog.Filter = "Managed Flow | *.FLO";
+
+            if (CatchmentOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                lbPumpingTo.Items.Add(CatchmentOpenFileDialog.SafeFileName);
+            }
         }
     }
 }

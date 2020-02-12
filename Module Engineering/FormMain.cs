@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace warmf {
         public DialogSystemCoeffs dlgSystemCoeffs;
         public DialogReservoirCoeffs dlgReservoirCoeffs;
         public DialogOutput dlgOutput;
+        public DialogRunSimulation dlgRunSimulation;
 
         public FormMain()
         {
@@ -44,11 +46,11 @@ namespace warmf {
 
             // dialogs called from within the Engineering Module (River Coefficients,
             // Catchment Coefficients, System Coefficients, Reservoir Coefficients)
-            dlgRiverCoeffs = new DialogRiverCoeffs(this); // used in Engineering module to show river coefficients
-            dlgCatchCoeffs = new DialogCatchCoeffs(this); // used in Engineering module to show catchment coefficients
-            dlgSystemCoeffs = new DialogSystemCoeffs(this); //used in Engineering module to show the system coefficients
-            dlgReservoirCoeffs = new DialogReservoirCoeffs(this); //used in Engineering module to show the reservoir coefficients
-            dlgOutput = new DialogOutput(this); //used to display output
+            //dlgRiverCoeffs = new DialogRiverCoeffs(this); // used in Engineering module to show river coefficients
+            //dlgCatchCoeffs = new DialogCatchCoeffs(this); // used in Engineering module to show catchment coefficients
+            //dlgSystemCoeffs = new DialogSystemCoeffs(this); //used in Engineering module to show the system coefficients
+            //dlgReservoirCoeffs = new DialogReservoirCoeffs(this); //used in Engineering module to show the reservoir coefficients
+            //dlgOutput = new DialogOutput(this); //used to display output
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -160,10 +162,8 @@ namespace warmf {
 
             // read in Coefficients file
             string fname = Global.DIR.COE + "Catawba.coe";
-            //string fname = Global.DIR_DATA+"coe/Henn.coe";
-            //string fname = Global.DIR_DATA+"coe/SanJoaquin.coe";
 
-            if (!Global.coe.ReadFile(fname))
+            if (!Global.coe.ReadCOE(fname))
             {
                 MessageBox.Show(this, "Error reading coefficients file.", "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
             }
@@ -230,12 +230,19 @@ namespace warmf {
                     }
                 if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
                 {
-                    dlgRiverCoeffs.Populate(ii);
-                    dlgRiverCoeffs.ShowDialog();
+                    using (dlgRiverCoeffs = new DialogRiverCoeffs(this))
+                    {
+                        dlgRiverCoeffs.Populate(ii);
+                        dlgRiverCoeffs.ShowDialog();
+                    }
                 }
                 else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
                 {
-                    dlgOutput.ShowDialog();
+                    using (dlgOutput = new DialogOutput(this))
+                    {
+                        dlgOutput.Populate("River", ii);
+                        dlgOutput.ShowDialog();
+                    }
                 }
                 else
                 {
@@ -275,12 +282,19 @@ namespace warmf {
                     }
                 if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
                 {
-                    dlgReservoirCoeffs.Populate(iRes, iSeg);
-                    dlgReservoirCoeffs.ShowDialog();
+                    using (dlgReservoirCoeffs = new DialogReservoirCoeffs(this))
+                    {
+                        dlgReservoirCoeffs.Populate(iRes, iSeg);
+                        dlgReservoirCoeffs.ShowDialog();
+                    }
                 }
                 else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
                 {
-                    dlgOutput.ShowDialog();
+                    //need to populate the dialog - but is it the same dialog as is used for catchments and rivers?
+                    using (dlgOutput = new DialogOutput(this))
+                    {
+                        dlgOutput.ShowDialog();
+                    }
                 }
                 else
                 {
@@ -314,12 +328,19 @@ namespace warmf {
                     }
                 if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
                 {
-                    dlgCatchCoeffs.Populate(ii);
-                    dlgCatchCoeffs.ShowDialog();
+                    using (dlgCatchCoeffs = new DialogCatchCoeffs(this))
+                    {
+                        dlgCatchCoeffs.Populate(ii);
+                        dlgCatchCoeffs.ShowDialog();
+                    }
                 }
                 else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
                 {
-                    dlgOutput.ShowDialog();
+                    using (dlgOutput = new DialogOutput(this))
+                    {
+                        dlgOutput.Populate("Catchment", ii);
+                        dlgOutput.ShowDialog();
+                    } 
                 }
                 else
                 {
@@ -331,8 +352,11 @@ namespace warmf {
             {
                 if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
                 {
-                    dlgSystemCoeffs.Populate();
-                    dlgSystemCoeffs.ShowDialog();
+                    using (dlgSystemCoeffs = new DialogSystemCoeffs(this))
+                    {
+                        dlgSystemCoeffs.Populate();
+                        dlgSystemCoeffs.ShowDialog();
+                    }
                 }
                 else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
                 {
@@ -343,8 +367,6 @@ namespace warmf {
                     MessageBox.Show("Gowdy or Herr Output Selected");
                 }
             }
-
-
         }
 
         private void miFileExit_Click(object sender, EventArgs e)
@@ -502,6 +524,60 @@ namespace warmf {
             miModeFluxOutput.BackColor = System.Drawing.SystemColors.Control;
             miModeLongGowdyOutput.BackColor = System.Drawing.SystemColors.Highlight;
             miModeOutput.BackColor = System.Drawing.SystemColors.Control;
+        }
+
+        private void miScenarioSave_Click(object sender, EventArgs e)
+        {
+            Global.coe.WriteCOE("c:/temp/testWriteCOE.COE");
+        }
+
+        private void miScenarioCompare_Click(object sender, EventArgs e)
+        {
+            StreamReader newCOE = new StreamReader("c:/temp/testWriteCOE.COE");
+            StreamReader oldCOE = new StreamReader("C:/Systech/WARMF_GUI/Watershed-Analysis/data/input/coe/Catawba.COE");
+            StreamWriter swErrors = new StreamWriter("c:/temp/COEErrors.txt");
+            string newCOEline, oldCOEline, newCOElineTrim;
+            int result, i;
+            char[] trimChars = { ' ' };
+
+            i = 1;
+            newCOEline = newCOE.ReadLine();
+            while (newCOEline != null)
+            {
+                newCOElineTrim = newCOEline.TrimEnd(trimChars);
+                oldCOEline = oldCOE.ReadLine().TrimEnd(trimChars);
+                result = string.Compare(newCOElineTrim, oldCOEline);
+                if (result != 0)
+                {
+                    swErrors.WriteLine("Line " + i.ToString());
+                    swErrors.WriteLine("Old: " + oldCOEline);
+                    swErrors.WriteLine("New: " + newCOElineTrim);
+                    swErrors.WriteLine();
+
+                    //Display via message box
+                    //if (MessageBox.Show("Line " + i + " error." + Environment.NewLine + 
+                    //    "New: '" + newCOEline + "'" + Environment.NewLine +
+                    //    "Old: '" + oldCOEline + "'" + Environment.NewLine +
+                    //    "Do you want to continue?", "Comparison Fail", MessageBoxButtons.YesNo) == DialogResult.No)
+                    //{
+                    //    return;
+                    //} 
+                }
+                i++;
+                newCOEline = newCOE.ReadLine();
+            }
+            MessageBox.Show("No further discrepancies were found" + Environment.NewLine + "Lines Reviewed: " + i.ToString()
+                , "Comparison Complete",MessageBoxButtons.OK);
+        }
+
+        private void miScenarioRun_Click(object sender, EventArgs e)
+        {
+            using (dlgRunSimulation = new DialogRunSimulation(this))
+            {
+                dlgRunSimulation.Populate();
+                dlgRunSimulation.ShowDialog();
+            }
+            
         }
     }
 }

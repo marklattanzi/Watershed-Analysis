@@ -139,14 +139,14 @@
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label11 = new System.Windows.Forms.Label();
             this.tpPtSrc = new System.Windows.Forms.TabPage();
-            this.tbNPDESnum = new System.Windows.Forms.TextBox();
+            this.tbNPDESNumber = new System.Windows.Forms.TextBox();
             this.label35 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.rbtnAmbient = new System.Windows.Forms.RadioButton();
-            this.rbtnZero = new System.Windows.Forms.RadioButton();
+            this.rbUnspecAmbient = new System.Windows.Forms.RadioButton();
+            this.rbUnspecZero = new System.Windows.Forms.RadioButton();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.rbtnExternal = new System.Windows.Forms.RadioButton();
-            this.rbtnInternal = new System.Windows.Forms.RadioButton();
+            this.rbSourceExternal = new System.Windows.Forms.RadioButton();
+            this.rbSourceInternal = new System.Windows.Forms.RadioButton();
             this.label34 = new System.Windows.Forms.Label();
             this.btnRemovePTS = new System.Windows.Forms.Button();
             this.btnAddPTS = new System.Windows.Forms.Button();
@@ -215,10 +215,6 @@
             this.btnDeepMinePermits = new System.Windows.Forms.Button();
             this.chbxDeepMines = new System.Windows.Forms.CheckBox();
             this.tpCequalw2 = new System.Windows.Forms.TabPage();
-            this.btnOK = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnHelp = new System.Windows.Forms.Button();
-            this.CatchmentOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.gbCEQUALW2chem = new System.Windows.Forms.GroupBox();
             this.btnSelectChemFile = new System.Windows.Forms.Button();
             this.tbCEQUALconcFile = new System.Windows.Forms.TextBox();
@@ -230,6 +226,25 @@
             this.tbCEQUALflowFile = new System.Windows.Forms.TextBox();
             this.label36 = new System.Windows.Forms.Label();
             this.cbWriteCEQUALoutput = new System.Windows.Forms.CheckBox();
+            this.btnOK = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnHelp = new System.Windows.Forms.Button();
+            this.CatchmentOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.btnToRemove = new System.Windows.Forms.Button();
+            this.btnFromRemove = new System.Windows.Forms.Button();
+            this.btnToAdd = new System.Windows.Forms.Button();
+            this.btnFromAdd = new System.Windows.Forms.Button();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.lbPumpingTo = new System.Windows.Forms.ListBox();
+            this.lbPumpingFrom = new System.Windows.Forms.ListBox();
+            this.dgvReactions = new System.Windows.Forms.DataGridView();
+            this.Soil = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Surface = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Canopy = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Biozone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label39 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
             this.tcCatchTabs.SuspendLayout();
             this.tpPhysData.SuspendLayout();
             this.gbSizeSlope.SuspendLayout();
@@ -256,7 +271,9 @@
             this.tpPtSrc.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            this.tpPumping.SuspendLayout();
             this.tpSeptic.SuspendLayout();
+            this.tpRxns.SuspendLayout();
             this.tpSoil.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgSoilHydroCoeffs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgInorganicC)).BeginInit();
@@ -271,6 +288,7 @@
             this.gbCEQUALW2chem.SuspendLayout();
             this.gbCEQUALW2temp.SuspendLayout();
             this.gbCEQUALW2flow.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReactions)).BeginInit();
             this.SuspendLayout();
             // 
             // tcCatchTabs
@@ -1036,30 +1054,30 @@
             this.groupBox4.Controls.Add(this.label8);
             this.groupBox4.Controls.Add(this.label9);
             this.groupBox4.Controls.Add(this.label10);
-            this.groupBox4.Location = new System.Drawing.Point(204, 214);
+            this.groupBox4.Location = new System.Drawing.Point(216, 146);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(305, 192);
+            this.groupBox4.Size = new System.Drawing.Size(231, 132);
             this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Surface Soil Particle Composition";
             // 
             // tbSand
             // 
-            this.tbSand.Location = new System.Drawing.Point(110, 137);
+            this.tbSand.Location = new System.Drawing.Point(115, 93);
             this.tbSand.Name = "tbSand";
             this.tbSand.Size = new System.Drawing.Size(100, 22);
             this.tbSand.TabIndex = 8;
             // 
             // tbSilt
             // 
-            this.tbSilt.Location = new System.Drawing.Point(110, 100);
+            this.tbSilt.Location = new System.Drawing.Point(115, 56);
             this.tbSilt.Name = "tbSilt";
             this.tbSilt.Size = new System.Drawing.Size(100, 22);
             this.tbSilt.TabIndex = 7;
             // 
             // tbClay
             // 
-            this.tbClay.Location = new System.Drawing.Point(110, 65);
+            this.tbClay.Location = new System.Drawing.Point(115, 21);
             this.tbClay.Name = "tbClay";
             this.tbClay.Size = new System.Drawing.Size(100, 22);
             this.tbClay.TabIndex = 6;
@@ -1067,7 +1085,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(15, 71);
+            this.label8.Location = new System.Drawing.Point(20, 27);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(34, 16);
             this.label8.TabIndex = 3;
@@ -1076,7 +1094,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(15, 106);
+            this.label9.Location = new System.Drawing.Point(20, 62);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(27, 16);
             this.label9.TabIndex = 4;
@@ -1085,7 +1103,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(15, 137);
+            this.label10.Location = new System.Drawing.Point(20, 93);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(38, 16);
             this.label10.TabIndex = 5;
@@ -1093,15 +1111,15 @@
             // 
             // tbSoilErosivity
             // 
-            this.tbSoilErosivity.Location = new System.Drawing.Point(295, 128);
+            this.tbSoilErosivity.Location = new System.Drawing.Point(342, 118);
             this.tbSoilErosivity.Name = "tbSoilErosivity";
-            this.tbSoilErosivity.Size = new System.Drawing.Size(100, 22);
+            this.tbSoilErosivity.Size = new System.Drawing.Size(105, 22);
             this.tbSoilErosivity.TabIndex = 1;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(166, 131);
+            this.label5.Location = new System.Drawing.Point(213, 121);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(128, 16);
             this.label5.TabIndex = 0;
@@ -1341,7 +1359,7 @@
             // 
             // tpPtSrc
             // 
-            this.tpPtSrc.Controls.Add(this.tbNPDESnum);
+            this.tpPtSrc.Controls.Add(this.tbNPDESNumber);
             this.tpPtSrc.Controls.Add(this.label35);
             this.tpPtSrc.Controls.Add(this.groupBox7);
             this.tpPtSrc.Controls.Add(this.groupBox6);
@@ -1358,12 +1376,12 @@
             this.tpPtSrc.Text = "Point Sources";
             this.tpPtSrc.UseVisualStyleBackColor = true;
             // 
-            // tbNPDESnum
+            // tbNPDESNumber
             // 
-            this.tbNPDESnum.Location = new System.Drawing.Point(332, 380);
-            this.tbNPDESnum.Name = "tbNPDESnum";
-            this.tbNPDESnum.Size = new System.Drawing.Size(173, 22);
-            this.tbNPDESnum.TabIndex = 14;
+            this.tbNPDESNumber.Location = new System.Drawing.Point(332, 380);
+            this.tbNPDESNumber.Name = "tbNPDESNumber";
+            this.tbNPDESNumber.Size = new System.Drawing.Size(173, 22);
+            this.tbNPDESNumber.TabIndex = 14;
             // 
             // label35
             // 
@@ -1377,8 +1395,8 @@
             // 
             // groupBox7
             // 
-            this.groupBox7.Controls.Add(this.rbtnAmbient);
-            this.groupBox7.Controls.Add(this.rbtnZero);
+            this.groupBox7.Controls.Add(this.rbUnspecAmbient);
+            this.groupBox7.Controls.Add(this.rbUnspecZero);
             this.groupBox7.Location = new System.Drawing.Point(330, 281);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(176, 82);
@@ -1386,32 +1404,32 @@
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Unspecified Constituents";
             // 
-            // rbtnAmbient
+            // rbUnspecAmbient
             // 
-            this.rbtnAmbient.AutoSize = true;
-            this.rbtnAmbient.Location = new System.Drawing.Point(16, 49);
-            this.rbtnAmbient.Name = "rbtnAmbient";
-            this.rbtnAmbient.Size = new System.Drawing.Size(74, 20);
-            this.rbtnAmbient.TabIndex = 8;
-            this.rbtnAmbient.TabStop = true;
-            this.rbtnAmbient.Text = "Ambient";
-            this.rbtnAmbient.UseVisualStyleBackColor = true;
+            this.rbUnspecAmbient.AutoSize = true;
+            this.rbUnspecAmbient.Location = new System.Drawing.Point(16, 49);
+            this.rbUnspecAmbient.Name = "rbUnspecAmbient";
+            this.rbUnspecAmbient.Size = new System.Drawing.Size(74, 20);
+            this.rbUnspecAmbient.TabIndex = 8;
+            this.rbUnspecAmbient.TabStop = true;
+            this.rbUnspecAmbient.Text = "Ambient";
+            this.rbUnspecAmbient.UseVisualStyleBackColor = true;
             // 
-            // rbtnZero
+            // rbUnspecZero
             // 
-            this.rbtnZero.AutoSize = true;
-            this.rbtnZero.Location = new System.Drawing.Point(16, 23);
-            this.rbtnZero.Name = "rbtnZero";
-            this.rbtnZero.Size = new System.Drawing.Size(51, 20);
-            this.rbtnZero.TabIndex = 7;
-            this.rbtnZero.TabStop = true;
-            this.rbtnZero.Text = "Zero";
-            this.rbtnZero.UseVisualStyleBackColor = true;
+            this.rbUnspecZero.AutoSize = true;
+            this.rbUnspecZero.Location = new System.Drawing.Point(16, 23);
+            this.rbUnspecZero.Name = "rbUnspecZero";
+            this.rbUnspecZero.Size = new System.Drawing.Size(51, 20);
+            this.rbUnspecZero.TabIndex = 7;
+            this.rbUnspecZero.TabStop = true;
+            this.rbUnspecZero.Text = "Zero";
+            this.rbUnspecZero.UseVisualStyleBackColor = true;
             // 
             // groupBox6
             // 
-            this.groupBox6.Controls.Add(this.rbtnExternal);
-            this.groupBox6.Controls.Add(this.rbtnInternal);
+            this.groupBox6.Controls.Add(this.rbSourceExternal);
+            this.groupBox6.Controls.Add(this.rbSourceInternal);
             this.groupBox6.Location = new System.Drawing.Point(144, 281);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(176, 82);
@@ -1419,27 +1437,27 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Water Source";
             // 
-            // rbtnExternal
+            // rbSourceExternal
             // 
-            this.rbtnExternal.AutoSize = true;
-            this.rbtnExternal.Location = new System.Drawing.Point(16, 49);
-            this.rbtnExternal.Name = "rbtnExternal";
-            this.rbtnExternal.Size = new System.Drawing.Size(74, 20);
-            this.rbtnExternal.TabIndex = 8;
-            this.rbtnExternal.TabStop = true;
-            this.rbtnExternal.Text = "External";
-            this.rbtnExternal.UseVisualStyleBackColor = true;
+            this.rbSourceExternal.AutoSize = true;
+            this.rbSourceExternal.Location = new System.Drawing.Point(16, 49);
+            this.rbSourceExternal.Name = "rbSourceExternal";
+            this.rbSourceExternal.Size = new System.Drawing.Size(74, 20);
+            this.rbSourceExternal.TabIndex = 8;
+            this.rbSourceExternal.TabStop = true;
+            this.rbSourceExternal.Text = "External";
+            this.rbSourceExternal.UseVisualStyleBackColor = true;
             // 
-            // rbtnInternal
+            // rbSourceInternal
             // 
-            this.rbtnInternal.AutoSize = true;
-            this.rbtnInternal.Location = new System.Drawing.Point(16, 23);
-            this.rbtnInternal.Name = "rbtnInternal";
-            this.rbtnInternal.Size = new System.Drawing.Size(68, 20);
-            this.rbtnInternal.TabIndex = 7;
-            this.rbtnInternal.TabStop = true;
-            this.rbtnInternal.Text = "Internal";
-            this.rbtnInternal.UseVisualStyleBackColor = true;
+            this.rbSourceInternal.AutoSize = true;
+            this.rbSourceInternal.Location = new System.Drawing.Point(16, 23);
+            this.rbSourceInternal.Name = "rbSourceInternal";
+            this.rbSourceInternal.Size = new System.Drawing.Size(68, 20);
+            this.rbSourceInternal.TabIndex = 7;
+            this.rbSourceInternal.TabStop = true;
+            this.rbSourceInternal.Text = "Internal";
+            this.rbSourceInternal.UseVisualStyleBackColor = true;
             // 
             // label34
             // 
@@ -1452,6 +1470,7 @@
             // 
             // btnRemovePTS
             // 
+            this.btnRemovePTS.Enabled = false;
             this.btnRemovePTS.Location = new System.Drawing.Point(330, 188);
             this.btnRemovePTS.Name = "btnRemovePTS";
             this.btnRemovePTS.Size = new System.Drawing.Size(122, 31);
@@ -1478,9 +1497,18 @@
             this.lbPointSources.Name = "lbPointSources";
             this.lbPointSources.Size = new System.Drawing.Size(395, 164);
             this.lbPointSources.TabIndex = 0;
+            this.lbPointSources.SelectedIndexChanged += new System.EventHandler(this.lbPointSources_SelectedIndexChanged);
             // 
             // tpPumping
             // 
+            this.tpPumping.Controls.Add(this.btnToRemove);
+            this.tpPumping.Controls.Add(this.btnFromRemove);
+            this.tpPumping.Controls.Add(this.btnToAdd);
+            this.tpPumping.Controls.Add(this.btnFromAdd);
+            this.tpPumping.Controls.Add(this.label37);
+            this.tpPumping.Controls.Add(this.label38);
+            this.tpPumping.Controls.Add(this.lbPumpingTo);
+            this.tpPumping.Controls.Add(this.lbPumpingFrom);
             this.tpPumping.Location = new System.Drawing.Point(4, 46);
             this.tpPumping.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tpPumping.Name = "tpPumping";
@@ -1693,6 +1721,9 @@
             // 
             // tpRxns
             // 
+            this.tpRxns.Controls.Add(this.label40);
+            this.tpRxns.Controls.Add(this.label39);
+            this.tpRxns.Controls.Add(this.dgvReactions);
             this.tpRxns.Location = new System.Drawing.Point(4, 46);
             this.tpRxns.Name = "tpRxns";
             this.tpRxns.Size = new System.Drawing.Size(667, 434);
@@ -2098,42 +2129,6 @@
             this.tpCequalw2.Text = "CE-QUAL-W2";
             this.tpCequalw2.UseVisualStyleBackColor = true;
             // 
-            // btnOK
-            // 
-            this.btnOK.Location = new System.Drawing.Point(104, 507);
-            this.btnOK.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(137, 39);
-            this.btnOK.TabIndex = 11;
-            this.btnOK.Text = "OK";
-            this.btnOK.UseVisualStyleBackColor = true;
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(268, 507);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(137, 39);
-            this.btnCancel.TabIndex = 12;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            // 
-            // btnHelp
-            // 
-            this.btnHelp.Location = new System.Drawing.Point(429, 507);
-            this.btnHelp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(137, 39);
-            this.btnHelp.TabIndex = 13;
-            this.btnHelp.Text = "Help";
-            this.btnHelp.UseVisualStyleBackColor = true;
-            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
-            // 
-            // CatchmentOpenFileDialog
-            // 
-            this.CatchmentOpenFileDialog.FileName = "openFileDialog1";
-            // 
             // gbCEQUALW2chem
             // 
             this.gbCEQUALW2chem.Controls.Add(this.btnSelectChemFile);
@@ -2239,6 +2234,176 @@
             this.cbWriteCEQUALoutput.TabIndex = 10;
             this.cbWriteCEQUALoutput.UseVisualStyleBackColor = true;
             // 
+            // btnOK
+            // 
+            this.btnOK.Location = new System.Drawing.Point(104, 507);
+            this.btnOK.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(137, 39);
+            this.btnOK.TabIndex = 11;
+            this.btnOK.Text = "OK";
+            this.btnOK.UseVisualStyleBackColor = true;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(268, 507);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(137, 39);
+            this.btnCancel.TabIndex = 12;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            // 
+            // btnHelp
+            // 
+            this.btnHelp.Location = new System.Drawing.Point(429, 507);
+            this.btnHelp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnHelp.Name = "btnHelp";
+            this.btnHelp.Size = new System.Drawing.Size(137, 39);
+            this.btnHelp.TabIndex = 13;
+            this.btnHelp.Text = "Help";
+            this.btnHelp.UseVisualStyleBackColor = true;
+            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
+            // 
+            // CatchmentOpenFileDialog
+            // 
+            this.CatchmentOpenFileDialog.FileName = "openFileDialog1";
+            // 
+            // btnToRemove
+            // 
+            this.btnToRemove.Enabled = false;
+            this.btnToRemove.Location = new System.Drawing.Point(500, 364);
+            this.btnToRemove.Name = "btnToRemove";
+            this.btnToRemove.Size = new System.Drawing.Size(75, 23);
+            this.btnToRemove.TabIndex = 15;
+            this.btnToRemove.Text = "Remove";
+            this.btnToRemove.UseVisualStyleBackColor = true;
+            this.btnToRemove.Click += new System.EventHandler(this.btnToRemove_Click);
+            // 
+            // btnFromRemove
+            // 
+            this.btnFromRemove.Enabled = false;
+            this.btnFromRemove.Location = new System.Drawing.Point(175, 364);
+            this.btnFromRemove.Name = "btnFromRemove";
+            this.btnFromRemove.Size = new System.Drawing.Size(75, 23);
+            this.btnFromRemove.TabIndex = 14;
+            this.btnFromRemove.Text = "Remove";
+            this.btnFromRemove.UseVisualStyleBackColor = true;
+            this.btnFromRemove.Click += new System.EventHandler(this.btnFromRemove_Click);
+            // 
+            // btnToAdd
+            // 
+            this.btnToAdd.Location = new System.Drawing.Point(419, 364);
+            this.btnToAdd.Name = "btnToAdd";
+            this.btnToAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnToAdd.TabIndex = 13;
+            this.btnToAdd.Text = "Add";
+            this.btnToAdd.UseVisualStyleBackColor = true;
+            this.btnToAdd.Click += new System.EventHandler(this.btnToAdd_Click);
+            // 
+            // btnFromAdd
+            // 
+            this.btnFromAdd.Location = new System.Drawing.Point(94, 364);
+            this.btnFromAdd.Name = "btnFromAdd";
+            this.btnFromAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnFromAdd.TabIndex = 12;
+            this.btnFromAdd.Text = "Add";
+            this.btnFromAdd.UseVisualStyleBackColor = true;
+            this.btnFromAdd.Click += new System.EventHandler(this.btnFromAdd_Click);
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(336, 48);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(147, 16);
+            this.label37.TabIndex = 11;
+            this.label37.Text = "Pumping To Catchment:";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(17, 48);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(164, 16);
+            this.label38.TabIndex = 10;
+            this.label38.Text = "Pumping From Catchment:";
+            // 
+            // lbPumpingTo
+            // 
+            this.lbPumpingTo.FormattingEnabled = true;
+            this.lbPumpingTo.ItemHeight = 16;
+            this.lbPumpingTo.Location = new System.Drawing.Point(339, 64);
+            this.lbPumpingTo.Name = "lbPumpingTo";
+            this.lbPumpingTo.Size = new System.Drawing.Size(311, 276);
+            this.lbPumpingTo.TabIndex = 9;
+            this.lbPumpingTo.SelectedIndexChanged += new System.EventHandler(this.lbPumpingTo_SelectedIndexChanged);
+            // 
+            // lbPumpingFrom
+            // 
+            this.lbPumpingFrom.FormattingEnabled = true;
+            this.lbPumpingFrom.ItemHeight = 16;
+            this.lbPumpingFrom.Location = new System.Drawing.Point(20, 64);
+            this.lbPumpingFrom.Name = "lbPumpingFrom";
+            this.lbPumpingFrom.Size = new System.Drawing.Size(311, 276);
+            this.lbPumpingFrom.TabIndex = 8;
+            this.lbPumpingFrom.SelectedIndexChanged += new System.EventHandler(this.lbPumpingFrom_SelectedIndexChanged);
+            // 
+            // dgvReactions
+            // 
+            this.dgvReactions.AllowUserToAddRows = false;
+            this.dgvReactions.AllowUserToDeleteRows = false;
+            this.dgvReactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvReactions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Soil,
+            this.Surface,
+            this.Canopy,
+            this.Biozone});
+            this.dgvReactions.Location = new System.Drawing.Point(21, 38);
+            this.dgvReactions.Name = "dgvReactions";
+            this.dgvReactions.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dgvReactions.Size = new System.Drawing.Size(624, 351);
+            this.dgvReactions.TabIndex = 0;
+            // 
+            // Soil
+            // 
+            this.Soil.HeaderText = "Soil";
+            this.Soil.Name = "Soil";
+            // 
+            // Surface
+            // 
+            this.Surface.HeaderText = "Surface";
+            this.Surface.Name = "Surface";
+            // 
+            // Canopy
+            // 
+            this.Canopy.HeaderText = "Canopy";
+            this.Canopy.Name = "Canopy";
+            // 
+            // Biozone
+            // 
+            this.Biozone.HeaderText = "Biozone";
+            this.Biozone.Name = "Biozone";
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(18, 19);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(101, 16);
+            this.label39.TabIndex = 1;
+            this.label39.Text = "Reaction Rates:";
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(18, 392);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(360, 16);
+            this.label40.TabIndex = 2;
+            this.label40.Text = "Note: Biozone reaction rates are rate coefficients (cm3/mg-d)";
+            // 
             // DialogCatchCoeffs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -2299,8 +2464,12 @@
             this.groupBox7.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
+            this.tpPumping.ResumeLayout(false);
+            this.tpPumping.PerformLayout();
             this.tpSeptic.ResumeLayout(false);
             this.tpSeptic.PerformLayout();
+            this.tpRxns.ResumeLayout(false);
+            this.tpRxns.PerformLayout();
             this.tpSoil.ResumeLayout(false);
             this.tpSoil.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgSoilHydroCoeffs)).EndInit();
@@ -2322,6 +2491,7 @@
             this.gbCEQUALW2temp.PerformLayout();
             this.gbCEQUALW2flow.ResumeLayout(false);
             this.gbCEQUALW2flow.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReactions)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2507,16 +2677,16 @@
         private System.Windows.Forms.CheckBox chbxDeepMines;
         private System.Windows.Forms.Label lblSoilHydroCoeffs;
         private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.RadioButton rbtnAmbient;
-        private System.Windows.Forms.RadioButton rbtnZero;
+        private System.Windows.Forms.RadioButton rbUnspecAmbient;
+        private System.Windows.Forms.RadioButton rbUnspecZero;
         private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.RadioButton rbtnExternal;
-        private System.Windows.Forms.RadioButton rbtnInternal;
+        private System.Windows.Forms.RadioButton rbSourceExternal;
+        private System.Windows.Forms.RadioButton rbSourceInternal;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Button btnRemovePTS;
         private System.Windows.Forms.Button btnAddPTS;
         private System.Windows.Forms.ListBox lbPointSources;
-        private System.Windows.Forms.TextBox tbNPDESnum;
+        private System.Windows.Forms.TextBox tbNPDESNumber;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.OpenFileDialog CatchmentOpenFileDialog;
         private System.Windows.Forms.GroupBox gbCEQUALW2chem;
@@ -2530,5 +2700,20 @@
         private System.Windows.Forms.TextBox tbCEQUALflowFile;
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.CheckBox cbWriteCEQUALoutput;
+        private System.Windows.Forms.Button btnToRemove;
+        private System.Windows.Forms.Button btnFromRemove;
+        private System.Windows.Forms.Button btnToAdd;
+        private System.Windows.Forms.Button btnFromAdd;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.ListBox lbPumpingTo;
+        private System.Windows.Forms.ListBox lbPumpingFrom;
+        private System.Windows.Forms.DataGridView dgvReactions;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Soil;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Surface;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Canopy;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Biozone;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.Label label39;
     }
 }

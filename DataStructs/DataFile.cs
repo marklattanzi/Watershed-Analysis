@@ -31,7 +31,7 @@ namespace warmf
 
         public bool ParseString(string TheString, int NumValues)
         {
-            int intRes, day, month, year, hour, minute;
+            //int intRes, day, month, year, hour, minute;
 
             ParseDate(TheString);
 /*            day = Int32.TryParse(TheString.Substring(0, 2), out intRes) ? intRes : 0;
@@ -91,7 +91,8 @@ namespace warmf
             NumGroups = 1;
             ParameterNames = new List<string>();
             ParameterCodes = new List<string>();
-            TheData = new List<DataLine>(); }
+            TheData = new List<DataLine>();
+        }
 
         public struct GraphLabels
         {
@@ -179,10 +180,7 @@ namespace warmf
 
             try
             {
-                int intRes;
-                double dblRes;
-                string line;
-                int day, month, year, hour, minute;
+                string line;               
                 DataLine thisDataLine;
                 sr = new STechStreamReader(filename);
 
