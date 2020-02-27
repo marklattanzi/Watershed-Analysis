@@ -16,6 +16,8 @@ namespace warmf
         public ObservedFile(string fname)
         {
             filename = fname;
+            FlexibleColumns = true;
+            Sortable = true;
         }
     }
 }

@@ -194,6 +194,11 @@ namespace warmf {
                         break;
                 }
 
+                // Enable/disable Edit menu items
+                columnsToolStripMenuItem.Enabled = activeData.FlexibleColumns;
+                sortByToolStripMenuItem.Enabled = activeData.Sortable;
+                fillMissingDataToolStripMenuItem.Enabled = activeData.Fillable;
+
                 if (activeData.ReadFile())
                  {
                     ShowHeaderData();
@@ -462,5 +467,72 @@ namespace warmf {
 				fileInTable = activeData.filename;
 			}
 		}
-	}
+
+        private void columnsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // Called from Edit / Sort by... / Data Source in the Data Module menu
+        private void dateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int i, j;
+            int sortIncrement = 6000;
+
+            // This is the maximum number of things to sort at once without crashing
+            int numIterations = activeData.NumLines / sortIncrement;
+
+            // Initial sort - the only one needed if there are less than "SORTINCREMENT" lines
+            for (i = 0; i < activeData.NumLines - 1; i += sortIncrement)
+                activeData.SortByDate(i, Math.Min(i + sortIncrement, activeData.NumLines) - 1);
+
+            for (j = 0; j < numIterations; j++)
+            {
+                // Split each sorted block in half
+                for (i = sortIncrement / 2; i < activeData.NumLines - sortIncrement; i += sortIncrement)
+                    activeData.SortByDate(i, i + sortIncrement - 1);
+
+                // Sort again the regular way
+                for (i = 0; i < activeData.NumLines; i += sortIncrement)
+                    activeData.SortByDate(i, Math.Min(i + sortIncrement, activeData.NumLines) - 1);
+            }
+
+        }
+
+        // Called from Edit / Sort by... / Data Source in the Data Module menu
+        private void dataSourceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // Called from Edit / Fill Missing Data in the Data Module menu
+        private void fillMissingDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // Called from Edit / Extrapolate in the Data Module menu
+        private void extrapolateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // Called from Edit / Truncate in the Data Module menu
+        private void truncateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // Called from Edit / Import Delimited in the Data Module menu
+        private void importDelimitedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // Called from Edit / Import HEC-DSS in the Data Module menu
+        private void importHECDSSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

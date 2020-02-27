@@ -17,7 +17,11 @@ namespace warmf
         public string npdesPermit;
 
         // methods
-        public PTSFile(string fname) { filename = fname; }
+        public PTSFile(string fname)
+        {
+            filename = fname;
+            FlexibleColumns = true;
+        }
 
         public bool ReadHeader()
         {

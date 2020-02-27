@@ -73,6 +73,9 @@ namespace warmf
         public int NumLines;
         public int NumParameters;
         public int NumGroups;
+        public bool FlexibleColumns;
+        public bool Sortable;
+        public bool Fillable;
         public List<string> ParameterNames;
         public List<string> ParameterCodes;
 
@@ -89,6 +92,9 @@ namespace warmf
             NumLines = 0;
             NumParameters = 0;
             NumGroups = 1;
+            FlexibleColumns = false;
+            Sortable = false;
+            Fillable = false;
             ParameterNames = new List<string>();
             ParameterCodes = new List<string>();
             TheData = new List<DataLine>();
@@ -269,5 +275,50 @@ namespace warmf
 
         }
 
+        // Sorts the data by date - algorithm from Microsoft Fortran Powerstation
+        // Uses Quick_Sort from FORTRAN Powerstation 4.0 "Fortran for Engineers"
+        public bool SortByDate(int Left, int Right)
+        {
+            if (!Sortable)
+                return false;
+
+            int left1, right1;
+            DataLine temp;
+
+            if (Left < Right)
+            {
+                left1 = Left;
+                right1 = Right;
+
+                do
+                {
+                    // Shift left1 to the right
+                    while (left1 < Right && !(TheData[left1].Date > TheData[Left].Date))
+                        left1++;
+
+                    // Shift right1 to the left
+                    while (Left < right1 && !(TheData[right1].Date < TheData[Left].Date))
+                        right1--;
+
+                    // Swap data lines
+                    if (left1 < right1)
+                    {
+                        temp = TheData[left1];
+                        TheData[left1] = TheData[right1];
+                        TheData[right1] = temp;
+                    }
+                } while (left1 < right1);
+
+                temp = TheData[Left];
+                TheData[Left] = TheData[right1];
+                TheData[right1] = temp;
+                // Sort left subset
+                SortByDate(Left, right1 - 1);
+                // Sort right subset
+                SortByDate(right1 + 1, Right);
+            }
+            
+            return true;
+        }
     }
 }

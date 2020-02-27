@@ -13,6 +13,8 @@ namespace warmf
         public AIRFile(string fname)
         {
             filename = fname;
+            FlexibleColumns = true;
+            Fillable = true;
         }
 
         // Reads the data in AIR file format

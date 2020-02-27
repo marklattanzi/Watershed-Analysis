@@ -23,6 +23,8 @@ namespace warmf {
             ParameterNames.Add("Dew Point Temperature, C");
             ParameterNames.Add("Air Pressure, mbar");
             ParameterNames.Add("Wind Speed, m/s");
+
+            Fillable = true;
         }
 
         // Overridden ReadParameters routine to do nothing
