@@ -103,11 +103,12 @@ namespace warmf
                     Node n = new Node();
                     n.ID = Global.coe.rivers[i].idNum;
                     n.Type = "RIVER";
+                    n.Name = Global.coe.rivers[i].name;
 
                     //first subwatershed boundary found
                     if (lbSubwatersheds.Items.Count == 0)
                     {
-                        lbSubwatersheds.Items.Add(Global.coe.rivers[i].name);
+                        lbSubwatersheds.Items.Add(n.Name);
                         SubwatershedNodesList.Add(n);
                     }
                     else
@@ -115,16 +116,25 @@ namespace warmf
                         //is current node upstream of last entry in SubwatershedNodes list
                         if (isDownstreamOf(n, SubwatershedNodesList[SubwatershedNodesList.Count - 1]))
                         {
+                            lbSubwatersheds.Items.Add(n.Name);
                             SubwatershedNodesList.Add(n);
                         }
-                        else //current node is upstream of last item in SubwatershedNodes list
+                        else //current node is either at same level as or upstream of last item in SubwatershedNodes list
                         {
+                            bool sameLevel = true;
                             for (int j = SubwatershedNodesList.Count - 1; j >= 0; j--)
                             {
                                 if (isDownstreamOf(n, SubwatershedNodesList[j]))
                                 {
+                                    lbSubwatersheds.Items.Insert(j, n.Name);
                                     SubwatershedNodesList.Insert(j,n);
+                                    sameLevel = false;
                                 }
+                            }
+                            if (sameLevel == true)
+                            {
+                                lbSubwatersheds.Items.Add(n.Name);
+                                SubwatershedNodesList.Add(n);
                             }
                         }
                     }  
@@ -140,7 +150,41 @@ namespace warmf
                         Node n = new Node();
                         n.ID = Global.coe.reservoirs[i].reservoirSegs[k].idNum;
                         n.Type = "RESERVOIR SEGMENT";
+                        n.Name = Global.coe.reservoirs[i].reservoirSegs[k].name;
 
+                        //first subwatershed boundary found
+                        if (lbSubwatersheds.Items.Count == 0)
+                        {
+                            lbSubwatersheds.Items.Add(n.Name);
+                            SubwatershedNodesList.Add(n);
+                        }
+                        else
+                        {
+                            //is current node upstream of last entry in SubwatershedNodes list
+                            if (isDownstreamOf(n, SubwatershedNodesList[SubwatershedNodesList.Count - 1]))
+                            {
+                                lbSubwatersheds.Items.Add(n.Name);
+                                SubwatershedNodesList.Add(n);
+                            }
+                            else //current node is either at same level as or upstream of last item in SubwatershedNodes list
+                            {
+                                bool sameLevel = true;
+                                for (int j = SubwatershedNodesList.Count - 1; j >= 0; j--)
+                                {
+                                    if (isDownstreamOf(n, SubwatershedNodesList[j]))
+                                    {
+                                        lbSubwatersheds.Items.Insert(j, n.Name);
+                                        SubwatershedNodesList.Insert(j, n);
+                                        sameLevel = false;
+                                    }
+                                }
+                                if (sameLevel == true)
+                                {
+                                    lbSubwatersheds.Items.Add(n.Name);
+                                    SubwatershedNodesList.Add(n);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -150,6 +194,7 @@ namespace warmf
         {
             public int ID { get; set; }
             public string Type { get; set; }
+            public string Name { get; set; }
         }
 
         public static DateTime getMinDate(string fileName, DateTime minDate)
