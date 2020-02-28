@@ -51,6 +51,15 @@ namespace warmf {
             Write(Value);
         }
 
+        // Writes a boolean as 1 or 0
+        public void WriteBool(bool Value)
+        {
+            if (Value)
+                WriteInt(1);
+            else
+                WriteInt(0);
+        }
+
         // Writes an integer in an 8 character field
         public void WriteInt(int Value)
         {

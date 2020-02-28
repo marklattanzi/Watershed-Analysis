@@ -23,7 +23,20 @@ namespace warmf {
             ParameterNames.Add("Dew Point Temperature, C");
             ParameterNames.Add("Air Pressure, mbar");
             ParameterNames.Add("Wind Speed, m/s");
+
+            Fillable = true;
         }
 
+        // Overridden ReadParameters routine to do nothing
+        public override bool ReadParameters(ref STechStreamReader SW)
+        {
+            return true;
+        }
+
+        // Overridden WriteParameters routine to do nothing
+        public override bool WriteParameters(ref STechStreamWriter SW)
+        {
+            return true;
+        }
     }
 }

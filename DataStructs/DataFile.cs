@@ -73,6 +73,9 @@ namespace warmf
         public int NumLines;
         public int NumParameters;
         public int NumGroups;
+        public bool FlexibleColumns;
+        public bool Sortable;
+        public bool Fillable;
         public List<string> ParameterNames;
         public List<string> ParameterCodes;
 
@@ -89,6 +92,9 @@ namespace warmf
             NumLines = 0;
             NumParameters = 0;
             NumGroups = 1;
+            FlexibleColumns = false;
+            Sortable = false;
+            Fillable = false;
             ParameterNames = new List<string>();
             ParameterCodes = new List<string>();
             TheData = new List<DataLine>();
@@ -128,11 +134,13 @@ namespace warmf
 
         public virtual bool ReadHeader(ref STechStreamReader SR)
         {
-            return ReadVersionLatLongName(ref SR);
+            ReadVersionLatLongName(ref SR);
+
+            return ReadParameters(ref SR);
         }
 
         // Reads the number and codes of parameters
-        public bool ReadParameters(ref STechStreamReader SR)
+        public virtual bool ReadParameters(ref STechStreamReader SR)
         {
             try
             { 
@@ -141,7 +149,7 @@ namespace warmf
                 for (int ii = 0; ii < NumParameters; ii++)
                 {
                     ParameterCodes.Add(line.Substring(13 + 8 * ii, 8));
-                    ParameterNames.Add(Global.coe.GetParameterNameFromCode(ParameterCodes[ii]));
+                    ParameterNames.Add(Global.coe.GetParameterNameAndUnitsFromCode(ParameterCodes[ii]));
                 }
             }
             catch (Exception e)
@@ -151,6 +159,22 @@ namespace warmf
                 else
                     Debug.WriteLine("Error opening StreamReader for data file " + filename);
                 return false;
+            }
+
+            return true;
+        }
+
+        // Reads the lines of data
+        public virtual bool ReadData(ref STechStreamReader SR)
+        {
+            DataLine thisDataLine;
+            string line = SR.ReadLine();
+            while (line != null)
+            {
+                thisDataLine = new DataLine();
+                thisDataLine.ParseString(line, NumParameters);
+                TheData.Add(thisDataLine);
+                line = SR.ReadLine();
             }
 
             return true;
@@ -167,15 +191,7 @@ namespace warmf
                 sr = new STechStreamReader(filename);
 
                 ReadHeader(ref sr);
-
-                line = sr.ReadLine();
-                while (line != null)
-                {
-                    thisDataLine = new DataLine();
-                    thisDataLine.ParseString(line, NumParameters);
-                    TheData.Add(thisDataLine);
-                    line = sr.ReadLine();
-                }
+                ReadData(ref sr);
             }
             catch (Exception e)
             {
@@ -208,12 +224,25 @@ namespace warmf
             return true;
         }
 
-        public virtual bool WriteHeader(ref STechStreamWriter SW)
+        public virtual bool WriteParameters(ref STechStreamWriter SW)
         {
-            return WriteVersionLatLongName(ref SW);
+            SW.Write("     ");
+            SW.WriteInt(NumParameters);
+            for (int ii = 0; ii < NumParameters; ii++)
+                SW.Write(ParameterCodes[ii]);
+            SW.Write("\n");
+
+            return true;
         }
 
-        public bool WriteData(ref STechStreamWriter SW)
+        public virtual bool WriteHeader(ref STechStreamWriter SW)
+        {
+            WriteVersionLatLongName(ref SW);
+            return WriteParameters(ref SW);
+        }
+
+        // Writes all the lines of data
+        public virtual bool WriteData(ref STechStreamWriter SW)
         {
             for (int ii = 0; ii < TheData.Count(); ii++)
             {
@@ -223,6 +252,7 @@ namespace warmf
             return true;
         }
 
+        // Writes the entire file
         public bool WriteFile()
         {
             STechStreamWriter sw = null;
@@ -231,32 +261,64 @@ namespace warmf
                 sw = new STechStreamWriter(filename, false);
                 WriteHeader(ref sw);
                 WriteData(ref sw);
-/*                for (int ii = 0; ii < TheData.Count(); ii++)
-                {
-                    sw.WriteLine("{0:ddMMyyyy HHmm}{1,8:0.###}{2,8:0.#}{3,8:0.#}{4,8:0.##}{5,8:0.#}{6,8:0.#}{7,8:0.#}{8}",
-                        Convert.ToDateTime(TheData[ii].Date.ToString()),
-                        TheData[ii].Values[0],
-                        TheData[ii].Values[1],
-                        TheData[ii].Values[2],
-                        TheData[ii].Values[3],
-                        TheData[ii].Values[4],
-                        TheData[ii].Values[5],
-                        TheData[ii].Values[6],
-                        TheData[ii].Source);
-                }*/
                 sw.Close();
                 return true;
             }
             catch (Exception e)
             {
                 if (sw != null)
-                    Debug.WriteLine("Error writing MET file {0} at line {1} ", filename, sw.LineNum);
+                    Debug.WriteLine("Error writing data file {0} at line {1} ", filename, sw.LineNum);
                 else
-                    Debug.WriteLine("Error writing MET file {0}.  Problem with file creation.", filename);
+                    Debug.WriteLine("Error writing data file {0}.  Problem with file creation.", filename);
                 return true;
             }
 
         }
 
+        // Sorts the data by date - algorithm from Microsoft Fortran Powerstation
+        // Uses Quick_Sort from FORTRAN Powerstation 4.0 "Fortran for Engineers"
+        public bool SortByDate(int Left, int Right)
+        {
+            if (!Sortable)
+                return false;
+
+            int left1, right1;
+            DataLine temp;
+
+            if (Left < Right)
+            {
+                left1 = Left;
+                right1 = Right;
+
+                do
+                {
+                    // Shift left1 to the right
+                    while (left1 < Right && !(TheData[left1].Date > TheData[Left].Date))
+                        left1++;
+
+                    // Shift right1 to the left
+                    while (Left < right1 && !(TheData[right1].Date < TheData[Left].Date))
+                        right1--;
+
+                    // Swap data lines
+                    if (left1 < right1)
+                    {
+                        temp = TheData[left1];
+                        TheData[left1] = TheData[right1];
+                        TheData[right1] = temp;
+                    }
+                } while (left1 < right1);
+
+                temp = TheData[Left];
+                TheData[Left] = TheData[right1];
+                TheData[right1] = temp;
+                // Sort left subset
+                SortByDate(Left, right1 - 1);
+                // Sort right subset
+                SortByDate(right1 + 1, Right);
+            }
+            
+            return true;
+        }
     }
 }

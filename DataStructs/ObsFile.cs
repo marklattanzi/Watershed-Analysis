@@ -16,14 +16,8 @@ namespace warmf
         public ObservedFile(string fname)
         {
             filename = fname;
+            FlexibleColumns = true;
+            Sortable = true;
         }
-
-        public override bool ReadHeader(ref STechStreamReader SR)
-        {
-            base.ReadHeader(ref SR);
-
-            return ReadParameters(ref SR);
-        }
-
     }
 }

@@ -17,10 +17,18 @@ namespace warmf
         public string npdesPermit;
 
         // methods
-        public PTSFile(string fname) { filename = fname; }
+        public PTSFile(string fname)
+        {
+            filename = fname;
+            FlexibleColumns = true;
+        }
 
         public bool ReadHeader()
         {
+            string line;
+            int intRes;
+            double dblRes;
+
             STechStreamReader sr = null;
             try
             {
@@ -40,7 +48,7 @@ namespace warmf
 
         public override bool ReadHeader(ref STechStreamReader SR)
         {
-            base.ReadHeader(ref SR);
+            ReadVersionLatLongName(ref SR);
             try
             {
                 int intRes;
@@ -64,25 +72,18 @@ namespace warmf
             return ReadParameters(ref SR);
         }
 
-        //public bool ReadCOE()
-        //{
-        //    STechStreamReader sr = null;
+        public override bool WriteHeader(ref STechStreamWriter SW)
+        {
+            WriteVersionLatLongName(ref SW);
 
-        //    try
-        //    {
-        //        //int intRes;
-        //        //double dblRes;
-        //        //string line;
-        //        //int day, month, year, hour, minute;
-        //        //sr = new STechStreamReader(filename);
+            // Write parameters specific to point source files
+            SW.WriteBool(swInternal);
+            SW.WriteInt(unspecified);
+            SW.WriteDouble(outElevation);
+            SW.WriteDouble(outWidth);
+            SW.WriteLine(npdesPermit);
 
-        //        //ReadVersionLatLongName(ref sr);
-        //        return true;
-        //    }
-        //    catch
-        //    {
-        //        return false;
-        //    }
-        //}
+            return base.WriteParameters(ref SW);
+        }
     }
 }

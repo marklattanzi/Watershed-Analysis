@@ -78,26 +78,8 @@ namespace warmf {
 			if (radioGraph.Checked) PlotGraph();
 		}
 
-		// these routines need to be updated for other file types (than MET) --MRL
-		// pick data to graph
+		// PlotGraph is a relic - calls to it can be changed to PlotData
 		private void PlotGraph() {
-            /*			switch (cboxTypeOfFile.SelectedIndex) {
-                            case 0: // MET
-                                PlotData();
-                                break;
-                            case 1: // AIR QUALITY
-                                break;
-                            case 2: // OBSERVED HYDROLOGY
-                                break;
-                            case 3: // OBSERVED WATER QUALITY
-                                break;
-                            case 4: // MANAGED FLOW
-                                break;
-                            case 5: // POINT SOURCES
-                                break;
-                            case 6: // PICTURES
-                                break;
-                        }*/
             PlotData();
     }
 
@@ -134,7 +116,7 @@ namespace warmf {
 				case 3: // OBSERVED WATER QUALITY
                     // River observed water quality files
                     for (int ii = 0; ii < Global.coe.rivers.Count(); ii++)
-                        if (!String.IsNullOrWhiteSpace(Global.coe.rivers[ii].hydrologyFilename))
+                        if (!String.IsNullOrWhiteSpace(Global.coe.rivers[ii].waterQualFilename))
                             cboxFilename.Items.Add(Global.coe.rivers[ii].waterQualFilename);
                     // Reservoir observed volume / surface elevation files
                     for (int ii = 0; ii < Global.coe.reservoirs.Count(); ii++)
@@ -211,6 +193,11 @@ namespace warmf {
                     case 6: // PICTURES
                         break;
                 }
+
+                // Enable/disable Edit menu items
+                columnsToolStripMenuItem.Enabled = activeData.FlexibleColumns;
+                sortByToolStripMenuItem.Enabled = activeData.Sortable;
+                fillMissingDataToolStripMenuItem.Enabled = activeData.Fillable;
 
                 if (activeData.ReadFile())
                  {
@@ -480,5 +467,72 @@ namespace warmf {
 				fileInTable = activeData.filename;
 			}
 		}
-	}
+
+        private void columnsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // Called from Edit / Sort by... / Data Source in the Data Module menu
+        private void dateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int i, j;
+            int sortIncrement = 6000;
+
+            // This is the maximum number of things to sort at once without crashing
+            int numIterations = activeData.NumLines / sortIncrement;
+
+            // Initial sort - the only one needed if there are less than "SORTINCREMENT" lines
+            for (i = 0; i < activeData.NumLines - 1; i += sortIncrement)
+                activeData.SortByDate(i, Math.Min(i + sortIncrement, activeData.NumLines) - 1);
+
+            for (j = 0; j < numIterations; j++)
+            {
+                // Split each sorted block in half
+                for (i = sortIncrement / 2; i < activeData.NumLines - sortIncrement; i += sortIncrement)
+                    activeData.SortByDate(i, i + sortIncrement - 1);
+
+                // Sort again the regular way
+                for (i = 0; i < activeData.NumLines; i += sortIncrement)
+                    activeData.SortByDate(i, Math.Min(i + sortIncrement, activeData.NumLines) - 1);
+            }
+
+        }
+
+        // Called from Edit / Sort by... / Data Source in the Data Module menu
+        private void dataSourceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // Called from Edit / Fill Missing Data in the Data Module menu
+        private void fillMissingDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // Called from Edit / Extrapolate in the Data Module menu
+        private void extrapolateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // Called from Edit / Truncate in the Data Module menu
+        private void truncateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // Called from Edit / Import Delimited in the Data Module menu
+        private void importDelimitedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // Called from Edit / Import HEC-DSS in the Data Module menu
+        private void importHECDSSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
 }
