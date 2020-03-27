@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using warmf.Module_Data;
 
 namespace warmf {
 	public partial class FormData : Form {
@@ -526,7 +527,409 @@ namespace warmf {
         // Called from Edit / Import Delimited in the Data Module menu
         private void importDelimitedToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Get the name of the comma delimited file
+            OpenFileDialog openDialog = new OpenFileDialog();
+            openDialog.InitialDirectory = Global.DIR.ROOT;
+            openDialog.FileName = "";
+            openDialog.DefaultExt = ".csv";
+            openDialog.Filter = "Comma Delimited File (.csv)|*.csv";
+            if (openDialog.ShowDialog() == DialogResult.OK)
+            {
+                // Get the delimiter and number of ignore lines & header lines
+                DialogImportFileFormat myDialog = new DialogImportFileFormat();
+                myDialog.Populate(openDialog.FileName);
+                if (myDialog.ShowDialog() == DialogResult.OK)
+                {
+                    char delimiter = myDialog.GetDelimiter();
+                    int numIgnoreLines = myDialog.GetNumberOfIgnoreLines();
+                    int numHeaderLines = myDialog.GetNumberOfHeaderLines();
+                }
+            }
 
+            string inputFileName = "delimited.inp";
+            /*
+
+                      // Create the data Import dialog
+                      TImportHECDSSDialog *aDialog = new TImportHECDSSDialog(this, "ImportHECDSS", TheSystem);
+                     aDialog->SetHelpContextID(3240L);
+                   ImportHECDSSTransferBuffer tb;
+                        strcpy(tb.Suffix, "");
+                    tb.TheSpread = new stSuperSpreadTransferBuffer;
+                      tb.TheSpread->AllocateArrays(numHeaders, csvInfoTB.HeaderLines + 3);
+
+                        // Column headers
+                        tb.SetColumnHeaders(GetApplication());
+
+                      // Read the data file headers
+                     csvFile.open(FilenameData.FileName);
+                      CharStarArray fileTypes, blank;
+                   tb.GetFileTypes(fileTypes, GetApplication());
+
+                     // Ignore the ignore lines
+                     for (lineCount = 0; lineCount < csvInfoTB.IgnoreLines; lineCount++)
+                        csvFile.ignore(1000000, '\n');
+
+                     // Read the header lines and enter the info in the spreadsheet
+                     char tempHeader[256];
+                     int headerCount;
+                        for (lineCount = 0; lineCount < csvInfoTB.HeaderLines; lineCount++)
+                            for (headerCount = 0; headerCount < numHeaders; headerCount++)
+                         {
+                         if (headerCount < numHeaders - 1)
+                            csvFile.getline(tempHeader, 255, delimiter);
+                           else
+                            csvFile.getline(tempHeader, 255, '\n');
+                           tb.TheSpread->SetText(headerCount, lineCount, tempHeader);
+                           // Last three columns
+                           if (lineCount == 0)
+                           {
+                            tb.TheSpread->SetCombo(headerCount, csvInfoTB.HeaderLines, fileTypes, fileTypes.Pointers[0]);
+                            tb.TheSpread->SetCombo(headerCount, csvInfoTB.HeaderLines + 1, blank, "");
+                            tb.TheSpread->SetCombo(headerCount, csvInfoTB.HeaderLines + 2, blank, "");
+                           }
+                       }
+
+                     SelectPreviousImport(inputFileName, csvInfoTB.HeaderLines, tb);
+
+                     aDialog->SetTransferBuffer(&tb);
+                     if (aDialog->Execute() == IDOK)
+                     {
+                        int suffixLength = strlen(tb.Suffix);
+
+                         // Save settings to an input file
+                        // Append to save previous imports then condense to remove duplicates
+                      stofstream ofs(inputFileName, ios::app);
+
+                         // Save the order of everything in the headers
+                         stIntArray modifiedTypes;
+                      CharStarArray modifiedFiles;
+                       stIntArray modifiedParameters;
+
+                        // Save list of observed data files
+                        CharStarArray observedFiles;
+
+                        IWMMSimControlCoeffs &simControlCoeffs = (IWMMSimControlCoeffs &) TheSystem->GetSimControlCoeffs();
+
+                            // Get information from transfer buffer
+                        for (lineCount = 0; lineCount < tb.TheSpread->NumRows; lineCount++)
+                       {
+                            char spreadText[256];
+
+                            // Write to input file
+                           for (headerCount = 0; headerCount < csvInfoTB.HeaderLines; headerCount++)
+                           {
+                            tb.TheSpread->GetText(lineCount, headerCount, spreadText, 255);
+                              ofs << spreadText << '|';
+                           }
+
+                            // Get the cases where any data type was selected
+                         tb.TheSpread->GetCombo(lineCount, csvInfoTB.HeaderLines, spreadText, 255);
+
+                                // Data import linkage found
+                          int selectedFileType = fileTypes.FindString(spreadText);
+                           if (selectedFileType > 0)
+                            {
+                               modifiedTypes.AddValue(selectedFileType);
+
+                             char oldFileName[256];
+
+                               for (headerCount = csvInfoTB.HeaderLines; headerCount < csvInfoTB.HeaderLines + 3; headerCount++)
+                                {
+                                tb.TheSpread->GetCombo(lineCount, headerCount, spreadText, 255);
+                                ofs << spreadText;
+                                   if (headerCount < csvInfoTB.HeaderLines + 2)
+                                    ofs << '|';
+
+                                  // Save the file name
+                                if (headerCount == csvInfoTB.HeaderLines + 1)
+                               {
+                                    strcpy(oldFileName, spreadText);
+                                        modifiedFiles.AddString(spreadText);
+                                   }
+
+                                // Save the parameter number
+                             if (headerCount == csvInfoTB.HeaderLines + 2)
+                                 modifiedParameters.AddValue(*(tb.TheSpread->GetText(lineCount, headerCount)) - '0');
+                            }
+
+                              // Copy the files if a suffix is added
+                              if (suffixLength)
+                              {
+                                   // Compile the modified file name
+                                char newFileName[256];
+                                    strcpy(newFileName, oldFileName);
+                                  char *oldExtension = strrchr(oldFileName, '.');
+
+                                        // Add in the suffix
+                                   char *newExtension = strrchr(newFileName, '.');
+                                    strcpy(newExtension, tb.Suffix);
+                                   strcat(newFileName, oldExtension);
+
+                                // See if it a meteorology file
+                                int fileNumber = simControlCoeffs.FileNames.Meteorology.FindString(oldFileName);
+                                 if (fileNumber >= 0)
+                                  {
+                                // Copy the file
+                                            IWMMMetData md;
+                                    if (md.ReadFile(oldFileName))
+                                   {
+                                       // Change the file used by WARMF in the master record
+                                        if (simControlCoeffs.FileNames.Meteorology.Pointers[fileNumber])
+                                            delete [] simControlCoeffs.FileNames.Meteorology.Pointers[fileNumber];
+                                        simControlCoeffs.FileNames.Meteorology.Pointers[fileNumber] = new char[strlen(newFileName) + 1];
+                                        strcpy(simControlCoeffs.FileNames.Meteorology.Pointers[fileNumber], newFileName);
+
+                                        // Copy the data to the new file
+                                       md.WriteFile(newFileName);
+                                    }
+                                 }
+
+                                // See if it a managed flow file
+                                fileNumber = simControlCoeffs.FileNames.ManagedFlow.FileNames.FindString(oldFileName);
+                                 if (fileNumber >= 0)
+                                  {
+                                    // Copy the file
+                                            OutflowData od;
+                                    if (od.ReadFile(oldFileName))
+                                {
+                                        // Change the file used by WARMF in the master record
+                                        if (simControlCoeffs.FileNames.ManagedFlow.FileNames.Pointers[fileNumber])
+                                            delete [] simControlCoeffs.FileNames.ManagedFlow.FileNames.Pointers[fileNumber];
+                                      simControlCoeffs.FileNames.ManagedFlow.FileNames.Pointers[fileNumber] = new char[strlen(newFileName) + 1];
+                                       strcpy(simControlCoeffs.FileNames.ManagedFlow.FileNames.Pointers[fileNumber], newFileName);
+
+                                        // Copy the data to the new file
+                                         od.WriteFile(newFileName);
+                                   }
+                                   }
+
+                                        // See if it is a point source file
+                                fileNumber = simControlCoeffs.FileNames.PointSources.FindString(oldFileName);
+                                 if (fileNumber >= 0)
+                                  {
+                                    // Copy the file
+                                            PointSourceStruct pd;
+                                    if (pd.ReadFile(oldFileName))
+                                   {
+                                        // Change the file used by WARMF in the master record
+                                        if (simControlCoeffs.FileNames.PointSources.Pointers[fileNumber])
+                                                delete [] simControlCoeffs.FileNames.PointSources.Pointers[fileNumber];
+                                         simControlCoeffs.FileNames.PointSources.Pointers[fileNumber] = new char[strlen(newFileName) + 1];
+                                          strcpy(simControlCoeffs.FileNames.PointSources.Pointers[fileNumber], newFileName);
+
+                                        // Copy the data to the new file
+                                           pd.WriteFile(newFileName);
+                                     }
+                               }
+
+                                        // See if it is an observed data file
+                                 if (!observedFiles.Number)
+                                    observedFiles = TheSystem->GetObservedDataFileList(true, true);
+                                 fileNumber = observedFiles.FindString(oldFileName);
+                                 if (fileNumber >= 0)
+                                 {
+                                    // Copy the file
+                                    ObservedDataStruct od;
+                                    if (od.ReadFile(oldFileName))
+                                    {
+                                       // Find all instances of the observed data file and
+                                       // change them all to the new file name
+                                        char *obsFileRecord = NULL;
+                                       do
+                                       {
+                                        obsFileRecord = TheSystem->FindObservedDataFile(oldFileName);
+                                          if (obsFileRecord)
+                                            strcpy(obsFileRecord, newFileName);
+                                       }
+                                       while (obsFileRecord);
+
+                                                // Write to the new file name
+                                        od.WriteFile(newFileName);
+                                    }
+                                        }
+
+                                    // Modify the string in the set of modified files
+                               int modifiedIndex = modifiedFiles.FindString(oldFileName);
+                                if (modifiedIndex >= 0)
+                                 {
+                                    modifiedFiles.RemovePointer(modifiedIndex);
+                                  modifiedFiles.AddString(newFileName, modifiedIndex);
+                                }
+                              }
+                           }
+                           else
+                           {
+                            modifiedTypes.AddValue(-999);
+                              modifiedFiles.AddString("");
+                              modifiedParameters.AddValue(-999);
+                           }
+                           ofs << '\n';
+                       }
+
+                            // Close the input file
+                          ofs.close();
+
+                        // Remove duplicated entries
+                        CondenseImportFile(inputFileName, csvInfoTB.HeaderLines);
+
+                        // Data structure to hold imported data
+                        TimeSeriesData newData;
+                        newData.NumTypes = 1;
+                        newData.NumData = numRecords;
+                        newData.NumVariables = numHeaders;
+                        newData.AllocateArrays();
+
+                        // Structure to hold potential data source text
+                        CharStarArray *dataSourceFields = NULL;
+                        if (numRecords > 0)
+                            dataSourceFields = new CharStarArray[numRecords];
+
+                         // Get the data from the text file
+                       for (lineCount = 0; lineCount < numRecords; lineCount++)
+                        {
+                           // Get the date (assumed first for now)
+                           csvFile.getline(tempHeader, 255, delimiter);
+                           newData.Data[lineCount].Date.SetDate(tempHeader);
+                           for (headerCount = 1; headerCount < numHeaders; headerCount++)
+                           {
+                            if (headerCount < numHeaders - 1)
+                                csvFile.getline(tempHeader, 255, delimiter);
+                            else
+                                csvFile.getline(tempHeader, 255, '\n');
+                              if (strlen(tempHeader))
+                                newData.Data[lineCount].Types[0].Values[headerCount] = atof(tempHeader);
+                              else
+                                newData.Data[lineCount].Types[0].Values[headerCount] = -999.;
+
+                              // Save the field in case it is a data source
+                              dataSourceFields[lineCount].AddString(tempHeader);
+                           }
+                        }
+                        csvFile.close();
+
+                            // Get the conversion from current flow units to cms
+                      double flowConvert = 1.;
+                       IWMMSystemCoeffs &systemCoeffs = (IWMMSystemCoeffs &) TheSystem->GetSystemCoeffs();
+                            int paramNum = systemCoeffs.Constituents.FindFortranCode("MFLO");
+                         if (paramNum >= 0 && strstr(systemCoeffs.Constituents.Pointers[paramNum]->Units, "cfs"))
+                        flowConvert = 0.028318;
+
+                        stDoubleArray replaceVariable;
+                        replaceVariable.AllocateValues(systemCoeffs.Constituents.Number);
+
+                       // Get data structures for all the selected files
+                        for (headerCount = 0; headerCount < numHeaders; headerCount++)
+                         {
+                                if (modifiedTypes.Values[headerCount] > 0)
+                          {
+                            // Clear the replacement variables
+                              for (k = 0; k < replaceVariable.Number; k++)
+                                replaceVariable.Values[k] = -999.;
+
+                              // Fill in the data source
+                              if (headerCount > 0)
+                                for (lineCount = 0; lineCount < numRecords; lineCount++)
+                                    newData.Data[lineCount].SetDataSource(dataSourceFields[lineCount].GetString(headerCount - 1));
+
+                            // Open the appropriate file type
+                                    // Meteorology
+                           if (modifiedTypes.Values[headerCount] == 1)
+                            {
+                                replaceVariable.Values[modifiedParameters.Values[headerCount]] = 1.;
+
+                                IWMMMetData md;
+                                md.ReadFile(modifiedFiles.Pointers[headerCount]);
+                                  md.ReplaceData(replaceVariable, newData, headerCount, true, flowConvert);
+                               md.WriteFile(modifiedFiles.Pointers[headerCount]);
+                             }
+                              // Managed flow
+                           else if (modifiedTypes.Values[headerCount] == 2)
+                            {
+                                replaceVariable.Values[modifiedParameters.Values[headerCount]] = 1.;
+
+                                OutflowData od;
+                                od.ReadFile(modifiedFiles.Pointers[headerCount]);
+                                  od.ReplaceData(replaceVariable, newData, headerCount, true, flowConvert);
+                               od.WriteFile(modifiedFiles.Pointers[headerCount]);
+                             }
+                              // Point source
+                              else if (modifiedTypes.Values[headerCount] == 3)
+                               {
+                                PointSourceStruct ps;
+                                ps.ReadFile(modifiedFiles.Pointers[headerCount]);
+
+                                        if (modifiedParameters.Values[headerCount] < ps.NumVariables)
+                                    replaceVariable.Values[modifiedParameters.Values[headerCount]] = 1.;
+                                 else
+                                 {
+                                    // Recreate the list of total parameters which would have been in the list
+                                            int totalCounter = 0;
+                                            int first = systemCoeffs.Constituents.GetFirstOfType(typeid(stChemical), true);
+                                            int firstTotal = systemCoeffs.Constituents.GetFirstOfType(typeid(stTotalParameter), true);
+
+                                            stTotalParameter *totalParameter = NULL;
+                                     for (int k = firstTotal; k < systemCoeffs.Constituents.Number; k++)
+                                  {
+                                    totalParameter = (stTotalParameter *) systemCoeffs.Constituents.Pointers[k];
+                                       for (int l = 0; l < totalParameter->ComponentMultipliers.Number; l++)
+                                            if (totalParameter->ComponentMultipliers.Values[l] > 0. &&
+                                            ps.ColumnHeader.FindString(systemCoeffs.Constituents.Pointers[first + l]->FortranCode) >= 0)
+                                         {
+                                             totalCounter++;
+                                           break;
+                                           }
+
+                                       if (totalCounter > modifiedParameters.Values[headerCount] - ps.NumVariables)
+                                        break;
+                                  }
+
+                                            if (totalParameter && totalCounter == modifiedParameters.Values[headerCount] - ps.NumVariables + 1)
+                                    {
+                                        for (int l = 0; l < totalParameter->ComponentMultipliers.Number; l++)
+                                        {
+                                        if (totalParameter->ComponentMultipliers.Values[l] > 0.)
+                                          {
+                                            // Alias for the component which makes up a part of the total parameter
+                                             stPhysicalParameter *componentParameter = (stPhysicalParameter *) systemCoeffs.Constituents.Pointers[first + l];
+
+                                            // Index of the component in the list of point source parameters
+                                                int psIndex = ps.ColumnHeader.FindString(componentParameter->FortranCode);
+                                            if (psIndex >= 0)
+                                            replaceVariable.Values[psIndex] = totalParameter->ComponentMultipliers.Values[l] *
+                                                    totalParameter->EquivalentWeight / componentParameter->EquivalentWeight;
+                                          }
+                                       }
+                                    }
+                                 }
+
+                                  ps.ReplaceData(replaceVariable, newData, headerCount, true, flowConvert);
+                               ps.WriteFile(modifiedFiles.Pointers[headerCount]);
+                              }
+                              // Observed hydrology and observed water quality
+                           else if (modifiedTypes.Values[headerCount] == 4 || modifiedTypes.Values[headerCount] == 5)
+                            {
+
+                                replaceVariable.Values[modifiedParameters.Values[headerCount]] = 1.;
+
+                                ObservedDataStruct od;
+                                od.ReadFile(modifiedFiles.Pointers[headerCount]);
+                                  od.ReplaceData(replaceVariable, newData, headerCount, true, flowConvert);
+                               od.WriteFile(modifiedFiles.Pointers[headerCount]);
+                             }
+                           }
+                        }
+
+                        if (dataSourceFields)
+                            delete [] dataSourceFields;
+
+                        // Only record a scenario change if new files are assigned
+                        if (suffixLength)
+                            TheSystem->AddScenarioChange();
+                     }
+                  }
+               }
+
+             */
         }
 
         // Called from Edit / Import HEC-DSS in the Data Module menu
