@@ -543,10 +543,16 @@ namespace warmf {
                     char delimiter = myDialog.GetDelimiter();
                     int numIgnoreLines = myDialog.GetNumberOfIgnoreLines();
                     int numHeaderLines = myDialog.GetNumberOfHeaderLines();
+
+                    DialogImportDelimitedFile importDialog = new DialogImportDelimitedFile();
+                    importDialog.Populate(openDialog.FileName, delimiter, numIgnoreLines, numHeaderLines);
+
+                    importDialog.ShowDialog();
                 }
             }
 
             string inputFileName = "delimited.inp";
+
             /*
 
                       // Create the data Import dialog

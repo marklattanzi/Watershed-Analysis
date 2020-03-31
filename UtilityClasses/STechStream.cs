@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 // File stream reader and writer that keep track of line nums
 namespace warmf {
@@ -10,6 +11,62 @@ namespace warmf {
         public override string ReadLine() {
             LineNum++;
             return base.ReadLine();
+        }
+
+        // Determines if a character read in is the end of the stream, end of the line, or the file delimiter
+        bool IsEndOfField(int ReadChar, char Delimiter, ref bool EndOfLine)
+        {
+            // End of file or end of line, therefore end of field
+            if (EndOfStream || ReadChar == '\n')
+            {
+                EndOfLine = true;
+                return true;
+            }
+            EndOfLine = false;
+
+            // End of field if read character is a comma and we are not in the middle of quotes
+            if (ReadChar == Delimiter)
+                return true;
+
+            // If none of the above conditions are met, it is not the end of a field
+            return false;
+        }
+
+        // Gets the characters between commas in a CSV or other delimited file and reads past the trailing delimiter
+        public string ReadDelimitedField(char Delimiter, ref bool EndOfLine)
+        {
+            // Local variables
+            string field = "";
+            int charCount = 0;
+            char tempDelimiter = Delimiter;
+
+            // Check to see if the first character of the field is double quote marks
+            char readChar = Convert.ToChar(Peek());
+            bool inQuotes = (readChar == '\"');
+            // If the field is in quotes, skip past the quote marks and then make quote marks the delimiter
+            if (inQuotes)
+            {
+                tempDelimiter = '\"';
+                Read();
+            }
+
+            // Read one character at a time to check for various ways of ending the field
+            while (!EndOfStream)
+            {
+                readChar = Convert.ToChar(Read());
+                if (!IsEndOfField(readChar, tempDelimiter, ref EndOfLine))
+                    field = field + Convert.ToString(readChar);
+                else
+                    break;
+
+                charCount++;
+            }
+
+            // If the last character read was ending quote marks, read past the subsequent comma in the stream
+            if (readChar == '\"')
+                Read();
+
+            return field;
         }
     }
 
