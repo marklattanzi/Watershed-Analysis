@@ -21,9 +21,16 @@ namespace warmf {
 		public static readonly string[] PlotFileTypes = new string[] {
 			"Meterology", "Air Quality", "Observed Hydrology", "Observed Water Quality", "Managed Flow", "Point Sources", "Pictures"
 		};
+        public static readonly int FileTypeMeteorology = 0;
+        public static readonly int FileTypeAirQuality = 1;
+        public static readonly int FileTypeObservedHydrology = 2;
+        public static readonly int FileTypeObservedWaterQuality = 3;
+        public static readonly int FileTypeManagedFlow = 4;
+        public static readonly int FileTypePointSource = 5;
+        public static readonly int FileTypePictures = 6;
 
-		// FormData constructor
-		public FormData(FormMain par) {
+        // FormData constructor
+        public FormData(FormMain par) {
 			InitializeComponent();
 			this.parent = par;
 			needToSave = false;
@@ -100,30 +107,14 @@ namespace warmf {
                         cboxFilename.Items.Add(Global.coe.AIRFilename[ii]);
                     break;
 				case 2: // OBSERVED HYDROLOGY
-                    // Catchment prescribed ponding depth files
-                    for (int ii = 0; ii < Global.coe.catchments.Count(); ii++)
-                        if (Global.coe.catchments[ii].nluPonds > 0)
-                            for (int jj = 0; jj < Global.coe.catchments[ii].pondFilename.Count(); jj++)
-                                cboxFilename.Items.Add(Global.coe.catchments[ii].pondFilename[jj]);
-                    // River observed flow files
-                    for (int ii = 0; ii < Global.coe.rivers.Count(); ii++)
-                        if (!String.IsNullOrWhiteSpace(Global.coe.rivers[ii].hydrologyFilename))
-                            cboxFilename.Items.Add(Global.coe.rivers[ii].hydrologyFilename);
-                    // Reservoir observed volume / surface elevation files
-                    for (int ii = 0; ii < Global.coe.reservoirs.Count(); ii++)
-                        if (!String.IsNullOrWhiteSpace(Global.coe.reservoirs[ii].hydrologyFilename))
-                            cboxFilename.Items.Add(Global.coe.reservoirs[ii].hydrologyFilename);
+                    List<string> obsHydFiles = Global.coe.GetAllObservedHydrologyFiles();
+                    for (int ii = 0; ii < obsHydFiles.Count; ii++)
+                        cboxFilename.Items.Add(obsHydFiles[ii]);
                     break;
 				case 3: // OBSERVED WATER QUALITY
-                    // River observed water quality files
-                    for (int ii = 0; ii < Global.coe.rivers.Count(); ii++)
-                        if (!String.IsNullOrWhiteSpace(Global.coe.rivers[ii].waterQualFilename))
-                            cboxFilename.Items.Add(Global.coe.rivers[ii].waterQualFilename);
-                    // Reservoir observed volume / surface elevation files
-                    for (int ii = 0; ii < Global.coe.reservoirs.Count(); ii++)
-                        for (int jj = 0; jj < Global.coe.reservoirs[ii].reservoirSegs.Count(); jj++)
-                            if (!String.IsNullOrWhiteSpace(Global.coe.reservoirs[ii].reservoirSegs[jj].obsWQFilename))
-                                cboxFilename.Items.Add(Global.coe.reservoirs[ii].reservoirSegs[jj].obsWQFilename);
+                    List<string> obsWQFiles = Global.coe.GetAllObservedWaterQualityFiles();
+                    for (int ii = 0; ii < obsWQFiles.Count; ii++)
+                        cboxFilename.Items.Add(obsWQFiles[ii]);
                     break;
 				case 4: // MANAGED FLOW
                     for (int ii = 0; ii < Global.coe.numDIVFiles; ii++)

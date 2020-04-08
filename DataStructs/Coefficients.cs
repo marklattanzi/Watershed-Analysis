@@ -3176,5 +3176,43 @@ namespace warmf {
             else
                 return "";
         }   
+
+        // Compiles a list of all catchment, river, and reservoir observed hydrology files
+        public List<string> GetAllObservedHydrologyFiles()
+        {
+            List<string> obsHydFiles = new List<string>();
+            // Catchment prescribed ponding depth files
+            for (int ii = 0; ii < catchments.Count; ii++)
+                if (catchments[ii].nluPonds > 0)
+                    for (int jj = 0; jj < catchments[ii].pondFilename.Count; jj++)
+                        obsHydFiles.Add(catchments[ii].pondFilename[jj]);
+            // River observed flow files
+            for (int ii = 0; ii < rivers.Count; ii++)
+                if (!String.IsNullOrWhiteSpace(rivers[ii].hydrologyFilename))
+                    obsHydFiles.Add(rivers[ii].hydrologyFilename);
+            // Reservoir observed volume / surface elevation files
+            for (int ii = 0; ii < reservoirs.Count; ii++)
+                if (!String.IsNullOrWhiteSpace(reservoirs[ii].hydrologyFilename))
+                    obsHydFiles.Add(reservoirs[ii].hydrologyFilename);
+
+            return obsHydFiles;
+        }
+
+        // Compiles a list of all catchment, river, and reservoir observed hydrology files
+        public List<string> GetAllObservedWaterQualityFiles()
+        {
+            List<string> obsWQFiles = new List<string>();
+            // River observed water quality files
+            for (int ii = 0; ii < rivers.Count; ii++)
+                if (!String.IsNullOrWhiteSpace(rivers[ii].waterQualFilename))
+                    obsWQFiles.Add(rivers[ii].waterQualFilename);
+            // Reservoir observed volume / surface elevation files
+            for (int ii = 0; ii < reservoirs.Count; ii++)
+                for (int jj = 0; jj < reservoirs[ii].reservoirSegs.Count; jj++)
+                    if (!String.IsNullOrWhiteSpace(reservoirs[ii].reservoirSegs[jj].obsWQFilename))
+                        obsWQFiles.Add(reservoirs[ii].reservoirSegs[jj].obsWQFilename);
+
+            return obsWQFiles;
+        }
     }
 }

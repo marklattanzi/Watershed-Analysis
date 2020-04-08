@@ -320,5 +320,15 @@ namespace warmf
             
             return true;
         }
+
+        // Returns the index of the parameter whose Fortran code matches what was passed in
+        public int FindParameterCode(string TheCode)
+        {
+            string codeWithoutSpaces = TheCode.Trim();
+            for (int i = 0; i < ParameterCodes.Count; i++)
+                if (ParameterCodes[i].IndexOf(TheCode) == 0)
+                    return i;
+            return -1;
+        }
     }
 }
