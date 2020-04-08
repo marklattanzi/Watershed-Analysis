@@ -82,8 +82,8 @@ namespace warmf
             chartArea1.AxisY.Minimum = 0;
             for (int i = 0; i < 9; i++)
             {
-                dgvStageWidth.Rows.Insert(i, river.segment[i].stage, river.segment[i].width);
-                chartStageWidth.Series["SeriesStageWidth"].Points.AddXY(river.segment[i].width, river.segment[i].stage);
+                dgvStageWidth.Rows.Insert(i, river.stageWidthCurve[i].stage, river.stageWidthCurve[i].width);
+                chartStageWidth.Series["SeriesStageWidth"].Points.AddXY(river.stageWidthCurve[i].width, river.stageWidthCurve[i].stage);
             }
 
             //Diversions
@@ -96,19 +96,19 @@ namespace warmf
             if (river.numDiversionsTo > 0)
             {
                 for (int i = 0; i < river.numDiversionsTo; i++)
-                    lbDiversionsTo.Items.Add(Global.coe.DIVData[river.divFilenumTo[i] - 1].filename);
+                    lbDiversionsTo.Items.Add(Global.coe.DIVData[river.diversionToFilenums[i] - 1].filename);
             }
 
             tbMinRiverFlow.Text = river.minFlow.ToString();
 
             //Point Sources
-            if (river.numPointSrcs > 0)
+            if (river.numPointSources > 0)
             {
                 pointSourceFiles = new List<PTSFile>();
-                for (int i = 0; i < river.numPointSrcs; i++)
+                for (int i = 0; i < river.numPointSources; i++)
                 {
-                    lbPointSources.Items.Add(Global.coe.PTSFilename[river.pointSrcFilenum[i] - 1]);
-                    PTSFile ptFile = new PTSFile(Global.coe.PTSFilename[river.pointSrcFilenum[i] - 1]);
+                    lbPointSources.Items.Add(Global.coe.PTSFilename[river.pointSources[i] - 1]);
+                    PTSFile ptFile = new PTSFile(Global.coe.PTSFilename[river.pointSources[i] - 1]);
                     pointSourceFiles.Add(ptFile);
                 }
                 lbPointSources.SelectedIndex = 0;
@@ -224,7 +224,7 @@ namespace warmf
 
             //Observed Data
             tbObsHydroFile.Text = river.hydrologyFilename;
-            tbObsWaterQualFile.Text = river.waterQualFilename;
+            tbObsWaterQualFile.Text = river.obsWQFilename;
             if (river.overrideSimulation.swUseObsData == true)
             {
                 cbSimulationOverride.Checked = true;

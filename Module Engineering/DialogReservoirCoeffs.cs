@@ -158,13 +158,13 @@ namespace warmf
             FormatDataGridView(dgvInitialConc);
             
             //Point Sources
-            if (reservoirSeg.numPointSrcs > 0)
+            if (reservoirSeg.numPointSources > 0)
             {
                 pointSourceFiles = new List<PTSFile>();
-                for (int i = 0; i < reservoirSeg.numPointSrcs; i++)
+                for (int i = 0; i < reservoirSeg.numPointSources; i++)
                 {
-                    lbPointSources.Items.Add(Global.coe.PTSFilename[reservoirSeg.pointSrcFilenums[i] - 1]);
-                    PTSFile ptFile = new PTSFile(Global.coe.PTSFilename[reservoirSeg.pointSrcFilenums[0] - 1]);
+                    lbPointSources.Items.Add(Global.coe.PTSFilename[reservoirSeg.pointSources[i] - 1]);
+                    PTSFile ptFile = new PTSFile(Global.coe.PTSFilename[reservoirSeg.pointSources[0] - 1]);
                     pointSourceFiles.Add(ptFile);
                 }
                 lbPointSources.SelectedIndex = 0;

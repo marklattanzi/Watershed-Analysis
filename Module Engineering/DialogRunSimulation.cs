@@ -95,7 +95,7 @@ namespace warmf
             //populate subwatersheds listbox
             //find the first river segment listed as a subwatershed boundary,
             //then for each successive watershed boundary,check its location relative to the others, and 
-            //add it to the appropriate location in the listbox (ordered from upstream to downstream
+            //add it to the appropriate location in the listbox (ordered from upstream to downstream)
             for (int i = 0; i < Global.coe.numRivers; i++)
             {
                 if (Global.coe.rivers[i].swIsSubwaterBoundary)
@@ -113,28 +113,21 @@ namespace warmf
                     }
                     else
                     {
-                        //is current node upstream of last entry in SubwatershedNodes list
+                        //current node is downstream or at same level as last entry in SubwatershedNodes list
                         if (isDownstreamOf(n, SubwatershedNodesList[SubwatershedNodesList.Count - 1]))
                         {
                             lbSubwatersheds.Items.Add(n.Name);
                             SubwatershedNodesList.Add(n);
                         }
-                        else //current node is either at same level as or upstream of last item in SubwatershedNodes list
+                        else //current node is upstream of last item in SubwatershedNodes list
                         {
-                            bool sameLevel = true;
                             for (int j = SubwatershedNodesList.Count - 1; j >= 0; j--)
                             {
                                 if (isDownstreamOf(n, SubwatershedNodesList[j]))
                                 {
                                     lbSubwatersheds.Items.Insert(j, n.Name);
                                     SubwatershedNodesList.Insert(j,n);
-                                    sameLevel = false;
                                 }
-                            }
-                            if (sameLevel == true)
-                            {
-                                lbSubwatersheds.Items.Add(n.Name);
-                                SubwatershedNodesList.Add(n);
                             }
                         }
                     }  
@@ -168,27 +161,20 @@ namespace warmf
                             }
                             else //current node is either at same level as or upstream of last item in SubwatershedNodes list
                             {
-                                bool sameLevel = true;
                                 for (int j = SubwatershedNodesList.Count - 1; j >= 0; j--)
                                 {
                                     if (isDownstreamOf(n, SubwatershedNodesList[j]))
                                     {
                                         lbSubwatersheds.Items.Insert(j, n.Name);
                                         SubwatershedNodesList.Insert(j, n);
-                                        sameLevel = false;
                                     }
-                                }
-                                if (sameLevel == true)
-                                {
-                                    lbSubwatersheds.Items.Add(n.Name);
-                                    SubwatershedNodesList.Add(n);
                                 }
                             }
                         }
                     }
                 }
             }
-
+            
         }
         public class Node
         {
@@ -284,6 +270,9 @@ namespace warmf
         }
 
         private Boolean isDownstreamOf(Node node, Node USnode)
+            //node is the location to evaluate, USnode is the location to evaluate against
+            //returns true if node is downstream or at same level as USnode
+            //returns false if node is upstream of USnode
         {
             List<int> UpstreamReservoirList = new List<int>();
             List<int> UpstreamRiverList = new List<int>();
@@ -298,26 +287,26 @@ namespace warmf
                 {
                     if (Global.coe.rivers[i].idNum == node.ID)
                     {
-                        for (int ii = 0; ii < 9; ii++)
+                        for (int ii = 0; ii < 9; ii++) //max of 9 upstream rivers
                         {
-                            if (Global.coe.rivers[i].upstreamRiver[ii] == 0)
+                            if (Global.coe.rivers[i].upstreamRiverIDs[ii] == 0)
                             {
                                 break;
                             }
                             else
                             {
-                                TotalRiverNodes.Add(Global.coe.rivers[i].upstreamRiver[ii]);
+                                TotalRiverNodes.Add(Global.coe.rivers[i].upstreamRiverIDs[ii]);
                             }
                         }
-                        for (int ii = 0; ii < 9; ii++)
+                        for (int ii = 0; ii < 9; ii++) //max of 9 upstream reservoirs - could there ever really be more than one?
                         {
-                            if (Global.coe.rivers[i].upstreamReservoir[ii] == 0)
+                            if (Global.coe.rivers[i].upstreamReservoirIDs[ii] == 0)
                             {
                                 break;
                             }
                             else
                             {
-                                TotalReservoirNodes.Add(Global.coe.rivers[i].upstreamReservoir[ii]);
+                                TotalReservoirNodes.Add(Global.coe.rivers[i].upstreamReservoirIDs[ii]);
                             }
                         }
                         break;
@@ -330,9 +319,9 @@ namespace warmf
                 {
                     for (int ii = 0; ii < Global.coe.reservoirs[i].numSegments; ii++)
                     {
-                        if (Global.coe.reservoirs[i].reservoirSegs[ii].idNum == node.ID)
+                        if (Global.coe.reservoirs[i].reservoirSegs[ii].idNum == node.ID) //find the node to start from
                         {
-                            for (int j = 0; j < 9; j++)
+                            for (int j = 0; j < 9; j++) //upstream rivers
                             {
                                 if (Global.coe.reservoirs[i].reservoirSegs[ii].upstreamRiverIDs[j] == 0)
                                 {
@@ -343,58 +332,55 @@ namespace warmf
                                     TotalRiverNodes.Add(Global.coe.reservoirs[i].reservoirSegs[ii].upstreamRiverIDs[j]);
                                 }
                             }
-                            for (int j = 0; j < 9; j++)
+                            for (int j = 0; j < 9; j++) //upstream reservoirs
                             {
-                                if (Global.coe.reservoirs[i].reservoirSegs[ii].upstreamLakeIDs[j] == 0)
+                                if (Global.coe.reservoirs[i].reservoirSegs[ii].upstreamReservoirIDs[j] == 0)
                                 {
                                     break;
                                 }
                                 else
                                 {
-                                    TotalReservoirNodes.Add(Global.coe.reservoirs[i].reservoirSegs[ii].upstreamLakeIDs[j]);
+                                    TotalReservoirNodes.Add(Global.coe.reservoirs[i].reservoirSegs[ii].upstreamReservoirIDs[j]);
                                 }
                             }
                             break;
                         }
                     }
-                    
                 }
             }
-            else //this would be for catchments listed as subwatershed boundaries.
-            {
-
-            }
+            else //this would be for catchments listed as subwatershed boundaries. I don't think this happens...
+            {}
 
             riverCounter = 0;
             reservoirCounter = 0;
             while (riverCounter < TotalRiverNodes.Count | reservoirCounter < TotalReservoirNodes.Count)
             {
-                for (int i = riverCounter; i < TotalRiverNodes.Count; i++)
+                for (int i = 0; i < TotalRiverNodes.Count; i++)
                 {
                     for (int ii = 0; ii < Global.coe.numRivers; ii++)
                     {
-                        if (Global.coe.rivers[ii].idNum == TotalRiverNodes[riverCounter])
+                        if (Global.coe.rivers[ii].idNum == TotalRiverNodes[i])
                         {
-                            for (int j = 0; j < 9; j++)
+                            for (int j = 0; j < 9; j++) //max of 9 upstream rivers
                             {
-                                if (Global.coe.rivers[ii].upstreamRiver[j] == 0)
+                                if (Global.coe.rivers[ii].upstreamRiverIDs[j] == 0)
                                 {
                                     break;
                                 }
                                 else
                                 {
-                                    TotalRiverNodes.Add(Global.coe.rivers[ii].upstreamRiver[j]);
+                                    TotalRiverNodes.Add(Global.coe.rivers[ii].upstreamRiverIDs[j]);
                                 }
                             }
-                            for (int j = 0; j < 9; j++)
+                            for (int j = 0; j < 9; j++) //max of 9 upstream reservoirs - could there ever really be more than one?
                             {
-                                if (Global.coe.rivers[ii].upstreamReservoir[j] == 0)
+                                if (Global.coe.rivers[ii].upstreamReservoirIDs[j] == 0)
                                 {
                                     break;
                                 }
                                 else
                                 {
-                                    TotalReservoirNodes.Add(Global.coe.rivers[ii].upstreamReservoir[j]);
+                                    TotalReservoirNodes.Add(Global.coe.rivers[ii].upstreamReservoirIDs[j]);
                                 }
                             }
                             riverCounter++;
@@ -402,13 +388,13 @@ namespace warmf
                         }
                     }
                 }
-                for (int i = reservoirCounter; i < TotalReservoirNodes.Count; i++)
+                for (int i = 0; i < TotalReservoirNodes.Count; i++)
                 {
                     for (int ii = 0; ii < Global.coe.numReservoirs; ii++)
                     {
                         for (int iii = 0; iii < Global.coe.reservoirs[ii].numSegments; iii++)
                         {
-                            if (Global.coe.reservoirs[ii].reservoirSegs[iii].idNum == TotalReservoirNodes[reservoirCounter])
+                            if (Global.coe.reservoirs[ii].reservoirSegs[iii].idNum == TotalReservoirNodes[i])
                             {
                                 for (int j = 0; j < 9; j++)
                                 {
@@ -423,18 +409,18 @@ namespace warmf
                                 }
                                 for (int j = 0; j < 9; j++)
                                 {
-                                    if (Global.coe.reservoirs[ii].reservoirSegs[iii].upstreamLakeIDs[j] == 0)
+                                    if (Global.coe.reservoirs[ii].reservoirSegs[iii].upstreamReservoirIDs[j] == 0)
                                     {
                                         break;
                                     }
                                     else
                                     {
-                                        TotalReservoirNodes.Add(Global.coe.reservoirs[ii].reservoirSegs[iii].upstreamLakeIDs[j]);
+                                        TotalReservoirNodes.Add(Global.coe.reservoirs[ii].reservoirSegs[iii].upstreamReservoirIDs[j]);
                                     }
                                 }
                                 reservoirCounter++;
                                 break;
-                            }
+                            }  
                         }
                     }
                 }
@@ -443,24 +429,26 @@ namespace warmf
             //assign boolean value
             if (node.Type == "RIVER")
             {
+                //returns true if node is downstream or at same level as USnode
+                //returns false if node is upstream of USnode
                 if (TotalRiverNodes.Contains(USnode.ID))
                 {
-                    return true;
+                    return false;
                 }
                 else
                 {
-                    return false;
+                    return true;
                 }
             }
             else if (node.Type == "RESERVOIR SEGMENT")
             {
                 if (TotalReservoirNodes.Contains(USnode.ID))
                 {
-                    return true;
+                    return false;
                 }
                 else
                 {
-                    return false;
+                    return true;
                 }
             }
             else

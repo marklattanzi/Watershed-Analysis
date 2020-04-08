@@ -39,9 +39,9 @@ namespace warmf
                     hydroData = new ObservedFile(Global.DIR.ORH + river.hydrologyFilename);
                     hydroData.ReadFile();
                 }
-                if (river.waterQualFilename != "")
+                if (river.obsWQFilename != "")
                 {
-                    wqData = new ObservedFile(Global.DIR.ORC + river.waterQualFilename);
+                    wqData = new ObservedFile(Global.DIR.ORC + river.obsWQFilename);
                     wqData.ReadFile();
                 }
                 
@@ -201,7 +201,7 @@ namespace warmf
                 else
                 {
                     chkShowObservations.Enabled = true;
-                    if (river.waterQualFilename != "" || river.hydrologyFilename != "")
+                    if (river.obsWQFilename != "" || river.hydrologyFilename != "")
                     {
                         chkShowObservations.Checked = true;
                         chartOutput.Series["SeriesObserved"].IsVisibleInLegend = true;

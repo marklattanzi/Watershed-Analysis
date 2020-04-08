@@ -281,16 +281,37 @@ namespace warmf {
         public List<double> adsorptionIsotherm; // for each component
     }
 
-    public struct Catchment {
+    public class Node
+    {
         public int idNum;
+        public string name;
+        public string type; //river, reservoir segment, or catchment
+
+        public List<int> upstreamCatchIDs;
+        public bool swOutputResults;
+        public int numPointSources;
+        public List<int> pointSources;
+    }
+
+    public class NodeHydro : Node
+    {
+        public bool swIsSubwaterBoundary;
+        public List<int> upstreamRiverIDs;
+        public List<int> upstreamReservoirIDs;
+        public int numDiversionsTo;
+        public List<int> diversionToFilenums;
+        public string obsWQFilename;
+    }
+
+    public class Catchment : Node
+    {
+        
         public int METFileNum;
         public double precipMultiplier;
         public double aveTempLapse;
         public double altitudeTempLapse;
-        public bool swOutputToFile;
         public int airRainChemFileNum;         // from AIRFILES
         public int particleRainChemFileNum;    // from AIRFILES
-        public string name;
 
         public int numSoilLayers;
         public double slope;
@@ -298,8 +319,6 @@ namespace warmf {
         public double aspect;
         public double ManningN;
         public double detentionStorage;
-
-        public List<int> upstreamCatchmentNum;
 
         // landuse
         public List<double> landUsePercent;
@@ -311,8 +330,7 @@ namespace warmf {
 
         public int nluPonds;
         public List<string> pondFilename;
-        public int numPointSources;
-        public List<int> pointSources;
+        
         public int numPumpFromSchedules;
         public List<int> pumpFromDivFile;
         public int numPumpToSchedules;
@@ -334,24 +352,8 @@ namespace warmf {
         public List<Soil> soils;
     }
 
-    public struct StageWidth {
-        public double stage;
-        public double width;
-    }
-
-    public struct SimulationOverride
+    public class River : NodeHydro
     {
-        public bool swUseObsData;
-        public int hydroInterpPeriod;
-        public int waterQualityInterpPeriod;
-        public int monthAverageMethod;
-        public int tdsAdjustmentPriority;
-        public int alkAdjustmentPriority;
-        public int phAdjustmentPriority;
-    }
-
-    public struct River {
-        public int idNum;
         public double depth;
         public double length;
         public double upElevation;
@@ -360,11 +362,8 @@ namespace warmf {
         public double temp;
         public double convectiveHeatFactor;
         public double minFlow;
-
-        public bool swIncludeOutput;
-        public bool swIsSubwaterBoundary;
+        
         public bool swViewManagerOutput;
-        public string name;
 
         public double impoundArea;
         public double impoundVol;
@@ -372,16 +371,9 @@ namespace warmf {
         public double meltingTemp;
         public double iceCalcAve;
 
-        public List<StageWidth> segment;
-        public List<int> upstreamCatch;
-        public List<int> upstreamRiver;
-        public List<int> upstreamReservoir;
+        public List<StageWidth> stageWidthCurve;
         public int numDiversionsFrom;
         public List<int> divFilenumFrom;
-        public int numDiversionsTo;
-        public List<int> divFilenumTo;
-        public int numPointSrcs;
-        public List<int> pointSrcFilenum;
 
         public SimulationOverride overrideSimulation;
 
@@ -402,7 +394,6 @@ namespace warmf {
 
         public List<double> waterReactionRate;
         public List<double> bedReactionRate;
-        public string waterQualFilename;
 
         public int numCEQW2Files;
         public string flowInputFilename;
@@ -415,40 +406,11 @@ namespace warmf {
         public List<double> bedAdsorpIsotherm;
     }
 
-    public struct StageFlow {
-        public double stage;
-        public double flow;
-    }
-
-    public struct StageArea {
-        public double stage;
-        public double area;
-    }
-
-    public struct ReservoirOutlet {
-        public double elevation;
-        public double width;
-        public int outletType;
-        public int numFlowFile;
-        public string managedFlowFilename;
-    }
-
-    public struct DepthTemp {
-        public double depth;
-        public double temp;
-    }
-
-    public struct ReservoirSeg {
-        public int idNum;
+    public class ReservoirSeg : NodeHydro
+    {
         public double bottomElevation;
-        public bool swOutputResults;
-        public bool swIsSubwaterBoundary;
         public int numOutlets;
-        public int numDiversionsTo;
-        public string name;
         public List<ReservoirOutlet> outlets;
-        public int numPointSrcs;
-        public List<int> pointSrcFilenums;
         public double precipWgtMult;
         public double tempLapse;
         public double windSpeedMult;
@@ -474,13 +436,48 @@ namespace warmf {
         public List<double> chemConcentrations;
         public List<double> chemConBedSediment;
         public List<DepthTemp> depthTemp;
-        public List<int> upstreamCatchIDs;
-        public List<int> upstreamRiverIDs;
-        public List<int> upstreamLakeIDs;
-        public List<int> diversionToFilenums;
-        public string obsWQFilename;
+        
     }
 
+    public struct StageWidth {
+        public double stage;
+        public double width;
+    }
+
+    public struct SimulationOverride
+    {
+        public bool swUseObsData;
+        public int hydroInterpPeriod;
+        public int waterQualityInterpPeriod;
+        public int monthAverageMethod;
+        public int tdsAdjustmentPriority;
+        public int alkAdjustmentPriority;
+        public int phAdjustmentPriority;
+    }
+
+    public struct StageFlow {
+        public double stage;
+        public double flow;
+    }
+
+    public struct StageArea {
+        public double stage;
+        public double area;
+    }
+
+    public struct ReservoirOutlet {
+        public double elevation;
+        public double width;
+        public int outletType;
+        public int numFlowFile;
+        public string managedFlowFilename;
+    }
+
+    public struct DepthTemp {
+        public double depth;
+        public double temp;
+    }
+    
     public struct Reservoir {
 		public int idNum;
         public int numSegments;
@@ -1253,7 +1250,7 @@ namespace warmf {
                     catchData.precipMultiplier = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : 0;
                     catchData.aveTempLapse = Double.TryParse(line.Substring(32, 8), out dblRes) ? dblRes : 0;
                     catchData.altitudeTempLapse = Double.TryParse(line.Substring(40, 8), out dblRes) ? dblRes : 0;
-                    catchData.swOutputToFile = !line.Substring(48, 8).Contains("0");
+                    catchData.swOutputResults = !line.Substring(48, 8).Contains("0");
                     catchData.airRainChemFileNum = Int32.TryParse(line.Substring(56, 8), out intRes) ? intRes : 0;
                     catchData.particleRainChemFileNum = Int32.TryParse(line.Substring(64, 8), out intRes) ? intRes : 0;
                     catchData.name = line.Substring(72);
@@ -1266,7 +1263,7 @@ namespace warmf {
                     catchData.detentionStorage = Double.TryParse(line.Substring(48, 8), out dblRes) ? dblRes : 0;
 
                     // upstream catchment numbers
-                    catchData.upstreamCatchmentNum = ReadIntData(sr, "ICAT", 9);  // will there always be 9 values ? - MRL
+                    catchData.upstreamCatchIDs = ReadIntData(sr, "ICAT", 9);  // will there always be 9 values ? - MRL
                     catchData.landUsePercent = ReadDoubleData(sr, "CATC", numLanduses);
 
                     // fertilation plan nums per land use
@@ -1471,7 +1468,7 @@ namespace warmf {
 					river.minFlow = dnums[8];
 
 					line = sr.ReadLine();
-					river.swIncludeOutput = !line.Substring(8, 8).Contains("0");
+					river.swOutputResults = !line.Substring(8, 8).Contains("0");
 					river.swIsSubwaterBoundary = !line.Substring(16, 8).Contains("0");
                     river.swViewManagerOutput = !line.Substring(24, 8).Contains("0");
 					river.name = line.Substring(32);
@@ -1484,27 +1481,27 @@ namespace warmf {
 					river.iceCalcAve = dnums[4];
 
 					dnums = ReadDoubleData(sr, "STAR", 18);
-					river.segment = new List<StageWidth>();
+					river.stageWidthCurve = new List<StageWidth>();
 					for (int jj=0; jj<18; jj+=2) {
 						StageWidth sw = new StageWidth();
 						sw.stage = dnums[jj];
 						sw.width = dnums[jj + 1];
-						river.segment.Add(sw);
+						river.stageWidthCurve.Add(sw);
 					}
 
-					river.upstreamCatch = ReadIntData(sr, "ICAT", 9);   // how many upstream catchments - 9? - MRL
-					river.upstreamRiver = ReadIntData(sr, "IRVT", 9);   // how many upstream rivers - 9? - MRL
-					river.upstreamReservoir = ReadIntData(sr, "ILKT", 9);   // how many upstream reservoirs -9? - MRL
+					river.upstreamCatchIDs = ReadIntData(sr, "ICAT", 9);   // how many upstream catchments - 9? - MRL
+					river.upstreamRiverIDs = ReadIntData(sr, "IRVT", 9);   // how many upstream rivers - 9? - MRL
+					river.upstreamReservoirIDs = ReadIntData(sr, "ILKT", 9);   // how many upstream reservoirs -9? - MRL
 
 					river.numDiversionsFrom = ReadInt(sr, "DIVFROM");
 					if (river.numDiversionsFrom > 0)
 						river.divFilenumFrom = ReadIntData(sr, "DIVFROM", river.numDiversionsFrom);
 					river.numDiversionsTo = ReadInt(sr, "DIVTO");
 					if (river.numDiversionsTo > 0)
-						river.divFilenumTo = ReadIntData(sr, "DIVTO", river.numDiversionsTo);
-					river.numPointSrcs = ReadInt(sr, "PTSOURCE");
-					if (river.numPointSrcs > 0)
-						river.pointSrcFilenum = ReadIntData(sr, "PTSOURCE", river.numPointSrcs);
+						river.diversionToFilenums = ReadIntData(sr, "DIVTO", river.numDiversionsTo);
+					river.numPointSources = ReadInt(sr, "PTSOURCE");
+					if (river.numPointSources > 0)
+						river.pointSources = ReadIntData(sr, "PTSOURCE", river.numPointSources);
 					nums = ReadIntData(sr, "OBSW", 7);
                     river.overrideSimulation.swUseObsData = nums[0] != 0;
                     river.overrideSimulation.hydroInterpPeriod = nums[1];
@@ -1532,7 +1529,7 @@ namespace warmf {
 
 					river.waterReactionRate = ReadDoubleData(sr, "REAC-H2O", numReactions);
 					river.bedReactionRate = ReadDoubleData(sr, "REAC-BED", numReactions);
-					river.waterQualFilename = ReadString(sr, "OBSD");
+					river.obsWQFilename = ReadString(sr, "OBSD");
 					river.numCEQW2Files = ReadInt(sr, "W2FILES");
 					if (river.numCEQW2Files == 3) {
 						river.flowInputFilename = ReadString(sr, "W2FILES");
@@ -1651,9 +1648,9 @@ namespace warmf {
 							}
 						}
 
-						seg.numPointSrcs = ReadInt(sr, "PTSOURCE");
-						if (seg.numPointSrcs > 0)
-							seg.pointSrcFilenums = ReadIntData(sr, "PTSOURCE", seg.numPointSrcs);
+						seg.numPointSources = ReadInt(sr, "PTSOURCE");
+						if (seg.numPointSources > 0)
+							seg.pointSources = ReadIntData(sr, "PTSOURCE", seg.numPointSources);
 						
 						dnums = ReadDoubleData(sr, "METFAC", 6);
 						seg.precipWgtMult = dnums[0];
@@ -1702,7 +1699,7 @@ namespace warmf {
 
 						seg.upstreamCatchIDs = ReadIntData(sr, "ICATOL", 9);
 						seg.upstreamRiverIDs = ReadIntData(sr, "IRVTOL", 9);
-						seg.upstreamLakeIDs = ReadIntData(sr, "ILKTOL", 9);
+						seg.upstreamReservoirIDs = ReadIntData(sr, "ILKTOL", 9);
                         
                         nums = ReadIntData(sr, "DIVTO", 9);
                         seg.numDiversionsTo = nums[0];
@@ -2391,7 +2388,7 @@ namespace warmf {
                     sw.WriteDouble(catchments[i].precipMultiplier);
                     sw.WriteDouble(catchments[i].aveTempLapse);
                     sw.WriteDouble(catchments[i].altitudeTempLapse);
-                    sw.WriteOnOffas1or0(catchments[i].swOutputToFile);
+                    sw.WriteOnOffas1or0(catchments[i].swOutputResults);
                     sw.WriteInt(catchments[i].airRainChemFileNum);
                     sw.WriteInt(catchments[i].particleRainChemFileNum);
                     sw.WriteString(catchments[i].name);
@@ -2407,7 +2404,7 @@ namespace warmf {
                     sw.WriteLine();
 
                     //Upstream catchments
-                    WriteIntData(sw, "ICAT" + catchments[i].idNum.ToString(), catchments[i].upstreamCatchmentNum);
+                    WriteIntData(sw, "ICAT" + catchments[i].idNum.ToString(), catchments[i].upstreamCatchIDs);
 
                     //Land use percentages
                     WriteDoubleData(sw, "CATC" + catchments[i].idNum.ToString(), catchments[i].landUsePercent);
@@ -2656,7 +2653,7 @@ namespace warmf {
                     sw.WriteLine();
 
                     sw.WriteString("ELEV" + rivers[i].idNum.ToString());
-                    sw.WriteOnOffas1or0(rivers[i].swIncludeOutput);
+                    sw.WriteOnOffas1or0(rivers[i].swOutputResults);
                     sw.WriteOnOffas1or0(rivers[i].swIsSubwaterBoundary);
                     sw.WriteOnOffas1or0(rivers[i].swViewManagerOutput);
                     sw.WriteString(rivers[i].name);
@@ -2674,14 +2671,14 @@ namespace warmf {
                     int k = 0;
                     for (int j = 0; j < 9; j++)
                     {
-                        sw.WriteDouble(rivers[i].segment[j].stage);
+                        sw.WriteDouble(rivers[i].stageWidthCurve[j].stage);
                         k++;
                         if (k == 9)
                         {
                             sw.WriteLine();
                             sw.WriteString("STAR" + rivers[i].idNum.ToString());
                         }
-                        sw.WriteDouble(rivers[i].segment[j].width);
+                        sw.WriteDouble(rivers[i].stageWidthCurve[j].width);
                         k++;
                         if (k == 9)
                         {
@@ -2692,13 +2689,13 @@ namespace warmf {
                     sw.WriteLine();
 
                     //upstream catchments (9 max)
-                    WriteIntData(sw, "ICAT" + rivers[i].idNum.ToString(), rivers[i].upstreamCatch);
+                    WriteIntData(sw, "ICAT" + rivers[i].idNum.ToString(), rivers[i].upstreamCatchIDs);
 
                     //upstream rivers (9 max)
-                    WriteIntData(sw, "IRVT" + rivers[i].idNum.ToString(), rivers[i].upstreamRiver);
+                    WriteIntData(sw, "IRVT" + rivers[i].idNum.ToString(), rivers[i].upstreamRiverIDs);
 
                     //upstream reservoirs (9 max)
-                    WriteIntData(sw, "ILKT" + rivers[i].idNum.ToString(), rivers[i].upstreamReservoir);
+                    WriteIntData(sw, "ILKT" + rivers[i].idNum.ToString(), rivers[i].upstreamReservoirIDs);
 
                     sw.WriteString("DIVFROM");
                     sw.WriteInt(rivers[i].numDiversionsFrom);
@@ -2713,15 +2710,15 @@ namespace warmf {
                     sw.WriteLine();
                     if (rivers[i].numDiversionsTo > 0)
                     {
-                        WriteIntData(sw, "DIVTO", rivers[i].divFilenumTo);
+                        WriteIntData(sw, "DIVTO", rivers[i].diversionToFilenums);
                     }
 
                     sw.WriteString("PTSOURCE");
-                    sw.WriteInt(rivers[i].numPointSrcs);
+                    sw.WriteInt(rivers[i].numPointSources);
                     sw.WriteLine();
-                    if (rivers[i].numPointSrcs > 0)
+                    if (rivers[i].numPointSources > 0)
                     {
-                        WriteIntData(sw, "PTSOURCE", rivers[i].pointSrcFilenum);
+                        WriteIntData(sw, "PTSOURCE", rivers[i].pointSources);
                     }
 
                     sw.WriteString("OBSW" + rivers[i].idNum.ToString());
@@ -2765,7 +2762,7 @@ namespace warmf {
 
                     //water quality observations
                     sw.WriteString("OBSD" + rivers[i].idNum.ToString());
-                    sw.WriteString(rivers[i].waterQualFilename);
+                    sw.WriteString(rivers[i].obsWQFilename);
                     sw.WriteLine();
 
                     //CEQUALW2
@@ -2958,11 +2955,11 @@ namespace warmf {
 
                         //Point sources
                         sw.WriteString("PTSOURCE");
-                        sw.WriteInt(reservoirs[i].reservoirSegs[j].numPointSrcs);
+                        sw.WriteInt(reservoirs[i].reservoirSegs[j].numPointSources);
                         sw.WriteLine();
-                        if (reservoirs[i].reservoirSegs[j].numPointSrcs > 0)
+                        if (reservoirs[i].reservoirSegs[j].numPointSources > 0)
                         {
-                            WriteIntData(sw, "PTSOURCE", reservoirs[i].reservoirSegs[j].pointSrcFilenums);
+                            WriteIntData(sw, "PTSOURCE", reservoirs[i].reservoirSegs[j].pointSources);
                         }
 
                         //Met parameters
@@ -3045,7 +3042,7 @@ namespace warmf {
                         //Upstream sources - catchments, rivers, reservoir segments
                         WriteIntData(sw, "ICATOL", reservoirs[i].reservoirSegs[j].upstreamCatchIDs);
                         WriteIntData(sw, "IRVTOL", reservoirs[i].reservoirSegs[j].upstreamRiverIDs);
-                        WriteIntData(sw, "ICATOL", reservoirs[i].reservoirSegs[j].upstreamLakeIDs);
+                        WriteIntData(sw, "ICATOL", reservoirs[i].reservoirSegs[j].upstreamReservoirIDs);
 
                         //Diversions to
                         sw.WriteString("DIVTO");
@@ -3204,8 +3201,8 @@ namespace warmf {
             List<string> obsWQFiles = new List<string>();
             // River observed water quality files
             for (int ii = 0; ii < rivers.Count; ii++)
-                if (!String.IsNullOrWhiteSpace(rivers[ii].waterQualFilename))
-                    obsWQFiles.Add(rivers[ii].waterQualFilename);
+                if (!String.IsNullOrWhiteSpace(rivers[ii].obsWQFilename))
+                    obsWQFiles.Add(rivers[ii].obsWQFilename);
             // Reservoir observed volume / surface elevation files
             for (int ii = 0; ii < reservoirs.Count; ii++)
                 for (int jj = 0; jj < reservoirs[ii].reservoirSegs.Count; jj++)
