@@ -436,7 +436,6 @@ namespace warmf {
         public List<double> chemConcentrations;
         public List<double> chemConBedSediment;
         public List<DepthTemp> depthTemp;
-        
     }
 
     public struct StageWidth {
@@ -520,6 +519,8 @@ namespace warmf {
     }
 
     class Coefficients {
+
+        #region Variable Declarations
         public int version;
         public string scenarioDescription;
         public DateTime begDate;
@@ -542,6 +543,7 @@ namespace warmf {
         public bool swStartupFile;
         public string startupFileName;
 
+        // input files
         public int numMETFiles;
         public List<string> METFilename;
 
@@ -596,7 +598,7 @@ namespace warmf {
         public List<Sediment> sediments;
         public List<Algae> algaes;
         public Periphyton peri;
-        
+
         public double sedimentShading;
         public double algaeShading;
         public double detritusShading;
@@ -622,11 +624,11 @@ namespace warmf {
         public List<River> rivers;
         public List<Reservoir> reservoirs;
 
-		public bool isTMDLSimulation;
+        public bool isTMDLSimulation;
+        #endregion
 
-        // ********************************************************************************************
-        // Coefficients METHODS
-
+        #region Methods - Reading Coefficients
+        
         // test the line code to make sure it's what it expected
         public bool TestLine(string line, int lnum, string abbrev) {
             if (!line.StartsWith(abbrev)) {
@@ -1743,6 +1745,10 @@ namespace warmf {
                 return false;
             }
         }
+
+        #endregion
+
+        #region Methods - Writing Coefficients
 
         // writes doubles from a list- 9 per line
         public void WriteDoubleData(STechStreamWriter sw, string lineAbbrev, List<double> dblValues)
@@ -3074,6 +3080,10 @@ namespace warmf {
             }
         }
 
+        #endregion
+
+        #region Methods - Working with Entity IDs, Names, WARMF Codes, etc
+
         public int GetCatchmentNumberFromID(int id)
         {
             for (int i = 0; i < catchments.Count; i++)
@@ -3096,6 +3106,26 @@ namespace warmf {
                 }
             }
             return -1;
+        }
+
+        public List<int> GetReservoirSegmentNumberFromID(int id)
+        {
+            List<int> ReservoirAndSegment = new List<int>();
+            for (int i = 0; i < numReservoirs; i++)
+            {
+                for (int j = 0; j < reservoirs[i].numSegments; j++)
+                {
+                    if (reservoirs[i].reservoirSegs[j].idNum == id)
+                    {
+                        ReservoirAndSegment.Add(i);
+                        ReservoirAndSegment.Add(j);
+                        return ReservoirAndSegment;
+                    }
+                }
+            }
+            ReservoirAndSegment.Add(-1);
+            ReservoirAndSegment.Add(-1);
+            return ReservoirAndSegment;
         }
 
         public int GetPTSNumberFromName(string name)
@@ -3172,7 +3202,49 @@ namespace warmf {
             }  
             else
                 return "";
-        }   
+        }
+
+        public List<NodeHydro> GetWatershedPourPoints()
+        {
+            List<int> UpstreamNodeIDs = new List<int>();
+            List<NodeHydro> watershedPourPoints = new List<NodeHydro>();
+
+            for (int i = 0; i < Global.coe.numRivers; i++)
+            {
+                UpstreamNodeIDs.AddRange(Global.coe.rivers[i].upstreamRiverIDs);
+                UpstreamNodeIDs.AddRange(Global.coe.rivers[i].upstreamReservoirIDs);
+            }
+            for (int i = 0; i < Global.coe.numReservoirs; i++)
+            {
+                for (int j = 0; j < Global.coe.reservoirs[i].numSegments; j++)
+                {
+                    UpstreamNodeIDs.AddRange(Global.coe.reservoirs[i].reservoirSegs[j].upstreamRiverIDs);
+                    UpstreamNodeIDs.AddRange(Global.coe.reservoirs[i].reservoirSegs[j].upstreamReservoirIDs);
+                }
+            }
+            for (int i = 0; i < Global.coe.numRivers; i++)
+            {
+                if (! UpstreamNodeIDs.Contains(Global.coe.rivers[i].idNum))
+                {
+                    watershedPourPoints.Add(Global.coe.rivers[i]);
+                }
+            }
+            for (int i = 0; i < Global.coe.numReservoirs; i++)
+            {
+                for (int j = 0; j < Global.coe.reservoirs[i].numSegments; j++)
+                {
+                    if (! UpstreamNodeIDs.Contains(Global.coe.reservoirs[i].reservoirSegs[j].idNum))
+                    {
+                        watershedPourPoints.Add(Global.coe.reservoirs[i].reservoirSegs[j]);
+                    }
+                }
+            }
+            return watershedPourPoints;
+        }
+
+        #endregion
+
+        #region Methods - Working with Observed Data (ORC, ORH, OLC, OLH)
 
         // Compiles a list of all catchment, river, and reservoir observed hydrology files
         public List<string> GetAllObservedHydrologyFiles()
@@ -3195,7 +3267,7 @@ namespace warmf {
             return obsHydFiles;
         }
 
-        // Compiles a list of all catchment, river, and reservoir observed hydrology files
+        // Compiles a list of all catchment, river, and reservoir observed water quality files
         public List<string> GetAllObservedWaterQualityFiles()
         {
             List<string> obsWQFiles = new List<string>();
@@ -3211,5 +3283,7 @@ namespace warmf {
 
             return obsWQFiles;
         }
+
+        #endregion
     }
 }

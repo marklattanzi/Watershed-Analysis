@@ -218,6 +218,7 @@
             this.lbSubwatersheds.ItemHeight = 15;
             this.lbSubwatersheds.Location = new System.Drawing.Point(303, 51);
             this.lbSubwatersheds.Name = "lbSubwatersheds";
+            this.lbSubwatersheds.ScrollAlwaysVisible = true;
             this.lbSubwatersheds.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.lbSubwatersheds.Size = new System.Drawing.Size(355, 94);
             this.lbSubwatersheds.TabIndex = 13;

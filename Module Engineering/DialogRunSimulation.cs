@@ -16,7 +16,6 @@ namespace warmf
     {
         FormMain parent;
         
-
         public DialogRunSimulation(FormMain par)
         {
             InitializeComponent();
@@ -27,12 +26,11 @@ namespace warmf
         {
             string fileName;
             
-            List<Node> SubwatershedNodesList = new List<Node>();
+            List<NodeHydro> SubwatershedNodesList = new List<NodeHydro>();
             DateTime date = new DateTime(2050,1,1);
             DateTime minDate = new DateTime(1900, 1, 1);
             DateTime maxDate = new DateTime(2050, 1, 1);
             
-
             //dates: 4 file types considered: MET, AIR, FLO (DIV), PTS
             //Files must be sorted chronologically
             for (int i = 0; i < Global.coe.numMETFiles; i++)
@@ -91,96 +89,65 @@ namespace warmf
             //time steps per day
             nudTimeStepsPerDay.Value = Global.coe.numTimeStepsPerDay;
 
-            
             //populate subwatersheds listbox
-            //find the first river segment listed as a subwatershed boundary,
+            //find the watershed pour point(s) and add to SubwatershedNodesList,
             //then for each successive watershed boundary,check its location relative to the others, and 
             //add it to the appropriate location in the listbox (ordered from upstream to downstream)
+
+            //add pour points to list
+            SubwatershedNodesList = Global.coe.GetWatershedPourPoints();
+            int numPourPoints = SubwatershedNodesList.Count;
             for (int i = 0; i < Global.coe.numRivers; i++)
             {
                 if (Global.coe.rivers[i].swIsSubwaterBoundary)
                 {
-                    Node n = new Node();
-                    n.ID = Global.coe.rivers[i].idNum;
-                    n.Type = "RIVER";
-                    n.Name = Global.coe.rivers[i].name;
-
-                    //first subwatershed boundary found
-                    if (lbSubwatersheds.Items.Count == 0)
+                    for (int j = SubwatershedNodesList.Count - 1; j >= 0; j--)
                     {
-                        lbSubwatersheds.Items.Add(n.Name);
-                        SubwatershedNodesList.Add(n);
-                    }
-                    else
-                    {
-                        //current node is downstream or at same level as last entry in SubwatershedNodes list
-                        if (isDownstreamOf(n, SubwatershedNodesList[SubwatershedNodesList.Count - 1]))
+                        if (IsNodeUpstream(SubwatershedNodesList[j].idNum, Global.coe.rivers[i].idNum) == false
+                            || j==0)
                         {
-                            lbSubwatersheds.Items.Add(n.Name);
-                            SubwatershedNodesList.Add(n);
-                        }
-                        else //current node is upstream of last item in SubwatershedNodes list
-                        {
-                            for (int j = SubwatershedNodesList.Count - 1; j >= 0; j--)
+                            if (SubwatershedNodesList.Count==numPourPoints)
                             {
-                                if (isDownstreamOf(n, SubwatershedNodesList[j]))
-                                {
-                                    lbSubwatersheds.Items.Insert(j, n.Name);
-                                    SubwatershedNodesList.Insert(j,n);
-                                }
+                                SubwatershedNodesList.Insert(j, Global.coe.rivers[i]);
                             }
+                            else
+                            {
+                                SubwatershedNodesList.Insert(j + 1, Global.coe.rivers[i]);//added +1 - if conditions met, add below comparison node, not above
+                            }
+                            break;
                         }
-                    }  
+                    }
                 }
             }
-
             for (int i = 0; i < Global.coe.numReservoirs; i++)
             {
                 for (int k = 0; k < Global.coe.reservoirs[i].numSegments; k++)
                 {
                     if (Global.coe.reservoirs[i].reservoirSegs[k].swIsSubwaterBoundary)
                     {
-                        Node n = new Node();
-                        n.ID = Global.coe.reservoirs[i].reservoirSegs[k].idNum;
-                        n.Type = "RESERVOIR SEGMENT";
-                        n.Name = Global.coe.reservoirs[i].reservoirSegs[k].name;
-
-                        //first subwatershed boundary found
-                        if (lbSubwatersheds.Items.Count == 0)
+                        for (int j = SubwatershedNodesList.Count - 1; j >= 0; j--)
                         {
-                            lbSubwatersheds.Items.Add(n.Name);
-                            SubwatershedNodesList.Add(n);
-                        }
-                        else
-                        {
-                            //is current node upstream of last entry in SubwatershedNodes list
-                            if (isDownstreamOf(n, SubwatershedNodesList[SubwatershedNodesList.Count - 1]))
+                            if (IsNodeUpstream(SubwatershedNodesList[j].idNum, Global.coe.reservoirs[i].reservoirSegs[k].idNum) == false
+                                || j==0)
                             {
-                                lbSubwatersheds.Items.Add(n.Name);
-                                SubwatershedNodesList.Add(n);
-                            }
-                            else //current node is either at same level as or upstream of last item in SubwatershedNodes list
-                            {
-                                for (int j = SubwatershedNodesList.Count - 1; j >= 0; j--)
+                                if (SubwatershedNodesList.Count==numPourPoints)
                                 {
-                                    if (isDownstreamOf(n, SubwatershedNodesList[j]))
-                                    {
-                                        lbSubwatersheds.Items.Insert(j, n.Name);
-                                        SubwatershedNodesList.Insert(j, n);
-                                    }
+                                    SubwatershedNodesList.Insert(j, Global.coe.rivers[i]);
                                 }
+                                else
+                                {
+                                    SubwatershedNodesList.Insert(j + 1, Global.coe.reservoirs[i].reservoirSegs[k]);
+                                }
+                                break;
                             }
                         }
                     }
                 }
             }
-            
-        }
-        public class Node
-        {
-            public int ID { get; set; }
-            public string Type { get; set; }
-            public string Name { get; set; }
+            for (int i = 0; i < SubwatershedNodesList.Count; i++)
+            {
+                lbSubwatersheds.Items.Add(SubwatershedNodesList[i].name);
+            }
         }
 
         public static DateTime getMinDate(string fileName, DateTime minDate)
@@ -269,192 +236,46 @@ namespace warmf
             }
         }
 
-        private Boolean isDownstreamOf(Node node, Node USnode)
-            //node is the location to evaluate, USnode is the location to evaluate against
-            //returns true if node is downstream or at same level as USnode
-            //returns false if node is upstream of USnode
+        public bool IsNodeUpstream(int downstreamNode, int upstreamNodeID)
         {
-            List<int> UpstreamReservoirList = new List<int>();
-            List<int> UpstreamRiverList = new List<int>();
-            List<int> TotalRiverNodes = new List<int>();
-            List<int> TotalReservoirNodes = new List<int>();
-            int riverCounter, reservoirCounter;
-
-            if (node.Type == "RIVER")
+            List<int> upstreamRiverIDs = new List<int>();
+            List<int> upstreamReservoirSegmentIDs = new List<int>();
+            int coefficientIndex = Global.coe.GetRiverNumberFromID(downstreamNode);
+            if (coefficientIndex >= 0) //downstreamNode is a river segment
             {
-                //find the node to start from
-                for (int i = 0; i < Global.coe.numRivers; i++)
-                {
-                    if (Global.coe.rivers[i].idNum == node.ID)
-                    {
-                        for (int ii = 0; ii < 9; ii++) //max of 9 upstream rivers
-                        {
-                            if (Global.coe.rivers[i].upstreamRiverIDs[ii] == 0)
-                            {
-                                break;
-                            }
-                            else
-                            {
-                                TotalRiverNodes.Add(Global.coe.rivers[i].upstreamRiverIDs[ii]);
-                            }
-                        }
-                        for (int ii = 0; ii < 9; ii++) //max of 9 upstream reservoirs - could there ever really be more than one?
-                        {
-                            if (Global.coe.rivers[i].upstreamReservoirIDs[ii] == 0)
-                            {
-                                break;
-                            }
-                            else
-                            {
-                                TotalReservoirNodes.Add(Global.coe.rivers[i].upstreamReservoirIDs[ii]);
-                            }
-                        }
-                        break;
-                    }  
-                }  
+                upstreamRiverIDs = Global.coe.rivers[coefficientIndex].upstreamRiverIDs;
+                upstreamReservoirSegmentIDs = Global.coe.rivers[coefficientIndex].upstreamReservoirIDs;
             }
-            else if (node.Type == "RESERVOIR SEGMENT")
+            else //downstreamNode is a reservoir segment
             {
-                for (int i = 0; i < Global.coe.numReservoirs; i++)
+                List<int> reservoirAndSegment = Global.coe.GetReservoirSegmentNumberFromID(downstreamNode);
+                if (reservoirAndSegment[0] >= 0 && reservoirAndSegment[1] >= 0)
                 {
-                    for (int ii = 0; ii < Global.coe.reservoirs[i].numSegments; ii++)
-                    {
-                        if (Global.coe.reservoirs[i].reservoirSegs[ii].idNum == node.ID) //find the node to start from
-                        {
-                            for (int j = 0; j < 9; j++) //upstream rivers
-                            {
-                                if (Global.coe.reservoirs[i].reservoirSegs[ii].upstreamRiverIDs[j] == 0)
-                                {
-                                    break;
-                                }
-                                else
-                                {
-                                    TotalRiverNodes.Add(Global.coe.reservoirs[i].reservoirSegs[ii].upstreamRiverIDs[j]);
-                                }
-                            }
-                            for (int j = 0; j < 9; j++) //upstream reservoirs
-                            {
-                                if (Global.coe.reservoirs[i].reservoirSegs[ii].upstreamReservoirIDs[j] == 0)
-                                {
-                                    break;
-                                }
-                                else
-                                {
-                                    TotalReservoirNodes.Add(Global.coe.reservoirs[i].reservoirSegs[ii].upstreamReservoirIDs[j]);
-                                }
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
-            else //this would be for catchments listed as subwatershed boundaries. I don't think this happens...
-            {}
-
-            riverCounter = 0;
-            reservoirCounter = 0;
-            while (riverCounter < TotalRiverNodes.Count | reservoirCounter < TotalReservoirNodes.Count)
-            {
-                for (int i = 0; i < TotalRiverNodes.Count; i++)
-                {
-                    for (int ii = 0; ii < Global.coe.numRivers; ii++)
-                    {
-                        if (Global.coe.rivers[ii].idNum == TotalRiverNodes[i])
-                        {
-                            for (int j = 0; j < 9; j++) //max of 9 upstream rivers
-                            {
-                                if (Global.coe.rivers[ii].upstreamRiverIDs[j] == 0)
-                                {
-                                    break;
-                                }
-                                else
-                                {
-                                    TotalRiverNodes.Add(Global.coe.rivers[ii].upstreamRiverIDs[j]);
-                                }
-                            }
-                            for (int j = 0; j < 9; j++) //max of 9 upstream reservoirs - could there ever really be more than one?
-                            {
-                                if (Global.coe.rivers[ii].upstreamReservoirIDs[j] == 0)
-                                {
-                                    break;
-                                }
-                                else
-                                {
-                                    TotalReservoirNodes.Add(Global.coe.rivers[ii].upstreamReservoirIDs[j]);
-                                }
-                            }
-                            riverCounter++;
-                            break;
-                        }
-                    }
-                }
-                for (int i = 0; i < TotalReservoirNodes.Count; i++)
-                {
-                    for (int ii = 0; ii < Global.coe.numReservoirs; ii++)
-                    {
-                        for (int iii = 0; iii < Global.coe.reservoirs[ii].numSegments; iii++)
-                        {
-                            if (Global.coe.reservoirs[ii].reservoirSegs[iii].idNum == TotalReservoirNodes[i])
-                            {
-                                for (int j = 0; j < 9; j++)
-                                {
-                                    if (Global.coe.reservoirs[ii].reservoirSegs[iii].upstreamRiverIDs[j] == 0)
-                                    {
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        TotalRiverNodes.Add(Global.coe.reservoirs[ii].reservoirSegs[iii].upstreamRiverIDs[j]);
-                                    }
-                                }
-                                for (int j = 0; j < 9; j++)
-                                {
-                                    if (Global.coe.reservoirs[ii].reservoirSegs[iii].upstreamReservoirIDs[j] == 0)
-                                    {
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        TotalReservoirNodes.Add(Global.coe.reservoirs[ii].reservoirSegs[iii].upstreamReservoirIDs[j]);
-                                    }
-                                }
-                                reservoirCounter++;
-                                break;
-                            }  
-                        }
-                    }
+                    upstreamRiverIDs = Global.coe.reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]].upstreamRiverIDs;
+                    upstreamReservoirSegmentIDs = Global.coe.reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]].upstreamReservoirIDs;
                 }
             }
 
-            //assign boolean value
-            if (node.Type == "RIVER")
+            int nodeID;
+            for (int i = 0; i < 9; i++)
             {
-                //returns true if node is downstream or at same level as USnode
-                //returns false if node is upstream of USnode
-                if (TotalRiverNodes.Contains(USnode.ID))
-                {
-                    return false;
-                }
-                else
-                {
+                nodeID = upstreamRiverIDs[i];
+                if (nodeID > 0 && nodeID == upstreamNodeID)
                     return true;
-                }
-            }
-            else if (node.Type == "RESERVOIR SEGMENT")
-            {
-                if (TotalReservoirNodes.Contains(USnode.ID))
-                {
-                    return false;
-                }
-                else
-                {
+
+                if (nodeID > 0 && IsNodeUpstream(nodeID,upstreamNodeID))
                     return true;
-                }
             }
-            else
+            for (int i = 0; i < 9; i++)
             {
-                return true;
+                nodeID = upstreamReservoirSegmentIDs[i];
+                if (nodeID > 0 && nodeID == upstreamNodeID)
+                    return true;
+
+                if (nodeID > 0 && IsNodeUpstream(nodeID, upstreamNodeID))
+                    return true;
             }
+            return false;
         }
 
         private void btnRun_Click(object sender, EventArgs e)
