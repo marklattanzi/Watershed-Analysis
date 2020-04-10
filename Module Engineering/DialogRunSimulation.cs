@@ -15,7 +15,8 @@ namespace warmf
     public partial class DialogRunSimulation : Form
     {
         FormMain parent;
-        
+        List<NodeHydro> SubwatershedNodesList = new List<NodeHydro>();
+
         public DialogRunSimulation(FormMain par)
         {
             InitializeComponent();
@@ -26,7 +27,6 @@ namespace warmf
         {
             string fileName;
             
-            List<NodeHydro> SubwatershedNodesList = new List<NodeHydro>();
             DateTime date = new DateTime(2050,1,1);
             DateTime minDate = new DateTime(1900, 1, 1);
             DateTime maxDate = new DateTime(2050, 1, 1);
@@ -248,7 +248,7 @@ namespace warmf
             }
             else //downstreamNode is a reservoir segment
             {
-                List<int> reservoirAndSegment = Global.coe.GetReservoirSegmentNumberFromID(downstreamNode);
+                List<int> reservoirAndSegment = Global.coe.GetReservoirAndSegmentNumberFromID(downstreamNode);
                 if (reservoirAndSegment[0] >= 0 && reservoirAndSegment[1] >= 0)
                 {
                     upstreamRiverIDs = Global.coe.reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]].upstreamRiverIDs;
@@ -280,8 +280,41 @@ namespace warmf
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            //figure out what to run
-
+            Coefficients subwatershedCoefficients = Global.coe;
+            // Clear catchments, rivers, and reservoirs
+            subwatershedCoefficients.catchments.Clear();
+            subwatershedCoefficients.rivers.Clear();
+            subwatershedCoefficients.reservoirs.Clear();
+            for (int i = 0; i < SubwatershedNodesList.Count; i++)
+            {
+                int nodeIndex = Global.coe.GetRiverNumberFromID(SubwatershedNodesList[i].idNum);
+                if (nodeIndex >= 0)
+                {
+                    Global.coe.CompileSubwatershed(Global.coe.rivers[nodeIndex], ref subwatershedCoefficients);
+                    subwatershedCoefficients.rivers.Add(Global.coe.rivers[nodeIndex]);
+                }
+                else
+                {
+                    List<int> reservoirAndSegment = Global.coe.GetReservoirAndSegmentNumberFromID(SubwatershedNodesList[i].idNum);
+                    if (reservoirAndSegment.Count == 2 && reservoirAndSegment[0] >= 0 && reservoirAndSegment[1] >= 0)
+                    {
+                        Global.coe.CompileSubwatershed(Global.coe.reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]], ref subwatershedCoefficients);
+                        subwatershedCoefficients.reservoirs.Add(Global.coe.reservoirs[reservoirAndSegment[0]]);
+                    }
+                    // Rogue catchment not connected to anything
+                    else
+                    {
+                        nodeIndex = Global.coe.GetCatchmentNumberFromID(SubwatershedNodesList[i].idNum);
+                        if (nodeIndex >= 0)
+                        {
+                            Global.coe.CompileSubwatershed(Global.coe.catchments[nodeIndex], ref subwatershedCoefficients);
+                            subwatershedCoefficients.catchments.Add(Global.coe.catchments[nodeIndex]);
+                        }
+                    }
+                }
+            }
+            //Write the subwatershed information out to 00000000 file
+            Global.coe.WriteCOE();
         }
     }
 }

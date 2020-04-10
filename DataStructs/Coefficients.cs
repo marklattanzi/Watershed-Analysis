@@ -3080,6 +3080,57 @@ namespace warmf {
             }
         }
 
+        public void CompileSubwatershed(Node DownstreamNode, ref Coefficients SubwatershedCoefficients)
+        {
+            // This requires moving Tributary rivers and reservoir segments from NodeHydro to Node, might be more elegant way
+            // of doing it
+            for (int i = 0; i < DownstreamNode.upstreamCatchIDs.Count; i++)
+            {
+                int catchIndex = GetCatchmentNumberFromID(DownstreamNode.upstreamCatchIDs[i]);
+                if (catchIndex >= 0)
+                {
+                    // Add everything upstream of the upstream catchment (catchment to catchment connections)
+                    CompileSubwatershed(catchments[catchIndex], ref SubwatershedCoefficients);
+                    // Add the upstream river - is this a safe way to add the river to the subwatershed coefficients
+                    // or do we need to copy the river coefficients first?
+                    SubwatershedCoefficients.catchments.Add(catchments[catchIndex]);
+                }
+            }
+            for (int i = 0; i < DownstreamNode.upstreamRiverIDs.Count; i++)
+            {
+                int riverIndex = GetRiverNumberFromID(DownstreamNode.upstreamRiverIDs[i]);
+                if (riverIndex >= 0)
+                {
+                    // Add everything upstream of the upstream river if it is not a subwatershed boundary
+                    if (!rivers[riverIndex].swIsSubwaterBoundary)
+                    {
+                        CompileSubwatershed(rivers[riverIndex], ref SubwatershedCoefficients);
+                    }
+                    // Add the upstream river - is this a safe way to add the river to the subwatershed coefficients
+                    // or do we need to copy the river coefficients first?
+                    SubwatershedCoefficients.rivers.Add(rivers[riverIndex]);
+                }
+            }
+            for (int i = 0; i < DownstreamNode.upstreamReservoirIDs.Count; i++)
+            {
+                List<int> reservoirAndSegment = GetReservoirAndSegmentFromID(DownstreamNode.upstreamReservoirIDs[i]);
+                if (reservoirAndSegment.Count == 2 && reservoirAndSegment[0] >= 0 && reservoirAndSegment[1] >= 0)
+                {
+                    // Add everything upstream of the upstream reservoir segment if it is not a subwatershed boundary
+                    if (reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]].swIsSubwaterBoundary)
+                    {
+                        CompileSubwatershed(reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]], ref SubwatershedCoefficients);
+                    }
+                    // Add the upstream reservoir IF this segment is the subwatershed boundary
+                    // Again, don't know if this is a safe way to add to subwatershed coefficients or if a copy needs to be made
+                    if (reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]].swIsSubwaterBoundary)
+                    {
+                        SubwatershedCoefficients.reservoirs.Add(reservoirs[reservoirAndSegment[0]]);
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region Methods - Working with Entity IDs, Names, WARMF Codes, etc
@@ -3108,7 +3159,7 @@ namespace warmf {
             return -1;
         }
 
-        public List<int> GetReservoirSegmentNumberFromID(int id)
+        public List<int> GetReservoirAndSegmentNumberFromID(int id)
         {
             List<int> ReservoirAndSegment = new List<int>();
             for (int i = 0; i < numReservoirs; i++)
@@ -3140,9 +3191,9 @@ namespace warmf {
             return -1;
         }
 
+        public int GetParameterNumberFromCode(string TheCode)
         // Returns the ordinal number of the constituent from the master list of all constituents 
         // (hydro -> chemical -> physical -> composite)
-        public int GetParameterNumberFromCode(string TheCode)
         {
             int totalNumConstits = numHydrologyParams + numChemicalParams + numPhysicalParams + numCompositeParams;
             for (int ii = 0; ii < totalNumConstits; ii++)
