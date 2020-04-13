@@ -286,8 +286,12 @@ namespace warmf {
         public int idNum;
         public string name;
         public string type; //river, reservoir segment, or catchment
+        public int subwatershed;
 
         public List<int> upstreamCatchIDs;
+        public List<int> upstreamRiverIDs;
+        public List<int> upstreamReservoirIDs;
+
         public bool swOutputResults;
         public int numPointSources;
         public List<int> pointSources;
@@ -296,8 +300,7 @@ namespace warmf {
     public class NodeHydro : Node
     {
         public bool swIsSubwaterBoundary;
-        public List<int> upstreamRiverIDs;
-        public List<int> upstreamReservoirIDs;
+
         public int numDiversionsTo;
         public List<int> diversionToFilenums;
         public string obsWQFilename;
@@ -3080,20 +3083,18 @@ namespace warmf {
             }
         }
 
-        public void CompileSubwatershed(Node DownstreamNode, ref Coefficients SubwatershedCoefficients)
+        public void defineSubwatershed(Node DownstreamNode, int subwatershedID)
         {
-            // This requires moving Tributary rivers and reservoir segments from NodeHydro to Node, might be more elegant way
-            // of doing it
             for (int i = 0; i < DownstreamNode.upstreamCatchIDs.Count; i++)
             {
                 int catchIndex = GetCatchmentNumberFromID(DownstreamNode.upstreamCatchIDs[i]);
                 if (catchIndex >= 0)
                 {
+                    catchments[catchIndex].subwatershed = subwatershedID;
                     // Add everything upstream of the upstream catchment (catchment to catchment connections)
-                    CompileSubwatershed(catchments[catchIndex], ref SubwatershedCoefficients);
+                    defineSubwatershed(catchments[catchIndex],subwatershedID);
                     // Add the upstream river - is this a safe way to add the river to the subwatershed coefficients
                     // or do we need to copy the river coefficients first?
-                    SubwatershedCoefficients.catchments.Add(catchments[catchIndex]);
                 }
             }
             for (int i = 0; i < DownstreamNode.upstreamRiverIDs.Count; i++)
@@ -3104,32 +3105,76 @@ namespace warmf {
                     // Add everything upstream of the upstream river if it is not a subwatershed boundary
                     if (!rivers[riverIndex].swIsSubwaterBoundary)
                     {
-                        CompileSubwatershed(rivers[riverIndex], ref SubwatershedCoefficients);
+                        rivers[riverIndex].subwatershed = subwatershedID;
+                        defineSubwatershed(rivers[riverIndex], subwatershedID);
                     }
-                    // Add the upstream river - is this a safe way to add the river to the subwatershed coefficients
-                    // or do we need to copy the river coefficients first?
-                    SubwatershedCoefficients.rivers.Add(rivers[riverIndex]);
                 }
             }
             for (int i = 0; i < DownstreamNode.upstreamReservoirIDs.Count; i++)
             {
-                List<int> reservoirAndSegment = GetReservoirAndSegmentFromID(DownstreamNode.upstreamReservoirIDs[i]);
+                List<int> reservoirAndSegment = GetReservoirAndSegmentNumberFromID(DownstreamNode.upstreamReservoirIDs[i]);
                 if (reservoirAndSegment.Count == 2 && reservoirAndSegment[0] >= 0 && reservoirAndSegment[1] >= 0)
                 {
                     // Add everything upstream of the upstream reservoir segment if it is not a subwatershed boundary
-                    if (reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]].swIsSubwaterBoundary)
+                    if (!reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]].swIsSubwaterBoundary)
                     {
-                        CompileSubwatershed(reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]], ref SubwatershedCoefficients);
-                    }
-                    // Add the upstream reservoir IF this segment is the subwatershed boundary
-                    // Again, don't know if this is a safe way to add to subwatershed coefficients or if a copy needs to be made
-                    if (reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]].swIsSubwaterBoundary)
-                    {
-                        SubwatershedCoefficients.reservoirs.Add(reservoirs[reservoirAndSegment[0]]);
+                        reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]].subwatershed = subwatershedID;
+                        defineSubwatershed(reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]], subwatershedID);
                     }
                 }
             }
         }
+
+        //public void CompileSubwatershed(Node DownstreamNode, ref Coefficients SubwatershedCoefficients)
+        //{
+        //    // This requires moving Tributary rivers and reservoir segments from NodeHydro to Node, might be more elegant way
+        //    // of doing it
+        //    for (int i = 0; i < DownstreamNode.upstreamCatchIDs.Count; i++)
+        //    {
+        //        int catchIndex = GetCatchmentNumberFromID(DownstreamNode.upstreamCatchIDs[i]);
+        //        if (catchIndex >= 0)
+        //        {
+        //            // Add everything upstream of the upstream catchment (catchment to catchment connections)
+        //            CompileSubwatershed(catchments[catchIndex], ref SubwatershedCoefficients);
+        //            // Add the upstream river - is this a safe way to add the river to the subwatershed coefficients
+        //            // or do we need to copy the river coefficients first?
+        //            SubwatershedCoefficients.catchments.Add(catchments[catchIndex]);
+        //        }
+        //    }
+        //    for (int i = 0; i < DownstreamNode.upstreamRiverIDs.Count; i++)
+        //    {
+        //        int riverIndex = GetRiverNumberFromID(DownstreamNode.upstreamRiverIDs[i]);
+        //        if (riverIndex >= 0)
+        //        {
+        //            // Add everything upstream of the upstream river if it is not a subwatershed boundary
+        //            if (!rivers[riverIndex].swIsSubwaterBoundary)
+        //            {
+        //                CompileSubwatershed(rivers[riverIndex], ref SubwatershedCoefficients);
+        //            }
+        //            // Add the upstream river - is this a safe way to add the river to the subwatershed coefficients
+        //            // or do we need to copy the river coefficients first?
+        //            SubwatershedCoefficients.rivers.Add(rivers[riverIndex]);
+        //        }
+        //    }
+        //    for (int i = 0; i < DownstreamNode.upstreamReservoirIDs.Count; i++)
+        //    {
+        //        List<int> reservoirAndSegment = GetReservoirAndSegmentNumberFromID(DownstreamNode.upstreamReservoirIDs[i]);
+        //        if (reservoirAndSegment.Count == 2 && reservoirAndSegment[0] >= 0 && reservoirAndSegment[1] >= 0)
+        //        {
+        //            // Add everything upstream of the upstream reservoir segment if it is not a subwatershed boundary
+        //            if (reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]].swIsSubwaterBoundary)
+        //            {
+        //                CompileSubwatershed(reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]], ref SubwatershedCoefficients);
+        //            }
+        //            // Add the upstream reservoir IF this segment is the subwatershed boundary
+        //            // Again, don't know if this is a safe way to add to subwatershed coefficients or if a copy needs to be made
+        //            if (reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]].swIsSubwaterBoundary)
+        //            {
+        //                SubwatershedCoefficients.reservoirs.Add(reservoirs[reservoirAndSegment[0]]);
+        //            }
+        //        }
+        //    }
+        //}
 
         #endregion
 

@@ -280,26 +280,35 @@ namespace warmf
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            Coefficients subwatershedCoefficients = Global.coe;
-            // Clear catchments, rivers, and reservoirs
-            subwatershedCoefficients.catchments.Clear();
-            subwatershedCoefficients.rivers.Clear();
-            subwatershedCoefficients.reservoirs.Clear();
+            string fileName;
+            int subwatershedCatchments;
+            int subwatershedRivers;
+            int subwatershedResSegs;
+
+            // Generate run file (00000000.Txx) for each subwatershed
             for (int i = 0; i < SubwatershedNodesList.Count; i++)
             {
-                int nodeIndex = Global.coe.GetRiverNumberFromID(SubwatershedNodesList[i].idNum);
-                if (nodeIndex >= 0)
+                if (i<10)
                 {
-                    Global.coe.CompileSubwatershed(Global.coe.rivers[nodeIndex], ref subwatershedCoefficients);
-                    subwatershedCoefficients.rivers.Add(Global.coe.rivers[nodeIndex]);
+                    fileName = Global.DIR.INPUT + "00000000.T0" + (i + 1);
                 }
                 else
+                {
+                    fileName = Global.DIR.INPUT + "00000000.T" + (i + 1);
+                }
+                int nodeIndex = Global.coe.GetRiverNumberFromID(SubwatershedNodesList[i].idNum);
+                if (nodeIndex >= 0) //rivers
+                {
+                    Global.coe.rivers[nodeIndex].subwatershed = i + 1;
+                    Global.coe.defineSubwatershed(Global.coe.rivers[nodeIndex],i + 1);
+                }
+                else //reservoirs & reservoir segments
                 {
                     List<int> reservoirAndSegment = Global.coe.GetReservoirAndSegmentNumberFromID(SubwatershedNodesList[i].idNum);
                     if (reservoirAndSegment.Count == 2 && reservoirAndSegment[0] >= 0 && reservoirAndSegment[1] >= 0)
                     {
-                        Global.coe.CompileSubwatershed(Global.coe.reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]], ref subwatershedCoefficients);
-                        subwatershedCoefficients.reservoirs.Add(Global.coe.reservoirs[reservoirAndSegment[0]]);
+                        Global.coe.reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]].subwatershed = i + 1;
+                        Global.coe.defineSubwatershed(Global.coe.reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]],i+1);
                     }
                     // Rogue catchment not connected to anything
                     else
@@ -307,14 +316,42 @@ namespace warmf
                         nodeIndex = Global.coe.GetCatchmentNumberFromID(SubwatershedNodesList[i].idNum);
                         if (nodeIndex >= 0)
                         {
-                            Global.coe.CompileSubwatershed(Global.coe.catchments[nodeIndex], ref subwatershedCoefficients);
-                            subwatershedCoefficients.catchments.Add(Global.coe.catchments[nodeIndex]);
+                            Global.coe.catchments[nodeIndex].subwatershed = i + 1;
+                            Global.coe.defineSubwatershed(Global.coe.catchments[nodeIndex], i + 1);
                         }
                     }
                 }
+                //Write the subwatershed information out to 00000000 file
+                subwatershedCatchments = 0;
+                for (int j = 0; j < Global.coe.numCatchments; j++)
+                {
+                    if (Global.coe.catchments[j].subwatershed == i + 1)
+                    {
+                        subwatershedCatchments++;
+                    }
+                }
+                subwatershedResSegs = 0;
+                for (int j = 0; j < Global.coe.numReservoirs; j++)
+                {
+                    for (int k = 0; k < Global.coe.reservoirs[j].numSegments; k++)
+                    {
+                        if (Global.coe.reservoirs[j].reservoirSegs[k].subwatershed == i + 1)
+                        {
+                            subwatershedResSegs++;
+                        }
+                    }
+                }
+                subwatershedRivers = 0;
+                for (int j = 0; j < Global.coe.numRivers; j++)
+                {
+                    if (Global.coe.rivers[j].subwatershed == i + 1)
+                    {
+                        subwatershedRivers++;
+                    }
+                }
+                //subwatershedCoefficients.WriteCOE(fileName);
             }
-            //Write the subwatershed information out to 00000000 file
-            Global.coe.WriteCOE();
+            
         }
     }
 }
