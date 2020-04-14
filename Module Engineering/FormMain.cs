@@ -528,7 +528,7 @@ namespace warmf {
 
         private void miScenarioSave_Click(object sender, EventArgs e)
         {
-            Global.coe.WriteCOE("c:/temp/testWriteCOE.COE");
+            Global.coe.WriteCOE("c:/temp/testWriteCOE.COE",-1);
         }
 
         private void miScenarioCompare_Click(object sender, EventArgs e)

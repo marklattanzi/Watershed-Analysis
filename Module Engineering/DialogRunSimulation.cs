@@ -281,20 +281,17 @@ namespace warmf
         private void btnRun_Click(object sender, EventArgs e)
         {
             string fileName;
-            int subwatershedCatchments;
-            int subwatershedRivers;
-            int subwatershedResSegs;
 
             // Generate run file (00000000.Txx) for each subwatershed
             for (int i = 0; i < SubwatershedNodesList.Count; i++)
             {
-                if (i<10)
+                if (i<9)
                 {
-                    fileName = Global.DIR.INPUT + "00000000.T0" + (i + 1);
+                    fileName = Global.DIR.INPUT + "00000000.T0" + (i + 1).ToString();
                 }
                 else
                 {
-                    fileName = Global.DIR.INPUT + "00000000.T" + (i + 1);
+                    fileName = Global.DIR.INPUT + "00000000.T" + (i + 1).ToString();
                 }
                 int nodeIndex = Global.coe.GetRiverNumberFromID(SubwatershedNodesList[i].idNum);
                 if (nodeIndex >= 0) //rivers
@@ -322,34 +319,8 @@ namespace warmf
                     }
                 }
                 //Write the subwatershed information out to 00000000 file
-                subwatershedCatchments = 0;
-                for (int j = 0; j < Global.coe.numCatchments; j++)
-                {
-                    if (Global.coe.catchments[j].subwatershed == i + 1)
-                    {
-                        subwatershedCatchments++;
-                    }
-                }
-                subwatershedResSegs = 0;
-                for (int j = 0; j < Global.coe.numReservoirs; j++)
-                {
-                    for (int k = 0; k < Global.coe.reservoirs[j].numSegments; k++)
-                    {
-                        if (Global.coe.reservoirs[j].reservoirSegs[k].subwatershed == i + 1)
-                        {
-                            subwatershedResSegs++;
-                        }
-                    }
-                }
-                subwatershedRivers = 0;
-                for (int j = 0; j < Global.coe.numRivers; j++)
-                {
-                    if (Global.coe.rivers[j].subwatershed == i + 1)
-                    {
-                        subwatershedRivers++;
-                    }
-                }
-                //subwatershedCoefficients.WriteCOE(fileName);
+                Global.coe.WriteCOE(fileName, i + 1);
+                
             }
             
         }
