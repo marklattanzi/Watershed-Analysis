@@ -1849,7 +1849,7 @@ namespace warmf {
                 //scenario description
                 sw.WriteString(scenarioDescription);
                 sw.WriteLine();
-                
+
                 //begin date
                 sw.WriteString("BEGDATE");
                 sw.WriteInt(begDate.Day);

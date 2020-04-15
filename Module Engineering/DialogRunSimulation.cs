@@ -89,6 +89,38 @@ namespace warmf
             //time steps per day
             nudTimeStepsPerDay.Value = Global.coe.numTimeStepsPerDay;
 
+            //simulation switches
+            if (Global.coe.swWaterQualSim)
+            {
+                chbxWaterQuality.Checked = true;
+            }
+            if (Global.coe.swSedimentSim)
+            {
+                chbxSediment.Checked = true;
+            }
+            if (Global.coe.swFertSim)
+            {
+                chbxLandApplication.Checked = true;
+            }
+            if (Global.coe.swPointSrcSim)
+            {
+                chbxPointSources.Checked = true;
+            }
+            if (Global.coe.swCalculateLoading)
+            {
+                chbxLoadingData.Checked = true;
+            }
+            if (Global.coe.swStartupFile)
+            {
+                chbxWarmStart.Checked = true;
+                tbWarmStartFile.Text = Global.coe.warmstartOutFilename;
+            }
+            if (Global.coe.numAutoCalibrationLoops > 0)
+            {
+                chbxHydrologyAutocalibration.Checked = true;
+                nudLoops.Value = Global.coe.numAutoCalibrationLoops;
+            }
+            
             //populate subwatersheds listbox
             //find the watershed pour point(s) and add to SubwatershedNodesList,
             //then for each successive watershed boundary,check its location relative to the others, and 
@@ -281,7 +313,43 @@ namespace warmf
         private void btnRun_Click(object sender, EventArgs e)
         {
             string fileName;
-
+            // update coe parameter values with entered information
+            // dates
+            Global.coe.begDate = dtpBeginDate.Value;
+            Global.coe.endDate = dtpEndDate.Value;
+            // time steps per day
+            Global.coe.numTimeStepsPerDay = Convert.ToInt16(nudTimeStepsPerDay.Value);
+            //simulation switches
+            if (chbxWaterQuality.Checked)
+            {
+                Global.coe.swWaterQualSim = true;
+            }
+            if (chbxSediment.Checked)
+            {
+                Global.coe.swSedimentSim = true;
+            }
+            if (chbxLandApplication.Checked)
+            {
+                Global.coe.swFertSim = true;
+            }
+            if (chbxPointSources.Checked)
+            {
+                Global.coe.swPointSrcSim = true;
+            }
+            if (chbxLoadingData.Checked)
+            {
+                Global.coe.swCalculateLoading = true;
+            }
+            if (chbxWarmStart.Checked)
+            {
+                Global.coe.swStartupFile = true;
+                Global.coe.warmstartOutFilename = tbWarmStartFile.Text;
+            }
+            if (chbxHydrologyAutocalibration.Checked)
+            {
+                Global.coe.numAutoCalibrationLoops = Convert.ToInt32(nudLoops.Value);
+            }
+            
             // Generate run file (00000000.Txx) for each subwatershed
             for (int i = 0; i < SubwatershedNodesList.Count; i++)
             {
@@ -322,7 +390,19 @@ namespace warmf
                 Global.coe.WriteCOE(fileName, i + 1);
                 
             }
-            
+
+            // Run WARMF.exe
+            using (System.Diagnostics.Process pProcess = new System.Diagnostics.Process())
+            {
+                pProcess.StartInfo.FileName = Global.DIR.ROOT + "\\MODEL.EXE";
+                pProcess.StartInfo.UseShellExecute = false;
+                pProcess.StartInfo.RedirectStandardOutput = true;
+                pProcess.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                pProcess.StartInfo.CreateNoWindow = false; //display in a separate window
+                pProcess.Start();
+                string output = pProcess.StandardOutput.ReadToEnd(); //The output result
+                pProcess.WaitForExit();
+            }
         }
     }
 }
