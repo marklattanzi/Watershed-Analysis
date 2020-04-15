@@ -305,7 +305,7 @@ namespace warmf {
 
     public class Catchment : Node
     {
-        
+
         public int METFileNum;
         public double precipMultiplier;
         public double aveTempLapse;
@@ -407,10 +407,7 @@ namespace warmf {
     }
 
     public class ReservoirSeg : NodeHydro
-    {
-        public double bottomElevation;
-        public int numOutlets;
-        public List<ReservoirOutlet> outlets;
+    { 
         public double precipWgtMult;
         public double tempLapse;
         public double windSpeedMult;
@@ -430,6 +427,10 @@ namespace warmf {
         public double sedBottomThickness;
         public double sedDiffusion;
         public double sedOxygenDemand;
+
+        public double bottomElevation;
+        public int numOutlets;
+        public List<ReservoirOutlet> outlets;
 
         public List<StageArea> bathymetry;
 

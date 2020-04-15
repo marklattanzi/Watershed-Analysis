@@ -20,6 +20,8 @@ namespace warmf {
         // what's on the map
         bool showMETStations = false;
 
+        public List<ScenarioInfo> scenarios = new List<ScenarioInfo>();
+
         // sub forms of Engineering (Main) module
         public DialogRiverCoeffs dlgRiverCoeffs;
         public DialogCatchCoeffs dlgCatchCoeffs;
@@ -27,6 +29,13 @@ namespace warmf {
         public DialogReservoirCoeffs dlgReservoirCoeffs;
         public DialogOutput dlgOutput;
         public DialogRunSimulation dlgRunSimulation;
+
+        public struct ScenarioInfo
+        {
+            public int IsOpen;
+            public int IsActive;
+            public string Name;
+        }
 
         public FormMain()
         {
@@ -119,11 +128,137 @@ namespace warmf {
 
         private void miFileOpen_Click(object sender, EventArgs e)
         {
-            if (dlgFileOpen.ShowDialog(this) == DialogResult.OK)
+            int i;
+
+            OpenFileDialog openDialog = new OpenFileDialog();
+            openDialog.InitialDirectory = Global.DIR.ROOT;
+            openDialog.FileName = "";
+            openDialog.DefaultExt = ".wpf";
+            openDialog.Filter = "WARMF Project File (.wpf)|*.wpf";
+            if (openDialog.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
                     //OpenShapeFile(dlgFileOpen.FileName);
+                    STechStreamReader sr = new STechStreamReader(dlgFileOpen.FileName);
+                    bool endOfLine = false;
+                    // Read where it says "VERSION"
+                    sr.ReadDelimitedField(',', ref endOfLine);
+                    int version = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine));
+                    if (version >= 2)
+                    {
+                        // Read directory structure
+                        int numDirectories = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine));
+                        for (i = 0; i < numDirectories; i++)
+                        {
+                            string fieldString = sr.ReadDelimitedField(',', ref endOfLine);
+                            string dirString = sr.ReadDelimitedField(',', ref endOfLine);
+                            if (dirString.StartsWith("DATA"))
+                            {
+                                Global.DIR.DATA = System.IO.Path.Combine(Global.DIR.ROOT, dirString);
+                            }
+                            else if (dirString.StartsWith("INPUT"))
+                            {
+                                Global.DIR.INPUT = System.IO.Path.Combine(Global.DIR.DATA, dirString);
+                            }
+                            else if (dirString.StartsWith("OUTPUT"))
+                            {
+                                Global.DIR.OUTPUT = System.IO.Path.Combine(Global.DIR.DATA, dirString);
+                            }
+                            else if (dirString.StartsWith("SHP"))
+                            {
+                                Global.DIR.SHP = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                            }
+                            else if (dirString.StartsWith("COE"))
+                            {
+                                Global.DIR.COE = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                            }
+                            else if (dirString.StartsWith("NPT"))
+                            {
+                                Global.DIR.NPT = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                            }
+                            else if (dirString.StartsWith("AIR"))
+                            {
+                                Global.DIR.AIR = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                            }
+                            else if (dirString.StartsWith("CPA"))
+                            {
+                                Global.DIR.CPA = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                            }
+                            else if (dirString.StartsWith("FLO"))
+                            {
+                                Global.DIR.FLO = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                            }
+                            else if (dirString.StartsWith("MET"))
+                            {
+                                Global.DIR.MET = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                            }
+                            else if (dirString.StartsWith("OLC"))
+                            {
+                                Global.DIR.OLC = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                            }
+                            else if (dirString.StartsWith("OLH"))
+                            {
+                                Global.DIR.OLH = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                            }
+                            else if (dirString.StartsWith("ORC"))
+                            {
+                                Global.DIR.ORC = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                            }
+                            else if (dirString.StartsWith("ORH"))
+                            {
+                                Global.DIR.ORH = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                            }
+                            else if (dirString.StartsWith("PTS"))
+                            {
+                                Global.DIR.PTS = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                            }
+                            else if (dirString.StartsWith("CAT"))
+                            {
+                                Global.DIR.CAT = System.IO.Path.Combine(Global.DIR.OUTPUT, dirString);
+                            }
+                            else if (dirString.StartsWith("RIV"))
+                            {
+                                Global.DIR.RIV = System.IO.Path.Combine(Global.DIR.OUTPUT, dirString);
+                            }
+                            else if (dirString.StartsWith("LAK"))
+                            {
+                                Global.DIR.LAK = System.IO.Path.Combine(Global.DIR.OUTPUT, dirString);
+                            }
+                            else if (dirString.StartsWith("PSM"))
+                            {
+                                Global.DIR.PSM = System.IO.Path.Combine(Global.DIR.OUTPUT, dirString);
+                            }
+                            else if (dirString.StartsWith("QWQ"))
+                            {
+                                Global.DIR.QWQ = System.IO.Path.Combine(Global.DIR.OUTPUT, dirString);
+                            }
+                            else if (dirString.StartsWith("WST"))
+                            {
+                                Global.DIR.WST = System.IO.Path.Combine(Global.DIR.OUTPUT, dirString);
+                            }
+                        }
+
+                        // Read the information on scenarios in the project
+                        int numScenarios = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine));
+                        scenarios.Clear();
+                        for (i = 0; i < numScenarios; i++)
+                        {
+                            ScenarioInfo newScenario = new ScenarioInfo();
+                            newScenario.IsOpen = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine));
+                            newScenario.IsActive = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine));
+                            newScenario.Name = sr.ReadDelimitedField(',', ref endOfLine);
+                            // Read the active scenario
+                            if (newScenario.IsActive > 0)
+                            {
+                                string coeFileName = newScenario.Name + ".COE";
+                                Global.coe.ReadCOE(coeFileName);
+                            }
+
+                            // Add the scenario to the master list of scenarios in the project
+                            scenarios.Add(newScenario);
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {

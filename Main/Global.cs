@@ -35,7 +35,11 @@ namespace warmf {
             public static string RIV = System.IO.Path.Combine(OUTPUT, "riv\\");
             public static string CAT = System.IO.Path.Combine(OUTPUT, "cat\\");
             public static string LAK = System.IO.Path.Combine(OUTPUT, "lak\\");
+            public static string PSM = System.IO.Path.Combine(OUTPUT, "psm\\");
+            public static string QWQ = System.IO.Path.Combine(OUTPUT, "qwq\\");
+            public static string WST = System.IO.Path.Combine(OUTPUT, "wst\\");
         }
+
         public static Coefficients coe = new Coefficients(); // so we can access coefficients from anywhere - may not be necessary...  MRL
         public static Simulation simulation = new Simulation();
     }

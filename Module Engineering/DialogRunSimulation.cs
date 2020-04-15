@@ -15,7 +15,7 @@ namespace warmf
     public partial class DialogRunSimulation : Form
     {
         FormMain parent;
-        
+
 
         public DialogRunSimulation(FormMain par)
         {
@@ -26,12 +26,12 @@ namespace warmf
         public void Populate()
         {
             string fileName;
-            
+
             List<Node> SubwatershedNodesList = new List<Node>();
-            DateTime date = new DateTime(2050,1,1);
+            DateTime date = new DateTime(2050, 1, 1);
             DateTime minDate = new DateTime(1900, 1, 1);
             DateTime maxDate = new DateTime(2050, 1, 1);
-            
+
 
             //dates: 4 file types considered: MET, AIR, FLO (DIV), PTS
             //Files must be sorted chronologically
@@ -91,7 +91,7 @@ namespace warmf
             //time steps per day
             nudTimeStepsPerDay.Value = Global.coe.numTimeStepsPerDay;
 
-            
+
             //populate subwatersheds listbox
             //find the first river segment listed as a subwatershed boundary,
             //then for each successive watershed boundary,check its location relative to the others, and 
@@ -126,11 +126,11 @@ namespace warmf
                                 if (isDownstreamOf(n, SubwatershedNodesList[j]))
                                 {
                                     lbSubwatersheds.Items.Insert(j, n.Name);
-                                    SubwatershedNodesList.Insert(j,n);
+                                    SubwatershedNodesList.Insert(j, n);
                                 }
                             }
                         }
-                    }  
+                    }
                 }
             }
 
@@ -174,7 +174,7 @@ namespace warmf
                     }
                 }
             }
-            
+
         }
         public class Node
         {
@@ -226,7 +226,7 @@ namespace warmf
             {
                 line = File.ReadLines(fileName).Last();
             }
-            
+
             Int32.TryParse(line.Substring(4, 4), out year);
             Int32.TryParse(line.Substring(2, 2), out month);
             Int32.TryParse(line.Substring(0, 2), out day);
@@ -270,9 +270,9 @@ namespace warmf
         }
 
         private Boolean isDownstreamOf(Node node, Node USnode)
-            //node is the location to evaluate, USnode is the location to evaluate against
-            //returns true if node is downstream or at same level as USnode
-            //returns false if node is upstream of USnode
+        //node is the location to evaluate, USnode is the location to evaluate against
+        //returns true if node is downstream or at same level as USnode
+        //returns false if node is upstream of USnode
         {
             List<int> UpstreamReservoirList = new List<int>();
             List<int> UpstreamRiverList = new List<int>();
@@ -310,8 +310,8 @@ namespace warmf
                             }
                         }
                         break;
-                    }  
-                }  
+                    }
+                }
             }
             else if (node.Type == "RESERVOIR SEGMENT")
             {
@@ -349,7 +349,7 @@ namespace warmf
                 }
             }
             else //this would be for catchments listed as subwatershed boundaries. I don't think this happens...
-            {}
+            { }
 
             riverCounter = 0;
             reservoirCounter = 0;
@@ -420,7 +420,7 @@ namespace warmf
                                 }
                                 reservoirCounter++;
                                 break;
-                            }  
+                            }
                         }
                     }
                 }
