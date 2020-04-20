@@ -5,7 +5,7 @@ using System.Globalization;
 using System.IO;
 
 namespace warmf {
-    public struct DIVFileData {
+    public class DIVFileData {
         public string filename;
         public double flowDivertedMultiplier;
         public double flowCap;
@@ -60,7 +60,7 @@ namespace warmf {
         public double stoichHydroxWithChem;
     }
 
-    public struct Reaction {
+    public class Reaction {
         public int primReactantNumber;
         public bool swIsAnoxic;
         public double dissolvedOxyLimit;
@@ -73,13 +73,13 @@ namespace warmf {
         public List<double> stoich;  // one per component
     }
 
-    public struct Sediment {
+    public class Sediment {
         public double grainSize;
         public double specGravity;
         public double settlingRate;
     }
 
-    public struct Algae {
+    public class Algae {
         public double nitroHalfSat;
         public double phosHalfSat;
         public double silicaHalfSat;
@@ -89,7 +89,7 @@ namespace warmf {
         public double optGrowTemp;
     }
 
-    public struct Periphyton {
+    public class Periphyton {
         public double recycledFraction;
         public double velocityHalfSat;
         public double nitroHalfSat;
@@ -105,7 +105,7 @@ namespace warmf {
         public double photoRespirationFraction;
     }
 
-    public struct Mineral {
+    public class Mineral {
         public string name;
         public double molecularWgt;
         public double phDepend;
@@ -114,7 +114,7 @@ namespace warmf {
         public List<double> chemReactionProduct;
     }
 
-    public struct Litter {
+    public class Litter {
         public double coarseLitterFrac;
         public double fineLitterFrac;
         public double humusFrac;
@@ -124,7 +124,7 @@ namespace warmf {
         public double humusDecay;
     }
 
-    public struct Snow {
+    public class Snow {
         public double formTemp;
         public double openAreaSubRate;
         public double forestAreaSubRate;
@@ -141,14 +141,14 @@ namespace warmf {
         public double nitrificationRate;
     }
 
-    public struct Septic {
+    public class Septic {
         public double failedFlow;
         public List<double> type1;
         public List<double> type2;
         public List<double> type3;
     }
 
-    public struct Landuse {
+    public class Landuse {
         public double openWinterFrac;
         public double imperviousFrac;
         public double maxPotentInceptStorage;
@@ -176,7 +176,7 @@ namespace warmf {
         public List<List<List<double>>> fertPlanApplication;
     }
 
-    public struct CatchSeptic {
+    public class CatchSeptic {
         public double soilLayer;
         public double population;
         public double standardPct;
@@ -189,14 +189,14 @@ namespace warmf {
         public double biomassMortRate;
     }
 
-    public struct CatchSediment {
+    public class CatchSediment {
         public double erosivity;
         public double firstPartSizePct;
         public double secondPartSizePct;
         public double thirdPartSizePct;
     }
 
-    public struct CatchBMP {
+    public class CatchBMP {
         public double streetSweepFreq;
         public double streetSweepEff;
         public double divertedImpervFlow;
@@ -204,14 +204,14 @@ namespace warmf {
         public double maxFertAccumTime;
     }
 
-    public struct CatchMine {
+    public class CatchMine {
         public double areaFraction;
         public string name;
         public List<double> concentrationLimit;
         public string mineOutFilename;
     }
 
-    public struct CatchReactions
+    public class CatchReactions
     {
         public List<double> soilReactionRate;
         public List<double> surfaceReactionRate;
@@ -219,7 +219,7 @@ namespace warmf {
         public List<double> biozoneReactionRate;
     }
 
-    public struct CatchMining {
+    public class CatchMining {
         public bool swIsLowSoilDeepMineOverburden;
         public int surfaceMineLanduseNum;
         public double depthSpoils;
@@ -252,7 +252,7 @@ namespace warmf {
         public string waterQualInputFilename;
     }
 
-    public struct Soil {
+    public class Soil {
         public double area;
         public double thickness;
         public double moisture;
@@ -376,7 +376,7 @@ namespace warmf {
 
         public List<StageWidth> stageWidthCurve;
         public int numDiversionsFrom;
-        public List<int> divFilenumFrom;
+        public List<int> diversionFromFilenums;
 
         public SimulationOverride overrideSimulation;
 
@@ -441,12 +441,12 @@ namespace warmf {
         public List<DepthTemp> depthTemp;
     }
 
-    public struct StageWidth {
+    public class StageWidth {
         public double stage;
         public double width;
     }
 
-    public struct SimulationOverride
+    public class SimulationOverride
     {
         public bool swUseObsData;
         public int hydroInterpPeriod;
@@ -457,17 +457,17 @@ namespace warmf {
         public int phAdjustmentPriority;
     }
 
-    public struct StageFlow {
+    public class StageFlow {
         public double stage;
         public double flow;
     }
 
-    public struct StageArea {
+    public class StageArea {
         public double stage;
         public double area;
     }
 
-    public struct ReservoirOutlet {
+    public class ReservoirOutlet {
         public double elevation;
         public double width;
         public int outletType;
@@ -475,7 +475,7 @@ namespace warmf {
         public string managedFlowFilename;
     }
 
-    public struct DepthTemp {
+    public class DepthTemp {
         public double depth;
         public double temp;
     }
@@ -807,6 +807,7 @@ namespace warmf {
                 swPointSrcSim = ReadOnOffSwitch(sr, "POINTS");
                 swInputCoeffChecks = ReadOnOffSwitch(sr, "CHECKS");
 
+                #region Files
                 line = sr.ReadLine();
                 if (TestLine(line, sr.LineNum, "WARMST")) {
                     swStartupFile = line.Substring(8, 8).Contains("1") ? true : false;
@@ -854,9 +855,11 @@ namespace warmf {
                 loadingOutFilename = ReadString(sr, "FILES");
                 warmstartOutFilename = ReadString(sr, "FILES");
                 textOutFilename = ReadString(sr, "FILES");
+                #endregion
 
-				// System coefficients
-				line = ReadSpacerLine(sr, "****");
+                #region System Coefficients
+                // System coefficients
+                line = ReadSpacerLine(sr, "****");
                 dnums = ReadDoubleData(sr, "TOL", 4);
                 tolerancePH = dnums[0];
                 // nums[1] is unused;
@@ -1242,9 +1245,11 @@ namespace warmf {
 						landuse.Add(lu);
                     }
                 }
+                #endregion
 
-				// CATCHMENTS
-				line = ReadSpacerLine(sr, "CATCHMENT COEFFICIENTS");
+                #region Catchments
+                // CATCHMENTS
+                line = ReadSpacerLine(sr, "CATCHMENT COEFFICIENTS");
 
                 catchments = new List<Catchment>();
                 for (int ii = 0; ii < numCatchments; ii++) {
@@ -1455,9 +1460,11 @@ namespace warmf {
 
                     catchments.Add(catchData);
                 }
+                #endregion
 
-				// RIVERS
-				line = ReadSpacerLine(sr, "RIVER COEFFICIENTS");
+                #region River Coefficients
+                // RIVERS
+                line = ReadSpacerLine(sr, "RIVER COEFFICIENTS");
                 rivers = new List<River>();
                 for (int ii = 0; ii < numRivers; ii++) {
 					line = ReadSpacerLine(sr, "RIVE");	// RIVE####  - can these have 5 digits?  MRL
@@ -1495,13 +1502,13 @@ namespace warmf {
 						river.stageWidthCurve.Add(sw);
 					}
 
-					river.upstreamCatchIDs = ReadIntData(sr, "ICAT", 9);   // how many upstream catchments - 9? - MRL
-					river.upstreamRiverIDs = ReadIntData(sr, "IRVT", 9);   // how many upstream rivers - 9? - MRL
-					river.upstreamReservoirIDs = ReadIntData(sr, "ILKT", 9);   // how many upstream reservoirs -9? - MRL
+					river.upstreamCatchIDs = ReadIntData(sr, "ICAT", 9);   
+					river.upstreamRiverIDs = ReadIntData(sr, "IRVT", 9);   
+					river.upstreamReservoirIDs = ReadIntData(sr, "ILKT", 9);   
 
 					river.numDiversionsFrom = ReadInt(sr, "DIVFROM");
 					if (river.numDiversionsFrom > 0)
-						river.divFilenumFrom = ReadIntData(sr, "DIVFROM", river.numDiversionsFrom);
+						river.diversionFromFilenums = ReadIntData(sr, "DIVFROM", river.numDiversionsFrom);
 					river.numDiversionsTo = ReadInt(sr, "DIVTO");
 					if (river.numDiversionsTo > 0)
 						river.diversionToFilenums = ReadIntData(sr, "DIVTO", river.numDiversionsTo);
@@ -1550,10 +1557,11 @@ namespace warmf {
 
                     rivers.Add(river);
                 }
+                #endregion
 
-
-				// RESERVOIRS
-				line = ReadSpacerLine(sr, "LAKE COEFFICIENTS");
+                #region Reservoir Coefficients
+                // RESERVOIRS
+                line = ReadSpacerLine(sr, "LAKE COEFFICIENTS");
 				reservoirs = new List<Reservoir>();
 				for (int ii = 0; ii < numReservoirs; ii++) {
 					line = ReadSpacerLine(sr, "RESE");	// RESE####  - can these have 5 digits?  MRL
@@ -1725,10 +1733,10 @@ namespace warmf {
                         reservoir.reservoirSegs.Add(seg);
 					}
 					reservoirs.Add(reservoir);
-
 				}
+                #endregion
 
-				line = sr.ReadLine();
+                line = sr.ReadLine();
 				while (line.Contains("CRITERIA")) line = sr.ReadLine();  // remove - MRL
 
                 // criteria
@@ -2760,7 +2768,7 @@ namespace warmf {
                         sw.WriteLine();
                         if (rivers[i].numDiversionsFrom > 0)
                         {
-                            WriteIntData(sw, "DIVFROM", rivers[i].divFilenumFrom);
+                            WriteIntData(sw, "DIVFROM", rivers[i].diversionFromFilenums);
                         }
 
                         sw.WriteString("DIVTO");
@@ -3239,6 +3247,18 @@ namespace warmf {
             for (int i = 0; i < numPTSFiles; i++)
             {
                 if (PTSFilename[i] == name)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public int GetFLONumberFromName(string name)
+        {
+            for (int i = 0; i < numDIVFiles; i++)
+            {
+                if (DIVData[i].filename == name)
                 {
                     return i;
                 }

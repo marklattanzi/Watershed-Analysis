@@ -90,7 +90,7 @@ namespace warmf
             if (river.numDiversionsFrom > 0)
             {
                 for (int i = 0; i < river.numDiversionsFrom; i++)
-                    lbDiversionsFrom.Items.Add(Global.coe.DIVData[river.divFilenumFrom[i] - 1].filename);
+                    lbDiversionsFrom.Items.Add(Global.coe.DIVData[river.diversionFromFilenums[i] - 1].filename);
             }
 
             if (river.numDiversionsTo > 0)
@@ -143,7 +143,7 @@ namespace warmf
             dgvBedParticleContent.Rows[1].Cells[0].Value = (river.sedSecondPartSizePct * 100).ToString("F");
             dgvBedParticleContent.Rows.Add();
             dgvBedParticleContent.Rows[2].HeaderCell.Value = "Sand";
-            dgvBedParticleContent.Rows[2].Cells[0].Value = (river.sedFirstPartSizePct * 100).ToString("F");
+            dgvBedParticleContent.Rows[2].Cells[0].Value = (river.sedThirdPartSizePct * 100).ToString("F");
 
             //Initial Concentrations
             string strWaterUnits, strShortUnits;
@@ -482,7 +482,157 @@ namespace warmf
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            
+            River river = Global.coe.rivers[Global.coe.GetRiverNumberFromID(Convert.ToInt32(tbStreamID.Text))];
 
+            //Physical Data Tab
+            river.name = tbName.Text;
+            river.upElevation = Convert.ToDouble(tbUpElevation.Text);
+            river.downElevation = Convert.ToDouble(tbDownElevation.Text);
+            river.length = Convert.ToDouble(tbLength.Text);
+            river.depth = Convert.ToDouble(tbDepth.Text);
+            river.impoundArea = Convert.ToDouble(tbImpArea.Text);
+            river.impoundVol = Convert.ToDouble(tbImpVolume.Text);
+            river.ManningN = Convert.ToDouble(tbManningsN.Text);
+
+            //Stage-Width
+            for (int i = 0; i < 9; i++)
+            {
+                river.stageWidthCurve[i].stage = Convert.ToDouble(dgvStageWidth.Rows[i].Cells[0].Value);
+                river.stageWidthCurve[i].width = Convert.ToDouble(dgvStageWidth.Rows[i].Cells[1].Value);
+            }
+
+            //Diversions
+            river.numDiversionsFrom = 0;
+            river.diversionFromFilenums.Clear();
+            if (lbDiversionsFrom.Items.Count > 0)
+            {
+                river.numDiversionsFrom = lbDiversionsFrom.Items.Count;
+                for (int i = 0; i < river.numDiversionsFrom; i++)
+                {
+                    river.diversionFromFilenums.Add(Global.coe.GetFLONumberFromName(lbDiversionsFrom.Items[i].ToString()));
+                }
+            }
+            river.numDiversionsTo = 0;
+            river.diversionToFilenums.Clear();
+            if (lbDiversionsTo.Items.Count > 0)
+            {
+                river.numDiversionsTo = lbDiversionsTo.Items.Count;
+                for (int i = 0; i < river.numDiversionsTo; i++)
+                {
+                    river.diversionToFilenums.Add(Global.coe.GetFLONumberFromName(lbDiversionsTo.Items[i].ToString()));
+                }
+            }
+            river.minFlow = Convert.ToDouble(tbMinRiverFlow.Text);
+
+            //Point Sources
+            river.numPointSources = 0;
+            river.pointSources.Clear();
+            if (lbPointSources.Items.Count > 0)
+            {
+                river.numPointSources = lbPointSources.Items.Count;
+                for (int i = 0; i < river.numPointSources; i++)
+                {
+                    river.pointSources.Add(Global.coe.GetPTSNumberFromName(lbPointSources.Items[i].ToString()));
+                }
+            }
+
+            //Reactions
+            river.waterReactionRate.Clear();
+            river.bedReactionRate.Clear();
+            for (int i = 0; i < Global.coe.numReactions; i++)
+            {
+                river.waterReactionRate.Add(Convert.ToDouble(dgvReactions.Rows[i].Cells["water"].Value));
+                river.bedReactionRate.Add(Convert.ToDouble(dgvReactions.Rows[i].Cells["bed"].Value));
+            }
+            river.reaerationRateMult = Convert.ToDouble(tbAerationFactor.Text);
+            river.convectiveHeatFactor = Convert.ToDouble(tbConvHeatFactor.Text);
+            river.precipSettleRate = Convert.ToDouble(tbPrecipitateSettling.Text);
+
+            //Sediment
+            river.sedBedDepth = Convert.ToDouble(tbInitSedDepth.Text);
+            river.sedDiffusionRate = Convert.ToDouble(tbBedDiffRate.Text);
+            river.sedDetachVelMult = Convert.ToDouble(tbDetachVelMult.Text);
+            river.sedDetachVelExp = Convert.ToDouble(tbDetachVelExp.Text);
+            river.sedVegFactor = Convert.ToDouble(tbVegFactor.Text);
+            river.sedBankStabFactor = Convert.ToDouble(tbBankStabilityFactor.Text);
+            river.sedFirstPartSizePct = Convert.ToDouble(dgvBedParticleContent.Rows[0].Cells[0].Value) / 100; //Clay
+            river.sedSecondPartSizePct = Convert.ToDouble(dgvBedParticleContent.Rows[1].Cells[0].Value) / 100; //Silt
+            river.sedThirdPartSizePct = Convert.ToDouble(dgvBedParticleContent.Rows[2].Cells[0].Value) / 100; //Sand
+
+            //Initial Concentrations
+            river.componentConcentration.Clear();
+            river.bedAdsorpConcentration.Clear();
+            for (int i = 0; i < Global.coe.numChemicalParams; i++) //chemical parameters
+            {
+                river.componentConcentration.Add(Convert.ToDouble(dgvRiverInitConcs.Rows[i].Cells["water"].Value));
+                river.bedAdsorpConcentration.Add(Convert.ToDouble(dgvRiverInitConcs.Rows[i].Cells["bed"].Value));
+            }
+            for (int i = 0; i < Global.coe.numPhysicalParams; i++) //physical parameters
+            {
+                river.componentConcentration.Add(Convert.ToDouble(dgvRiverInitConcs.Rows[i + Global.coe.numChemicalParams].Cells["water"].Value));
+                river.bedAdsorpConcentration.Add(Convert.ToDouble(dgvRiverInitConcs.Rows[i + Global.coe.numChemicalParams].Cells["bed"].Value));
+            }
+
+            //Adsorption
+            river.waterAdsorpIsotherm.Clear();
+            river.bedAdsorpIsotherm.Clear();
+
+
+            dgvAdsorption.Columns.Add("water", "Water");
+            dgvAdsorption.Columns.Add("bed", "Bed");
+            for (int i = 0; i < Global.coe.numChemicalParams; i++)
+            {
+                dgvAdsorption.Rows.Add();
+                dgvAdsorption.Rows[i].HeaderCell.Value = Global.coe.chemConstits[i].fullName;
+                dgvAdsorption.Rows[i].Cells["water"].Value = river.waterAdsorpIsotherm[i].ToString();
+                dgvAdsorption.Rows[i].Cells["bed"].Value = river.bedAdsorpIsotherm[i].ToString();
+            }
+            List<int> HideCols = new List<int> { 0, 1, 2, 13 };
+            for (int i = 0; i < Global.coe.numChemicalParams; i++)
+            {
+                if (HideCols.Contains(i))
+                {
+                    dgvAdsorption.Rows[i].Visible = false;
+                }
+            }
+
+            //Observed Data
+            tbObsHydroFile.Text = river.hydrologyFilename;
+            tbObsWaterQualFile.Text = river.obsWQFilename;
+            if (river.overrideSimulation.swUseObsData == true)
+            {
+                cbSimulationOverride.Checked = true;
+                tbHydroInterpPd.Text = river.overrideSimulation.hydroInterpPeriod.ToString();
+                tbWQInterpPd.Text = river.overrideSimulation.waterQualityInterpPeriod.ToString();
+                if (river.overrideSimulation.monthAverageMethod == 1)
+                {
+                    rbAvgSimulation.Checked = true;
+                    rbAverageData.Checked = false;
+                }
+                else
+                {
+                    rbAvgSimulation.Checked = false;
+                    rbAverageData.Checked = true;
+                }
+            }
+            tbPriorityTDS.Text = river.overrideSimulation.tdsAdjustmentPriority.ToString();
+            tbPriorityAlkalinity.Text = river.overrideSimulation.alkAdjustmentPriority.ToString();
+            tbPriorityPh.Text = river.overrideSimulation.phAdjustmentPriority.ToString();
+
+            //CE-QUAL-W2
+            if (river.numCEQW2Files == 3)
+            {
+                cbWriteCEQUALoutput.Checked = true;
+                tbCEQUALflowFile.Text = river.flowInputFilename;
+                tbCEQUALtempFile.Text = river.tempInputFilename;
+                tbCEQUALconcFile.Text = river.waterQualInputFilename;
+            }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
