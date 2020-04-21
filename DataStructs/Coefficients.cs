@@ -3242,11 +3242,35 @@ namespace warmf {
             return ReservoirAndSegment;
         }
 
+        public int GetAIRNumberFromName(string name)
+        {
+            for (int i = 0; i < numAIRFiles; i++)
+            {
+                if (AIRFilename[i] == name)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
         public int GetPTSNumberFromName(string name)
         {
             for (int i = 0; i < numPTSFiles; i++)
             {
                 if (PTSFilename[i] == name)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public int GetMETNumberFromName(string name)
+        {
+            for (int i = 0; i < numMETFiles; i++)
+            {
+                if (METFilename[i] == name)
                 {
                     return i;
                 }

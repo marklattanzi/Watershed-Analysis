@@ -601,5 +601,275 @@ namespace warmf
                 lbPumpingTo.Items.Add(CatchmentOpenFileDialog.SafeFileName);
             }
         }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            Catchment catchment = Global.coe.catchments[Global.coe.GetCatchmentNumberFromID(Convert.ToInt16(tbCatchID.Text))];
+
+            //Physical Data tab
+            catchment.name = tbName.Text;
+            catchment.width = Convert.ToDouble(tbWidth.Text);
+            catchment.aspect = Convert.ToDouble(tbAspect.Text);
+            catchment.slope = Convert.ToDouble(tbSlope.Text);
+            catchment.detentionStorage = Convert.ToDouble(tbDetention.Text);
+            catchment.ManningN = Convert.ToDouble(tbRoughness.Text);
+
+            //Meteorology tab
+            catchment.METFileNum = Global.coe.GetMETNumberFromName(tbMetFile.Text);
+            catchment.precipMultiplier = Convert.ToDouble(tbPrecipWeight.Text);
+            catchment.aveTempLapse = Convert.ToDouble(tbTempLapse.Text);
+            catchment.altitudeTempLapse = Convert.ToDouble(tbAltLapse.Text);
+            //if (tbAirFile.Text = "" || tbAirFile.Text = null)
+            //{
+            //    catchment.airRainChemFileNum = Global.coe.GetAIRNumberFromName(tbAirFile.Text) + 1;
+            //}
+            //catchment.altitudeTempLapse = Convert.ToDouble(tbAltLapse.Text);
+            //if (true)
+            //{
+
+            //}
+
+            //tbAirFile.Text = Global.coe.AIRFilename[catchment.airRainChemFileNum - 1];
+            ////tbPartAir.Text = Global.coe.//(catchment.particleRainChemFileNum);
+
+            //Land Uses tab
+            for (int i = 0; i < Global.coe.numLanduses; i++)
+            {
+                catchment.landUsePercent[i] = Convert.ToDouble(dgLanduse.Rows[i].Cells[1]);
+            }
+
+            //Land Application tab
+            //int iNumParams = Global.coe.numChemicalParams + Global.coe.numPhysicalParams;
+
+            //for (int iParam = 0; iParam < iNumParams; iParam++) //add blank rows to datagridview (row headers labeled)
+            //{
+            //    string Units = ConstitUnits[iParam].Trim();
+            //    if (Units.Contains("mg/l"))
+            //    {
+            //        Units = " (" + Units.Replace("mg/l", "kg/ha") + ")";
+            //    }
+            //    else if (Units.Contains("#/100 ml"))
+            //    {
+            //        Units = " (" + Units.Replace("#/100 ml", "10^6 #/ha") + ")";
+            //    }
+            //    string NameUnit = ConstitNames[iParam] + Units;
+            //    dgLandApp.Rows.Insert(iParam);
+            //    dgLandApp.Rows[iParam].HeaderCell.Value = NameUnit.ToString();
+
+            //}
+
+            //List<int> HideList = new List<int> { 0, 1, 2, 15, 16, 20, 22, 23, 24, 29, 30, 31, 32, 37 };
+            //for (int i = 0; i < iNumParams; i++) //hide chemical and physical parameters that aren't applicable
+            //{
+            //    if (HideList.Contains(i))
+            //    {
+            //        dgLandApp.Rows[i].Visible = false;
+            //    }
+            //}
+
+            //cbLanduse.SelectedIndex = 0;
+            //FormatDataGridView(dgLandApp); //Format datagridview
+
+            catchment.bmp.maxFertAccumTime = Convert.ToDouble(tbMaxAccTime.Text);
+
+            //Irrigation tab - Tabled for now - there is no irrigation in the Catawba watershed...
+            //cbIrrLandUse.Items.Clear();
+            //cbIrrLandUse.Items.AddRange(landuselist.ToArray());
+            //cbIrrLandUse.SelectedIndex = 7;
+
+            //catchment.numIrrigationSources[cbIrrLandUse.SelectedIndex].ToString();
+            //catchment.irrigationSource.ToString();
+            //catchment.irrigationSourcePercent.ToString();
+
+            //Sediment tab
+            catchment.sediment.erosivity = Convert.ToDouble(tbSoilErosivity.Text);
+            catchment.sediment.firstPartSizePct = Convert.ToDouble(tbClay.Text);
+            catchment.sediment.secondPartSizePct = Convert.ToDouble(tbSilt.Text);
+            catchment.sediment.thirdPartSizePct = Convert.ToDouble(tbSand.Text);
+
+            //BMP's tab
+            for (int i = 0; i < Global.coe.numLanduses; i++)
+            {
+                catchment.landApplicationLoad[i] = Convert.ToDouble(dgLivestockEx.Rows[i].Cells[1]);
+            }
+            catchment.bufferingPct = Convert.ToDouble(tbPctBuffered.Text);
+            catchment.bufferZoneWidth = Convert.ToDouble(tbBufferWidth);
+            catchment.bufferZoneSlope = Convert.ToDouble(tbBufferSlope);
+            catchment.bufferManningN = Convert.ToDouble(tbBufferRoughness);
+            catchment.bmp.streetSweepFreq = Convert.ToDouble(tbFrequency.Text);
+            catchment.bmp.streetSweepEff = Convert.ToDouble(tbEfficiency.Text);
+            catchment.bmp.divertedImpervFlow = Convert.ToDouble(tbImpRouting.Text);
+            catchment.bmp.detentionPondVol = Convert.ToDouble(tbDetVolume.Text);
+
+            //Point Sources tab
+            catchment.numPointSources = lbPointSources.Items.Count;
+            if (catchment.numPointSources > 0)
+            {
+                for (int i = 0; i < lbPointSources.Items.Count; i++)
+                {
+                    catchment.pointSources[i] = Global.coe.GetPTSNumberFromName(lbPointSources.Items[i].ToString());
+                }
+            }
+
+            //Pumping tab
+            catchment.numPumpFromSchedules = 0;
+            catchment.pumpFromDivFile.Clear();
+            catchment.numPumpToSchedules = 0;
+            catchment.pumpToDivFile.Clear();
+
+            if (lbPumpingFrom.Items.Count > 0)
+            {
+                catchment.numPumpFromSchedules = lbPumpingFrom.Items.Count;
+                for (int i = 0; i < catchment.numPumpFromSchedules; i++)
+                {
+                    catchment.pumpFromDivFile.Add(Global.coe.GetFLONumberFromName(lbPumpingFrom.Items[i].ToString()));
+                }
+            }
+            if (lbPumpingTo.Items.Count > 0)
+            {
+                catchment.numPumpToSchedules = lbPumpingTo.Items.Count;
+                for (int i = 0; i < catchment.numPumpToSchedules; i++)
+                {
+                    catchment.pumpToDivFile.Add(Global.coe.GetFLONumberFromName(lbPumpingTo.Items[i].ToString()));
+                }
+            }
+
+            //Septic Systems tab
+            catchment.septic.soilLayer = Convert.ToDouble(tbDischargeSoilLayer.Text);
+            catchment.septic.population = Convert.ToDouble(tbPopSeptic.Text);
+            catchment.septic.failingPct = Convert.ToDouble(tbTreatment1.Text);
+            catchment.septic.standardPct = Convert.ToDouble(tbTreatment2.Text);
+            catchment.septic.advancedPct = Convert.ToDouble(tbTreatment3.Text);
+            catchment.septic.initialBiomass = Convert.ToDouble(tbInitBiomass.Text);
+            catchment.septic.thickness = Convert.ToDouble(tbBioThick.Text);
+            catchment.septic.area = Convert.ToDouble(tbBiozoneArea.Text);
+            catchment.septic.biomassRespRate = Convert.ToDouble(tbBioRespCoeff.Text);
+            catchment.septic.biomassMortRate = Convert.ToDouble(tbBioMortCoeff.Text);
+            //Stopped here on 4/21
+
+            //Reactions tab
+            for (int i = 0; i < Global.coe.numReactions; i++)
+            {
+                dgvReactions.Rows.Add();
+                dgvReactions.Rows[i].HeaderCell.Value = Global.coe.reactions[i].name + ", " + Global.coe.reactions[i].units;
+                dgvReactions.Rows[i].Cells["soil"].Value = catchment.reactions.soilReactionRate[i].ToString();
+                dgvReactions.Rows[i].Cells["surface"].Value = catchment.reactions.surfaceReactionRate[i].ToString();
+                dgvReactions.Rows[i].Cells["canopy"].Value = catchment.reactions.canopyReactionRate[i].ToString();
+                dgvReactions.Rows[i].Cells["biozone"].Value = catchment.reactions.biozoneReactionRate[i].ToString();
+            }
+
+            //Soil Layers tab
+            tbNumSoilLayers.Text = catchment.numSoilLayers.ToString();
+            cbSoilCoeffGroup.SelectedItem = "Hydrology";
+            //Soil Layers > Hydrology coefficients (displayed on load)
+            for (int ii = 0; ii < catchment.numSoilLayers; ii++)
+            {
+                string area = catchment.soils[ii].area.ToString();
+                string thickness = catchment.soils[ii].thickness.ToString("F0");
+                string moisture = catchment.soils[ii].moisture.ToString("F2");
+                string fieldCap = catchment.soils[ii].fieldCapacity.ToString("F2");
+                string satMoist = catchment.soils[ii].saturationMoisture.ToString("F2");
+                string horizCond = catchment.soils[ii].horizHydraulicConduct.ToString("F0");
+                string vertCond = catchment.soils[ii].vertHydraulicConduct.ToString("F0");
+                string rootDist = catchment.soils[ii].evapTranspireFract.ToString("F2");
+                string density = catchment.soils[ii].density.ToString("F1");
+                string tortuosity = catchment.soils[ii].tortuosity.ToString("F0");
+                dgSoilHydroCoeffs.Rows.Insert(ii, area, thickness, moisture, fieldCap, satMoist, horizCond, vertCond, rootDist, density, tortuosity);
+                dgSoilHydroCoeffs.Rows[ii].HeaderCell.Value = "Soil Layer " + (ii + 1).ToString();
+            }
+            FormatDataGridView(dgSoilHydroCoeffs);
+            dgSoilHydroCoeffs.Visible = true;
+            //Soil Layers > Initial Concentrations
+            dgInitialConc.Columns.Add("Temp", "Temperature (degrees C)");
+            for (int ii = 0; ii < iNumParams; ii++)
+            {
+                dgInitialConc.Columns.Add(ConstitShortNames[ii], ConstitShortNames[ii].ToString() + " (" + ConstitUnits[ii].ToString().TrimEnd() + ")");
+            }
+            for (int ii = 0; ii < catchment.numSoilLayers; ii++)
+            {
+                dgInitialConc.Rows.Insert(ii);
+                dgInitialConc.Rows[ii].HeaderCell.Value = "Soil Layer " + (ii + 1).ToString();
+                dgInitialConc.Rows[ii].Cells[0].Value = catchment.soils[ii].waterTemp.ToString();
+                for (int iParam = 0; iParam < iNumParams; iParam++)
+                {
+                    dgInitialConc.Rows[ii].Cells[iParam + 1].Value = catchment.soils[ii].solutionConcen[iParam].ToString();
+                }
+            }
+            FormatDataGridView(dgInitialConc);
+            dgInitialConc.Visible = false;
+
+            //Soil Layers > Adsorption
+            //***************Adsorption is currently working differently than in WARMF v7****************
+            //***************We need to make some decisions here, and decide how to proceed**************
+            dgAdsorption.Columns.Add("CEC", "CEC (meq/100 g)");
+            dgAdsorption.Columns.Add("MaxP", "Max PO4 (mg/kg)");
+            for (int ii = 0; ii < iNumParams; ii++)
+            {
+                dgAdsorption.Columns.Add(ConstitShortNames[ii].ToString(), ConstitShortNames[ii].ToString().TrimEnd() + " (L/kg)");
+            }
+            for (int ii = 0; ii < catchment.numSoilLayers; ii++)
+            {
+                dgAdsorption.Rows.Insert(ii);
+                dgAdsorption.Rows[ii].HeaderCell.Value = "Soil Layer " + (ii + 1).ToString();
+                dgAdsorption.Rows[ii].Cells[0].Value = catchment.soils[ii].exchangeCapacity.ToString("F0");
+                dgAdsorption.Rows[ii].Cells[1].Value = catchment.soils[ii].maxPhosAdsorption.ToString("F0");
+                for (int iParam = 0; iParam < iNumParams; iParam++)
+                {
+                    dgAdsorption.Rows[ii].Cells[iParam + 2].Value = catchment.soils[ii].adsorptionIsotherm[iParam].ToString("F0");
+                }
+            }
+            List<int> HideCols = new List<int> { 0, 1, 13, 15, 16, 19, 20, 21, 22, 23, 24, 29, 30, 31, 32, 33, 34, 35, 36, 37 };
+            for (int ii = 0; ii < iNumParams; ii++)
+            {
+                if (HideCols.Contains(ii))
+                {
+                    dgAdsorption.Columns[ii + 2].Visible = false;
+                }
+            }
+            FormatDataGridView(dgAdsorption);
+            dgAdsorption.Visible = false;
+
+            //Soil Layers > Mineral Composition
+            for (int ii = 0; ii < Global.coe.numMinerals; ii++)
+            {
+                dgMineralComp.Columns.Add(Global.coe.minerals[ii].name.ToString(), Global.coe.minerals[ii].name.ToString());
+            }
+            for (int ii = 0; ii < catchment.numSoilLayers; ii++)
+            {
+                dgMineralComp.Rows.Insert(ii);
+                dgMineralComp.Rows[ii].HeaderCell.Value = "Soil Layer " + (ii + 1).ToString();
+                for (int iMineral = 0; iMineral < Global.coe.numMinerals; iMineral++)
+                {
+                    dgMineralComp.Rows[ii].Cells[iMineral].Value = catchment.soils[ii].weightFract[iMineral].ToString();
+                }
+            }
+            FormatDataGridView(dgMineralComp);
+            dgMineralComp.Visible = false;
+
+            //Soil Layers > Inorganic Carbon
+            for (int ii = 0; ii < catchment.numSoilLayers; ii++)
+            {
+                dgInorganicC.Rows.Insert(ii);
+                dgInorganicC.Rows[ii].HeaderCell.Value = "Soil Layer " + (ii + 1).ToString();
+                dgInorganicC.Rows[ii].Cells[0].Value = (dgInorganicC.Rows[ii].Cells[0] as DataGridViewComboBoxCell).Items[catchment.soils[ii].CO2CalcMethod - 1];
+                dgInorganicC.Rows[ii].Cells[1].Value = catchment.soils[ii].CO2ConcenFactor.ToString("F0");
+            }
+            FormatDataGridView(dgInorganicC);
+            dgInorganicC.Visible = false;
+
+            //Mining tab
+            //Dialog is set up in the designer, but no code for functionality yet
+            //Deleted from collection at runtime.
+            tcCatchTabs.TabPages.RemoveByKey("tpMining");
+
+            //CE-QUAL-W2 tab
+            if (catchment.mining.numCEQW2Files == 3)
+            {
+                cbWriteCEQUALoutput.Checked = true;
+                tbCEQUALflowFile.Text = catchment.mining.flowInputFilename;
+                tbCEQUALtempFile.Text = catchment.mining.tempInputFilename;
+                tbCEQUALconcFile.Text = catchment.mining.waterQualInputFilename;
+            }
+        }
     }
 }

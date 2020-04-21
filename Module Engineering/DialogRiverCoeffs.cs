@@ -577,56 +577,53 @@ namespace warmf
             //Adsorption
             river.waterAdsorpIsotherm.Clear();
             river.bedAdsorpIsotherm.Clear();
-
-
-            dgvAdsorption.Columns.Add("water", "Water");
-            dgvAdsorption.Columns.Add("bed", "Bed");
             for (int i = 0; i < Global.coe.numChemicalParams; i++)
             {
-                dgvAdsorption.Rows.Add();
-                dgvAdsorption.Rows[i].HeaderCell.Value = Global.coe.chemConstits[i].fullName;
-                dgvAdsorption.Rows[i].Cells["water"].Value = river.waterAdsorpIsotherm[i].ToString();
-                dgvAdsorption.Rows[i].Cells["bed"].Value = river.bedAdsorpIsotherm[i].ToString();
-            }
-            List<int> HideCols = new List<int> { 0, 1, 2, 13 };
-            for (int i = 0; i < Global.coe.numChemicalParams; i++)
-            {
-                if (HideCols.Contains(i))
-                {
-                    dgvAdsorption.Rows[i].Visible = false;
-                }
+                river.waterAdsorpIsotherm.Add(Convert.ToDouble(dgvAdsorption.Rows[i].Cells["water"].Value));
+                river.bedAdsorpIsotherm.Add(Convert.ToDouble(dgvAdsorption.Rows[i].Cells["bed"].Value));
             }
 
             //Observed Data
-            tbObsHydroFile.Text = river.hydrologyFilename;
-            tbObsWaterQualFile.Text = river.obsWQFilename;
-            if (river.overrideSimulation.swUseObsData == true)
+            river.hydrologyFilename = tbObsHydroFile.Text;
+            river.obsWQFilename = tbObsWaterQualFile.Text;
+            if (cbSimulationOverride.Checked == true)
             {
-                cbSimulationOverride.Checked = true;
-                tbHydroInterpPd.Text = river.overrideSimulation.hydroInterpPeriod.ToString();
-                tbWQInterpPd.Text = river.overrideSimulation.waterQualityInterpPeriod.ToString();
-                if (river.overrideSimulation.monthAverageMethod == 1)
-                {
-                    rbAvgSimulation.Checked = true;
-                    rbAverageData.Checked = false;
-                }
-                else
-                {
-                    rbAvgSimulation.Checked = false;
-                    rbAverageData.Checked = true;
-                }
+                river.overrideSimulation.swUseObsData = true;
+                river.overrideSimulation.hydroInterpPeriod = Convert.ToInt16(tbHydroInterpPd.Text);
+                river.overrideSimulation.waterQualityInterpPeriod = Convert.ToInt16(tbWQInterpPd.Text);
             }
-            tbPriorityTDS.Text = river.overrideSimulation.tdsAdjustmentPriority.ToString();
-            tbPriorityAlkalinity.Text = river.overrideSimulation.alkAdjustmentPriority.ToString();
-            tbPriorityPh.Text = river.overrideSimulation.phAdjustmentPriority.ToString();
+            else
+            {
+                river.overrideSimulation.swUseObsData = false;
+                river.overrideSimulation.hydroInterpPeriod = 0;
+                river.overrideSimulation.waterQualityInterpPeriod = 0;
+            }
+            if (rbAvgSimulation.Checked == true)
+            {
+                river.overrideSimulation.monthAverageMethod = 1;
+            }
+            else
+            {
+                river.overrideSimulation.monthAverageMethod = 2;
+            }
+            river.overrideSimulation.tdsAdjustmentPriority = Convert.ToInt16(tbPriorityTDS.Text);
+            river.overrideSimulation.alkAdjustmentPriority = Convert.ToInt16(tbPriorityAlkalinity.Text);
+            river.overrideSimulation.phAdjustmentPriority = Convert.ToInt16(tbPriorityPh.Text);
 
             //CE-QUAL-W2
-            if (river.numCEQW2Files == 3)
+            if (cbWriteCEQUALoutput.Checked == true)
             {
-                cbWriteCEQUALoutput.Checked = true;
-                tbCEQUALflowFile.Text = river.flowInputFilename;
-                tbCEQUALtempFile.Text = river.tempInputFilename;
-                tbCEQUALconcFile.Text = river.waterQualInputFilename;
+                river.numCEQW2Files = 3;
+                river.flowInputFilename = tbCEQUALflowFile.Text;
+                river.tempInputFilename = tbCEQUALtempFile.Text;
+                river.waterQualInputFilename = tbCEQUALconcFile.Text;
+            }
+            else
+            {
+                river.numCEQW2Files = 0;
+                river.flowInputFilename = null;
+                river.tempInputFilename = null;
+                river.waterQualInputFilename = null;
             }
         }
 

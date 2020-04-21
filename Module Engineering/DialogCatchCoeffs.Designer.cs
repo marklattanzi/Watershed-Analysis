@@ -152,6 +152,14 @@
             this.btnAddPTS = new System.Windows.Forms.Button();
             this.lbPointSources = new System.Windows.Forms.ListBox();
             this.tpPumping = new System.Windows.Forms.TabPage();
+            this.btnToRemove = new System.Windows.Forms.Button();
+            this.btnFromRemove = new System.Windows.Forms.Button();
+            this.btnToAdd = new System.Windows.Forms.Button();
+            this.btnFromAdd = new System.Windows.Forms.Button();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.lbPumpingTo = new System.Windows.Forms.ListBox();
+            this.lbPumpingFrom = new System.Windows.Forms.ListBox();
             this.tpSeptic = new System.Windows.Forms.TabPage();
             this.tbBioMortCoeff = new System.Windows.Forms.TextBox();
             this.tbBioRespCoeff = new System.Windows.Forms.TextBox();
@@ -175,6 +183,13 @@
             this.label21 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.tpRxns = new System.Windows.Forms.TabPage();
+            this.label40 = new System.Windows.Forms.Label();
+            this.label39 = new System.Windows.Forms.Label();
+            this.dgvReactions = new System.Windows.Forms.DataGridView();
+            this.Soil = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Surface = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Canopy = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Biozone = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tpSoil = new System.Windows.Forms.TabPage();
             this.lblSoilHydroCoeffs = new System.Windows.Forms.Label();
             this.dgSoilHydroCoeffs = new System.Windows.Forms.DataGridView();
@@ -230,21 +245,6 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
             this.CatchmentOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.btnToRemove = new System.Windows.Forms.Button();
-            this.btnFromRemove = new System.Windows.Forms.Button();
-            this.btnToAdd = new System.Windows.Forms.Button();
-            this.btnFromAdd = new System.Windows.Forms.Button();
-            this.label37 = new System.Windows.Forms.Label();
-            this.label38 = new System.Windows.Forms.Label();
-            this.lbPumpingTo = new System.Windows.Forms.ListBox();
-            this.lbPumpingFrom = new System.Windows.Forms.ListBox();
-            this.dgvReactions = new System.Windows.Forms.DataGridView();
-            this.Soil = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Surface = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Canopy = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Biozone = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label39 = new System.Windows.Forms.Label();
-            this.label40 = new System.Windows.Forms.Label();
             this.tcCatchTabs.SuspendLayout();
             this.tpPhysData.SuspendLayout();
             this.gbSizeSlope.SuspendLayout();
@@ -274,6 +274,7 @@
             this.tpPumping.SuspendLayout();
             this.tpSeptic.SuspendLayout();
             this.tpRxns.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReactions)).BeginInit();
             this.tpSoil.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgSoilHydroCoeffs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgInorganicC)).BeginInit();
@@ -288,7 +289,6 @@
             this.gbCEQUALW2chem.SuspendLayout();
             this.gbCEQUALW2temp.SuspendLayout();
             this.gbCEQUALW2flow.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvReactions)).BeginInit();
             this.SuspendLayout();
             // 
             // tcCatchTabs
@@ -1518,6 +1518,86 @@
             this.tpPumping.Text = "Pumping";
             this.tpPumping.UseVisualStyleBackColor = true;
             // 
+            // btnToRemove
+            // 
+            this.btnToRemove.Enabled = false;
+            this.btnToRemove.Location = new System.Drawing.Point(500, 364);
+            this.btnToRemove.Name = "btnToRemove";
+            this.btnToRemove.Size = new System.Drawing.Size(75, 23);
+            this.btnToRemove.TabIndex = 15;
+            this.btnToRemove.Text = "Remove";
+            this.btnToRemove.UseVisualStyleBackColor = true;
+            this.btnToRemove.Click += new System.EventHandler(this.btnToRemove_Click);
+            // 
+            // btnFromRemove
+            // 
+            this.btnFromRemove.Enabled = false;
+            this.btnFromRemove.Location = new System.Drawing.Point(175, 364);
+            this.btnFromRemove.Name = "btnFromRemove";
+            this.btnFromRemove.Size = new System.Drawing.Size(75, 23);
+            this.btnFromRemove.TabIndex = 14;
+            this.btnFromRemove.Text = "Remove";
+            this.btnFromRemove.UseVisualStyleBackColor = true;
+            this.btnFromRemove.Click += new System.EventHandler(this.btnFromRemove_Click);
+            // 
+            // btnToAdd
+            // 
+            this.btnToAdd.Location = new System.Drawing.Point(419, 364);
+            this.btnToAdd.Name = "btnToAdd";
+            this.btnToAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnToAdd.TabIndex = 13;
+            this.btnToAdd.Text = "Add";
+            this.btnToAdd.UseVisualStyleBackColor = true;
+            this.btnToAdd.Click += new System.EventHandler(this.btnToAdd_Click);
+            // 
+            // btnFromAdd
+            // 
+            this.btnFromAdd.Location = new System.Drawing.Point(94, 364);
+            this.btnFromAdd.Name = "btnFromAdd";
+            this.btnFromAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnFromAdd.TabIndex = 12;
+            this.btnFromAdd.Text = "Add";
+            this.btnFromAdd.UseVisualStyleBackColor = true;
+            this.btnFromAdd.Click += new System.EventHandler(this.btnFromAdd_Click);
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(336, 48);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(147, 16);
+            this.label37.TabIndex = 11;
+            this.label37.Text = "Pumping To Catchment:";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(17, 48);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(164, 16);
+            this.label38.TabIndex = 10;
+            this.label38.Text = "Pumping From Catchment:";
+            // 
+            // lbPumpingTo
+            // 
+            this.lbPumpingTo.FormattingEnabled = true;
+            this.lbPumpingTo.ItemHeight = 16;
+            this.lbPumpingTo.Location = new System.Drawing.Point(339, 64);
+            this.lbPumpingTo.Name = "lbPumpingTo";
+            this.lbPumpingTo.Size = new System.Drawing.Size(311, 276);
+            this.lbPumpingTo.TabIndex = 9;
+            this.lbPumpingTo.SelectedIndexChanged += new System.EventHandler(this.lbPumpingTo_SelectedIndexChanged);
+            // 
+            // lbPumpingFrom
+            // 
+            this.lbPumpingFrom.FormattingEnabled = true;
+            this.lbPumpingFrom.ItemHeight = 16;
+            this.lbPumpingFrom.Location = new System.Drawing.Point(20, 64);
+            this.lbPumpingFrom.Name = "lbPumpingFrom";
+            this.lbPumpingFrom.Size = new System.Drawing.Size(311, 276);
+            this.lbPumpingFrom.TabIndex = 8;
+            this.lbPumpingFrom.SelectedIndexChanged += new System.EventHandler(this.lbPumpingFrom_SelectedIndexChanged);
+            // 
             // tpSeptic
             // 
             this.tpSeptic.Controls.Add(this.tbBioMortCoeff);
@@ -1730,6 +1810,60 @@
             this.tpRxns.TabIndex = 10;
             this.tpRxns.Text = "Reactions";
             this.tpRxns.UseVisualStyleBackColor = true;
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(18, 392);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(360, 16);
+            this.label40.TabIndex = 2;
+            this.label40.Text = "Note: Biozone reaction rates are rate coefficients (cm3/mg-d)";
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(18, 19);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(101, 16);
+            this.label39.TabIndex = 1;
+            this.label39.Text = "Reaction Rates:";
+            // 
+            // dgvReactions
+            // 
+            this.dgvReactions.AllowUserToAddRows = false;
+            this.dgvReactions.AllowUserToDeleteRows = false;
+            this.dgvReactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvReactions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Soil,
+            this.Surface,
+            this.Canopy,
+            this.Biozone});
+            this.dgvReactions.Location = new System.Drawing.Point(21, 38);
+            this.dgvReactions.Name = "dgvReactions";
+            this.dgvReactions.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dgvReactions.Size = new System.Drawing.Size(624, 351);
+            this.dgvReactions.TabIndex = 0;
+            // 
+            // Soil
+            // 
+            this.Soil.HeaderText = "Soil";
+            this.Soil.Name = "Soil";
+            // 
+            // Surface
+            // 
+            this.Surface.HeaderText = "Surface";
+            this.Surface.Name = "Surface";
+            // 
+            // Canopy
+            // 
+            this.Canopy.HeaderText = "Canopy";
+            this.Canopy.Name = "Canopy";
+            // 
+            // Biozone
+            // 
+            this.Biozone.HeaderText = "Biozone";
+            this.Biozone.Name = "Biozone";
             // 
             // tpSoil
             // 
@@ -2243,6 +2377,7 @@
             this.btnOK.TabIndex = 11;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // btnCancel
             // 
@@ -2269,140 +2404,6 @@
             // CatchmentOpenFileDialog
             // 
             this.CatchmentOpenFileDialog.FileName = "openFileDialog1";
-            // 
-            // btnToRemove
-            // 
-            this.btnToRemove.Enabled = false;
-            this.btnToRemove.Location = new System.Drawing.Point(500, 364);
-            this.btnToRemove.Name = "btnToRemove";
-            this.btnToRemove.Size = new System.Drawing.Size(75, 23);
-            this.btnToRemove.TabIndex = 15;
-            this.btnToRemove.Text = "Remove";
-            this.btnToRemove.UseVisualStyleBackColor = true;
-            this.btnToRemove.Click += new System.EventHandler(this.btnToRemove_Click);
-            // 
-            // btnFromRemove
-            // 
-            this.btnFromRemove.Enabled = false;
-            this.btnFromRemove.Location = new System.Drawing.Point(175, 364);
-            this.btnFromRemove.Name = "btnFromRemove";
-            this.btnFromRemove.Size = new System.Drawing.Size(75, 23);
-            this.btnFromRemove.TabIndex = 14;
-            this.btnFromRemove.Text = "Remove";
-            this.btnFromRemove.UseVisualStyleBackColor = true;
-            this.btnFromRemove.Click += new System.EventHandler(this.btnFromRemove_Click);
-            // 
-            // btnToAdd
-            // 
-            this.btnToAdd.Location = new System.Drawing.Point(419, 364);
-            this.btnToAdd.Name = "btnToAdd";
-            this.btnToAdd.Size = new System.Drawing.Size(75, 23);
-            this.btnToAdd.TabIndex = 13;
-            this.btnToAdd.Text = "Add";
-            this.btnToAdd.UseVisualStyleBackColor = true;
-            this.btnToAdd.Click += new System.EventHandler(this.btnToAdd_Click);
-            // 
-            // btnFromAdd
-            // 
-            this.btnFromAdd.Location = new System.Drawing.Point(94, 364);
-            this.btnFromAdd.Name = "btnFromAdd";
-            this.btnFromAdd.Size = new System.Drawing.Size(75, 23);
-            this.btnFromAdd.TabIndex = 12;
-            this.btnFromAdd.Text = "Add";
-            this.btnFromAdd.UseVisualStyleBackColor = true;
-            this.btnFromAdd.Click += new System.EventHandler(this.btnFromAdd_Click);
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(336, 48);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(147, 16);
-            this.label37.TabIndex = 11;
-            this.label37.Text = "Pumping To Catchment:";
-            // 
-            // label38
-            // 
-            this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(17, 48);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(164, 16);
-            this.label38.TabIndex = 10;
-            this.label38.Text = "Pumping From Catchment:";
-            // 
-            // lbPumpingTo
-            // 
-            this.lbPumpingTo.FormattingEnabled = true;
-            this.lbPumpingTo.ItemHeight = 16;
-            this.lbPumpingTo.Location = new System.Drawing.Point(339, 64);
-            this.lbPumpingTo.Name = "lbPumpingTo";
-            this.lbPumpingTo.Size = new System.Drawing.Size(311, 276);
-            this.lbPumpingTo.TabIndex = 9;
-            this.lbPumpingTo.SelectedIndexChanged += new System.EventHandler(this.lbPumpingTo_SelectedIndexChanged);
-            // 
-            // lbPumpingFrom
-            // 
-            this.lbPumpingFrom.FormattingEnabled = true;
-            this.lbPumpingFrom.ItemHeight = 16;
-            this.lbPumpingFrom.Location = new System.Drawing.Point(20, 64);
-            this.lbPumpingFrom.Name = "lbPumpingFrom";
-            this.lbPumpingFrom.Size = new System.Drawing.Size(311, 276);
-            this.lbPumpingFrom.TabIndex = 8;
-            this.lbPumpingFrom.SelectedIndexChanged += new System.EventHandler(this.lbPumpingFrom_SelectedIndexChanged);
-            // 
-            // dgvReactions
-            // 
-            this.dgvReactions.AllowUserToAddRows = false;
-            this.dgvReactions.AllowUserToDeleteRows = false;
-            this.dgvReactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvReactions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Soil,
-            this.Surface,
-            this.Canopy,
-            this.Biozone});
-            this.dgvReactions.Location = new System.Drawing.Point(21, 38);
-            this.dgvReactions.Name = "dgvReactions";
-            this.dgvReactions.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.dgvReactions.Size = new System.Drawing.Size(624, 351);
-            this.dgvReactions.TabIndex = 0;
-            // 
-            // Soil
-            // 
-            this.Soil.HeaderText = "Soil";
-            this.Soil.Name = "Soil";
-            // 
-            // Surface
-            // 
-            this.Surface.HeaderText = "Surface";
-            this.Surface.Name = "Surface";
-            // 
-            // Canopy
-            // 
-            this.Canopy.HeaderText = "Canopy";
-            this.Canopy.Name = "Canopy";
-            // 
-            // Biozone
-            // 
-            this.Biozone.HeaderText = "Biozone";
-            this.Biozone.Name = "Biozone";
-            // 
-            // label39
-            // 
-            this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(18, 19);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(101, 16);
-            this.label39.TabIndex = 1;
-            this.label39.Text = "Reaction Rates:";
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(18, 392);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(360, 16);
-            this.label40.TabIndex = 2;
-            this.label40.Text = "Note: Biozone reaction rates are rate coefficients (cm3/mg-d)";
             // 
             // DialogCatchCoeffs
             // 
@@ -2470,6 +2471,7 @@
             this.tpSeptic.PerformLayout();
             this.tpRxns.ResumeLayout(false);
             this.tpRxns.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReactions)).EndInit();
             this.tpSoil.ResumeLayout(false);
             this.tpSoil.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgSoilHydroCoeffs)).EndInit();
@@ -2491,7 +2493,6 @@
             this.gbCEQUALW2temp.PerformLayout();
             this.gbCEQUALW2flow.ResumeLayout(false);
             this.gbCEQUALW2flow.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvReactions)).EndInit();
             this.ResumeLayout(false);
 
         }
