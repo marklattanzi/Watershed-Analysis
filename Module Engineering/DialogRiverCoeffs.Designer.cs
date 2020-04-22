@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tcRiverTabs = new System.Windows.Forms.TabControl();
             this.tpPhysicalData = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -398,6 +398,7 @@
             // 
             this.tbStreamID.Location = new System.Drawing.Point(188, 54);
             this.tbStreamID.Name = "tbStreamID";
+            this.tbStreamID.ReadOnly = true;
             this.tbStreamID.Size = new System.Drawing.Size(86, 20);
             this.tbStreamID.TabIndex = 3;
             // 
@@ -453,13 +454,13 @@
             // 
             // chartStageWidth
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartStageWidth.ChartAreas.Add(chartArea1);
+            chartArea2.Name = "ChartArea1";
+            this.chartStageWidth.ChartAreas.Add(chartArea2);
             this.chartStageWidth.Location = new System.Drawing.Point(235, 79);
             this.chartStageWidth.Name = "chartStageWidth";
-            series1.ChartArea = "ChartArea1";
-            series1.Name = "SeriesStageWidth";
-            this.chartStageWidth.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.Name = "SeriesStageWidth";
+            this.chartStageWidth.Series.Add(series2);
             this.chartStageWidth.Size = new System.Drawing.Size(403, 355);
             this.chartStageWidth.TabIndex = 2;
             this.chartStageWidth.Text = "chart1";
@@ -1478,6 +1479,7 @@
             this.btnCancel.TabIndex = 15;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnOK
             // 
