@@ -62,6 +62,9 @@ namespace warmf {
                 charCount++;
             }
 
+            // Remove whitespace characters from beginning and end
+            field = field.Trim();
+
             // If the last character read was ending quote marks, read past the subsequent comma in the stream
             if (readChar == '\"')
                 Read();

@@ -199,9 +199,13 @@ namespace warmf
                     dgvRiverInitConcs.Rows[iRow].Cells["bedunits"].Value = strWaterUnits;
                 }
             }
-            List<int> hideRowsList = new List<int>() { 1, 2, 3, 14, 17, 21, 23, 24, 33, 38 };
-            foreach (int i in hideRowsList)
-                dgvRiverInitConcs.Rows[i - 1].Visible = false;
+            List<string> hideParameters = new List<string>() { "MSOX", "MNOX", "MH", "MALK", "MALG", "MCO2", "MSSED", "MSDET" };
+            for (int i = 0; i < hideParameters.Count; i++)
+            {
+                int parameterIndex = Global.coe.GetParameterNumberFromCode(hideParameters[i]);
+                if (parameterIndex >= 0 && parameterIndex < dgvRiverInitConcs.Rows.Count)
+                    dgvRiverInitConcs.Rows[parameterIndex].Visible = false;
+            }
 
             //Adsorption
             dgvAdsorption.Columns.Add("water", "Water");

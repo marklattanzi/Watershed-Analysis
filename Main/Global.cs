@@ -10,7 +10,7 @@ namespace warmf {
         //Directory Structures
         public struct DIR
         {
-            public static string ROOT = System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
+            public static string ROOT = System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) + "\\";
             
             //data, input, output directories 
             public static string DATA = System.IO.Path.Combine(ROOT,"data\\");

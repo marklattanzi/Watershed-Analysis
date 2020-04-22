@@ -1,4 +1,5 @@
 VERSION,2
+20
 DATA,data\\
 INPUT,input\\
 OUTPUT,output\\
@@ -19,10 +20,9 @@ CAT,cat\\
 PSM,psm\\
 QWQ,\\
 WST,\\
-1
-1,1,Catawba.coe
-3
 Catchments,catchments.shp
 Rivers,rivers.shp
 Reservoirs,lakes.shp
 0
+1
+1,1,Catawba.coe

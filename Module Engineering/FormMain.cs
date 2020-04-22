@@ -20,6 +20,10 @@ namespace warmf {
         // what's on the map
         bool showMETStations = false;
 
+        public LayerInfo catchmentLayer;
+        public LayerInfo riverLayer;
+        public LayerInfo reservoirLayer;
+        public List<LayerInfo> layers = new List<LayerInfo>();
         public List<ScenarioInfo> scenarios = new List<ScenarioInfo>();
 
         // sub forms of Engineering (Main) module
@@ -35,6 +39,12 @@ namespace warmf {
             public int IsOpen;
             public int IsActive;
             public string Name;
+        }
+
+        public struct LayerInfo
+        {
+            public string Name;
+            public string FileName;
         }
 
         public FormMain()
@@ -88,6 +98,38 @@ namespace warmf {
             this.Hide();
         }
 
+        // Loads the catchment, river, and reservoir shapefiles
+        private void LoadCatchmentRiverReservoirShapefiles()
+        {
+            //Add catchments shapefile
+            this.frmMap.AddShapeFile(Global.DIR.SHP + catchmentLayer.FileName, "ShapeFile", "");
+            EGIS.ShapeFileLib.ShapeFile catchShapefile = this.frmMap[0];
+            catchShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
+            catchShapefile.RenderSettings.UseToolTip = true;
+            catchShapefile.RenderSettings.ToolTipFieldName = catchShapefile.RenderSettings.FieldName;
+            catchShapefile.RenderSettings.IsSelectable = true;
+            catchShapefile.RenderSettings.FillColor = Color.FromArgb(224, 250, 207);
+            catchShapefile.RenderSettings.OutlineColor = Color.FromArgb(178, 178, 178);
+            ////Add rivers shapefile
+            this.frmMap.AddShapeFile(Global.DIR.SHP + riverLayer.FileName, "ShapeFile", "");
+            EGIS.ShapeFileLib.ShapeFile riverShapefile = this.frmMap[1];
+            riverShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
+            riverShapefile.RenderSettings.UseToolTip = true;
+            riverShapefile.RenderSettings.ToolTipFieldName = catchShapefile.RenderSettings.FieldName;
+            riverShapefile.RenderSettings.IsSelectable = true;
+            riverShapefile.RenderSettings.LineType = LineType.Solid;
+            riverShapefile.RenderSettings.OutlineColor = Color.FromArgb(0, 0, 255);
+            //add reservoirs shapefile
+            this.frmMap.AddShapeFile(Global.DIR.SHP + reservoirLayer.FileName, "ShapeFile", "");
+            EGIS.ShapeFileLib.ShapeFile lakeShapefile = this.frmMap[2];
+            lakeShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
+            lakeShapefile.RenderSettings.UseToolTip = true;
+            lakeShapefile.RenderSettings.ToolTipFieldName = catchShapefile.RenderSettings.FieldName;
+            lakeShapefile.RenderSettings.IsSelectable = true;
+            lakeShapefile.RenderSettings.FillColor = Color.FromArgb(151, 219, 242);
+            lakeShapefile.RenderSettings.OutlineColor = Color.FromArgb(61, 101, 235);
+        }
+
         private void LoadDefault()
         {
             try
@@ -135,12 +177,13 @@ namespace warmf {
             openDialog.FileName = "";
             openDialog.DefaultExt = ".wpf";
             openDialog.Filter = "WARMF Project File (.wpf)|*.wpf";
+            openDialog.Title = "Select WARMF Project File";
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
                     //OpenShapeFile(dlgFileOpen.FileName);
-                    STechStreamReader sr = new STechStreamReader(dlgFileOpen.FileName);
+                    STechStreamReader sr = new STechStreamReader(openDialog.FileName);
                     bool endOfLine = false;
                     // Read where it says "VERSION"
                     sr.ReadDelimitedField(',', ref endOfLine);
@@ -151,92 +194,119 @@ namespace warmf {
                         int numDirectories = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine));
                         for (i = 0; i < numDirectories; i++)
                         {
+                            // Read the name and directory
                             string fieldString = sr.ReadDelimitedField(',', ref endOfLine);
                             string dirString = sr.ReadDelimitedField(',', ref endOfLine);
-                            if (dirString.StartsWith("DATA"))
+
+                            // Check to make sure the directory ends with a backslash
+                            if (!dirString.EndsWith("\\"))
+                                dirString = dirString + "\\";
+
+                            if (fieldString.StartsWith("DATA"))
                             {
-                                Global.DIR.DATA = System.IO.Path.Combine(Global.DIR.ROOT, dirString);
+                                Global.DIR.DATA = Global.DIR.ROOT + dirString;
                             }
-                            else if (dirString.StartsWith("INPUT"))
+                            else if (fieldString.StartsWith("INPUT"))
                             {
-                                Global.DIR.INPUT = System.IO.Path.Combine(Global.DIR.DATA, dirString);
+                                Global.DIR.INPUT = Global.DIR.DATA + dirString;
                             }
-                            else if (dirString.StartsWith("OUTPUT"))
+                            else if (fieldString.StartsWith("OUTPUT"))
                             {
-                                Global.DIR.OUTPUT = System.IO.Path.Combine(Global.DIR.DATA, dirString);
+                                Global.DIR.OUTPUT = Global.DIR.DATA + dirString;
                             }
-                            else if (dirString.StartsWith("SHP"))
+                            else if (fieldString.StartsWith("SHP"))
                             {
-                                Global.DIR.SHP = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                                Global.DIR.SHP = Global.DIR.INPUT + dirString;
                             }
-                            else if (dirString.StartsWith("COE"))
+                            else if (fieldString.StartsWith("COE"))
                             {
-                                Global.DIR.COE = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                                Global.DIR.COE = Global.DIR.INPUT + dirString;
                             }
-                            else if (dirString.StartsWith("NPT"))
+                            else if (fieldString.StartsWith("NPT"))
                             {
-                                Global.DIR.NPT = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                                Global.DIR.NPT = Global.DIR.INPUT + dirString;
                             }
-                            else if (dirString.StartsWith("AIR"))
+                            else if (fieldString.StartsWith("AIR"))
                             {
-                                Global.DIR.AIR = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                                Global.DIR.AIR = Global.DIR.INPUT + dirString;
                             }
-                            else if (dirString.StartsWith("CPA"))
+                            else if (fieldString.StartsWith("CPA"))
                             {
-                                Global.DIR.CPA = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                                Global.DIR.CPA = Global.DIR.INPUT + dirString;
                             }
-                            else if (dirString.StartsWith("FLO"))
+                            else if (fieldString.StartsWith("FLO"))
                             {
-                                Global.DIR.FLO = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                                Global.DIR.FLO = Global.DIR.INPUT + dirString;
                             }
-                            else if (dirString.StartsWith("MET"))
+                            else if (fieldString.StartsWith("MET"))
                             {
-                                Global.DIR.MET = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                                Global.DIR.MET = Global.DIR.INPUT + dirString;
                             }
-                            else if (dirString.StartsWith("OLC"))
+                            else if (fieldString.StartsWith("OLC"))
                             {
-                                Global.DIR.OLC = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                                Global.DIR.OLC = Global.DIR.INPUT + dirString;
                             }
-                            else if (dirString.StartsWith("OLH"))
+                            else if (fieldString.StartsWith("OLH"))
                             {
-                                Global.DIR.OLH = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                                Global.DIR.OLH = Global.DIR.INPUT + dirString;
                             }
-                            else if (dirString.StartsWith("ORC"))
+                            else if (fieldString.StartsWith("ORC"))
                             {
-                                Global.DIR.ORC = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                                Global.DIR.ORC = Global.DIR.INPUT + dirString;
                             }
-                            else if (dirString.StartsWith("ORH"))
+                            else if (fieldString.StartsWith("ORH"))
                             {
-                                Global.DIR.ORH = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                                Global.DIR.ORH = Global.DIR.INPUT + dirString;
                             }
-                            else if (dirString.StartsWith("PTS"))
+                            else if (fieldString.StartsWith("PTS"))
                             {
-                                Global.DIR.PTS = System.IO.Path.Combine(Global.DIR.INPUT, dirString);
+                                Global.DIR.PTS = Global.DIR.INPUT + dirString;
                             }
-                            else if (dirString.StartsWith("CAT"))
+                            else if (fieldString.StartsWith("CAT"))
                             {
-                                Global.DIR.CAT = System.IO.Path.Combine(Global.DIR.OUTPUT, dirString);
+                                Global.DIR.CAT = Global.DIR.OUTPUT + dirString;
                             }
-                            else if (dirString.StartsWith("RIV"))
+                            else if (fieldString.StartsWith("RIV"))
                             {
-                                Global.DIR.RIV = System.IO.Path.Combine(Global.DIR.OUTPUT, dirString);
+                                Global.DIR.RIV = Global.DIR.OUTPUT + dirString;
                             }
-                            else if (dirString.StartsWith("LAK"))
+                            else if (fieldString.StartsWith("LAK"))
                             {
-                                Global.DIR.LAK = System.IO.Path.Combine(Global.DIR.OUTPUT, dirString);
+                                Global.DIR.LAK = Global.DIR.OUTPUT + dirString;
                             }
-                            else if (dirString.StartsWith("PSM"))
+                            else if (fieldString.StartsWith("PSM"))
                             {
-                                Global.DIR.PSM = System.IO.Path.Combine(Global.DIR.OUTPUT, dirString);
+                                Global.DIR.PSM = Global.DIR.OUTPUT + dirString;
                             }
-                            else if (dirString.StartsWith("QWQ"))
+                            else if (fieldString.StartsWith("QWQ"))
                             {
-                                Global.DIR.QWQ = System.IO.Path.Combine(Global.DIR.OUTPUT, dirString);
+                                Global.DIR.QWQ = Global.DIR.OUTPUT + dirString;
                             }
-                            else if (dirString.StartsWith("WST"))
+                            else if (fieldString.StartsWith("WST"))
                             {
-                                Global.DIR.WST = System.IO.Path.Combine(Global.DIR.OUTPUT, dirString);
+                                Global.DIR.WST = Global.DIR.OUTPUT + dirString;
                             }
+                        }
+
+                        // Read the catchment, river, and reservoir layer information
+                        catchmentLayer.Name = sr.ReadDelimitedField(',', ref endOfLine);
+                        catchmentLayer.FileName = sr.ReadDelimitedField(',', ref endOfLine);
+                        riverLayer.Name = sr.ReadDelimitedField(',', ref endOfLine);
+                        riverLayer.FileName = sr.ReadDelimitedField(',', ref endOfLine);
+                        reservoirLayer.Name = sr.ReadDelimitedField(',', ref endOfLine);
+                        reservoirLayer.FileName = sr.ReadDelimitedField(',', ref endOfLine);
+
+                        LoadCatchmentRiverReservoirShapefiles();
+
+                        // Read reference layer information
+                        int numReferenceLayers = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine));
+                        layers.Clear();
+                        for (i = 0; i < numReferenceLayers; i++)
+                        {
+                            LayerInfo referenceLayer = new LayerInfo();
+                            referenceLayer.Name = sr.ReadDelimitedField(',', ref endOfLine);
+                            referenceLayer.FileName = sr.ReadDelimitedField(',', ref endOfLine);
+                            layers.Add(referenceLayer);
                         }
 
                         // Read the information on scenarios in the project
@@ -251,7 +321,7 @@ namespace warmf {
                             // Read the active scenario
                             if (newScenario.IsActive > 0)
                             {
-                                string coeFileName = newScenario.Name + ".COE";
+                                string coeFileName = Global.DIR.COE + newScenario.Name;
                                 Global.coe.ReadCOE(coeFileName);
                             }
 
@@ -294,15 +364,6 @@ namespace warmf {
 
             lblLatLong.Visible = true;
             frmMap.Focus();
-
-            // read in Coefficients file
-            string fname = Global.DIR.COE + "Catawba.coe";
-
-            if (!Global.coe.ReadCOE(fname))
-            {
-                MessageBox.Show(this, "Error reading coefficients file.", "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
-            }
-
         }
 
         public void ShowForm(string name)
@@ -529,6 +590,14 @@ namespace warmf {
         {
             LoadDefault();
             SetupEngrModule();  // shortcut to load SHP file --MRL
+
+            // read in Coefficients file
+            string fname = Global.DIR.COE + "Catawba.coe";
+
+            if (!Global.coe.ReadCOE(fname))
+            {
+                MessageBox.Show(this, "Error reading coefficients file.", "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+            }
         }
 
         private void miHelpAbout_Click(object sender, EventArgs e)
