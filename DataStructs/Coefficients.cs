@@ -241,11 +241,6 @@ namespace warmf {
         public double fineLitterWgtFraction;
         public double humusWgtFraction;
 
-        //public List<double> soilReactionRate;
-        //public List<double> surfaceReactionRate;
-        //public List<double> canopyReactionRate;
-        //public List<double> biozoneReactionRate;
-
         public int numCEQW2Files;
         public string flowInputFilename;
         public string tempInputFilename;
@@ -1409,6 +1404,7 @@ namespace warmf {
                     catchData.mining.humusWgtFraction = dnums[2];
 
                     // reaction rates
+                    catchData.reactions = new CatchReactions();
                     catchData.reactions.soilReactionRate = ReadDoubleData(sr, "REACSOIL", numReactions);
                     catchData.reactions.surfaceReactionRate = ReadDoubleData(sr, "REACSURF", numReactions);
                     catchData.reactions.canopyReactionRate = ReadDoubleData(sr, "REACCNPY", numReactions);
@@ -1517,6 +1513,7 @@ namespace warmf {
 					if (river.numPointSources > 0)
 						river.pointSources = ReadIntData(sr, "PTSOURCE", river.numPointSources);
 					nums = ReadIntData(sr, "OBSW", 7);
+                    river.overrideSimulation = new SimulationOverride();
                     river.overrideSimulation.swUseObsData = nums[0] != 0;
                     river.overrideSimulation.hydroInterpPeriod = nums[1];
                     river.overrideSimulation.waterQualityInterpPeriod = nums[2];

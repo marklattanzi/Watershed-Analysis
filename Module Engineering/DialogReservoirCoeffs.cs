@@ -43,6 +43,8 @@ namespace warmf
                 dgvStageFlow.Rows.Insert(i, reservoir.spillway[i].stage.ToString(), reservoir.spillway[i].flow.ToString());
                 seriesStageFlow.Points.AddXY(reservoir.spillway[i].stage, reservoir.spillway[i].flow);
             }
+            for (int i = 0; i < dgvStageFlow.Columns.Count; i++)
+                dgvStageFlow.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
 
             //Reactions
             dgvReactions.Columns.Add("water", "Water");
@@ -106,6 +108,9 @@ namespace warmf
             dgvInitialConc.Columns.Add("waterunits", "Units");
             dgvInitialConc.Columns.Add("bed", "Bed");
             dgvInitialConc.Columns.Add("bedunits", "Units");
+            for (int i = 0; i < dgvInitialConc.Columns.Count; i++)
+                dgvInitialConc.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+
             for (int i = 0; i < Global.coe.numChemicalParams; i++)
             {
                 dgvInitialConc.Rows.Add();
@@ -228,6 +233,8 @@ namespace warmf
                 dgvStageArea.Rows.Insert(i, reservoir.bathymetry[i].stage.ToString(), reservoir.bathymetry[i].area.ToString());
                 seriesStageArea.Points.AddXY(reservoir.bathymetry[i].stage, reservoir.bathymetry[i].area);
             }
+            for (int i = 0; i < dgvStageArea.Columns.Count; i++)
+                dgvStageArea.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
 
             //Physical Data
             tbName.Text = reservoirSeg.name.ToString();
@@ -300,6 +307,8 @@ namespace warmf
             //}
             dgv.ReadOnly = false;
             dgv.Visible = true;
+            for (int i = 0; i < dgv.Columns.Count; i++)
+                dgv.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
         }
         private void BtnUpdateChart_Click(object sender, EventArgs e)
         {

@@ -92,6 +92,8 @@ namespace warmf
                 string luName = Global.coe.landuse[ii].name;
                 dgLanduse.Rows.Insert(ii, luName, Percent);
             }
+            for (int i = 0; i < dgLanduse.Columns.Count; i++)
+                dgLanduse.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
 
             //Land Application tab
             cbLanduse.Items.Clear();
@@ -114,6 +116,8 @@ namespace warmf
                 dgLandApp.Rows[iParam].HeaderCell.Value = NameUnit.ToString();
                 
             }
+            for (int i = 0; i < dgLandApp.Columns.Count; i++)
+                dgLandApp.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
             
             List<int> HideList = new List<int> { 0, 1, 2, 15, 16, 20, 22, 23, 24, 29, 30, 31, 32, 37 };
             for (int i = 0; i < iNumParams; i++) //hide chemical and physical parameters that aren't applicable
@@ -219,6 +223,8 @@ namespace warmf
                 dgvReactions.Rows[i].Cells["canopy"].Value = catchment.reactions.canopyReactionRate[i].ToString();
                 dgvReactions.Rows[i].Cells["biozone"].Value = catchment.reactions.biozoneReactionRate[i].ToString();
             }
+            for (int i = 0; i < dgvReactions.Columns.Count; i++)
+                dgvReactions.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
 
             //Soil Layers tab
             tbNumSoilLayers.Text = catchment.numSoilLayers.ToString();
@@ -246,7 +252,18 @@ namespace warmf
             for (int ii = 0; ii < iNumParams; ii++)
             {
                 dgInitialConc.Columns.Add(ConstitShortNames[ii], ConstitShortNames[ii].ToString() + " (" + ConstitUnits[ii].ToString().TrimEnd() + ")");
+                dgInitialConc.Columns[ii].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
+
+            // Hide initial concentration columns which are not applicable
+            List<string> hideParameters = new List<string>() { "MSOX", "MNOX", "MH", "MALK", "MALG", "MCO2", "MSSED", "MSDET" };
+            for (int i = 0; i < hideParameters.Count; i++)
+            {
+                int parameterIndex = Global.coe.GetParameterNumberFromCode(hideParameters[i]);
+                if (parameterIndex >= 0 && parameterIndex + 1 < dgInitialConc.Columns.Count)
+                    dgInitialConc.Columns[parameterIndex + 1].Visible = false;
+            }
+
             for (int ii = 0; ii < catchment.numSoilLayers; ii++)
             {
                 dgInitialConc.Rows.Insert(ii);
@@ -780,11 +797,13 @@ namespace warmf
             FormatDataGridView(dgSoilHydroCoeffs);
             dgSoilHydroCoeffs.Visible = true;
             //Soil Layers > Initial Concentrations
-            dgInitialConc.Columns.Add("Temp", "Temperature (degrees C)");
+/*            dgInitialConc.Columns.Add("Temp", "Temperature (degrees C)");
             for (int ii = 0; ii < iNumParams; ii++)
             {
                 dgInitialConc.Columns.Add(ConstitShortNames[ii], ConstitShortNames[ii].ToString() + " (" + ConstitUnits[ii].ToString().TrimEnd() + ")");
             }
+
+
             for (int ii = 0; ii < catchment.numSoilLayers; ii++)
             {
                 dgInitialConc.Rows.Insert(ii);
@@ -869,7 +888,7 @@ namespace warmf
                 tbCEQUALflowFile.Text = catchment.mining.flowInputFilename;
                 tbCEQUALtempFile.Text = catchment.mining.tempInputFilename;
                 tbCEQUALconcFile.Text = catchment.mining.waterQualInputFilename;
-            }
+            }*/
         }
     }
 }

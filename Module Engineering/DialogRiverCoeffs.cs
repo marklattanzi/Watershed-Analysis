@@ -123,6 +123,8 @@ namespace warmf
                 dgvReactions.Rows[i].Cells["water"].Value = river.waterReactionRate[i].ToString();
                 dgvReactions.Rows[i].Cells["bed"].Value = river.bedReactionRate[i].ToString();
             }
+            for (int i = 0; i < dgvReactions.Columns.Count; i++)
+                dgvReactions.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
             tbAerationFactor.Text = river.reaerationRateMult.ToString();
             tbConvHeatFactor.Text = river.convectiveHeatFactor.ToString();
             tbPrecipitateSettling.Text = river.precipSettleRate.ToString();
@@ -144,6 +146,8 @@ namespace warmf
             dgvBedParticleContent.Rows.Add();
             dgvBedParticleContent.Rows[2].HeaderCell.Value = "Sand";
             dgvBedParticleContent.Rows[2].Cells[0].Value = (river.sedThirdPartSizePct * 100).ToString("F");
+            for (int i = 0; i < dgvBedParticleContent.Columns.Count; i++)
+                dgvBedParticleContent.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
 
             //Initial Concentrations
             string strWaterUnits, strShortUnits;
@@ -153,6 +157,8 @@ namespace warmf
             dgvRiverInitConcs.Columns.Add("bed", "Bed");
             dgvRiverInitConcs.Columns.Add("bedunits", "Units");
             dgvRiverInitConcs.Columns["bedunits"].ReadOnly = true;
+            for (int i = 0; i < dgvRiverInitConcs.Columns.Count; i++)
+                dgvRiverInitConcs.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
             for (int i = 0; i < Global.coe.numChemicalParams; i++)
             {
                 dgvRiverInitConcs.Rows.Add();
@@ -217,6 +223,8 @@ namespace warmf
                 dgvAdsorption.Rows[i].Cells["water"].Value = river.waterAdsorpIsotherm[i].ToString();
                 dgvAdsorption.Rows[i].Cells["bed"].Value = river.bedAdsorpIsotherm[i].ToString();
             }
+            for (int i = 0; i < dgvAdsorption.Columns.Count; i++)
+                dgvAdsorption.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
             List<int> HideCols = new List<int> { 0, 1, 2, 13 };
             for (int i = 0; i < Global.coe.numChemicalParams; i++)
             {
