@@ -19,7 +19,7 @@ namespace warmf {
         static readonly string xAxisLabel = "Time";
 
 		public static readonly string[] PlotFileTypes = new string[] {
-			"Meterology", "Air Quality", "Observed Hydrology", "Observed Water Quality", "Managed Flow", "Point Sources", "Pictures"
+			"Meteorology", "Air Quality", "Observed Hydrology", "Observed Water Quality", "Managed Flow", "Point Sources", "Pictures"
 		};
         public static readonly int FileTypeMeteorology = 0;
         public static readonly int FileTypeAirQuality = 1;

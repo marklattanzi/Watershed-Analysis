@@ -56,6 +56,7 @@
             this.ImportDelimitedDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ImportDelimitedDataGrid_CellContentClick);
             this.ImportDelimitedDataGrid.CellValueChanged += new DataGridViewCellEventHandler(ImportDelimitedDataGrid_CellValueChanged);
             this.ImportDelimitedDataGrid.CurrentCellDirtyStateChanged += new EventHandler(ImportDelimitedDataGrid_CurrentCellDirtyStateChanged);
+            this.ImportDelimitedDataGrid.DataError += new DataGridViewDataErrorEventHandler(ImportDelimitedDataGrid_DataError);
             // 
             // FileNameSuffix
             // 

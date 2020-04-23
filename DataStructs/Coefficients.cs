@@ -247,6 +247,12 @@ namespace warmf {
         public string waterQualInputFilename;
     }
 
+    public class PondedLandUse
+    {
+        public int landUseNumber;
+        public string pondFilename;
+    }
+
     public class Soil {
         public double area;
         public double thickness;
@@ -327,7 +333,7 @@ namespace warmf {
         public List<double> irrigationSourcePercent;
 
         public int nluPonds;
-        public List<string> pondFilename;
+        public List<PondedLandUse> ponds;
         
         public int numPumpFromSchedules;
         public List<int> pumpFromDivFile;
@@ -737,7 +743,7 @@ namespace warmf {
             if (lineAbbrev != "")
                 if (TestLine(line, sr.LineNum, lineAbbrev)) {
 					try {
-						return line.Substring(8);
+						return line.Substring(8).Trim();
 					} catch {
 						// no string found on line,
 						Debug.WriteLine("MISSING STRING\nExpected a string on line " + sr.LineNum + "\nLine = |" + line + "|");
@@ -827,7 +833,7 @@ namespace warmf {
                     dfd.flowCap = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0;
                     dfd.swUseMonthFlows = !line.Substring(24, 8).Contains("0");
                     // extra column of 8 in these lines (32-39)  MRL
-                    dfd.filename = line.Substring(40);
+                    dfd.filename = line.Substring(40).Trim();
                     dfd.monthlyFlow = ReadMonthlyDoubleData(sr, "DIVFILES");
                     DIVData.Add(dfd);
                 }
@@ -1292,9 +1298,14 @@ namespace warmf {
                     }
 
                     catchData.nluPonds = ReadInt(sr, "NLUPONDS");
-                    if (catchData.nluPonds > 0) catchData.pondFilename = new List<string>();
+                    if (catchData.nluPonds > 0) catchData.ponds = new List<PondedLandUse>();
                     for (int jj = 0; jj < catchData.nluPonds; jj++)
-                        catchData.pondFilename.Add(ReadString(sr, "PONDFILE"));
+                    {
+                        PondedLandUse newpond = new PondedLandUse();
+                        line = sr.ReadLine();
+                        newpond.landUseNumber = Int32.TryParse(line.Substring(8, 8), out intRes) ? intRes : 0;
+                        newpond.pondFilename = line.Substring(16).Trim();
+                    }
 
                     // point sources
                     catchData.numPointSources = ReadInt(sr, "PTSOURCE");
@@ -2504,7 +2515,8 @@ namespace warmf {
                             for (int j = 0; j < catchments[i].nluPonds; j++)
                             {
                                 sw.WriteString("PONDFILE");
-                                sw.WriteString(catchments[i].pondFilename[j]);
+                                sw.WriteInt(catchments[i].ponds[j].landUseNumber);
+                                sw.WriteString(catchments[i].ponds[j].pondFilename);
                                 sw.WriteLine();
                             }
                         }
@@ -3401,8 +3413,8 @@ namespace warmf {
             // Catchment prescribed ponding depth files
             for (int ii = 0; ii < catchments.Count; ii++)
                 if (catchments[ii].nluPonds > 0)
-                    for (int jj = 0; jj < catchments[ii].pondFilename.Count; jj++)
-                        obsHydFiles.Add(catchments[ii].pondFilename[jj]);
+                    for (int jj = 0; jj < catchments[ii].ponds.Count; jj++)
+                        obsHydFiles.Add(catchments[ii].ponds[jj].pondFilename);
             // River observed flow files
             for (int ii = 0; ii < rivers.Count; ii++)
                 if (!String.IsNullOrWhiteSpace(rivers[ii].hydrologyFilename))

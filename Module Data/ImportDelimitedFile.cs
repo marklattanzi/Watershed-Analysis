@@ -51,29 +51,33 @@ namespace warmf.Module_Data
                 // If so, this loop is ended early
                 for (i = 0; i < numHeaders; i++)
                 {
-                    if (readLine.IndexOf(combinedHeaders[i]) == 0)
+                    // Determine if the header in the import file lines up with the beginning of the 
+                    // header in the linkage file and lines up with the end of the field
+                    if (readLine.IndexOf(combinedHeaders[i]) == 0 &&
+                        (readLine.Length == combinedHeaders[i].Length || readLine[combinedHeaders[i].Length] == linkageDelimiter))
                     {
-                        string lineSubstring = readLine.Substring(combinedHeaders[i].Length);
+                        string lineSubstring = readLine.Substring(combinedHeaders[i].Length + 1);
                         // Set the remaining columns of the spreadsheet on this row from the linkage file
                         for (j = 0; j < 4; j++)
                         {
                             // Get the field from the linkage file
-                            // Bypass the delimiter
-                            lineSubstring = lineSubstring.Substring(1);
-
                             // Find the next delimiter
                             int delimiterIndex = lineSubstring.IndexOf(linkageDelimiter);
 
                             // Set the field between delimiters or after the last delimiter
                             string field;
                             if (delimiterIndex >= 0)
+                            {
                                 field = lineSubstring.Substring(0, delimiterIndex);
+                                // Set the next substring to find the next field
+                                lineSubstring = lineSubstring.Substring(field.Length + 1);
+                            }
                             else
                                 field = lineSubstring;
 
                             // Set the spreadsheet cell 
-//                            ImportDelimitedDataGrid.Rows[i].Cells[NumHeaderLines + j].Value = field;
-//                            ImportDelimitedDataGrid_ProcessCellChanged(i, NumHeaderLines + j);
+                            ImportDelimitedDataGrid.Rows[i].Cells[NumHeaderLines + j].Value = field;
+                            ImportDelimitedDataGrid_ProcessCellChanged(i, NumHeaderLines + j);
                         }
 
                         // Stop looking for a match since we found one and move on to the next line in the linkage file
@@ -535,6 +539,11 @@ field = tab + 1;
 //                    ImportDelimitedDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex + 1] = theCell;
                 }
             }
+        }
+
+        private void ImportDelimitedDataGrid_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            
         }
     }
 }
