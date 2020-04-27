@@ -701,48 +701,35 @@ namespace warmf
             }
 
             //Land Application tab
-            //detect change in landAppArray?
+            //detect change in landAppArray? see: dgLandApp_CellValueChanged
+
             //if change, set up new plan for applicable land uses
-            //compare to plan to all old plans - if identical, set to old plan ID - if unique
             //add plan to system coeffs for each land use.
             //set catchment to using new plan
+            if (anyLandAppChanged)
+            {
+                for (int i = 0; i < Global.coe.numLanduses; i++)
+                {
+                    if (landAppLandUsesChanged.Contains(i))
+                    {
+                        Global.coe.landuse[i].numFertPlans++;
+                        List<List<double>> fertPlans = new List<List<double>>();
+                        for (int j = 0; j < 12; j++)
+                        {
+                            List<double> plan = new List<double>();
+                            for (int k = 0; k < Global.coe.numChemicalParams + Global.coe.numPhysicalParams; k++)
+                            {
+                                plan.Add(LandAppArray[i, k, j]);
+                            }
+                            fertPlans.Add(plan);
+                        }
+                        Global.coe.landuse[i].fertPlanApplication.Add(fertPlans);
+                        catchment.fertPlanNum[i] = Global.coe.landuse[i].numFertPlans;
+                    }
+                    
+                }
+            }
             
-            //for scenario > save
-            //go through all plans in system coefficients to see if there are any that aren't used anymore
-            //if unused plans exist, delete and renumber used plans
-
-
-            //int iNumParams = Global.coe.numChemicalParams + Global.coe.numPhysicalParams;
-
-            //for (int iParam = 0; iParam < iNumParams; iParam++) //add blank rows to datagridview (row headers labeled)
-            //{
-            //    string Units = ConstitUnits[iParam].Trim();
-            //    if (Units.Contains("mg/l"))
-            //    {
-            //        Units = " (" + Units.Replace("mg/l", "kg/ha") + ")";
-            //    }
-            //    else if (Units.Contains("#/100 ml"))
-            //    {
-            //        Units = " (" + Units.Replace("#/100 ml", "10^6 #/ha") + ")";
-            //    }
-            //    string NameUnit = ConstitNames[iParam] + Units;
-            //    dgLandApp.Rows.Insert(iParam);
-            //    dgLandApp.Rows[iParam].HeaderCell.Value = NameUnit.ToString();
-
-            //}
-
-            //List<int> HideList = new List<int> { 0, 1, 2, 15, 16, 20, 22, 23, 24, 29, 30, 31, 32, 37 };
-            //for (int i = 0; i < iNumParams; i++) //hide chemical and physical parameters that aren't applicable
-            //{
-            //    if (HideList.Contains(i))
-            //    {
-            //        dgLandApp.Rows[i].Visible = false;
-            //    }
-            //}
-
-            //cbLanduse.SelectedIndex = 0;
-            //FormatDataGridView(dgLandApp); //Format datagridview
-
             catchment.bmp.maxFertAccumTime = Convert.ToDouble(tbMaxAccTime.Text);
 
             //Irrigation tab - Tabled for now - there is no irrigation in the Catawba watershed...
