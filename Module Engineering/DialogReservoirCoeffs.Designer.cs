@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
@@ -231,6 +231,7 @@
             // 
             // btnOK
             // 
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Location = new System.Drawing.Point(58, 552);
             this.btnOK.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnOK.Name = "btnOK";
@@ -283,6 +284,7 @@
             this.tpPhysicalData.TabIndex = 0;
             this.tpPhysicalData.Text = "Physical Data";
             this.tpPhysicalData.UseVisualStyleBackColor = true;
+            this.tpPhysicalData.Click += new System.EventHandler(this.tpPhysicalData_Click);
             // 
             // tbMaxElev
             // 
@@ -383,13 +385,13 @@
             // 
             // chartStageFlow
             // 
-            chartArea10.Name = "ChartArea1";
-            this.chartStageFlow.ChartAreas.Add(chartArea10);
+            chartArea4.Name = "ChartArea1";
+            this.chartStageFlow.ChartAreas.Add(chartArea4);
             this.chartStageFlow.Location = new System.Drawing.Point(276, 29);
             this.chartStageFlow.Name = "chartStageFlow";
-            series10.ChartArea = "ChartArea1";
-            series10.Name = "seriesStageFlow";
-            this.chartStageFlow.Series.Add(series10);
+            series4.ChartArea = "ChartArea1";
+            series4.Name = "seriesStageFlow";
+            this.chartStageFlow.Series.Add(series4);
             this.chartStageFlow.Size = new System.Drawing.Size(403, 355);
             this.chartStageFlow.TabIndex = 17;
             this.chartStageFlow.Text = "chart1";
@@ -833,15 +835,15 @@
             // 
             // chartDepthTemp
             // 
-            chartArea11.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea11.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea11.Name = "ChartArea1";
-            this.chartDepthTemp.ChartAreas.Add(chartArea11);
+            chartArea5.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea5.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea5.Name = "ChartArea1";
+            this.chartDepthTemp.ChartAreas.Add(chartArea5);
             this.chartDepthTemp.Location = new System.Drawing.Point(281, 32);
             this.chartDepthTemp.Name = "chartDepthTemp";
-            series11.ChartArea = "ChartArea1";
-            series11.Name = "Series1";
-            this.chartDepthTemp.Series.Add(series11);
+            series5.ChartArea = "ChartArea1";
+            series5.Name = "Series1";
+            this.chartDepthTemp.Series.Add(series5);
             this.chartDepthTemp.Size = new System.Drawing.Size(389, 313);
             this.chartDepthTemp.TabIndex = 9;
             this.chartDepthTemp.Text = "chart1";
@@ -1207,13 +1209,13 @@
             // 
             // chartStageArea
             // 
-            chartArea12.Name = "ChartArea1";
-            this.chartStageArea.ChartAreas.Add(chartArea12);
+            chartArea6.Name = "ChartArea1";
+            this.chartStageArea.ChartAreas.Add(chartArea6);
             this.chartStageArea.Location = new System.Drawing.Point(279, 15);
             this.chartStageArea.Name = "chartStageArea";
-            series12.ChartArea = "ChartArea1";
-            series12.Name = "seriesStageArea";
-            this.chartStageArea.Series.Add(series12);
+            series6.ChartArea = "ChartArea1";
+            series6.Name = "seriesStageArea";
+            this.chartStageArea.Series.Add(series6);
             this.chartStageArea.Size = new System.Drawing.Size(403, 355);
             this.chartStageArea.TabIndex = 20;
             this.chartStageArea.Text = "chart1";

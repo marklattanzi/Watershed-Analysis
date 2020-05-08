@@ -195,6 +195,12 @@
             this.dgvGasDepVel = new System.Windows.Forms.DataGridView();
             this.dgvReactionProds = new System.Windows.Forms.DataGridView();
             this.dgvReactions = new System.Windows.Forms.DataGridView();
+            this.Reactant = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.AnoxicRxn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dissOlimit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UVmedRxn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Theta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LinkedRxn = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.dgvComposition = new System.Windows.Forms.DataGridView();
             this.dgvMultipliers = new System.Windows.Forms.DataGridView();
             this.dgvSulfateSolubility = new System.Windows.Forms.DataGridView();
@@ -215,12 +221,6 @@
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
-            this.Reactant = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.AnoxicRxn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.dissOlimit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UVmedRxn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Theta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LinkedRxn = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tcSystemTabs.SuspendLayout();
             this.tpPhysicalData.SuspendLayout();
             this.tpLandUses.SuspendLayout();
@@ -1940,6 +1940,38 @@
             this.dgvReactions.Size = new System.Drawing.Size(656, 385);
             this.dgvReactions.TabIndex = 8;
             // 
+            // Reactant
+            // 
+            this.Reactant.HeaderText = "Reactant";
+            this.Reactant.Name = "Reactant";
+            this.Reactant.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Reactant.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // AnoxicRxn
+            // 
+            this.AnoxicRxn.HeaderText = "Anoxic Reaction";
+            this.AnoxicRxn.Name = "AnoxicRxn";
+            // 
+            // dissOlimit
+            // 
+            this.dissOlimit.HeaderText = "D.O. Limit (mg/L)";
+            this.dissOlimit.Name = "dissOlimit";
+            // 
+            // UVmedRxn
+            // 
+            this.UVmedRxn.HeaderText = "UV Light Mediated";
+            this.UVmedRxn.Name = "UVmedRxn";
+            // 
+            // Theta
+            // 
+            this.Theta.HeaderText = "Theta";
+            this.Theta.Name = "Theta";
+            // 
+            // LinkedRxn
+            // 
+            this.LinkedRxn.HeaderText = "Linked Reaction";
+            this.LinkedRxn.Name = "LinkedRxn";
+            // 
             // dgvComposition
             // 
             this.dgvComposition.AllowUserToAddRows = false;
@@ -2124,6 +2156,7 @@
             // 
             // btnOK
             // 
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Location = new System.Drawing.Point(49, 554);
             this.btnOK.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnOK.Name = "btnOK";
@@ -2131,38 +2164,6 @@
             this.btnOK.TabIndex = 14;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
-            // 
-            // Reactant
-            // 
-            this.Reactant.HeaderText = "Reactant";
-            this.Reactant.Name = "Reactant";
-            this.Reactant.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Reactant.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // AnoxicRxn
-            // 
-            this.AnoxicRxn.HeaderText = "Anoxic Reaction";
-            this.AnoxicRxn.Name = "AnoxicRxn";
-            // 
-            // dissOlimit
-            // 
-            this.dissOlimit.HeaderText = "D.O. Limit (mg/L)";
-            this.dissOlimit.Name = "dissOlimit";
-            // 
-            // UVmedRxn
-            // 
-            this.UVmedRxn.HeaderText = "UV Light Mediated";
-            this.UVmedRxn.Name = "UVmedRxn";
-            // 
-            // Theta
-            // 
-            this.Theta.HeaderText = "Theta";
-            this.Theta.Name = "Theta";
-            // 
-            // LinkedRxn
-            // 
-            this.LinkedRxn.HeaderText = "Linked Reaction";
-            this.LinkedRxn.Name = "LinkedRxn";
             // 
             // DialogSystemCoeffs
             // 

@@ -102,6 +102,12 @@
     <Compile Include="Module Engineering\DialogOutput.Designer.cs">
       <DependentUpon>DialogOutput.cs</DependentUpon>
     </Compile>
+    <Compile Include="Module Engineering\ScenarioManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Module Engineering\ScenarioManager.Designer.cs">
+      <DependentUpon>ScenarioManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="UtilityClasses\Extensions.cs" />
     <Compile Include="Module Engineering\DialogCatchCoeffs.cs">
       <SubType>Form</SubType>
@@ -181,6 +187,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Module Engineering\DialogSystemCoeffs.resx">
       <DependentUpon>DialogSystemCoeffs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Module Engineering\ScenarioManager.resx">
+      <DependentUpon>ScenarioManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Module Manager\FormManager.resx">
       <DependentUpon>FormManager.cs</DependentUpon>

@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tcRiverTabs = new System.Windows.Forms.TabControl();
             this.tpPhysicalData = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -454,13 +454,13 @@
             // 
             // chartStageWidth
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartStageWidth.ChartAreas.Add(chartArea2);
+            chartArea1.Name = "ChartArea1";
+            this.chartStageWidth.ChartAreas.Add(chartArea1);
             this.chartStageWidth.Location = new System.Drawing.Point(235, 79);
             this.chartStageWidth.Name = "chartStageWidth";
-            series2.ChartArea = "ChartArea1";
-            series2.Name = "SeriesStageWidth";
-            this.chartStageWidth.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.Name = "SeriesStageWidth";
+            this.chartStageWidth.Series.Add(series1);
             this.chartStageWidth.Size = new System.Drawing.Size(403, 355);
             this.chartStageWidth.TabIndex = 2;
             this.chartStageWidth.Text = "chart1";
@@ -1483,6 +1483,7 @@
             // 
             // btnOK
             // 
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Location = new System.Drawing.Point(98, 502);
             this.btnOK.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnOK.Name = "btnOK";

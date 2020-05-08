@@ -538,7 +538,12 @@ namespace warmf {
                     DialogImportDelimitedFile importDialog = new DialogImportDelimitedFile();
                     importDialog.Populate(openDialog.FileName, delimiter, numIgnoreLines, numHeaderLines);
 
-                    importDialog.ShowDialog();
+                    if (importDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        // Get linkages from the dialog
+                        // Save linkages to linkage file
+                        // Modify data files with imported data
+                    }
                 }
             }
 

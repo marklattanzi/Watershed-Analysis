@@ -491,5 +491,10 @@ namespace warmf
                 lbDiversionsToReservoir.Items.Remove(lbDiversionsToReservoir.SelectedItems[0]);
             }
         }
+
+        private void tpPhysicalData_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -34,7 +34,9 @@ namespace warmf {
         public DialogOutput dlgOutput;
         public DialogRunSimulation dlgRunSimulation;
 
-        public struct ScenarioInfo
+        // Scenarios
+        public bool scenarioChanged;
+        public class ScenarioInfo
         {
             public int IsOpen;
             public int IsActive;
@@ -182,7 +184,6 @@ namespace warmf {
             {
                 try
                 {
-                    //OpenShapeFile(dlgFileOpen.FileName);
                     STechStreamReader sr = new STechStreamReader(openDialog.FileName);
                     bool endOfLine = false;
                     // Read where it says "VERSION"
@@ -307,6 +308,7 @@ namespace warmf {
                             referenceLayer.Name = sr.ReadDelimitedField(',', ref endOfLine);
                             referenceLayer.FileName = sr.ReadDelimitedField(',', ref endOfLine);
                             layers.Add(referenceLayer);
+                            miTopView.DropDownItems.Add(referenceLayer.Name);
                         }
 
                         // Read the information on scenarios in the project
@@ -318,11 +320,23 @@ namespace warmf {
                             newScenario.IsOpen = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine));
                             newScenario.IsActive = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine));
                             newScenario.Name = sr.ReadDelimitedField(',', ref endOfLine);
-                            // Read the active scenario
+
+                            // Add open scenarios to the bottom of the Scenario menu
+                            if (newScenario.IsOpen > 0)
+                            {
+                                string scenarioName = Path.GetFileNameWithoutExtension(newScenario.Name);
+                                miTopScenario.DropDownItems.Add(scenarioName);
+                            }
+
+                            // Read the active scenario and check it in the scenario menu
                             if (newScenario.IsActive > 0)
                             {
                                 string coeFileName = Global.DIR.COE + newScenario.Name;
                                 Global.coe.ReadCOE(coeFileName);
+
+                                int itemNumber = miTopScenario.DropDownItems.Count - 1;
+                                if (itemNumber >= 0)
+                                    ((ToolStripMenuItem)miTopScenario.DropDownItems[itemNumber]).Checked = true;
                             }
 
                             // Add the scenario to the master list of scenarios in the project
@@ -429,7 +443,8 @@ namespace warmf {
                     using (dlgRiverCoeffs = new DialogRiverCoeffs(this))
                     {
                         dlgRiverCoeffs.Populate(ii);
-                        dlgRiverCoeffs.ShowDialog();
+                        if (dlgRiverCoeffs.ShowDialog() == DialogResult.OK)
+                            scenarioChanged = true;
                     }
                 }
                 else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
@@ -481,7 +496,8 @@ namespace warmf {
                     using (dlgReservoirCoeffs = new DialogReservoirCoeffs(this))
                     {
                         dlgReservoirCoeffs.Populate(iRes, iSeg);
-                        dlgReservoirCoeffs.ShowDialog();
+                        if (dlgReservoirCoeffs.ShowDialog() == DialogResult.OK)
+                            scenarioChanged = true;
                     }
                 }
                 else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
@@ -527,7 +543,8 @@ namespace warmf {
                     using (dlgCatchCoeffs = new DialogCatchCoeffs(this))
                     {
                         dlgCatchCoeffs.Populate(ii);
-                        dlgCatchCoeffs.ShowDialog();
+                        if (dlgCatchCoeffs.ShowDialog() == DialogResult.OK)
+                            scenarioChanged = true;
                     }
                 }
                 else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
@@ -551,7 +568,8 @@ namespace warmf {
                     using (dlgSystemCoeffs = new DialogSystemCoeffs(this))
                     {
                         dlgSystemCoeffs.Populate();
-                        dlgSystemCoeffs.ShowDialog();
+                        if (dlgSystemCoeffs.ShowDialog() == DialogResult.OK)
+                            scenarioChanged = true;
                     }
                 }
                 else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
@@ -732,13 +750,41 @@ namespace warmf {
 
         private void miScenarioSave_Click(object sender, EventArgs e)
         {
-            Global.coe.WriteCOE("c:/temp/testWriteCOE.COE",-1);
+            int activeScenario = GetActiveScenario();
+            if (activeScenario >= 0)
+                Global.coe.WriteCOE(Global.DIR.COE + scenarios[activeScenario].Name, -1);
+            else
+                MessageBox.Show("There is no active scenario to save.");
         }
 
         private void miScenarioCompare_Click(object sender, EventArgs e)
         {
-            StreamReader newCOE = new StreamReader("c:/temp/testWriteCOE.COE");
-            StreamReader oldCOE = new StreamReader("C:/Systech/WARMF_GUI/Watershed-Analysis/data/input/coe/Catawba.COE");
+            int activeScenario = GetActiveScenario();
+            string firstCOEFileName = "";
+            if (activeScenario >= 0)
+                firstCOEFileName = Global.DIR.COE + scenarios[activeScenario].Name;
+            else
+            {
+                if (!OpenExistingCOEFile(ref firstCOEFileName))
+                    return;
+            }
+
+            string secondCOEFileName = "";
+            if (!OpenExistingCOEFile(ref secondCOEFileName))
+                return;
+
+            // Check to see if both files are the same
+            if (firstCOEFileName == secondCOEFileName)
+            {
+                MessageBox.Show("Can not compare one scenario against itself");
+                return;
+            }
+
+            // Open the files for comparison
+            try
+            {
+            StreamReader newCOE = new StreamReader(secondCOEFileName);
+            StreamReader oldCOE = new StreamReader(firstCOEFileName);
             StreamWriter swErrors = new StreamWriter("c:/temp/COEErrors.txt");
             string newCOEline, oldCOEline, newCOElineTrim;
             int result, i;
@@ -772,6 +818,12 @@ namespace warmf {
             }
             MessageBox.Show("No further discrepancies were found" + Environment.NewLine + "Lines Reviewed: " + i.ToString()
                 , "Comparison Complete",MessageBoxButtons.OK);
+
+            }
+            catch
+            {
+                MessageBox.Show("Unable to compare " + Path.GetFileName(firstCOEFileName) + " and " + Path.GetFileName(secondCOEFileName));
+            }
         }
 
         private void miScenarioRun_Click(object sender, EventArgs e)
@@ -782,6 +834,173 @@ namespace warmf {
                 dlgRunSimulation.ShowDialog();
             }
             
+        }
+
+        private void miScenarioManager_Click(object sender, EventArgs e)
+        {
+            DialogScenarioManager smDialog = new DialogScenarioManager(scenarios);
+
+            if (smDialog.ShowDialog() == DialogResult.OK)
+            {
+                // Save the old active scenario name in case it is closed or removed from the project
+                int oldActiveScenario = GetActiveScenario();
+                string oldScenarioName = "";
+                if (oldActiveScenario >= 0)
+                    oldScenarioName = scenarios[oldActiveScenario].Name;
+
+                // Clear the scenarios from the bottom of the scenario menu
+                int firstScenario = miTopScenario.DropDownItems.Count - GetNumberOfOpenScenarios();
+                for (int i = miTopScenario.DropDownItems.Count - 1; i >= firstScenario; i--)
+                    miTopScenario.DropDownItems.RemoveAt(i);
+
+                // Retrieve the new scenario info from the dialog
+                smDialog.GetScenarioInfo(ref scenarios);
+
+                // Put the open scenarios at the bottom of the scenario menu
+                for (int i = 0; i < scenarios.Count; i++)
+                    if (scenarios[i].IsOpen > 0)
+                    {
+                        miTopScenario.DropDownItems.Add(Path.GetFileNameWithoutExtension(scenarios[i].Name));
+                        miTopScenario.DropDownItems[miTopScenario.DropDownItems.Count - 1].Click += new System.EventHandler(this.miScenarioSelected_Click);
+                    }
+
+                // Determine if the active scenario is among those in the list of open scenarios
+                int newActiveScenario = GetScenarioNumberFromName(oldScenarioName);
+                if (newActiveScenario < 0 || scenarios[newActiveScenario].IsOpen == 0)
+                {
+                    // Provide the opportunity to save changes to old scenario
+                    if (scenarioChanged)
+                    {
+                        if (MessageBox.Show("Save changes to model coefficients?", "Scenario " + oldScenarioName) == DialogResult.OK)
+                            Global.coe.WriteCOE(oldScenarioName, -1);
+
+                        scenarioChanged = false;
+                    }
+
+                    // Previous active scenario is no longer an open scenario
+                    // Set the first open scenario to be active and read its coefficient file
+                    newActiveScenario = GetOpenScenario(0);
+//                    Global.coe.ReadCOE(Global.DIR.COE + scenarios[0].Name);
+                }
+
+                SetActiveScenario(newActiveScenario);
+            }
+        }
+
+        // Called when the user selects one of the listed scenarios at the bottom of the Scenario menu
+        public void miScenarioSelected_Click(object sender, EventArgs e)
+        {
+            // Get which scenario was chosen
+            int scenarioSelected = GetScenarioNumberFromName(sender.ToString() + ".coe");
+            SetActiveScenario(scenarioSelected);
+        }
+
+        // Returns the active scenario
+        private int GetActiveScenario()
+        {
+            for (int i = 0; i < scenarios.Count; i++)
+                if (scenarios[i].IsActive > 0)
+                    return i;
+
+            // For some reason there is no active scenario
+            return -1;
+        }
+
+        // Returns the number of the scenario in the master list from the name
+        private int GetScenarioNumberFromName(string ScenarioName)
+        {
+            for (int i = 0; i < scenarios.Count; i++)
+                if (ScenarioName.ToLower() == scenarios[i].Name.ToLower())
+                    return i;
+
+            return -1;
+        }
+
+        // Returns the "Number"th open scenario in the master list
+        private int GetOpenScenario(int Number)
+        {
+            int counter = 0;
+            for (int i = 0; i < scenarios.Count; i++)
+                if (scenarios[i].IsOpen > 0)
+                {
+                    if (counter == Number)
+                        return i;
+                    counter++;
+                }
+            return -1;
+        }
+        
+        // Returns the number of scenarios in the master list which are open
+        private int GetNumberOfOpenScenarios()
+        {
+            int numOpen = 0;
+            for (int i = 0; i < scenarios.Count; i++)
+                if (scenarios[i].IsOpen > 0)
+                    numOpen++;
+
+            return numOpen;
+        }
+
+        // Changes the active scenario
+        private void SetActiveScenario(int NewActiveScenario)
+        {
+            int oldActiveScenario = GetActiveScenario();
+            // If new active scenario is the same as the old, do nothing
+            if (oldActiveScenario != NewActiveScenario)
+            {
+                // Provide the opportunity to save changes to old scenario
+                if (oldActiveScenario >= 0 && scenarioChanged)
+                {
+                    if (MessageBox.Show("Save changes to model coefficients?", "Scenario " + scenarios[oldActiveScenario].Name) == DialogResult.OK)
+                        Global.coe.WriteCOE(scenarios[oldActiveScenario].Name, -1);
+                    scenarioChanged = false;
+                }
+
+                if (NewActiveScenario >= 0)
+                {
+                    string fileName = Global.DIR.COE + scenarios[NewActiveScenario].Name;
+                    if (Global.coe.ReadCOE(fileName))
+                    {
+                        // Mark the new scenario as active
+                        scenarios[NewActiveScenario].IsActive = 1;
+                        // Find new and old active scenarios in the Scenario menu
+                        string newScenario = Path.GetFileNameWithoutExtension(scenarios[NewActiveScenario].Name);
+                        string oldScenario = "";
+                        if (oldActiveScenario >= 0)
+                        {
+                            oldScenario = Path.GetFileNameWithoutExtension(scenarios[oldActiveScenario].Name);
+                            // Mark the old scenario as no longer active
+                            scenarios[oldActiveScenario].IsActive = 0;
+                        }
+                        // Search through items at the bottom of the Scenario menu, uncheck the old and check the new
+                        for (int i = miTopScenario.DropDownItems.Count - GetNumberOfOpenScenarios(); i < miTopScenario.DropDownItems.Count; i++)
+                        {
+                            if (miTopScenario.DropDownItems[i].ToString() == newScenario)
+                                ((ToolStripMenuItem)miTopScenario.DropDownItems[i]).Checked = true;
+                            else
+                                ((ToolStripMenuItem)miTopScenario.DropDownItems[i]).Checked = false;
+                        }
+                    }
+                    else
+                        MessageBox.Show("Unable to read coefficient file " + fileName);
+                }
+            }
+
+        }
+
+        // Gets the user to choose the name of an existing coefficient file to open
+        public static bool OpenExistingCOEFile(ref string FileName)
+        {
+            OpenFileDialog openDialog = new OpenFileDialog();
+            openDialog.InitialDirectory = Global.DIR.COE;
+            openDialog.FileName = "";
+            openDialog.DefaultExt = ".coe";
+            openDialog.Filter = "WARMF Coefficient File (.coe)|*.coe";
+            bool result = (openDialog.ShowDialog() == DialogResult.OK);
+            if (result)
+                FileName = openDialog.FileName;
+
+            return result;
         }
     }
 }
