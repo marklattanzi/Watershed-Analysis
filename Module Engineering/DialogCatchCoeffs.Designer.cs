@@ -770,6 +770,7 @@
             this.dgLandApp.RowHeadersWidth = 100;
             this.dgLandApp.Size = new System.Drawing.Size(671, 332);
             this.dgLandApp.TabIndex = 0;
+            
             // 
             // colJan
             // 
@@ -866,6 +867,8 @@
             this.colDec.Name = "colDec";
             this.colDec.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.colDec.Width = 75;
+            // cellvaluechanged event handler
+            this.dgLandApp.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgLandApp_CellValueChanged);
             // 
             // tpIrrigation
             // 
@@ -2496,6 +2499,16 @@
             this.gbCEQUALW2flow.PerformLayout();
             this.ResumeLayout(false);
 
+        }
+
+        private void CbIrrLandUse_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void DgLandApp_CurrentCellDirtyStateChanged(object sender, System.EventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
 
         #endregion

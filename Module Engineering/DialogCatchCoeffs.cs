@@ -15,8 +15,13 @@ namespace warmf
     {
         FormMain parent;
         private List<PTSFile> pointSourceFiles;
+        
         // array for land application data [landuse, parameter, month]
         public double[,,] LandAppArray = new double[Global.coe.numLanduses, Global.coe.numChemicalParams + Global.coe.numPhysicalParams, 12];
+        public bool anyLandAppChanged = false;
+        public bool thisLandAppChanged = false;
+        public int cbLanduseIndex;
+        public List<int> landAppLandUsesChanged = new List<int>();
 
         public DialogCatchCoeffs(FormMain par)
         {
@@ -102,9 +107,9 @@ namespace warmf
             //LandAppArray = [landuse, parameter, month] = [i,j,k]
             for (int i = 0; i < Global.coe.numLanduses; i++) //Landuse
             {
-                for (int j = 0; j < Global.coe.numChemicalParams + Global.coe.numPhysicalParams; i++) //parameter
+                for (int j = 0; j < Global.coe.numChemicalParams + Global.coe.numPhysicalParams; j++) //parameter
                 {
-                    for (int k = 0; k < 12; i++) //month
+                    for (int k = 0; k < 12; k++) //month
                     {
                         LandAppArray[i, j, k] = Global.coe.landuse[i].fertPlanApplication[catchment.fertPlanNum[i]][k][j];
                     }
@@ -114,7 +119,8 @@ namespace warmf
             cbLanduse.Items.Clear();
             cbLanduse.Items.AddRange(landuselist.ToArray());
             int iNumParams = Global.coe.numChemicalParams + Global.coe.numPhysicalParams;
-            
+            //set up dgLandApp
+            dgLandApp.CellValueChanged -= dgLandApp_CellValueChanged;
             for (int iParam = 0; iParam < iNumParams; iParam++) //add blank rows to datagridview (row headers labeled)
             {
                 string Units = ConstitUnits[iParam].Trim();
@@ -142,10 +148,10 @@ namespace warmf
                     dgLandApp.Rows[i].Visible = false;
                 }
             }
-
+            dgLandApp.CellValueChanged += dgLandApp_CellValueChanged;
             cbLanduse.SelectedIndex = 0;
             FormatDataGridView(dgLandApp); //Format datagridview
-
+            
             tbMaxAccTime.Text = catchment.bmp.maxFertAccumTime.ToString();
             
             //Irrigation tab - Tabled for now - there is no irrigation in the Catawba watershed...
@@ -365,7 +371,13 @@ namespace warmf
                 tbCEQUALconcFile.Text = catchment.mining.waterQualInputFilename;
             }
         }
-
+        
+        private void dgLandApp_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            anyLandAppChanged = true;
+            thisLandAppChanged = true;
+        }
+        
         public void PointSourceInfo(int FileIndex)
         {
             PTSFile pFile = pointSourceFiles[FileIndex];
@@ -391,6 +403,7 @@ namespace warmf
 
         public void FormatDataGridView(DataGridView dgv)
         {
+            dgLandApp.CellValueChanged -= dgLandApp_CellValueChanged;
             dgv.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dgv.AllowUserToAddRows = false;
@@ -401,6 +414,7 @@ namespace warmf
                 dgv.Columns[ii].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
             dgv.ReadOnly = false;
+            dgLandApp.CellValueChanged += dgLandApp_CellValueChanged;
         }
 
         private void btnHelp_Click(object sender, EventArgs e)
@@ -535,16 +549,24 @@ namespace warmf
 
         private void cbLanduse_SelectedIndexChanged(object sender, EventArgs e)
         {
-            PopLandAppGrid();
-        }
-
-        private void PopLandAppGrid()
-        {
-            int Index = cbLanduse.SelectedIndex;
-            int catchID = Convert.ToInt32(tbCatchID.Text);
-            int catchNum = Global.coe.GetCatchmentNumberFromID(catchID);
+            int catchNum = Global.coe.GetCatchmentNumberFromID(Convert.ToInt32(tbCatchID.Text));
             int iFertPlanNum = Global.coe.catchments[catchNum].fertPlanNum[cbLanduse.SelectedIndex];
-            int iNumParams = Global.coe.numChemicalParams + Global.coe.numPhysicalParams;
+
+            if (thisLandAppChanged)
+            {
+                if (landAppLandUsesChanged.Contains(cbLanduseIndex) == false)
+                {
+                    landAppLandUsesChanged.Add(cbLanduseIndex);
+                }
+
+                for (int iParam = 0; iParam < Global.coe.numChemicalParams + Global.coe.numPhysicalParams; iParam++)
+                {
+                    for (int iMonth = 0; iMonth < 12; iMonth++)
+                    {
+                        LandAppArray[cbLanduseIndex, iParam, iMonth] = Convert.ToDouble(dgLandApp.Rows[iParam].Cells[iMonth].Value);
+                    }
+                }
+            }
 
             //make sure we have a catchment number
             if (catchNum < 0)
@@ -552,13 +574,18 @@ namespace warmf
                 return;
             }
 
-            for (int iParam = 0; iParam < iNumParams; iParam++)
+            dgLandApp.CellValueChanged -= dgLandApp_CellValueChanged;
+            for (int iParam = 0; iParam < Global.coe.numChemicalParams + Global.coe.numPhysicalParams; iParam++)
             {
                 for (int iMonth = 0; iMonth < 12; iMonth++)
                 {
-                    dgLandApp.Rows[iParam].Cells[iMonth].Value = Global.coe.landuse[cbLanduse.SelectedIndex].fertPlanApplication[iFertPlanNum][iMonth][iParam];
+                    dgLandApp.Rows[iParam].Cells[iMonth].Value = LandAppArray[cbLanduse.SelectedIndex, iParam, iMonth];
                 }
             }
+            dgLandApp.Refresh();
+            dgLandApp.CellValueChanged += dgLandApp_CellValueChanged;
+            cbLanduseIndex = cbLanduse.SelectedIndex;
+            thisLandAppChanged = false;
         }
 
         private void btnAddPTS_Click(object sender, EventArgs e)
@@ -674,37 +701,35 @@ namespace warmf
             }
 
             //Land Application tab
-            //int iNumParams = Global.coe.numChemicalParams + Global.coe.numPhysicalParams;
+            //detect change in landAppArray? see: dgLandApp_CellValueChanged
 
-            //for (int iParam = 0; iParam < iNumParams; iParam++) //add blank rows to datagridview (row headers labeled)
-            //{
-            //    string Units = ConstitUnits[iParam].Trim();
-            //    if (Units.Contains("mg/l"))
-            //    {
-            //        Units = " (" + Units.Replace("mg/l", "kg/ha") + ")";
-            //    }
-            //    else if (Units.Contains("#/100 ml"))
-            //    {
-            //        Units = " (" + Units.Replace("#/100 ml", "10^6 #/ha") + ")";
-            //    }
-            //    string NameUnit = ConstitNames[iParam] + Units;
-            //    dgLandApp.Rows.Insert(iParam);
-            //    dgLandApp.Rows[iParam].HeaderCell.Value = NameUnit.ToString();
-
-            //}
-
-            //List<int> HideList = new List<int> { 0, 1, 2, 15, 16, 20, 22, 23, 24, 29, 30, 31, 32, 37 };
-            //for (int i = 0; i < iNumParams; i++) //hide chemical and physical parameters that aren't applicable
-            //{
-            //    if (HideList.Contains(i))
-            //    {
-            //        dgLandApp.Rows[i].Visible = false;
-            //    }
-            //}
-
-            //cbLanduse.SelectedIndex = 0;
-            //FormatDataGridView(dgLandApp); //Format datagridview
-
+            //if change, set up new plan for applicable land uses
+            //add plan to system coeffs for each land use.
+            //set catchment to using new plan
+            if (anyLandAppChanged)
+            {
+                for (int i = 0; i < Global.coe.numLanduses; i++)
+                {
+                    if (landAppLandUsesChanged.Contains(i))
+                    {
+                        Global.coe.landuse[i].numFertPlans++;
+                        List<List<double>> fertPlans = new List<List<double>>();
+                        for (int j = 0; j < 12; j++)
+                        {
+                            List<double> plan = new List<double>();
+                            for (int k = 0; k < Global.coe.numChemicalParams + Global.coe.numPhysicalParams; k++)
+                            {
+                                plan.Add(LandAppArray[i, k, j]);
+                            }
+                            fertPlans.Add(plan);
+                        }
+                        Global.coe.landuse[i].fertPlanApplication.Add(fertPlans);
+                        catchment.fertPlanNum[i] = Global.coe.landuse[i].numFertPlans;
+                    }
+                    
+                }
+            }
+            
             catchment.bmp.maxFertAccumTime = Convert.ToDouble(tbMaxAccTime.Text);
 
             //Irrigation tab - Tabled for now - there is no irrigation in the Catawba watershed...
