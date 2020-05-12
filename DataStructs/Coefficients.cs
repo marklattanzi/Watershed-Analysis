@@ -23,6 +23,29 @@ namespace warmf {
         public bool swRiverInclude;
         public bool swReservoirInclude;
         public bool swLoadingInclude;
+        public string header;
+
+        public HydrologyConstits() { header = "CONSTIT"; }
+
+        public virtual bool WriteConstituent(ref STechStreamWriter sw)
+        {
+            sw.WriteString(header);
+            sw.WriteString(fortranCode);
+            sw.WriteOnOffas1or0(swIncludeInOutput);
+            sw.WriteString16(units);
+            sw.WriteString16(abbrevName);
+            sw.WriteString(fullName);
+            sw.WriteLine();
+
+            sw.WriteString(header);
+            sw.WriteOnOffas1or0(swCatchmentInclude);
+            sw.WriteOnOffas1or0(swRiverInclude);
+            sw.WriteOnOffas1or0(swReservoirInclude);
+            sw.WriteOnOffas1or0(swLoadingInclude);
+            sw.WriteLine();
+
+            return true;
+        }
     }
 
     public class CompositeConstits : HydrologyConstits
@@ -37,6 +60,30 @@ namespace warmf {
         public bool swIncludePrecipConstits;
 
         public List<double> componentTotalMass;
+
+        public CompositeConstits() { header = "COMPOSIT"; }
+
+        public override bool WriteConstituent(ref STechStreamWriter sw)
+        {
+            base.WriteConstituent(ref sw);
+
+            sw.WriteString(header);
+            sw.WriteDouble(electricalCharge);
+            sw.WriteDouble(massEquivalent);
+            sw.WriteDouble(loadingUnitConversion);
+            sw.WriteString(loadingUnits);
+            sw.WriteLine();
+
+            sw.WriteString(header);
+            sw.WriteOnOffas1or0(swIncludeDissolvedConstits);
+            sw.WriteOnOffas1or0(swIncludeAdsorbedConstits);
+            sw.WriteOnOffas1or0(swIncludePrecipConstits);
+            sw.WriteLine();
+
+            sw.WriteDoubleData("COMPONEN", componentTotalMass);
+
+            return true;
+        }
     }
 
     public class PhysicalConstits : CompositeConstits
@@ -48,6 +95,8 @@ namespace warmf {
         public int dryDepositionForm;
         public bool swChemAdvection;
         public List<double> gasDepositVelocity;
+
+        public PhysicalConstits() { header = "PHYSICAL"; }
     }
 
     public class ChemicalConstits : PhysicalConstits
@@ -58,6 +107,8 @@ namespace warmf {
         public double solubWithHydrox;
         public double stoichChemWithHydrox;
         public double stoichHydroxWithChem;
+
+        public ChemicalConstits() { header = "CHEMICAL"; }
     }
 
     public class Reaction {
@@ -2076,20 +2127,7 @@ namespace warmf {
 
                 for (int i = 0; i < numHydrologyParams; i++)
                 {
-                    sw.WriteString("CONSTIT");
-                    sw.WriteString(hydroConstits[i].fortranCode);
-                    sw.WriteOnOffas1or0(hydroConstits[i].swIncludeInOutput);
-                    sw.WriteString16(hydroConstits[i].units);
-                    sw.WriteString16(hydroConstits[i].abbrevName);
-                    sw.WriteString(hydroConstits[i].fullName);
-                    sw.WriteLine();
-
-                    sw.WriteString("CONSTIT");
-                    sw.WriteOnOffas1or0(hydroConstits[i].swCatchmentInclude);
-                    sw.WriteOnOffas1or0(hydroConstits[i].swRiverInclude);
-                    sw.WriteOnOffas1or0(hydroConstits[i].swReservoirInclude);
-                    sw.WriteOnOffas1or0(hydroConstits[i].swLoadingInclude);
-                    sw.WriteLine();
+                    hydroConstits[i].WriteConstituent(ref sw);
                 }
 
                 //chemical constituents
@@ -2194,35 +2232,7 @@ namespace warmf {
 
                 for (int i = 0; i < numCompositeParams; i++)
                 {
-                    sw.WriteString("COMPOSIT");
-                    sw.WriteString(compositeConstits[i].fortranCode);
-                    sw.WriteOnOffas1or0(compositeConstits[i].swIncludeInOutput);
-                    sw.WriteString16(compositeConstits[i].units);
-                    sw.WriteString16(compositeConstits[i].abbrevName);
-                    sw.WriteString(compositeConstits[i].fullName);
-                    sw.WriteLine();
-
-                    sw.WriteString("COMPOSIT");
-                    sw.WriteOnOffas1or0(compositeConstits[i].swCatchmentInclude);
-                    sw.WriteOnOffas1or0(compositeConstits[i].swRiverInclude);
-                    sw.WriteOnOffas1or0(compositeConstits[i].swReservoirInclude);
-                    sw.WriteOnOffas1or0(compositeConstits[i].swLoadingInclude);
-                    sw.WriteLine();
-
-                    sw.WriteString("COMPOSIT");
-                    sw.WriteDouble(compositeConstits[i].electricalCharge);
-                    sw.WriteDouble(compositeConstits[i].massEquivalent);
-                    sw.WriteDouble(compositeConstits[i].loadingUnitConversion);
-                    sw.WriteString(compositeConstits[i].loadingUnits);
-                    sw.WriteLine();
-
-                    sw.WriteString("COMPOSIT");
-                    sw.WriteOnOffas1or0(compositeConstits[i].swIncludeDissolvedConstits);
-                    sw.WriteOnOffas1or0(compositeConstits[i].swIncludeAdsorbedConstits);
-                    sw.WriteOnOffas1or0(compositeConstits[i].swIncludePrecipConstits);
-                    sw.WriteLine();
-
-                    WriteDoubleData(sw, "COMPONEN", compositeConstits[i].componentTotalMass);
+                    compositeConstits[i].WriteConstituent(ref sw);
                 }
 
                 // Reactions

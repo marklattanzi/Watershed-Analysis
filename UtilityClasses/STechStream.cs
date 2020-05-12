@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 
 // File stream reader and writer that keep track of line nums
 namespace warmf {
@@ -190,6 +191,44 @@ namespace warmf {
             // Fill in spaces left of the number if it is less than 8 digits
             doubleString = doubleString.PadLeft(8);
             Write("{0}", doubleString);
+        }
+
+        // writes doubles from a list- 9 per line
+        public void WriteDoubleData(string lineAbbrev, List<double> dblValues)
+        {
+            double dblRes;
+            int numValues, linesToWrite, i;
+
+            numValues = dblValues.Count;
+            dblRes = (double)numValues / 9;
+            linesToWrite = Convert.ToInt16(Math.Ceiling(dblRes));
+
+            i = 0;
+
+            for (int j = 0; j < linesToWrite; j++)
+            {
+                if (j < (linesToWrite - 1)) //all full lines
+                {
+                    WriteString(lineAbbrev);
+                    for (int k = 0; k < 9; k++)
+                    {
+                        WriteDouble(dblValues[i]);
+                        i++;
+                    }
+                    WriteLine();
+                }
+                else //last line
+                {
+                    WriteString(lineAbbrev);
+                    while (i < dblValues.Count)
+                    {
+                        WriteDouble(dblValues[i]);
+                        i++;
+                    }
+                    WriteLine();
+                    return;
+                }
+            }
         }
 
         // Writes On (true) and Off (false)
