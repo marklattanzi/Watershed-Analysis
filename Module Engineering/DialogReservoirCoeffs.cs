@@ -165,9 +165,10 @@ namespace warmf
                     dgvInitialConc.Rows[parameterIndex].Visible = false;
             }
             FormatDataGridView(dgvInitialConc);
-            
+
             //Point Sources
             if (reservoirSeg.numPointSources > 0)
+            //            if (reservoirSeg.pointSources.Count > 0)
             {
                 pointSourceFiles = new List<PTSFile>();
                 for (int i = 0; i < reservoirSeg.numPointSources; i++)

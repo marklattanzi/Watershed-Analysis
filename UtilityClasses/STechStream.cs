@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 // File stream reader and writer that keep track of line nums
 namespace warmf {
@@ -8,6 +9,18 @@ namespace warmf {
         public int LineNum { get; private set; }
 
 		public STechStreamReader(string filename) : base(filename) { LineNum = 0; }
+
+        // test the line code to make sure it's what it expected
+        public bool TestLine(string line, int lnum, string abbrev)
+        {
+            if (!line.StartsWith(abbrev))
+            {
+                Debug.WriteLine("Expected line " + lnum + " to start with " + abbrev + ". Starts with |" + line.Substring(0, 8) + "|");
+                return false;
+            }
+
+            return true;
+        }
 
         public override string ReadLine() {
             LineNum++;
@@ -72,9 +85,95 @@ namespace warmf {
 
             return field;
         }
+
+        // Reads an array of integers from fields 8 characters wide and 9 fields across
+        public List<int> ReadIntData(string lineAbbrev, int num)
+        {
+            int intRes;
+            string line;
+            int linesToRead = (num - 1) / 9 + 1;
+
+            List<int> data = new List<int>();
+            for (int nlines = 0; nlines < linesToRead; nlines++)
+            {
+                line = ReadLine();
+                if (TestLine(line, LineNum, lineAbbrev))
+                {
+                    int jj = 0;
+                    try
+                    {
+                        while (nlines * 9 + jj < num && jj < 9)
+                        {
+                            data.Add(Int32.TryParse(line.Substring(8 * (jj + 1), 8), out intRes) ? intRes : 0);
+                            jj++;
+                        }
+                    }
+                    catch
+                    {
+                        Debug.WriteLine("MISSING INTEGERS\nExpected " + num + " numbers on line " + LineNum + "\nLine = |" + line + "|");
+                    }
+
+                }
+                else
+                {
+                    data.Add(0);    // what to do if line has error?  MRL
+                    Debug.WriteLine("Expected line code " + lineAbbrev + ". Saw line code " + line.Substring(0, 8) + " at line " + LineNum);
+                }
+            }
+            return data;
+        }
+
+        // reads in monthly integers - 9 per line
+        public List<int> ReadMonthlyIntData(string lineAbbrev)
+        {
+            return ReadIntData(lineAbbrev, 12);
+        }
+
+        // reads in doubles - up to 9 per line
+        public List<double> ReadDoubleData(string lineAbbrev, int num)
+        {
+            double dblRes;
+            string line;
+            int linesToRead = (num - 1) / 9 + 1;
+
+            List<double> data = new List<double>();
+            for (int nlines = 0; nlines < linesToRead; nlines++)
+            {
+                line = ReadLine();
+                if (TestLine(line, LineNum, lineAbbrev))
+                {
+                    int jj = 0;
+                    try
+                    {
+                        while (nlines * 9 + jj < num && jj < 9)
+                        {
+                            data.Add(Double.TryParse(line.Substring(8 * (jj + 1), 8), out dblRes) ? dblRes : 0);
+                            jj++;
+                        }
+                    }
+                    catch
+                    {
+                        Debug.WriteLine("MISSING DOUBLES\nExpected " + num + " numbers on line " + LineNum + "\nLine = |" + line + "|");
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine("Expected line code " + lineAbbrev + ". Saw line code " + line.Substring(0, 8) + " at line " + LineNum);
+                    data.Add(0);
+                }
+            }
+            return data;
+        }
+
+        // reads in monthly doubles - 9 per line
+        public List<double> ReadMonthlyDoubleData(string lineAbbrev)
+        {
+            return ReadDoubleData(lineAbbrev, 12);
+        }
+
     }
 
-	public class STechStreamWriter : StreamWriter {
+    public class STechStreamWriter : StreamWriter {
 		public int LineNum { get; private set; }
 
 		public STechStreamWriter(string filename) : base(filename) { LineNum = 0; }

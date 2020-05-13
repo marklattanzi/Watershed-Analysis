@@ -193,9 +193,10 @@ namespace warmf
             //Point Sources tab
             //Warning: this code block was constructed without having a case to test - probably contains errors!!
             if (catchment.numPointSources > 0)
+            //            if (catchment.pointSources.Count > 0)
             {
                 pointSourceFiles = new List<PTSFile>();
-                for (int i = 0; i < catchment.numPointSources; i++)
+                for (int i = 0; i < catchment.pointSources.Count; i++)
                 {
                     lbPointSources.Items.Add(Global.coe.PTSFilename[catchment.pointSources[i] - 1]);
                     PTSFile ptFile = new PTSFile(Global.coe.PTSFilename[catchment.pointSources[i] - 1]);
@@ -207,19 +208,13 @@ namespace warmf
 
             //Pumping tab
             //Warning: this code block was constructed without having a case to test - probably contains errors!!
-            if (catchment.numPumpFromSchedules > 0)
+            for (int i = 0; i < catchment.pumpFromDivFile.Count; i++)
             {
-                for (int i = 0; i < catchment.numPumpFromSchedules; i++)
-                {
-                    lbPumpingFrom.Items.Add(Global.coe.DIVData[catchment.pumpFromDivFile[i] - 1].filename);
-                }
+                lbPumpingFrom.Items.Add(Global.coe.DIVData[catchment.pumpFromDivFile[i] - 1].filename);
             }
-            if (catchment.numPumpToSchedules > 0)
+            for (int i = 0; i < catchment.pumpToDivFile.Count; i++)
             {
-                for (int i = 0; i < catchment.numPumpToSchedules; i++)
-                {
-                    lbPumpingTo.Items.Add(Global.coe.DIVData[catchment.pumpToDivFile[i] - 1].filename);
-                }
+                lbPumpingTo.Items.Add(Global.coe.DIVData[catchment.pumpToDivFile[i] - 1].filename);
             }
 
             //Septic Systems tab
@@ -697,7 +692,7 @@ namespace warmf
             //Land Uses tab
             for (int i = 0; i < Global.coe.numLanduses; i++)
             {
-                catchment.landUsePercent[i] = Convert.ToDouble(dgLanduse.Rows[i].Cells[1]);
+                catchment.landUsePercent[i] = Convert.ToDouble(dgLanduse.Rows[i].Cells[1].Value);
             }
 
             //Land Application tab
@@ -712,7 +707,6 @@ namespace warmf
                 {
                     if (landAppLandUsesChanged.Contains(i))
                     {
-                        Global.coe.landuse[i].numFertPlans++;
                         List<List<double>> fertPlans = new List<List<double>>();
                         for (int j = 0; j < 12; j++)
                         {
@@ -724,9 +718,9 @@ namespace warmf
                             fertPlans.Add(plan);
                         }
                         Global.coe.landuse[i].fertPlanApplication.Add(fertPlans);
-                        catchment.fertPlanNum[i] = Global.coe.landuse[i].numFertPlans;
+                        catchment.fertPlanNum[i] = Global.coe.landuse[i].fertPlanApplication.Count;
                     }
-                    
+
                 }
             }
             
@@ -750,12 +744,12 @@ namespace warmf
             //BMP's tab
             for (int i = 0; i < Global.coe.numLanduses; i++)
             {
-                catchment.landApplicationLoad[i] = Convert.ToDouble(dgLivestockEx.Rows[i].Cells[1]);
+                catchment.landApplicationLoad[i] = Convert.ToDouble(dgLivestockEx.Rows[i].Cells[1].Value);
             }
             catchment.bufferingPct = Convert.ToDouble(tbPctBuffered.Text);
-            catchment.bufferZoneWidth = Convert.ToDouble(tbBufferWidth);
-            catchment.bufferZoneSlope = Convert.ToDouble(tbBufferSlope);
-            catchment.bufferManningN = Convert.ToDouble(tbBufferRoughness);
+            catchment.bufferZoneWidth = Convert.ToDouble(tbBufferWidth.Text);
+            catchment.bufferZoneSlope = Convert.ToDouble(tbBufferSlope.Text);
+            catchment.bufferManningN = Convert.ToDouble(tbBufferRoughness.Text);
             catchment.bmp.streetSweepFreq = Convert.ToDouble(tbFrequency.Text);
             catchment.bmp.streetSweepEff = Convert.ToDouble(tbEfficiency.Text);
             catchment.bmp.divertedImpervFlow = Convert.ToDouble(tbImpRouting.Text);
@@ -765,6 +759,7 @@ namespace warmf
             catchment.numPointSources = lbPointSources.Items.Count;
             if (catchment.numPointSources > 0)
             {
+                catchment.pointSources.Clear();
                 for (int i = 0; i < lbPointSources.Items.Count; i++)
                 {
                     catchment.pointSources[i] = Global.coe.GetPTSNumberFromName(lbPointSources.Items[i].ToString());
@@ -772,26 +767,15 @@ namespace warmf
             }
 
             //Pumping tab
-            catchment.numPumpFromSchedules = 0;
             catchment.pumpFromDivFile.Clear();
-            catchment.numPumpToSchedules = 0;
             catchment.pumpToDivFile.Clear();
-
-            if (lbPumpingFrom.Items.Count > 0)
+            for (int i = 0; i < lbPumpingFrom.Items.Count; i++)
             {
-                catchment.numPumpFromSchedules = lbPumpingFrom.Items.Count;
-                for (int i = 0; i < catchment.numPumpFromSchedules; i++)
-                {
-                    catchment.pumpFromDivFile.Add(Global.coe.GetFLONumberFromName(lbPumpingFrom.Items[i].ToString()));
-                }
+                catchment.pumpFromDivFile.Add(Global.coe.GetFLONumberFromName(lbPumpingFrom.Items[i].ToString()));
             }
-            if (lbPumpingTo.Items.Count > 0)
+            for (int i = 0; i < lbPumpingTo.Items.Count; i++)
             {
-                catchment.numPumpToSchedules = lbPumpingTo.Items.Count;
-                for (int i = 0; i < catchment.numPumpToSchedules; i++)
-                {
-                    catchment.pumpToDivFile.Add(Global.coe.GetFLONumberFromName(lbPumpingTo.Items[i].ToString()));
-                }
+                catchment.pumpToDivFile.Add(Global.coe.GetFLONumberFromName(lbPumpingTo.Items[i].ToString()));
             }
 
             //Septic Systems tab

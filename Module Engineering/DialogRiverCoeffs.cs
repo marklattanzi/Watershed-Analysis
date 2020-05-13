@@ -103,6 +103,7 @@ namespace warmf
 
             //Point Sources
             if (river.numPointSources > 0)
+            //            if (river.pointSources.Count > 0)
             {
                 pointSourceFiles = new List<PTSFile>();
                 for (int i = 0; i < river.numPointSources; i++)
@@ -543,7 +544,7 @@ namespace warmf
             if (lbPointSources.Items.Count > 0)
             {
                 river.numPointSources = lbPointSources.Items.Count;
-                for (int i = 0; i < river.numPointSources; i++)
+                for (int i = 0; i < lbPointSources.Items.Count; i++)
                 {
                     river.pointSources.Add(Global.coe.GetPTSNumberFromName(lbPointSources.Items[i].ToString()));
                 }
