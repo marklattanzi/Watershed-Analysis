@@ -475,7 +475,6 @@ namespace warmf {
         public List<int> upstreamReservoirIDs;
 
         public bool swOutputResults;
-        public int numPointSources;
         public List<int> pointSources;
     }
 
@@ -483,7 +482,6 @@ namespace warmf {
     {
         public bool swIsSubwaterBoundary;
 
-        public int numDiversionsTo;
         public List<int> diversionToFilenums;
         public string obsWQFilename;
     }
@@ -1394,10 +1392,11 @@ namespace warmf {
                     }
 
                     // point sources
-                    catchData.numPointSources = ReadInt(sr, "PTSOURCE");
-//                    int numPointSources = ReadInt(sr, "PTSOURCE");
-                    if (catchData.numPointSources > 0)
-                        catchData.pointSources = ReadIntData(sr, "PTSOURCE", catchData.numPointSources);
+                    int numPointSources = ReadInt(sr, "PTSOURCE");
+                    if (numPointSources > 0)
+                        catchData.pointSources = ReadIntData(sr, "PTSOURCE", numPointSources);
+                    else
+                        catchData.pointSources = new List<int>();
 
                     // pumping - initialize lists if there are currently no pumping files
                     int numPumping = ReadInt(sr, "PUMPFROM");
@@ -1612,16 +1611,22 @@ namespace warmf {
 					river.upstreamRiverIDs = ReadIntData(sr, "IRVT", 9);   
 					river.upstreamReservoirIDs = ReadIntData(sr, "ILKT", 9);   
 
-					river.numDiversionsFrom = ReadInt(sr, "DIVFROM");
-					if (river.numDiversionsFrom > 0)
-						river.diversionFromFilenums = ReadIntData(sr, "DIVFROM", river.numDiversionsFrom);
-					river.numDiversionsTo = ReadInt(sr, "DIVTO");
-					if (river.numDiversionsTo > 0)
-						river.diversionToFilenums = ReadIntData(sr, "DIVTO", river.numDiversionsTo);
-                    river.numPointSources = ReadInt(sr, "PTSOURCE");
-//                    int numPointSources = ReadInt(sr, "PTSOURCE");
-                    if (river.numPointSources > 0)
-						river.pointSources = ReadIntData(sr, "PTSOURCE", river.numPointSources);
+					int numDiversionsFrom = ReadInt(sr, "DIVFROM");
+                    if (numDiversionsFrom > 0)
+                        river.diversionFromFilenums = ReadIntData(sr, "DIVFROM", numDiversionsFrom);
+                    else
+                        river.diversionFromFilenums = new List<int>();
+					int numDiversionsTo = ReadInt(sr, "DIVTO");
+                    if (numDiversionsTo > 0)
+                        river.diversionToFilenums = ReadIntData(sr, "DIVTO", numDiversionsTo);
+                    else
+                        river.diversionToFilenums = new List<int>();
+                    int numPointSources = ReadInt(sr, "PTSOURCE");
+                    if (numPointSources > 0)
+                        river.pointSources = ReadIntData(sr, "PTSOURCE", numPointSources);
+                    else
+                        river.pointSources = new List<int>();
+
 					nums = ReadIntData(sr, "OBSW", 7);
                     river.overrideSimulation = new SimulationOverride();
                     river.overrideSimulation.swUseObsData = nums[0] != 0;
@@ -1770,10 +1775,11 @@ namespace warmf {
 							}
 						}
 
-                        seg.numPointSources = ReadInt(sr, "PTSOURCE");
-//                        int numPointSources = ReadInt(sr, "PTSOURCE");
-                        if (seg.numPointSources > 0)
-							seg.pointSources = ReadIntData(sr, "PTSOURCE", seg.numPointSources);
+                        int numPointSources = ReadInt(sr, "PTSOURCE");
+                        if (numPointSources > 0)
+                            seg.pointSources = ReadIntData(sr, "PTSOURCE", numPointSources);
+                        else
+                            seg.pointSources = new List<int>();
 						
 						dnums = ReadDoubleData(sr, "METFAC", 6);
 						seg.precipWgtMult = dnums[0];
@@ -1823,13 +1829,12 @@ namespace warmf {
 						seg.upstreamCatchIDs = ReadIntData(sr, "ICATOL", 9);
 						seg.upstreamRiverIDs = ReadIntData(sr, "IRVTOL", 9);
 						seg.upstreamReservoirIDs = ReadIntData(sr, "ILKTOL", 9);
-                        
-                        nums = ReadIntData(sr, "DIVTO", 9);
-                        seg.numDiversionsTo = nums[0];
-                        for (int i = 0; i < seg.numDiversionsTo; i++)
-                        {
-                            seg.diversionToFilenums[i] = nums[i + 1];
-                        }
+
+                        int numDiversionsTo = ReadInt(sr, "DIVTO");
+                        if (numDiversionsTo > 0)
+                            seg.diversionToFilenums = ReadIntData(sr, "DIVTO", numDiversionsTo);
+                        else
+                            seg.diversionToFilenums = new List<int>();
 						seg.obsWQFilename = ReadString(sr, "OBSDATA");
 
                         //last (downstream-most) segment of a reservoir is always a subwatershed boundary
@@ -1845,7 +1850,8 @@ namespace warmf {
 				}
                 #endregion
 
-                line = sr.ReadLine();
+                // Criteria and TMDL information doesn't have to be read in by the GUI
+/*                line = sr.ReadLine();
 				while (line.Contains("CRITERIA")) line = sr.ReadLine();  // remove - MRL
 
                 // criteria
@@ -1857,7 +1863,7 @@ namespace warmf {
 					// get TMDL switch.  spec has 6 other numbers...  MRL
 					isTMDLSimulation = line.Substring(8, 8).Contains("1") ? true : false;
 				}
-
+*/
 				sr.Close();
                 return true;
             }
@@ -2519,10 +2525,9 @@ namespace warmf {
 
                         // point sources
                         sw.WriteString("PTSOURCE");
-                        sw.WriteInt(catchments[i].numPointSources);
-//                        sw.WriteInt(catchments[i].pointSources.Count);
+                        sw.WriteInt(catchments[i].pointSources.Count);
                         sw.WriteLine();
-                        if (catchments[i].numPointSources > 0)
+                        if (catchments[i].pointSources.Count > 0)
                         {
                             WriteIntData(sw, "PTSOURCE", catchments[i].pointSources);
                         }
@@ -2772,26 +2777,25 @@ namespace warmf {
                         WriteIntData(sw, "ILKT" + rivers[i].idNum.ToString(), rivers[i].upstreamReservoirIDs);
 
                         sw.WriteString("DIVFROM");
-                        sw.WriteInt(rivers[i].numDiversionsFrom);
+                        sw.WriteInt(rivers[i].diversionFromFilenums.Count);
                         sw.WriteLine();
-                        if (rivers[i].numDiversionsFrom > 0)
+                        if (rivers[i].diversionFromFilenums.Count > 0)
                         {
                             WriteIntData(sw, "DIVFROM", rivers[i].diversionFromFilenums);
                         }
 
                         sw.WriteString("DIVTO");
-                        sw.WriteInt(rivers[i].numDiversionsTo);
+                        sw.WriteInt(rivers[i].diversionToFilenums.Count);
                         sw.WriteLine();
-                        if (rivers[i].numDiversionsTo > 0)
+                        if (rivers[i].diversionToFilenums.Count > 0)
                         {
                             WriteIntData(sw, "DIVTO", rivers[i].diversionToFilenums);
                         }
 
                         sw.WriteString("PTSOURCE");
-                        sw.WriteInt(rivers[i].numPointSources);
-//                        sw.WriteInt(rivers[i].pointSources.Count);
+                        sw.WriteInt(rivers[i].pointSources.Count);
                         sw.WriteLine();
-                        if (rivers[i].numPointSources > 0)
+                        if (rivers[i].pointSources.Count > 0)
                         {
                             WriteIntData(sw, "PTSOURCE", rivers[i].pointSources);
                         }
@@ -2880,7 +2884,7 @@ namespace warmf {
                         sw.WriteLine("++++++++ RESERVOIR " + i.ToString() + " ++++++++");
 
                         sw.WriteString("DEPTH" + (i + 1).ToString());
-                        sw.WriteInt(reservoirs[i].idNum);
+//                        sw.WriteInt(reservoirs[i].idNum);
                         sw.WriteInt(reservoirs[i].numSegments);
                         sw.WriteOnOffas1or0(reservoirs[i].swCalcPseudo);
                         sw.WriteInt(reservoirs[i].METFilenum);
@@ -3031,10 +3035,9 @@ namespace warmf {
 
                             //Point sources
                             sw.WriteString("PTSOURCE");
-                            sw.WriteInt(reservoirs[i].reservoirSegs[j].numPointSources);
-//                            sw.WriteInt(reservoirs[i].reservoirSegs[j].pointSources.Count);
+                            sw.WriteInt(reservoirs[i].reservoirSegs[j].pointSources.Count);
                             sw.WriteLine();
-                            if (reservoirs[i].reservoirSegs[j].numPointSources > 0)
+                            if (reservoirs[i].reservoirSegs[j].pointSources.Count > 0)
                             {
                                 WriteIntData(sw, "PTSOURCE", reservoirs[i].reservoirSegs[j].pointSources);
                             }
@@ -3119,13 +3122,13 @@ namespace warmf {
                             //Upstream sources - catchments, rivers, reservoir segments
                             WriteIntData(sw, "ICATOL", reservoirs[i].reservoirSegs[j].upstreamCatchIDs);
                             WriteIntData(sw, "IRVTOL", reservoirs[i].reservoirSegs[j].upstreamRiverIDs);
-                            WriteIntData(sw, "ICATOL", reservoirs[i].reservoirSegs[j].upstreamReservoirIDs);
+                            WriteIntData(sw, "ILKTOL", reservoirs[i].reservoirSegs[j].upstreamReservoirIDs);
 
                             //Diversions to
                             sw.WriteString("DIVTO");
-                            sw.WriteInt(reservoirs[i].reservoirSegs[j].numDiversionsTo);
+                            sw.WriteInt(reservoirs[i].reservoirSegs[j].diversionToFilenums.Count);
                             sw.WriteLine();
-                            if (reservoirs[i].reservoirSegs[j].numDiversionsTo > 0)
+                            if (reservoirs[i].reservoirSegs[j].diversionToFilenums.Count > 0)
                             {
                                 WriteIntData(sw, "DIVTO", reservoirs[i].reservoirSegs[j].diversionToFilenums);
                             }
@@ -3136,11 +3139,18 @@ namespace warmf {
                             sw.WriteLine();
                         }
                     }
-                    
-                    //water quality criteria and TMDL
-                    //This consists of three lines at the end of the COE file
-                    //The lines are written to the coe file in the writeCON() function
                 }
+
+                //water quality criteria and TMDL
+                // temporary
+                sw.WriteString("CRITERIA");
+                sw.WriteInt(0);
+                sw.WriteLine();
+                sw.WriteString("TMDL");
+                sw.WriteInt(0);
+                sw.WriteLine();
+                //This consists of three lines at the end of the COE file
+                //The lines are written to the coe file in the writeCON() function
 
                 sw.Close();
                 return true;
@@ -3362,6 +3372,19 @@ namespace warmf {
             }  
             else
                 return "";
+        }
+
+        // Sets the scenario portion of output file names
+        public void SetOutputFileNames(string scenarioName)
+        {
+            string withoutExtension = Path.GetFileNameWithoutExtension(scenarioName);
+
+            catchmentOutFilename = withoutExtension + Path.GetExtension(catchmentOutFilename);
+            riverOutFilename = withoutExtension + Path.GetExtension(riverOutFilename);
+            reservoirOutFilename = withoutExtension + Path.GetExtension(reservoirOutFilename);
+            loadingOutFilename = withoutExtension + Path.GetExtension(loadingOutFilename);
+            warmstartOutFilename = withoutExtension + Path.GetExtension(warmstartOutFilename);
+            textOutFilename = withoutExtension + Path.GetExtension(textOutFilename);
         }
 
         public List<NodeHydro> GetWatershedPourPoints()

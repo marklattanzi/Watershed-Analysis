@@ -167,11 +167,10 @@ namespace warmf
             FormatDataGridView(dgvInitialConc);
 
             //Point Sources
-            if (reservoirSeg.numPointSources > 0)
-            //            if (reservoirSeg.pointSources.Count > 0)
+            if (reservoirSeg.pointSources.Count > 0)
             {
                 pointSourceFiles = new List<PTSFile>();
-                for (int i = 0; i < reservoirSeg.numPointSources; i++)
+                for (int i = 0; i < reservoirSeg.pointSources.Count; i++)
                 {
                     lbPointSources.Items.Add(Global.coe.PTSFilename[reservoirSeg.pointSources[i] - 1]);
                     PTSFile ptFile = new PTSFile(Global.coe.PTSFilename[reservoirSeg.pointSources[0] - 1]);
@@ -276,13 +275,10 @@ namespace warmf
                 cbReleaseAdjustment.Checked = true;
             else
                 cbReleaseAdjustment.Checked = false;
-            
-            if (reservoirSeg.numDiversionsTo > 0)
+
+            for (int i = 1; i < reservoirSeg.diversionToFilenums.Count + 1; i++)
             {
-                for (int i = 1; i < reservoirSeg.diversionToFilenums.Count + 1; i++)
-                {
-                    lbDiversionsToReservoir.Items.Add(Global.coe.DIVData[reservoirSeg.diversionToFilenums[i]].filename);
-                }
+                lbDiversionsToReservoir.Items.Add(Global.coe.DIVData[reservoirSeg.diversionToFilenums[i]].filename);
             }
 
             //Meteorology

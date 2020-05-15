@@ -87,26 +87,19 @@ namespace warmf
             }
 
             //Diversions
-            if (river.numDiversionsFrom > 0)
-            {
-                for (int i = 0; i < river.numDiversionsFrom; i++)
-                    lbDiversionsFrom.Items.Add(Global.coe.DIVData[river.diversionFromFilenums[i] - 1].filename);
-            }
+            for (int i = 0; i < river.diversionFromFilenums.Count; i++)
+                lbDiversionsFrom.Items.Add(Global.coe.DIVData[river.diversionFromFilenums[i] - 1].filename);
 
-            if (river.numDiversionsTo > 0)
-            {
-                for (int i = 0; i < river.numDiversionsTo; i++)
-                    lbDiversionsTo.Items.Add(Global.coe.DIVData[river.diversionToFilenums[i] - 1].filename);
-            }
+            for (int i = 0; i < river.diversionToFilenums.Count; i++)
+                lbDiversionsTo.Items.Add(Global.coe.DIVData[river.diversionToFilenums[i] - 1].filename);
 
             tbMinRiverFlow.Text = river.minFlow.ToString();
 
             //Point Sources
-            if (river.numPointSources > 0)
-            //            if (river.pointSources.Count > 0)
+            if (river.pointSources.Count > 0)
             {
                 pointSourceFiles = new List<PTSFile>();
-                for (int i = 0; i < river.numPointSources; i++)
+                for (int i = 0; i < river.pointSources.Count; i++)
                 {
                     lbPointSources.Items.Add(Global.coe.PTSFilename[river.pointSources[i] - 1]);
                     PTSFile ptFile = new PTSFile(Global.coe.PTSFilename[river.pointSources[i] - 1]);
@@ -516,38 +509,23 @@ namespace warmf
             }
 
             //Diversions
-            river.numDiversionsFrom = 0;
             river.diversionFromFilenums.Clear();
-            if (lbDiversionsFrom.Items.Count > 0)
+            for (int i = 0; i < lbDiversionsFrom.Items.Count; i++)
             {
-                river.numDiversionsFrom = lbDiversionsFrom.Items.Count;
-                for (int i = 0; i < river.numDiversionsFrom; i++)
-                {
-                    river.diversionFromFilenums.Add(Global.coe.GetFLONumberFromName(lbDiversionsFrom.Items[i].ToString()));
-                }
+                river.diversionFromFilenums.Add(Global.coe.GetFLONumberFromName(lbDiversionsFrom.Items[i].ToString()));
             }
-            river.numDiversionsTo = 0;
             river.diversionToFilenums.Clear();
-            if (lbDiversionsTo.Items.Count > 0)
+            for (int i = 0; i < lbDiversionsTo.Items.Count; i++)
             {
-                river.numDiversionsTo = lbDiversionsTo.Items.Count;
-                for (int i = 0; i < river.numDiversionsTo; i++)
-                {
-                    river.diversionToFilenums.Add(Global.coe.GetFLONumberFromName(lbDiversionsTo.Items[i].ToString()));
-                }
+                river.diversionToFilenums.Add(Global.coe.GetFLONumberFromName(lbDiversionsTo.Items[i].ToString()));
             }
             river.minFlow = Convert.ToDouble(tbMinRiverFlow.Text);
 
             //Point Sources
-            river.numPointSources = 0;
             river.pointSources.Clear();
-            if (lbPointSources.Items.Count > 0)
+            for (int i = 0; i < lbPointSources.Items.Count; i++)
             {
-                river.numPointSources = lbPointSources.Items.Count;
-                for (int i = 0; i < lbPointSources.Items.Count; i++)
-                {
-                    river.pointSources.Add(Global.coe.GetPTSNumberFromName(lbPointSources.Items[i].ToString()));
-                }
+                river.pointSources.Add(Global.coe.GetPTSNumberFromName(lbPointSources.Items[i].ToString()));
             }
 
             //Reactions
@@ -576,21 +554,16 @@ namespace warmf
             //Initial Concentrations
             river.componentConcentration.Clear();
             river.bedAdsorpConcentration.Clear();
-            for (int i = 0; i < Global.coe.numChemicalParams; i++) //chemical parameters
+            for (int i = 0; i < Global.coe.numChemicalParams + Global.coe.numPhysicalParams; i++) //chemical and physical parameters
             {
                 river.componentConcentration.Add(Convert.ToDouble(dgvRiverInitConcs.Rows[i].Cells["water"].Value));
                 river.bedAdsorpConcentration.Add(Convert.ToDouble(dgvRiverInitConcs.Rows[i].Cells["bed"].Value));
-            }
-            for (int i = 0; i < Global.coe.numPhysicalParams; i++) //physical parameters
-            {
-                river.componentConcentration.Add(Convert.ToDouble(dgvRiverInitConcs.Rows[i + Global.coe.numChemicalParams].Cells["water"].Value));
-                river.bedAdsorpConcentration.Add(Convert.ToDouble(dgvRiverInitConcs.Rows[i + Global.coe.numChemicalParams].Cells["bed"].Value));
             }
 
             //Adsorption
             river.waterAdsorpIsotherm.Clear();
             river.bedAdsorpIsotherm.Clear();
-            for (int i = 0; i < Global.coe.numChemicalParams; i++)
+            for (int i = 0; i < Global.coe.numChemicalParams + Global.coe.numPhysicalParams; i++)
             {
                 river.waterAdsorpIsotherm.Add(Convert.ToDouble(dgvAdsorption.Rows[i].Cells["water"].Value));
                 river.bedAdsorpIsotherm.Add(Convert.ToDouble(dgvAdsorption.Rows[i].Cells["bed"].Value));
@@ -599,18 +572,9 @@ namespace warmf
             //Observed Data
             river.hydrologyFilename = tbObsHydroFile.Text;
             river.obsWQFilename = tbObsWaterQualFile.Text;
-            if (cbSimulationOverride.Checked == true)
-            {
-                river.overrideSimulation.swUseObsData = true;
-                river.overrideSimulation.hydroInterpPeriod = Convert.ToInt16(tbHydroInterpPd.Text);
-                river.overrideSimulation.waterQualityInterpPeriod = Convert.ToInt16(tbWQInterpPd.Text);
-            }
-            else
-            {
-                river.overrideSimulation.swUseObsData = false;
-                river.overrideSimulation.hydroInterpPeriod = 0;
-                river.overrideSimulation.waterQualityInterpPeriod = 0;
-            }
+            river.overrideSimulation.swUseObsData = cbSimulationOverride.Checked;
+            river.overrideSimulation.hydroInterpPeriod = Convert.ToInt16(tbHydroInterpPd.Text);
+            river.overrideSimulation.waterQualityInterpPeriod = Convert.ToInt16(tbWQInterpPd.Text);
             if (rbAvgSimulation.Checked == true)
             {
                 river.overrideSimulation.monthAverageMethod = 1;

@@ -192,8 +192,7 @@ namespace warmf
 
             //Point Sources tab
             //Warning: this code block was constructed without having a case to test - probably contains errors!!
-            if (catchment.numPointSources > 0)
-            //            if (catchment.pointSources.Count > 0)
+            if (catchment.pointSources.Count > 0)
             {
                 pointSourceFiles = new List<PTSFile>();
                 for (int i = 0; i < catchment.pointSources.Count; i++)
@@ -756,14 +755,10 @@ namespace warmf
             catchment.bmp.detentionPondVol = Convert.ToDouble(tbDetVolume.Text);
 
             //Point Sources tab
-            catchment.numPointSources = lbPointSources.Items.Count;
-            if (catchment.numPointSources > 0)
+            catchment.pointSources.Clear();
+            for (int i = 0; i < lbPointSources.Items.Count; i++)
             {
-                catchment.pointSources.Clear();
-                for (int i = 0; i < lbPointSources.Items.Count; i++)
-                {
-                    catchment.pointSources[i] = Global.coe.GetPTSNumberFromName(lbPointSources.Items[i].ToString());
-                }
+                catchment.pointSources[i] = Global.coe.GetPTSNumberFromName(lbPointSources.Items[i].ToString());
             }
 
             //Pumping tab

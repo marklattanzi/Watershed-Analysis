@@ -752,9 +752,68 @@ namespace warmf {
         {
             int activeScenario = GetActiveScenario();
             if (activeScenario >= 0)
-                Global.coe.WriteCOE(Global.DIR.COE + scenarios[activeScenario].Name, -1);
+            {
+                if (Global.coe.WriteCOE(Global.DIR.COE + scenarios[activeScenario].Name, -1))
+                    scenarioChanged = false;
+            }
             else
                 MessageBox.Show("There is no active scenario to save.");
+        }
+
+        public static bool ScenarioSaveAs(ref string newScenario)
+        {
+            // Get the new coefficient file
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.InitialDirectory = Global.DIR.COE;
+            saveDialog.FileName = "";
+            saveDialog.DefaultExt = ".coe";
+            saveDialog.Filter = "WARMF Coefficient File (.coe)|*.coe";
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                newScenario = saveDialog.FileName;
+
+                // Replace the output file names
+                Global.coe.SetOutputFileNames(newScenario);
+
+                // Save the coefficients in memory to the new coefficient file
+                Global.coe.WriteCOE(newScenario, -1);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private void miScenarioSaveAs_Click(object sender, EventArgs e)
+        {
+            // Get the new scenario name
+            string newScenario = "";
+            if (ScenarioSaveAs(ref newScenario))
+            {
+                // Set the name of the active scenario to the new name
+                int activeScenario = GetActiveScenario();
+                if (activeScenario >= 0 && activeScenario < scenarios.Count)
+                    scenarios[activeScenario].Name = Path.GetFileName(newScenario);
+                else
+                {
+                    ScenarioInfo newScenarioInfo = new ScenarioInfo();
+                    newScenarioInfo.Name = newScenario;
+                    newScenarioInfo.IsOpen = 1;
+                    newScenarioInfo.IsActive = 0;
+                    scenarios.Add(newScenarioInfo);
+                    activeScenario = scenarios.Count - 1;
+                    SetActiveScenario(scenarios.Count - 1);
+                }
+
+                // Change the scenario name in the list at the bottom of the menu
+                int firstScenario = miTopScenario.DropDownItems.Count - GetNumberOfOpenScenarios();
+                for (int i = firstScenario; i < miTopScenario.DropDownItems.Count; i++)
+                {
+                    // Set the name of the active scenario to the new name
+                    if (((ToolStripMenuItem)miTopScenario.DropDownItems[i]).Checked)
+                        miTopScenario.DropDownItems[i].Text = Path.GetFileNameWithoutExtension(scenarios[activeScenario].Name);
+                }
+            }
         }
 
         private void miScenarioCompare_Click(object sender, EventArgs e)
@@ -783,42 +842,41 @@ namespace warmf {
             // Open the files for comparison
             try
             {
-            StreamReader newCOE = new StreamReader(secondCOEFileName);
-            StreamReader oldCOE = new StreamReader(firstCOEFileName);
-            StreamWriter swErrors = new StreamWriter("c:/temp/COEErrors.txt");
-            string newCOEline, oldCOEline, newCOElineTrim;
-            int result, i;
-            char[] trimChars = { ' ' };
+                StreamReader newCOE = new StreamReader(secondCOEFileName);
+                StreamReader oldCOE = new StreamReader(firstCOEFileName);
+                string compareFile = Global.DIR.COE + "compare.txt";
+                StreamWriter swErrors = new StreamWriter(compareFile);
+                string newCOEline, oldCOEline, newCOElineTrim;
+                int result, i;
+                char[] trimChars = { ' ' };
 
-            i = 1;
-            newCOEline = newCOE.ReadLine();
-            while (newCOEline != null)
-            {
-                newCOElineTrim = newCOEline.TrimEnd(trimChars);
-                oldCOEline = oldCOE.ReadLine().TrimEnd(trimChars);
-                result = string.Compare(newCOElineTrim, oldCOEline);
-                if (result != 0)
-                {
-                    swErrors.WriteLine("Line " + i.ToString());
-                    swErrors.WriteLine("Old: " + oldCOEline);
-                    swErrors.WriteLine("New: " + newCOElineTrim);
-                    swErrors.WriteLine();
-
-                    //Display via message box
-                    //if (MessageBox.Show("Line " + i + " error." + Environment.NewLine + 
-                    //    "New: '" + newCOEline + "'" + Environment.NewLine +
-                    //    "Old: '" + oldCOEline + "'" + Environment.NewLine +
-                    //    "Do you want to continue?", "Comparison Fail", MessageBoxButtons.YesNo) == DialogResult.No)
-                    //{
-                    //    return;
-                    //} 
-                }
-                i++;
+                i = 1;
+                int differences = 0;
                 newCOEline = newCOE.ReadLine();
-            }
-            MessageBox.Show("No further discrepancies were found" + Environment.NewLine + "Lines Reviewed: " + i.ToString()
-                , "Comparison Complete",MessageBoxButtons.OK);
+                while (newCOEline != null)
+                {
+                    newCOElineTrim = newCOEline.TrimEnd(trimChars);
+                    oldCOEline = oldCOE.ReadLine().TrimEnd(trimChars);
+                    result = string.Compare(newCOElineTrim, oldCOEline);
+                    if (result != 0)
+                    {
+                        // Check to see if the difference is just the output file names, which is not a real difference
+                        if (!oldCOEline.StartsWith("FILES") || !newCOElineTrim.StartsWith("FILES"))
+                        {
+                            swErrors.WriteLine("Line " + i.ToString());
+                            swErrors.WriteLine(Path.GetFileName(firstCOEFileName) + ": " + oldCOEline);
+                            swErrors.WriteLine(Path.GetFileName(secondCOEFileName) + ": " + newCOElineTrim);
+                            swErrors.WriteLine();
 
+                            differences++;
+                        }
+                    }
+                    i++;
+                    newCOEline = newCOE.ReadLine();
+                }
+                swErrors.WriteLine("Lines Reviewed: " + i.ToString() + "; differences found: " + differences.ToString());
+                swErrors.Close();
+                Process.Start(compareFile);
             }
             catch
             {

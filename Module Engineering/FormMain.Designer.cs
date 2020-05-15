@@ -411,6 +411,7 @@
             this.miScenarioSaveAs.Name = "miScenarioSaveAs";
             this.miScenarioSaveAs.Size = new System.Drawing.Size(180, 22);
             this.miScenarioSaveAs.Text = "Save As";
+            this.miScenarioSaveAs.Click += new System.EventHandler(this.miScenarioSaveAs_Click);
             // 
             // miScenarioDelete
             // 
@@ -451,7 +452,7 @@
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(173, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(177, 6);
             // 
             // miTopDocument
             // 

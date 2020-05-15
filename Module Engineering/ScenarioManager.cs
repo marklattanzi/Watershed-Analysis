@@ -129,20 +129,16 @@ namespace warmf
 
         private void CopyActiveScenario_Click(object sender, EventArgs e)
         {
-            // Get the new coefficient file
-            SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.InitialDirectory = Global.DIR.COE;
-            saveDialog.FileName = "";
-            saveDialog.DefaultExt = ".coe";
-            saveDialog.Filter = "WARMF Coefficient File (.coe)|*.coe";
-            if (saveDialog.ShowDialog() == DialogResult.OK)
+            // Remember the active scenario name
+            string activeScenario = Path.GetFileNameWithoutExtension(Global.coe.catchmentOutFilename);
+            string newScenario = "";
+            if (FormMain.ScenarioSaveAs(ref newScenario))
             {
-                string newFile = saveDialog.FileName;
-                // Save the coefficients in memory to the new coefficient file
-                Global.coe.WriteCOE(newFile, -1);
+                // Put back the output file names
+                Global.coe.SetOutputFileNames(activeScenario);
 
                 // Add the new scenario to the project scenarios list
-                AddToProjectScenarioList(newFile);
+                AddToProjectScenarioList(newScenario);
 
                 // Reset the button enabling
                 EnableProjectScenarioButtons();
