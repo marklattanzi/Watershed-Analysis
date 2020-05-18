@@ -876,6 +876,8 @@ namespace warmf {
                 }
                 swErrors.WriteLine("Lines Reviewed: " + i.ToString() + "; differences found: " + differences.ToString());
                 swErrors.Close();
+                newCOE.Close();
+                oldCOE.Close();
                 Process.Start(compareFile);
             }
             catch
@@ -929,8 +931,8 @@ namespace warmf {
                     // Provide the opportunity to save changes to old scenario
                     if (scenarioChanged)
                     {
-                        if (MessageBox.Show("Save changes to model coefficients?", "Scenario " + oldScenarioName) == DialogResult.OK)
-                            Global.coe.WriteCOE(oldScenarioName, -1);
+                        if (MessageBox.Show("Save changes to model coefficients?", "Scenario " + oldScenarioName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                            Global.coe.WriteCOE(Global.DIR.COE + oldScenarioName, -1);
 
                         scenarioChanged = false;
                     }
@@ -1009,8 +1011,8 @@ namespace warmf {
                 // Provide the opportunity to save changes to old scenario
                 if (oldActiveScenario >= 0 && scenarioChanged)
                 {
-                    if (MessageBox.Show("Save changes to model coefficients?", "Scenario " + scenarios[oldActiveScenario].Name) == DialogResult.OK)
-                        Global.coe.WriteCOE(scenarios[oldActiveScenario].Name, -1);
+                    if (MessageBox.Show("Save changes to model coefficients?", "Scenario " + scenarios[oldActiveScenario].Name, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        Global.coe.WriteCOE(Global.DIR.COE + scenarios[oldActiveScenario].Name, -1);
                     scenarioChanged = false;
                 }
 

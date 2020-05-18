@@ -124,22 +124,22 @@ namespace warmf
             tbPrecipitateSettling.Text = river.precipSettleRate.ToString();
 
             //Sediment
-            tbInitSedDepth.Text = river.sedBedDepth.ToString("F");
-            tbBedDiffRate.Text = river.sedDiffusionRate.ToString("F");
-            tbDetachVelMult.Text = river.sedDetachVelMult.ToString("F");
-            tbDetachVelExp.Text = river.sedDetachVelExp.ToString("F");
-            tbVegFactor.Text = river.sedVegFactor.ToString("F");
-            tbBankStabilityFactor.Text = river.sedBankStabFactor.ToString("F");
+            tbInitSedDepth.Text = river.sedBedDepth.ToString();
+            tbBedDiffRate.Text = river.sedDiffusionRate.ToString();
+            tbDetachVelMult.Text = river.sedDetachVelMult.ToString();
+            tbDetachVelExp.Text = river.sedDetachVelExp.ToString();
+            tbVegFactor.Text = river.sedVegFactor.ToString();
+            tbBankStabilityFactor.Text = river.sedBankStabFactor.ToString();
             //number of sediment particle sizes is not flexible in current code. Consider revising?
             dgvBedParticleContent.Rows.Add();
             dgvBedParticleContent.Rows[0].HeaderCell.Value = "Clay";
-            dgvBedParticleContent.Rows[0].Cells[0].Value = (river.sedFirstPartSizePct * 100).ToString("F");
+            dgvBedParticleContent.Rows[0].Cells[0].Value = (river.sedFirstPartSizePct * 100).ToString();
             dgvBedParticleContent.Rows.Add();
             dgvBedParticleContent.Rows[1].HeaderCell.Value = "Silt";
-            dgvBedParticleContent.Rows[1].Cells[0].Value = (river.sedSecondPartSizePct * 100).ToString("F");
+            dgvBedParticleContent.Rows[1].Cells[0].Value = (river.sedSecondPartSizePct * 100).ToString();
             dgvBedParticleContent.Rows.Add();
             dgvBedParticleContent.Rows[2].HeaderCell.Value = "Sand";
-            dgvBedParticleContent.Rows[2].Cells[0].Value = (river.sedThirdPartSizePct * 100).ToString("F");
+            dgvBedParticleContent.Rows[2].Cells[0].Value = (river.sedThirdPartSizePct * 100).ToString();
             for (int i = 0; i < dgvBedParticleContent.Columns.Count; i++)
                 dgvBedParticleContent.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
 
@@ -200,9 +200,10 @@ namespace warmf
                 }
             }
             List<string> hideParameters = new List<string>() { "MSOX", "MNOX", "MH", "MALK", "MALG", "MCO2", "MSSED", "MSDET" };
+            int temperatureParameter = Global.coe.GetParameterNumberFromCode("MTEMP");
             for (int i = 0; i < hideParameters.Count; i++)
             {
-                int parameterIndex = Global.coe.GetParameterNumberFromCode(hideParameters[i]);
+                int parameterIndex = Global.coe.GetParameterNumberFromCode(hideParameters[i]) - temperatureParameter - 1;
                 if (parameterIndex >= 0 && parameterIndex < dgvRiverInitConcs.Rows.Count)
                     dgvRiverInitConcs.Rows[parameterIndex].Visible = false;
             }
@@ -210,42 +211,46 @@ namespace warmf
             //Adsorption
             dgvAdsorption.Columns.Add("water", "Water");
             dgvAdsorption.Columns.Add("bed", "Bed");
-            for (int i = 0; i < Global.coe.numChemicalParams; i++)
+            for (int i = 0; i < Global.coe.numChemicalParams + Global.coe.numPhysicalParams; i++)
             {
                 dgvAdsorption.Rows.Add();
-                dgvAdsorption.Rows[i].HeaderCell.Value = Global.coe.chemConstits[i].fullName;
+                dgvAdsorption.Rows[i].HeaderCell.Value = Global.coe.AllConstits[i + temperatureParameter + 1].fullName;
                 dgvAdsorption.Rows[i].Cells["water"].Value = river.waterAdsorpIsotherm[i].ToString();
                 dgvAdsorption.Rows[i].Cells["bed"].Value = river.bedAdsorpIsotherm[i].ToString();
             }
             for (int i = 0; i < dgvAdsorption.Columns.Count; i++)
                 dgvAdsorption.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
-            List<int> HideCols = new List<int> { 0, 1, 2, 13 };
+            List <string> hideAdsorbed = new List<string> () { "MSOX", "MNOX", "MH", "MALK", "MTIC", "MOAAL", "MALG", "MCOLI", "MCO2", "MDO", "MBOD", "MBOD2", "MALG1", "MALG2", "MALG3", "MALG4", "MSED1", "MSED2", "MSED3", "MSSED", "MSDET" };
+            for (int i = 0; i < hideAdsorbed.Count; i++)
+            {
+                int parameterIndex = Global.coe.GetParameterNumberFromCode(hideAdsorbed[i]) - temperatureParameter - 1;
+                if (parameterIndex >= 0 && parameterIndex < dgvAdsorption.Rows.Count)
+                    dgvAdsorption.Rows[parameterIndex].Visible = false;
+            }
+/*            List<int> HideCols = new List<int> { 0, 1, 2, 13 };
             for (int i = 0; i < Global.coe.numChemicalParams; i++)
             {
                 if (HideCols.Contains(i))
                 {
                     dgvAdsorption.Rows[i].Visible = false;
                 }
-            }
+            }*/
 
             //Observed Data
             tbObsHydroFile.Text = river.hydrologyFilename;
             tbObsWaterQualFile.Text = river.obsWQFilename;
-            if (river.overrideSimulation.swUseObsData == true)
+            cbSimulationOverride.Checked = river.overrideSimulation.swUseObsData;
+            tbHydroInterpPd.Text = river.overrideSimulation.hydroInterpPeriod.ToString();
+            tbWQInterpPd.Text = river.overrideSimulation.waterQualityInterpPeriod.ToString();
+            if (river.overrideSimulation.monthAverageMethod == 1)
             {
-                cbSimulationOverride.Checked = true;
-                tbHydroInterpPd.Text = river.overrideSimulation.hydroInterpPeriod.ToString();
-                tbWQInterpPd.Text = river.overrideSimulation.waterQualityInterpPeriod.ToString();
-                if (river.overrideSimulation.monthAverageMethod == 1)
-                {
-                    rbAvgSimulation.Checked = true;
-                    rbAverageData.Checked = false;
-                }
-                else
-                {
-                    rbAvgSimulation.Checked = false;
-                    rbAverageData.Checked = true;
-                }
+                rbAvgSimulation.Checked = true;
+                rbAverageData.Checked = false;
+            }
+            else
+            {
+                rbAvgSimulation.Checked = false;
+                rbAverageData.Checked = true;
             }
             tbPriorityTDS.Text = river.overrideSimulation.tdsAdjustmentPriority.ToString();
             tbPriorityAlkalinity.Text = river.overrideSimulation.alkAdjustmentPriority.ToString();
