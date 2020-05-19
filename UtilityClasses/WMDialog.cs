@@ -25,10 +25,12 @@ namespace warmf {
 			btnWidth = 70;
 			gap = 20;
 
-			msg = new Label();
-            msg.Text = message;
-            msg.AutoSize = true;
-			System.Drawing.Size lblSize = TextRenderer.MeasureText(msg.Text, msg.Font);
+            msg = new Label
+            {
+                Text = message,
+                AutoSize = true
+            };
+            System.Drawing.Size lblSize = TextRenderer.MeasureText(msg.Text, msg.Font);
 			this.Height += lblSize.Height;
 			msg.ForeColor = System.Drawing.Color.Black;
             msg.TextAlign = System.Drawing.ContentAlignment.TopLeft;

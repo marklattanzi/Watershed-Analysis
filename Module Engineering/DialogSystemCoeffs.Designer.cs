@@ -679,7 +679,7 @@
             this.cbLandUseParameter.Size = new System.Drawing.Size(269, 24);
             this.cbLandUseParameter.TabIndex = 2;
             this.cbLandUseParameter.Text = "--Select--";
-            this.cbLandUseParameter.SelectedIndexChanged += new System.EventHandler(this.cbLandUseParameter_SelectedIndexChanged);
+            this.cbLandUseParameter.SelectedIndexChanged += new System.EventHandler(this.CbLandUseParameter_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -2141,7 +2141,7 @@
             this.btnHelp.TabIndex = 16;
             this.btnHelp.Text = "Help";
             this.btnHelp.UseVisualStyleBackColor = true;
-            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
+            this.btnHelp.Click += new System.EventHandler(this.BtnHelp_Click);
             // 
             // btnCancel
             // 
@@ -2153,7 +2153,7 @@
             this.btnCancel.TabIndex = 15;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // btnOK
             // 

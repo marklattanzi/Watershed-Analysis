@@ -50,9 +50,11 @@ namespace warmf
             Scenarios.Clear();
             for (int i = 0; i < ProjectScenariosList.Items.Count; i++)
             {
-                FormMain.ScenarioInfo thisScenario = new FormMain.ScenarioInfo();
-                thisScenario.Name = ProjectScenariosList.Items[i].ToString() + ".coe";
-                thisScenario.IsActive = 0;
+                FormMain.ScenarioInfo thisScenario = new FormMain.ScenarioInfo
+                {
+                    Name = ProjectScenariosList.Items[i].ToString() + ".coe",
+                    IsActive = 0
+                };
                 if (OpenScenariosList.Items.IndexOf(ProjectScenariosList.Items[i].ToString()) >= 0)
                     thisScenario.IsOpen = 1;
                 else

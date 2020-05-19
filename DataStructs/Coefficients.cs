@@ -89,8 +89,7 @@ namespace warmf {
                 string line = sr.ReadLine();
                 if (sr.TestLine(line, sr.LineNum, header))
                 {
-                    double dblRes;
-                    electricalCharge = Double.TryParse(line.Substring(8, 8), out dblRes) ? dblRes : 0;
+                    electricalCharge = Double.TryParse(line.Substring(8, 8), out double dblRes) ? dblRes : 0;
                     massEquivalent = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0;
                     loadingUnitConversion = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : 0;
                     loadingUnits = line.Substring(32);
@@ -845,7 +844,6 @@ namespace warmf {
 
         // reads in integers - 9 per line
         public List<int> ReadIntData(STechStreamReader sr, string lineAbbrev, int num) {
-            int intRes;
             string line;
             int linesToRead = (num-1) / 9 + 1;
 
@@ -856,7 +854,7 @@ namespace warmf {
                     int jj = 0;
 					try {
 						while (nlines * 9 + jj < num && jj < 9) {
-							data.Add(Int32.TryParse(line.Substring(8 * (jj + 1), 8), out intRes) ? intRes : 0);
+							data.Add(Int32.TryParse(line.Substring(8 * (jj + 1), 8), out int intRes) ? intRes : 0);
 							jj++;
 						}
 					}
@@ -886,7 +884,6 @@ namespace warmf {
 
         // reads in doubles - 9 per line
         public List<double> ReadDoubleData(STechStreamReader sr, string lineAbbrev, int num) {
-            double dblRes;
             string line;
             int linesToRead = (num-1) / 9 + 1;
 
@@ -897,7 +894,7 @@ namespace warmf {
                     int jj = 0;
 					try {
 						while (nlines * 9 + jj < num && jj < 9) {
-							data.Add(Double.TryParse(line.Substring(8 * (jj + 1), 8), out dblRes) ? dblRes : 0);
+							data.Add(Double.TryParse(line.Substring(8 * (jj + 1), 8), out double dblRes) ? dblRes : 0);
 							jj++;
 						}
 					} catch {
@@ -1003,13 +1000,15 @@ namespace warmf {
                 DIVData = new List<DIVFileData>();
                 for (int ii = 0; ii < numDIVFiles; ii++) {
                     line = sr.ReadLine();
-                    DIVFileData dfd = new DIVFileData();
-                    dfd.flowDivertedMultiplier = Double.TryParse(line.Substring(8, 8), out dblRes) ? dblRes : 0;
-                    dfd.flowCap = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0;
-                    dfd.swUseMonthFlows = !line.Substring(24, 8).Contains("0");
-                    dfd.managed = !line.Substring(32, 8).Contains("0");
-                    dfd.filename = line.Substring(40).Trim();
-                    dfd.monthlyFlow = ReadMonthlyDoubleData(sr, "DIVFILES");
+                    DIVFileData dfd = new DIVFileData
+                    {
+                        flowDivertedMultiplier = Double.TryParse(line.Substring(8, 8), out dblRes) ? dblRes : 0,
+                        flowCap = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0,
+                        swUseMonthFlows = !line.Substring(24, 8).Contains("0"),
+                        managed = !line.Substring(32, 8).Contains("0"),
+                        filename = line.Substring(40).Trim(),
+                        monthlyFlow = ReadMonthlyDoubleData(sr, "DIVFILES")
+                    };
                     DIVData.Add(dfd);
                 }
 
@@ -1236,14 +1235,16 @@ namespace warmf {
 
 				// Septic
 				line = ReadSpacerLine(sr, "SEPTIC");
-                septic = new Septic();
-                septic.failedFlow = ReadDouble(sr, "SEPTIC");
-                septic.type1 = ReadDoubleData(sr, "SEPTIC", numComponents);
-                septic.type2 = ReadDoubleData(sr, "SEPTIC", numComponents);
-                septic.type3 = ReadDoubleData(sr, "SEPTIC", numComponents);
+                septic = new Septic
+                {
+                    failedFlow = ReadDouble(sr, "SEPTIC"),
+                    type1 = ReadDoubleData(sr, "SEPTIC", numComponents),
+                    type2 = ReadDoubleData(sr, "SEPTIC", numComponents),
+                    type3 = ReadDoubleData(sr, "SEPTIC", numComponents)
+                };
 
-				// Land use data
-				line = ReadSpacerLine(sr, "CANOPY AND LAND USE");
+                // Land use data
+                line = ReadSpacerLine(sr, "CANOPY AND LAND USE");
                 // general land use params
                 partDV = ReadMonthlyDoubleData(sr, "PARTDV");
                 coarseDV = ReadMonthlyDoubleData(sr, "COARSEDV");
@@ -1325,16 +1326,18 @@ namespace warmf {
                 for (int ii = 0; ii < numCatchments; ii++) {
                     line = sr.ReadLine();  // spacer line: CATC####  - can these have 5 digits?  MRL
                     line = sr.ReadLine();
-                    Catchment catchData = new Catchment();
-                    catchData.idNum = Int32.TryParse(line.Substring(8, 8), out intRes) ? intRes : 0;
-                    catchData.METFileNum = Int32.TryParse(line.Substring(16, 8), out intRes) ? intRes : 0;
-                    catchData.precipMultiplier = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : 0;
-                    catchData.aveTempLapse = Double.TryParse(line.Substring(32, 8), out dblRes) ? dblRes : 0;
-                    catchData.altitudeTempLapse = Double.TryParse(line.Substring(40, 8), out dblRes) ? dblRes : 0;
-                    catchData.swOutputResults = !line.Substring(48, 8).Contains("0");
-                    catchData.airRainChemFileNum = Int32.TryParse(line.Substring(56, 8), out intRes) ? intRes : 0;
-                    catchData.particleRainChemFileNum = Int32.TryParse(line.Substring(64, 8), out intRes) ? intRes : 0;
-                    catchData.name = line.Substring(72);
+                    Catchment catchData = new Catchment
+                    {
+                        idNum = Int32.TryParse(line.Substring(8, 8), out intRes) ? intRes : 0,
+                        METFileNum = Int32.TryParse(line.Substring(16, 8), out intRes) ? intRes : 0,
+                        precipMultiplier = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : 0,
+                        aveTempLapse = Double.TryParse(line.Substring(32, 8), out dblRes) ? dblRes : 0,
+                        altitudeTempLapse = Double.TryParse(line.Substring(40, 8), out dblRes) ? dblRes : 0,
+                        swOutputResults = !line.Substring(48, 8).Contains("0"),
+                        airRainChemFileNum = Int32.TryParse(line.Substring(56, 8), out intRes) ? intRes : 0,
+                        particleRainChemFileNum = Int32.TryParse(line.Substring(64, 8), out intRes) ? intRes : 0,
+                        name = line.Substring(72)
+                    };
                     line = sr.ReadLine();
                     catchData.numSoilLayers = Int32.TryParse(line.Substring(8, 8), out intRes) ? intRes : 0;
                     catchData.slope = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0;
@@ -1368,8 +1371,10 @@ namespace warmf {
                         {
                             if (position == 0)
                                 line = sr.ReadLine();
-                            IrrigationSourcePercent theSource = new IrrigationSourcePercent();
-                            theSource.source = Int32.TryParse(line.Substring(8 * (position + 1), 8), out intRes) ? intRes : 0;
+                            IrrigationSourcePercent theSource = new IrrigationSourcePercent
+                            {
+                                source = Int32.TryParse(line.Substring(8 * (position + 1), 8), out intRes) ? intRes : 0
+                            };
                             position = (position + 1) % 9;
                             if (position == 0)
                                 line = sr.ReadLine();
@@ -1412,34 +1417,40 @@ namespace warmf {
 
                     // septic
                     dnums = ReadDoubleData(sr, "SEPTIC", 9);
-                    catchData.septic = new CatchSeptic();
-                    catchData.septic.soilLayer = dnums[0];
-                    catchData.septic.population = dnums[1]; 
-                    catchData.septic.standardPct = dnums[2]; 
-                    catchData.septic.advancedPct = dnums[3]; 
-                    catchData.septic.failingPct = dnums[4]; 
-                    catchData.septic.initialBiomass = dnums[5]; 
-                    catchData.septic.thickness = dnums[6]; 
-                    catchData.septic.area = dnums[7]; 
-                    catchData.septic.biomassRespRate = dnums[8]; 
-                    catchData.septic.biomassMortRate = ReadDouble(sr, "SEPTIC");
+                    catchData.septic = new CatchSeptic
+                    {
+                        soilLayer = dnums[0],
+                        population = dnums[1],
+                        standardPct = dnums[2],
+                        advancedPct = dnums[3],
+                        failingPct = dnums[4],
+                        initialBiomass = dnums[5],
+                        thickness = dnums[6],
+                        area = dnums[7],
+                        biomassRespRate = dnums[8],
+                        biomassMortRate = ReadDouble(sr, "SEPTIC")
+                    };
 
                     // sediment
                     dnums = ReadDoubleData(sr, "SEDIMENT", 4);
-                    catchData.sediment = new CatchSediment();
-                    catchData.sediment.erosivity = dnums[0];
-                    catchData.sediment.firstPartSizePct = dnums[1];
-                    catchData.sediment.secondPartSizePct = dnums[2];
-                    catchData.sediment.thirdPartSizePct = dnums[3];
+                    catchData.sediment = new CatchSediment
+                    {
+                        erosivity = dnums[0],
+                        firstPartSizePct = dnums[1],
+                        secondPartSizePct = dnums[2],
+                        thirdPartSizePct = dnums[3]
+                    };
 
                     // Best management practices
                     dnums = ReadDoubleData(sr, "BMP", 5);
-                    catchData.bmp = new CatchBMP();
-                    catchData.bmp.streetSweepFreq = dnums[0];
-                    catchData.bmp.streetSweepEff = dnums[1];
-                    catchData.bmp.divertedImpervFlow = dnums[2];
-                    catchData.bmp.detentionPondVol = dnums[3];
-                    catchData.bmp.maxFertAccumTime = dnums[4];
+                    catchData.bmp = new CatchBMP
+                    {
+                        streetSweepFreq = dnums[0],
+                        streetSweepEff = dnums[1],
+                        divertedImpervFlow = dnums[2],
+                        detentionPondVol = dnums[3],
+                        maxFertAccumTime = dnums[4]
+                    };
 
                     // stream bank buffers
                     dnums = ReadDoubleData(sr, "BUFFZONE", 4);
@@ -1510,11 +1521,13 @@ namespace warmf {
                     catchData.mining.humusWgtFraction = dnums[2];
 
                     // reaction rates
-                    catchData.reactions = new CatchReactions();
-                    catchData.reactions.soilReactionRate = ReadDoubleData(sr, "REACSOIL", numReactions);
-                    catchData.reactions.surfaceReactionRate = ReadDoubleData(sr, "REACSURF", numReactions);
-                    catchData.reactions.canopyReactionRate = ReadDoubleData(sr, "REACCNPY", numReactions);
-                    catchData.reactions.biozoneReactionRate = ReadDoubleData(sr, "REACBIOZ", numReactions);
+                    catchData.reactions = new CatchReactions
+                    {
+                        soilReactionRate = ReadDoubleData(sr, "REACSOIL", numReactions),
+                        surfaceReactionRate = ReadDoubleData(sr, "REACSURF", numReactions),
+                        canopyReactionRate = ReadDoubleData(sr, "REACCNPY", numReactions),
+                        biozoneReactionRate = ReadDoubleData(sr, "REACBIOZ", numReactions)
+                    };
 
                     //CE-QUAL-W2
                     catchData.mining.numCEQW2Files = ReadInt(sr, "W2FILES");
@@ -1527,9 +1540,11 @@ namespace warmf {
                     // soil layers
                     catchData.soils = new List<Soil>();
                     for (int jj = 0; jj < catchData.numSoilLayers; jj++) {
-                        Soil soil = new Soil();
-                        // Assign seepage fraction read in above
-                        soil.seepageFraction = soilLayerSeepageFractions[jj];
+                        Soil soil = new Soil
+                        {
+                            // Assign seepage fraction read in above
+                            seepageFraction = soilLayerSeepageFractions[jj]
+                        };
                         dnums = ReadDoubleData(sr, "LAYER", 9);
                         soil.area = dnums[0];
                         soil.thickness = dnums[1];
@@ -1601,10 +1616,12 @@ namespace warmf {
 					dnums = ReadDoubleData(sr, "STAR", 18);
 					river.stageWidthCurve = new List<StageWidth>();
 					for (int jj=0; jj<18; jj+=2) {
-						StageWidth sw = new StageWidth();
-						sw.stage = dnums[jj];
-						sw.width = dnums[jj + 1];
-						river.stageWidthCurve.Add(sw);
+                        StageWidth sw = new StageWidth
+                        {
+                            stage = dnums[jj],
+                            width = dnums[jj + 1]
+                        };
+                        river.stageWidthCurve.Add(sw);
 					}
 
 					river.upstreamCatchIDs = ReadIntData(sr, "ICAT", 9);   
@@ -1628,14 +1645,16 @@ namespace warmf {
                         river.pointSources = new List<int>();
 
 					nums = ReadIntData(sr, "OBSW", 7);
-                    river.overrideSimulation = new SimulationOverride();
-                    river.overrideSimulation.swUseObsData = nums[0] != 0;
-                    river.overrideSimulation.hydroInterpPeriod = nums[1];
-                    river.overrideSimulation.waterQualityInterpPeriod = nums[2];
-                    river.overrideSimulation.monthAverageMethod = nums[3];
-                    river.overrideSimulation.tdsAdjustmentPriority = nums[4];
-                    river.overrideSimulation.alkAdjustmentPriority = nums[5];
-                    river.overrideSimulation.phAdjustmentPriority = nums[6];
+                    river.overrideSimulation = new SimulationOverride
+                    {
+                        swUseObsData = nums[0] != 0,
+                        hydroInterpPeriod = nums[1],
+                        waterQualityInterpPeriod = nums[2],
+                        monthAverageMethod = nums[3],
+                        tdsAdjustmentPriority = nums[4],
+                        alkAdjustmentPriority = nums[5],
+                        phAdjustmentPriority = nums[6]
+                    };
                     river.hydrologyFilename = ReadString(sr, "OBSD");
 					dnums = ReadDoubleData(sr, "SEDIMENT", 6);
 					river.sedDetachVelMult = dnums[0];
@@ -1679,32 +1698,38 @@ namespace warmf {
 				for (int ii = 0; ii < numReservoirs; ii++) {
 					line = ReadSpacerLine(sr, "RESE");	// RESE####  - can these have 5 digits?  MRL
 					line = sr.ReadLine();
-					Reservoir reservoir = new Reservoir();
-					reservoir.idNum = ii;
-					reservoir.numSegments = Int32.TryParse(line.Substring(8, 8), out intRes) ? intRes : 0;
-					reservoir.swCalcPseudo = !line.Substring(16, 8).Contains("0");
-					reservoir.METFilenum = Int32.TryParse(line.Substring(24, 8), out intRes) ? intRes : 0;
-					reservoir.elevation = Double.TryParse(line.Substring(32, 8), out dblRes) ? dblRes : 0;
-					reservoir.airRainChemFilenum = Int32.TryParse(line.Substring(40, 8), out intRes) ? intRes : 0;
-					reservoir.coarseAirPartFilenum = Int32.TryParse(line.Substring(48, 8), out intRes) ? intRes : 0;
-					reservoir.releaseFlowFilename = line.Substring(56);
+                    Reservoir reservoir = new Reservoir
+                    {
+                        idNum = ii,
+                        numSegments = Int32.TryParse(line.Substring(8, 8), out intRes) ? intRes : 0,
+                        swCalcPseudo = !line.Substring(16, 8).Contains("0"),
+                        METFilenum = Int32.TryParse(line.Substring(24, 8), out intRes) ? intRes : 0,
+                        elevation = Double.TryParse(line.Substring(32, 8), out dblRes) ? dblRes : 0,
+                        airRainChemFilenum = Int32.TryParse(line.Substring(40, 8), out intRes) ? intRes : 0,
+                        coarseAirPartFilenum = Int32.TryParse(line.Substring(48, 8), out intRes) ? intRes : 0,
+                        releaseFlowFilename = line.Substring(56)
+                    };
 
-					dnums = ReadDoubleData(sr, "STGFLO", 18);
+                    dnums = ReadDoubleData(sr, "STGFLO", 18);
 					reservoir.spillway = new List<StageFlow>();
 					for (int jj = 0; jj < 18; jj += 2) {
-						StageFlow sw = new StageFlow();
-						sw.stage = dnums[jj];
-						sw.flow = dnums[jj + 1];
-						reservoir.spillway.Add(sw);
+                        StageFlow sw = new StageFlow
+                        {
+                            stage = dnums[jj],
+                            flow = dnums[jj + 1]
+                        };
+                        reservoir.spillway.Add(sw);
 					}
 
 					dnums = ReadDoubleData(sr, "TOTSTA", 18);
 					reservoir.bathymetry = new List<StageArea>();
 					for (int jj = 0; jj < 18; jj += 2) {
-						StageArea sa = new StageArea();
-						sa.stage = dnums[jj];
-						sa.area = dnums[jj + 1];
-						reservoir.bathymetry.Add(sa);
+                        StageArea sa = new StageArea
+                        {
+                            stage = dnums[jj],
+                            area = dnums[jj + 1]
+                        };
+                        reservoir.bathymetry.Add(sa);
 					}
 
                     line = sr.ReadLine();
@@ -1721,15 +1746,17 @@ namespace warmf {
 					reservoir.algae = new List <Algae > ();
 					for (int jj=0; jj<3; jj++) {
 						dnums = ReadDoubleData(sr, "ALGAE", 7);
-						Algae alg  = new Algae();
-						alg.nitroHalfSat = dnums[0];
-						alg.phosHalfSat = dnums[1];
-						alg.silicaHalfSat = dnums[2];
-						alg.lightSat = dnums[3];
-						alg.lowTempLimit = dnums[4];
-						alg.highTempLimit = dnums[5];
-						alg.optGrowTemp = dnums[6];
-						reservoir.algae.Add(alg);
+                        Algae alg = new Algae
+                        {
+                            nitroHalfSat = dnums[0],
+                            phosHalfSat = dnums[1],
+                            silicaHalfSat = dnums[2],
+                            lightSat = dnums[3],
+                            lowTempLimit = dnums[4],
+                            highTempLimit = dnums[5],
+                            optGrowTemp = dnums[6]
+                        };
+                        reservoir.algae.Add(alg);
 					}
 
 					reservoir.numWaterQualParams = ReadInt(sr, "W2PARAM");
@@ -1765,13 +1792,15 @@ namespace warmf {
 						for (int kk=0; kk<seg.numOutlets+1; kk++) {
 							line = sr.ReadLine();
 							if (TestLine(line, sr.LineNum, "DEPTH")) {
-								ReservoirOutlet outlet = new ReservoirOutlet();
-								outlet.elevation = Double.TryParse(line.Substring(8, 8), out dblRes) ? dblRes : 0;
-								outlet.width = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0;
-								outlet.outletType = Int32.TryParse(line.Substring(24, 8), out intRes) ? intRes : 0;
-								outlet.numFlowFile = Int32.TryParse(line.Substring(32, 8), out intRes) ? intRes : 0;
-								outlet.managedFlowFilename = line.Substring(40);
-								seg.outlets.Add(outlet);
+                                ReservoirOutlet outlet = new ReservoirOutlet
+                                {
+                                    elevation = Double.TryParse(line.Substring(8, 8), out dblRes) ? dblRes : 0,
+                                    width = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0,
+                                    outletType = Int32.TryParse(line.Substring(24, 8), out intRes) ? intRes : 0,
+                                    numFlowFile = Int32.TryParse(line.Substring(32, 8), out intRes) ? intRes : 0,
+                                    managedFlowFilename = line.Substring(40)
+                                };
+                                seg.outlets.Add(outlet);
 							}
 						}
 
@@ -1808,10 +1837,12 @@ namespace warmf {
 						dnums = ReadDoubleData(sr, "STGAREA", 18);
 						seg.bathymetry = new List<StageArea>();
 						for (int kk = 0; kk < 18; kk += 2) {
-							StageArea sa = new StageArea();
-							sa.stage = dnums[kk];
-							sa.area = dnums[kk + 1];
-							seg.bathymetry.Add(sa);
+                            StageArea sa = new StageArea
+                            {
+                                stage = dnums[kk],
+                                area = dnums[kk + 1]
+                            };
+                            seg.bathymetry.Add(sa);
 						}
 
 						seg.chemConcentrations = ReadDoubleData(sr, "LAKION", numComponents);
@@ -1820,10 +1851,12 @@ namespace warmf {
 						dnums = ReadDoubleData(sr, "DEPTHTMP", 18);
 						seg.depthTemp = new List<DepthTemp>();
 						for (int kk = 0; kk < 18; kk += 2) {
-							DepthTemp dt = new DepthTemp();
-							dt.depth = dnums[kk];
-							dt.temp = dnums[kk + 1];
-							seg.depthTemp.Add(dt);
+                            DepthTemp dt = new DepthTemp
+                            {
+                                depth = dnums[kk],
+                                temp = dnums[kk + 1]
+                            };
+                            seg.depthTemp.Add(dt);
 						}
 
 						seg.upstreamCatchIDs = ReadIntData(sr, "ICATOL", 9);
@@ -3162,7 +3195,7 @@ namespace warmf {
             }
         }
 
-        public void defineSubwatershed(Node DownstreamNode, int subwatershedID)
+        public void DefineSubwatershed(Node DownstreamNode, int subwatershedID)
         {
             if (DownstreamNode.upstreamCatchIDs != null)
             {
@@ -3173,7 +3206,7 @@ namespace warmf {
                     {
                         catchments[catchIndex].subwatershed = subwatershedID;
                         // Add everything upstream of the upstream catchment (catchment to catchment connections)
-                        defineSubwatershed(catchments[catchIndex], subwatershedID);
+                        DefineSubwatershed(catchments[catchIndex], subwatershedID);
                         // Add the upstream river - is this a safe way to add the river to the subwatershed coefficients
                         // or do we need to copy the river coefficients first?
                     }
@@ -3190,7 +3223,7 @@ namespace warmf {
                         if (!rivers[riverIndex].swIsSubwaterBoundary)
                         {
                             rivers[riverIndex].subwatershed = subwatershedID;
-                            defineSubwatershed(rivers[riverIndex], subwatershedID);
+                            DefineSubwatershed(rivers[riverIndex], subwatershedID);
                         }
                     }
                 }
@@ -3207,7 +3240,7 @@ namespace warmf {
                         {
                             reservoirs[reservoirAndSegment[0]].subwatershed = subwatershedID;
                             reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]].subwatershed = subwatershedID;
-                            defineSubwatershed(reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]], subwatershedID);
+                            DefineSubwatershed(reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]], subwatershedID);
                         }
                     }
                 }

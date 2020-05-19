@@ -270,33 +270,43 @@ field = tab + 1;
             // No headers for columns above file headers
             for (lineCount = 0; lineCount < NumHeaderLines; lineCount++)
             {
-                DataGridViewTextBoxColumn headerColumn = new DataGridViewTextBoxColumn();
-                headerColumn.HeaderText = "";
+                DataGridViewTextBoxColumn headerColumn = new DataGridViewTextBoxColumn
+                {
+                    HeaderText = ""
+                };
                 ImportDelimitedDataGrid.Columns.Add(headerColumn);
             }
 
             // Input file types column
-            DataGridViewComboBoxColumn inputType = new DataGridViewComboBoxColumn();
-            inputType.HeaderText = "Input Type";
-            inputType.MaxDropDownItems = 7;
+            DataGridViewComboBoxColumn inputType = new DataGridViewComboBoxColumn
+            {
+                HeaderText = "Input Type",
+                MaxDropDownItems = 7
+            };
             inputType.Items.Add("(not used)");
             for (i = 0; i < 6; i++)
                 inputType.Items.Add(FormData.PlotFileTypes[i]);
             ImportDelimitedDataGrid.Columns.Add(inputType);
 
             // Input file names column - choices not set until file type is chosen
-            DataGridViewComboBoxColumn inputFile = new DataGridViewComboBoxColumn();
-            inputFile.HeaderText = "Input File Name";
+            DataGridViewComboBoxColumn inputFile = new DataGridViewComboBoxColumn
+            {
+                HeaderText = "Input File Name"
+            };
             ImportDelimitedDataGrid.Columns.Add(inputFile);
 
             // Input parameter column - choices not set until file name is chosen
-            DataGridViewComboBoxColumn inputParameter = new DataGridViewComboBoxColumn();
-            inputParameter.HeaderText = "Parameter";
+            DataGridViewComboBoxColumn inputParameter = new DataGridViewComboBoxColumn
+            {
+                HeaderText = "Parameter"
+            };
             ImportDelimitedDataGrid.Columns.Add(inputParameter);
 
             // Unit conversion column
-            DataGridViewTextBoxColumn unitConversion = new DataGridViewTextBoxColumn();
-            unitConversion.HeaderText = "Unit Conversion";
+            DataGridViewTextBoxColumn unitConversion = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Unit Conversion"
+            };
             ImportDelimitedDataGrid.Columns.Add(unitConversion);
 
             // Open the file to be imported and the file with the linkage between import headers and WARMF file

@@ -219,9 +219,8 @@ namespace warmf {
 
 		// Data grid handlers
 		private void toolGrid_CellChanged(object sender, DataGridViewCellEventArgs e) {
-			double dblRes;
-			needToSave = true;
-			Double.TryParse(toolDataGrid[e.ColumnIndex, e.RowIndex].Value.ToString(), out dblRes);
+            needToSave = true;
+            Double.TryParse(toolDataGrid[e.ColumnIndex, e.RowIndex].Value.ToString(), out double dblRes);
 
             // Date changed
             if (e.ColumnIndex == 1)
@@ -245,17 +244,18 @@ namespace warmf {
 
 		// validate text boxes
 		private void validateTextBoxes() {
-			double dblRes;
-			if (Double.TryParse(tboxLatitude.Text, out dblRes)) {
-				activeData.latitude = dblRes;
-			}
-			else {
-				tboxLatitude.Text = activeData.latitude.ToString();
-				WMDialog dialog = new WMDialog("Data Error", "Error in latitude data.  Reverting to file data.", false);
-				dialog.ShowDialog();
-			}
+            if (Double.TryParse(tboxLatitude.Text, out double dblRes))
+            {
+                activeData.latitude = dblRes;
+            }
+            else
+            {
+                tboxLatitude.Text = activeData.latitude.ToString();
+                WMDialog dialog = new WMDialog("Data Error", "Error in latitude data.  Reverting to file data.", false);
+                dialog.ShowDialog();
+            }
 
-			if (Double.TryParse(tboxLongitude.Text, out dblRes)) {
+            if (Double.TryParse(tboxLongitude.Text, out dblRes)) {
 				activeData.longitude = dblRes;
 			}
 			else {
@@ -384,32 +384,36 @@ namespace warmf {
 
 				// plot average
 				if (chkboxAverage.Checked) {
-					double dblRes;
-					StripLine line = new StripLine();
-					line.StripWidth = 0.01;
-					line.BackColor = Color.Green;
-					//line.BorderDashStyle = ChartDashStyle.Dash;	// use with BorderColor but need to refigure line width --MRL
-					line.IntervalOffset = Double.TryParse(tboxAverage.Text, out dblRes) ? dblRes : 0;
-					toolGraph.ChartAreas[0].AxisY.StripLines.Add(line);
+                    StripLine line = new StripLine
+                    {
+                        StripWidth = 0.01,
+                        BackColor = Color.Green,
+                        //line.BorderDashStyle = ChartDashStyle.Dash;	// use with BorderColor but need to refigure line width --MRL
+                        IntervalOffset = Double.TryParse(tboxAverage.Text, out double dblRes) ? dblRes : 0
+                    };
+                    toolGraph.ChartAreas[0].AxisY.StripLines.Add(line);
 				}
 
 				// plot std dev
 				if (chkboxStdDev.Checked) {
-					double dblRes;
-					double average = Double.TryParse(tboxAverage.Text, out dblRes) ? dblRes : 0;
-					StripLine line = new StripLine();
-					line.StripWidth = 0.01;
-					line.BackColor = Color.Orange;
-					//line.BorderDashStyle = ChartDashStyle.Dash;	// use with BorderColor but need to refigure line width --MRL
-					line.IntervalOffset = average + (Double.TryParse(tboxStdDev.Text, out dblRes) ? dblRes : 0);
-					toolGraph.ChartAreas[0].AxisY.StripLines.Add(line);
+                    double average = Double.TryParse(tboxAverage.Text, out double dblRes) ? dblRes : 0;
+                    StripLine line = new StripLine
+                    {
+                        StripWidth = 0.01,
+                        BackColor = Color.Orange,
+                        //line.BorderDashStyle = ChartDashStyle.Dash;	// use with BorderColor but need to refigure line width --MRL
+                        IntervalOffset = average + (Double.TryParse(tboxStdDev.Text, out dblRes) ? dblRes : 0)
+                    };
+                    toolGraph.ChartAreas[0].AxisY.StripLines.Add(line);
 
-					StripLine line2 = new StripLine();
-					line2.StripWidth = 0.01;
-					line2.BackColor = Color.Orange;
-					//line2.BorderDashStyle = ChartDashStyle.Dash;	// use with BorderColor but need to refigure line width --MRL
-					line2.IntervalOffset = average - (Double.TryParse(tboxStdDev.Text, out dblRes) ? dblRes : 0);
-					toolGraph.ChartAreas[0].AxisY.StripLines.Add(line2);
+                    StripLine line2 = new StripLine
+                    {
+                        StripWidth = 0.01,
+                        BackColor = Color.Orange,
+                        //line2.BorderDashStyle = ChartDashStyle.Dash;	// use with BorderColor but need to refigure line width --MRL
+                        IntervalOffset = average - (Double.TryParse(tboxStdDev.Text, out dblRes) ? dblRes : 0)
+                    };
+                    toolGraph.ChartAreas[0].AxisY.StripLines.Add(line2);
 				}
 			}
 		}
@@ -519,11 +523,13 @@ namespace warmf {
         private void importDelimitedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Get the name of the comma delimited file
-            OpenFileDialog openDialog = new OpenFileDialog();
-            openDialog.InitialDirectory = Global.DIR.ROOT;
-            openDialog.FileName = "";
-            openDialog.DefaultExt = ".csv";
-            openDialog.Filter = "Comma Delimited File (.csv)|*.csv";
+            OpenFileDialog openDialog = new OpenFileDialog
+            {
+                InitialDirectory = Global.DIR.ROOT,
+                FileName = "",
+                DefaultExt = ".csv",
+                Filter = "Comma Delimited File (.csv)|*.csv"
+            };
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
                 // Get the delimiter and number of ignore lines & header lines

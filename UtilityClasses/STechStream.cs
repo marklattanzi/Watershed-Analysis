@@ -89,7 +89,6 @@ namespace warmf {
         // Reads an array of integers from fields 8 characters wide and 9 fields across
         public List<int> ReadIntData(string lineAbbrev, int num)
         {
-            int intRes;
             string line;
             int linesToRead = (num - 1) / 9 + 1;
 
@@ -104,7 +103,7 @@ namespace warmf {
                     {
                         while (nlines * 9 + jj < num && jj < 9)
                         {
-                            data.Add(Int32.TryParse(line.Substring(8 * (jj + 1), 8), out intRes) ? intRes : 0);
+                            data.Add(Int32.TryParse(line.Substring(8 * (jj + 1), 8), out int intRes) ? intRes : 0);
                             jj++;
                         }
                     }
@@ -132,7 +131,6 @@ namespace warmf {
         // reads in doubles - up to 9 per line
         public List<double> ReadDoubleData(string lineAbbrev, int num)
         {
-            double dblRes;
             string line;
             int linesToRead = (num - 1) / 9 + 1;
 
@@ -147,7 +145,7 @@ namespace warmf {
                     {
                         while (nlines * 9 + jj < num && jj < 9)
                         {
-                            data.Add(Double.TryParse(line.Substring(8 * (jj + 1), 8), out dblRes) ? dblRes : 0);
+                            data.Add(Double.TryParse(line.Substring(8 * (jj + 1), 8), out double dblRes) ? dblRes : 0);
                             jj++;
                         }
                     }

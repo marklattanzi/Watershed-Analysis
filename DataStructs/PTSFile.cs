@@ -51,12 +51,10 @@ namespace warmf
             ReadVersionLatLongName(ref SR);
             try
             {
-                int intRes;
-                double dblRes;
                 string line = SR.ReadLine();
                 swInternal = line.Substring(0, 8).Contains("0");
-                unspecified = Int32.TryParse(line.Substring(8, 8), out intRes) ? intRes : -1;
-                outElevation = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : -1;
+                unspecified = Int32.TryParse(line.Substring(8, 8), out int intRes) ? intRes : -1;
+                outElevation = Double.TryParse(line.Substring(16, 8), out double dblRes) ? dblRes : -1;
                 outWidth = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : -1;
                 npdesPermit = line.Substring(32);
             }

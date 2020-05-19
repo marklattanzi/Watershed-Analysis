@@ -17,9 +17,8 @@ namespace warmf
 
         public bool ParseDate(string TheString)
         {
-            int intRes;
 
-            int day = Int32.TryParse(TheString.Substring(0, 2), out intRes) ? intRes : 0;
+            int day = Int32.TryParse(TheString.Substring(0, 2), out int intRes) ? intRes : 0;
             int month = Int32.TryParse(TheString.Substring(2, 2), out intRes) ? intRes : 0;
             int year = Int32.TryParse(TheString.Substring(4, 4), out intRes) ? intRes : 0;
             int hour = Int32.TryParse(TheString.Substring(9, 2), out intRes) ? intRes : 0;
@@ -34,18 +33,17 @@ namespace warmf
             //int intRes, day, month, year, hour, minute;
 
             ParseDate(TheString);
-/*            day = Int32.TryParse(TheString.Substring(0, 2), out intRes) ? intRes : 0;
-            month = Int32.TryParse(TheString.Substring(2, 2), out intRes) ? intRes : 0;
-            year = Int32.TryParse(TheString.Substring(4, 4), out intRes) ? intRes : 0;
-            hour = Int32.TryParse(TheString.Substring(9, 2), out intRes) ? intRes : 0;
-            minute = Int32.TryParse(TheString.Substring(11, 2), out intRes) ? intRes : 0;
-            Date = new DateTime(year, month, day, hour, minute, 0);*/
+            /*            day = Int32.TryParse(TheString.Substring(0, 2), out intRes) ? intRes : 0;
+                        month = Int32.TryParse(TheString.Substring(2, 2), out intRes) ? intRes : 0;
+                        year = Int32.TryParse(TheString.Substring(4, 4), out intRes) ? intRes : 0;
+                        hour = Int32.TryParse(TheString.Substring(9, 2), out intRes) ? intRes : 0;
+                        minute = Int32.TryParse(TheString.Substring(11, 2), out intRes) ? intRes : 0;
+                        Date = new DateTime(year, month, day, hour, minute, 0);*/
 
-            double dblRes;
             Values = new List<double>();
             for (int i = 0; i < NumValues; i++)
             {
-                Values.Add(Double.TryParse(TheString.Substring(13 + 8 * i, 8), out dblRes) ? dblRes : 0);
+                Values.Add(Double.TryParse(TheString.Substring(13 + 8 * i, 8), out double dblRes) ? dblRes : 0);
             }
             Source = TheString.Substring(13 + 8 * NumValues);
 
@@ -109,13 +107,11 @@ namespace warmf
 
         public bool ReadVersionLatLongName(ref STechStreamReader SR)
         {
-            int intRes;
-            double dblRes;
             string line;
 
             line = SR.ReadLine();
             if (line.StartsWith("VERSION"))
-                version = Int32.TryParse(line.Substring(8, 8), out intRes) ? intRes : 0;
+                version = Int32.TryParse(line.Substring(8, 8), out int intRes) ? intRes : 0;
             else
             {
                 Debug.WriteLine("Error in data file.  Version number is missing. Continuing.");
@@ -125,7 +121,7 @@ namespace warmf
             }
 
             line = SR.ReadLine();
-            latitude = Double.TryParse(line.Substring(9, 10), out dblRes) ? dblRes : 0;
+            latitude = Double.TryParse(line.Substring(9, 10), out double dblRes) ? dblRes : 0;
             longitude = Double.TryParse(line.Substring(30, 10), out dblRes) ? dblRes : 0;
             shortName = line.Substring(40);
 

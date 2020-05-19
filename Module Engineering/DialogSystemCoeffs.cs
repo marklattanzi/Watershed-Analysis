@@ -13,7 +13,16 @@ namespace warmf
     public partial class DialogSystemCoeffs : Form
     {
         FormMain parent;
-        public List<Mineral> mineralsList = new List<Mineral>();
+        //mineral variables
+        public int cbMineralsSelected = -1;
+        public List<string> mineralNames = new List<string>();
+        public List<double> molecularWgts = new List<double>();
+        public List<double> phDepends = new List<double>();
+        public List<double> weatheringRates = new List<double>();
+        public List<double> oxyConsumptionRates = new List<double>();
+        public List<double> mineralChemReactionProduct = new List<double>();
+        public List<List<double>> ChemReactionProducts = new List<List<double>>();
+        //public List<Mineral> mineralsList = new List<Mineral>();
 
         public DialogSystemCoeffs(FormMain par)
         {
@@ -414,10 +423,20 @@ namespace warmf
             FormatDataGridView(dgvTrunkComp);
 
             //Minerals
+            //Make copies of all mineral information - save changes on ok_click event
             for (int ii = 0; ii < Global.coe.numMinerals; ii++)
             {
-                mineralsList[ii] = Global.coe.minerals[ii];
-                cbMinerals.Items.Add(Global.coe.minerals[ii].name.ToString());
+                mineralNames.Add(Global.coe.minerals[ii].name);
+                cbMinerals.Items.Add(mineralNames[ii]);
+                molecularWgts.Add(Global.coe.minerals[ii].molecularWgt);
+                phDepends.Add(Global.coe.minerals[ii].phDepend);
+                weatheringRates.Add(Global.coe.minerals[ii].weatheringRate);
+                oxyConsumptionRates.Add(Global.coe.minerals[ii].oxyConsumption);
+                for (int j = 0; j < Global.coe.numChemicalParams; j++)
+                {
+                    mineralChemReactionProduct.Add(Global.coe.minerals[ii].chemReactionProduct[j]);
+                }
+                ChemReactionProducts.Add(mineralChemReactionProduct);
             }
             dgvRxnProducts.Columns.Add("Value", "Value");
             for (int iConstit = 0; iConstit < Global.coe.numChemicalParams; iConstit++)
@@ -426,11 +445,7 @@ namespace warmf
                 dgvRxnProducts.Rows[iConstit].HeaderCell.Value = ConstitNames[iConstit];
             }
             FormatDataGridView(dgvRxnProducts);
-            cbMinerals.SelectedIndex = 0;
-            tbMolWeight.Text = Global.coe.minerals[0].molecularWgt.ToString();
-            tbWeatherRate.Text = Global.coe.minerals[0].weatheringRate.ToString();
-            tbPHdepend.Text = Global.coe.minerals[0].phDepend.ToString();
-            tbOconsumption.Text = Global.coe.minerals[0].oxyConsumption.ToString();
+            cbMinerals.SelectedIndex = 0;            
 
             //Sediment (This is not truly dynamic, by the way. There is no name for each
             //sediment class in the coe file, so row header cells are hard coded)
@@ -594,10 +609,14 @@ namespace warmf
                 dgvPhysicalData.Rows[iCount].Cells[1].Value = Global.coe.chemConstits[ii].massEquivalent.ToString();
                 if (Global.coe.chemConstits[ii].fullName == "pH")
                 {
-                    DataGridViewTextBoxCell c = new DataGridViewTextBoxCell();
-                    c.Value = "";
-                    DataGridViewTextBoxCell c2 = new DataGridViewTextBoxCell();
-                    c2.Value = "";
+                    DataGridViewTextBoxCell c = new DataGridViewTextBoxCell
+                    {
+                        Value = ""
+                    };
+                    DataGridViewTextBoxCell c2 = new DataGridViewTextBoxCell
+                    {
+                        Value = ""
+                    };
                     dgvPhysicalData.Rows[iCount].Cells[2] = c;
                     dgvPhysicalData.Rows[iCount].Cells[2].ReadOnly = true;
                     dgvPhysicalData.Rows[iCount].Cells[3] = c2;
@@ -648,10 +667,14 @@ namespace warmf
                 dgvPhysicalData.Rows[iCount].HeaderCell.Value = Global.coe.compositeConstits[ii].fullName.ToString();
                 dgvPhysicalData.Rows[iCount].Cells[0].Value = Global.coe.compositeConstits[ii].electricalCharge.ToString();
                 dgvPhysicalData.Rows[iCount].Cells[1].Value = Global.coe.compositeConstits[ii].massEquivalent.ToString();
-                DataGridViewTextBoxCell c = new DataGridViewTextBoxCell();
-                c.Value = "";
-                DataGridViewTextBoxCell c2 = new DataGridViewTextBoxCell();
-                c2.Value = "";
+                DataGridViewTextBoxCell c = new DataGridViewTextBoxCell
+                {
+                    Value = ""
+                };
+                DataGridViewTextBoxCell c2 = new DataGridViewTextBoxCell
+                {
+                    Value = ""
+                };
                 dgvPhysicalData.Rows[iCount].Cells[2] = c;
                 dgvPhysicalData.Rows[iCount].Cells[2].ReadOnly = true;
                 dgvPhysicalData.Rows[iCount].Cells[3] = c2;
@@ -814,13 +837,13 @@ namespace warmf
             cbParameters.SelectedIndex = 0;
         }
 
-        private void btnHelp_Click(object sender, EventArgs e)
+        private void BtnHelp_Click(object sender, EventArgs e)
         {
             // Launch browser to http://warmf.com/...
             System.Diagnostics.Process.Start("http://warmf.com/home/index.php/engineering-module/system/");
         }
 
-        private void cbLandUseParameter_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbLandUseParameter_SelectedIndexChanged(object sender, EventArgs e)
         {
             int ii = cbLandUseParameter.SelectedIndex;
             if (ii == 0) //Open in Winter
@@ -946,15 +969,29 @@ namespace warmf
 
         private void cbMinerals_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int ii = cbMinerals.SelectedIndex;
-            tbMolWeight.Text = Global.coe.minerals[ii].molecularWgt.ToString();
-            tbWeatherRate.Text = Global.coe.minerals[ii].weatheringRate.ToString();
-            tbPHdepend.Text = Global.coe.minerals[ii].phDepend.ToString();
-            tbOconsumption.Text = Global.coe.minerals[ii].oxyConsumption.ToString();
+            //Save the information currently displayed on the form
+            if (cbMineralsSelected != -1)
+            {
+                molecularWgts[cbMineralsSelected] = Convert.ToDouble(tbMolWeight.Text);
+                phDepends[cbMineralsSelected] = Convert.ToDouble(tbPHdepend.Text);
+                weatheringRates[cbMineralsSelected] = Convert.ToDouble(tbWeatherRate.Text);
+                oxyConsumptionRates[cbMineralsSelected] = Convert.ToDouble(tbOconsumption.Text);
+                for (int i = 0; i < Global.coe.numChemicalParams; i++)
+                {
+                    mineralChemReactionProduct[i] = Convert.ToDouble(dgvRxnProducts.Rows[i].Cells[0].Value);
+                }
+                ChemReactionProducts[cbMineralsSelected] = mineralChemReactionProduct;
+            }
+            //Populate the form with properties of new cbMinerals.SelectedIndex
+            cbMineralsSelected = cbMinerals.SelectedIndex;
+            tbMolWeight.Text = molecularWgts[cbMineralsSelected].ToString();
+            tbWeatherRate.Text = weatheringRates[cbMineralsSelected].ToString();
+            tbPHdepend.Text = phDepends[cbMineralsSelected].ToString();
+            tbOconsumption.Text = oxyConsumptionRates[cbMineralsSelected].ToString();
             for (int iConstit = 0; iConstit < Global.coe.numChemicalParams; iConstit++)
             {
                 dgvRxnProducts.Rows[iConstit].Cells[0].Value =
-                    Global.coe.minerals[ii].chemReactionProduct[iConstit].ToString();
+                    ChemReactionProducts[cbMineralsSelected][iConstit].ToString();
             }
             FormatDataGridView(dgvRxnProducts);
         }
@@ -1066,83 +1103,52 @@ namespace warmf
             }
 
             //Minerals
+            for (int i = 0; i < Global.coe.numMinerals; i++)
+            {
+                Global.coe.minerals[i].molecularWgt = molecularWgts[i];
+                Global.coe.minerals[i].oxyConsumption = oxyConsumptionRates[i];
+                Global.coe.minerals[i].phDepend = phDepends[i];
+                Global.coe.minerals[i].weatheringRate = weatheringRates[i];
+                for (int j = 0; j < Global.coe.numChemicalParams; j++)
+                {
+                    Global.coe.minerals[i].chemReactionProduct[j] = ChemReactionProducts[i][j];
+                }
+            }
 
-            //for (int ii = 0; ii < Global.coe.numMinerals; ii++)
-            //{
-            //    cbMinerals.Items.Add(Global.coe.minerals[ii].name.ToString());
-            //}
-            //dgvRxnProducts.Columns.Add("Value", "Value");
-            //for (int iConstit = 0; iConstit < Global.coe.numChemicalParams; iConstit++)
-            //{
-            //    dgvRxnProducts.Rows.Insert(iConstit);
-            //    dgvRxnProducts.Rows[iConstit].HeaderCell.Value = ConstitNames[iConstit];
-            //}
-            //FormatDataGridView(dgvRxnProducts);
-            //cbMinerals.SelectedIndex = 0;
-            //tbMolWeight.Text = Global.coe.minerals[0].molecularWgt.ToString();
-            //tbWeatherRate.Text = Global.coe.minerals[0].weatheringRate.ToString();
-            //tbPHdepend.Text = Global.coe.minerals[0].phDepend.ToString();
-            //tbOconsumption.Text = Global.coe.minerals[0].oxyConsumption.ToString();
+            //Sediment
+            for (int i = 0; i < Global.coe.numSedParticleSizes; i++)
+            {
+                Global.coe.sediments[i].grainSize = Convert.ToDouble(dgvSediment.Rows[i].Cells[0].Value);
+                Global.coe.sediments[i].specGravity = Convert.ToDouble(dgvSediment.Rows[i].Cells[1].Value);
+            }
 
-            ////Sediment (This is not truly dynamic, by the way. There is no name for each
-            ////sediment class in the coe file, so row header cells are hard coded)
-            //dgvSediment.Columns.Add("Size", "Size (mm)");
-            //dgvSediment.Columns.Add("SGrav", "Specific Gravity");
-            //dgvSediment.Rows.Add(3);
-            //dgvSediment.Rows[0].HeaderCell.Value = "Clay";
-            //dgvSediment.Rows[1].HeaderCell.Value = "Silt";
-            //dgvSediment.Rows[2].HeaderCell.Value = "Sand";
-            //for (int ii = 0; ii < Global.coe.numSedParticleSizes; ii++)
-            //{
-            //    dgvSediment.Rows[ii].Cells[0].Value =
-            //        Global.coe.sediments[ii].grainSize.ToString();
-            //    dgvSediment.Rows[ii].Cells[1].Value =
-            //        Global.coe.sediments[ii].specGravity.ToString();
-            //}
-            //FormatDataGridView(dgvRxnProducts);
+            //Phytoplankton (algae 0 = Blue-Green; algae 1 = Diatoms; algae 2 = Green)
+            for (int i = 0; i < Global.coe.numAlgae; i++)
+            {
+                Global.coe.algaes[i].nitroHalfSat = Convert.ToDouble(dgvPhytoplankton.Rows[0].Cells[i].Value);
+                Global.coe.algaes[i].phosHalfSat = Convert.ToDouble(dgvPhytoplankton.Rows[1].Cells[i].Value);
+                Global.coe.algaes[i].silicaHalfSat = Convert.ToDouble(dgvPhytoplankton.Rows[2].Cells[i].Value);
+                Global.coe.algaes[i].lightSat = Convert.ToDouble(dgvPhytoplankton.Rows[3].Cells[i].Value);
+                Global.coe.algaes[i].lowTempLimit = Convert.ToDouble(dgvPhytoplankton.Rows[4].Cells[i].Value);
+                Global.coe.algaes[i].highTempLimit = Convert.ToDouble(dgvPhytoplankton.Rows[5].Cells[i].Value);
+                Global.coe.algaes[i].optGrowTemp = Convert.ToDouble(dgvPhytoplankton.Rows[6].Cells[i].Value);
+            }
 
-            ////Phytoplankton (This is not truly dynamic. There is no name for each
-            ////algae class in the coe file, so column header cells are hard coded)
-            ////algae 0 = Blue-Green; algae 1 = Diatoms; algae 2 = Green
-            //dgvPhytoplankton.Columns.Add("BG", "Blue-Green Algae");
-            //dgvPhytoplankton.Columns.Add("Diatoms", "Diatoms");
-            //dgvPhytoplankton.Columns.Add("Green", "Green Algae");
-            //dgvPhytoplankton.Rows.Add(7);
-            //dgvPhytoplankton.Rows[0].HeaderCell.Value = "Nitrogen Half-Saturation (mg/L)";
-            //dgvPhytoplankton.Rows[1].HeaderCell.Value = "Phosphorus Half-Saturation (mg/L)";
-            //dgvPhytoplankton.Rows[2].HeaderCell.Value = "Silica Half-Saturation (mg/L)";
-            //dgvPhytoplankton.Rows[3].HeaderCell.Value = "Light Saturation (W/m2)";
-            //dgvPhytoplankton.Rows[4].HeaderCell.Value = "Lower Growth Temperature (C)";
-            //dgvPhytoplankton.Rows[5].HeaderCell.Value = "Upper Growth Temperature (C)";
-            //dgvPhytoplankton.Rows[6].HeaderCell.Value = "Optimum Growth Temperature (C)";
-            //for (int ii = 0; ii < dgvPhytoplankton.Columns.Count; ii++)
-            //{
-            //    dgvPhytoplankton.Rows[0].Cells[ii].Value = Global.coe.algaes[ii].nitroHalfSat.ToString();
-            //    dgvPhytoplankton.Rows[1].Cells[ii].Value = Global.coe.algaes[ii].phosHalfSat.ToString();
-            //    dgvPhytoplankton.Rows[2].Cells[ii].Value = Global.coe.algaes[ii].silicaHalfSat.ToString();
-            //    dgvPhytoplankton.Rows[3].Cells[ii].Value = Global.coe.algaes[ii].lightSat.ToString();
-            //    dgvPhytoplankton.Rows[4].Cells[ii].Value = Global.coe.algaes[ii].lowTempLimit.ToString();
-            //    dgvPhytoplankton.Rows[5].Cells[ii].Value = Global.coe.algaes[ii].highTempLimit.ToString();
-            //    dgvPhytoplankton.Rows[6].Cells[ii].Value = Global.coe.algaes[ii].optGrowTemp.ToString();
-            //}
-            //FormatDataGridView(dgvPhytoplankton);
-
-            ////Periphyton
-            //tbEndRespCoeff.Text = Global.coe.peri.endoRespirationCoef.ToString();
-            //tbEndRespExpCoeff.Text = Global.coe.peri.endoRespirationExp.ToString();
-            //tbPhotoRespFract.Text = Global.coe.peri.photoRespirationFraction.ToString();
-            //tbRecycledFract.Text = Global.coe.peri.recycledFraction.ToString();
-            //tbSpatHalfSat.Text = Global.coe.peri.spatialLimitHalfSat.ToString();
-            //tbSpatLimitIntcpt.Text = Global.coe.peri.spatialLimitHalfSat.ToString();
-            //tbSpatLimitIntcpt.Text = Global.coe.peri.spatialLimitIntercept.ToString();
-            //tbScourRegCoeff.Text = Global.coe.peri.scourRegressionCoef.ToString();
-            //tbScourRegExp.Text = Global.coe.peri.scourRegressionExp.ToString();
-            //tbNhalfSat.Text = Global.coe.peri.nitroHalfSat.ToString();
-            //tbPhalfSat.Text = Global.coe.peri.phosHalfSat.ToString();
-            //tbVelHalfSat.Text = Global.coe.peri.velocityHalfSat.ToString();
-            //tbLightHalfSat.Text = Global.coe.peri.lightSat.ToString();
-            ////tbChlCarbonRatio.Text = Global.coe.peri.??
-            //tbAmmPrefCoeff.Text = Global.coe.peri.ammoniaPref.ToString();
+            //Periphyton
+            Global.coe.peri.endoRespirationCoef = Convert.ToDouble(tbEndRespCoeff.Text);
+            Global.coe.peri.endoRespirationExp = Convert.ToDouble(tbEndRespExpCoeff.Text);
+            Global.coe.peri.photoRespirationFraction = Convert.ToDouble(tbPhotoRespFract.Text);
+            Global.coe.peri.recycledFraction = Convert.ToDouble(tbRecycledFract.Text);
+            Global.coe.peri.spatialLimitHalfSat = Convert.ToDouble(tbSpatHalfSat.Text);
+            Global.coe.peri.spatialLimitIntercept = Convert.ToDouble(tbSpatLimitIntcpt.Text);
+            Global.coe.peri.scourRegressionCoef = Convert.ToDouble(tbScourRegCoeff.Text);
+            Global.coe.peri.scourRegressionExp = Convert.ToDouble(tbScourRegExp.Text);
+            Global.coe.peri.nitroHalfSat = Convert.ToDouble(tbNhalfSat.Text);
+            Global.coe.peri.phosHalfSat = Convert.ToDouble(tbPhalfSat.Text);
+            Global.coe.peri.velocityHalfSat = Convert.ToDouble(tbVelHalfSat.Text);
+            Global.coe.peri.lightSat = Convert.ToDouble(tbLightHalfSat.Text);
+            //Global.coe.peri.chlCarbonRatio = Convert.ToDouble(tbChlCarbonRatio.Text);
+            Global.coe.peri.ammoniaPref = Convert.ToDouble(tbAmmPrefCoeff.Text);
 
             ////Food Web
             ////Needs to be added later, using an example that has food web dynamics activated
@@ -1466,7 +1472,7 @@ namespace warmf
             //cbParameters.SelectedIndex = 0;
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
         }

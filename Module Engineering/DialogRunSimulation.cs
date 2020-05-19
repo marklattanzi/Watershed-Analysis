@@ -186,7 +186,6 @@ namespace warmf
         {
             string line;
             string fileType;
-            int year, month, day;
             int compareResult;
 
             //read and parse the first data line of the file. Then compare to minDate
@@ -198,9 +197,9 @@ namespace warmf
             else
                 line = File.ReadLines(fileName).Skip(3).Take(1).First();
 
-            Int32.TryParse(line.Substring(4, 4), out year);
-            Int32.TryParse(line.Substring(2, 2), out month);
-            Int32.TryParse(line.Substring(0, 2), out day);
+            Int32.TryParse(line.Substring(4, 4), out int year);
+            Int32.TryParse(line.Substring(2, 2), out int month);
+            Int32.TryParse(line.Substring(0, 2), out int day);
             DateTime date = new DateTime(year, month, day);
             compareResult = System.DateTime.Compare(date, minDate);
             if (compareResult > 0)
@@ -213,7 +212,6 @@ namespace warmf
         public static DateTime getMaxDate(string fileName, DateTime maxDate)
         {
             string line;
-            int year, month, day;
             int compareResult;
 
             if (string.Equals(fileName.Substring(fileName.Length - 3, 3), "AIR", StringComparison.OrdinalIgnoreCase))
@@ -226,9 +224,9 @@ namespace warmf
                 line = File.ReadLines(fileName).Last();
             }
             
-            Int32.TryParse(line.Substring(4, 4), out year);
-            Int32.TryParse(line.Substring(2, 2), out month);
-            Int32.TryParse(line.Substring(0, 2), out day);
+            Int32.TryParse(line.Substring(4, 4), out int year);
+            Int32.TryParse(line.Substring(2, 2), out int month);
+            Int32.TryParse(line.Substring(0, 2), out int day);
             DateTime date = new DateTime(year, month, day);
             compareResult = System.DateTime.Compare(date, maxDate);
             if (compareResult < 0)
@@ -365,7 +363,7 @@ namespace warmf
                 if (nodeIndex >= 0) //rivers
                 {
                     Global.coe.rivers[nodeIndex].subwatershed = i + 1;
-                    Global.coe.defineSubwatershed(Global.coe.rivers[nodeIndex],i + 1);
+                    Global.coe.DefineSubwatershed(Global.coe.rivers[nodeIndex],i + 1);
                 }
                 else //reservoirs & reservoir segments
                 {
@@ -373,7 +371,7 @@ namespace warmf
                     if (reservoirAndSegment.Count == 2 && reservoirAndSegment[0] >= 0 && reservoirAndSegment[1] >= 0)
                     {
                         Global.coe.reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]].subwatershed = i + 1;
-                        Global.coe.defineSubwatershed(Global.coe.reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]],i+1);
+                        Global.coe.DefineSubwatershed(Global.coe.reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]],i+1);
                     }
                     // Rogue catchment not connected to anything
                     else
@@ -382,7 +380,7 @@ namespace warmf
                         if (nodeIndex >= 0)
                         {
                             Global.coe.catchments[nodeIndex].subwatershed = i + 1;
-                            Global.coe.defineSubwatershed(Global.coe.catchments[nodeIndex], i + 1);
+                            Global.coe.DefineSubwatershed(Global.coe.catchments[nodeIndex], i + 1);
                         }
                     }
                 }

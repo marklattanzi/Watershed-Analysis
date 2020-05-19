@@ -174,12 +174,14 @@ namespace warmf {
         {
             int i;
 
-            OpenFileDialog openDialog = new OpenFileDialog();
-            openDialog.InitialDirectory = Global.DIR.ROOT;
-            openDialog.FileName = "";
-            openDialog.DefaultExt = ".wpf";
-            openDialog.Filter = "WARMF Project File (.wpf)|*.wpf";
-            openDialog.Title = "Select WARMF Project File";
+            OpenFileDialog openDialog = new OpenFileDialog
+            {
+                InitialDirectory = Global.DIR.ROOT,
+                FileName = "",
+                DefaultExt = ".wpf",
+                Filter = "WARMF Project File (.wpf)|*.wpf",
+                Title = "Select WARMF Project File"
+            };
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
                 try
@@ -304,9 +306,11 @@ namespace warmf {
                         layers.Clear();
                         for (i = 0; i < numReferenceLayers; i++)
                         {
-                            LayerInfo referenceLayer = new LayerInfo();
-                            referenceLayer.Name = sr.ReadDelimitedField(',', ref endOfLine);
-                            referenceLayer.FileName = sr.ReadDelimitedField(',', ref endOfLine);
+                            LayerInfo referenceLayer = new LayerInfo
+                            {
+                                Name = sr.ReadDelimitedField(',', ref endOfLine),
+                                FileName = sr.ReadDelimitedField(',', ref endOfLine)
+                            };
                             layers.Add(referenceLayer);
                             miTopView.DropDownItems.Add(referenceLayer.Name);
                         }
@@ -316,10 +320,12 @@ namespace warmf {
                         scenarios.Clear();
                         for (i = 0; i < numScenarios; i++)
                         {
-                            ScenarioInfo newScenario = new ScenarioInfo();
-                            newScenario.IsOpen = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine));
-                            newScenario.IsActive = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine));
-                            newScenario.Name = sr.ReadDelimitedField(',', ref endOfLine);
+                            ScenarioInfo newScenario = new ScenarioInfo
+                            {
+                                IsOpen = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine)),
+                                IsActive = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine)),
+                                Name = sr.ReadDelimitedField(',', ref endOfLine)
+                            };
 
                             // Add open scenarios to the bottom of the Scenario menu
                             if (newScenario.IsOpen > 0)
@@ -763,11 +769,13 @@ namespace warmf {
         public static bool ScenarioSaveAs(ref string newScenario)
         {
             // Get the new coefficient file
-            SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.InitialDirectory = Global.DIR.COE;
-            saveDialog.FileName = "";
-            saveDialog.DefaultExt = ".coe";
-            saveDialog.Filter = "WARMF Coefficient File (.coe)|*.coe";
+            SaveFileDialog saveDialog = new SaveFileDialog
+            {
+                InitialDirectory = Global.DIR.COE,
+                FileName = "",
+                DefaultExt = ".coe",
+                Filter = "WARMF Coefficient File (.coe)|*.coe"
+            };
             if (saveDialog.ShowDialog() == DialogResult.OK)
             {
                 newScenario = saveDialog.FileName;
@@ -796,10 +804,12 @@ namespace warmf {
                     scenarios[activeScenario].Name = Path.GetFileName(newScenario);
                 else
                 {
-                    ScenarioInfo newScenarioInfo = new ScenarioInfo();
-                    newScenarioInfo.Name = newScenario;
-                    newScenarioInfo.IsOpen = 1;
-                    newScenarioInfo.IsActive = 0;
+                    ScenarioInfo newScenarioInfo = new ScenarioInfo
+                    {
+                        Name = newScenario,
+                        IsOpen = 1,
+                        IsActive = 0
+                    };
                     scenarios.Add(newScenarioInfo);
                     activeScenario = scenarios.Count - 1;
                     SetActiveScenario(scenarios.Count - 1);
@@ -1051,11 +1061,13 @@ namespace warmf {
         // Gets the user to choose the name of an existing coefficient file to open
         public static bool OpenExistingCOEFile(ref string FileName)
         {
-            OpenFileDialog openDialog = new OpenFileDialog();
-            openDialog.InitialDirectory = Global.DIR.COE;
-            openDialog.FileName = "";
-            openDialog.DefaultExt = ".coe";
-            openDialog.Filter = "WARMF Coefficient File (.coe)|*.coe";
+            OpenFileDialog openDialog = new OpenFileDialog
+            {
+                InitialDirectory = Global.DIR.COE,
+                FileName = "",
+                DefaultExt = ".coe",
+                Filter = "WARMF Coefficient File (.coe)|*.coe"
+            };
             bool result = (openDialog.ShowDialog() == DialogResult.OK);
             if (result)
                 FileName = openDialog.FileName;
