@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 
 namespace warmf {
+    #region Variable Declaration Classes
     public class DIVFileData {
         public string filename;
         public double flowDivertedMultiplier;
@@ -234,6 +235,7 @@ namespace warmf {
             return true;
         }
     }
+
     public class Reaction {
         public int primReactantNumber;
         public bool swIsAnoxic;
@@ -697,6 +699,8 @@ namespace warmf {
 
         public List<ReservoirSeg> reservoirSegs;
     }
+
+    #endregion
 
     class Coefficients {
 

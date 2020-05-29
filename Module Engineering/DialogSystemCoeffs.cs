@@ -1147,7 +1147,7 @@ namespace warmf
             Global.coe.peri.phosHalfSat = Convert.ToDouble(tbPhalfSat.Text);
             Global.coe.peri.velocityHalfSat = Convert.ToDouble(tbVelHalfSat.Text);
             Global.coe.peri.lightSat = Convert.ToDouble(tbLightHalfSat.Text);
-            //Global.coe.peri.chlCarbonRatio = Convert.ToDouble(tbChlCarbonRatio.Text);
+            //tbChlCarbonRatio is read-only - the value is set in System Coefficients > Parameters > Physical Data
             Global.coe.peri.ammoniaPref = Convert.ToDouble(tbAmmPrefCoeff.Text);
 
             ////Food Web

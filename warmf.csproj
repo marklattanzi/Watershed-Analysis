@@ -150,6 +150,9 @@
     <Compile Include="UtilityClasses\STechStream.cs" />
     <Compile Include="Main\Global.cs" />
     <Compile Include="DataStructs\Coefficients.cs" />
+    <Compile Include="UtilityClasses\STechTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UtilityClasses\WMDialog.cs">
       <SubType>Form</SubType>
     </Compile>

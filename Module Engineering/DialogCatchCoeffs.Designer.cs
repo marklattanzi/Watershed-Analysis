@@ -35,23 +35,23 @@
             this.lblAspect = new System.Windows.Forms.Label();
             this.lblWidth = new System.Windows.Forms.Label();
             this.lblArea = new System.Windows.Forms.Label();
-            this.tbSlope = new System.Windows.Forms.TextBox();
-            this.tbAspect = new System.Windows.Forms.TextBox();
-            this.tbWidth = new System.Windows.Forms.TextBox();
-            this.tbArea = new System.Windows.Forms.TextBox();
+            this.tbSlope = new UtilityClasses.DoubleTextBox();
+            this.tbAspect = new UtilityClasses.DoubleTextBox();
+            this.tbWidth = new UtilityClasses.DoubleTextBox();
+            this.tbArea = new UtilityClasses.Int64TextBox();
             this.lblRoughness = new System.Windows.Forms.Label();
             this.lblStorage = new System.Windows.Forms.Label();
             this.lblCatchID = new System.Windows.Forms.Label();
-            this.tbRoughness = new System.Windows.Forms.TextBox();
-            this.tbDetention = new System.Windows.Forms.TextBox();
-            this.tbCatchID = new System.Windows.Forms.TextBox();
+            this.tbRoughness = new UtilityClasses.DoubleTextBox();
+            this.tbDetention = new UtilityClasses.DoubleTextBox();
+            this.tbCatchID = new UtilityClasses.Int32TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
             this.tpMeteorology = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.tbAltLapse = new System.Windows.Forms.TextBox();
-            this.tbTempLapse = new System.Windows.Forms.TextBox();
-            this.tbPrecipWeight = new System.Windows.Forms.TextBox();
+            this.tbAltLapse = new UtilityClasses.DoubleTextBox();
+            this.tbTempLapse = new UtilityClasses.DoubleTextBox();
+            this.tbPrecipWeight = new UtilityClasses.DoubleTextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -71,7 +71,7 @@
             this.tpLandAp = new System.Windows.Forms.TabPage();
             this.cbLanduse = new System.Windows.Forms.ComboBox();
             this.lblLanduse = new System.Windows.Forms.Label();
-            this.tbMaxAccTime = new System.Windows.Forms.TextBox();
+            this.tbMaxAccTime = new UtilityClasses.DoubleTextBox();
             this.lblMaxAccTime = new System.Windows.Forms.Label();
             this.dgLandApp = new System.Windows.Forms.DataGridView();
             this.colJan = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -89,11 +89,12 @@
             this.tpIrrigation = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbAppliedWaterRate = new UtilityClasses.DoubleTextBox();
+            
             this.label6 = new System.Windows.Forms.Label();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnSelect = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tbPondDepth = new System.Windows.Forms.TextBox();
             this.btnBalance = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
@@ -105,30 +106,30 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tpSediment = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.tbSand = new System.Windows.Forms.TextBox();
-            this.tbSilt = new System.Windows.Forms.TextBox();
-            this.tbClay = new System.Windows.Forms.TextBox();
+            this.tbSand = new UtilityClasses.DoubleTextBox();
+            this.tbSilt = new UtilityClasses.DoubleTextBox();
+            this.tbClay = new UtilityClasses.DoubleTextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.tbSoilErosivity = new System.Windows.Forms.TextBox();
+            this.tbSoilErosivity = new UtilityClasses.DoubleTextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tpBMPs = new System.Windows.Forms.TabPage();
             this.gbDetentionPonds = new System.Windows.Forms.GroupBox();
-            this.tbDetVolume = new System.Windows.Forms.TextBox();
-            this.tbImpRouting = new System.Windows.Forms.TextBox();
+            this.tbDetVolume = new UtilityClasses.DoubleTextBox();
+            this.tbImpRouting = new UtilityClasses.DoubleTextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.gbStreetSweeping = new System.Windows.Forms.GroupBox();
-            this.tbEfficiency = new System.Windows.Forms.TextBox();
-            this.tbFrequency = new System.Windows.Forms.TextBox();
+            this.tbEfficiency = new UtilityClasses.DoubleTextBox();
+            this.tbFrequency = new UtilityClasses.DoubleTextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.gbBufferZone = new System.Windows.Forms.GroupBox();
-            this.tbBufferRoughness = new System.Windows.Forms.TextBox();
-            this.tbBufferSlope = new System.Windows.Forms.TextBox();
-            this.tbBufferWidth = new System.Windows.Forms.TextBox();
-            this.tbPctBuffered = new System.Windows.Forms.TextBox();
+            this.tbBufferRoughness = new UtilityClasses.DoubleTextBox();
+            this.tbBufferSlope = new UtilityClasses.DoubleTextBox();
+            this.tbBufferWidth = new UtilityClasses.DoubleTextBox();
+            this.tbPctBuffered = new UtilityClasses.DoubleTextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -139,7 +140,7 @@
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label11 = new System.Windows.Forms.Label();
             this.tpPtSrc = new System.Windows.Forms.TabPage();
-            this.tbNPDESNumber = new System.Windows.Forms.TextBox();
+            this.tbNPDESNumber = new UtilityClasses.DoubleTextBox();
             this.label35 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.rbUnspecAmbient = new System.Windows.Forms.RadioButton();
@@ -161,16 +162,16 @@
             this.lbPumpingTo = new System.Windows.Forms.ListBox();
             this.lbPumpingFrom = new System.Windows.Forms.ListBox();
             this.tpSeptic = new System.Windows.Forms.TabPage();
-            this.tbBioMortCoeff = new System.Windows.Forms.TextBox();
-            this.tbBioRespCoeff = new System.Windows.Forms.TextBox();
-            this.tbBiozoneArea = new System.Windows.Forms.TextBox();
-            this.tbBioThick = new System.Windows.Forms.TextBox();
-            this.tbInitBiomass = new System.Windows.Forms.TextBox();
-            this.tbTreatment3 = new System.Windows.Forms.TextBox();
-            this.tbTreatment2 = new System.Windows.Forms.TextBox();
-            this.tbTreatment1 = new System.Windows.Forms.TextBox();
-            this.tbPopSeptic = new System.Windows.Forms.TextBox();
-            this.tbDischargeSoilLayer = new System.Windows.Forms.TextBox();
+            this.tbBioMortCoeff = new UtilityClasses.DoubleTextBox();
+            this.tbBioRespCoeff = new UtilityClasses.DoubleTextBox();
+            this.tbBiozoneArea = new UtilityClasses.DoubleTextBox();
+            this.tbBioThick = new UtilityClasses.DoubleTextBox();
+            this.tbInitBiomass = new UtilityClasses.DoubleTextBox();
+            this.tbTreatment3 = new UtilityClasses.DoubleTextBox();
+            this.tbTreatment2 = new UtilityClasses.DoubleTextBox();
+            this.tbTreatment1 = new UtilityClasses.DoubleTextBox();
+            this.tbPopSeptic = new UtilityClasses.Int32TextBox();
+            this.tbDischargeSoilLayer = new UtilityClasses.Int32TextBox();
             this.label30 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
@@ -204,7 +205,7 @@
             this.Density = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SoilTort = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cbSoilCoeffGroup = new System.Windows.Forms.ComboBox();
-            this.tbNumSoilLayers = new System.Windows.Forms.TextBox();
+            this.tbNumSoilLayers = new UtilityClasses.Int32TextBox();
             this.label31 = new System.Windows.Forms.Label();
             this.dgInorganicC = new System.Windows.Forms.DataGridView();
             this.Option = new System.Windows.Forms.DataGridViewComboBoxColumn();
@@ -770,7 +771,7 @@
             this.dgLandApp.RowHeadersWidth = 100;
             this.dgLandApp.Size = new System.Drawing.Size(671, 332);
             this.dgLandApp.TabIndex = 0;
-            
+            this.dgLandApp.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgLandApp_CellValueChanged);
             // 
             // colJan
             // 
@@ -867,15 +868,13 @@
             this.colDec.Name = "colDec";
             this.colDec.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.colDec.Width = 75;
-            // cellvaluechanged event handler
-            this.dgLandApp.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgLandApp_CellValueChanged);
             // 
             // tpIrrigation
             // 
             this.tpIrrigation.Controls.Add(this.groupBox2);
             this.tpIrrigation.Controls.Add(this.btnClear);
             this.tpIrrigation.Controls.Add(this.btnSelect);
-            this.tpIrrigation.Controls.Add(this.textBox2);
+            this.tpIrrigation.Controls.Add(this.tbPondDepth);
             this.tpIrrigation.Controls.Add(this.btnBalance);
             this.tpIrrigation.Controls.Add(this.btnDelete);
             this.tpIrrigation.Controls.Add(this.btnAdd);
@@ -895,7 +894,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.textBox1);
+            this.groupBox2.Controls.Add(this.tbAppliedWaterRate);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Location = new System.Drawing.Point(30, 40);
             this.groupBox2.Name = "groupBox2";
@@ -913,13 +912,13 @@
             this.label7.TabIndex = 9;
             this.label7.Text = "* Assumes average source flow over period of record";
             // 
-            // textBox1
+            // tbAppliedWaterRate
             // 
-            this.textBox1.Location = new System.Drawing.Point(170, 20);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(99, 22);
-            this.textBox1.TabIndex = 10;
+            this.tbAppliedWaterRate.Location = new System.Drawing.Point(170, 20);
+            this.tbAppliedWaterRate.Name = "tbAppliedWaterRate";
+            this.tbAppliedWaterRate.ReadOnly = true;
+            this.tbAppliedWaterRate.Size = new System.Drawing.Size(99, 22);
+            this.tbAppliedWaterRate.TabIndex = 10;
             // 
             // label6
             // 
@@ -948,12 +947,12 @@
             this.btnSelect.Text = "Select";
             this.btnSelect.UseVisualStyleBackColor = true;
             // 
-            // textBox2
+            // tbPondDepth
             // 
-            this.textBox2.Location = new System.Drawing.Point(50, 310);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(300, 22);
-            this.textBox2.TabIndex = 15;
+            this.tbPondDepth.Location = new System.Drawing.Point(50, 310);
+            this.tbPondDepth.Name = "tbPondDepth";
+            this.tbPondDepth.Size = new System.Drawing.Size(300, 22);
+            this.tbPondDepth.TabIndex = 15;
             // 
             // btnBalance
             // 
@@ -2512,7 +2511,40 @@
         }
 
         #endregion
-
+        private System.Windows.Forms.TextBox tbName;
+        private System.Windows.Forms.TextBox tbMetFile;
+        private System.Windows.Forms.TextBox tbPartAir;
+        private System.Windows.Forms.TextBox tbAirFile;
+        private UtilityClasses.DoubleTextBox tbAppliedWaterRate;
+        private System.Windows.Forms.TextBox tbPondDepth;
+        private UtilityClasses.DoubleTextBox tbSoilErosivity;
+        private UtilityClasses.DoubleTextBox tbSand;
+        private UtilityClasses.DoubleTextBox tbSilt;
+        private UtilityClasses.DoubleTextBox tbClay;
+        private UtilityClasses.DoubleTextBox tbDetVolume;
+        private UtilityClasses.DoubleTextBox tbImpRouting;
+        private UtilityClasses.DoubleTextBox tbEfficiency;
+        private UtilityClasses.DoubleTextBox tbFrequency;
+        private UtilityClasses.DoubleTextBox tbBufferRoughness;
+        private UtilityClasses.DoubleTextBox tbBufferSlope;
+        private UtilityClasses.DoubleTextBox tbBufferWidth;
+        private UtilityClasses.DoubleTextBox tbPctBuffered;
+        private UtilityClasses.Int32TextBox tbPopSeptic;
+        private UtilityClasses.Int32TextBox tbDischargeSoilLayer;
+        private UtilityClasses.DoubleTextBox tbBioMortCoeff;
+        private UtilityClasses.DoubleTextBox tbBioRespCoeff;
+        private UtilityClasses.DoubleTextBox tbBiozoneArea;
+        private UtilityClasses.DoubleTextBox tbBioThick;
+        private UtilityClasses.DoubleTextBox tbInitBiomass;
+        private UtilityClasses.DoubleTextBox tbTreatment3;
+        private UtilityClasses.DoubleTextBox tbTreatment2;
+        private UtilityClasses.DoubleTextBox tbTreatment1;
+        private UtilityClasses.Int32TextBox tbNumSoilLayers;
+        private System.Windows.Forms.TextBox tbNPDESNumber;
+        private System.Windows.Forms.TextBox tbCEQUALconcFile;
+        private System.Windows.Forms.TextBox tbCEQUALtempFile;
+        private System.Windows.Forms.TextBox tbCEQUALflowFile;
+                     
         private System.Windows.Forms.TabControl tcCatchTabs;
         private System.Windows.Forms.TabPage tpPhysData;
         private System.Windows.Forms.Label lblRoughness;
@@ -2522,15 +2554,7 @@
         private System.Windows.Forms.Label lblWidth;
         private System.Windows.Forms.Label lblArea;
         private System.Windows.Forms.Label lblCatchID;
-        private System.Windows.Forms.TextBox tbRoughness;
-        private System.Windows.Forms.TextBox tbDetention;
-        private System.Windows.Forms.TextBox tbSlope;
-        private System.Windows.Forms.TextBox tbAspect;
-        private System.Windows.Forms.TextBox tbWidth;
-        private System.Windows.Forms.TextBox tbArea;
-        private System.Windows.Forms.TextBox tbCatchID;
         private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.TextBox tbName;
         private System.Windows.Forms.TabPage tpMeteorology;
         private System.Windows.Forms.TabPage tpLandUses;
         private System.Windows.Forms.TabPage tpLandAp;
@@ -2544,20 +2568,14 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnHelp;
         private System.Windows.Forms.GroupBox gbMetFile;
-        private System.Windows.Forms.TextBox tbMetFile;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox tbAltLapse;
-        private System.Windows.Forms.TextBox tbTempLapse;
-        private System.Windows.Forms.TextBox tbPrecipWeight;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox gbCoarseAir;
         private System.Windows.Forms.Button btnSelectPartAir;
-        private System.Windows.Forms.TextBox tbPartAir;
         private System.Windows.Forms.GroupBox gbFineAir;
         private System.Windows.Forms.Button btnSelectAir;
-        private System.Windows.Forms.TextBox tbAirFile;
         private System.Windows.Forms.Button btnSelectMet;
         private System.Windows.Forms.TabPage tpRxns;
         private System.Windows.Forms.TabPage tpSoil;
@@ -2568,7 +2586,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn columnPercent;
         private System.Windows.Forms.ComboBox cbLanduse;
         private System.Windows.Forms.Label lblLanduse;
-        private System.Windows.Forms.TextBox tbMaxAccTime;
         private System.Windows.Forms.Label lblMaxAccTime;
         private System.Windows.Forms.DataGridView dgLandApp;
         private System.Windows.Forms.DataGridViewTextBoxColumn colJan;
@@ -2585,13 +2602,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colDec;
         private System.Windows.Forms.ComboBox cbIrrLandUse;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnSelect;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button btnBalance;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnAdd;
@@ -2600,11 +2615,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.TextBox tbSoilErosivity;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox tbSand;
-        private System.Windows.Forms.TextBox tbSilt;
-        private System.Windows.Forms.TextBox tbClay;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
@@ -2617,18 +2628,10 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox tbDetVolume;
-        private System.Windows.Forms.TextBox tbImpRouting;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.TextBox tbEfficiency;
-        private System.Windows.Forms.TextBox tbFrequency;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox tbBufferRoughness;
-        private System.Windows.Forms.TextBox tbBufferSlope;
-        private System.Windows.Forms.TextBox tbBufferWidth;
-        private System.Windows.Forms.TextBox tbPctBuffered;
         private System.Windows.Forms.DataGridView dgLivestockEx;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
@@ -2644,19 +2647,8 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.TextBox tbPopSeptic;
-        private System.Windows.Forms.TextBox tbDischargeSoilLayer;
-        private System.Windows.Forms.TextBox tbBioMortCoeff;
-        private System.Windows.Forms.TextBox tbBioRespCoeff;
-        private System.Windows.Forms.TextBox tbBiozoneArea;
-        private System.Windows.Forms.TextBox tbBioThick;
-        private System.Windows.Forms.TextBox tbInitBiomass;
-        private System.Windows.Forms.TextBox tbTreatment3;
-        private System.Windows.Forms.TextBox tbTreatment2;
-        private System.Windows.Forms.TextBox tbTreatment1;
         private System.Windows.Forms.DataGridView dgSoilHydroCoeffs;
         private System.Windows.Forms.ComboBox cbSoilCoeffGroup;
-        private System.Windows.Forms.TextBox tbNumSoilLayers;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.DataGridViewTextBoxColumn area;
         private System.Windows.Forms.DataGridViewTextBoxColumn Thickness;
@@ -2701,18 +2693,14 @@
         private System.Windows.Forms.Button btnRemovePTS;
         private System.Windows.Forms.Button btnAddPTS;
         private System.Windows.Forms.ListBox lbPointSources;
-        private System.Windows.Forms.TextBox tbNPDESNumber;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.OpenFileDialog CatchmentOpenFileDialog;
         private System.Windows.Forms.GroupBox gbCEQUALW2chem;
         private System.Windows.Forms.Button btnSelectChemFile;
-        private System.Windows.Forms.TextBox tbCEQUALconcFile;
         private System.Windows.Forms.GroupBox gbCEQUALW2temp;
         private System.Windows.Forms.Button btnSelectTempFile;
-        private System.Windows.Forms.TextBox tbCEQUALtempFile;
         private System.Windows.Forms.GroupBox gbCEQUALW2flow;
         private System.Windows.Forms.Button btnSelectFlowFile;
-        private System.Windows.Forms.TextBox tbCEQUALflowFile;
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.CheckBox cbWriteCEQUALoutput;
         private System.Windows.Forms.Button btnToRemove;
@@ -2730,5 +2718,16 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Biozone;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Label label39;
+        private UtilityClasses.DoubleTextBox tbRoughness;
+        private UtilityClasses.DoubleTextBox tbDetention;
+        private UtilityClasses.DoubleTextBox tbSlope;
+        private UtilityClasses.DoubleTextBox tbAspect;
+        private UtilityClasses.DoubleTextBox tbWidth;
+        private UtilityClasses.Int64TextBox tbArea;
+        private UtilityClasses.Int32TextBox tbCatchID;
+        private UtilityClasses.DoubleTextBox tbAltLapse;
+        private UtilityClasses.DoubleTextBox tbTempLapse;
+        private UtilityClasses.DoubleTextBox tbPrecipWeight;
+        private UtilityClasses.DoubleTextBox tbMaxAccTime;
     }
 }
