@@ -693,48 +693,68 @@ namespace warmf {
         // need to change to creating a new shpfile layer on frmMap and show/hide it - MRL
         private void DrawMETStations()
         {
+            //delete previous version
+            if (File.Exists(Global.DIR.SHP + "MET.shp"))
+            {
+                File.Delete(Global.DIR.SHP + "MET.shp");
+            }
+            if (File.Exists(Global.DIR.SHP + "MET.shx"))
+            {
+                File.Delete(Global.DIR.SHP + "MET.shx");
+            }
+            if (File.Exists(Global.DIR.SHP + "MET.dbf"))
+            {
+                File.Delete(Global.DIR.SHP + "MET.dbf");
+            }
+            if (File.Exists(Global.DIR.SHP + "MET.cpg"))
+            {
+                File.Delete(Global.DIR.SHP + "MET.cpg");
+            }
+
             //get lat/long and station name data from MET files
             List<double> metLongLat = new List<double>();
             List<string> metName = new List<string>();
+            double[] coords = new double[2];
+            string[] fields = new string[1];
 
-            for (int ii = 0; ii < Global.coe.numMETFiles; ii++)
-            {
-                METFile met = new METFile(Global.DIR.MET + Global.coe.METFilename[ii]);
-                STechStreamReader sr = new STechStreamReader(Global.DIR.MET + Global.coe.METFilename[ii]);
-                met.ReadVersionLatLongName(ref sr);
-                metLongLat.Add(met.longitude);
-                metLongLat.Add(met.latitude);
-
-                metName.Add(met.shortName);
-                met = null;
-                sr = null;
-            }
-
-            double[] coords = metLongLat.ToArray();
-            string[] fieldData = metName.ToArray();
             ShapeFile sf = new ShapeFile(Global.DIR.SHP + "Untitled_Point.shp");
             DbfReader dbfReader = new DbfReader(Global.DIR.SHP + "Untitled_Point.shp");
-
-            //create a new ShapeFileWriter
-            ShapeFileWriter sfw;
-            sfw = ShapeFileWriter.CreateWriter(Global.DIR.SHP, "MET" , sf.ShapeType,
+            ShapeFileWriter sfw = ShapeFileWriter.CreateWriter(Global.DIR.SHP, "MET", sf.ShapeType,
                 dbfReader.DbfRecordHeader.GetFieldDescriptions());
 
-            //add records to the new shapefile
-
-            sfw.AddRecord(coords, coords.Length / 2, fieldData);
-            
-            
+            try
+            {
+                for (int i = 0; i < Global.coe.numMETFiles; i++)
+                {
+                    METFile met = new METFile(Global.DIR.MET + Global.coe.METFilename[i]);
+                    STechStreamReader sr = new STechStreamReader(Global.DIR.MET + Global.coe.METFilename[i]);
+                    met.ReadVersionLatLongName(ref sr);
+                    coords[0] = met.longitude;
+                    coords[1] = met.latitude;
+                    fields[0] = met.shortName;
+                    sfw.AddRecord(coords, 1, fields);
+                    met = null;
+                    sr = null;
+                    Array.Clear(coords, 0, coords.Length);
+                    Array.Clear(fields, 0, fields.Length);
+                }
+            }
+            finally
+            {
+                //close the shapefile, shapefilewriter and dbfreader
+                sfw.Close();
+                sf.Close();
+                dbfReader.Close();
+            }
 
             //Add MET stations shapefile
-            //this.frmMap.AddShapeFile(Global.DIR.SHP, "MET.shp", "Name");
-            //this.frmMap.AddShapeFile(Global.DIR.SHP + "Catchments.shp", "ShapeFile", "");
-            //EGIS.ShapeFileLib.ShapeFile catchShapefile = this.frmMap[0];
-            //catchShapefile.RenderSettings.UseToolTip = true;
-            //catchShapefile.RenderSettings.ToolTipFieldName = catchShapefile.RenderSettings.FieldName;
-            //catchShapefile.RenderSettings.IsSelectable = true;
-            //catchShapefile.RenderSettings.FillColor = Color.FromArgb(224, 250, 207);
-            //catchShapefile.RenderSettings.OutlineColor = Color.FromArgb(178, 178, 178);
+            this.frmMap.AddShapeFile(Global.DIR.SHP+"MET.shp","Meteorology Stations","Name");
+            EGIS.ShapeFileLib.ShapeFile metShapefile = this.frmMap[0];
+            metShapefile.RenderSettings.UseToolTip = true;
+            metShapefile.RenderSettings.ToolTipFieldName = metShapefile.RenderSettings.FieldName;
+            metShapefile.RenderSettings.IsSelectable = true;
+            metShapefile.RenderSettings.FillColor = Color.FromArgb(224, 250, 207);
+            metShapefile.RenderSettings.OutlineColor = Color.FromArgb(178, 178, 178);
 
 
 
@@ -744,7 +764,7 @@ namespace warmf {
 
 
 
-            
+
         }
 
         private void frmMap_Load(object sender, EventArgs e)
@@ -761,10 +781,10 @@ namespace warmf {
 
         private void frmMap_Paint(object sender, PaintEventArgs e)
         {
-            if (showMETStations)
-            {
-                DrawMETStations();
-            }
+            //if (showMETStations)
+            //{
+            //    DrawMETStations();
+            //}
 
         }
 
