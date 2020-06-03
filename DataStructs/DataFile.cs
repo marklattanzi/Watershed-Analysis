@@ -182,8 +182,8 @@ namespace warmf
 
             try
             {
-                string line;               
-                DataLine thisDataLine;
+                //string line;               
+                //DataLine thisDataLine;
                 sr = new STechStreamReader(filename);
 
                 ReadHeader(ref sr);

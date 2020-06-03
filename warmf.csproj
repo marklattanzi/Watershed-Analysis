@@ -108,6 +108,7 @@
     <Compile Include="Module Engineering\ScenarioManager.Designer.cs">
       <DependentUpon>ScenarioManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="UtilityClasses\STechShapes.cs" />
     <Compile Include="UtilityClasses\Extensions.cs" />
     <Compile Include="Module Engineering\DialogCatchCoeffs.cs">
       <SubType>Form</SubType>
