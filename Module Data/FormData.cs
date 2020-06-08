@@ -351,7 +351,7 @@ namespace warmf {
 					tboxStdDev.Text = Extensions.StdDev(data).ToString("0.00000");
 				}
 				catch (Exception e) {
-					// likely no data in file
+                    MessageBox.Show(e.Message, "Exception/Error", MessageBoxButtons.OK);
 				}
 
 				Series series = toolGraph.Series["data"];

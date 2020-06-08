@@ -24,7 +24,7 @@ namespace warmf.Module_Data
         // Reads the last data import linkages used and puts them in the data import spreadsheet
         public void SelectPreviousImport(string InputFileName, int NumHeaderLines, List<string> TheHeaders)
         {
-            int i, j, k, l;
+            int i, j;
             char linkageDelimiter = '|';
             int numHeaders = TheHeaders.Count / NumHeaderLines;
 

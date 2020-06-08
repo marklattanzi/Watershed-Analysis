@@ -808,7 +808,7 @@ namespace warmf {
         public List<River> rivers;
         public List<Reservoir> reservoirs;
 
-        public bool isTMDLSimulation;
+        //public bool isTMDLSimulation;
         #endregion
 
         #region Methods - Reading Coefficients
@@ -1591,7 +1591,7 @@ namespace warmf {
                 line = ReadSpacerLine(sr, "RIVER COEFFICIENTS");
                 rivers = new List<River>();
                 for (int ii = 0; ii < numRivers; ii++) {
-					line = ReadSpacerLine(sr, "RIVE");	// RIVE####  - can these have 5 digits?  MRL
+					line = ReadSpacerLine(sr, "RIVE");
                     River river = new River();
 					dnums = ReadDoubleData(sr, "STRE", 9);
 					river.idNum = (int)dnums[0];
@@ -3502,6 +3502,18 @@ namespace warmf {
                         obsWQFiles.Add(reservoirs[ii].reservoirSegs[jj].obsWQFilename);
 
             return obsWQFiles;
+        }
+
+        public void RunFilesCrosscheck()
+        //Read through the coefficient file and identify all FLO, MET, PTS, ORC, ORH, OLC, OLH files
+        //Cross-reference these lists with the files contained in the corresponding /input/ directory
+        //Highlight any files that exist in the COE but not in the /input/ directories
+        {
+            //MET Files
+            for (int i = 0; i < Global.coe.numMETFiles; i++)
+            {
+
+            }
         }
 
         #endregion

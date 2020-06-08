@@ -11,6 +11,7 @@ using EGIS.ShapeFileLib;
 namespace warmf {
     public partial class FormMain : Form
     {
+        #region Declarations
         private FormData frmData;
         private FormKnowledge frmKnow;
         private FormManager frmManager;
@@ -19,6 +20,11 @@ namespace warmf {
 
         // what's on the map
         bool showMETStations = false;
+        bool showGageStations = false;
+        bool showWQStations = false;
+        bool showFLOStations = false;
+        bool showPTSStations = false;
+        bool showAIRStations = false;
 
         public LayerInfo catchmentLayer;
         public LayerInfo riverLayer;
@@ -48,6 +54,7 @@ namespace warmf {
             public string Name;
             public string FileName;
         }
+        #endregion
 
         public FormMain()
         {
@@ -65,13 +72,6 @@ namespace warmf {
             frmConsensus = new FormConsensus(this);
             frmTMDL = new FormTMDL(this);
 
-            // dialogs called from within the Engineering Module (River Coefficients,
-            // Catchment Coefficients, System Coefficients, Reservoir Coefficients)
-            //dlgRiverCoeffs = new DialogRiverCoeffs(this); // used in Engineering module to show river coefficients
-            //dlgCatchCoeffs = new DialogCatchCoeffs(this); // used in Engineering module to show catchment coefficients
-            //dlgSystemCoeffs = new DialogSystemCoeffs(this); //used in Engineering module to show the system coefficients
-            //dlgReservoirCoeffs = new DialogReservoirCoeffs(this); //used in Engineering module to show the reservoir coefficients
-            //dlgOutput = new DialogOutput(this); //used to display output
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -103,41 +103,10 @@ namespace warmf {
         // Loads the catchment, river, and reservoir shapefiles
         private void LoadCatchmentRiverReservoirShapefiles()
         {
-            //Add catchments shapefile
-            this.frmMap.AddShapeFile(Global.DIR.SHP + catchmentLayer.FileName, "ShapeFile", "");
-            EGIS.ShapeFileLib.ShapeFile catchShapefile = this.frmMap[0];
-            catchShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
-            catchShapefile.RenderSettings.UseToolTip = true;
-            catchShapefile.RenderSettings.ToolTipFieldName = catchShapefile.RenderSettings.FieldName;
-            catchShapefile.RenderSettings.IsSelectable = true;
-            catchShapefile.RenderSettings.FillColor = Color.FromArgb(224, 250, 207);
-            catchShapefile.RenderSettings.OutlineColor = Color.FromArgb(178, 178, 178);
-            ////Add rivers shapefile
-            this.frmMap.AddShapeFile(Global.DIR.SHP + riverLayer.FileName, "ShapeFile", "");
-            EGIS.ShapeFileLib.ShapeFile riverShapefile = this.frmMap[1];
-            riverShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
-            riverShapefile.RenderSettings.UseToolTip = true;
-            riverShapefile.RenderSettings.ToolTipFieldName = catchShapefile.RenderSettings.FieldName;
-            riverShapefile.RenderSettings.IsSelectable = true;
-            riverShapefile.RenderSettings.LineType = LineType.Solid;
-            riverShapefile.RenderSettings.OutlineColor = Color.FromArgb(0, 0, 255);
-            //add reservoirs shapefile
-            this.frmMap.AddShapeFile(Global.DIR.SHP + reservoirLayer.FileName, "ShapeFile", "");
-            EGIS.ShapeFileLib.ShapeFile lakeShapefile = this.frmMap[2];
-            lakeShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
-            lakeShapefile.RenderSettings.UseToolTip = true;
-            lakeShapefile.RenderSettings.ToolTipFieldName = catchShapefile.RenderSettings.FieldName;
-            lakeShapefile.RenderSettings.IsSelectable = true;
-            lakeShapefile.RenderSettings.FillColor = Color.FromArgb(151, 219, 242);
-            lakeShapefile.RenderSettings.OutlineColor = Color.FromArgb(61, 101, 235);
-        }
-
-        private void LoadDefault()
-        {
             try
             {
                 //Add catchments shapefile (shapefile [0])
-                this.frmMap.AddShapeFile(Global.DIR.SHP + "Catchments.shp", "ShapeFile", "");
+                this.frmMap.AddShapeFile(Global.DIR.SHP + "Catchments.shp", "Catchments", "");
                 EGIS.ShapeFileLib.ShapeFile catchShapefile = this.frmMap[0];
                 catchShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
                 catchShapefile.RenderSettings.UseToolTip = true;
@@ -146,7 +115,7 @@ namespace warmf {
                 catchShapefile.RenderSettings.FillColor = Color.FromArgb(224, 250, 207);
                 catchShapefile.RenderSettings.OutlineColor = Color.FromArgb(178, 178, 178);
                 //Add rivers shapefile (shapefile [1])
-                this.frmMap.AddShapeFile(Global.DIR.SHP + "Rivers.shp", "ShapeFile", "");
+                this.frmMap.AddShapeFile(Global.DIR.SHP + "Rivers.shp", "Rivers", "");
                 EGIS.ShapeFileLib.ShapeFile riverShapefile = this.frmMap[1];
                 riverShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
                 riverShapefile.RenderSettings.UseToolTip = true;
@@ -155,7 +124,7 @@ namespace warmf {
                 riverShapefile.RenderSettings.LineType = LineType.Solid;
                 riverShapefile.RenderSettings.OutlineColor = Color.FromArgb(0, 0, 255);
                 //add reservoirs shapefile (shapefile [2])
-                this.frmMap.AddShapeFile(Global.DIR.SHP + "Lakes.shp", "ShapeFile", "");
+                this.frmMap.AddShapeFile(Global.DIR.SHP + "Lakes.shp", "Lakes", "");
                 EGIS.ShapeFileLib.ShapeFile lakeShapefile = this.frmMap[2];
                 lakeShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
                 lakeShapefile.RenderSettings.UseToolTip = true;
@@ -170,6 +139,283 @@ namespace warmf {
             }
         }
 
+        private void SetupEngrModule()
+        {
+            pboxSplash.Hide();
+            frmMap.Show();
+            miFileClose.Visible = true;
+            miFileImport.Visible = true;
+            miFileExport.Visible = true;
+            miFileSep1.Visible = true;
+            miFileSave.Visible = true;
+            miFileSaveAs.Visible = true;
+            miFilePrint.Visible = true;
+            miFilePrintPreview.Visible = true;
+            miFilePrinterSetup.Visible = true;
+
+            miTopEdit.Visible = true;
+            miTopView.Visible = true;
+            miTopMode.Visible = true;
+            miModeInput.Select();
+            miModeInput.BackColor = System.Drawing.SystemColors.Highlight;
+            miModule.Visible = true;
+            miTopScenario.Visible = true;
+            miTopDocument.Visible = true;
+            miTopWindow.Visible = true;
+
+            lblLatLong.Visible = true;
+            frmMap.Focus();
+        }
+
+        public void ShowForm(string name)
+        {
+            //this.Hide();	// ENGR window is always visible - MRL
+            frmKnow.Hide();
+            frmData.Hide();
+            frmManager.Hide();
+            frmTMDL.Hide();
+            frmConsensus.Hide();
+
+            Logger.Info("Showing form " + name);
+            switch (name)
+            {
+                case "engineering": this.Show(); break;
+                case "knowledge": frmKnow.Show(); break;
+                case "data": frmData.Show(); break;
+                case "manager": frmManager.Show(); break;
+                case "tmdl": frmTMDL.Show(); break;
+                case "consensus": frmConsensus.Show(); break;
+            }
+        }
+
+        #region Map Interaction Events
+        private void frmMap_MapDoubleClick(object sender, EGIS.Controls.SFMap.MapDoubleClickedEventArgs e)
+        {
+            e.Cancel = true;
+        }
+
+        private void frmMap_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+
+            int CatchmentRecordIndex = frmMap.GetShapeIndexAtPixelCoord(0, e.Location, 8);
+            int riverRecordIndex = frmMap.GetShapeIndexAtPixelCoord(1, e.Location, 8);
+            int reservoirRecordIndex = frmMap.GetShapeIndexAtPixelCoord(2, e.Location, 8);
+
+            if (riverRecordIndex >= 0) //River segment selected - River coefficients
+            {
+                string[] recordAttributes = frmMap[1].GetAttributeFieldValues(riverRecordIndex);
+                string[] attributeNames = frmMap[1].GetAttributeFieldNames();
+                int n = 0;
+                while (attributeNames[n] != "WARMF_ID") //test of shapefile attributes
+                {
+                    if (n < (attributeNames.Length - 1))
+                        n++;
+                    else
+                    {
+                        Debug.WriteLine("No WARMF_ID Field found in catchments attribute table");
+                        return;
+                    }
+                }
+                int riverID = Int32.Parse(recordAttributes[n]);
+                int ii = 0;
+                while (Global.coe.rivers[ii].idNum != riverID) //test of coefficients file read
+                    if (ii < Global.coe.numRivers - 1)
+                        ii++;
+                    else
+                    {
+                        Debug.WriteLine("No river found with IDnum = " + riverID);
+                        return;
+                    }
+                if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
+                {
+                    using (dlgRiverCoeffs = new DialogRiverCoeffs(this))
+                    {
+                        dlgRiverCoeffs.Populate(ii);
+                        if (dlgRiverCoeffs.ShowDialog() == DialogResult.OK)
+                            scenarioChanged = true;
+                    }
+                }
+                else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
+                {
+                    using (dlgOutput = new DialogOutput(this))
+                    {
+                        dlgOutput.Populate("River", ii);
+                        dlgOutput.ShowDialog();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Gowdy or Herr Output Selected");
+                }
+
+            }
+            else if (reservoirRecordIndex >= 0) //Reservoir segment selected - Reservoir coefficients
+            {
+                string[] recordAttributes = frmMap[2].GetAttributeFieldValues(reservoirRecordIndex);
+                string[] attributeNames = frmMap[2].GetAttributeFieldNames();
+                int n = 0;
+                while (attributeNames[n] != "WARMF_ID") //test of shapefile attributes
+                {
+                    if (n < (attributeNames.Length - 1))
+                        n++;
+                    else
+                    {
+                        Debug.WriteLine("No WARMF_ID Field found in reservoirs attribute table");
+                        return;
+                    }
+                }
+                int reservoirID = Int32.Parse(recordAttributes[n]);
+
+                int iRes = 0;
+                int iSeg = 0;
+                while (Global.coe.reservoirs[iRes].reservoirSegs[iSeg].idNum != reservoirID) //test of coefficients file read
+                    if (iSeg < Global.coe.reservoirs[iRes].numSegments - 1)
+                        iSeg++;
+                    else
+                        if (iRes < Global.coe.numReservoirs - 1)
+                        iRes++;
+                    else
+                    {
+                        Debug.WriteLine("No reservoir found with IDnum = " + reservoirID);
+                        return;
+                    }
+                if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
+                {
+                    using (dlgReservoirCoeffs = new DialogReservoirCoeffs(this))
+                    {
+                        dlgReservoirCoeffs.Populate(iRes, iSeg);
+                        if (dlgReservoirCoeffs.ShowDialog() == DialogResult.OK)
+                            scenarioChanged = true;
+                    }
+                }
+                else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
+                {
+                    //need to populate the dialog - but is it the same dialog as is used for catchments and rivers?
+                    using (dlgOutput = new DialogOutput(this))
+                    {
+                        dlgOutput.ShowDialog();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Gowdy or Herr Output Selected");
+                }
+            }
+            else if (CatchmentRecordIndex >= 0) //Catchment selected - Catchment coefficients
+            {
+                string[] recordAttributes = frmMap[0].GetAttributeFieldValues(CatchmentRecordIndex);
+                string[] attributeNames = frmMap[0].GetAttributeFieldNames();
+                int n = 0;
+                while (attributeNames[n] != "WARMF_ID") //test of shapefile attributes
+                {
+                    if (n < (attributeNames.Length - 1))
+                        n++;
+                    else
+                    {
+                        Debug.WriteLine("No WARMF_ID Field found in catchments attribute table");
+                        return;
+                    }
+                }
+                int catchID = Int32.Parse(recordAttributes[n]);
+                int ii = 0;
+                while (Global.coe.catchments[ii].idNum != catchID) //test of coefficients file read
+                    if (ii < Global.coe.numCatchments - 1)
+                        ii++;
+                    else
+                    {
+                        Debug.WriteLine("No catchment found with IDnum = " + catchID);
+                        return;
+                    }
+                if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
+                {
+                    using (dlgCatchCoeffs = new DialogCatchCoeffs(this))
+                    {
+                        dlgCatchCoeffs.Populate(ii);
+                        if (dlgCatchCoeffs.ShowDialog() == DialogResult.OK)
+                            scenarioChanged = true;
+                    }
+                }
+                else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
+                {
+                    using (dlgOutput = new DialogOutput(this))
+                    {
+                        dlgOutput.Populate("Catchment", ii);
+                        dlgOutput.ShowDialog();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Gowdy or Herr Output Selected");
+                }
+            }
+
+            else //System coefficients
+            {
+                if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
+                {
+                    using (dlgSystemCoeffs = new DialogSystemCoeffs(this))
+                    {
+                        dlgSystemCoeffs.Populate();
+                        if (dlgSystemCoeffs.ShowDialog() == DialogResult.OK)
+                            scenarioChanged = true;
+                    }
+                }
+                else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
+                {
+                    MessageBox.Show("Display Spatial Output Dialog");
+                }
+                else
+                {
+                    MessageBox.Show("Gowdy or Herr Output Selected");
+                }
+            }
+        }
+
+        private void frmMap_Load(object sender, EventArgs e)
+        {
+            this.frmMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMap_MouseMove);
+            this.frmMap.Paint += new System.Windows.Forms.PaintEventHandler(this.frmMap_Paint);
+        }
+
+        private void frmMap_MouseMove(object sender, MouseEventArgs e)
+        {
+            PointD pt = frmMap.PixelCoordToGisPoint(e.Y, e.X);
+            lblLatLong.Text = "Lat/Long: " + pt.Y + ", " + pt.X;
+        }
+
+        private void frmMap_Paint(object sender, PaintEventArgs e)
+        {
+            //if (showMETStations)
+            //{
+            //    DrawMETStations();
+            //}
+
+        }
+
+        #endregion
+
+        private void pboxSplash_Click(object sender, EventArgs e)
+        {
+            LoadCatchmentRiverReservoirShapefiles();
+            SetupEngrModule();  // shortcut to load SHP file --MRL
+
+            // read in Coefficients file
+            string fname = Global.DIR.COE + "Catawba.coe";
+
+            if (!Global.coe.ReadCOE(fname))
+            {
+                MessageBox.Show(this, "Error reading coefficients file.", "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+            }
+        }
+
+        private void miHelpAbout_Click(object sender, EventArgs e)
+        {
+            WMDialog popup = new WMDialog("About WARMF", "Watershed Analysis Risk Management Framework\nVersion 7.0\n\nCopyright 2018\nSystech Inc.\nWalnut Creek, CA\nAll rights reserved.", false);
+            popup.SetTextColor(System.Drawing.Color.Green);
+            popup.ShowDialog();
+        }
+
+        #region File Menu Events
         private void miFileOpen_Click(object sender, EventArgs e)
         {
             int i;
@@ -358,242 +604,14 @@ namespace warmf {
             }
         }
 
-        private void SetupEngrModule()
-        {
-            pboxSplash.Hide();
-            frmMap.Show();
-            miFileClose.Visible = true;
-            miFileImport.Visible = true;
-            miFileExport.Visible = true;
-            miFileSep1.Visible = true;
-            miFileSave.Visible = true;
-            miFileSaveAs.Visible = true;
-            miFilePrint.Visible = true;
-            miFilePrintPreview.Visible = true;
-            miFilePrinterSetup.Visible = true;
-
-            miTopEdit.Visible = true;
-            miTopView.Visible = true;
-            miTopMode.Visible = true;
-            miModeInput.Select();
-            miModeInput.BackColor = System.Drawing.SystemColors.Highlight;
-            miModule.Visible = true;
-            miTopScenario.Visible = true;
-            miTopDocument.Visible = true;
-            miTopWindow.Visible = true;
-
-            lblLatLong.Visible = true;
-            frmMap.Focus();
-        }
-
-        public void ShowForm(string name)
-        {
-            //this.Hide();	// ENGR window is always visible - MRL
-            frmKnow.Hide();
-            frmData.Hide();
-            frmManager.Hide();
-            frmTMDL.Hide();
-            frmConsensus.Hide();
-
-            Logger.Info("Showing form " + name);
-            switch (name)
-            {
-                case "engineering": this.Show(); break;
-                case "knowledge": frmKnow.Show(); break;
-                case "data": frmData.Show(); break;
-                case "manager": frmManager.Show(); break;
-                case "tmdl": frmTMDL.Show(); break;
-                case "consensus": frmConsensus.Show(); break;
-            }
-        }
-
-        private void frmMap_MapDoubleClick(object sender, EGIS.Controls.SFMap.MapDoubleClickedEventArgs e)
-        {
-            e.Cancel = true;
-        }
-
-        private void frmMap_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-
-            int CatchmentRecordIndex = frmMap.GetShapeIndexAtPixelCoord(0, e.Location, 8);
-            int riverRecordIndex = frmMap.GetShapeIndexAtPixelCoord(1, e.Location, 8);
-            int reservoirRecordIndex = frmMap.GetShapeIndexAtPixelCoord(2, e.Location, 8);
-
-            if (riverRecordIndex >= 0) //River segment selected - River coefficients
-            {
-                string[] recordAttributes = frmMap[1].GetAttributeFieldValues(riverRecordIndex);
-                string[] attributeNames = frmMap[1].GetAttributeFieldNames();
-                int n = 0;
-                while (attributeNames[n] != "WARMF_ID") //test of shapefile attributes
-                {
-                    if (n < (attributeNames.Length - 1))
-                        n++;
-                    else
-                    {
-                        Debug.WriteLine("No WARMF_ID Field found in catchments attribute table");
-                        return;
-                    }
-                }
-                int riverID = Int32.Parse(recordAttributes[n]);
-                int ii = 0;
-                while (Global.coe.rivers[ii].idNum != riverID) //test of coefficients file read
-                    if (ii < Global.coe.numRivers - 1)
-                        ii++;
-                    else
-                    {
-                        Debug.WriteLine("No river found with IDnum = " + riverID);
-                        return;
-                    }
-                if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
-                {
-                    using (dlgRiverCoeffs = new DialogRiverCoeffs(this))
-                    {
-                        dlgRiverCoeffs.Populate(ii);
-                        if (dlgRiverCoeffs.ShowDialog() == DialogResult.OK)
-                            scenarioChanged = true;
-                    }
-                }
-                else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
-                {
-                    using (dlgOutput = new DialogOutput(this))
-                    {
-                        dlgOutput.Populate("River", ii);
-                        dlgOutput.ShowDialog();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Gowdy or Herr Output Selected");
-                }
-                
-            }
-            else if (reservoirRecordIndex >= 0) //Reservoir segment selected - Reservoir coefficients
-            {
-                string[] recordAttributes = frmMap[2].GetAttributeFieldValues(reservoirRecordIndex);
-                string[] attributeNames = frmMap[2].GetAttributeFieldNames();
-                int n = 0;
-                while (attributeNames[n] != "WARMF_ID") //test of shapefile attributes
-                {
-                    if (n < (attributeNames.Length - 1))
-                        n++;
-                    else
-                    {
-                        Debug.WriteLine("No WARMF_ID Field found in reservoirs attribute table");
-                        return;
-                    }
-                }
-                int reservoirID = Int32.Parse(recordAttributes[n]);
-
-                int iRes = 0;
-                int iSeg = 0;
-                while (Global.coe.reservoirs[iRes].reservoirSegs[iSeg].idNum != reservoirID) //test of coefficients file read
-                    if (iSeg < Global.coe.reservoirs[iRes].numSegments - 1)
-                        iSeg++;
-                    else
-                        if (iRes < Global.coe.numReservoirs - 1)
-                        iRes++;
-                    else
-                    {
-                        Debug.WriteLine("No reservoir found with IDnum = " + reservoirID);
-                        return;
-                    }
-                if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
-                {
-                    using (dlgReservoirCoeffs = new DialogReservoirCoeffs(this))
-                    {
-                        dlgReservoirCoeffs.Populate(iRes, iSeg);
-                        if (dlgReservoirCoeffs.ShowDialog() == DialogResult.OK)
-                            scenarioChanged = true;
-                    }
-                }
-                else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
-                {
-                    //need to populate the dialog - but is it the same dialog as is used for catchments and rivers?
-                    using (dlgOutput = new DialogOutput(this))
-                    {
-                        dlgOutput.ShowDialog();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Gowdy or Herr Output Selected");
-                }
-            }
-            else if (CatchmentRecordIndex >= 0) //Catchment selected - Catchment coefficients
-            {
-                string[] recordAttributes = frmMap[0].GetAttributeFieldValues(CatchmentRecordIndex);
-                string[] attributeNames = frmMap[0].GetAttributeFieldNames();
-                int n = 0;
-                while (attributeNames[n] != "WARMF_ID") //test of shapefile attributes
-                {
-                    if (n < (attributeNames.Length - 1))
-                        n++;
-                    else
-                    {
-                        Debug.WriteLine("No WARMF_ID Field found in catchments attribute table");
-                        return;
-                    }
-                }
-                int catchID = Int32.Parse(recordAttributes[n]);
-                int ii = 0;
-                while (Global.coe.catchments[ii].idNum != catchID) //test of coefficients file read
-                    if (ii < Global.coe.numCatchments - 1)
-                        ii++;
-                    else
-                    {
-                        Debug.WriteLine("No catchment found with IDnum = " + catchID);
-                        return;
-                    }
-                if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
-                {
-                    using (dlgCatchCoeffs = new DialogCatchCoeffs(this))
-                    {
-                        dlgCatchCoeffs.Populate(ii);
-                        if (dlgCatchCoeffs.ShowDialog() == DialogResult.OK)
-                            scenarioChanged = true;
-                    }
-                }
-                else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
-                {
-                    using (dlgOutput = new DialogOutput(this))
-                    {
-                        dlgOutput.Populate("Catchment", ii);
-                        dlgOutput.ShowDialog();
-                    } 
-                }
-                else
-                {
-                    MessageBox.Show("Gowdy or Herr Output Selected");
-                }
-            }
-
-            else //System coefficients
-            {
-                if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
-                {
-                    using (dlgSystemCoeffs = new DialogSystemCoeffs(this))
-                    {
-                        dlgSystemCoeffs.Populate();
-                        if (dlgSystemCoeffs.ShowDialog() == DialogResult.OK)
-                            scenarioChanged = true;
-                    }
-                }
-                else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
-                {
-                    MessageBox.Show("Display Spatial Output Dialog");
-                }
-                else
-                {
-                    MessageBox.Show("Gowdy or Herr Output Selected");
-                }
-            }
-        }
-
         private void miFileExit_Click(object sender, EventArgs e)
         {
             System.Windows.Forms.Application.Exit();
         }
 
+        #endregion
+
+        #region Edit Menu Events
         private void miEditZoomIn_Click(object sender, EventArgs e)
         {
             if (frmMap.ZoomLevel < 10)
@@ -609,185 +627,182 @@ namespace warmf {
                 frmMap.ZoomLevel /= 2;
             }
         }
+        #endregion
 
-        private void pboxSplash_Click(object sender, EventArgs e)
-        {
-            LoadDefault();
-            SetupEngrModule();  // shortcut to load SHP file --MRL
-
-            // read in Coefficients file
-            string fname = Global.DIR.COE + "Catawba.coe";
-
-            if (!Global.coe.ReadCOE(fname))
-            {
-                MessageBox.Show(this, "Error reading coefficients file.", "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
-            }
-        }
-
-        private void miHelpAbout_Click(object sender, EventArgs e)
-        {
-            WMDialog popup = new WMDialog("About WARMF", "Watershed Analysis Risk Management Framework\nVersion 7.0\n\nCopyright 2018\nSysTech Inc.\nWalnut Creek, CA\nAll rights reserved.", false);
-            popup.SetTextColor(System.Drawing.Color.Green);
-            popup.ShowDialog();
-        }
-
-        private void miData_Click(object sender, EventArgs e)
-        {
-            ShowForm("data");
-        }
-
-        private void miKnowledge_Click(object sender, EventArgs e)
-        {
-            ShowForm("knowledge");
-        }
-
-        private void miManager_Click(object sender, EventArgs e)
-        {
-            ShowForm("manager");
-        }
-
-        private void miTMDL_Click(object sender, EventArgs e)
-        {
-            ShowForm("tmdl");
-        }
-
-        private void miConsensus_Click(object sender, EventArgs e)
-        {
-            ShowForm("consensus");
-        }
-
-        private void miEngineering_Click(object sender, EventArgs e)
-        {
-            ShowForm("engineering");
-        }
-
-        private void DrawMarker(Graphics g, double longitude, double latitude)
-        {
-            Point pt = frmMap.GisPointToPixelCoord(longitude, latitude);
-            int width = 10;
-
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            g.DrawLine(Pens.Red, pt.X, pt.Y - width, pt.X, pt.Y + width);
-            g.DrawLine(Pens.Red, pt.X - width, pt.Y, pt.X + width, pt.Y);
-            pt.Offset(-width / 2, -width / 2);
-            g.FillEllipse(Brushes.Yellow, pt.X, pt.Y, width, width);
-            g.DrawEllipse(Pens.Red, pt.X, pt.Y, width, width);
-        }
-
+        #region View Menu Events
         private void miMETStations_Click(object sender, EventArgs e)
         {
-            //show MET stations on map
-            if (showMETStations)
+            if (showMETStations) //remove points from map
             {
                 showMETStations = false;
                 miViewMETStations.Text = miViewMETStations.Text.Substring(1);
+                for (int i = 0; i < frmMap.ShapeFileCount; i++)
+                {
+                    if (frmMap[i].Name == "Meteorology Stations")
+                    {
+                        frmMap.RemoveShapeFile(frmMap[i]);
+                    }
+                }
                 frmMap.Refresh();
                 return;
             }
-            showMETStations = true;
-            miViewMETStations.Text = Global.checkmark + miViewMETStations.Text;
-            DrawMETStations();
-            frmMap.Refresh();
-        }
-
-        // need to change to creating a new shpfile layer on frmMap and show/hide it - MRL
-        private void DrawMETStations()
-        {
-            //delete previous version
-            if (File.Exists(Global.DIR.SHP + "MET.shp"))
+            else //add points to map
             {
-                File.Delete(Global.DIR.SHP + "MET.shp");
-            }
-            if (File.Exists(Global.DIR.SHP + "MET.shx"))
-            {
-                File.Delete(Global.DIR.SHP + "MET.shx");
-            }
-            if (File.Exists(Global.DIR.SHP + "MET.dbf"))
-            {
-                File.Delete(Global.DIR.SHP + "MET.dbf");
-            }
-            if (File.Exists(Global.DIR.SHP + "MET.cpg"))
-            {
-                File.Delete(Global.DIR.SHP + "MET.cpg");
-            }
-
-            //get lat/long and station name data from MET files
-            List<double> metLongLat = new List<double>();
-            List<string> metName = new List<string>();
-            double[] coords = new double[2];
-            string[] fields = new string[1];
-
-            ShapeFile sf = new ShapeFile(Global.DIR.SHP + "Untitled_Point.shp");
-            DbfReader dbfReader = new DbfReader(Global.DIR.SHP + "Untitled_Point.shp");
-            ShapeFileWriter sfw = ShapeFileWriter.CreateWriter(Global.DIR.SHP, "MET", sf.ShapeType,
-                dbfReader.DbfRecordHeader.GetFieldDescriptions());
-
-            try
-            {
-                for (int i = 0; i < Global.coe.numMETFiles; i++)
+                if (STechShapes.CreateShapeFile("MET"))
                 {
-                    METFile met = new METFile(Global.DIR.MET + Global.coe.METFilename[i]);
-                    STechStreamReader sr = new STechStreamReader(Global.DIR.MET + Global.coe.METFilename[i]);
-                    met.ReadVersionLatLongName(ref sr);
-                    coords[0] = met.longitude;
-                    coords[1] = met.latitude;
-                    fields[0] = met.shortName;
-                    sfw.AddRecord(coords, 1, fields);
-                    met = null;
-                    sr = null;
-                    Array.Clear(coords, 0, coords.Length);
-                    Array.Clear(fields, 0, fields.Length);
+                    this.frmMap.AddShapeFile(Global.DIR.SHP + "MET.shp", "Meteorology Stations", "Name");
+                    showMETStations = true;
+                    miViewMETStations.Text = Global.checkmark + miViewMETStations.Text;
+                    frmMap.Refresh();
                 }
             }
-            finally
+        }
+
+        private void miViewGagingStations_Click(object sender, EventArgs e)
+        {
+            if (showGageStations) //remove points from map
             {
-                //close the shapefile, shapefilewriter and dbfreader
-                sfw.Close();
-                sf.Close();
-                dbfReader.Close();
+                showGageStations = false;
+                miViewGagingStations.Text = miViewGagingStations.Text.Substring(1);
+                for (int i = 0; i < frmMap.ShapeFileCount; i++)
+                {
+                    if (frmMap[i].Name == "Gaging Stations")
+                    {
+                        frmMap.RemoveShapeFile(frmMap[i]);
+                    }
+                }
+                frmMap.Refresh();
+                return;
             }
-
-            //Add MET stations shapefile
-            this.frmMap.AddShapeFile(Global.DIR.SHP+"MET.shp","Meteorology Stations","Name");
-            EGIS.ShapeFileLib.ShapeFile metShapefile = this.frmMap[0];
-            metShapefile.RenderSettings.UseToolTip = true;
-            metShapefile.RenderSettings.ToolTipFieldName = metShapefile.RenderSettings.FieldName;
-            metShapefile.RenderSettings.IsSelectable = true;
-            metShapefile.RenderSettings.FillColor = Color.FromArgb(224, 250, 207);
-            metShapefile.RenderSettings.OutlineColor = Color.FromArgb(178, 178, 178);
-
-
-
-
-
-
-
-
-
-
+            else //add points to map
+            {
+                if (STechShapes.CreateShapeFile("ORH"))
+                {
+                    this.frmMap.AddShapeFile(Global.DIR.SHP + "ORH.shp", "Gaging Stations", "Name");
+                    showGageStations = true;
+                    miViewGagingStations.Text = Global.checkmark + miViewGagingStations.Text;
+                    frmMap.Refresh();
+                }
+            }
         }
 
-        private void frmMap_Load(object sender, EventArgs e)
+        private void miViewWQStations_Click(object sender, EventArgs e)
         {
-            this.frmMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMap_MouseMove);
-            this.frmMap.Paint += new System.Windows.Forms.PaintEventHandler(this.frmMap_Paint);
+            if (showWQStations) //remove points from map
+            {
+                showWQStations = false;
+                miViewWQStations.Text = miViewWQStations.Text.Substring(1);
+                for (int i = 0; i < frmMap.ShapeFileCount; i++)
+                {
+                    if (frmMap[i].Name == "Water Quality Stations")
+                    {
+                        frmMap.RemoveShapeFile(frmMap[i]);
+                    }
+
+                }
+
+                frmMap.Refresh();
+                return;
+            }
+            else //add points to map
+            {
+                if (STechShapes.CreateShapeFile("ORC"))
+                {
+                    this.frmMap.AddShapeFile(Global.DIR.SHP + "ORC.shp", "Water Quality Stations", "Name");
+                    showWQStations = true;
+                    miViewWQStations.Text = Global.checkmark + miViewWQStations.Text;
+                    frmMap.Refresh();
+                }
+            }
         }
 
-        private void frmMap_MouseMove(object sender, MouseEventArgs e)
+        private void miViewManagedFlow_Click(object sender, EventArgs e)
         {
-            PointD pt = frmMap.PixelCoordToGisPoint(e.Y, e.X);
-            lblLatLong.Text = "Lat/Long: " + pt.Y + ", " + pt.X;
+            if (showFLOStations) //remove points from map
+            {
+                showFLOStations = false;
+                miViewManagedFlow.Text = miViewManagedFlow.Text.Substring(1);
+                for (int i = 0; i < frmMap.ShapeFileCount; i++)
+                {
+                    if (frmMap[i].Name == "Managed Flow")
+                    {
+                        frmMap.RemoveShapeFile(frmMap[i]);
+                    }
+                }
+                frmMap.Refresh();
+                return;
+            }
+            else //add points to map
+            {
+                if (STechShapes.CreateShapeFile("FLO"))
+                {
+                    this.frmMap.AddShapeFile(Global.DIR.SHP + "FLO.shp", "Managed Flow", "Name");
+                    showFLOStations = true;
+                    miViewManagedFlow.Text = Global.checkmark + miViewManagedFlow.Text;
+                    frmMap.Refresh();
+                }
+            }
         }
 
-        private void frmMap_Paint(object sender, PaintEventArgs e)
+        private void miViewPointSources_Click(object sender, EventArgs e)
         {
-            //if (showMETStations)
-            //{
-            //    DrawMETStations();
-            //}
-
+            if (showPTSStations) //remove points from map
+            {
+                showPTSStations = false;
+                miViewPointSources.Text = miViewPointSources.Text.Substring(1);
+                for (int i = 0; i < frmMap.ShapeFileCount; i++)
+                {
+                    if (frmMap[i].Name == "Point Sources")
+                    {
+                        frmMap.RemoveShapeFile(frmMap[i]);
+                    }
+                }
+                frmMap.Refresh();
+                return;
+            }
+            else //add points to map
+            {
+                if (STechShapes.CreateShapeFile("PTS"))
+                {
+                    this.frmMap.AddShapeFile(Global.DIR.SHP + "PTS.shp", "Point Sources", "Name");
+                    showPTSStations = true;
+                    miViewPointSources.Text = Global.checkmark + miViewPointSources.Text;
+                    frmMap.Refresh();
+                }
+                
+            }
         }
 
+        private void miViewAirQualityStations_Click(object sender, EventArgs e)
+        {
+            if (showAIRStations) //remove points from map
+            {
+                showAIRStations = false;
+                miViewAirQualityStations.Text = miViewAirQualityStations.Text.Substring(1);
+                for (int i = 0; i < frmMap.ShapeFileCount; i++)
+                {
+                    if (frmMap[i].Name == "Air Quality Stations")
+                    {
+                        frmMap.RemoveShapeFile(frmMap[i]);
+                    }
+                }
+                frmMap.Refresh();
+                return;
+            }
+            else //add points to map
+            {
+                if (STechShapes.CreateShapeFile("AIR"))
+                {
+                    this.frmMap.AddShapeFile(Global.DIR.SHP + "AIR.shp", "Air Quality Stations", "Name");
+                    showAIRStations = true;
+                    miViewAirQualityStations.Text = Global.checkmark + miViewAirQualityStations.Text;
+                    frmMap.Refresh();
+                }
+            }
+        }
+        #endregion
+
+        #region Mode Menu Events
         private void miModeOutput_Click(object sender, EventArgs e)
         {
             miModeInput.BackColor = System.Drawing.SystemColors.Control;
@@ -819,7 +834,9 @@ namespace warmf {
             miModeLongGowdyOutput.BackColor = System.Drawing.SystemColors.Highlight;
             miModeOutput.BackColor = System.Drawing.SystemColors.Control;
         }
+        #endregion
 
+        #region Scenario Menu Events
         private void miScenarioSave_Click(object sender, EventArgs e)
         {
             int activeScenario = GetActiveScenario();
@@ -969,7 +986,7 @@ namespace warmf {
                 dlgRunSimulation.Populate();
                 dlgRunSimulation.ShowDialog();
             }
-            
+
         }
 
         private void miScenarioManager_Click(object sender, EventArgs e)
@@ -1016,7 +1033,7 @@ namespace warmf {
                     // Previous active scenario is no longer an open scenario
                     // Set the first open scenario to be active and read its coefficient file
                     newActiveScenario = GetOpenScenario(0);
-//                    Global.coe.ReadCOE(Global.DIR.COE + scenarios[0].Name);
+                    //                    Global.coe.ReadCOE(Global.DIR.COE + scenarios[0].Name);
                 }
 
                 SetActiveScenario(newActiveScenario);
@@ -1065,7 +1082,7 @@ namespace warmf {
                 }
             return -1;
         }
-        
+
         // Returns the number of scenarios in the master list which are open
         private int GetNumberOfOpenScenarios()
         {
@@ -1140,6 +1157,45 @@ namespace warmf {
 
             return result;
         }
+        #endregion
+
+        #region Module Menu Events
+        private void miData_Click(object sender, EventArgs e)
+        {
+            ShowForm("data");
+        }
+
+        private void miKnowledge_Click(object sender, EventArgs e)
+        {
+            ShowForm("knowledge");
+        }
+
+        private void miManager_Click(object sender, EventArgs e)
+        {
+            ShowForm("manager");
+        }
+
+        private void miTMDL_Click(object sender, EventArgs e)
+        {
+            ShowForm("tmdl");
+        }
+
+        private void miConsensus_Click(object sender, EventArgs e)
+        {
+            ShowForm("consensus");
+        }
+
+        private void miEngineering_Click(object sender, EventArgs e)
+        {
+            ShowForm("engineering");
+        }
+
+
+
+
+
+
+        #endregion
     }
 }
 
