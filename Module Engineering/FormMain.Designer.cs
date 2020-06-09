@@ -100,6 +100,7 @@
             this.miHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.pboxSplash = new System.Windows.Forms.PictureBox();
             this.lblLatLong = new System.Windows.Forms.Label();
+            this.miScenarioFileCheck = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxSplash)).BeginInit();
             this.SuspendLayout();
@@ -481,7 +482,8 @@
             this.toolStripSeparator5,
             this.miScenarioViewCoeff,
             this.miScenarioCompare,
-            this.toolStripSeparator7});
+            this.toolStripSeparator7,
+            this.miScenarioFileCheck});
             this.miTopScenario.Name = "miTopScenario";
             this.miTopScenario.Size = new System.Drawing.Size(64, 22);
             this.miTopScenario.Text = "&Scenario";
@@ -489,76 +491,76 @@
             // miScenarioRun
             // 
             this.miScenarioRun.Name = "miScenarioRun";
-            this.miScenarioRun.Size = new System.Drawing.Size(181, 22);
+            this.miScenarioRun.Size = new System.Drawing.Size(205, 22);
             this.miScenarioRun.Text = "Run";
             this.miScenarioRun.Click += new System.EventHandler(this.miScenarioRun_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(178, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(202, 6);
             // 
             // miScenarioManager
             // 
             this.miScenarioManager.Name = "miScenarioManager";
-            this.miScenarioManager.Size = new System.Drawing.Size(181, 22);
+            this.miScenarioManager.Size = new System.Drawing.Size(205, 22);
             this.miScenarioManager.Text = "Manager";
             this.miScenarioManager.Click += new System.EventHandler(this.miScenarioManager_Click);
             // 
             // miScenarioSave
             // 
             this.miScenarioSave.Name = "miScenarioSave";
-            this.miScenarioSave.Size = new System.Drawing.Size(181, 22);
+            this.miScenarioSave.Size = new System.Drawing.Size(205, 22);
             this.miScenarioSave.Text = "Save";
             this.miScenarioSave.Click += new System.EventHandler(this.miScenarioSave_Click);
             // 
             // miScenarioSaveAs
             // 
             this.miScenarioSaveAs.Name = "miScenarioSaveAs";
-            this.miScenarioSaveAs.Size = new System.Drawing.Size(181, 22);
+            this.miScenarioSaveAs.Size = new System.Drawing.Size(205, 22);
             this.miScenarioSaveAs.Text = "Save As";
             this.miScenarioSaveAs.Click += new System.EventHandler(this.miScenarioSaveAs_Click);
             // 
             // miScenarioDelete
             // 
             this.miScenarioDelete.Name = "miScenarioDelete";
-            this.miScenarioDelete.Size = new System.Drawing.Size(181, 22);
+            this.miScenarioDelete.Size = new System.Drawing.Size(205, 22);
             this.miScenarioDelete.Text = "Delete";
             // 
             // miScenarioExport
             // 
             this.miScenarioExport.Name = "miScenarioExport";
-            this.miScenarioExport.Size = new System.Drawing.Size(181, 22);
+            this.miScenarioExport.Size = new System.Drawing.Size(205, 22);
             this.miScenarioExport.Text = "Export";
             // 
             // miScenarioImport
             // 
             this.miScenarioImport.Name = "miScenarioImport";
-            this.miScenarioImport.Size = new System.Drawing.Size(181, 22);
+            this.miScenarioImport.Size = new System.Drawing.Size(205, 22);
             this.miScenarioImport.Text = "Import";
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(178, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(202, 6);
             // 
             // miScenarioViewCoeff
             // 
             this.miScenarioViewCoeff.Name = "miScenarioViewCoeff";
-            this.miScenarioViewCoeff.Size = new System.Drawing.Size(181, 22);
+            this.miScenarioViewCoeff.Size = new System.Drawing.Size(205, 22);
             this.miScenarioViewCoeff.Text = "View Coefficient File";
             // 
             // miScenarioCompare
             // 
             this.miScenarioCompare.Name = "miScenarioCompare";
-            this.miScenarioCompare.Size = new System.Drawing.Size(181, 22);
+            this.miScenarioCompare.Size = new System.Drawing.Size(205, 22);
             this.miScenarioCompare.Text = "Compare";
             this.miScenarioCompare.Click += new System.EventHandler(this.miScenarioCompare_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(178, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(202, 6);
             // 
             // miTopDocument
             // 
@@ -693,6 +695,13 @@
             this.lblLatLong.Text = "Lat/Long:";
             this.lblLatLong.Visible = false;
             // 
+            // miScenarioFileCheck
+            // 
+            this.miScenarioFileCheck.Name = "miScenarioFileCheck";
+            this.miScenarioFileCheck.Size = new System.Drawing.Size(205, 22);
+            this.miScenarioFileCheck.Text = "Check Scenario Run Files";
+            this.miScenarioFileCheck.Click += new System.EventHandler(this.miScenarioFileCheck_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -795,6 +804,7 @@
         private System.Windows.Forms.ToolStripMenuItem miViewScale;
         private System.Windows.Forms.ToolStripMenuItem miViewPictures;
         private System.Windows.Forms.ToolStripMenuItem miViewLabels;
+        private System.Windows.Forms.ToolStripMenuItem miScenarioFileCheck;
     }
 }
 

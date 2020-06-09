@@ -989,6 +989,11 @@ namespace warmf {
 
         }
 
+        private void miScenarioFileCheck_Click(object sender, EventArgs e)
+        {
+            Global.coe.RunFilesCrosscheck();
+        }
+
         private void miScenarioManager_Click(object sender, EventArgs e)
         {
             DialogScenarioManager smDialog = new DialogScenarioManager(scenarios);
@@ -1195,7 +1200,9 @@ namespace warmf {
 
 
 
+
         #endregion
+
     }
 }
 
