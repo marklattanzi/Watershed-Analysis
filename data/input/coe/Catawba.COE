@@ -41973,7 +41973,7 @@ DIVFROM        0
 DIVTO          0
 PTSOURCE       0
 OBSWI353       0      30      60       2       1       2       3
-OBSDA353USGS021457492.ORH
+OBSDA353
 SEDIMENT   1E-06     1.8       1       0       0       0
 SEDTYPES    0.45    0.45     0.1
 AIRK353        1       0
