@@ -83,6 +83,7 @@
             this.miScenarioViewCoeff = new System.Windows.Forms.ToolStripMenuItem();
             this.miScenarioCompare = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.miScenarioFileCheck = new System.Windows.Forms.ToolStripMenuItem();
             this.miTopDocument = new System.Windows.Forms.ToolStripMenuItem();
             this.miDocumentModelLog = new System.Windows.Forms.ToolStripMenuItem();
             this.miDocumentNotes = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,7 +101,6 @@
             this.miHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.pboxSplash = new System.Windows.Forms.PictureBox();
             this.lblLatLong = new System.Windows.Forms.Label();
-            this.miScenarioFileCheck = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxSplash)).BeginInit();
             this.SuspendLayout();
@@ -341,34 +341,44 @@
             // 
             // miViewTribConnect
             // 
+            this.miViewTribConnect.CheckOnClick = true;
             this.miViewTribConnect.Enabled = false;
+            this.miViewTribConnect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.miViewTribConnect.Name = "miViewTribConnect";
             this.miViewTribConnect.Size = new System.Drawing.Size(195, 22);
             this.miViewTribConnect.Text = "Tributary Connections";
             // 
             // miViewEntityIDs
             // 
+            this.miViewEntityIDs.CheckOnClick = true;
             this.miViewEntityIDs.Enabled = false;
+            this.miViewEntityIDs.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.miViewEntityIDs.Name = "miViewEntityIDs";
             this.miViewEntityIDs.Size = new System.Drawing.Size(195, 22);
             this.miViewEntityIDs.Text = "Entity ID\'s";
             // 
             // miViewEntityPoints
             // 
+            this.miViewEntityPoints.CheckOnClick = true;
             this.miViewEntityPoints.Enabled = false;
+            this.miViewEntityPoints.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.miViewEntityPoints.Name = "miViewEntityPoints";
             this.miViewEntityPoints.Size = new System.Drawing.Size(195, 22);
             this.miViewEntityPoints.Text = "Selected Entities Points";
             // 
             // miViewSubwatersheds
             // 
+            this.miViewSubwatersheds.CheckOnClick = true;
             this.miViewSubwatersheds.Enabled = false;
+            this.miViewSubwatersheds.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.miViewSubwatersheds.Name = "miViewSubwatersheds";
             this.miViewSubwatersheds.Size = new System.Drawing.Size(195, 22);
             this.miViewSubwatersheds.Text = "Subwatersheds";
             // 
             // miViewMETStations
             // 
+            this.miViewMETStations.CheckOnClick = true;
+            this.miViewMETStations.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.miViewMETStations.Name = "miViewMETStations";
             this.miViewMETStations.Size = new System.Drawing.Size(195, 22);
             this.miViewMETStations.Text = "Meteorology Stations";
@@ -376,6 +386,8 @@
             // 
             // miViewGagingStations
             // 
+            this.miViewGagingStations.CheckOnClick = true;
+            this.miViewGagingStations.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.miViewGagingStations.Name = "miViewGagingStations";
             this.miViewGagingStations.Size = new System.Drawing.Size(195, 22);
             this.miViewGagingStations.Text = "Gaging Stations";
@@ -383,6 +395,8 @@
             // 
             // miViewWQStations
             // 
+            this.miViewWQStations.CheckOnClick = true;
+            this.miViewWQStations.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.miViewWQStations.Name = "miViewWQStations";
             this.miViewWQStations.Size = new System.Drawing.Size(195, 22);
             this.miViewWQStations.Text = "Water Quality Stations";
@@ -390,6 +404,8 @@
             // 
             // miViewManagedFlow
             // 
+            this.miViewManagedFlow.CheckOnClick = true;
+            this.miViewManagedFlow.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.miViewManagedFlow.Name = "miViewManagedFlow";
             this.miViewManagedFlow.Size = new System.Drawing.Size(195, 22);
             this.miViewManagedFlow.Text = "Managed Flow";
@@ -397,6 +413,8 @@
             // 
             // miViewPointSources
             // 
+            this.miViewPointSources.CheckOnClick = true;
+            this.miViewPointSources.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.miViewPointSources.Name = "miViewPointSources";
             this.miViewPointSources.Size = new System.Drawing.Size(195, 22);
             this.miViewPointSources.Text = "Point Sources";
@@ -404,6 +422,8 @@
             // 
             // miViewAirQualityStations
             // 
+            this.miViewAirQualityStations.CheckOnClick = true;
+            this.miViewAirQualityStations.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.miViewAirQualityStations.Name = "miViewAirQualityStations";
             this.miViewAirQualityStations.Size = new System.Drawing.Size(195, 22);
             this.miViewAirQualityStations.Text = "Air Quality Stations";
@@ -411,19 +431,25 @@
             // 
             // miViewScale
             // 
+            this.miViewScale.CheckOnClick = true;
+            this.miViewScale.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.miViewScale.Name = "miViewScale";
             this.miViewScale.Size = new System.Drawing.Size(195, 22);
             this.miViewScale.Text = "Scale";
             // 
             // miViewPictures
             // 
+            this.miViewPictures.CheckOnClick = true;
             this.miViewPictures.Enabled = false;
+            this.miViewPictures.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.miViewPictures.Name = "miViewPictures";
             this.miViewPictures.Size = new System.Drawing.Size(195, 22);
             this.miViewPictures.Text = "Pictures";
             // 
             // miViewLabels
             // 
+            this.miViewLabels.CheckOnClick = true;
+            this.miViewLabels.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.miViewLabels.Name = "miViewLabels";
             this.miViewLabels.Size = new System.Drawing.Size(195, 22);
             this.miViewLabels.Text = "Labels";
@@ -562,6 +588,13 @@
             this.toolStripSeparator7.Name = "toolStripSeparator7";
             this.toolStripSeparator7.Size = new System.Drawing.Size(202, 6);
             // 
+            // miScenarioFileCheck
+            // 
+            this.miScenarioFileCheck.Name = "miScenarioFileCheck";
+            this.miScenarioFileCheck.Size = new System.Drawing.Size(205, 22);
+            this.miScenarioFileCheck.Text = "Check Scenario Run Files";
+            this.miScenarioFileCheck.Click += new System.EventHandler(this.miScenarioFileCheck_Click);
+            // 
             // miTopDocument
             // 
             this.miTopDocument.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -694,13 +727,6 @@
             this.lblLatLong.TabIndex = 4;
             this.lblLatLong.Text = "Lat/Long:";
             this.lblLatLong.Visible = false;
-            // 
-            // miScenarioFileCheck
-            // 
-            this.miScenarioFileCheck.Name = "miScenarioFileCheck";
-            this.miScenarioFileCheck.Size = new System.Drawing.Size(205, 22);
-            this.miScenarioFileCheck.Text = "Check Scenario Run Files";
-            this.miScenarioFileCheck.Click += new System.EventHandler(this.miScenarioFileCheck_Click);
             // 
             // FormMain
             // 

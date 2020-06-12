@@ -18,7 +18,7 @@ namespace warmf
         //if ORC is passed, OLC files are also included
         {
             double[] coords = new double[2];
-            string[] fields = new string[1];
+            string[] fields = new string[2];
 
             //delete previous version
             if (File.Exists(Global.DIR.SHP + fileType + ".shp"))
@@ -43,6 +43,7 @@ namespace warmf
             DbfReader dbfReader = new DbfReader(Global.DIR.SHP + "Untitled_Point.shp");
             ShapeFileWriter sfw = ShapeFileWriter.CreateWriter(Global.DIR.SHP, fileType, sf.ShapeType,
                 dbfReader.DbfRecordHeader.GetFieldDescriptions());
+            
             try
             {
                 if (fileType == "MET")
@@ -55,6 +56,7 @@ namespace warmf
                         coords[0] = dataFile.longitude;
                         coords[1] = dataFile.latitude;
                         fields[0] = dataFile.shortName;
+                        fields[1] = Global.coe.METFilename[i];
                         sfw.AddRecord(coords, 1, fields);
                         dataFile = null;
                         sr = null;
@@ -72,6 +74,7 @@ namespace warmf
                         coords[0] = dataFile.longitude;
                         coords[1] = dataFile.latitude;
                         fields[0] = dataFile.shortName;
+                        fields[1] = Global.coe.PTSFilename[i];
                         sfw.AddRecord(coords, 1, fields);
                         dataFile = null;
                         sr = null;
@@ -89,6 +92,7 @@ namespace warmf
                         coords[0] = dataFile.longitude;
                         coords[1] = dataFile.latitude;
                         fields[0] = dataFile.shortName;
+                        fields[1] = Global.coe.DIVData[i].filename;
                         sfw.AddRecord(coords, 1, fields);
                         dataFile = null;
                         sr = null;
@@ -106,6 +110,7 @@ namespace warmf
                         coords[0] = dataFile.longitude;
                         coords[1] = dataFile.latitude;
                         fields[0] = dataFile.shortName;
+                        fields[1] = Global.coe.AIRFilename[i];
                         sfw.AddRecord(coords, 1, fields);
                         dataFile = null;
                         sr = null;
@@ -125,6 +130,7 @@ namespace warmf
                             coords[0] = dataFile.longitude;
                             coords[1] = dataFile.latitude;
                             fields[0] = dataFile.shortName;
+                            fields[1] = Global.coe.rivers[i].hydrologyFilename;
                             sfw.AddRecord(coords, 1, fields);
                             dataFile = null;
                             sr = null;
@@ -142,6 +148,7 @@ namespace warmf
                             coords[0] = dataFile.longitude;
                             coords[1] = dataFile.latitude;
                             fields[0] = dataFile.shortName;
+                            fields[1] = Global.coe.reservoirs[i].hydrologyFilename;
                             sfw.AddRecord(coords, 1, fields);
                             dataFile = null;
                             sr = null;
@@ -162,6 +169,7 @@ namespace warmf
                             coords[0] = dataFile.longitude;
                             coords[1] = dataFile.latitude;
                             fields[0] = dataFile.shortName;
+                            fields[1] = Global.coe.rivers[i].obsWQFilename;
                             sfw.AddRecord(coords, 1, fields);
                             dataFile = null;
                             sr = null;
@@ -181,6 +189,7 @@ namespace warmf
                                 coords[0] = dataFile.longitude;
                                 coords[1] = dataFile.latitude;
                                 fields[0] = dataFile.shortName;
+                                fields[1] = Global.coe.reservoirs[i].reservoirSegs[j].obsWQFilename;
                                 sfw.AddRecord(coords, 1, fields);
                                 dataFile = null;
                                 sr = null;

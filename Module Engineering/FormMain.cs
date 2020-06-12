@@ -196,10 +196,57 @@ namespace warmf {
 
         private void frmMap_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-
+            List<int> shapefileRecord = new List<int>();
+            List<int> shapefileNumber = new List<int>();
+            int numShapeFiles = frmMap.ShapeFileCount;
             int CatchmentRecordIndex = frmMap.GetShapeIndexAtPixelCoord(0, e.Location, 8);
             int riverRecordIndex = frmMap.GetShapeIndexAtPixelCoord(1, e.Location, 8);
             int reservoirRecordIndex = frmMap.GetShapeIndexAtPixelCoord(2, e.Location, 8);
+
+            if (numShapeFiles > 3) //three shapefiles are default - catchments, rivers, lakes
+            {
+                string fileName;
+                for (int i = 3; i < numShapeFiles; i++)
+                {
+                    int record = frmMap.GetShapeIndexAtPixelCoord(i, e.Location, 8);
+                    if (record >= 0) //record exists at this location for this shapefile
+                    {
+                        string[] recordAttributes = frmMap[i].GetAttributeFieldValues(record);
+                        string[] attributeNames = frmMap[i].GetAttributeFieldNames();
+                        for (int j = 0; j < attributeNames.Length; j++)
+                        {
+                            if (attributeNames[j] == "FileName")
+                            {
+                                fileName = recordAttributes[j];
+                                fileName = fileName.Trim();
+                                string fileType = fileName.Substring(fileName.Length - 3);
+                                if (fileType == "MET")
+                                    frmData.cboxTypeOfFile.SelectedIndex = 0;
+                                else if (fileType == "AIR")
+                                    frmData.cboxTypeOfFile.SelectedIndex = 1;
+                                else if (fileType == "ORH" || fileType == "OLH")
+                                    frmData.cboxTypeOfFile.SelectedIndex = 2;
+                                else if (fileType == "ORC" || fileType == "OLC")
+                                    frmData.cboxTypeOfFile.SelectedIndex = 3;
+                                else if (fileType == "FLO")
+                                    frmData.cboxTypeOfFile.SelectedIndex = 4;
+                                else if (fileType == "PTS")
+                                    frmData.cboxTypeOfFile.SelectedIndex = 5;
+                                else
+                                {
+                                    MessageBox.Show("File extension does not match any of the recognized WARMF file extensions", "Exception/Error", MessageBoxButtons.OK);
+                                    return;
+                                }
+                                frmData.cboxFilename.SelectedIndex =
+                                    frmData.cboxFilename.FindString(fileName);
+                                frmData.cboxData.SelectedIndex = 0;
+                                frmData.Show();
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
 
             if (riverRecordIndex >= 0) //River segment selected - River coefficients
             {
