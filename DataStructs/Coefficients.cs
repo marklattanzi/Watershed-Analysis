@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Forms;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -1591,7 +1592,7 @@ namespace warmf {
                 line = ReadSpacerLine(sr, "RIVER COEFFICIENTS");
                 rivers = new List<River>();
                 for (int ii = 0; ii < numRivers; ii++) {
-					line = ReadSpacerLine(sr, "RIVE");	// RIVE####  - can these have 5 digits?  MRL
+					line = ReadSpacerLine(sr, "RIVE");
                     River river = new River();
 					dnums = ReadDoubleData(sr, "STRE", 9);
 					river.idNum = (int)dnums[0];
