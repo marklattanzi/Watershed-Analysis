@@ -256,16 +256,6 @@ namespace warmf
             //Soil Layers > Hydrology coefficients (displayed on load)
             for (int ii = 0; ii < catchment.numSoilLayers; ii++)
             {
-//                string area = catchment.soils[ii].area.ToString();
-//                string thickness = catchment.soils[ii].thickness.ToString("F0");
-//                string moisture = catchment.soils[ii].moisture.ToString("F2");
-//                string fieldCap = catchment.soils[ii].fieldCapacity.ToString("F2");
-//                string satMoist = catchment.soils[ii].saturationMoisture.ToString("F2");
-//                string horizCond = catchment.soils[ii].horizHydraulicConduct.ToString("F0");
-//                string vertCond = catchment.soils[ii].vertHydraulicConduct.ToString("F0");
-//                string rootDist = catchment.soils[ii].evapTranspireFract.ToString("F2");
-//                string density = catchment.soils[ii].density.ToString("F1");
-//                string tortuosity = catchment.soils[ii].tortuosity.ToString("F0");
                 string thickness = catchment.soils[ii].thickness.ToString();
                 string moisture = catchment.soils[ii].moisture.ToString();
                 string fieldCap = catchment.soils[ii].fieldCapacity.ToString();

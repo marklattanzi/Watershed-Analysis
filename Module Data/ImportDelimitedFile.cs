@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace warmf.Module_Data
         public DialogImportDelimitedFile()
         {
             InitializeComponent();
+            NumIgnoreLines = 0;
             NumHeaderLines = 0;
         }
 
@@ -87,175 +89,6 @@ namespace warmf.Module_Data
             }
 
             linkageFile.Close();
-/*                for (j = 0; j < numHeaders; j++)
-                {
-                    string field = readLine;
-                    if (field.IndexOf())
-                    for (i = 0; i < NumHeaderLines; i++)
-                    {
-                        string tab;
-                        string fieldCopy = field;
-                        int delimiterIndex;
-
-                        if (!string.IsNullOrEmpty(field))
-                        {
-                            tab = strchr(fieldCopy, '|');
-                            delimiterIndex = field.IndexOf(linkageDelimiter);
-                            if (delimiterIndex >= 0)
-                                fieldCopy = field.Substring(0, delimiterIndex);
-                            if (tab)
-                                *tab = '\0';
-                            // Compare field in input file with those in the dialog
-                            if (strcmp(fieldCopy, spreadText))
-                                break;
-                        }
-                        else
-                            break;
-
-                        tab = strchr(field, '|');
-                        if (tab)
-                            field = tab + 1;
-                        else
-                            field = NULL;
-                    }
-
-                    // If we made it all the way through the above for loop, we have a match
-                    if (i == NumHeaderLines && field)
-                    {
-                        // Give the field an end
-                        char* tab = strchr(field, '|');
-                        if (tab)
-                            *tab = '\0';
-
-                        TB.TheSpread->SetCombo(j, NumHeaderLines, FormData.PlotFileTypes, field);
-                        int inputFileType = FormData.PlotFileTypes.FindString(field);
-                        if (inputFileType > 0 && tab)
-                        {
-                            // Get to the file name field
-                            field = tab + 1;
-                            tab = strchr(field, '|');
-                            if (tab)
-                                *tab = '\0';
-
-                            // List of parameters for the penultimate column
-                            CharStarArray parameterList;
-                            char nameAndUnits[256];
-                            IWMMSystemCoeffs & systemCoeffs = (IWMMSystemCoeffs &) GetSystemCoeffs();
-                            IWMMSimControlCoeffs & simControlCoeffs = (IWMMSimControlCoeffs &) GetSimControlCoeffs();
-                            // Meteorology
-                            if (inputFileType == 1)
-                            {
-                                TB.TheSpread->SetCombo(j, NumHeaderLines + 1, simControlCoeffs.FileNames.Meteorology, field);
-
-                                for (i = 0; i < 7; i++)
-                                {
-                                    ReString aString(*SystemWindow->GetApplication(), IDS_METPARAM + i);
-                parameterList.AddString((char*)(const char*) aString);
-            }
-        }
-                           // Managed flow
-                           if (inputFileType == 2)
-                           {
-                            TB.TheSpread->SetCombo(j, NumHeaderLines + 1, simControlCoeffs.FileNames.ManagedFlow.FileNames, field);
-
-        int paramNum = systemCoeffs.Constituents.FindFortranCode("MFLO");
-                                    if (paramNum >= 0)
-                                {
-                                stParameter* aParameter = systemCoeffs.Constituents.Pointers[paramNum];
-        char nameAndUnits[256];
-        aParameter->GetNameAndUnits(nameAndUnits);
-        parameterList.AddString(nameAndUnits);
-                               }
-}
-                           // Point source
-                           else if (inputFileType == 3)
-                           {
-                                TB.TheSpread->SetCombo(j, NumHeaderLines + 1, simControlCoeffs.FileNames.PointSources, field);
-
-PointSourceStruct pd;
-int version;
-stifstream ifs(field);
-// Only parameters in point source file can be substituted or total composite parameters
-pd.ReadHeader(ifs, version);
-                                    // Get string for each parameter
-                                for (k = 0; k<pd.ColumnHeader.GetNumber(); k++)
-                                   {
-                                    int paramNum = systemCoeffs.Constituents.FindFortranCode(pd.ColumnHeader.GetString(k));
-                                   if (paramNum >= 0)
-                                      {
-                                        stParameter* aParameter = systemCoeffs.Constituents.Pointers[paramNum];
-aParameter->GetNameAndUnits(nameAndUnits);
-parameterList.AddString(nameAndUnits);
-                                   }
-                                }
-                              // Add applicable total composite parameters
-                                    int first = systemCoeffs.Constituents.GetFirstOfType(typeid(stChemical), true);
-int firstTotal = systemCoeffs.Constituents.GetFirstOfType(typeid(stTotalParameter), true);
-                              for (k = firstTotal; k<systemCoeffs.Constituents.Number; k++)
-                              {
-                                    stTotalParameter* totalParameter = (stTotalParameter*)systemCoeffs.Constituents.Pointers[k];
-                                 for (l = 0; l<totalParameter->ComponentMultipliers.Number; l++)
-                                    if (totalParameter->ComponentMultipliers.Values[l] > 0. &&
-                                        pd.ColumnHeader.FindString(systemCoeffs.Constituents.Pointers[first + l]->FortranCode) >= 0)
-                                    {
-                                        totalParameter->GetNameAndUnits(nameAndUnits);
-parameterList.AddString(nameAndUnits);
-                                       break;
-                                    }
-                              }
-                           }
-                           // Observed Data
-                           else if (inputFileType == 4 || inputFileType == 5)
-                           {
-                            // Compile a list of observed data files
-                              CharStarArray obsDataFiles = GetObservedDataFileList((inputFileType == 4), (inputFileType == 5));
-
-// Put the list of observed data files in the combo box
-TB.TheSpread->SetCombo(j, NumHeaderLines + 1, obsDataFiles, field);
-
-// Put the list of parameters for the selected file into the next column
-ObservedDataStruct od;
-int version;
-stifstream ifs(field);
-// Only parameters in observed data file
-od.ReadHeader(ifs, version);
-                                    // Get string for each parameter
-                                for (k = 0; k<od.ColumnHeader.GetNumber(); k++)
-                                   {
-                                    int paramNum = systemCoeffs.Constituents.FindFortranCode(od.ColumnHeader.GetString(k));
-                                   if (paramNum >= 0)
-                                      {
-                                        stParameter* aParameter = systemCoeffs.Constituents.Pointers[paramNum];
-aParameter->GetNameAndUnits(nameAndUnits);
-parameterList.AddString(nameAndUnits);
-                                   }
-                                }
-                                }
-
-                           // Select parameter in final column
-                           field = tab + 1;
-                           tab = strchr(field, '|');
-                           if (tab)
-                               * tab = '\0';
-
-// Data Source
-parameterList.AddString((char*) (const char*) dataSourceString);
-
-                                // Put in the appropriate parameter list with selected field
-                           TB.TheSpread->SetCombo(j, NumHeaderLines + 2, parameterList, field);
-
-// Add in the unit conversion
-field = tab + 1;
-                           TB.TheSpread->SetDouble(j, NumHeaderLines + 3, atof(field));
-                        }
-
-                        // Found a spreadsheet line matching the line in the input file,
-                        // so go on to the next line in the input file
-                        break;
-                     }
-                  }
-               }
-               inputFile.close();*/
         }
 
         // Fills the dialog with data from delimited file
@@ -263,6 +96,7 @@ field = tab + 1;
         {
             int i, lineCount, headerCount;
 
+            NumIgnoreLines = nIgnoreLines;
             NumHeaderLines = nHeaderLines;
             
             // Label the column headers
@@ -328,6 +162,8 @@ field = tab + 1;
                     theHeaders.Add(importFile.ReadDelimitedField(Delimiter, ref endOfLine));
                 }
             }
+            importFile.Close();
+
             int numHeaders = 0;
             if (NumHeaderLines > 0)
                 numHeaders = theHeaders.Count / NumHeaderLines;
@@ -341,6 +177,442 @@ field = tab + 1;
             }
             SelectPreviousImport(FileName, NumHeaderLines, theHeaders);
         }
+
+        // Removes duplicate entries in the linkage file
+        public void CondenseLinkageFile(string fileName)
+        {
+            int i, j;
+
+            // Read the import file
+            string inputLine;
+            List<string> fileContents = new List<string>();
+            STechStreamReader linkageFile = new STechStreamReader(LinkageFileName);
+            while (!linkageFile.EndOfStream)
+            {
+                inputLine = linkageFile.ReadLine();
+                if (inputLine.Length > 0)
+                    fileContents.Add(inputLine);
+            }
+            linkageFile.Close();
+
+            // Work from end to beginning looking for an earlier match of the header lines
+            for (i = fileContents.Count - 1; i >= 0; i--)
+            {
+                // Create a string with only the header information
+                inputLine = fileContents[i];
+
+                int delimiterIndex = 0;
+                for (j = 0; j < NumHeaderLines; j++)
+                {
+                    if (delimiterIndex >= 0)
+                    {
+                        delimiterIndex = inputLine.IndexOf('|', delimiterIndex + 1);
+                    }
+                }
+
+                // Check if any of the import fields have been left blank
+                bool removeMainString = (delimiterIndex < 0);
+                if (!removeMainString)
+                    for (j = delimiterIndex; j < inputLine.Length - 1; j++)
+                        if (inputLine[j] == '|' && inputLine[j + 1] == '|')
+                        {
+                            removeMainString = true;
+                            break;
+                        }
+
+                // Successfully skipped across the header info
+                if (delimiterIndex >= 0 && !removeMainString)
+                {
+                    // Truncate at the tab after the header info
+                    inputLine = inputLine.Substring(0, delimiterIndex);
+
+                    // Search through previous lines for the same header info
+                    for (j = 0; j < i; j++)
+                        if (fileContents[j].StartsWith(inputLine))
+                        {
+                            // Cut out the duplicate
+                            fileContents.RemoveAt(j);
+
+                            // Don't remove the main string yet to keep things simple
+                            //            	   removeMainString = false;
+                            break;
+                        }
+                }
+
+                if (removeMainString)
+                    fileContents.RemoveAt(i);
+            }
+
+            // Write back to file
+            STechStreamWriter sw = new STechStreamWriter(LinkageFileName);
+            for (i = 0; i < fileContents.Count; i++)
+                sw.WriteLine(fileContents[i]);
+            sw.Close();
+        }
+
+        // Gets linkages from spreadsheet
+        public void GetLinkages(string csvFileName)
+        {
+            int lineCount, headerCount;
+
+            // Get the file name suffix
+            string suffix = FileNameSuffix.Text;
+
+            // Save settings to an input file
+            // Append to save previous imports then condense to remove duplicates
+            STechStreamWriter linkageFile = new STechStreamWriter(LinkageFileName, true);
+
+            // Save the order of everything in the headers
+            List <int> modifiedTypes = new List<int>();
+            List<string> modifiedFiles = new List<string>();
+            List <int> modifiedParameters = new List<int>();
+
+            // Save list of observed data files
+            List <string> observedFiles;
+
+            // Get information from transfer buffer
+            for (lineCount = 0; lineCount < ImportDelimitedDataGrid.Rows.Count; lineCount++)
+            {
+                string spreadText;
+
+                // Write to input file
+                for (headerCount = 0; headerCount < ImportDelimitedDataGrid.Columns.Count; headerCount++)
+                {
+                    if (ImportDelimitedDataGrid.Rows[lineCount].Cells[headerCount].Value != null)
+                        spreadText = ImportDelimitedDataGrid.Rows[lineCount].Cells[headerCount].Value.ToString();
+                    else
+                        spreadText = "";
+
+                    // Add the delimiter to all but the last entry on a line
+                    if (headerCount < ImportDelimitedDataGrid.Columns.Count - 1)
+                        spreadText = spreadText + "|";
+                    linkageFile.Write(spreadText);
+                }
+                linkageFile.WriteLine();
+
+                // Get the cases where any data type was selected
+                if (ImportDelimitedDataGrid.Rows[lineCount].Cells[NumHeaderLines].Value != null)
+                    spreadText = ImportDelimitedDataGrid.Rows[lineCount].Cells[NumHeaderLines].Value.ToString();
+                else
+                    spreadText = "";
+
+                // Data import linkage found
+                int selectedFileType = Array.IndexOf(FormData.PlotFileTypes, spreadText);
+                if (selectedFileType > 0)
+                {
+                    modifiedTypes.Add(selectedFileType);
+
+                    string oldFileName = "";
+
+                    for (headerCount = NumHeaderLines; headerCount < NumHeaderLines + 3; headerCount++)
+                    {
+                        spreadText = ImportDelimitedDataGrid.Rows[lineCount].Cells[headerCount].Value.ToString();
+//                        linkageFile.Write(spreadText);
+//                        if (headerCount < NumHeaderLines + 2)
+//                            linkageFile.Write("|");
+
+                        // Save the file name
+                        if (headerCount == NumHeaderLines + 1)
+                        {
+                            oldFileName =  spreadText;
+                            modifiedFiles.Add(spreadText);
+                        }
+
+                        // Save the parameter number
+                        if (headerCount == NumHeaderLines + 2)
+                        {
+                            int parameterIndex = Global.coe.GetParameterNumberFromNameAndUnits(spreadText);
+                            modifiedParameters.Add(parameterIndex);
+                        }
+                    }
+
+                    // Copy the files if a suffix is added
+                    if (suffix.Length > 0)
+                    {
+                        // Compile the modified file name
+                        string newFileName = Path.GetFileNameWithoutExtension(oldFileName) + suffix + Path.GetExtension(oldFileName);
+
+                        // See if it a meteorology file
+                        int fileNumber = Global.coe.METFilename.IndexOf(oldFileName);
+                        if (fileNumber >= 0)
+                        {
+                            // Copy the file
+                            METFile mf = new METFile(oldFileName);
+                            if (mf.ReadFile())
+                            {
+                                // Change the file used by WARMF in the master record
+                                Global.coe.METFilename[fileNumber] = newFileName;
+                                mf.filename = newFileName;
+
+                                // Copy the data to the new file
+                                mf.WriteFile();
+                            }
+                        }
+
+                        // See if it a managed flow file
+                        fileNumber = Global.coe.GetFLONumberFromName(oldFileName);
+                        if (fileNumber >= 0)
+                        {
+                            // Copy the file
+                            FLOFile ff = new FLOFile(oldFileName);
+                            if (ff.ReadFile())
+                            {
+                                // Change the file used by WARMF in the master record
+                                Global.coe.DIVData[fileNumber].filename = newFileName;
+                                ff.filename = newFileName;
+
+                                // Copy the data to the new file
+                                ff.WriteFile();
+                            }
+                        }
+
+                        // See if it is a point source file
+                        fileNumber = Global.coe.PTSFilename.IndexOf(oldFileName);
+                        if (fileNumber >= 0)
+                        {
+                            // Copy the file
+                            PTSFile pf = new PTSFile(oldFileName);
+                            if (pf.ReadFile())
+                            {
+                                // Change the file used by WARMF in the master record
+                                Global.coe.PTSFilename[fileNumber] = newFileName;
+                                pf.filename = newFileName;
+
+                                // Copy the data to the new file 
+                                pf.WriteFile();
+                            }
+                        }
+
+                        // See if it is an observed data file
+                        List<string> allObservedFiles = Global.coe.GetAllObservedHydrologyFiles();
+                        allObservedFiles.AddRange(Global.coe.GetAllObservedWaterQualityFiles());
+                        fileNumber = allObservedFiles.IndexOf(oldFileName);
+                        if (fileNumber >= 0)
+                        {
+                            // Copy the file
+                            ObservedFile of = new ObservedFile(oldFileName);
+                            if (of.ReadFile())
+                            {
+                                // Find all instances of the observed data file and
+                                // change them all to the new file name
+                                Global.coe.ChangeObservedFileName(oldFileName, newFileName);
+                                of.filename = newFileName;
+
+                                // Write to the new file name
+                                of.WriteFile();
+                            }
+                        }
+
+                        // Modify the string in the set of modified files
+                        int modifiedIndex = modifiedFiles.IndexOf(oldFileName);
+                        if (modifiedIndex >= 0)
+                        {
+                            modifiedFiles[modifiedIndex] = newFileName;
+                        }
+                    }
+                }
+                else
+                {
+                    modifiedTypes.Add(-999);
+                    modifiedFiles.Add("");
+                    modifiedParameters.Add(-999);
+                }
+                linkageFile.WriteLine();
+            }
+
+            // Close the input file
+            linkageFile.Close();
+
+            // Remove duplicated entries
+            CondenseLinkageFile(LinkageFileName);
+
+            // Data structure to hold imported data
+            DataFile newData = new DataFile();
+            newData.NumGroups = 1;
+            newData.NumLines = 0;
+            // NumParameters in this case is each column of data in the import file
+            newData.NumParameters = ImportDelimitedDataGrid.RowCount;
+
+            // Structure to hold potential data source text
+            // Each row has a data source array of the fields in each column
+            List<List<string>> dataSourceFields = new List<List<string>>();
+
+            // Get the data from the text file
+            STechStreamReader csvFile = new STechStreamReader(csvFileName);
+
+            // Read past the ignore lines and the headers
+            for (lineCount = 0; lineCount < NumIgnoreLines + NumHeaderLines; lineCount++)
+                csvFile.ReadLine();
+
+            lineCount = 0;
+            double dblRes;
+            while (!csvFile.EndOfStream)
+            {
+                bool endOfLine = false;
+                DataLine theDataLine = new DataLine();
+                // Get the date (assumed first on each line)
+                theDataLine.Date = Convert.ToDateTime(csvFile.ReadDelimitedField(',', ref endOfLine));
+
+                // Read each column of the file
+                theDataLine.Values = new List<double>();
+                List<string> theseDataSourceFields = new List<string>();
+                for (headerCount = 1; headerCount < ImportDelimitedDataGrid.RowCount; headerCount++)
+                {
+                    // Get the field as a double precision floating point number
+                    string field = csvFile.ReadDelimitedField(',', ref endOfLine); 
+                    if (field.Length > 0)
+                        theDataLine.Values.Add(Double.TryParse(field, out dblRes) ? dblRes : 0);
+                    else
+                        theDataLine.Values.Add(-999);
+
+                    // Save the field as a string in case it is a data source
+                    theseDataSourceFields.Add(field);
+                }
+
+                newData.TheData.Add(theDataLine);
+            }
+            csvFile.Close();
+            
+            // Get the conversion from current flow units to cms
+            double flowConvert = 1;
+            int paramNum = Global.coe.GetParameterNumberFromCode("MFLO");
+            if (paramNum >= 0 && Global.coe.AllConstits[paramNum].units.IndexOf("cfs") == 0)
+                flowConvert = 0.028318;
+
+            List<double> replaceVariable = new List<double>();
+
+            // Get data structures for all the selected files
+            for (headerCount = 0; headerCount < ImportDelimitedDataGrid.RowCount; headerCount++)
+            {
+                if (modifiedTypes[headerCount] > 0)
+                {
+                    // Clear the replacement variables
+                    for (int k = 0; k < replaceVariable.Count; k++)
+                        replaceVariable[k] = -999;
+
+                    // Fill in the data source
+//                    if (headerCount > 0)
+  //                      for (lineCount = 0; lineCount)
+                }
+            }
+            /*
+                        stDoubleArray replaceVariable;
+                        replaceVariable.AllocateValues(systemCoeffs.Constituents.Number);
+
+                        // Get data structures for all the selected files
+                        for (headerCount = 0; headerCount < numHeaders; headerCount++)
+                        {
+                            if (modifiedTypes.Values[headerCount] > 0)
+                            {
+                                // Clear the replacement variables
+                                for (k = 0; k < replaceVariable.Number; k++)
+                                    replaceVariable.Values[k] = -999.;
+
+                                // Fill in the data source
+                                if (headerCount > 0)
+                                    for (lineCount = 0; lineCount < numRecords; lineCount++)
+                                        newData.Data[lineCount].SetDataSource(dataSourceFields[lineCount].GetString(headerCount - 1));
+
+                                // Open the appropriate file type
+                                // Meteorology
+                                if (modifiedTypes.Values[headerCount] == 1)
+                                {
+                                    replaceVariable.Values[modifiedParameters.Values[headerCount]] = 1.;
+
+                                    IWMMMetData md;
+                                    md.ReadFile(modifiedFiles.Pointers[headerCount]);
+                                    md.ReplaceData(replaceVariable, newData, headerCount, true, flowConvert);
+                                    md.WriteFile(modifiedFiles.Pointers[headerCount]);
+                                }
+                                // Managed flow
+                                else if (modifiedTypes.Values[headerCount] == 2)
+                                {
+                                    replaceVariable.Values[modifiedParameters.Values[headerCount]] = 1.;
+
+                                    OutflowData od;
+                                    od.ReadFile(modifiedFiles.Pointers[headerCount]);
+                                    od.ReplaceData(replaceVariable, newData, headerCount, true, flowConvert);
+                                    od.WriteFile(modifiedFiles.Pointers[headerCount]);
+                                }
+                                // Point source
+                                else if (modifiedTypes.Values[headerCount] == 3)
+                                {
+                                    PointSourceStruct ps;
+                                    ps.ReadFile(modifiedFiles.Pointers[headerCount]);
+
+                                    if (modifiedParameters.Values[headerCount] < ps.NumVariables)
+                                        replaceVariable.Values[modifiedParameters.Values[headerCount]] = 1.;
+                                    else
+                                    {
+                                        // Recreate the list of total parameters which would have been in the list
+                                        int totalCounter = 0;
+                                        int first = systemCoeffs.Constituents.GetFirstOfType(typeid(stChemical), true);
+                                        int firstTotal = systemCoeffs.Constituents.GetFirstOfType(typeid(stTotalParameter), true);
+
+                                        stTotalParameter* totalParameter = NULL;
+                                        for (int k = firstTotal; k < systemCoeffs.Constituents.Number; k++)
+                                        {
+                                            totalParameter = (stTotalParameter*)systemCoeffs.Constituents.Pointers[k];
+                                            for (int l = 0; l < totalParameter->ComponentMultipliers.Number; l++)
+                                                if (totalParameter->ComponentMultipliers.Values[l] > 0. &&
+                                                ps.ColumnHeader.FindString(systemCoeffs.Constituents.Pointers[first + l]->FortranCode) >= 0)
+                                                {
+                                                    totalCounter++;
+                                                    break;
+                                                }
+
+                                            if (totalCounter > modifiedParameters.Values[headerCount] - ps.NumVariables)
+                                                break;
+                                        }
+
+                                        if (totalParameter && totalCounter == modifiedParameters.Values[headerCount] - ps.NumVariables + 1)
+                                        {
+                                            for (int l = 0; l < totalParameter->ComponentMultipliers.Number; l++)
+                                            {
+                                                if (totalParameter->ComponentMultipliers.Values[l] > 0.)
+                                                {
+                                                    // Alias for the component which makes up a part of the total parameter
+                                                    stPhysicalParameter* componentParameter = (stPhysicalParameter*)systemCoeffs.Constituents.Pointers[first + l];
+
+                                                    // Index of the component in the list of point source parameters
+                                                    int psIndex = ps.ColumnHeader.FindString(componentParameter->FortranCode);
+                                                    if (psIndex >= 0)
+                                                        replaceVariable.Values[psIndex] = totalParameter->ComponentMultipliers.Values[l] *
+                                                                totalParameter->EquivalentWeight / componentParameter->EquivalentWeight;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    ps.ReplaceData(replaceVariable, newData, headerCount, true, flowConvert);
+                                    ps.WriteFile(modifiedFiles.Pointers[headerCount]);
+                                }
+                                // Observed hydrology and observed water quality
+                                else if (modifiedTypes.Values[headerCount] == 4 || modifiedTypes.Values[headerCount] == 5)
+                                {
+
+                                    replaceVariable.Values[modifiedParameters.Values[headerCount]] = 1.;
+
+                                    ObservedDataStruct od;
+                                    od.ReadFile(modifiedFiles.Pointers[headerCount]);
+                                    od.ReplaceData(replaceVariable, newData, headerCount, true, flowConvert);
+                                    od.WriteFile(modifiedFiles.Pointers[headerCount]);
+                                }
+                            }
+                        }
+
+                        if (dataSourceFields)
+                            delete[] dataSourceFields;
+
+                        // Only record a scenario change if new files are assigned
+                        if (suffixLength)
+                            TheSystem->AddScenarioChange();
+                    }
+                }
+            }*/
+
+        }
+
 
         private void ImportFileFormatHelp_Click(object sender, EventArgs e)
         {
