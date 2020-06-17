@@ -251,7 +251,7 @@ namespace warmf.Module_Data
         }
 
         // Gets linkages from spreadsheet
-        public void GetLinkages(string csvFileName)
+        public void GetLinkages(string csvFileName, ref bool scenarioChanged)
         {
             int lineCount, headerCount;
 
@@ -343,6 +343,7 @@ namespace warmf.Module_Data
                                 // Change the file used by WARMF in the master record
                                 Global.coe.METFilename[fileNumber] = newFileName;
                                 mf.filename = newFileName;
+                                scenarioChanged = true;
 
                                 // Copy the data to the new file
                                 mf.WriteFile();
@@ -360,6 +361,7 @@ namespace warmf.Module_Data
                                 // Change the file used by WARMF in the master record
                                 Global.coe.DIVData[fileNumber].filename = newFileName;
                                 ff.filename = newFileName;
+                                scenarioChanged = true;
 
                                 // Copy the data to the new file
                                 ff.WriteFile();
@@ -377,6 +379,7 @@ namespace warmf.Module_Data
                                 // Change the file used by WARMF in the master record
                                 Global.coe.PTSFilename[fileNumber] = newFileName;
                                 pf.filename = newFileName;
+                                scenarioChanged = true;
 
                                 // Copy the data to the new file 
                                 pf.WriteFile();
@@ -397,6 +400,7 @@ namespace warmf.Module_Data
                                 // change them all to the new file name
                                 Global.coe.ChangeObservedFileName(oldFileName, newFileName);
                                 of.filename = newFileName;
+                                scenarioChanged = true;
 
                                 // Write to the new file name
                                 of.WriteFile();
@@ -491,128 +495,98 @@ namespace warmf.Module_Data
                         replaceVariable[k] = -999;
 
                     // Fill in the data source
-//                    if (headerCount > 0)
-  //                      for (lineCount = 0; lineCount)
-                }
-            }
-            /*
-                        stDoubleArray replaceVariable;
-                        replaceVariable.AllocateValues(systemCoeffs.Constituents.Number);
+                    if (headerCount > 0)
+                        for (lineCount = 0; lineCount < newData.TheData.Count; lineCount++)
+                            newData.TheData[lineCount].Source = dataSourceFields[lineCount][headerCount - 1];
 
-                        // Get data structures for all the selected files
-                        for (headerCount = 0; headerCount < numHeaders; headerCount++)
+                    // Open the appropriate file type
+                    // Meteorology
+                    if (modifiedTypes[headerCount] == 1)
+                    {
+                        replaceVariable[modifiedParameters[headerCount]] = 1;
+
+                        METFile mf = new METFile(modifiedFiles[headerCount]);
+                        mf.ReadFile();
+                        mf.ReplaceData(replaceVariable, newData, headerCount, true, flowConvert);
+                        mf.WriteFile();
+                    }
+                    // Managed flow
+                    else if (modifiedTypes[headerCount] == 2)
+                    {
+                        replaceVariable[modifiedParameters[headerCount]] = 1;
+
+                        FLOFile of = new FLOFile(modifiedFiles[headerCount]);
+                        of.ReadFile();
+                        of.ReplaceData(replaceVariable, newData, headerCount, true, flowConvert);
+                        of.WriteFile();
+                    }
+                    // Point source
+                    else if (modifiedTypes[headerCount] == 3)
+                    {
+                        PTSFile pf = new PTSFile(modifiedFiles[headerCount]);
+                        pf.ReadFile();
+
+                        if (modifiedParameters[headerCount] < pf.NumParameters)
+                            replaceVariable[modifiedParameters[headerCount]] = 1;
+                        else
                         {
-                            if (modifiedTypes.Values[headerCount] > 0)
+                            // Recreate the list of total parameters which would have been in the list
+                            int totalCounter = 0;
+                            int k;
+                            for (k = 0; k < Global.coe.compositeConstits.Count; k++)
                             {
-                                // Clear the replacement variables
-                                for (k = 0; k < replaceVariable.Number; k++)
-                                    replaceVariable.Values[k] = -999.;
-
-                                // Fill in the data source
-                                if (headerCount > 0)
-                                    for (lineCount = 0; lineCount < numRecords; lineCount++)
-                                        newData.Data[lineCount].SetDataSource(dataSourceFields[lineCount].GetString(headerCount - 1));
-
-                                // Open the appropriate file type
-                                // Meteorology
-                                if (modifiedTypes.Values[headerCount] == 1)
+                                for (int l = 0; l < Global.coe.compositeConstits[k].componentTotalMass.Count; l++)
                                 {
-                                    replaceVariable.Values[modifiedParameters.Values[headerCount]] = 1.;
-
-                                    IWMMMetData md;
-                                    md.ReadFile(modifiedFiles.Pointers[headerCount]);
-                                    md.ReplaceData(replaceVariable, newData, headerCount, true, flowConvert);
-                                    md.WriteFile(modifiedFiles.Pointers[headerCount]);
-                                }
-                                // Managed flow
-                                else if (modifiedTypes.Values[headerCount] == 2)
-                                {
-                                    replaceVariable.Values[modifiedParameters.Values[headerCount]] = 1.;
-
-                                    OutflowData od;
-                                    od.ReadFile(modifiedFiles.Pointers[headerCount]);
-                                    od.ReplaceData(replaceVariable, newData, headerCount, true, flowConvert);
-                                    od.WriteFile(modifiedFiles.Pointers[headerCount]);
-                                }
-                                // Point source
-                                else if (modifiedTypes.Values[headerCount] == 3)
-                                {
-                                    PointSourceStruct ps;
-                                    ps.ReadFile(modifiedFiles.Pointers[headerCount]);
-
-                                    if (modifiedParameters.Values[headerCount] < ps.NumVariables)
-                                        replaceVariable.Values[modifiedParameters.Values[headerCount]] = 1.;
-                                    else
+                                    if (Global.coe.compositeConstits[k].componentTotalMass[l] > 0 &&
+                                        pf.ParameterCodes.IndexOf(Global.coe.compositeConstits[k].fortranCode) >= 0)
                                     {
-                                        // Recreate the list of total parameters which would have been in the list
-                                        int totalCounter = 0;
-                                        int first = systemCoeffs.Constituents.GetFirstOfType(typeid(stChemical), true);
-                                        int firstTotal = systemCoeffs.Constituents.GetFirstOfType(typeid(stTotalParameter), true);
+                                        totalCounter++;
+                                        break;
+                                    }
+                                }
 
-                                        stTotalParameter* totalParameter = NULL;
-                                        for (int k = firstTotal; k < systemCoeffs.Constituents.Number; k++)
+                                if (totalCounter > modifiedParameters[headerCount] - pf.NumParameters)
+                                    break;
+                            }
+
+                            if (k < Global.coe.compositeConstits.Count && totalCounter == modifiedParameters[headerCount] - pf.NumParameters + 1)
+                            {
+                                for (int l = 0; l < Global.coe.compositeConstits[k].componentTotalMass.Count; l++)
+                                {
+                                    if (Global.coe.compositeConstits[k].componentTotalMass[l] > 0)
+                                    {
+                                        // Alias for the component which makes up a part of the total parameter
+                                        PhysicalConstits thePhysical = Global.coe.AllConstits[Global.coe.numHydrologyParams + l] as PhysicalConstits;
+                                        if (thePhysical != null)
                                         {
-                                            totalParameter = (stTotalParameter*)systemCoeffs.Constituents.Pointers[k];
-                                            for (int l = 0; l < totalParameter->ComponentMultipliers.Number; l++)
-                                                if (totalParameter->ComponentMultipliers.Values[l] > 0. &&
-                                                ps.ColumnHeader.FindString(systemCoeffs.Constituents.Pointers[first + l]->FortranCode) >= 0)
-                                                {
-                                                    totalCounter++;
-                                                    break;
-                                                }
-
-                                            if (totalCounter > modifiedParameters.Values[headerCount] - ps.NumVariables)
-                                                break;
-                                        }
-
-                                        if (totalParameter && totalCounter == modifiedParameters.Values[headerCount] - ps.NumVariables + 1)
-                                        {
-                                            for (int l = 0; l < totalParameter->ComponentMultipliers.Number; l++)
-                                            {
-                                                if (totalParameter->ComponentMultipliers.Values[l] > 0.)
-                                                {
-                                                    // Alias for the component which makes up a part of the total parameter
-                                                    stPhysicalParameter* componentParameter = (stPhysicalParameter*)systemCoeffs.Constituents.Pointers[first + l];
-
-                                                    // Index of the component in the list of point source parameters
-                                                    int psIndex = ps.ColumnHeader.FindString(componentParameter->FortranCode);
-                                                    if (psIndex >= 0)
-                                                        replaceVariable.Values[psIndex] = totalParameter->ComponentMultipliers.Values[l] *
-                                                                totalParameter->EquivalentWeight / componentParameter->EquivalentWeight;
-                                                }
-                                            }
+                                            // Index of the component in the list of point source parameters
+                                            int psIndex = pf.ParameterCodes.IndexOf(thePhysical.fortranCode);
+                                            if (psIndex >= 0)
+                                                replaceVariable[psIndex] = Global.coe.compositeConstits[k].componentTotalMass[l] *
+                                                        Global.coe.compositeConstits[k].massEquivalent / thePhysical.massEquivalent;
                                         }
                                     }
-
-                                    ps.ReplaceData(replaceVariable, newData, headerCount, true, flowConvert);
-                                    ps.WriteFile(modifiedFiles.Pointers[headerCount]);
-                                }
-                                // Observed hydrology and observed water quality
-                                else if (modifiedTypes.Values[headerCount] == 4 || modifiedTypes.Values[headerCount] == 5)
-                                {
-
-                                    replaceVariable.Values[modifiedParameters.Values[headerCount]] = 1.;
-
-                                    ObservedDataStruct od;
-                                    od.ReadFile(modifiedFiles.Pointers[headerCount]);
-                                    od.ReplaceData(replaceVariable, newData, headerCount, true, flowConvert);
-                                    od.WriteFile(modifiedFiles.Pointers[headerCount]);
                                 }
                             }
                         }
 
-                        if (dataSourceFields)
-                            delete[] dataSourceFields;
+                        pf.ReplaceData(replaceVariable, newData, headerCount, true, flowConvert);
+                        pf.WriteFile();
+                    }
+                    // Observed hydrology and observed water quality
+                    else if (modifiedTypes[headerCount] == 4 || modifiedTypes[headerCount] == 5)
+                    {
 
-                        // Only record a scenario change if new files are assigned
-                        if (suffixLength)
-                            TheSystem->AddScenarioChange();
+                        replaceVariable[modifiedParameters[headerCount]] = 1;
+
+                        ObservedFile of = new ObservedFile(modifiedFiles[headerCount]);
+                        of.ReadFile();
+                        of.ReplaceData(replaceVariable, newData, headerCount, true, flowConvert);
+                        of.WriteFile();
                     }
                 }
-            }*/
-
+            }
         }
-
 
         private void ImportFileFormatHelp_Click(object sender, EventArgs e)
         {
