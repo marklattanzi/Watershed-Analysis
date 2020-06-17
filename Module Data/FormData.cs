@@ -547,6 +547,7 @@ namespace warmf {
                     if (importDialog.ShowDialog() == DialogResult.OK)
                     {
                         // Get linkages from the dialog
+                        importDialog.GetLinkages(openDialog.FileName);
                         // Save linkages to linkage file
                         // Modify data files with imported data
                     }
@@ -556,52 +557,6 @@ namespace warmf {
             string inputFileName = "delimited.inp";
 
             /*
-
-                      // Create the data Import dialog
-                      TImportHECDSSDialog *aDialog = new TImportHECDSSDialog(this, "ImportHECDSS", TheSystem);
-                     aDialog->SetHelpContextID(3240L);
-                   ImportHECDSSTransferBuffer tb;
-                        strcpy(tb.Suffix, "");
-                    tb.TheSpread = new stSuperSpreadTransferBuffer;
-                      tb.TheSpread->AllocateArrays(numHeaders, csvInfoTB.HeaderLines + 3);
-
-                        // Column headers
-                        tb.SetColumnHeaders(GetApplication());
-
-                      // Read the data file headers
-                     csvFile.open(FilenameData.FileName);
-                      CharStarArray fileTypes, blank;
-                   tb.GetFileTypes(fileTypes, GetApplication());
-
-                     // Ignore the ignore lines
-                     for (lineCount = 0; lineCount < csvInfoTB.IgnoreLines; lineCount++)
-                        csvFile.ignore(1000000, '\n');
-
-                     // Read the header lines and enter the info in the spreadsheet
-                     char tempHeader[256];
-                     int headerCount;
-                        for (lineCount = 0; lineCount < csvInfoTB.HeaderLines; lineCount++)
-                            for (headerCount = 0; headerCount < numHeaders; headerCount++)
-                         {
-                         if (headerCount < numHeaders - 1)
-                            csvFile.getline(tempHeader, 255, delimiter);
-                           else
-                            csvFile.getline(tempHeader, 255, '\n');
-                           tb.TheSpread->SetText(headerCount, lineCount, tempHeader);
-                           // Last three columns
-                           if (lineCount == 0)
-                           {
-                            tb.TheSpread->SetCombo(headerCount, csvInfoTB.HeaderLines, fileTypes, fileTypes.Pointers[0]);
-                            tb.TheSpread->SetCombo(headerCount, csvInfoTB.HeaderLines + 1, blank, "");
-                            tb.TheSpread->SetCombo(headerCount, csvInfoTB.HeaderLines + 2, blank, "");
-                           }
-                       }
-
-                     SelectPreviousImport(inputFileName, csvInfoTB.HeaderLines, tb);
-
-                     aDialog->SetTransferBuffer(&tb);
-                     if (aDialog->Execute() == IDOK)
-                     {
                         int suffixLength = strlen(tb.Suffix);
 
                          // Save settings to an input file

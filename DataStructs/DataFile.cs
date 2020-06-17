@@ -326,5 +326,173 @@ namespace warmf
                     return i;
             return -1;
         }
+
+        // Replaces one data line with another
+        public void ReplaceData(List <double> ReplaceVariable, DataFile Other, int OtherVariable, bool FillBetween, double Conversion)
+        {
+
+        }
+
+        /*
+// Replaces a variable on a specific line of data with a variable from elsewhere
+bool TimeSeriesData::ReplaceDataLine(int ReplaceLine, stDoubleArray &ReplaceVariable, stDataLine &Other, int OtherVariable, double)
+{
+	int i, j;
+	int replaceNumber;
+   for (replaceNumber = 0; replaceNumber < ReplaceVariable.Number; replaceNumber++)
+   	if (ReplaceVariable.Values[replaceNumber] > 0.)
+      	break;
+
+	// Flag for data source
+   if (replaceNumber == Data[ReplaceLine].Types[0].Number)
+   {
+      Data[ReplaceLine].SetDataSource(Other.DataSource);
+      return true;
+   }
+
+	if (ReplaceLine < 0 || ReplaceLine >= NumData)
+   	return false;
+   if (replaceNumber < 0 || replaceNumber > Data[ReplaceLine].Types[0].Number)
+   	return false;
+   if (OtherVariable >= Other.Types[0].Number)
+   	return false;
+
+   // Copy the data to be changed
+	for (i = 0; i < NumTypes; i++)
+   {
+   	if (Other.Types[i].Values[OtherVariable] > -999.)
+      {
+		   // Add up current values on this data line
+   	   double currentTotal = 0.;
+   		for (j = 0; j < Data[ReplaceLine].Types[i].Number; j++)
+      		currentTotal += Data[ReplaceLine].Types[i].Values[j] * ReplaceVariable.Values[j];
+
+         if (currentTotal > 0.)
+         	for (j = 0; j < Data[ReplaceLine].Types[i].Number; j++)
+            {
+            	if (ReplaceVariable.Values[i] > 0.)
+               	Data[ReplaceLine].Types[i].Values[j] *= Other.Types[i].Values[OtherVariable] / currentTotal;
+            }
+         else
+      		Data[ReplaceLine].Types[i].Values[replaceNumber] = Other.Types[i].Values[OtherVariable];
+      }
+   }
+
+	return true;
+}
+
+// Returns a default data line for extrapolation and importing
+stDataLine TimeSeriesData::GetDefaultDataLine(stDataLine &OtherDataLine)
+{
+	int theDataLine = 0;
+   for (int i = 0; i < NumData; i++)
+   {
+   	if (Data[i].IsAfter(OtherDataLine))
+      	break;
+
+      if (Data[i].Types[0].Values[0] > -999.)
+      	theDataLine = i;
+   }
+
+   return Data[theDataLine];
+}
+
+// Replaces data with data from another file
+bool TimeSeriesData::ReplaceData(stDoubleArray &ReplaceVariable, TimeSeriesData &Other, int OtherVariable, bool FillBetween, double FlowConvert)
+{
+   int i;
+   int lineNumber = 0;
+
+   if (OtherVariable > Other.NumVariables)
+   	return false;
+   if (Other.NumData <= 0)
+   	return false;
+
+   // Fill in space between this dataset and the other, as applicable, with blank lines
+   if (IsRegularInterval())
+   {
+		// Contingency 1: "Other" last data point before first point of this data
+		if (Other.Data[Other.NumData - 1].IsBefore(Data[0]))
+      	ExtrapolateData(Other.Data[Other.NumData - 1].Date, GetDataInterval(), EXTRAPOLATEMETHODMISSING);
+		// Contingency 2: "Other" first data point after last point of this data
+		if (Other.Data[0].IsAfter(Data[NumData - 1]))
+      	ExtrapolateData(Other.Data[0].Date, GetDataInterval(), EXTRAPOLATEMETHODMISSING);
+   }
+
+   // Get a default data line for after the end of the "Other" time series
+	stDataLine defaultDataLine = GetDefaultDataLine(Other.Data[Other.NumData - 1]);
+
+	for (i = 0; i < Other.NumData; i++)
+   {
+      // Get the line number with the same date or just earlier as this data line in "Other"
+   	if (!AdvanceToDateAndTime(Other.Data[i], lineNumber))
+      {
+       	// Contingency 1: "Other's" data point is before all data
+      	if (Other.Data[i].IsBefore(Data[0]))
+      		lineNumber = 0;
+       	// Contingency 2: "Other's" data point is after all data
+      	if (Data[NumData - 1].IsBefore(Other.Data[i]))
+      		lineNumber = NumData - 1;
+      }
+
+      // Only add a new line if the dates don't match
+      if (!Data[lineNumber].IsSameTime(Other.Data[i]))
+      {
+	      // Add a new line after "lineNumber" if date is before
+   	   if (Data[lineNumber].IsBefore(Other.Data[i]))
+      		lineNumber++;
+
+         AddDataLine(lineNumber, 1, true);
+
+         // Set the date of the new line to match the Other line
+         Data[lineNumber].Date = Other.Data[i].Date;
+         Data[lineNumber].Time = Other.Data[i].Time;
+      }
+
+		// Replace all data before the next data line in the "Other" series
+      do
+      {
+	      // Actually replace the data with the data from "Other"
+      	if (OtherVariable < Other.NumVariables)
+         	ReplaceDataLine(lineNumber, ReplaceVariable, Other.Data[i], OtherVariable, FlowConvert);
+         else
+         	Data[lineNumber].SetDataSource(Other.Data[i].DataSource);
+         lineNumber++;
+      } while (FillBetween && lineNumber < NumData && i < Other.NumData - 1 &&
+      			Data[lineNumber].IsBefore(Other.Data[i + 1]));
+   }
+
+   // Put default data back in place
+   // Set the date to after the other data
+   defaultDataLine.Date = Other.Data[Other.NumData - 1].Date;
+   defaultDataLine.Time = Other.Data[Other.NumData - 1].Time;
+   if (Other.NumData > 1 && Other.Data[Other.NumData - 1].Date.nDay ==
+   	 Other.Data[Other.NumData - 2].Date.nDay)
+   {
+   	// Increment default data by a month
+      defaultDataLine.Date += 31;
+      defaultDataLine.Date.nDay = Other.Data[Other.NumData - 1].Date.nDay;
+   }
+   else
+   	defaultDataLine.Date++;
+
+	lineNumber = 0;
+   if (AdvanceToDateAndTime(defaultDataLine, lineNumber))
+   {
+      if (!Data[lineNumber].IsSameTime(defaultDataLine))
+      {
+      	lineNumber++;
+      	AddDataLine(lineNumber);
+         Data[lineNumber] = defaultDataLine;
+      }
+      else
+      	// Replace data if first value is missing
+      	if (Data[lineNumber].Types[0].Values[0] == -999.)
+      		Data[lineNumber] = defaultDataLine;
+   }
+
+   return true;
+}
+         */
     }
 }

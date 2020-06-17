@@ -3358,6 +3358,25 @@ namespace warmf {
             return -1;
         }
 
+        public int GetParameterNumberFromName(string TheName)
+        {
+            for (int ii = 0; ii < AllConstits.Count; ii++)
+                if (String.Compare(TheName, AllConstits[ii].fullName, new CultureInfo("en-US"), System.Globalization.CompareOptions.IgnoreSymbols) == 0)
+                    return ii;
+            return -1;
+        }
+
+        public int GetParameterNumberFromNameAndUnits(string TheName)
+        {
+            string nameWithoutUnits = TheName;
+            // Find the comma and truncate the string there
+            int commaIndex = nameWithoutUnits.LastIndexOf(',');
+            if (commaIndex > 0)
+                nameWithoutUnits = nameWithoutUnits.Substring(0, commaIndex);
+
+            return GetParameterNumberFromName(nameWithoutUnits);
+        }
+
         public string GetParameterCodeFromName(string name)
         {
             int totalNumConstits = numHydrologyParams + numChemicalParams + numPhysicalParams + numCompositeParams;
@@ -3502,6 +3521,40 @@ namespace warmf {
                         obsWQFiles.Add(reservoirs[ii].reservoirSegs[jj].obsWQFilename);
 
             return obsWQFiles;
+        }
+
+        // Finds all instances of an observed file name and changes them to a new file name
+        public void ChangeObservedFileName(string oldFileName, string newFileName)
+        {
+            // Catchment prescribed ponding depth files
+            for (int ii = 0; ii < catchments.Count; ii++)
+                if (catchments[ii].nluPonds > 0)
+                    for (int jj = 0; jj < catchments[ii].ponds.Count; jj++)
+                        if (!String.IsNullOrEmpty(catchments[ii].ponds[jj].pondFilename) &&
+                            catchments[ii].ponds[jj].pondFilename == oldFileName)
+                            catchments[ii].ponds[jj].pondFilename = newFileName;
+            // River observed flow and water quality files
+            for (int ii = 0; ii < rivers.Count; ii++)
+            {
+                if (!String.IsNullOrEmpty(rivers[ii].hydrologyFilename) &&
+                    rivers[ii].hydrologyFilename == oldFileName)
+                    rivers[ii].hydrologyFilename = newFileName;
+                if (!String.IsNullOrEmpty(rivers[ii].obsWQFilename) &&
+                    rivers[ii].obsWQFilename == oldFileName)
+                    rivers[ii].obsWQFilename = newFileName;
+            }
+            // Reservoir observed volume / surface elevation files
+            for (int ii = 0; ii < reservoirs.Count; ii++)
+            {
+                if (!String.IsNullOrEmpty(reservoirs[ii].hydrologyFilename) &&
+                    reservoirs[ii].hydrologyFilename == oldFileName)
+                    reservoirs[ii].hydrologyFilename = newFileName;
+                for (int jj = 0; jj < reservoirs[ii].reservoirSegs.Count; jj++)
+                    if (!String.IsNullOrEmpty(reservoirs[ii].reservoirSegs[jj].obsWQFilename) &&
+                        reservoirs[ii].reservoirSegs[jj].obsWQFilename == oldFileName)
+                        reservoirs[ii].reservoirSegs[jj].obsWQFilename = newFileName;
+
+            }
         }
 
         #endregion
