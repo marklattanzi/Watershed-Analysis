@@ -47,11 +47,9 @@
             this.miEditSelectRivers = new System.Windows.Forms.ToolStripMenuItem();
             this.miEditSelectAll = new System.Windows.Forms.ToolStripMenuItem();
             this.miTopView = new System.Windows.Forms.ToolStripMenuItem();
-            this.miViewZoom = new System.Windows.Forms.ToolStripMenuItem();
             this.miEditZoomIn = new System.Windows.Forms.ToolStripMenuItem();
             this.miEditZoomOut = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.miEditRestore = new System.Windows.Forms.ToolStripMenuItem();
             this.miViewTribConnect = new System.Windows.Forms.ToolStripMenuItem();
             this.miViewEntityIDs = new System.Windows.Forms.ToolStripMenuItem();
             this.miViewEntityPoints = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,6 +63,11 @@
             this.miViewScale = new System.Windows.Forms.ToolStripMenuItem();
             this.miViewPictures = new System.Windows.Forms.ToolStripMenuItem();
             this.miViewLabels = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.miViewSelectableLayer = new System.Windows.Forms.ToolStripMenuItem();
+            this.catchmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.riversToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lakesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.miTopMode = new System.Windows.Forms.ToolStripMenuItem();
             this.miModeInput = new System.Windows.Forms.ToolStripMenuItem();
             this.miModeOutput = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,8 +104,13 @@
             this.miHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.pboxSplash = new System.Windows.Forms.PictureBox();
             this.lblLatLong = new System.Windows.Forms.Label();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton_ZoomIn = new System.Windows.Forms.ToolStripButton();
+            this.tsbZoomToExtent = new System.Windows.Forms.ToolStripButton();
+            this.tsbClearSelected = new System.Windows.Forms.ToolStripButton();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxSplash)).BeginInit();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dlgFileOpen
@@ -115,13 +123,13 @@
             this.frmMap.AutoSize = true;
             this.frmMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.frmMap.CentrePoint2D = ((EGIS.ShapeFileLib.PointD)(resources.GetObject("frmMap.CentrePoint2D")));
-            this.frmMap.Location = new System.Drawing.Point(15, 30);
+            this.frmMap.Location = new System.Drawing.Point(15, 61);
             this.frmMap.MapBackColor = System.Drawing.SystemColors.Control;
             this.frmMap.Margin = new System.Windows.Forms.Padding(6);
             this.frmMap.Name = "frmMap";
             this.frmMap.PanSelectMode = EGIS.Controls.PanSelectMode.Pan;
             this.frmMap.RenderQuality = EGIS.ShapeFileLib.RenderQuality.Auto;
-            this.frmMap.Size = new System.Drawing.Size(917, 540);
+            this.frmMap.Size = new System.Drawing.Size(930, 546);
             this.frmMap.TabIndex = 0;
             this.frmMap.UseMercatorProjection = false;
             this.frmMap.ZoomLevel = 1D;
@@ -146,7 +154,7 @@
             this.mnuMain.Location = new System.Drawing.Point(0, 0);
             this.mnuMain.Name = "mnuMain";
             this.mnuMain.Padding = new System.Windows.Forms.Padding(3, 1, 0, 1);
-            this.mnuMain.Size = new System.Drawing.Size(947, 24);
+            this.mnuMain.Size = new System.Drawing.Size(960, 24);
             this.mnuMain.TabIndex = 1;
             this.mnuMain.Text = "menuStrip1";
             // 
@@ -286,11 +294,11 @@
             // miTopView
             // 
             this.miTopView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miViewZoom,
             this.miEditZoomIn,
             this.miEditZoomOut,
             this.toolStripSeparator6,
-            this.miEditRestore,
+            this.miViewSelectableLayer,
+            this.toolStripSeparator1,
             this.miViewTribConnect,
             this.miViewEntityIDs,
             this.miViewEntityPoints,
@@ -307,12 +315,6 @@
             this.miTopView.Name = "miTopView";
             this.miTopView.Size = new System.Drawing.Size(44, 22);
             this.miTopView.Text = "&View";
-            // 
-            // miViewZoom
-            // 
-            this.miViewZoom.Name = "miViewZoom";
-            this.miViewZoom.Size = new System.Drawing.Size(195, 22);
-            this.miViewZoom.Text = "Zoom";
             // 
             // miEditZoomIn
             // 
@@ -332,12 +334,6 @@
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(192, 6);
-            // 
-            // miEditRestore
-            // 
-            this.miEditRestore.Name = "miEditRestore";
-            this.miEditRestore.Size = new System.Drawing.Size(195, 22);
-            this.miEditRestore.Text = "Restore Map";
             // 
             // miViewTribConnect
             // 
@@ -453,6 +449,48 @@
             this.miViewLabels.Name = "miViewLabels";
             this.miViewLabels.Size = new System.Drawing.Size(195, 22);
             this.miViewLabels.Text = "Labels";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(192, 6);
+            // 
+            // miViewSelectableLayer
+            // 
+            this.miViewSelectableLayer.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.catchmentsToolStripMenuItem,
+            this.riversToolStripMenuItem,
+            this.lakesToolStripMenuItem});
+            this.miViewSelectableLayer.Name = "miViewSelectableLayer";
+            this.miViewSelectableLayer.Size = new System.Drawing.Size(195, 22);
+            this.miViewSelectableLayer.Text = "Selectable Layer(s)";
+            // 
+            // catchmentsToolStripMenuItem
+            // 
+            this.catchmentsToolStripMenuItem.CheckOnClick = true;
+            this.catchmentsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.catchmentsToolStripMenuItem.Name = "catchmentsToolStripMenuItem";
+            this.catchmentsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.catchmentsToolStripMenuItem.Text = "Catchments";
+            this.catchmentsToolStripMenuItem.Click += new System.EventHandler(this.catchmentsToolStripMenuItem_Click);
+            // 
+            // riversToolStripMenuItem
+            // 
+            this.riversToolStripMenuItem.CheckOnClick = true;
+            this.riversToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.riversToolStripMenuItem.Name = "riversToolStripMenuItem";
+            this.riversToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.riversToolStripMenuItem.Text = "Rivers";
+            this.riversToolStripMenuItem.Click += new System.EventHandler(this.riversToolStripMenuItem_Click);
+            // 
+            // lakesToolStripMenuItem
+            // 
+            this.lakesToolStripMenuItem.CheckOnClick = true;
+            this.lakesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.lakesToolStripMenuItem.Name = "lakesToolStripMenuItem";
+            this.lakesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.lakesToolStripMenuItem.Text = "Lakes";
+            this.lakesToolStripMenuItem.Click += new System.EventHandler(this.lakesToolStripMenuItem_Click);
             // 
             // miTopMode
             // 
@@ -728,12 +766,63 @@
             this.lblLatLong.Text = "Lat/Long:";
             this.lblLatLong.Visible = false;
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.GripMargin = new System.Windows.Forms.Padding(0);
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(30, 30);
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton_ZoomIn,
+            this.tsbZoomToExtent,
+            this.tsbClearSelected});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(960, 37);
+            this.toolStrip1.TabIndex = 5;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripButton_ZoomIn
+            // 
+            this.toolStripButton_ZoomIn.CheckOnClick = true;
+            this.toolStripButton_ZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton_ZoomIn.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_ZoomIn.Image")));
+            this.toolStripButton_ZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_ZoomIn.Margin = new System.Windows.Forms.Padding(0);
+            this.toolStripButton_ZoomIn.Name = "toolStripButton_ZoomIn";
+            this.toolStripButton_ZoomIn.Size = new System.Drawing.Size(34, 37);
+            this.toolStripButton_ZoomIn.Text = "toolStripButton1";
+            this.toolStripButton_ZoomIn.ToolTipText = "Zoom to selected area";
+            // 
+            // tsbZoomToExtent
+            // 
+            this.tsbZoomToExtent.AutoToolTip = false;
+            this.tsbZoomToExtent.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbZoomToExtent.Image = ((System.Drawing.Image)(resources.GetObject("tsbZoomToExtent.Image")));
+            this.tsbZoomToExtent.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbZoomToExtent.Margin = new System.Windows.Forms.Padding(0);
+            this.tsbZoomToExtent.Name = "tsbZoomToExtent";
+            this.tsbZoomToExtent.Size = new System.Drawing.Size(34, 37);
+            this.tsbZoomToExtent.Text = "ButtonText";
+            this.tsbZoomToExtent.ToolTipText = "Zoom to watershed extent";
+            this.tsbZoomToExtent.Click += new System.EventHandler(this.toolStripButton_ZoomToExtent_Click);
+            // 
+            // tsbClearSelected
+            // 
+            this.tsbClearSelected.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbClearSelected.Image = ((System.Drawing.Image)(resources.GetObject("tsbClearSelected.Image")));
+            this.tsbClearSelected.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbClearSelected.Name = "tsbClearSelected";
+            this.tsbClearSelected.Size = new System.Drawing.Size(34, 34);
+            this.tsbClearSelected.Text = "toolStripButton1";
+            this.tsbClearSelected.ToolTipText = "Clear selected features";
+            this.tsbClearSelected.Click += new System.EventHandler(this.tsbClearSelected_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(947, 575);
+            this.ClientSize = new System.Drawing.Size(960, 612);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.lblLatLong);
             this.Controls.Add(this.pboxSplash);
             this.Controls.Add(this.frmMap);
@@ -746,6 +835,8 @@
             this.mnuMain.ResumeLayout(false);
             this.mnuMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxSplash)).EndInit();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -787,11 +878,9 @@
 		private System.Windows.Forms.ToolStripMenuItem miEditSelectReservoir;
 		private System.Windows.Forms.ToolStripMenuItem miEditSelectRivers;
 		private System.Windows.Forms.ToolStripMenuItem miEditSelectAll;
-		private System.Windows.Forms.ToolStripMenuItem miViewZoom;
 		private System.Windows.Forms.ToolStripMenuItem miEditZoomIn;
 		private System.Windows.Forms.ToolStripMenuItem miEditZoomOut;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-		private System.Windows.Forms.ToolStripMenuItem miEditRestore;
 		private System.Windows.Forms.ToolStripMenuItem miModeInput;
 		private System.Windows.Forms.ToolStripMenuItem miModeOutput;
 		private System.Windows.Forms.ToolStripMenuItem miModeFluxOutput;
@@ -831,6 +920,15 @@
         private System.Windows.Forms.ToolStripMenuItem miViewPictures;
         private System.Windows.Forms.ToolStripMenuItem miViewLabels;
         private System.Windows.Forms.ToolStripMenuItem miScenarioFileCheck;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton toolStripButton_ZoomIn;
+        private System.Windows.Forms.ToolStripButton tsbZoomToExtent;
+        private System.Windows.Forms.ToolStripButton tsbClearSelected;
+        private System.Windows.Forms.ToolStripMenuItem miViewSelectableLayer;
+        private System.Windows.Forms.ToolStripMenuItem catchmentsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem riversToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lakesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

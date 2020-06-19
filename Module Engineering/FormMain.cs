@@ -18,7 +18,12 @@ namespace warmf {
         private FormTMDL frmTMDL;
         private FormConsensus frmConsensus;
 
-        // what's on the map
+        // public shapefiles
+        public EGIS.ShapeFileLib.ShapeFile catchShapefile;
+        public EGIS.ShapeFileLib.ShapeFile riverShapefile;
+        public EGIS.ShapeFileLib.ShapeFile lakeShapefile;
+
+        // what's showing on the map
         bool showMETStations = false;
         bool showGageStations = false;
         bool showWQStations = false;
@@ -71,7 +76,6 @@ namespace warmf {
             frmManager = new FormManager(this);
             frmConsensus = new FormConsensus(this);
             frmTMDL = new FormTMDL(this);
-
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -96,6 +100,7 @@ namespace warmf {
             miTopDocument.Visible = false;
             miTopWindow.Visible = false;
 
+
             // for testing - MRL
             this.Hide();
         }
@@ -107,29 +112,29 @@ namespace warmf {
             {
                 //Add catchments shapefile (shapefile [0])
                 this.frmMap.AddShapeFile(Global.DIR.SHP + "Catchments.shp", "Catchments", "");
-                EGIS.ShapeFileLib.ShapeFile catchShapefile = this.frmMap[0];
+                catchShapefile = this.frmMap[0];
                 catchShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
                 catchShapefile.RenderSettings.UseToolTip = true;
                 catchShapefile.RenderSettings.ToolTipFieldName = catchShapefile.RenderSettings.FieldName;
-                catchShapefile.RenderSettings.IsSelectable = true;
+                catchShapefile.RenderSettings.IsSelectable = false;
                 catchShapefile.RenderSettings.FillColor = Color.FromArgb(224, 250, 207);
                 catchShapefile.RenderSettings.OutlineColor = Color.FromArgb(178, 178, 178);
                 //Add rivers shapefile (shapefile [1])
                 this.frmMap.AddShapeFile(Global.DIR.SHP + "Rivers.shp", "Rivers", "");
-                EGIS.ShapeFileLib.ShapeFile riverShapefile = this.frmMap[1];
+                riverShapefile = this.frmMap[1];
                 riverShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
                 riverShapefile.RenderSettings.UseToolTip = true;
                 riverShapefile.RenderSettings.ToolTipFieldName = catchShapefile.RenderSettings.FieldName;
-                riverShapefile.RenderSettings.IsSelectable = true;
+                riverShapefile.RenderSettings.IsSelectable = false;
                 riverShapefile.RenderSettings.LineType = LineType.Solid;
                 riverShapefile.RenderSettings.OutlineColor = Color.FromArgb(0, 0, 255);
                 //add reservoirs shapefile (shapefile [2])
                 this.frmMap.AddShapeFile(Global.DIR.SHP + "Lakes.shp", "Lakes", "");
-                EGIS.ShapeFileLib.ShapeFile lakeShapefile = this.frmMap[2];
+                lakeShapefile = this.frmMap[2];
                 lakeShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
                 lakeShapefile.RenderSettings.UseToolTip = true;
                 lakeShapefile.RenderSettings.ToolTipFieldName = catchShapefile.RenderSettings.FieldName;
-                lakeShapefile.RenderSettings.IsSelectable = true;
+                lakeShapefile.RenderSettings.IsSelectable = false;
                 lakeShapefile.RenderSettings.FillColor = Color.FromArgb(151, 219, 242);
                 lakeShapefile.RenderSettings.OutlineColor = Color.FromArgb(61, 101, 235);
             }
@@ -165,6 +170,7 @@ namespace warmf {
 
             lblLatLong.Visible = true;
             frmMap.Focus();
+            frmMap.ZoomToSelectedExtentWhenCtrlKeydown = true;
         }
 
         public void ShowForm(string name)
@@ -189,6 +195,8 @@ namespace warmf {
         }
 
         #region Map Interaction Events
+        
+
         private void frmMap_MapDoubleClick(object sender, EGIS.Controls.SFMap.MapDoubleClickedEventArgs e)
         {
             e.Cancel = true;
@@ -420,15 +428,15 @@ namespace warmf {
 
         private void frmMap_Load(object sender, EventArgs e)
         {
-            this.frmMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMap_MouseMove);
+            //this.frmMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMap_MouseMove);
             this.frmMap.Paint += new System.Windows.Forms.PaintEventHandler(this.frmMap_Paint);
         }
 
-        private void frmMap_MouseMove(object sender, MouseEventArgs e)
-        {
-            PointD pt = frmMap.PixelCoordToGisPoint(e.Y, e.X);
-            lblLatLong.Text = "Lat/Long: " + pt.Y + ", " + pt.X;
-        }
+        //private void frmMap_MouseMove(object sender, MouseEventArgs e)
+        //{
+        //    PointD pt = frmMap.PixelCoordToGisPoint(e.Y, e.X);
+        //    lblLatLong.Text = "Lat/Long: " + pt.Y + ", " + pt.X;
+        //}
 
         private void frmMap_Paint(object sender, PaintEventArgs e)
         {
@@ -1250,6 +1258,61 @@ namespace warmf {
 
         #endregion
 
+        private void toolStripButton_ZoomToExtent_Click(object sender, EventArgs e)
+        {
+            frmMap.ZoomToFullExtent();
+        }
+
+        private void tsbClearSelected_Click(object sender, EventArgs e)
+        {
+            catchShapefile.ClearSelectedRecords();
+            riverShapefile.ClearSelectedRecords();
+            lakeShapefile.ClearSelectedRecords();
+            
+        
+        }
+
+        private void catchmentsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (catchmentsToolStripMenuItem.Checked == true)
+            {
+                catchShapefile.RenderSettings.IsSelectable = true;
+                catchmentsToolStripMenuItem.Checked = true;
+            }
+            else
+            {
+                catchShapefile.RenderSettings.IsSelectable = false;
+                catchmentsToolStripMenuItem.Checked = false;
+            }
+        }
+
+        private void riversToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (riversToolStripMenuItem.Checked == true)
+            {
+                riverShapefile.RenderSettings.IsSelectable = true;
+                riversToolStripMenuItem.Checked = true;
+            }
+            else
+            {
+                riverShapefile.RenderSettings.IsSelectable = false;
+                riversToolStripMenuItem.Checked = false;
+            }
+        }
+
+        private void lakesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lakesToolStripMenuItem.Checked == true)
+            {
+                lakeShapefile.RenderSettings.IsSelectable = true;
+                lakesToolStripMenuItem.Checked = true;
+            }
+            else
+            {
+                lakeShapefile.RenderSettings.IsSelectable = false;
+                lakesToolStripMenuItem.Checked = false;
+            }
+        }
     }
 }
 
