@@ -153,7 +153,7 @@ namespace warmf
                 if (SR != null)
                     Debug.WriteLine("Error in data file.  Badly formatted data at line = " + SR.LineNum);
                 else
-                    Debug.WriteLine("Error opening StreamReader for data file " + filename);
+                    Debug.WriteLine("Error opening StreamstmReader for data file " + filename);
                 return false;
             }
 
@@ -325,6 +325,12 @@ namespace warmf
                 if (ParameterCodes[i].IndexOf(TheCode) == 0)
                     return i;
             return -1;
+        }
+
+        // Replaces data in this file with data in another structure
+        public virtual void ReplaceData(List <double> replaceVariable, DataFile theData, int theVariable, bool something, double conversion)
+        {
+
         }
     }
 }
