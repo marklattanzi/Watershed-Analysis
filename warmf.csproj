@@ -60,17 +60,17 @@
     <Compile Include="DataStructs\PTSFile.cs" />
     <Compile Include="DataStructs\DataFile.cs" />
     <Compile Include="Main\Simulation.cs" />
-    <Compile Include="Module Data\ExtrapolateData.cs">
+    <Compile Include="Module Data\DialogExtrapolateData.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Module Data\ExtrapolateData.Designer.cs">
-      <DependentUpon>ExtrapolateData.cs</DependentUpon>
+    <Compile Include="Module Data\DialogExtrapolateData.Designer.cs">
+      <DependentUpon>DialogExtrapolateData.cs</DependentUpon>
     </Compile>
-    <Compile Include="Module Data\TruncateData.cs">
+    <Compile Include="Module Data\DialogTruncateData.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Module Data\TruncateData.Designer.cs">
-      <DependentUpon>TruncateData.cs</DependentUpon>
+    <Compile Include="Module Data\DialogTruncateData.Designer.cs">
+      <DependentUpon>DialogTruncateData.cs</DependentUpon>
     </Compile>
     <Compile Include="Module Data\ImportDelimitedFile.cs">
       <SubType>Form</SubType>
@@ -177,11 +177,11 @@
     </Compile>
     <Compile Include="Main\Application.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Module Data\ExtrapolateData.resx">
-      <DependentUpon>ExtrapolateData.cs</DependentUpon>
+    <EmbeddedResource Include="Module Data\DialogExtrapolateData.resx">
+      <DependentUpon>DialogExtrapolateData.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Module Data\TruncateData.resx">
-      <DependentUpon>TruncateData.cs</DependentUpon>
+    <EmbeddedResource Include="Module Data\DialogTruncateData.resx">
+      <DependentUpon>DialogTruncateData.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Module Data\ImportDelimitedFile.resx">
       <DependentUpon>ImportDelimitedFile.cs</DependentUpon>

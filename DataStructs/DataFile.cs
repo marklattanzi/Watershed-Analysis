@@ -200,6 +200,8 @@ namespace warmf
 
                 ReadHeader(ref sr);
                 ReadData(ref sr);
+
+                sr.Close();
             }
             catch (Exception e)
             {
@@ -615,7 +617,7 @@ namespace warmf
             {
                 if (TheData[i].Date > TheDate && After)
                     TheData.RemoveAt(i);
-                if (TheData[i].Date < TheDate && !After)
+                else if (TheData[i].Date < TheDate && !After)
                     TheData.RemoveAt(i);
             }
 
