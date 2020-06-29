@@ -100,7 +100,6 @@ namespace warmf {
             miTopDocument.Visible = false;
             miTopWindow.Visible = false;
 
-
             // for testing - MRL
             this.Hide();
         }
@@ -170,7 +169,7 @@ namespace warmf {
 
             lblLatLong.Visible = true;
             frmMap.Focus();
-            frmMap.ZoomToSelectedExtentWhenCtrlKeydown = true;
+            frmMap.ZoomToSelectedExtentWhenCtrlKeydown = false;
         }
 
         public void ShowForm(string name)
@@ -194,9 +193,25 @@ namespace warmf {
             }
         }
 
+        public int GetWarmfIDFieldIndex(int shapefileIndex)
+        {
+            string[] attributeNames = frmMap[shapefileIndex].GetAttributeFieldNames();
+            int n = 0;
+            while (attributeNames[n] != "WARMF_ID") //test of shapefile attributes
+            {
+                if (n < (attributeNames.Length - 1))
+                    n++;
+                else
+                {
+                    Debug.WriteLine("No WARMF_ID Field found in rivers attribute table");
+                    return -1;
+                }
+            }
+            return n;
+        }
+
         #region Map Interaction Events
         
-
         private void frmMap_MapDoubleClick(object sender, EGIS.Controls.SFMap.MapDoubleClickedEventArgs e)
         {
             e.Cancel = true;

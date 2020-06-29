@@ -844,7 +844,7 @@
 
 		#endregion
 
-		private EGIS.Controls.SFMap frmMap;
+		public EGIS.Controls.SFMap frmMap;
 		private System.Windows.Forms.MenuStrip mnuMain;
 		private System.Windows.Forms.ToolStripMenuItem miTopFile;
 		private System.Windows.Forms.OpenFileDialog dlgFileOpen;
