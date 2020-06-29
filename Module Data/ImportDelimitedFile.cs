@@ -495,9 +495,9 @@ namespace warmf.Module_Data
                         replaceVariable[k] = -999;
 
                     // Fill in the data source
-                    if (headerCount > 0)
-                        for (lineCount = 0; lineCount < newData.TheData.Count; lineCount++)
-                            newData.TheData[lineCount].Source = dataSourceFields[lineCount][headerCount - 1];
+//                    if (headerCount > 0)
+//                        for (lineCount = 0; lineCount < newData.TheData.Count; lineCount++)
+//                            newData.TheData[lineCount].Source = dataSourceFields[lineCount][headerCount - 1];
 
                     // Open the appropriate file type
                     // Meteorology

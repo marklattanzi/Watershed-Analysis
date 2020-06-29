@@ -201,8 +201,43 @@ namespace warmf
             }
         }
 
-		// Data element selector handler
-		private void cboxData_SelectedIndexChanged(object sender, EventArgs e) {
+        // Return the appropriate data structure for the 
+        private DataFile GetNewDataStructure(string fileName)
+        {
+            if (cboxTypeOfFile.SelectedIndex == FileTypeMeteorology)
+            {
+                return new METFile(Global.DIR.MET + fileName);
+            }
+            else if (cboxTypeOfFile.SelectedIndex == FileTypeAirQuality)
+            {
+                return new AIRFile(Global.DIR.AIR + fileName);
+            }
+            else if (cboxTypeOfFile.SelectedIndex == FileTypeObservedHydrology) 
+            {
+                return new ObservedFile(Global.DIR.ORH + fileName);
+            }
+            else if (cboxTypeOfFile.SelectedIndex == FileTypeObservedWaterQuality)
+            {
+                return new ObservedFile(Global.DIR.ORC + fileName);
+            }
+            else if (cboxTypeOfFile.SelectedIndex == FileTypeManagedFlow)
+            {
+                return new FLOFile(Global.DIR.FLO + fileName);
+            }
+            else if (cboxTypeOfFile.SelectedIndex == FileTypePointSource)
+            {
+                return new PTSFile(Global.DIR.PTS + fileName);
+            }
+            else if (cboxTypeOfFile.SelectedIndex == FileTypePictures)
+            {
+                // This is not handled yet
+            }
+
+            return new DataFile();
+        }
+
+        // Data element selector handler
+        private void cboxData_SelectedIndexChanged(object sender, EventArgs e) {
 			if (radioGraph.Checked) PlotGraph();
 		}
 
@@ -513,7 +548,26 @@ namespace warmf
         // Called from Edit / Truncate in the Data Module menu
         private void truncateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            TruncateData myDialog = new TruncateData();
+            if (myDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (myDialog.TruncateBefore() || myDialog.TruncateAfter())
+                {
+                    int numFiles = cboxFilename.Items.Count;
+                    for (int i = 0; i < numFiles; i++)
+                    {
+                        DataFile df = GetNewDataStructure(cboxFilename.Items[i].ToString());
+                        if (df != null && df.ReadFile())
+                        {
+                            if (myDialog.TruncateBefore())
+                                df.TruncateData(myDialog.GetTruncateBeforeDate(), false);
+                            if (myDialog.TruncateAfter())
+                                df.TruncateData(myDialog.GetTruncateAfterDate(), true);
+                            df.WriteFile();
+                        }
+                    }
+                }
+            }
         }
 
         // Called from Edit / Import Delimited in the Data Module menu

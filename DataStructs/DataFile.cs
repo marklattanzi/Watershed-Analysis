@@ -74,6 +74,18 @@ namespace warmf
         public bool FlexibleColumns;
         public bool Sortable;
         public bool Fillable;
+        public bool RegularInterval;
+        public static int DATAFILLTYPENONE = -1;
+        public static int DATAFILLTYPESHIFT = 0;
+        public static int DATAFILLTYPEMULTIPLY = 1;
+        public static int EXTRAPOLATEINTERVALHOURLY = 0;
+        public static int EXTRAPOLATEINTERVALDAILY = 1;
+        public static int EXTRAPOLATEINTERVALWEEKLY = 2;
+        public static int EXTRAPOLATEINTERVALMONTHLY = 3;
+        public static int EXTRAPOLATEINTERVALYEARLY = 4;
+        public static int EXTRAPOLATEMETHODMISSING = 0;
+        public static int EXTRAPOLATEMETHODZERO = 1;
+        public static int EXTRAPOLATEMETHODAVERAGE = 2;
         public List<string> ParameterNames;
         public List<string> ParameterCodes;
 
@@ -188,6 +200,8 @@ namespace warmf
 
                 ReadHeader(ref sr);
                 ReadData(ref sr);
+
+                sr.Close();
             }
             catch (Exception e)
             {
@@ -271,6 +285,345 @@ namespace warmf
 
         }
 
+        // Returns the index of the parameter whose Fortran code matches what was passed in
+        public int FindParameterCode(string TheCode)
+        {
+            string codeWithoutSpaces = TheCode.Trim();
+            for (int i = 0; i < ParameterCodes.Count; i++)
+                if (ParameterCodes[i].IndexOf(TheCode) == 0)
+                    return i;
+            return -1;
+        }
+
+        public virtual bool IsRegularInterval()
+        {
+            return true;
+        }
+
+        // Returns the average time interval of the data in days
+        public double GetDataInterval()
+        {
+            if (TheData.Count < 2)
+                return 0;
+
+            // Choose data points to compare
+            int firstPoint = 0;
+            int lastPoint = TheData.Count - 1;
+
+            if (!IsRegularInterval())
+                firstPoint = lastPoint - 1;
+
+            // Difference in days and fraction of days
+            double difference = (TheData[lastPoint].Date - TheData[firstPoint].Date).TotalDays;
+
+            return difference / (double)(lastPoint - firstPoint);
+        }
+
+        // Gets default data interval code from the actual data interval
+        public int GetDefaultDataInterval()
+        {
+            // Get the actual data interval
+            double interval = GetDataInterval();
+
+            // Annual if no interval
+            if (interval <= 0)
+                return EXTRAPOLATEINTERVALYEARLY;
+
+            // Hourly by default
+            if (interval < 0.5)
+                return EXTRAPOLATEINTERVALHOURLY;
+            // Daily by default
+            if (interval < 3.5)
+                return EXTRAPOLATEINTERVALDAILY;
+            // Weekly by default
+            if (interval < 15)
+                return EXTRAPOLATEINTERVALWEEKLY;
+            // Monthly by default
+            if (interval < 180)
+                return EXTRAPOLATEINTERVALMONTHLY;
+
+            // If nothing else, default data interval is annual
+            return EXTRAPOLATEINTERVALYEARLY;
+        }
+
+        // Returns the value used when simulating
+        public double GetEffectiveValue(int TheDataLine, int TheGroup, int TheParameter)
+        {
+            if (TheDataLine < 0 || TheDataLine >= TheData.Count)
+                return -999;
+            if (TheGroup < 0 || TheGroup >= NumGroups)
+                return -999;
+            if (TheParameter < 0 || TheParameter >= NumParameters)
+                return -999;
+
+            if (TheGroup == 1)
+                return TheData[TheDataLine].SecondaryValues[TheParameter];
+            return TheData[TheDataLine].Values[TheParameter];
+        }
+
+        // Gets average values for each parameter for every day of the year
+        public bool GetAverageValues(ref DataFile Averages)
+        {
+            int i, j, k;
+            DataFile numValues = new DataFile();
+
+            // Initialize records to be used to calculate typical values for
+            // each day of the year
+            Averages.NumGroups = NumGroups;
+            Averages.NumParameters = NumParameters;
+            numValues.NumGroups = NumGroups;
+            numValues.NumParameters = NumParameters;
+            for (k = 0; k < Averages.TheData.Count; k++)
+            {
+                DataLine averageDataLine = new DataLine();
+                DataLine numValuesDataLine = new DataLine();
+                for (j = 0; j < NumParameters; j++)
+                {
+                    Averages.TheData[k].Values[j] = 0;
+                    Averages.TheData[k].SecondaryValues[j] = 0;
+                    numValues.TheData[k].Values[j] = 0;
+                    numValues.TheData[k].SecondaryValues[j] = 0;
+                }
+            }
+
+            // Sum up all the values to create an average year
+            int julian;
+            for (i = 0; i < TheData.Count; i++)
+            {
+                DateTime interDate = TheData[i].Date;
+                // Fill in for days between this data point and the next
+                do
+                {
+                    julian = interDate.DayOfYear - 1;
+                    for (k = 0; k < NumParameters; k++)
+                    {
+                        // Value used for simulation may be from earlier day in file
+                        double effectiveValue = GetEffectiveValue(i, 0, k);
+                        if (effectiveValue > -999)
+                        {
+                            Averages.TheData[julian].Values[k] +=
+                                 effectiveValue;
+                            numValues.TheData[julian].Values[k] += 1;
+                        }
+                        if (NumGroups == 2)
+                        {
+                            effectiveValue = GetEffectiveValue(i, 1, k);
+                            if (effectiveValue > -999)
+                            {
+                                Averages.TheData[julian].SecondaryValues[k] +=
+                                     effectiveValue;
+                                numValues.TheData[julian].SecondaryValues[k] += 1;
+                            }
+                        }
+                    }
+                    interDate.AddDays(1);
+                } while (i < TheData.Count - 1 && interDate < TheData[i + 1].Date);
+            }
+
+            // Average the summed values
+            for (k = 0; k < Averages.TheData.Count; k++)
+            {
+                for (j = 0; j < Averages.TheData[k].Values.Count; j++)
+                {
+                    // Calculate average for primary and secondary values
+                    // numValues will be zero for secondary values if there aren't any
+                    if (numValues.TheData[k].Values[j] > 1)
+                        Averages.TheData[k].Values[j] /=
+                           numValues.TheData[k].Values[j];
+                    if (numValues.TheData[k].SecondaryValues[j] > 1)
+                        Averages.TheData[k].SecondaryValues[j] /=
+                           numValues.TheData[k].SecondaryValues[j];
+
+                    // Smooth out average with leap years, affecting the last julian day
+                    if (k == 365)
+                    {
+                        Averages.TheData[365].Values[j] =
+                           (Averages.TheData[364].Values[j] +
+                           Averages.TheData[0].Values[j]) / 2;
+                        Averages.TheData[365].SecondaryValues[j] =
+                           (Averages.TheData[364].SecondaryValues[j] +
+                           Averages.TheData[0].SecondaryValues[j]) / 2;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        // Extrapolates data to a specified date
+        public bool ExtrapolateData(DateTime TheDate, int Interval, int Method)
+        {
+            int i, j, k;
+
+            if (TheData.Count < 1)
+                return false;
+
+            // Calculate the number of data lines to add
+            // Set increments for each of the interval possibilities
+            int hour = 0;
+            int day = 0;
+            int month = 0;
+            int year = 0;
+            // Hourly
+            if (Interval == EXTRAPOLATEINTERVALHOURLY)
+                hour = 1;
+            // Daily
+            if (Interval == EXTRAPOLATEINTERVALDAILY)
+                day = 1;
+            // Weekly
+            if (Interval == EXTRAPOLATEINTERVALWEEKLY)
+                day = 7;
+            // Monthly
+            if (Interval == EXTRAPOLATEINTERVALMONTHLY)
+                month = 1;
+            // Yearly
+            if (Interval == EXTRAPOLATEINTERVALYEARLY)
+                year = 1;
+            int numNewLines = 0;
+
+            // Extrapolate either forward or backward
+            int direction = 0;
+            int startTest;
+            // Forward
+            if (TheData[TheData.Count - 1].Date <= TheDate)
+            {
+                direction = 1;
+                startTest = TheData.Count - 1;
+            }
+            // Backward
+            else if (TheData[0].Date > TheDate)
+            {
+                direction = -1;
+                startTest = 0;
+            }
+            // Can't extrapolate at all
+            else
+                return false;
+
+            // Set up typical average values for each day of the year if that method is selected
+            DataFile typical = new DataFile();
+            if (Method == EXTRAPOLATEMETHODAVERAGE)
+                GetAverageValues(ref typical);
+
+            DateTime testDate = TheData[startTest].Date;
+            while ((testDate <= TheDate && direction == 1) || (testDate > TheDate && direction == -1))
+            {
+                numNewLines++;
+                testDate.AddHours(hour * direction);
+                testDate.AddDays(day * direction);
+                testDate.AddMonths(month * direction);
+                testDate.AddYears(year * direction);
+            }
+
+            // Expand the data to include all the new lines
+            int originalStartYear = TheData[0].Date.Year;
+            int originalEndYear = TheData[TheData.Count - 1].Date.Year;
+            int lineCount = 0;
+            if (direction == 1)
+            {
+                lineCount = TheData.Count;
+                for (i = 0; i < numNewLines; i++)
+                {
+                    DataLine newDataLine = new DataLine();
+                    TheData.Add(newDataLine);
+                }
+            }
+            else if (direction == -1)
+            {
+                lineCount = numNewLines - 1;
+                for (i = 0; i < numNewLines; i++)
+                {
+                    DataLine newDataLine = new DataLine();
+                    TheData.Insert(0, newDataLine);
+                }
+            }
+
+            for (; lineCount < TheData.Count && lineCount >= 0; lineCount += direction)
+            {
+                TheData[lineCount].Date = TheData[lineCount - 1 * direction].Date;
+                TheData[lineCount].Date.AddYears(year * direction);
+                TheData[lineCount].Date.AddMonths(month * direction);
+                TheData[lineCount].Date.AddDays(day * direction);
+                TheData[lineCount].Date.AddHours(hour * direction);
+
+                // Set the new data as directed
+                // Missing
+                if (Method == EXTRAPOLATEMETHODMISSING)
+                {
+                    for (j = 0; j < TheData[lineCount].Values.Count; j++)
+                        TheData[lineCount].Values[j] = -999;
+                    if (NumGroups == 2)
+                        for (j = 0; j < TheData[lineCount].SecondaryValues.Count; j++)
+                            TheData[lineCount].SecondaryValues[j] = -999;
+
+                    TheData[lineCount].Source = "";
+                }
+                // Zero
+                else if (Method == EXTRAPOLATEMETHODZERO)
+                {
+                    for (j = 0; j < TheData[lineCount].Values.Count; j++)
+                        TheData[lineCount].Values[j] = 0;
+                    if (NumGroups == 2)
+                        for (j = 0; j < TheData[lineCount].SecondaryValues.Count; j++)
+                            TheData[lineCount].SecondaryValues[j] = 0;
+
+                    TheData[lineCount].Source = "zero";
+                }
+                // Typical values
+                else if (Method == EXTRAPOLATEMETHODAVERAGE)
+                {
+                    int julian = TheData[lineCount].Date.DayOfYear - 1;
+                    // Days to include in each average: 1 for hourly or daily, 7 for weekly
+                    int daysInAverage = Math.Max(1, day);
+                    if (Interval == EXTRAPOLATEINTERVALMONTHLY)
+                        daysInAverage = 30;
+                    if (Interval == EXTRAPOLATEINTERVALYEARLY)
+                        daysInAverage = 365;
+                    // Fill in with typical values calculated earlier
+                    for (j = 0; j < TheData[lineCount].Values.Count; j++)
+                    {
+                        double theAverage = 0;
+                        for (k = 0; k < daysInAverage; k++)
+                            theAverage += typical.TheData[(julian + k) % 366].Values[j];
+
+                        // Get the average over the data interval
+                        TheData[lineCount].Values[j] =
+                             theAverage /= (double)daysInAverage;
+                    }
+                    if (NumGroups == 2)
+                        for (j = 0; j < TheData[lineCount].SecondaryValues.Count; j++)
+                        {
+                            double theAverage = 0;
+                            for (k = 0; k < daysInAverage; k++)
+                                theAverage += typical.TheData[(julian + k) % 366].SecondaryValues[j];
+
+                            // Get the average over the data interval
+                            TheData[lineCount].SecondaryValues[j] =
+                                 theAverage /= (double)daysInAverage;
+                        }
+
+                    string sourceString = "average of " + Convert.ToString(originalStartYear) + "-" + Convert.ToString(originalEndYear);
+                    TheData[lineCount].Source = sourceString;
+                }
+            }
+
+            return true;
+        }
+
+        // Truncates data before or after a certain date
+        public bool TruncateData(DateTime TheDate, bool After)
+        {
+            for (int i = TheData.Count - 1; i >= 0; i--)
+            {
+                if (TheData[i].Date > TheDate && After)
+                    TheData.RemoveAt(i);
+                else if (TheData[i].Date < TheDate && !After)
+                    TheData.RemoveAt(i);
+            }
+
+            return true;
+        }
+
         // Sorts the data by date - algorithm from Microsoft Fortran Powerstation
         // Uses Quick_Sort from FORTRAN Powerstation 4.0 "Fortran for Engineers"
         public bool SortByDate(int Left, int Right)
@@ -317,20 +670,106 @@ namespace warmf
             return true;
         }
 
-        // Returns the index of the parameter whose Fortran code matches what was passed in
-        public int FindParameterCode(string TheCode)
-        {
-            string codeWithoutSpaces = TheCode.Trim();
-            for (int i = 0; i < ParameterCodes.Count; i++)
-                if (ParameterCodes[i].IndexOf(TheCode) == 0)
-                    return i;
-            return -1;
-        }
-
         // Replaces data in this file with data in another structure
-        public virtual void ReplaceData(List <double> replaceVariable, DataFile theData, int theVariable, bool something, double conversion)
+        public virtual bool ReplaceData(List <double> replaceVariable, DataFile other, int otherVariable, bool fillBetween, double flowConvert)
         {
+            int i;
+            int lineNumber = 0;
 
+            if (otherVariable > other.NumParameters)
+                return false;
+            if (other.TheData.Count <= 0)
+                return false;
+
+            // Fill in space between this dataset and the other, as applicable, with blank lines
+            if (IsRegularInterval())
+            {
+                // Contingency 1: "Other" last data point before first point of this data
+                if (other.TheData[other.TheData.Count - 1].Date < TheData[0].Date)
+                    ExtrapolateData(other.TheData[other.TheData.Count - 1].Date, GetDefaultDataInterval(), EXTRAPOLATEMETHODMISSING);
+                // Contingency 2: "Other" first data point after last point of this data
+                if (other.TheData[0].Date > TheData[TheData.Count - 1].Date)
+                    ExtrapolateData(other.TheData[0].Date, GetDefaultDataInterval(), EXTRAPOLATEMETHODMISSING);
+            }
+
+            return true;
+
+            /*
+               // Get a default data line for after the end of the "Other" time series
+                stDataLine defaultDataLine = GetDefaultDataLine(Other.Data[Other.NumData - 1]);
+
+                for (i = 0; i < Other.NumData; i++)
+               {
+                  // Get the line number with the same date or just earlier as this data line in "Other"
+                if (!AdvanceToDateAndTime(Other.Data[i], lineNumber))
+                  {
+                    // Contingency 1: "Other's" data point is before all data
+                    if (Other.Data[i].IsBefore(Data[0]))
+                        lineNumber = 0;
+                    // Contingency 2: "Other's" data point is after all data
+                    if (Data[NumData - 1].IsBefore(Other.Data[i]))
+                        lineNumber = NumData - 1;
+                  }
+
+                  // Only add a new line if the dates don't match
+                  if (!Data[lineNumber].IsSameTime(Other.Data[i]))
+                  {
+                      // Add a new line after "lineNumber" if date is before
+                   if (Data[lineNumber].IsBefore(Other.Data[i]))
+                        lineNumber++;
+
+                     AddDataLine(lineNumber, 1, true);
+
+                     // Set the date of the new line to match the Other line
+                     Data[lineNumber].Date = Other.Data[i].Date;
+                     Data[lineNumber].Time = Other.Data[i].Time;
+                  }
+
+                    // Replace all data before the next data line in the "Other" series
+                  do
+                  {
+                      // Actually replace the data with the data from "Other"
+                    if (OtherVariable < Other.NumVariables)
+                        ReplaceDataLine(lineNumber, ReplaceVariable, Other.Data[i], OtherVariable, FlowConvert);
+                     else
+                        Data[lineNumber].SetDataSource(Other.Data[i].DataSource);
+                     lineNumber++;
+                  } while (FillBetween && lineNumber < NumData && i < Other.NumData - 1 &&
+                            Data[lineNumber].IsBefore(Other.Data[i + 1]));
+               }
+
+               // Put default data back in place
+               // Set the date to after the other data
+               defaultDataLine.Date = Other.Data[Other.NumData - 1].Date;
+               defaultDataLine.Time = Other.Data[Other.NumData - 1].Time;
+               if (Other.NumData > 1 && Other.Data[Other.NumData - 1].Date.nDay ==
+                 Other.Data[Other.NumData - 2].Date.nDay)
+               {
+                // Increment default data by a month
+                  defaultDataLine.Date += 31;
+                  defaultDataLine.Date.nDay = Other.Data[Other.NumData - 1].Date.nDay;
+               }
+               else
+                defaultDataLine.Date++;
+
+                lineNumber = 0;
+               if (AdvanceToDateAndTime(defaultDataLine, lineNumber))
+               {
+                  if (!Data[lineNumber].IsSameTime(defaultDataLine))
+                  {
+                    lineNumber++;
+                    AddDataLine(lineNumber);
+                     Data[lineNumber] = defaultDataLine;
+                  }
+                  else
+                    // Replace data if first value is missing
+                    if (Data[lineNumber].Types[0].Values[0] == -999.)
+                        Data[lineNumber] = defaultDataLine;
+               }
+
+               return true;
+
+             */
         }
     }
 }

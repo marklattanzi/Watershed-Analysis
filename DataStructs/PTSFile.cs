@@ -23,6 +23,11 @@ namespace warmf
             FlexibleColumns = true;
         }
 
+        public override bool IsRegularInterval()
+        {
+            return false;
+        }
+
         public bool ReadHeader()
         {
 

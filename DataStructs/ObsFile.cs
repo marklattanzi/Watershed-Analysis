@@ -19,5 +19,10 @@ namespace warmf
             FlexibleColumns = true;
             Sortable = true;
         }
+
+        public override bool IsRegularInterval()
+        {
+            return false;
+        }
     }
 }

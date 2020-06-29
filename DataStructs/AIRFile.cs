@@ -15,6 +15,12 @@ namespace warmf
             filename = fname;
             FlexibleColumns = true;
             Fillable = true;
+            NumGroups = 2;
+        }
+
+        public override bool IsRegularInterval()
+        {
+            return false;
         }
 
         // Reads the data in AIR file format
