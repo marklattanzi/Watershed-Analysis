@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tcRiverTabs = new System.Windows.Forms.TabControl();
             this.tpPhysicalData = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -73,6 +73,7 @@
             this.lbDiversionsTo = new System.Windows.Forms.ListBox();
             this.lbDiversionsFrom = new System.Windows.Forms.ListBox();
             this.tpPointSources = new System.Windows.Forms.TabPage();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.tbNPDESNumber = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
@@ -158,7 +159,6 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.RiverOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.chbxApplyToSelected = new System.Windows.Forms.CheckBox();
             this.chbxApplyToAll = new System.Windows.Forms.CheckBox();
             this.chbxWriteOutput = new System.Windows.Forms.CheckBox();
@@ -174,6 +174,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvStageWidth)).BeginInit();
             this.tpDiversions.SuspendLayout();
             this.tpPointSources.SuspendLayout();
+            this.groupBox9.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.tpReactions.SuspendLayout();
@@ -195,7 +196,6 @@
             this.gbCEQUALW2chem.SuspendLayout();
             this.gbCEQUALW2temp.SuspendLayout();
             this.gbCEQUALW2flow.SuspendLayout();
-            this.groupBox9.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -212,7 +212,7 @@
             this.tcRiverTabs.Controls.Add(this.tpObsData);
             this.tcRiverTabs.Controls.Add(this.tpCEQUALW2);
             this.tcRiverTabs.Location = new System.Drawing.Point(0, 0);
-            this.tcRiverTabs.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tcRiverTabs.Margin = new System.Windows.Forms.Padding(4);
             this.tcRiverTabs.Multiline = true;
             this.tcRiverTabs.Name = "tcRiverTabs";
             this.tcRiverTabs.SelectedIndex = 0;
@@ -230,9 +230,9 @@
             this.tpPhysicalData.Controls.Add(this.tbName);
             this.tpPhysicalData.Controls.Add(this.label1);
             this.tpPhysicalData.Location = new System.Drawing.Point(4, 50);
-            this.tpPhysicalData.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpPhysicalData.Margin = new System.Windows.Forms.Padding(4);
             this.tpPhysicalData.Name = "tpPhysicalData";
-            this.tpPhysicalData.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpPhysicalData.Padding = new System.Windows.Forms.Padding(4);
             this.tpPhysicalData.Size = new System.Drawing.Size(742, 471);
             this.tpPhysicalData.TabIndex = 0;
             this.tpPhysicalData.Text = "Physical Data";
@@ -243,9 +243,9 @@
             this.groupBox4.Controls.Add(this.tbManningsN);
             this.groupBox4.Controls.Add(this.label9);
             this.groupBox4.Location = new System.Drawing.Point(192, 366);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox4.Size = new System.Drawing.Size(344, 79);
             this.groupBox4.TabIndex = 19;
             this.groupBox4.TabStop = false;
@@ -254,7 +254,7 @@
             // tbManningsN
             // 
             this.tbManningsN.Location = new System.Drawing.Point(165, 33);
-            this.tbManningsN.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbManningsN.Margin = new System.Windows.Forms.Padding(4);
             this.tbManningsN.Name = "tbManningsN";
             this.tbManningsN.Size = new System.Drawing.Size(127, 26);
             this.tbManningsN.TabIndex = 9;
@@ -276,9 +276,9 @@
             this.groupBox3.Controls.Add(this.tbImpArea);
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Location = new System.Drawing.Point(16, 274);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox3.Size = new System.Drawing.Size(710, 84);
             this.groupBox3.TabIndex = 18;
             this.groupBox3.TabStop = false;
@@ -287,7 +287,7 @@
             // tbImpVolume
             // 
             this.tbImpVolume.Location = new System.Drawing.Point(474, 28);
-            this.tbImpVolume.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbImpVolume.Margin = new System.Windows.Forms.Padding(4);
             this.tbImpVolume.Name = "tbImpVolume";
             this.tbImpVolume.Size = new System.Drawing.Size(192, 26);
             this.tbImpVolume.TabIndex = 15;
@@ -305,7 +305,7 @@
             // tbImpArea
             // 
             this.tbImpArea.Location = new System.Drawing.Point(129, 28);
-            this.tbImpArea.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbImpArea.Margin = new System.Windows.Forms.Padding(4);
             this.tbImpArea.Name = "tbImpArea";
             this.tbImpArea.Size = new System.Drawing.Size(200, 26);
             this.tbImpArea.TabIndex = 13;
@@ -327,9 +327,9 @@
             this.groupBox2.Controls.Add(this.tbLength);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Location = new System.Drawing.Point(396, 86);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox2.Size = new System.Drawing.Size(330, 180);
             this.groupBox2.TabIndex = 17;
             this.groupBox2.TabStop = false;
@@ -338,7 +338,7 @@
             // tbDepth
             // 
             this.tbDepth.Location = new System.Drawing.Point(156, 119);
-            this.tbDepth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbDepth.Margin = new System.Windows.Forms.Padding(4);
             this.tbDepth.Name = "tbDepth";
             this.tbDepth.Size = new System.Drawing.Size(127, 26);
             this.tbDepth.TabIndex = 11;
@@ -356,7 +356,7 @@
             // tbLength
             // 
             this.tbLength.Location = new System.Drawing.Point(156, 54);
-            this.tbLength.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbLength.Margin = new System.Windows.Forms.Padding(4);
             this.tbLength.Name = "tbLength";
             this.tbLength.Size = new System.Drawing.Size(127, 26);
             this.tbLength.TabIndex = 9;
@@ -378,9 +378,9 @@
             this.groupBox1.Controls.Add(this.tbUpElevation);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Location = new System.Drawing.Point(16, 86);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(330, 180);
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
@@ -389,7 +389,7 @@
             // tbDownElevation
             // 
             this.tbDownElevation.Location = new System.Drawing.Point(148, 119);
-            this.tbDownElevation.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbDownElevation.Margin = new System.Windows.Forms.Padding(4);
             this.tbDownElevation.Name = "tbDownElevation";
             this.tbDownElevation.Size = new System.Drawing.Size(127, 26);
             this.tbDownElevation.TabIndex = 7;
@@ -407,7 +407,7 @@
             // tbUpElevation
             // 
             this.tbUpElevation.Location = new System.Drawing.Point(148, 54);
-            this.tbUpElevation.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbUpElevation.Margin = new System.Windows.Forms.Padding(4);
             this.tbUpElevation.Name = "tbUpElevation";
             this.tbUpElevation.Size = new System.Drawing.Size(127, 26);
             this.tbUpElevation.TabIndex = 5;
@@ -425,7 +425,7 @@
             // tbStreamID
             // 
             this.tbStreamID.Location = new System.Drawing.Point(154, 50);
-            this.tbStreamID.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbStreamID.Margin = new System.Windows.Forms.Padding(4);
             this.tbStreamID.Name = "tbStreamID";
             this.tbStreamID.ReadOnly = true;
             this.tbStreamID.Size = new System.Drawing.Size(127, 26);
@@ -444,7 +444,7 @@
             // tbName
             // 
             this.tbName.Location = new System.Drawing.Point(154, 15);
-            this.tbName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbName.Margin = new System.Windows.Forms.Padding(4);
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(572, 26);
             this.tbName.TabIndex = 1;
@@ -466,9 +466,9 @@
             this.tpStageWidth.Controls.Add(this.label10);
             this.tpStageWidth.Controls.Add(this.dgvStageWidth);
             this.tpStageWidth.Location = new System.Drawing.Point(4, 50);
-            this.tpStageWidth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpStageWidth.Margin = new System.Windows.Forms.Padding(4);
             this.tpStageWidth.Name = "tpStageWidth";
-            this.tpStageWidth.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpStageWidth.Padding = new System.Windows.Forms.Padding(4);
             this.tpStageWidth.Size = new System.Drawing.Size(742, 471);
             this.tpStageWidth.TabIndex = 1;
             this.tpStageWidth.Text = "Stage - Width";
@@ -487,14 +487,14 @@
             // 
             // chartStageWidth
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartStageWidth.ChartAreas.Add(chartArea2);
+            chartArea1.Name = "ChartArea1";
+            this.chartStageWidth.ChartAreas.Add(chartArea1);
             this.chartStageWidth.Location = new System.Drawing.Point(273, 8);
-            this.chartStageWidth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chartStageWidth.Margin = new System.Windows.Forms.Padding(4);
             this.chartStageWidth.Name = "chartStageWidth";
-            series2.ChartArea = "ChartArea1";
-            series2.Name = "SeriesStageWidth";
-            this.chartStageWidth.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.Name = "SeriesStageWidth";
+            this.chartStageWidth.Series.Add(series1);
             this.chartStageWidth.Size = new System.Drawing.Size(465, 458);
             this.chartStageWidth.TabIndex = 2;
             this.chartStageWidth.Text = "chart1";
@@ -505,7 +505,7 @@
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.MaximumSize = new System.Drawing.Size(300, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(217, 41);
+            this.label10.Size = new System.Drawing.Size(217, 0);
             this.label10.TabIndex = 1;
             this.label10.Text = "Enter up to 9 pairs of stage-width data below";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -521,7 +521,7 @@
             this.Stage,
             this.width});
             this.dgvStageWidth.Location = new System.Drawing.Point(9, 45);
-            this.dgvStageWidth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvStageWidth.Margin = new System.Windows.Forms.Padding(4);
             this.dgvStageWidth.Name = "dgvStageWidth";
             this.dgvStageWidth.RowHeadersVisible = false;
             this.dgvStageWidth.Size = new System.Drawing.Size(256, 352);
@@ -551,7 +551,7 @@
             this.tpDiversions.Controls.Add(this.lbDiversionsTo);
             this.tpDiversions.Controls.Add(this.lbDiversionsFrom);
             this.tpDiversions.Location = new System.Drawing.Point(4, 50);
-            this.tpDiversions.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpDiversions.Margin = new System.Windows.Forms.Padding(4);
             this.tpDiversions.Name = "tpDiversions";
             this.tpDiversions.Size = new System.Drawing.Size(742, 471);
             this.tpDiversions.TabIndex = 2;
@@ -571,7 +571,7 @@
             // tbMinRiverFlow
             // 
             this.tbMinRiverFlow.Location = new System.Drawing.Point(201, 320);
-            this.tbMinRiverFlow.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbMinRiverFlow.Margin = new System.Windows.Forms.Padding(4);
             this.tbMinRiverFlow.Name = "tbMinRiverFlow";
             this.tbMinRiverFlow.Size = new System.Drawing.Size(148, 26);
             this.tbMinRiverFlow.TabIndex = 8;
@@ -580,7 +580,7 @@
             // 
             this.btnToRemove.Enabled = false;
             this.btnToRemove.Location = new System.Drawing.Point(400, 281);
-            this.btnToRemove.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnToRemove.Margin = new System.Windows.Forms.Padding(4);
             this.btnToRemove.Name = "btnToRemove";
             this.btnToRemove.Size = new System.Drawing.Size(112, 32);
             this.btnToRemove.TabIndex = 7;
@@ -592,7 +592,7 @@
             // 
             this.btnFromRemove.Enabled = false;
             this.btnFromRemove.Location = new System.Drawing.Point(142, 281);
-            this.btnFromRemove.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnFromRemove.Margin = new System.Windows.Forms.Padding(4);
             this.btnFromRemove.Name = "btnFromRemove";
             this.btnFromRemove.Size = new System.Drawing.Size(112, 32);
             this.btnFromRemove.TabIndex = 6;
@@ -603,7 +603,7 @@
             // btnToAdd
             // 
             this.btnToAdd.Location = new System.Drawing.Point(279, 281);
-            this.btnToAdd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnToAdd.Margin = new System.Windows.Forms.Padding(4);
             this.btnToAdd.Name = "btnToAdd";
             this.btnToAdd.Size = new System.Drawing.Size(112, 32);
             this.btnToAdd.TabIndex = 5;
@@ -614,7 +614,7 @@
             // btnFromAdd
             // 
             this.btnFromAdd.Location = new System.Drawing.Point(21, 281);
-            this.btnFromAdd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnFromAdd.Margin = new System.Windows.Forms.Padding(4);
             this.btnFromAdd.Name = "btnFromAdd";
             this.btnFromAdd.Size = new System.Drawing.Size(112, 32);
             this.btnFromAdd.TabIndex = 4;
@@ -647,7 +647,7 @@
             this.lbDiversionsTo.FormattingEnabled = true;
             this.lbDiversionsTo.ItemHeight = 18;
             this.lbDiversionsTo.Location = new System.Drawing.Point(270, 35);
-            this.lbDiversionsTo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lbDiversionsTo.Margin = new System.Windows.Forms.Padding(4);
             this.lbDiversionsTo.Name = "lbDiversionsTo";
             this.lbDiversionsTo.Size = new System.Drawing.Size(250, 238);
             this.lbDiversionsTo.TabIndex = 1;
@@ -658,7 +658,7 @@
             this.lbDiversionsFrom.FormattingEnabled = true;
             this.lbDiversionsFrom.ItemHeight = 18;
             this.lbDiversionsFrom.Location = new System.Drawing.Point(13, 35);
-            this.lbDiversionsFrom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lbDiversionsFrom.Margin = new System.Windows.Forms.Padding(4);
             this.lbDiversionsFrom.Name = "lbDiversionsFrom";
             this.lbDiversionsFrom.Size = new System.Drawing.Size(250, 238);
             this.lbDiversionsFrom.TabIndex = 0;
@@ -671,17 +671,30 @@
             this.tpPointSources.Controls.Add(this.btnAddPTS);
             this.tpPointSources.Controls.Add(this.lbPointSources);
             this.tpPointSources.Location = new System.Drawing.Point(4, 50);
-            this.tpPointSources.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpPointSources.Margin = new System.Windows.Forms.Padding(4);
             this.tpPointSources.Name = "tpPointSources";
             this.tpPointSources.Size = new System.Drawing.Size(742, 471);
             this.tpPointSources.TabIndex = 3;
             this.tpPointSources.Text = "Point Sources";
             this.tpPointSources.UseVisualStyleBackColor = true;
             // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.tbNPDESNumber);
+            this.groupBox9.Controls.Add(this.label14);
+            this.groupBox9.Controls.Add(this.groupBox6);
+            this.groupBox9.Controls.Add(this.groupBox5);
+            this.groupBox9.Location = new System.Drawing.Point(9, 266);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(522, 170);
+            this.groupBox9.TabIndex = 19;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Water source Information corresponds to the selected point source";
+            // 
             // tbNPDESNumber
             // 
             this.tbNPDESNumber.Location = new System.Drawing.Point(195, 134);
-            this.tbNPDESNumber.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbNPDESNumber.Margin = new System.Windows.Forms.Padding(4);
             this.tbNPDESNumber.Name = "tbNPDESNumber";
             this.tbNPDESNumber.Size = new System.Drawing.Size(148, 26);
             this.tbNPDESNumber.TabIndex = 18;
@@ -701,9 +714,9 @@
             this.groupBox6.Controls.Add(this.rbUnspecAmbient);
             this.groupBox6.Controls.Add(this.rbUnspecZero);
             this.groupBox6.Location = new System.Drawing.Point(265, 26);
-            this.groupBox6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox6.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox6.Size = new System.Drawing.Size(250, 100);
             this.groupBox6.TabIndex = 16;
             this.groupBox6.TabStop = false;
@@ -713,7 +726,7 @@
             // 
             this.rbUnspecAmbient.AutoSize = true;
             this.rbUnspecAmbient.Location = new System.Drawing.Point(9, 58);
-            this.rbUnspecAmbient.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbUnspecAmbient.Margin = new System.Windows.Forms.Padding(4);
             this.rbUnspecAmbient.Name = "rbUnspecAmbient";
             this.rbUnspecAmbient.Size = new System.Drawing.Size(84, 22);
             this.rbUnspecAmbient.TabIndex = 14;
@@ -725,7 +738,7 @@
             // 
             this.rbUnspecZero.AutoSize = true;
             this.rbUnspecZero.Location = new System.Drawing.Point(9, 26);
-            this.rbUnspecZero.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbUnspecZero.Margin = new System.Windows.Forms.Padding(4);
             this.rbUnspecZero.Name = "rbUnspecZero";
             this.rbUnspecZero.Size = new System.Drawing.Size(58, 22);
             this.rbUnspecZero.TabIndex = 13;
@@ -738,9 +751,9 @@
             this.groupBox5.Controls.Add(this.rbSourceExternal);
             this.groupBox5.Controls.Add(this.rbSourceInternal);
             this.groupBox5.Location = new System.Drawing.Point(7, 26);
-            this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox5.Size = new System.Drawing.Size(250, 100);
             this.groupBox5.TabIndex = 15;
             this.groupBox5.TabStop = false;
@@ -750,7 +763,7 @@
             // 
             this.rbSourceExternal.AutoSize = true;
             this.rbSourceExternal.Location = new System.Drawing.Point(9, 58);
-            this.rbSourceExternal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbSourceExternal.Margin = new System.Windows.Forms.Padding(4);
             this.rbSourceExternal.Name = "rbSourceExternal";
             this.rbSourceExternal.Size = new System.Drawing.Size(82, 22);
             this.rbSourceExternal.TabIndex = 12;
@@ -762,7 +775,7 @@
             // 
             this.rbSourceInternal.AutoSize = true;
             this.rbSourceInternal.Location = new System.Drawing.Point(9, 26);
-            this.rbSourceInternal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbSourceInternal.Margin = new System.Windows.Forms.Padding(4);
             this.rbSourceInternal.Name = "rbSourceInternal";
             this.rbSourceInternal.Size = new System.Drawing.Size(75, 22);
             this.rbSourceInternal.TabIndex = 11;
@@ -774,7 +787,7 @@
             // 
             this.btnRemovePTS.Enabled = false;
             this.btnRemovePTS.Location = new System.Drawing.Point(294, 227);
-            this.btnRemovePTS.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnRemovePTS.Margin = new System.Windows.Forms.Padding(4);
             this.btnRemovePTS.Name = "btnRemovePTS";
             this.btnRemovePTS.Size = new System.Drawing.Size(112, 32);
             this.btnRemovePTS.TabIndex = 8;
@@ -785,7 +798,7 @@
             // btnAddPTS
             // 
             this.btnAddPTS.Location = new System.Drawing.Point(172, 227);
-            this.btnAddPTS.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAddPTS.Margin = new System.Windows.Forms.Padding(4);
             this.btnAddPTS.Name = "btnAddPTS";
             this.btnAddPTS.Size = new System.Drawing.Size(112, 32);
             this.btnAddPTS.TabIndex = 7;
@@ -798,7 +811,7 @@
             this.lbPointSources.FormattingEnabled = true;
             this.lbPointSources.ItemHeight = 18;
             this.lbPointSources.Location = new System.Drawing.Point(9, 14);
-            this.lbPointSources.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lbPointSources.Margin = new System.Windows.Forms.Padding(4);
             this.lbPointSources.Name = "lbPointSources";
             this.lbPointSources.Size = new System.Drawing.Size(522, 202);
             this.lbPointSources.TabIndex = 0;
@@ -815,7 +828,7 @@
             this.tpReactions.Controls.Add(this.label17);
             this.tpReactions.Controls.Add(this.label16);
             this.tpReactions.Location = new System.Drawing.Point(4, 50);
-            this.tpReactions.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpReactions.Margin = new System.Windows.Forms.Padding(4);
             this.tpReactions.Name = "tpReactions";
             this.tpReactions.Size = new System.Drawing.Size(742, 471);
             this.tpReactions.TabIndex = 4;
@@ -835,7 +848,7 @@
             // tbPrecipitateSettling
             // 
             this.tbPrecipitateSettling.Location = new System.Drawing.Point(412, 427);
-            this.tbPrecipitateSettling.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbPrecipitateSettling.Margin = new System.Windows.Forms.Padding(4);
             this.tbPrecipitateSettling.Name = "tbPrecipitateSettling";
             this.tbPrecipitateSettling.Size = new System.Drawing.Size(187, 26);
             this.tbPrecipitateSettling.TabIndex = 6;
@@ -843,7 +856,7 @@
             // tbConvHeatFactor
             // 
             this.tbConvHeatFactor.Location = new System.Drawing.Point(181, 427);
-            this.tbConvHeatFactor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbConvHeatFactor.Margin = new System.Windows.Forms.Padding(4);
             this.tbConvHeatFactor.Name = "tbConvHeatFactor";
             this.tbConvHeatFactor.Size = new System.Drawing.Size(168, 26);
             this.tbConvHeatFactor.TabIndex = 5;
@@ -851,7 +864,7 @@
             // tbAerationFactor
             // 
             this.tbAerationFactor.Location = new System.Drawing.Point(12, 427);
-            this.tbAerationFactor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbAerationFactor.Margin = new System.Windows.Forms.Padding(4);
             this.tbAerationFactor.Name = "tbAerationFactor";
             this.tbAerationFactor.Size = new System.Drawing.Size(113, 26);
             this.tbAerationFactor.TabIndex = 4;
@@ -867,7 +880,7 @@
             this.Water,
             this.Bed});
             this.dgvReactions.Location = new System.Drawing.Point(9, 39);
-            this.dgvReactions.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvReactions.Margin = new System.Windows.Forms.Padding(4);
             this.dgvReactions.Name = "dgvReactions";
             this.dgvReactions.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.dgvReactions.Size = new System.Drawing.Size(590, 362);
@@ -932,7 +945,7 @@
             this.tpSediment.Controls.Add(this.label21);
             this.tpSediment.Controls.Add(this.label20);
             this.tpSediment.Location = new System.Drawing.Point(4, 50);
-            this.tpSediment.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpSediment.Margin = new System.Windows.Forms.Padding(4);
             this.tpSediment.Name = "tpSediment";
             this.tpSediment.Size = new System.Drawing.Size(742, 471);
             this.tpSediment.TabIndex = 5;
@@ -957,7 +970,7 @@
             this.dgvBedParticleContent.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.SedContent});
             this.dgvBedParticleContent.Location = new System.Drawing.Point(9, 238);
-            this.dgvBedParticleContent.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvBedParticleContent.Margin = new System.Windows.Forms.Padding(4);
             this.dgvBedParticleContent.Name = "dgvBedParticleContent";
             this.dgvBedParticleContent.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.dgvBedParticleContent.Size = new System.Drawing.Size(371, 148);
@@ -971,7 +984,7 @@
             // tbBankStabilityFactor
             // 
             this.tbBankStabilityFactor.Location = new System.Drawing.Point(233, 181);
-            this.tbBankStabilityFactor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbBankStabilityFactor.Margin = new System.Windows.Forms.Padding(4);
             this.tbBankStabilityFactor.Name = "tbBankStabilityFactor";
             this.tbBankStabilityFactor.Size = new System.Drawing.Size(148, 26);
             this.tbBankStabilityFactor.TabIndex = 11;
@@ -979,7 +992,7 @@
             // tbVegFactor
             // 
             this.tbVegFactor.Location = new System.Drawing.Point(233, 147);
-            this.tbVegFactor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbVegFactor.Margin = new System.Windows.Forms.Padding(4);
             this.tbVegFactor.Name = "tbVegFactor";
             this.tbVegFactor.Size = new System.Drawing.Size(148, 26);
             this.tbVegFactor.TabIndex = 10;
@@ -987,7 +1000,7 @@
             // tbDetachVelExp
             // 
             this.tbDetachVelExp.Location = new System.Drawing.Point(233, 113);
-            this.tbDetachVelExp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbDetachVelExp.Margin = new System.Windows.Forms.Padding(4);
             this.tbDetachVelExp.Name = "tbDetachVelExp";
             this.tbDetachVelExp.Size = new System.Drawing.Size(148, 26);
             this.tbDetachVelExp.TabIndex = 9;
@@ -995,7 +1008,7 @@
             // tbDetachVelMult
             // 
             this.tbDetachVelMult.Location = new System.Drawing.Point(233, 79);
-            this.tbDetachVelMult.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbDetachVelMult.Margin = new System.Windows.Forms.Padding(4);
             this.tbDetachVelMult.Name = "tbDetachVelMult";
             this.tbDetachVelMult.Size = new System.Drawing.Size(148, 26);
             this.tbDetachVelMult.TabIndex = 8;
@@ -1003,7 +1016,7 @@
             // tbBedDiffRate
             // 
             this.tbBedDiffRate.Location = new System.Drawing.Point(233, 45);
-            this.tbBedDiffRate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbBedDiffRate.Margin = new System.Windows.Forms.Padding(4);
             this.tbBedDiffRate.Name = "tbBedDiffRate";
             this.tbBedDiffRate.Size = new System.Drawing.Size(148, 26);
             this.tbBedDiffRate.TabIndex = 7;
@@ -1011,7 +1024,7 @@
             // tbInitSedDepth
             // 
             this.tbInitSedDepth.Location = new System.Drawing.Point(233, 11);
-            this.tbInitSedDepth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbInitSedDepth.Margin = new System.Windows.Forms.Padding(4);
             this.tbInitSedDepth.Name = "tbInitSedDepth";
             this.tbInitSedDepth.Size = new System.Drawing.Size(148, 26);
             this.tbInitSedDepth.TabIndex = 6;
@@ -1080,7 +1093,7 @@
             // 
             this.tpInitialConcs.Controls.Add(this.dgvRiverInitConcs);
             this.tpInitialConcs.Location = new System.Drawing.Point(4, 50);
-            this.tpInitialConcs.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpInitialConcs.Margin = new System.Windows.Forms.Padding(4);
             this.tpInitialConcs.Name = "tpInitialConcs";
             this.tpInitialConcs.Size = new System.Drawing.Size(742, 471);
             this.tpInitialConcs.TabIndex = 6;
@@ -1095,7 +1108,7 @@
             this.dgvRiverInitConcs.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvRiverInitConcs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRiverInitConcs.Location = new System.Drawing.Point(10, 11);
-            this.dgvRiverInitConcs.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvRiverInitConcs.Margin = new System.Windows.Forms.Padding(4);
             this.dgvRiverInitConcs.Name = "dgvRiverInitConcs";
             this.dgvRiverInitConcs.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.dgvRiverInitConcs.Size = new System.Drawing.Size(717, 448);
@@ -1107,7 +1120,7 @@
             this.tpAdsorption.Controls.Add(this.label27);
             this.tpAdsorption.Controls.Add(this.dgvAdsorption);
             this.tpAdsorption.Location = new System.Drawing.Point(4, 50);
-            this.tpAdsorption.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpAdsorption.Margin = new System.Windows.Forms.Padding(4);
             this.tpAdsorption.Name = "tpAdsorption";
             this.tpAdsorption.Size = new System.Drawing.Size(742, 471);
             this.tpAdsorption.TabIndex = 7;
@@ -1142,7 +1155,7 @@
             this.dgvAdsorption.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvAdsorption.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAdsorption.Location = new System.Drawing.Point(12, 34);
-            this.dgvAdsorption.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvAdsorption.Margin = new System.Windows.Forms.Padding(4);
             this.dgvAdsorption.Name = "dgvAdsorption";
             this.dgvAdsorption.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.dgvAdsorption.Size = new System.Drawing.Size(726, 391);
@@ -1154,7 +1167,7 @@
             this.tpObsData.Controls.Add(this.groupBox8);
             this.tpObsData.Controls.Add(this.groupBox7);
             this.tpObsData.Location = new System.Drawing.Point(4, 50);
-            this.tpObsData.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpObsData.Margin = new System.Windows.Forms.Padding(4);
             this.tpObsData.Name = "tpObsData";
             this.tpObsData.Size = new System.Drawing.Size(742, 471);
             this.tpObsData.TabIndex = 8;
@@ -1168,9 +1181,9 @@
             this.gbObsAsInput.Controls.Add(this.gbMaxInterpPeriod);
             this.gbObsAsInput.Controls.Add(this.cbSimulationOverride);
             this.gbObsAsInput.Location = new System.Drawing.Point(9, 169);
-            this.gbObsAsInput.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbObsAsInput.Margin = new System.Windows.Forms.Padding(4);
             this.gbObsAsInput.Name = "gbObsAsInput";
-            this.gbObsAsInput.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbObsAsInput.Padding = new System.Windows.Forms.Padding(4);
             this.gbObsAsInput.Size = new System.Drawing.Size(610, 286);
             this.gbObsAsInput.TabIndex = 23;
             this.gbObsAsInput.TabStop = false;
@@ -1181,9 +1194,9 @@
             this.gbMonthAveraging.Controls.Add(this.rbAverageData);
             this.gbMonthAveraging.Controls.Add(this.rbAvgSimulation);
             this.gbMonthAveraging.Location = new System.Drawing.Point(8, 135);
-            this.gbMonthAveraging.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbMonthAveraging.Margin = new System.Windows.Forms.Padding(4);
             this.gbMonthAveraging.Name = "gbMonthAveraging";
-            this.gbMonthAveraging.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbMonthAveraging.Padding = new System.Windows.Forms.Padding(4);
             this.gbMonthAveraging.Size = new System.Drawing.Size(550, 64);
             this.gbMonthAveraging.TabIndex = 25;
             this.gbMonthAveraging.TabStop = false;
@@ -1193,7 +1206,7 @@
             // 
             this.rbAverageData.AutoSize = true;
             this.rbAverageData.Location = new System.Drawing.Point(204, 27);
-            this.rbAverageData.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbAverageData.Margin = new System.Windows.Forms.Padding(4);
             this.rbAverageData.Name = "rbAverageData";
             this.rbAverageData.Size = new System.Drawing.Size(228, 22);
             this.rbAverageData.TabIndex = 22;
@@ -1205,7 +1218,7 @@
             // 
             this.rbAvgSimulation.AutoSize = true;
             this.rbAvgSimulation.Location = new System.Drawing.Point(8, 27);
-            this.rbAvgSimulation.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbAvgSimulation.Margin = new System.Windows.Forms.Padding(4);
             this.rbAvgSimulation.Name = "rbAvgSimulation";
             this.rbAvgSimulation.Size = new System.Drawing.Size(188, 22);
             this.rbAvgSimulation.TabIndex = 21;
@@ -1222,9 +1235,9 @@
             this.gbAdjustPriority.Controls.Add(this.label33);
             this.gbAdjustPriority.Controls.Add(this.label31);
             this.gbAdjustPriority.Location = new System.Drawing.Point(8, 207);
-            this.gbAdjustPriority.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbAdjustPriority.Margin = new System.Windows.Forms.Padding(4);
             this.gbAdjustPriority.Name = "gbAdjustPriority";
-            this.gbAdjustPriority.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbAdjustPriority.Padding = new System.Windows.Forms.Padding(4);
             this.gbAdjustPriority.Size = new System.Drawing.Size(550, 69);
             this.gbAdjustPriority.TabIndex = 24;
             this.gbAdjustPriority.TabStop = false;
@@ -1233,7 +1246,7 @@
             // tbPriorityPh
             // 
             this.tbPriorityPh.Location = new System.Drawing.Point(415, 26);
-            this.tbPriorityPh.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbPriorityPh.Margin = new System.Windows.Forms.Padding(4);
             this.tbPriorityPh.Name = "tbPriorityPh";
             this.tbPriorityPh.Size = new System.Drawing.Size(44, 26);
             this.tbPriorityPh.TabIndex = 23;
@@ -1241,7 +1254,7 @@
             // tbPriorityAlkalinity
             // 
             this.tbPriorityAlkalinity.Location = new System.Drawing.Point(315, 26);
-            this.tbPriorityAlkalinity.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbPriorityAlkalinity.Margin = new System.Windows.Forms.Padding(4);
             this.tbPriorityAlkalinity.Name = "tbPriorityAlkalinity";
             this.tbPriorityAlkalinity.Size = new System.Drawing.Size(44, 26);
             this.tbPriorityAlkalinity.TabIndex = 22;
@@ -1249,7 +1262,7 @@
             // tbPriorityTDS
             // 
             this.tbPriorityTDS.Location = new System.Drawing.Point(177, 26);
-            this.tbPriorityTDS.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbPriorityTDS.Margin = new System.Windows.Forms.Padding(4);
             this.tbPriorityTDS.Name = "tbPriorityTDS";
             this.tbPriorityTDS.Size = new System.Drawing.Size(44, 26);
             this.tbPriorityTDS.TabIndex = 21;
@@ -1291,9 +1304,9 @@
             this.gbMaxInterpPeriod.Controls.Add(this.label30);
             this.gbMaxInterpPeriod.Controls.Add(this.label29);
             this.gbMaxInterpPeriod.Location = new System.Drawing.Point(8, 57);
-            this.gbMaxInterpPeriod.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbMaxInterpPeriod.Margin = new System.Windows.Forms.Padding(4);
             this.gbMaxInterpPeriod.Name = "gbMaxInterpPeriod";
-            this.gbMaxInterpPeriod.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbMaxInterpPeriod.Padding = new System.Windows.Forms.Padding(4);
             this.gbMaxInterpPeriod.Size = new System.Drawing.Size(550, 70);
             this.gbMaxInterpPeriod.TabIndex = 23;
             this.gbMaxInterpPeriod.TabStop = false;
@@ -1302,7 +1315,7 @@
             // tbWQInterpPd
             // 
             this.tbWQInterpPd.Location = new System.Drawing.Point(321, 20);
-            this.tbWQInterpPd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbWQInterpPd.Margin = new System.Windows.Forms.Padding(4);
             this.tbWQInterpPd.Name = "tbWQInterpPd";
             this.tbWQInterpPd.Size = new System.Drawing.Size(75, 26);
             this.tbWQInterpPd.TabIndex = 17;
@@ -1310,7 +1323,7 @@
             // tbHydroInterpPd
             // 
             this.tbHydroInterpPd.Location = new System.Drawing.Point(93, 20);
-            this.tbHydroInterpPd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbHydroInterpPd.Margin = new System.Windows.Forms.Padding(4);
             this.tbHydroInterpPd.Name = "tbHydroInterpPd";
             this.tbHydroInterpPd.Size = new System.Drawing.Size(75, 26);
             this.tbHydroInterpPd.TabIndex = 16;
@@ -1339,7 +1352,7 @@
             // 
             this.cbSimulationOverride.AutoSize = true;
             this.cbSimulationOverride.Location = new System.Drawing.Point(8, 27);
-            this.cbSimulationOverride.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbSimulationOverride.Margin = new System.Windows.Forms.Padding(4);
             this.cbSimulationOverride.Name = "cbSimulationOverride";
             this.cbSimulationOverride.Size = new System.Drawing.Size(457, 22);
             this.cbSimulationOverride.TabIndex = 12;
@@ -1352,9 +1365,9 @@
             this.groupBox8.Controls.Add(this.btnClearORC);
             this.groupBox8.Controls.Add(this.btnSelectORC);
             this.groupBox8.Location = new System.Drawing.Point(9, 91);
-            this.groupBox8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox8.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox8.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox8.Size = new System.Drawing.Size(610, 70);
             this.groupBox8.TabIndex = 11;
             this.groupBox8.TabStop = false;
@@ -1363,7 +1376,7 @@
             // tbObsWaterQualFile
             // 
             this.tbObsWaterQualFile.Location = new System.Drawing.Point(8, 27);
-            this.tbObsWaterQualFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbObsWaterQualFile.Margin = new System.Windows.Forms.Padding(4);
             this.tbObsWaterQualFile.Name = "tbObsWaterQualFile";
             this.tbObsWaterQualFile.ReadOnly = true;
             this.tbObsWaterQualFile.Size = new System.Drawing.Size(350, 26);
@@ -1373,7 +1386,7 @@
             // btnClearORC
             // 
             this.btnClearORC.Location = new System.Drawing.Point(486, 23);
-            this.btnClearORC.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnClearORC.Margin = new System.Windows.Forms.Padding(4);
             this.btnClearORC.Name = "btnClearORC";
             this.btnClearORC.Size = new System.Drawing.Size(112, 32);
             this.btnClearORC.TabIndex = 8;
@@ -1384,7 +1397,7 @@
             // btnSelectORC
             // 
             this.btnSelectORC.Location = new System.Drawing.Point(366, 23);
-            this.btnSelectORC.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSelectORC.Margin = new System.Windows.Forms.Padding(4);
             this.btnSelectORC.Name = "btnSelectORC";
             this.btnSelectORC.Size = new System.Drawing.Size(112, 32);
             this.btnSelectORC.TabIndex = 6;
@@ -1398,9 +1411,9 @@
             this.groupBox7.Controls.Add(this.btnSelectORH);
             this.groupBox7.Controls.Add(this.tbObsHydroFile);
             this.groupBox7.Location = new System.Drawing.Point(9, 13);
-            this.groupBox7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox7.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox7.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox7.Size = new System.Drawing.Size(610, 70);
             this.groupBox7.TabIndex = 10;
             this.groupBox7.TabStop = false;
@@ -1409,7 +1422,7 @@
             // btnClearORH
             // 
             this.btnClearORH.Location = new System.Drawing.Point(486, 23);
-            this.btnClearORH.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnClearORH.Margin = new System.Windows.Forms.Padding(4);
             this.btnClearORH.Name = "btnClearORH";
             this.btnClearORH.Size = new System.Drawing.Size(112, 32);
             this.btnClearORH.TabIndex = 7;
@@ -1420,7 +1433,7 @@
             // btnSelectORH
             // 
             this.btnSelectORH.Location = new System.Drawing.Point(366, 23);
-            this.btnSelectORH.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSelectORH.Margin = new System.Windows.Forms.Padding(4);
             this.btnSelectORH.Name = "btnSelectORH";
             this.btnSelectORH.Size = new System.Drawing.Size(112, 32);
             this.btnSelectORH.TabIndex = 5;
@@ -1431,7 +1444,7 @@
             // tbObsHydroFile
             // 
             this.tbObsHydroFile.Location = new System.Drawing.Point(8, 27);
-            this.tbObsHydroFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbObsHydroFile.Margin = new System.Windows.Forms.Padding(4);
             this.tbObsHydroFile.Name = "tbObsHydroFile";
             this.tbObsHydroFile.ReadOnly = true;
             this.tbObsHydroFile.Size = new System.Drawing.Size(350, 26);
@@ -1445,7 +1458,7 @@
             this.tpCEQUALW2.Controls.Add(this.gbCEQUALW2flow);
             this.tpCEQUALW2.Controls.Add(this.cbWriteCEQUALoutput);
             this.tpCEQUALW2.Location = new System.Drawing.Point(4, 50);
-            this.tpCEQUALW2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpCEQUALW2.Margin = new System.Windows.Forms.Padding(4);
             this.tpCEQUALW2.Name = "tpCEQUALW2";
             this.tpCEQUALW2.Size = new System.Drawing.Size(742, 471);
             this.tpCEQUALW2.TabIndex = 9;
@@ -1458,9 +1471,9 @@
             this.gbCEQUALW2chem.Controls.Add(this.tbCEQUALconcFile);
             this.gbCEQUALW2chem.Enabled = false;
             this.gbCEQUALW2chem.Location = new System.Drawing.Point(9, 198);
-            this.gbCEQUALW2chem.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbCEQUALW2chem.Margin = new System.Windows.Forms.Padding(4);
             this.gbCEQUALW2chem.Name = "gbCEQUALW2chem";
-            this.gbCEQUALW2chem.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbCEQUALW2chem.Padding = new System.Windows.Forms.Padding(4);
             this.gbCEQUALW2chem.Size = new System.Drawing.Size(542, 74);
             this.gbCEQUALW2chem.TabIndex = 9;
             this.gbCEQUALW2chem.TabStop = false;
@@ -1469,7 +1482,7 @@
             // btnSelectChemFile
             // 
             this.btnSelectChemFile.Location = new System.Drawing.Point(416, 23);
-            this.btnSelectChemFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSelectChemFile.Margin = new System.Windows.Forms.Padding(4);
             this.btnSelectChemFile.Name = "btnSelectChemFile";
             this.btnSelectChemFile.Size = new System.Drawing.Size(112, 32);
             this.btnSelectChemFile.TabIndex = 7;
@@ -1480,7 +1493,7 @@
             // tbCEQUALconcFile
             // 
             this.tbCEQUALconcFile.Location = new System.Drawing.Point(8, 27);
-            this.tbCEQUALconcFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbCEQUALconcFile.Margin = new System.Windows.Forms.Padding(4);
             this.tbCEQUALconcFile.Name = "tbCEQUALconcFile";
             this.tbCEQUALconcFile.ReadOnly = true;
             this.tbCEQUALconcFile.Size = new System.Drawing.Size(400, 26);
@@ -1492,9 +1505,9 @@
             this.gbCEQUALW2temp.Controls.Add(this.tbCEQUALtempFile);
             this.gbCEQUALW2temp.Enabled = false;
             this.gbCEQUALW2temp.Location = new System.Drawing.Point(9, 116);
-            this.gbCEQUALW2temp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbCEQUALW2temp.Margin = new System.Windows.Forms.Padding(4);
             this.gbCEQUALW2temp.Name = "gbCEQUALW2temp";
-            this.gbCEQUALW2temp.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbCEQUALW2temp.Padding = new System.Windows.Forms.Padding(4);
             this.gbCEQUALW2temp.Size = new System.Drawing.Size(542, 74);
             this.gbCEQUALW2temp.TabIndex = 9;
             this.gbCEQUALW2temp.TabStop = false;
@@ -1503,7 +1516,7 @@
             // btnSelectTempFile
             // 
             this.btnSelectTempFile.Location = new System.Drawing.Point(416, 23);
-            this.btnSelectTempFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSelectTempFile.Margin = new System.Windows.Forms.Padding(4);
             this.btnSelectTempFile.Name = "btnSelectTempFile";
             this.btnSelectTempFile.Size = new System.Drawing.Size(112, 32);
             this.btnSelectTempFile.TabIndex = 7;
@@ -1514,7 +1527,7 @@
             // tbCEQUALtempFile
             // 
             this.tbCEQUALtempFile.Location = new System.Drawing.Point(8, 27);
-            this.tbCEQUALtempFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbCEQUALtempFile.Margin = new System.Windows.Forms.Padding(4);
             this.tbCEQUALtempFile.Name = "tbCEQUALtempFile";
             this.tbCEQUALtempFile.ReadOnly = true;
             this.tbCEQUALtempFile.Size = new System.Drawing.Size(400, 26);
@@ -1526,9 +1539,9 @@
             this.gbCEQUALW2flow.Controls.Add(this.tbCEQUALflowFile);
             this.gbCEQUALW2flow.Enabled = false;
             this.gbCEQUALW2flow.Location = new System.Drawing.Point(9, 34);
-            this.gbCEQUALW2flow.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbCEQUALW2flow.Margin = new System.Windows.Forms.Padding(4);
             this.gbCEQUALW2flow.Name = "gbCEQUALW2flow";
-            this.gbCEQUALW2flow.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbCEQUALW2flow.Padding = new System.Windows.Forms.Padding(4);
             this.gbCEQUALW2flow.Size = new System.Drawing.Size(542, 74);
             this.gbCEQUALW2flow.TabIndex = 8;
             this.gbCEQUALW2flow.TabStop = false;
@@ -1537,7 +1550,7 @@
             // btnSelectFlowFile
             // 
             this.btnSelectFlowFile.Location = new System.Drawing.Point(416, 23);
-            this.btnSelectFlowFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSelectFlowFile.Margin = new System.Windows.Forms.Padding(4);
             this.btnSelectFlowFile.Name = "btnSelectFlowFile";
             this.btnSelectFlowFile.Size = new System.Drawing.Size(112, 32);
             this.btnSelectFlowFile.TabIndex = 7;
@@ -1548,7 +1561,7 @@
             // tbCEQUALflowFile
             // 
             this.tbCEQUALflowFile.Location = new System.Drawing.Point(8, 27);
-            this.tbCEQUALflowFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbCEQUALflowFile.Margin = new System.Windows.Forms.Padding(4);
             this.tbCEQUALflowFile.Name = "tbCEQUALflowFile";
             this.tbCEQUALflowFile.ReadOnly = true;
             this.tbCEQUALflowFile.Size = new System.Drawing.Size(400, 26);
@@ -1558,7 +1571,7 @@
             // 
             this.cbWriteCEQUALoutput.AutoSize = true;
             this.cbWriteCEQUALoutput.Location = new System.Drawing.Point(9, 4);
-            this.cbWriteCEQUALoutput.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbWriteCEQUALoutput.Margin = new System.Windows.Forms.Padding(4);
             this.cbWriteCEQUALoutput.Name = "cbWriteCEQUALoutput";
             this.cbWriteCEQUALoutput.Size = new System.Drawing.Size(313, 22);
             this.cbWriteCEQUALoutput.TabIndex = 0;
@@ -1599,19 +1612,6 @@
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
-            // groupBox9
-            // 
-            this.groupBox9.Controls.Add(this.tbNPDESNumber);
-            this.groupBox9.Controls.Add(this.label14);
-            this.groupBox9.Controls.Add(this.groupBox6);
-            this.groupBox9.Controls.Add(this.groupBox5);
-            this.groupBox9.Location = new System.Drawing.Point(9, 266);
-            this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(522, 170);
-            this.groupBox9.TabIndex = 19;
-            this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "Water source Information corresponds to the selected point source";
             // 
             // chbxApplyToSelected
             // 
@@ -1667,7 +1667,7 @@
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.tcRiverTabs);
             this.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DialogRiverCoeffs";
             this.Text = "River Coefficients";
             this.tcRiverTabs.ResumeLayout(false);
@@ -1687,6 +1687,8 @@
             this.tpDiversions.ResumeLayout(false);
             this.tpDiversions.PerformLayout();
             this.tpPointSources.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
@@ -1723,8 +1725,6 @@
             this.gbCEQUALW2temp.PerformLayout();
             this.gbCEQUALW2flow.ResumeLayout(false);
             this.gbCEQUALW2flow.PerformLayout();
-            this.groupBox9.ResumeLayout(false);
-            this.groupBox9.PerformLayout();
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
             this.ResumeLayout(false);

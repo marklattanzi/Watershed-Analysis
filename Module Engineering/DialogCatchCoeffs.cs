@@ -232,8 +232,8 @@ namespace warmf
             tbTreatment2.Text = catchment.septic.standardPct.ToString();
             tbTreatment3.Text = catchment.septic.advancedPct.ToString();
             tbInitBiomass.Text = catchment.septic.initialBiomass.ToString();
-            tbBioThick.Text = catchment.septic.thickness.ToString();
-            tbBiozoneArea.Text = catchment.septic.area.ToString();
+            tbBioThick.Text = catchment.septic.biomassThickness.ToString();
+            tbBiozoneArea.Text = catchment.septic.biomassArea.ToString();
             tbBioRespCoeff.Text = catchment.septic.biomassRespRate.ToString();
             tbBioMortCoeff.Text = catchment.septic.biomassMortRate.ToString();
 
@@ -667,26 +667,65 @@ namespace warmf
             }
         }
 
+        private void chbxApplyToSelected_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chbxApplyToSelected.Checked == true)
+            {
+                chbxApplyToAll.Checked = false;
+            }
+        }
+
+        private void chbxApplyToAll_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chbxApplyToAll.Checked == true)
+            {
+                chbxApplyToSelected.Checked = false;
+            }
+        }
+
         private void btnOK_Click(object sender, EventArgs e)
         {
             //clicking the ok button will save the coefficients contained within the dialog
             //into Global.coe.catchments[i] variables in memory. It does NOT rewrite the .coe file!!
 
             Catchment catchment = Global.coe.catchments[Global.coe.GetCatchmentNumberFromID(Convert.ToInt16(tbCatchID.Text))];
+            List<int> warmfCatchmentNumbers = new List<int>();
 
+            if (chbxApplyToSelected.Checked) //if apply to selected
+            {
+                warmfCatchmentNumbers.Add(Global.coe.GetRiverNumberFromID(Convert.ToInt32(tbCatchID.Text)));
+                int warmfIDfield = parent.GetWarmfIDFieldIndex(1);
+                int warmfCatchNumber;
+
+                for (int j = 0; j < parent.frmMap[1].SelectedRecordIndices.Count; j++)
+                {
+                    string[] recordAttributes = parent.frmMap[1].GetAttributeFieldValues(parent.frmMap[1].SelectedRecordIndices[j]);
+                    warmfCatchNumber = Global.coe.GetRiverNumberFromID(Convert.ToInt16(recordAttributes[warmfIDfield]));
+                    if (!warmfCatchmentNumbers.Contains(warmfCatchNumber))
+                    {
+                        warmfCatchmentNumbers.Add(warmfCatchNumber);
+                    }
+                }
+            }
+            else if (chbxApplyToAll.Checked) //if apply to all
+            {
+                warmfCatchmentNumbers = Enumerable.Range(0, Global.coe.numRivers - 1).ToList();
+            }
+            else //if neither apply to all or selected are checked
+            {
+                warmfCatchmentNumbers.Add(Global.coe.GetRiverNumberFromID(Convert.ToInt32(tbCatchID.Text)));
+            }
+
+            #region Update each of the coefficients that should not be applied to other rivers first
             //Physical Data tab
             catchment.name = tbName.Text;
             catchment.width = Convert.ToDouble(tbWidth.Text);
             catchment.aspect = Convert.ToDouble(tbAspect.Text);
             catchment.slope = Convert.ToDouble(tbSlope.Text);
             catchment.detentionStorage = Convert.ToDouble(tbDetention.Text);
-            catchment.ManningN = Convert.ToDouble(tbRoughness.Text);
 
             //Meteorology tab
-            catchment.METFileNum = Global.coe.GetMETNumberFromName(tbMetFile.Text);
-            catchment.precipMultiplier = Convert.ToDouble(tbPrecipWeight.Text);
-            catchment.aveTempLapse = Convert.ToDouble(tbTempLapse.Text);
-            catchment.altitudeTempLapse = Convert.ToDouble(tbAltLapse.Text);
+            
             //if (tbAirFile.Text = "" || tbAirFile.Text = null)
             //{
             //    catchment.airRainChemFileNum = Global.coe.GetAIRNumberFromName(tbAirFile.Text) + 1;
@@ -694,9 +733,7 @@ namespace warmf
             //catchment.altitudeTempLapse = Convert.ToDouble(tbAltLapse.Text);
             //if (true)
             //{
-
             //}
-
             //tbAirFile.Text = Global.coe.AIRFilename[catchment.airRainChemFileNum - 1];
             ////tbPartAir.Text = Global.coe.//(catchment.particleRainChemFileNum);
 
@@ -734,8 +771,6 @@ namespace warmf
 
                 }
             }
-            
-            catchment.bmp.maxFertAccumTime = Convert.ToDouble(tbMaxAccTime.Text);
 
             //Irrigation tab - Tabled for now - there is no irrigation in the Catawba watershed...
             //cbIrrLandUse.Items.Clear();
@@ -745,26 +780,6 @@ namespace warmf
             //catchment.numIrrigationSources[cbIrrLandUse.SelectedIndex].ToString();
             //catchment.irrigationSource.ToString();
             //catchment.irrigationSourcePercent.ToString();
-
-            //Sediment tab
-            catchment.sediment.erosivity = Convert.ToDouble(tbSoilErosivity.Text);
-            catchment.sediment.firstPartSizePct = Convert.ToDouble(tbClay.Text);
-            catchment.sediment.secondPartSizePct = Convert.ToDouble(tbSilt.Text);
-            catchment.sediment.thirdPartSizePct = Convert.ToDouble(tbSand.Text);
-
-            //BMP's tab
-            for (int i = 0; i < Global.coe.numLanduses; i++)
-            {
-                catchment.landApplicationLoad[i] = Convert.ToDouble(dgLivestockEx.Rows[i].Cells[1].Value);
-            }
-            catchment.bufferingPct = Convert.ToDouble(tbPctBuffered.Text);
-            catchment.bufferZoneWidth = Convert.ToDouble(tbBufferWidth.Text);
-            catchment.bufferZoneSlope = Convert.ToDouble(tbBufferSlope.Text);
-            catchment.bufferManningN = Convert.ToDouble(tbBufferRoughness.Text);
-            catchment.bmp.streetSweepFreq = Convert.ToDouble(tbFrequency.Text);
-            catchment.bmp.streetSweepEff = Convert.ToDouble(tbEfficiency.Text);
-            catchment.bmp.divertedImpervFlow = Convert.ToDouble(tbImpRouting.Text);
-            catchment.bmp.detentionPondVol = Convert.ToDouble(tbDetVolume.Text);
 
             //Point Sources tab
             catchment.pointSources.Clear();
@@ -785,80 +800,6 @@ namespace warmf
                 catchment.pumpToDivFile.Add(Global.coe.GetFLONumberFromName(lbPumpingTo.Items[i].ToString()));
             }
 
-            //Septic Systems tab
-            catchment.septic.soilLayer = Convert.ToDouble(tbDischargeSoilLayer.Text);
-            catchment.septic.population = Convert.ToDouble(tbPopSeptic.Text);
-            catchment.septic.failingPct = Convert.ToDouble(tbTreatment1.Text);
-            catchment.septic.standardPct = Convert.ToDouble(tbTreatment2.Text);
-            catchment.septic.advancedPct = Convert.ToDouble(tbTreatment3.Text);
-            catchment.septic.initialBiomass = Convert.ToDouble(tbInitBiomass.Text);
-            catchment.septic.thickness = Convert.ToDouble(tbBioThick.Text);
-            catchment.septic.area = Convert.ToDouble(tbBiozoneArea.Text);
-            catchment.septic.biomassRespRate = Convert.ToDouble(tbBioRespCoeff.Text);
-            catchment.septic.biomassMortRate = Convert.ToDouble(tbBioMortCoeff.Text);
-
-            //Reactions tab
-            for (int i = 0; i < Global.coe.numReactions; i++)
-            {
-                catchment.reactions.soilReactionRate[i] = Convert.ToDouble(dgvReactions.Rows[i].Cells["soil"].Value);
-                catchment.reactions.surfaceReactionRate[i] = Convert.ToDouble(dgvReactions.Rows[i].Cells["surface"].Value);
-                catchment.reactions.canopyReactionRate[i] = Convert.ToDouble(dgvReactions.Rows[i].Cells["canopy"].Value);
-                catchment.reactions.biozoneReactionRate[i] = Convert.ToDouble(dgvReactions.Rows[i].Cells["biozone"].Value);
-            }
-
-            //Soil Layers tab
-            catchment.numSoilLayers = Convert.ToInt16(tbNumSoilLayers.Text);
-            //Soil Layers > Hydrology coefficients
-            for (int i = 0; i < catchment.numSoilLayers; i++)
-            {
-                catchment.soils[i].thickness = Convert.ToDouble(dgSoilHydroCoeffs.Rows[i].Cells[1].Value);
-                catchment.soils[i].moisture = Convert.ToDouble(dgSoilHydroCoeffs.Rows[i].Cells[2].Value);
-                catchment.soils[i].fieldCapacity = Convert.ToDouble(dgSoilHydroCoeffs.Rows[i].Cells[3].Value);
-                catchment.soils[i].saturationMoisture = Convert.ToDouble(dgSoilHydroCoeffs.Rows[i].Cells[4].Value);
-                catchment.soils[i].horizHydraulicConduct = Convert.ToDouble(dgSoilHydroCoeffs.Rows[i].Cells[5].Value);
-                catchment.soils[i].vertHydraulicConduct = Convert.ToDouble(dgSoilHydroCoeffs.Rows[i].Cells[6].Value);
-                catchment.soils[i].evapTranspireFract = Convert.ToDouble(dgSoilHydroCoeffs.Rows[i].Cells[7].Value);
-                catchment.soils[i].density = Convert.ToDouble(dgSoilHydroCoeffs.Rows[i].Cells[8].Value);
-                catchment.soils[i].tortuosity = Convert.ToDouble(dgSoilHydroCoeffs.Rows[i].Cells[9].Value);
-            }
-            //Soil Layers > Initial Concentrations
-            for (int i = 0; i < catchment.numSoilLayers; i++)
-            {
-                catchment.soils[i].waterTemp = Convert.ToDouble(dgInitialConc.Rows[i].Cells[0].Value);
-                for (int j = 0; j < Global.coe.numChemicalParams + Global.coe.numPhysicalParams; j++)
-                {
-                    catchment.soils[i].solutionConcen[j] = Convert.ToDouble(dgInitialConc.Rows[i].Cells[j + 1].Value);
-                }
-            }
-            //Soil Layers > Adsorption
-            for (int i = 0; i < catchment.numSoilLayers; i++)
-            {
-                catchment.soils[i].exchangeCapacity = Convert.ToDouble(dgAdsorption.Rows[i].Cells[0].Value);
-                catchment.soils[i].maxPhosAdsorption = Convert.ToDouble(dgAdsorption.Rows[i].Cells[1].Value);
-                for (int j = 0; j < Global.coe.numChemicalParams + Global.coe.numPhysicalParams; j++)
-                {
-                    catchment.soils[i].adsorptionIsotherm[j] = Convert.ToDouble(dgAdsorption.Rows[i].Cells[j + 2].Value);
-                }
-            }
-            //Soil Layers > Mineral Composition
-            for (int i = 0; i < catchment.numSoilLayers; i++)
-            {
-                for (int j = 0; j < Global.coe.numMinerals; j++)
-                {
-                    catchment.soils[i].weightFract[j] = Convert.ToDouble(dgMineralComp.Rows[i].Cells[j].Value);
-                }
-            }
-            //Soil Layers > Inorganic Carbon -- this might not be correct - check value returned in debugger...
-            for (int i = 0; i < catchment.numSoilLayers; i++)
-            {
-                string co2Selection = (dgInorganicC.Rows[i].Cells[0] as DataGridViewComboBoxCell).Value.ToString();
-//                catchment.soils[i].CO2CalcMethod = Convert.ToInt16((dgInorganicC.Rows[i].Cells[0] as DataGridViewComboBoxCell).Value);
-                catchment.soils[i].CO2CalcMethod = (dgInorganicC.Rows[i].Cells[0] as DataGridViewComboBoxCell).Items.IndexOf(co2Selection) + 1;
-                catchment.soils[i].CO2ConcenFactor = Convert.ToDouble(dgInorganicC.Rows[i].Cells[1].Value);
-            }
-            //Mining tab
-            //skipping the mining tab for now. Skipped it in Populate() - Joel will have to do this piece.
-
             //CE-QUAL-W2 tab
             if (cbWriteCEQUALoutput.Checked)
             {
@@ -867,6 +808,173 @@ namespace warmf
                 catchment.mining.tempInputFilename = tbCEQUALtempFile.Text;
                 catchment.mining.waterQualInputFilename = tbCEQUALconcFile.Text;
             }
+            #endregion
+
+            #region Update the coefficients that can be applied to selected or all
+            for (int i = 0; i < warmfCatchmentNumbers.Count; i++)
+            {
+                //Physical Data tab
+                if (catchment.ManningN != Convert.ToDouble(tbRoughness.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].ManningN = Convert.ToDouble(tbRoughness.Text);
+                
+                //Meteorology tab
+                if (catchment.METFileNum != Global.coe.GetMETNumberFromName(tbMetFile.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].METFileNum = Global.coe.GetMETNumberFromName(tbMetFile.Text);
+                if (catchment.precipMultiplier != Convert.ToDouble(tbPrecipWeight.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].precipMultiplier = Convert.ToDouble(tbPrecipWeight.Text);
+                if (catchment.aveTempLapse != Convert.ToDouble(tbTempLapse.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].aveTempLapse = Convert.ToDouble(tbTempLapse.Text);
+                if(catchment.altitudeTempLapse != Convert.ToDouble(tbAltLapse.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].altitudeTempLapse = Convert.ToDouble(tbAltLapse.Text);
+                
+                //Land Application
+                if (catchment.bmp.maxFertAccumTime != Convert.ToDouble(tbMaxAccTime.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].bmp.maxFertAccumTime = Convert.ToDouble(tbMaxAccTime.Text);
+
+                //Sediment tab
+                if (catchment.sediment.erosivity != Convert.ToDouble(tbSoilErosivity.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].sediment.erosivity = Convert.ToDouble(tbSoilErosivity.Text);
+                if (catchment.sediment.firstPartSizePct != Convert.ToDouble(tbClay.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].sediment.firstPartSizePct = Convert.ToDouble(tbClay.Text);
+                if (catchment.sediment.secondPartSizePct != Convert.ToDouble(tbSilt.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].sediment.secondPartSizePct = Convert.ToDouble(tbSilt.Text);
+                if (catchment.sediment.thirdPartSizePct != Convert.ToDouble(tbSand.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].sediment.thirdPartSizePct = Convert.ToDouble(tbSand.Text);
+
+                //BMP's tab
+                for (int j = 0; j < Global.coe.numLanduses; j++)
+                {
+                    if(catchment.landApplicationLoad[j] != Convert.ToDouble(dgLivestockEx.Rows[j].Cells[1].Value))
+                        Global.coe.catchments[warmfCatchmentNumbers[i]].landApplicationLoad[j] = Convert.ToDouble(dgLivestockEx.Rows[j].Cells[1].Value);
+                }
+                if(catchment.bufferingPct != Convert.ToDouble(tbPctBuffered.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].bufferZoneWidth = Convert.ToDouble(tbBufferWidth.Text);
+                if (catchment.bufferZoneSlope != Convert.ToDouble(tbBufferSlope.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].bufferZoneSlope = Convert.ToDouble(tbBufferSlope.Text);
+                if (catchment.bufferManningN != Convert.ToDouble(tbBufferRoughness.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].bufferManningN = Convert.ToDouble(tbBufferRoughness.Text);
+                if (catchment.bmp.streetSweepFreq != Convert.ToDouble(tbFrequency.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].bmp.streetSweepEff = Convert.ToDouble(tbEfficiency.Text);
+                if (catchment.bmp.divertedImpervFlow != Convert.ToDouble(tbImpRouting.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].bmp.divertedImpervFlow = Convert.ToDouble(tbImpRouting.Text);
+                if (catchment.bmp.detentionPondVol != Convert.ToDouble(tbDetVolume.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].bmp.detentionPondVol = Convert.ToDouble(tbDetVolume.Text);
+
+                //Septic Systems tab
+                if (catchment.septic.soilLayer != Convert.ToDouble(tbDischargeSoilLayer.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].septic.soilLayer = Convert.ToDouble(tbDischargeSoilLayer.Text);
+                if (catchment.septic.population != Convert.ToDouble(tbPopSeptic.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].septic.population = Convert.ToDouble(tbPopSeptic.Text);
+                if (catchment.septic.failingPct != Convert.ToDouble(tbTreatment1.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].septic.failingPct = Convert.ToDouble(tbTreatment1.Text);
+                if (catchment.septic.standardPct != Convert.ToDouble(tbTreatment2.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].septic.standardPct = Convert.ToDouble(tbTreatment2.Text);
+                if (catchment.septic.advancedPct != Convert.ToDouble(tbTreatment3.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].septic.advancedPct = Convert.ToDouble(tbTreatment3.Text);
+                if (catchment.septic.initialBiomass != Convert.ToDouble(tbInitBiomass.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].septic.initialBiomass = Convert.ToDouble(tbInitBiomass.Text);
+                if (catchment.septic.biomassThickness != Convert.ToDouble(tbBioThick.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].septic.biomassThickness = Convert.ToDouble(tbBioThick.Text);
+                if (catchment.septic.biomassArea != Convert.ToDouble(tbBiozoneArea.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].septic.biomassArea = Convert.ToDouble(tbBiozoneArea.Text);
+                if (catchment.septic.biomassRespRate != Convert.ToDouble(tbBioRespCoeff.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].septic.biomassRespRate = Convert.ToDouble(tbBioRespCoeff.Text);
+                if (catchment.septic.biomassMortRate != Convert.ToDouble(tbBioMortCoeff.Text))
+                    Global.coe.catchments[warmfCatchmentNumbers[i]].septic.biomassMortRate = Convert.ToDouble(tbBioMortCoeff.Text);
+
+                //Reactions tab
+                for (int j = 0; j < Global.coe.numReactions; j++)
+                {
+                    if (catchment.reactions.soilReactionRate[j] != Convert.ToDouble(dgvReactions.Rows[j].Cells["soil"].Value))
+                        Global.coe.catchments[i].reactions.soilReactionRate[j] = Convert.ToDouble(dgvReactions.Rows[j].Cells["soil"].Value);
+                    if (catchment.reactions.surfaceReactionRate[j] != Convert.ToDouble(dgvReactions.Rows[j].Cells["surface"].Value))
+                        Global.coe.catchments[i].reactions.surfaceReactionRate[j] = Convert.ToDouble(dgvReactions.Rows[j].Cells["surface"].Value);
+                    if (catchment.reactions.canopyReactionRate[j] != Convert.ToDouble(dgvReactions.Rows[j].Cells["canopy"].Value))
+                        Global.coe.catchments[i].reactions.canopyReactionRate[j] = Convert.ToDouble(dgvReactions.Rows[j].Cells["canopy"].Value);
+                    if (catchment.reactions.biozoneReactionRate[j] != Convert.ToDouble(dgvReactions.Rows[j].Cells["biozone"].Value))
+                        Global.coe.catchments[i].reactions.biozoneReactionRate[j] = Convert.ToDouble(dgvReactions.Rows[j].Cells["biozone"].Value);
+                }
+
+                //Soil Layers tab
+                if (catchment.numSoilLayers != Convert.ToInt16(tbNumSoilLayers.Text))
+                {
+                    int oldNumSoilLayers = Global.coe.catchments[i].numSoilLayers;
+                    int newNumSoilLayers = Convert.ToInt16(tbNumSoilLayers.Text);
+
+                    if (newNumSoilLayers > oldNumSoilLayers)
+                    {
+                        int layersToAdd = newNumSoilLayers - oldNumSoilLayers;
+                        Global.coe.catchments[i].numSoilLayers = newNumSoilLayers;
+                        for (int j = 0; j < layersToAdd; j++)
+                        {
+                            Global.coe.catchments[i].soils.Add(Global.coe.catchments[i].soils[oldNumSoilLayers + i]);
+                        }
+                    }
+                    if (newNumSoilLayers < oldNumSoilLayers)
+                    {
+                        Global.coe.catchments[i].numSoilLayers = newNumSoilLayers;
+                    }
+                }
+
+                //Soil Layers > Hydrology coefficients
+                //for (int i = 0; i < catchment.numSoilLayers; i++)
+                //{
+                //    catchment.soils[i].thickness = Convert.ToDouble(dgSoilHydroCoeffs.Rows[i].Cells[1].Value);
+                //    catchment.soils[i].moisture = Convert.ToDouble(dgSoilHydroCoeffs.Rows[i].Cells[2].Value);
+                //    catchment.soils[i].fieldCapacity = Convert.ToDouble(dgSoilHydroCoeffs.Rows[i].Cells[3].Value);
+                //    catchment.soils[i].saturationMoisture = Convert.ToDouble(dgSoilHydroCoeffs.Rows[i].Cells[4].Value);
+                //    catchment.soils[i].horizHydraulicConduct = Convert.ToDouble(dgSoilHydroCoeffs.Rows[i].Cells[5].Value);
+                //    catchment.soils[i].vertHydraulicConduct = Convert.ToDouble(dgSoilHydroCoeffs.Rows[i].Cells[6].Value);
+                //    catchment.soils[i].evapTranspireFract = Convert.ToDouble(dgSoilHydroCoeffs.Rows[i].Cells[7].Value);
+                //    catchment.soils[i].density = Convert.ToDouble(dgSoilHydroCoeffs.Rows[i].Cells[8].Value);
+                //    catchment.soils[i].tortuosity = Convert.ToDouble(dgSoilHydroCoeffs.Rows[i].Cells[9].Value);
+                //}
+                ////Soil Layers > Initial Concentrations
+                //for (int i = 0; i < catchment.numSoilLayers; i++)
+                //{
+                //    catchment.soils[i].waterTemp = Convert.ToDouble(dgInitialConc.Rows[i].Cells[0].Value);
+                //    for (int j = 0; j < Global.coe.numChemicalParams + Global.coe.numPhysicalParams; j++)
+                //    {
+                //        catchment.soils[i].solutionConcen[j] = Convert.ToDouble(dgInitialConc.Rows[i].Cells[j + 1].Value);
+                //    }
+                //}
+                ////Soil Layers > Adsorption
+                //for (int i = 0; i < catchment.numSoilLayers; i++)
+                //{
+                //    catchment.soils[i].exchangeCapacity = Convert.ToDouble(dgAdsorption.Rows[i].Cells[0].Value);
+                //    catchment.soils[i].maxPhosAdsorption = Convert.ToDouble(dgAdsorption.Rows[i].Cells[1].Value);
+                //    for (int j = 0; j < Global.coe.numChemicalParams + Global.coe.numPhysicalParams; j++)
+                //    {
+                //        catchment.soils[i].adsorptionIsotherm[j] = Convert.ToDouble(dgAdsorption.Rows[i].Cells[j + 2].Value);
+                //    }
+                //}
+                ////Soil Layers > Mineral Composition
+                //for (int i = 0; i < catchment.numSoilLayers; i++)
+                //{
+                //    for (int j = 0; j < Global.coe.numMinerals; j++)
+                //    {
+                //        catchment.soils[i].weightFract[j] = Convert.ToDouble(dgMineralComp.Rows[i].Cells[j].Value);
+                //    }
+                //}
+                ////Soil Layers > Inorganic Carbon -- this might not be correct - check value returned in debugger...
+                //for (int i = 0; i < catchment.numSoilLayers; i++)
+                //{
+                //    string co2Selection = (dgInorganicC.Rows[i].Cells[0] as DataGridViewComboBoxCell).Value.ToString();
+                //    //                catchment.soils[i].CO2CalcMethod = Convert.ToInt16((dgInorganicC.Rows[i].Cells[0] as DataGridViewComboBoxCell).Value);
+                //    catchment.soils[i].CO2CalcMethod = (dgInorganicC.Rows[i].Cells[0] as DataGridViewComboBoxCell).Items.IndexOf(co2Selection) + 1;
+                //    catchment.soils[i].CO2ConcenFactor = Convert.ToDouble(dgInorganicC.Rows[i].Cells[1].Value);
+                //}
+                
+                //Mining tab
+                //skipping the mining tab for now. Skipped it in Populate() - Joel will have to do this piece.
+            }
+
+
+
+
+
+            #endregion
+
         }
     }
 }
