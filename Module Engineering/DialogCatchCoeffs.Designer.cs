@@ -139,6 +139,7 @@
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label11 = new System.Windows.Forms.Label();
             this.tpPtSrc = new System.Windows.Forms.TabPage();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.tbNPDESNumber = new warmf.UtilityClasses.DoubleTextBox();
             this.label35 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
@@ -247,7 +248,6 @@
             this.chbxWriteOutput = new System.Windows.Forms.CheckBox();
             this.chbxApplyToAll = new System.Windows.Forms.CheckBox();
             this.chbxApplyToSelected = new System.Windows.Forms.CheckBox();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.tcCatchTabs.SuspendLayout();
             this.tpPhysData.SuspendLayout();
             this.gbSizeSlope.SuspendLayout();
@@ -272,6 +272,7 @@
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgLivestockEx)).BeginInit();
             this.tpPtSrc.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.tpPumping.SuspendLayout();
@@ -293,7 +294,6 @@
             this.gbCEQUALW2temp.SuspendLayout();
             this.gbCEQUALW2flow.SuspendLayout();
             this.groupBox10.SuspendLayout();
-            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcCatchTabs
@@ -350,9 +350,9 @@
             this.gbSizeSlope.Controls.Add(this.tbWidth);
             this.gbSizeSlope.Controls.Add(this.tbArea);
             this.gbSizeSlope.Location = new System.Drawing.Point(9, 150);
-            this.gbSizeSlope.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbSizeSlope.Margin = new System.Windows.Forms.Padding(4);
             this.gbSizeSlope.Name = "gbSizeSlope";
-            this.gbSizeSlope.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbSizeSlope.Padding = new System.Windows.Forms.Padding(4);
             this.gbSizeSlope.Size = new System.Drawing.Size(724, 145);
             this.gbSizeSlope.TabIndex = 18;
             this.gbSizeSlope.TabStop = false;
@@ -401,7 +401,7 @@
             // tbSlope
             // 
             this.tbSlope.Location = new System.Drawing.Point(566, 84);
-            this.tbSlope.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbSlope.Margin = new System.Windows.Forms.Padding(4);
             this.tbSlope.Name = "tbSlope";
             this.tbSlope.Size = new System.Drawing.Size(133, 26);
             this.tbSlope.TabIndex = 8;
@@ -409,7 +409,7 @@
             // tbAspect
             // 
             this.tbAspect.Location = new System.Drawing.Point(566, 42);
-            this.tbAspect.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbAspect.Margin = new System.Windows.Forms.Padding(4);
             this.tbAspect.Name = "tbAspect";
             this.tbAspect.Size = new System.Drawing.Size(133, 26);
             this.tbAspect.TabIndex = 7;
@@ -417,7 +417,7 @@
             // tbWidth
             // 
             this.tbWidth.Location = new System.Drawing.Point(225, 84);
-            this.tbWidth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbWidth.Margin = new System.Windows.Forms.Padding(4);
             this.tbWidth.Name = "tbWidth";
             this.tbWidth.Size = new System.Drawing.Size(133, 26);
             this.tbWidth.TabIndex = 6;
@@ -425,7 +425,7 @@
             // tbArea
             // 
             this.tbArea.Location = new System.Drawing.Point(225, 42);
-            this.tbArea.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbArea.Margin = new System.Windows.Forms.Padding(4);
             this.tbArea.Name = "tbArea";
             this.tbArea.ReadOnly = true;
             this.tbArea.Size = new System.Drawing.Size(133, 26);
@@ -464,7 +464,7 @@
             // tbRoughness
             // 
             this.tbRoughness.Location = new System.Drawing.Point(441, 390);
-            this.tbRoughness.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbRoughness.Margin = new System.Windows.Forms.Padding(4);
             this.tbRoughness.Name = "tbRoughness";
             this.tbRoughness.Size = new System.Drawing.Size(133, 26);
             this.tbRoughness.TabIndex = 10;
@@ -472,7 +472,7 @@
             // tbDetention
             // 
             this.tbDetention.Location = new System.Drawing.Point(441, 343);
-            this.tbDetention.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbDetention.Margin = new System.Windows.Forms.Padding(4);
             this.tbDetention.Name = "tbDetention";
             this.tbDetention.Size = new System.Drawing.Size(133, 26);
             this.tbDetention.TabIndex = 9;
@@ -480,7 +480,7 @@
             // tbCatchID
             // 
             this.tbCatchID.Location = new System.Drawing.Point(156, 80);
-            this.tbCatchID.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbCatchID.Margin = new System.Windows.Forms.Padding(4);
             this.tbCatchID.Name = "tbCatchID";
             this.tbCatchID.ReadOnly = true;
             this.tbCatchID.Size = new System.Drawing.Size(133, 26);
@@ -499,7 +499,7 @@
             // tbName
             // 
             this.tbName.Location = new System.Drawing.Point(156, 44);
-            this.tbName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbName.Margin = new System.Windows.Forms.Padding(4);
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(482, 26);
             this.tbName.TabIndex = 2;
@@ -511,9 +511,9 @@
             this.tpMeteorology.Controls.Add(this.gbFineAir);
             this.tpMeteorology.Controls.Add(this.gbMetFile);
             this.tpMeteorology.Location = new System.Drawing.Point(4, 50);
-            this.tpMeteorology.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpMeteorology.Margin = new System.Windows.Forms.Padding(4);
             this.tpMeteorology.Name = "tpMeteorology";
-            this.tpMeteorology.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpMeteorology.Padding = new System.Windows.Forms.Padding(4);
             this.tpMeteorology.Size = new System.Drawing.Size(742, 471);
             this.tpMeteorology.TabIndex = 1;
             this.tpMeteorology.Text = "Meteorology";
@@ -696,9 +696,9 @@
             // 
             this.tpLandUses.Controls.Add(this.dgLanduse);
             this.tpLandUses.Location = new System.Drawing.Point(4, 50);
-            this.tpLandUses.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpLandUses.Margin = new System.Windows.Forms.Padding(4);
             this.tpLandUses.Name = "tpLandUses";
-            this.tpLandUses.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpLandUses.Padding = new System.Windows.Forms.Padding(4);
             this.tpLandUses.Size = new System.Drawing.Size(742, 471);
             this.tpLandUses.TabIndex = 2;
             this.tpLandUses.Text = "Land Uses";
@@ -739,9 +739,9 @@
             this.tpLandAp.Controls.Add(this.lblMaxAccTime);
             this.tpLandAp.Controls.Add(this.dgLandApp);
             this.tpLandAp.Location = new System.Drawing.Point(4, 50);
-            this.tpLandAp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpLandAp.Margin = new System.Windows.Forms.Padding(4);
             this.tpLandAp.Name = "tpLandAp";
-            this.tpLandAp.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpLandAp.Padding = new System.Windows.Forms.Padding(4);
             this.tpLandAp.Size = new System.Drawing.Size(742, 471);
             this.tpLandAp.TabIndex = 3;
             this.tpLandAp.Text = "Land Application";
@@ -921,9 +921,9 @@
             this.tpIrrigation.Controls.Add(this.label4);
             this.tpIrrigation.Controls.Add(this.groupBox1);
             this.tpIrrigation.Location = new System.Drawing.Point(4, 50);
-            this.tpIrrigation.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpIrrigation.Margin = new System.Windows.Forms.Padding(4);
             this.tpIrrigation.Name = "tpIrrigation";
-            this.tpIrrigation.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpIrrigation.Padding = new System.Windows.Forms.Padding(4);
             this.tpIrrigation.Size = new System.Drawing.Size(742, 471);
             this.tpIrrigation.TabIndex = 4;
             this.tpIrrigation.Text = "Irrigation";
@@ -1094,9 +1094,9 @@
             this.tpSediment.Controls.Add(this.tbSoilErosivity);
             this.tpSediment.Controls.Add(this.label5);
             this.tpSediment.Location = new System.Drawing.Point(4, 50);
-            this.tpSediment.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpSediment.Margin = new System.Windows.Forms.Padding(4);
             this.tpSediment.Name = "tpSediment";
-            this.tpSediment.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpSediment.Padding = new System.Windows.Forms.Padding(4);
             this.tpSediment.Size = new System.Drawing.Size(742, 471);
             this.tpSediment.TabIndex = 5;
             this.tpSediment.Text = "Sediment";
@@ -1198,9 +1198,9 @@
             this.tpBMPs.Controls.Add(this.gbBufferZone);
             this.tpBMPs.Controls.Add(this.groupBox5);
             this.tpBMPs.Location = new System.Drawing.Point(4, 50);
-            this.tpBMPs.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpBMPs.Margin = new System.Windows.Forms.Padding(4);
             this.tpBMPs.Name = "tpBMPs";
-            this.tpBMPs.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpBMPs.Padding = new System.Windows.Forms.Padding(4);
             this.tpBMPs.Size = new System.Drawing.Size(742, 471);
             this.tpBMPs.TabIndex = 6;
             this.tpBMPs.Text = "BMP\'s";
@@ -1456,13 +1456,26 @@
             this.tpPtSrc.Controls.Add(this.btnAddPTS);
             this.tpPtSrc.Controls.Add(this.lbPointSources);
             this.tpPtSrc.Location = new System.Drawing.Point(4, 50);
-            this.tpPtSrc.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpPtSrc.Margin = new System.Windows.Forms.Padding(4);
             this.tpPtSrc.Name = "tpPtSrc";
-            this.tpPtSrc.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpPtSrc.Padding = new System.Windows.Forms.Padding(4);
             this.tpPtSrc.Size = new System.Drawing.Size(742, 471);
             this.tpPtSrc.TabIndex = 7;
             this.tpPtSrc.Text = "Point Sources";
             this.tpPtSrc.UseVisualStyleBackColor = true;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.tbNPDESNumber);
+            this.groupBox8.Controls.Add(this.label35);
+            this.groupBox8.Controls.Add(this.groupBox7);
+            this.groupBox8.Controls.Add(this.groupBox6);
+            this.groupBox8.Location = new System.Drawing.Point(125, 266);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(506, 191);
+            this.groupBox8.TabIndex = 15;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Water source information corresponds to selected point source";
             // 
             // tbNPDESNumber
             // 
@@ -1602,9 +1615,9 @@
             this.tpPumping.Controls.Add(this.lbPumpingTo);
             this.tpPumping.Controls.Add(this.lbPumpingFrom);
             this.tpPumping.Location = new System.Drawing.Point(4, 50);
-            this.tpPumping.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpPumping.Margin = new System.Windows.Forms.Padding(4);
             this.tpPumping.Name = "tpPumping";
-            this.tpPumping.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpPumping.Padding = new System.Windows.Forms.Padding(4);
             this.tpPumping.Size = new System.Drawing.Size(742, 471);
             this.tpPumping.TabIndex = 9;
             this.tpPumping.Text = "Pumping";
@@ -1722,9 +1735,9 @@
             this.tpSeptic.Controls.Add(this.label21);
             this.tpSeptic.Controls.Add(this.label20);
             this.tpSeptic.Location = new System.Drawing.Point(4, 50);
-            this.tpSeptic.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpSeptic.Margin = new System.Windows.Forms.Padding(4);
             this.tpSeptic.Name = "tpSeptic";
-            this.tpSeptic.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpSeptic.Padding = new System.Windows.Forms.Padding(4);
             this.tpSeptic.Size = new System.Drawing.Size(742, 471);
             this.tpSeptic.TabIndex = 8;
             this.tpSeptic.Text = "Septic Systems";
@@ -2035,7 +2048,7 @@
             this.area.Name = "area";
             this.area.ReadOnly = true;
             this.area.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.area.Width = 41;
+            this.area.Width = 76;
             // 
             // Thickness
             // 
@@ -2043,7 +2056,7 @@
             this.Thickness.HeaderText = "Thickness (cm)";
             this.Thickness.Name = "Thickness";
             this.Thickness.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Thickness.Width = 93;
+            this.Thickness.Width = 107;
             // 
             // InitMoisture
             // 
@@ -2051,7 +2064,7 @@
             this.InitMoisture.HeaderText = "Initial Moisture";
             this.InitMoisture.Name = "InitMoisture";
             this.InitMoisture.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.InitMoisture.Width = 88;
+            this.InitMoisture.Width = 102;
             // 
             // FieldCap
             // 
@@ -2059,7 +2072,7 @@
             this.FieldCap.HeaderText = "Field Capacity";
             this.FieldCap.Name = "FieldCap";
             this.FieldCap.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.FieldCap.Width = 87;
+            this.FieldCap.Width = 104;
             // 
             // SatMoisture
             // 
@@ -2067,7 +2080,7 @@
             this.SatMoisture.HeaderText = "Saturation Moisture";
             this.SatMoisture.Name = "SatMoisture";
             this.SatMoisture.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.SatMoisture.Width = 114;
+            this.SatMoisture.Width = 134;
             // 
             // HorHydCond
             // 
@@ -2075,7 +2088,7 @@
             this.HorHydCond.HeaderText = "Horizontal Hydraulic Conductivity (cm/d)";
             this.HorHydCond.Name = "HorHydCond";
             this.HorHydCond.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.HorHydCond.Width = 187;
+            this.HorHydCond.Width = 219;
             // 
             // VertHydCond
             // 
@@ -2083,7 +2096,7 @@
             this.VertHydCond.HeaderText = "Vertical Hydraulic Conductivity (cm/d)";
             this.VertHydCond.Name = "VertHydCond";
             this.VertHydCond.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.VertHydCond.Width = 174;
+            this.VertHydCond.Width = 203;
             // 
             // RootDist
             // 
@@ -2091,7 +2104,7 @@
             this.RootDist.HeaderText = "Root Distribution";
             this.RootDist.Name = "RootDist";
             this.RootDist.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.RootDist.Width = 99;
+            this.RootDist.Width = 117;
             // 
             // Density
             // 
@@ -2099,7 +2112,7 @@
             this.Density.HeaderText = "Density (g/cm3)";
             this.Density.Name = "Density";
             this.Density.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Density.Width = 95;
+            this.Density.Width = 111;
             // 
             // SoilTort
             // 
@@ -2107,7 +2120,7 @@
             this.SoilTort.HeaderText = "Soil Tortuosity";
             this.SoilTort.Name = "SoilTort";
             this.SoilTort.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.SoilTort.Width = 86;
+            this.SoilTort.Width = 99;
             // 
             // cbSoilCoeffGroup
             // 
@@ -2132,6 +2145,7 @@
             this.tbNumSoilLayers.Name = "tbNumSoilLayers";
             this.tbNumSoilLayers.Size = new System.Drawing.Size(48, 26);
             this.tbNumSoilLayers.TabIndex = 1;
+            this.tbNumSoilLayers.TextChanged += new System.EventHandler(this.tbNumSoilLayers_TextChanged);
             // 
             // label31
             // 
@@ -2166,13 +2180,13 @@
             "Atmospheric Equilibrium",
             "Constant Concentration"});
             this.Option.Name = "Option";
-            this.Option.Width = 52;
+            this.Option.Width = 60;
             // 
             // Factor
             // 
             this.Factor.HeaderText = "Factor";
             this.Factor.Name = "Factor";
-            this.Factor.Width = 70;
+            this.Factor.Width = 78;
             // 
             // dgMineralComp
             // 
@@ -2259,7 +2273,7 @@
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
             this.dataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dataGridViewTextBoxColumn3.Width = 41;
+            this.dataGridViewTextBoxColumn3.Width = 76;
             // 
             // dataGridViewTextBoxColumn4
             // 
@@ -2267,7 +2281,7 @@
             this.dataGridViewTextBoxColumn4.HeaderText = "Thickness (cm)";
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             this.dataGridViewTextBoxColumn4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dataGridViewTextBoxColumn4.Width = 93;
+            this.dataGridViewTextBoxColumn4.Width = 107;
             // 
             // dataGridViewTextBoxColumn5
             // 
@@ -2275,7 +2289,7 @@
             this.dataGridViewTextBoxColumn5.HeaderText = "Initial Moisture";
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             this.dataGridViewTextBoxColumn5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dataGridViewTextBoxColumn5.Width = 88;
+            this.dataGridViewTextBoxColumn5.Width = 102;
             // 
             // dataGridViewTextBoxColumn6
             // 
@@ -2283,7 +2297,7 @@
             this.dataGridViewTextBoxColumn6.HeaderText = "Field Capacity";
             this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             this.dataGridViewTextBoxColumn6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dataGridViewTextBoxColumn6.Width = 87;
+            this.dataGridViewTextBoxColumn6.Width = 104;
             // 
             // dataGridViewTextBoxColumn7
             // 
@@ -2291,7 +2305,7 @@
             this.dataGridViewTextBoxColumn7.HeaderText = "Saturation Moisture";
             this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
             this.dataGridViewTextBoxColumn7.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dataGridViewTextBoxColumn7.Width = 114;
+            this.dataGridViewTextBoxColumn7.Width = 134;
             // 
             // dataGridViewTextBoxColumn8
             // 
@@ -2299,7 +2313,7 @@
             this.dataGridViewTextBoxColumn8.HeaderText = "Horizontal Hydraulic Conductivity (cm/d)";
             this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
             this.dataGridViewTextBoxColumn8.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dataGridViewTextBoxColumn8.Width = 187;
+            this.dataGridViewTextBoxColumn8.Width = 219;
             // 
             // dataGridViewTextBoxColumn9
             // 
@@ -2307,7 +2321,7 @@
             this.dataGridViewTextBoxColumn9.HeaderText = "Vertical Hydraulic Conductivity (cm/d)";
             this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
             this.dataGridViewTextBoxColumn9.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dataGridViewTextBoxColumn9.Width = 174;
+            this.dataGridViewTextBoxColumn9.Width = 203;
             // 
             // label33
             // 
@@ -2523,7 +2537,7 @@
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Location = new System.Drawing.Point(67, 601);
-            this.btnOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnOK.Margin = new System.Windows.Forms.Padding(4);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(176, 44);
             this.btnOK.TabIndex = 11;
@@ -2535,7 +2549,7 @@
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(278, 601);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(176, 44);
             this.btnCancel.TabIndex = 12;
@@ -2545,7 +2559,7 @@
             // btnHelp
             // 
             this.btnHelp.Location = new System.Drawing.Point(485, 601);
-            this.btnHelp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnHelp.Margin = new System.Windows.Forms.Padding(4);
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new System.Drawing.Size(176, 44);
             this.btnHelp.TabIndex = 13;
@@ -2603,19 +2617,6 @@
             this.chbxApplyToSelected.Text = "Apply to Selected";
             this.chbxApplyToSelected.UseVisualStyleBackColor = true;
             // 
-            // groupBox8
-            // 
-            this.groupBox8.Controls.Add(this.tbNPDESNumber);
-            this.groupBox8.Controls.Add(this.label35);
-            this.groupBox8.Controls.Add(this.groupBox7);
-            this.groupBox8.Controls.Add(this.groupBox6);
-            this.groupBox8.Location = new System.Drawing.Point(125, 266);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(506, 191);
-            this.groupBox8.TabIndex = 15;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Water source information corresponds to selected point source";
-            // 
             // DialogCatchCoeffs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -2630,7 +2631,7 @@
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.tcCatchTabs);
             this.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DialogCatchCoeffs";
             this.Text = "Catchment xxx Coefficients";
             this.tcCatchTabs.ResumeLayout(false);
@@ -2672,6 +2673,8 @@
             this.groupBox5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgLivestockEx)).EndInit();
             this.tpPtSrc.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             this.groupBox6.ResumeLayout(false);
@@ -2706,8 +2709,6 @@
             this.gbCEQUALW2flow.PerformLayout();
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
             this.ResumeLayout(false);
 
         }
