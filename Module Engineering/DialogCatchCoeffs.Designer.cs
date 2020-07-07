@@ -2145,7 +2145,7 @@
             this.tbNumSoilLayers.Name = "tbNumSoilLayers";
             this.tbNumSoilLayers.Size = new System.Drawing.Size(48, 26);
             this.tbNumSoilLayers.TabIndex = 1;
-            this.tbNumSoilLayers.TextChanged += new System.EventHandler(this.tbNumSoilLayers_TextChanged);
+            
             // 
             // label31
             // 

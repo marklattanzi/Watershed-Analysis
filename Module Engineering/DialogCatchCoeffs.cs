@@ -258,6 +258,8 @@ namespace warmf
                 tbCEQUALtempFile.Text = catchment.mining.tempInputFilename;
                 tbCEQUALconcFile.Text = catchment.mining.waterQualInputFilename;
             }
+
+            this.tbNumSoilLayers.TextChanged += new System.EventHandler(this.tbNumSoilLayers_TextChanged);
         }
         
         private void dgLandApp_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -865,25 +867,30 @@ namespace warmf
 
         private void tbNumSoilLayers_TextChanged(object sender, EventArgs e)
         {
-            Catchment catchment = Global.coe.catchments[Global.coe.GetCatchmentNumberFromID(Convert.ToInt16(tbCatchID.Text))];
-            int oldNumSoilLayers = catchment.numSoilLayers;
-            int newNumSoilLayers = Convert.ToInt16(tbNumSoilLayers.Text);
-
-            if (newNumSoilLayers > oldNumSoilLayers)
+            if (int.TryParse(tbNumSoilLayers.Text, out int result))
             {
-                int layersToAdd = newNumSoilLayers - oldNumSoilLayers;
-                for (int j = 0; j < layersToAdd; j++)
+                Catchment catchment = Global.coe.catchments[Global.coe.GetCatchmentNumberFromID(Convert.ToInt16(tbCatchID.Text))];
+                int oldNumSoilLayers = catchment.numSoilLayers;
+                int newNumSoilLayers = Convert.ToInt16(tbNumSoilLayers.Text);
+
+                if (newNumSoilLayers > oldNumSoilLayers)
                 {
-                    if (catchment.soils.Count < (oldNumSoilLayers + j))
-                        catchment.soils.Add(catchment.soils[oldNumSoilLayers + j]);
+                    int layersToAdd = newNumSoilLayers - oldNumSoilLayers;
+                    for (int j = 0; j < layersToAdd; j++)
+                    {
+                        if (catchment.soils.Count <= (oldNumSoilLayers + j))
+                            catchment.soils.Add(catchment.soils[oldNumSoilLayers + j - 1]);
+                    }
+                    //didn't update catchment.numSoilLayers here because its needed for ok_click event
                 }
-            }
-            if (newNumSoilLayers < oldNumSoilLayers)
-            {
-                catchment.numSoilLayers = newNumSoilLayers;
-            }
+                if (newNumSoilLayers < oldNumSoilLayers)
+                {
+                    catchment.numSoilLayers = newNumSoilLayers;
+                }
 
-            popSoilsData(catchment, newNumSoilLayers);
+                popSoilsData(catchment, newNumSoilLayers);
+            }
+            
         }
 
         private void popSoilsData(Catchment catchment, int numSoilLayers)
@@ -927,8 +934,9 @@ namespace warmf
             }
             FormatDataGridView(dgSoilHydroCoeffs);
             dgSoilHydroCoeffs.Visible = true;
-            
+
             //Soil Layers > Initial Concentrations
+            dgInitialConc.Columns.Clear();
             dgInitialConc.Columns.Add("Temp", "Temperature (degrees C)");
             for (int ii = 0; ii < Global.coe.numChemicalParams + Global.coe.numPhysicalParams; ii++)
             {
@@ -961,6 +969,7 @@ namespace warmf
             //Soil Layers > Adsorption
             //***************Adsorption is currently working differently than in WARMF v7****************
             //***************We need to make some decisions here, and decide how to proceed**************
+            dgAdsorption.Columns.Clear();
             dgAdsorption.Columns.Add("CEC", "CEC (meq/100 g)");
             dgAdsorption.Columns.Add("MaxP", "Max PO4 (mg/kg)");
             for (int ii = 0; ii < Global.coe.numChemicalParams + Global.coe.numPhysicalParams; ii++)
@@ -994,6 +1003,7 @@ namespace warmf
             dgAdsorption.Visible = false;
 
             //Soil Layers > Mineral Composition
+            dgMineralComp.Columns.Clear();
             for (int ii = 0; ii < Global.coe.numMinerals; ii++)
             {
                 dgMineralComp.Columns.Add(Global.coe.minerals[ii].name.ToString(), Global.coe.minerals[ii].name.ToString());
