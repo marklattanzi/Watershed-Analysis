@@ -867,30 +867,110 @@ namespace warmf
 
         private void tbNumSoilLayers_TextChanged(object sender, EventArgs e)
         {
-            if (int.TryParse(tbNumSoilLayers.Text, out int result))
+            if (int.TryParse(tbNumSoilLayers.Text,out int newNumSoilLayers))
             {
-                Catchment catchment = Global.coe.catchments[Global.coe.GetCatchmentNumberFromID(Convert.ToInt16(tbCatchID.Text))];
-                int oldNumSoilLayers = catchment.numSoilLayers;
-                int newNumSoilLayers = Convert.ToInt16(tbNumSoilLayers.Text);
-
-                if (newNumSoilLayers > oldNumSoilLayers)
+                if (0 < newNumSoilLayers && newNumSoilLayers < 6)
                 {
-                    int layersToAdd = newNumSoilLayers - oldNumSoilLayers;
-                    for (int j = 0; j < layersToAdd; j++)
+                    if (tbNumSoilLayers.BackColor == Color.Red)
                     {
-                        if (catchment.soils.Count <= (oldNumSoilLayers + j))
-                            catchment.soils.Add(catchment.soils[oldNumSoilLayers + j - 1]);
+                        tbNumSoilLayers.BackColor = SystemColors.Window;
                     }
-                    //didn't update catchment.numSoilLayers here because its needed for ok_click event
-                }
-                if (newNumSoilLayers < oldNumSoilLayers)
-                {
-                    catchment.numSoilLayers = newNumSoilLayers;
-                }
+                    //Catchment catchment = Global.coe.catchments[Global.coe.GetCatchmentNumberFromID(Convert.ToInt16(tbCatchID.Text))];
+                    int oldNumSoilLayers = dgSoilHydroCoeffs.Rows.Count;
 
-                popSoilsData(catchment, newNumSoilLayers);
+                    if (newNumSoilLayers > oldNumSoilLayers)
+                    {
+                        int layersToAdd = newNumSoilLayers - oldNumSoilLayers;
+                        for (int j = 0; j < layersToAdd; j++)
+                        {
+                            DataGridViewRow lastRow = new DataGridViewRow();
+                            DataGridViewRow clonedRow = new DataGridViewRow();
+
+                            //hydrology coeffs
+                            lastRow = dgSoilHydroCoeffs.Rows[dgSoilHydroCoeffs.Rows.Count - 1];
+                            clonedRow = CloneWithValues(lastRow);
+                            dgSoilHydroCoeffs.Rows.Add(clonedRow);
+                            //dgSoilHydroCoeffs.Rows[dgSoilHydroCoeffs.Rows.Count - 1].Cells[0].Value = 
+                                //"Soil Layer " + dgSoilHydroCoeffs.Rows.Count.ToString();
+                            dgSoilHydroCoeffs.Rows[dgSoilHydroCoeffs.Rows.Count - 1].HeaderCell.Value =
+                               "Soil Layer " + dgSoilHydroCoeffs.Rows.Count.ToString();
+
+                            //initial concentrations
+                            lastRow = dgInitialConc.Rows[dgInitialConc.Rows.Count - 1];
+                            clonedRow = CloneWithValues(lastRow);
+                            dgInitialConc.Rows.Add();
+                            dgInitialConc.Rows[dgInitialConc.Rows.Count - 1].HeaderCell.Value =
+                                "Soil Layer " + dgInitialConc.Rows.Count.ToString();
+
+                            //adsorption
+                            lastRow = dgAdsorption.Rows[dgAdsorption.Rows.Count - 1];
+                            clonedRow = CloneWithValues(lastRow);
+                            dgAdsorption.Rows.Add();
+                            dgAdsorption.Rows[dgAdsorption.Rows.Count - 1].HeaderCell.Value =
+                                "Soil Layer " + dgAdsorption.Rows.Count.ToString();
+
+                            //mineral composition
+                            lastRow = dgMineralComp.Rows[dgMineralComp.Rows.Count - 1];
+                            clonedRow = CloneWithValues(lastRow);
+                            dgMineralComp.Rows.Add();
+                            dgMineralComp.Rows[dgMineralComp.Rows.Count - 1].HeaderCell.Value =
+                                "Soil Layer " + dgMineralComp.Rows.Count.ToString();
+                        
+                            //inorganic carbon
+                            lastRow = dgInorganicC.Rows[dgInorganicC.Rows.Count - 1];
+                            clonedRow = CloneWithValues(lastRow);
+                            dgInorganicC.Rows.Add();
+                            dgInorganicC.Rows[dgInorganicC.Rows.Count - 1].HeaderCell.Value =
+                                "Soil Layer " + dgInorganicC.Rows.Count.ToString();
+                        }
+                    }
+                    if (newNumSoilLayers < oldNumSoilLayers)
+                    {
+                        int layersToRemove = oldNumSoilLayers - newNumSoilLayers;
+                        for (int j = 0; j < layersToRemove; j++)
+                        {
+                            DataGridViewRow lastRow = new DataGridViewRow();
+                            
+                            //hydrology coeffs
+                            lastRow = dgSoilHydroCoeffs.Rows[dgSoilHydroCoeffs.Rows.Count - 1];
+                            dgSoilHydroCoeffs.Rows.Remove(lastRow);
+
+                            //initial concentrations
+                            lastRow = dgInitialConc.Rows[dgInitialConc.Rows.Count - 1];
+                            dgInitialConc.Rows.Remove(lastRow);
+
+                            //adsorption
+                            lastRow = dgAdsorption.Rows[dgAdsorption.Rows.Count - 1];
+                            dgAdsorption.Rows.Remove(lastRow);
+
+                            //mineral composition
+                            lastRow = dgMineralComp.Rows[dgMineralComp.Rows.Count - 1];
+                            dgMineralComp.Rows.Remove(lastRow);
+
+                            //inorganic carbon
+                            lastRow = dgInorganicC.Rows[dgInorganicC.Rows.Count - 1];
+                            dgInorganicC.Rows.Remove(lastRow);
+                        }
+                    }
+                }
+                else
+                {
+                    tbNumSoilLayers.BackColor = Color.Red;
+                    ToolTip tt = new ToolTip();
+                    tt.Show("1 - 5 Soil Layers", tbNumSoilLayers, 48, 26, 3000);
+                }
             }
-            
+        }
+
+        // clone a row in a datagridview
+        public DataGridViewRow CloneWithValues(DataGridViewRow row)
+        {
+            DataGridViewRow clonedRow = (DataGridViewRow)row.Clone();
+            for (Int32 index = 0; index < row.Cells.Count; index++)
+            {
+                clonedRow.Cells[index].Value = row.Cells[index].Value;
+            }
+            return clonedRow;
         }
 
         private void popSoilsData(Catchment catchment, int numSoilLayers)

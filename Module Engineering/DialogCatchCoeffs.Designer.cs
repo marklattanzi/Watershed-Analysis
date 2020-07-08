@@ -2005,10 +2005,10 @@
             // 
             // tpSoil
             // 
-            this.tpSoil.Controls.Add(this.dgSoilHydroCoeffs);
             this.tpSoil.Controls.Add(this.cbSoilCoeffGroup);
             this.tpSoil.Controls.Add(this.tbNumSoilLayers);
             this.tpSoil.Controls.Add(this.label31);
+            this.tpSoil.Controls.Add(this.dgSoilHydroCoeffs);
             this.tpSoil.Controls.Add(this.dgInorganicC);
             this.tpSoil.Controls.Add(this.dgMineralComp);
             this.tpSoil.Controls.Add(this.dgAdsorption);
@@ -2145,7 +2145,6 @@
             this.tbNumSoilLayers.Name = "tbNumSoilLayers";
             this.tbNumSoilLayers.Size = new System.Drawing.Size(48, 26);
             this.tbNumSoilLayers.TabIndex = 1;
-            
             // 
             // label31
             // 

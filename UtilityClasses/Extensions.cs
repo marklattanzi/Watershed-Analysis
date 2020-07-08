@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,5 +33,7 @@ namespace warmf {
 			else
 				return ((max+10) / 10) * 10;
 		}
-	}
+
+        
+    }
 }
