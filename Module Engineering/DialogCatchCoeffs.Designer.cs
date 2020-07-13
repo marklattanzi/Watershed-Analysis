@@ -809,7 +809,6 @@
             this.dgLandApp.RowHeadersWidth = 100;
             this.dgLandApp.Size = new System.Drawing.Size(738, 374);
             this.dgLandApp.TabIndex = 0;
-            this.dgLandApp.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgLandApp_CellValueChanged);
             // 
             // colJan
             // 
