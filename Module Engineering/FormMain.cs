@@ -99,7 +99,7 @@ namespace warmf {
             miTopScenario.Visible = false;
             miTopDocument.Visible = false;
             miTopWindow.Visible = false;
-
+            toolStrip1.Visible = false;
             // for testing - MRL
             this.Hide();
         }
@@ -168,13 +168,13 @@ namespace warmf {
             miTopWindow.Visible = true;
 
             lblLatLong.Visible = true;
+            toolStrip1.Visible = true;
             frmMap.Focus();
             frmMap.ZoomToSelectedExtentWhenCtrlKeydown = false;
         }
 
         public void ShowForm(string name)
         {
-            //this.Hide();	// ENGR window is always visible - MRL
             frmKnow.Hide();
             frmData.Hide();
             frmManager.Hide();
@@ -443,24 +443,17 @@ namespace warmf {
 
         private void frmMap_Load(object sender, EventArgs e)
         {
-            //this.frmMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMap_MouseMove);
-            this.frmMap.Paint += new System.Windows.Forms.PaintEventHandler(this.frmMap_Paint);
+            this.frmMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMap_MouseMove);
+            //this.frmMap.Paint += new System.Windows.Forms.PaintEventHandler(this.frmMap_Paint);
         }
 
-        //private void frmMap_MouseMove(object sender, MouseEventArgs e)
-        //{
-        //    PointD pt = frmMap.PixelCoordToGisPoint(e.Y, e.X);
-        //    lblLatLong.Text = "Lat/Long: " + pt.Y + ", " + pt.X;
-        //}
-
-        private void frmMap_Paint(object sender, PaintEventArgs e)
+        private void frmMap_MouseMove(object sender, MouseEventArgs e)
         {
-            //if (showMETStations)
-            //{
-            //    DrawMETStations();
-            //}
-
+            PointD pt = frmMap.PixelCoordToGisPoint(e.Y, e.X);
+            lblLatLong.Text = "Lat/Long: " + pt.Y + ", " + pt.X;
         }
+
+        //private void frmMap_Paint(object sender, PaintEventArgs e){}
 
         #endregion
 
@@ -479,13 +472,6 @@ namespace warmf {
             {
                 MessageBox.Show(this, "Error reading coefficients file.", "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
             }
-        }
-
-        private void miHelpAbout_Click(object sender, EventArgs e)
-        {
-            WMDialog popup = new WMDialog("About WARMF", "Watershed Analysis Risk Management Framework\nVersion 7.0\n\nCopyright 2018\nSystech Inc.\nWalnut Creek, CA\nAll rights reserved.", false);
-            popup.SetTextColor(System.Drawing.Color.Green);
-            popup.ShowDialog();
         }
 
         #region File Menu Events
@@ -685,30 +671,169 @@ namespace warmf {
         #endregion
 
         #region Edit Menu Events
-        private void miEditZoomIn_Click(object sender, EventArgs e)
+        private void miEditSelectCatchments_Click(object sender, EventArgs e)
         {
-            if (frmMap.ZoomLevel < 10)
+            for (int i = 0; i < catchShapefile.RecordCount; i++)
             {
-                frmMap.ZoomLevel *= 2;
+                catchShapefile.SelectRecord(i, true);
             }
+            frmMap.Refresh(true);
         }
 
-        private void miEditZoomOut_Click(object sender, EventArgs e)
+        private void miEditSelectReservoir_Click(object sender, EventArgs e)
         {
-            if (frmMap.ZoomLevel > 0)
+            for (int i = 0; i < lakeShapefile.RecordCount; i++)
             {
-                frmMap.ZoomLevel /= 2;
+                lakeShapefile.SelectRecord(i, true);
             }
+            frmMap.Refresh(true);
+        }
+
+        private void miEditSelectRivers_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < riverShapefile.RecordCount; i++)
+            {
+                riverShapefile.SelectRecord(i, true);
+            }
+            frmMap.Refresh(true);
+        }
+
+        private void miEditSelectAll_Click(object sender, EventArgs e)
+        {
+            if (catchShapefile.IsSelectable)
+            {
+                for (int i = 0; i < catchShapefile.RecordCount; i++)
+                {
+                    catchShapefile.SelectRecord(i, true);
+                }
+            }
+            if (riverShapefile.IsSelectable)
+            {
+                for (int i = 0; i < riverShapefile.RecordCount; i++)
+                {
+                    riverShapefile.SelectRecord(i, true);
+                }
+            }
+            if (lakeShapefile.IsSelectable)
+            {
+                for (int i = 0; i < lakeShapefile.RecordCount; i++)
+                {
+                    lakeShapefile.SelectRecord(i, true);
+                }
+            }
+            frmMap.Refresh(true);
+        }
+
+        private void miEditClearSelectedFeatures_Click(object sender, EventArgs e)
+        {
+            catchShapefile.ClearSelectedRecords();
+            riverShapefile.ClearSelectedRecords();
+            lakeShapefile.ClearSelectedRecords();
+            frmMap.Refresh(true);
         }
         #endregion
 
         #region View Menu Events
-        private void miMETStations_Click(object sender, EventArgs e)
+        private void miViewZoomIn_Click(object sender, EventArgs e)
+        {
+            frmMap.ZoomLevel *= 1.5;
+        }
+
+        private void miViewZoomOut_Click(object sender, EventArgs e)
+        {
+            frmMap.ZoomLevel /= 1.5;
+        }
+
+        private void miViewZoomToExtent_Click(object sender, EventArgs e)
+        {
+            frmMap.ZoomToFullExtent();
+            frmMap.ZoomLevel /= 1.05;
+        }
+
+        private void miViewSelectableCatchments_Click(object sender, EventArgs e)
+        { 
+            if (miViewSelectableCatchments.Checked)
+            {
+                catchShapefile.RenderSettings.IsSelectable = true;
+                miViewSelectableCatchments.Checked = true;
+                miEditSelectCatchments.Enabled = true;
+                if (miViewSelectableLakes.Checked || miViewSelectableRivers.Checked)
+                {
+                    miEditSelectAll.Enabled = true;
+                }
+            }
+            else
+            {
+                catchShapefile.ClearSelectedRecords();
+                catchShapefile.RenderSettings.IsSelectable = false;
+                miViewSelectableCatchments.Checked = false;
+                miEditSelectCatchments.Enabled = false;
+                if (miViewSelectableLakes.Checked == false || miViewSelectableRivers.Checked == false)
+                {
+                    miEditSelectAll.Enabled = false;
+                }
+                frmMap.Refresh(true);
+            }
+        }
+
+        private void miViewSelectableRivers_Click(object sender, EventArgs e)
+        {
+            if (miViewSelectableRivers.Checked)
+            {
+                riverShapefile.RenderSettings.IsSelectable = true;
+                miViewSelectableRivers.Checked = true;
+                miEditSelectRivers.Enabled = true;
+                if (miViewSelectableCatchments.Checked || miViewSelectableLakes.Checked)
+                {
+                    miEditSelectAll.Enabled = true;
+                }
+            }
+            else
+            {
+                riverShapefile.ClearSelectedRecords();
+                riverShapefile.RenderSettings.IsSelectable = false;
+                miViewSelectableRivers.Checked = false;
+                miEditSelectRivers.Enabled = false;
+                if (miViewSelectableCatchments.Checked == false || miViewSelectableLakes.Checked == false)
+                {
+                    miEditSelectAll.Enabled = false;
+                }
+                frmMap.Refresh(true);
+            }
+        }
+
+        private void miViewSelectableLakes_Click(object sender, EventArgs e)
+        {
+            if (miViewSelectableLakes.Checked)
+            {
+                lakeShapefile.RenderSettings.IsSelectable = true;
+                miViewSelectableLakes.Checked = true;
+                miEditSelectReservoir.Enabled = true;
+                if (miViewSelectableRivers.Checked || miViewSelectableCatchments.Checked)
+                {
+                    miEditSelectAll.Enabled = true;
+                }
+                miEditSelectAll.Enabled = true;
+            }
+            else
+            {
+                lakeShapefile.ClearSelectedRecords();
+                lakeShapefile.RenderSettings.IsSelectable = false;
+                miViewSelectableLakes.Checked = false;
+                miEditSelectReservoir.Enabled = false;
+                if (miViewSelectableRivers.Checked == false || miViewSelectableCatchments.Checked == false)
+                {
+                    miEditSelectAll.Enabled = false;
+                }
+                frmMap.Refresh(true);
+            }
+        }
+
+        private void miViewMETStations_Click(object sender, EventArgs e)
         {
             if (showMETStations) //remove points from map
             {
                 showMETStations = false;
-                miViewMETStations.Text = miViewMETStations.Text.Substring(1);
                 for (int i = 0; i < frmMap.ShapeFileCount; i++)
                 {
                     if (frmMap[i].Name == "Meteorology Stations")
@@ -716,7 +841,6 @@ namespace warmf {
                         frmMap.RemoveShapeFile(frmMap[i]);
                     }
                 }
-                frmMap.Refresh();
                 return;
             }
             else //add points to map
@@ -725,8 +849,7 @@ namespace warmf {
                 {
                     this.frmMap.AddShapeFile(Global.DIR.SHP + "MET.shp", "Meteorology Stations", "Name");
                     showMETStations = true;
-                    miViewMETStations.Text = Global.checkmark + miViewMETStations.Text;
-                    frmMap.Refresh();
+                    frmMap.ZoomLevel /= 1.05;
                 }
             }
         }
@@ -736,7 +859,6 @@ namespace warmf {
             if (showGageStations) //remove points from map
             {
                 showGageStations = false;
-                miViewGagingStations.Text = miViewGagingStations.Text.Substring(1);
                 for (int i = 0; i < frmMap.ShapeFileCount; i++)
                 {
                     if (frmMap[i].Name == "Gaging Stations")
@@ -744,7 +866,6 @@ namespace warmf {
                         frmMap.RemoveShapeFile(frmMap[i]);
                     }
                 }
-                frmMap.Refresh();
                 return;
             }
             else //add points to map
@@ -753,8 +874,7 @@ namespace warmf {
                 {
                     this.frmMap.AddShapeFile(Global.DIR.SHP + "ORH.shp", "Gaging Stations", "Name");
                     showGageStations = true;
-                    miViewGagingStations.Text = Global.checkmark + miViewGagingStations.Text;
-                    frmMap.Refresh();
+                    frmMap.ZoomLevel /= 1.05;
                 }
             }
         }
@@ -764,17 +884,13 @@ namespace warmf {
             if (showWQStations) //remove points from map
             {
                 showWQStations = false;
-                miViewWQStations.Text = miViewWQStations.Text.Substring(1);
                 for (int i = 0; i < frmMap.ShapeFileCount; i++)
                 {
                     if (frmMap[i].Name == "Water Quality Stations")
                     {
                         frmMap.RemoveShapeFile(frmMap[i]);
                     }
-
                 }
-
-                frmMap.Refresh();
                 return;
             }
             else //add points to map
@@ -783,8 +899,7 @@ namespace warmf {
                 {
                     this.frmMap.AddShapeFile(Global.DIR.SHP + "ORC.shp", "Water Quality Stations", "Name");
                     showWQStations = true;
-                    miViewWQStations.Text = Global.checkmark + miViewWQStations.Text;
-                    frmMap.Refresh();
+                    frmMap.ZoomLevel /= 1.05;
                 }
             }
         }
@@ -794,7 +909,6 @@ namespace warmf {
             if (showFLOStations) //remove points from map
             {
                 showFLOStations = false;
-                miViewManagedFlow.Text = miViewManagedFlow.Text.Substring(1);
                 for (int i = 0; i < frmMap.ShapeFileCount; i++)
                 {
                     if (frmMap[i].Name == "Managed Flow")
@@ -811,8 +925,7 @@ namespace warmf {
                 {
                     this.frmMap.AddShapeFile(Global.DIR.SHP + "FLO.shp", "Managed Flow", "Name");
                     showFLOStations = true;
-                    miViewManagedFlow.Text = Global.checkmark + miViewManagedFlow.Text;
-                    frmMap.Refresh();
+                    frmMap.ZoomLevel /= 1.05;
                 }
             }
         }
@@ -822,7 +935,6 @@ namespace warmf {
             if (showPTSStations) //remove points from map
             {
                 showPTSStations = false;
-                miViewPointSources.Text = miViewPointSources.Text.Substring(1);
                 for (int i = 0; i < frmMap.ShapeFileCount; i++)
                 {
                     if (frmMap[i].Name == "Point Sources")
@@ -830,7 +942,6 @@ namespace warmf {
                         frmMap.RemoveShapeFile(frmMap[i]);
                     }
                 }
-                frmMap.Refresh();
                 return;
             }
             else //add points to map
@@ -839,8 +950,7 @@ namespace warmf {
                 {
                     this.frmMap.AddShapeFile(Global.DIR.SHP + "PTS.shp", "Point Sources", "Name");
                     showPTSStations = true;
-                    miViewPointSources.Text = Global.checkmark + miViewPointSources.Text;
-                    frmMap.Refresh();
+                    frmMap.ZoomLevel /= 1.05;
                 }
                 
             }
@@ -851,7 +961,6 @@ namespace warmf {
             if (showAIRStations) //remove points from map
             {
                 showAIRStations = false;
-                miViewAirQualityStations.Text = miViewAirQualityStations.Text.Substring(1);
                 for (int i = 0; i < frmMap.ShapeFileCount; i++)
                 {
                     if (frmMap[i].Name == "Air Quality Stations")
@@ -859,7 +968,6 @@ namespace warmf {
                         frmMap.RemoveShapeFile(frmMap[i]);
                     }
                 }
-                frmMap.Refresh();
                 return;
             }
             else //add points to map
@@ -868,8 +976,7 @@ namespace warmf {
                 {
                     this.frmMap.AddShapeFile(Global.DIR.SHP + "AIR.shp", "Air Quality Stations", "Name");
                     showAIRStations = true;
-                    miViewAirQualityStations.Text = Global.checkmark + miViewAirQualityStations.Text;
-                    frmMap.Refresh();
+                    frmMap.ZoomLevel /= 1.05;
                 }
             }
         }
@@ -1237,6 +1344,10 @@ namespace warmf {
         }
         #endregion
 
+        #region Document Menu Events
+
+        #endregion
+
         #region Module Menu Events
         private void miData_Click(object sender, EventArgs e)
         {
@@ -1268,17 +1379,27 @@ namespace warmf {
             ShowForm("engineering");
         }
 
+        #endregion
 
-
-
-
-
+        #region Window Menu Events
 
         #endregion
 
-        private void toolStripButton_ZoomToExtent_Click(object sender, EventArgs e)
+        #region Help Menu Events
+        private void miHelpAbout_Click(object sender, EventArgs e)
+        {
+            WMDialog popup = new WMDialog("About WARMF", "Watershed Analysis Risk Management Framework\nVersion 7.0\n\nCopyright 2018\nSystech Inc.\nWalnut Creek, CA\nAll rights reserved.", false);
+            popup.SetTextColor(System.Drawing.Color.Green);
+            popup.ShowDialog();
+        }
+
+        #endregion
+
+        #region Tool Strip Buttons
+        private void tsbZoomToExtent_Click(object sender, EventArgs e)
         {
             frmMap.ZoomToFullExtent();
+            frmMap.ZoomLevel /= 1.05;
         }
 
         private void tsbClearSelected_Click(object sender, EventArgs e)
@@ -1286,51 +1407,22 @@ namespace warmf {
             catchShapefile.ClearSelectedRecords();
             riverShapefile.ClearSelectedRecords();
             lakeShapefile.ClearSelectedRecords();
-            
+            frmMap.Refresh(true);
+        }
+
+        private void tsbZoomIn_Click(object sender, EventArgs e)
+        {
+            frmMap.ZoomLevel *= 1.25;
+        }
+
+        private void tsbZoomOut_Click(object sender, EventArgs e)
+        {
+            frmMap.ZoomLevel /= 1.25;
+        }
+
+        #endregion
+
         
-        }
-
-        private void catchmentsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (catchmentsToolStripMenuItem.Checked == true)
-            {
-                catchShapefile.RenderSettings.IsSelectable = true;
-                catchmentsToolStripMenuItem.Checked = true;
-            }
-            else
-            {
-                catchShapefile.RenderSettings.IsSelectable = false;
-                catchmentsToolStripMenuItem.Checked = false;
-            }
-        }
-
-        private void riversToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (riversToolStripMenuItem.Checked == true)
-            {
-                riverShapefile.RenderSettings.IsSelectable = true;
-                riversToolStripMenuItem.Checked = true;
-            }
-            else
-            {
-                riverShapefile.RenderSettings.IsSelectable = false;
-                riversToolStripMenuItem.Checked = false;
-            }
-        }
-
-        private void lakesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (lakesToolStripMenuItem.Checked == true)
-            {
-                lakeShapefile.RenderSettings.IsSelectable = true;
-                lakesToolStripMenuItem.Checked = true;
-            }
-            else
-            {
-                lakeShapefile.RenderSettings.IsSelectable = false;
-                lakesToolStripMenuItem.Checked = false;
-            }
-        }
     }
 }
 

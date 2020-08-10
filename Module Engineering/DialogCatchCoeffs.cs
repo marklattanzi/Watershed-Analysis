@@ -568,6 +568,7 @@ namespace warmf
             Catchment catchment = Global.coe.catchments[Global.coe.GetCatchmentNumberFromID(Convert.ToInt16(tbCatchID.Text))];
             List<int> warmfCatchmentNumbers = new List<int>();
 
+            #region Apply-to-All / Apply-to-Selected switches
             if (chbxApplyToSelected.Checked) //if apply to selected
             {
                 warmfCatchmentNumbers.Add(Global.coe.GetCatchmentNumberFromID(Convert.ToInt16(tbCatchID.Text)));
@@ -592,6 +593,7 @@ namespace warmf
             {
                 warmfCatchmentNumbers.Add(Global.coe.GetCatchmentNumberFromID(Convert.ToInt16(tbCatchID.Text)));
             }
+            #endregion
 
             #region Update each of the coefficients that should not be applied to other catchments first
             //Physical Data tab
@@ -885,7 +887,6 @@ namespace warmf
 
 
             #endregion
-
         }
 
         private void tbNumSoilLayers_TextChanged(object sender, EventArgs e)
@@ -1138,5 +1139,6 @@ namespace warmf
             FormatDataGridView(dgInorganicC);
             dgInorganicC.Visible = false;
         }
+
     }
 }

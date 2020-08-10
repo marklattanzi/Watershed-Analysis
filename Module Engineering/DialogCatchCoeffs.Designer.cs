@@ -35,23 +35,13 @@
             this.lblAspect = new System.Windows.Forms.Label();
             this.lblWidth = new System.Windows.Forms.Label();
             this.lblArea = new System.Windows.Forms.Label();
-            this.tbSlope = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbAspect = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbWidth = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbArea = new warmf.UtilityClasses.Int64TextBox();
             this.lblRoughness = new System.Windows.Forms.Label();
             this.lblStorage = new System.Windows.Forms.Label();
             this.lblCatchID = new System.Windows.Forms.Label();
-            this.tbRoughness = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbDetention = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbCatchID = new warmf.UtilityClasses.Int32TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
             this.tpMeteorology = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.tbAltLapse = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbTempLapse = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbPrecipWeight = new warmf.UtilityClasses.DoubleTextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -71,7 +61,6 @@
             this.tpLandAp = new System.Windows.Forms.TabPage();
             this.cbLanduse = new System.Windows.Forms.ComboBox();
             this.lblLanduse = new System.Windows.Forms.Label();
-            this.tbMaxAccTime = new warmf.UtilityClasses.DoubleTextBox();
             this.lblMaxAccTime = new System.Windows.Forms.Label();
             this.dgLandApp = new System.Windows.Forms.DataGridView();
             this.colJan = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -89,7 +78,6 @@
             this.tpIrrigation = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.tbAppliedWaterRate = new warmf.UtilityClasses.DoubleTextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnSelect = new System.Windows.Forms.Button();
@@ -105,30 +93,18 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tpSediment = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.tbSand = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbSilt = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbClay = new warmf.UtilityClasses.DoubleTextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.tbSoilErosivity = new warmf.UtilityClasses.DoubleTextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tpBMPs = new System.Windows.Forms.TabPage();
             this.gbDetentionPonds = new System.Windows.Forms.GroupBox();
-            this.tbDetVolume = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbImpRouting = new warmf.UtilityClasses.DoubleTextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.gbStreetSweeping = new System.Windows.Forms.GroupBox();
-            this.tbEfficiency = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbFrequency = new warmf.UtilityClasses.DoubleTextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.gbBufferZone = new System.Windows.Forms.GroupBox();
-            this.tbBufferRoughness = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbBufferSlope = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbBufferWidth = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbPctBuffered = new warmf.UtilityClasses.DoubleTextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -140,7 +116,6 @@
             this.label11 = new System.Windows.Forms.Label();
             this.tpPtSrc = new System.Windows.Forms.TabPage();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.tbNPDESNumber = new warmf.UtilityClasses.DoubleTextBox();
             this.label35 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.rbUnspecAmbient = new System.Windows.Forms.RadioButton();
@@ -161,16 +136,6 @@
             this.lbPumpingTo = new System.Windows.Forms.ListBox();
             this.lbPumpingFrom = new System.Windows.Forms.ListBox();
             this.tpSeptic = new System.Windows.Forms.TabPage();
-            this.tbBioMortCoeff = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbBioRespCoeff = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbBiozoneArea = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbBioThick = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbInitBiomass = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbTreatment3 = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbTreatment2 = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbTreatment1 = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbPopSeptic = new warmf.UtilityClasses.Int32TextBox();
-            this.tbDischargeSoilLayer = new warmf.UtilityClasses.Int32TextBox();
             this.label30 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
@@ -191,6 +156,8 @@
             this.Canopy = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Biozone = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tpSoil = new System.Windows.Forms.TabPage();
+            this.cbSoilCoeffGroup = new System.Windows.Forms.ComboBox();
+            this.label31 = new System.Windows.Forms.Label();
             this.dgSoilHydroCoeffs = new System.Windows.Forms.DataGridView();
             this.area = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Thickness = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -202,9 +169,6 @@
             this.RootDist = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Density = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SoilTort = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cbSoilCoeffGroup = new System.Windows.Forms.ComboBox();
-            this.tbNumSoilLayers = new warmf.UtilityClasses.Int32TextBox();
-            this.label31 = new System.Windows.Forms.Label();
             this.dgInorganicC = new System.Windows.Forms.DataGridView();
             this.Option = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Factor = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -248,6 +212,42 @@
             this.chbxWriteOutput = new System.Windows.Forms.CheckBox();
             this.chbxApplyToAll = new System.Windows.Forms.CheckBox();
             this.chbxApplyToSelected = new System.Windows.Forms.CheckBox();
+            this.tbSlope = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbAspect = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbWidth = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbArea = new warmf.UtilityClasses.Int64TextBox();
+            this.tbRoughness = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbDetention = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbCatchID = new warmf.UtilityClasses.Int32TextBox();
+            this.tbAltLapse = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbTempLapse = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbPrecipWeight = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbMaxAccTime = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbAppliedWaterRate = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbSand = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbSilt = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbClay = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbSoilErosivity = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbDetVolume = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbImpRouting = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbEfficiency = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbFrequency = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbBufferRoughness = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbBufferSlope = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbBufferWidth = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbPctBuffered = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbNPDESNumber = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbBioMortCoeff = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbBioRespCoeff = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbBiozoneArea = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbBioThick = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbInitBiomass = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbTreatment3 = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbTreatment2 = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbTreatment1 = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbPopSeptic = new warmf.UtilityClasses.Int32TextBox();
+            this.tbDischargeSoilLayer = new warmf.UtilityClasses.Int32TextBox();
+            this.tbNumSoilLayers = new warmf.UtilityClasses.Int32TextBox();
             this.tcCatchTabs.SuspendLayout();
             this.tpPhysData.SuspendLayout();
             this.gbSizeSlope.SuspendLayout();
@@ -398,39 +398,6 @@
             this.lblArea.TabIndex = 12;
             this.lblArea.Text = "Area (Square Meters)";
             // 
-            // tbSlope
-            // 
-            this.tbSlope.Location = new System.Drawing.Point(566, 84);
-            this.tbSlope.Margin = new System.Windows.Forms.Padding(4);
-            this.tbSlope.Name = "tbSlope";
-            this.tbSlope.Size = new System.Drawing.Size(133, 26);
-            this.tbSlope.TabIndex = 8;
-            // 
-            // tbAspect
-            // 
-            this.tbAspect.Location = new System.Drawing.Point(566, 42);
-            this.tbAspect.Margin = new System.Windows.Forms.Padding(4);
-            this.tbAspect.Name = "tbAspect";
-            this.tbAspect.Size = new System.Drawing.Size(133, 26);
-            this.tbAspect.TabIndex = 7;
-            // 
-            // tbWidth
-            // 
-            this.tbWidth.Location = new System.Drawing.Point(225, 84);
-            this.tbWidth.Margin = new System.Windows.Forms.Padding(4);
-            this.tbWidth.Name = "tbWidth";
-            this.tbWidth.Size = new System.Drawing.Size(133, 26);
-            this.tbWidth.TabIndex = 6;
-            // 
-            // tbArea
-            // 
-            this.tbArea.Location = new System.Drawing.Point(225, 42);
-            this.tbArea.Margin = new System.Windows.Forms.Padding(4);
-            this.tbArea.Name = "tbArea";
-            this.tbArea.ReadOnly = true;
-            this.tbArea.Size = new System.Drawing.Size(133, 26);
-            this.tbArea.TabIndex = 5;
-            // 
             // lblRoughness
             // 
             this.lblRoughness.AutoSize = true;
@@ -460,31 +427,6 @@
             this.lblCatchID.Size = new System.Drawing.Size(102, 18);
             this.lblCatchID.TabIndex = 11;
             this.lblCatchID.Text = "Catchment ID";
-            // 
-            // tbRoughness
-            // 
-            this.tbRoughness.Location = new System.Drawing.Point(441, 390);
-            this.tbRoughness.Margin = new System.Windows.Forms.Padding(4);
-            this.tbRoughness.Name = "tbRoughness";
-            this.tbRoughness.Size = new System.Drawing.Size(133, 26);
-            this.tbRoughness.TabIndex = 10;
-            // 
-            // tbDetention
-            // 
-            this.tbDetention.Location = new System.Drawing.Point(441, 343);
-            this.tbDetention.Margin = new System.Windows.Forms.Padding(4);
-            this.tbDetention.Name = "tbDetention";
-            this.tbDetention.Size = new System.Drawing.Size(133, 26);
-            this.tbDetention.TabIndex = 9;
-            // 
-            // tbCatchID
-            // 
-            this.tbCatchID.Location = new System.Drawing.Point(156, 80);
-            this.tbCatchID.Margin = new System.Windows.Forms.Padding(4);
-            this.tbCatchID.Name = "tbCatchID";
-            this.tbCatchID.ReadOnly = true;
-            this.tbCatchID.Size = new System.Drawing.Size(133, 26);
-            this.tbCatchID.TabIndex = 4;
             // 
             // lblName
             // 
@@ -535,30 +477,6 @@
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Meteorological Adjustments";
-            // 
-            // tbAltLapse
-            // 
-            this.tbAltLapse.Location = new System.Drawing.Point(543, 87);
-            this.tbAltLapse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbAltLapse.Name = "tbAltLapse";
-            this.tbAltLapse.Size = new System.Drawing.Size(127, 26);
-            this.tbAltLapse.TabIndex = 6;
-            // 
-            // tbTempLapse
-            // 
-            this.tbTempLapse.Location = new System.Drawing.Point(543, 55);
-            this.tbTempLapse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbTempLapse.Name = "tbTempLapse";
-            this.tbTempLapse.Size = new System.Drawing.Size(127, 26);
-            this.tbTempLapse.TabIndex = 5;
-            // 
-            // tbPrecipWeight
-            // 
-            this.tbPrecipWeight.Location = new System.Drawing.Point(543, 24);
-            this.tbPrecipWeight.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbPrecipWeight.Name = "tbPrecipWeight";
-            this.tbPrecipWeight.Size = new System.Drawing.Size(127, 26);
-            this.tbPrecipWeight.TabIndex = 4;
             // 
             // label3
             // 
@@ -735,9 +653,9 @@
             // 
             this.tpLandAp.Controls.Add(this.cbLanduse);
             this.tpLandAp.Controls.Add(this.lblLanduse);
-            this.tpLandAp.Controls.Add(this.tbMaxAccTime);
             this.tpLandAp.Controls.Add(this.lblMaxAccTime);
             this.tpLandAp.Controls.Add(this.dgLandApp);
+            this.tpLandAp.Controls.Add(this.tbMaxAccTime);
             this.tpLandAp.Location = new System.Drawing.Point(4, 50);
             this.tpLandAp.Margin = new System.Windows.Forms.Padding(4);
             this.tpLandAp.Name = "tpLandAp";
@@ -766,14 +684,6 @@
             this.lblLanduse.Size = new System.Drawing.Size(72, 18);
             this.lblLanduse.TabIndex = 3;
             this.lblLanduse.Text = "Landuse:";
-            // 
-            // tbMaxAccTime
-            // 
-            this.tbMaxAccTime.Location = new System.Drawing.Point(448, 431);
-            this.tbMaxAccTime.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbMaxAccTime.Name = "tbMaxAccTime";
-            this.tbMaxAccTime.Size = new System.Drawing.Size(126, 26);
-            this.tbMaxAccTime.TabIndex = 2;
             // 
             // lblMaxAccTime
             // 
@@ -952,15 +862,6 @@
             this.label7.TabIndex = 9;
             this.label7.Text = "* Assumes average source flow over period of record";
             // 
-            // tbAppliedWaterRate
-            // 
-            this.tbAppliedWaterRate.Location = new System.Drawing.Point(219, 22);
-            this.tbAppliedWaterRate.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbAppliedWaterRate.Name = "tbAppliedWaterRate";
-            this.tbAppliedWaterRate.ReadOnly = true;
-            this.tbAppliedWaterRate.Size = new System.Drawing.Size(126, 26);
-            this.tbAppliedWaterRate.TabIndex = 10;
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -1090,8 +991,8 @@
             // tpSediment
             // 
             this.tpSediment.Controls.Add(this.groupBox4);
-            this.tpSediment.Controls.Add(this.tbSoilErosivity);
             this.tpSediment.Controls.Add(this.label5);
+            this.tpSediment.Controls.Add(this.tbSoilErosivity);
             this.tpSediment.Location = new System.Drawing.Point(4, 50);
             this.tpSediment.Margin = new System.Windows.Forms.Padding(4);
             this.tpSediment.Name = "tpSediment";
@@ -1117,30 +1018,6 @@
             this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Surface Soil Particle Composition";
-            // 
-            // tbSand
-            // 
-            this.tbSand.Location = new System.Drawing.Point(148, 105);
-            this.tbSand.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbSand.Name = "tbSand";
-            this.tbSand.Size = new System.Drawing.Size(127, 26);
-            this.tbSand.TabIndex = 8;
-            // 
-            // tbSilt
-            // 
-            this.tbSilt.Location = new System.Drawing.Point(148, 63);
-            this.tbSilt.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbSilt.Name = "tbSilt";
-            this.tbSilt.Size = new System.Drawing.Size(127, 26);
-            this.tbSilt.TabIndex = 7;
-            // 
-            // tbClay
-            // 
-            this.tbClay.Location = new System.Drawing.Point(148, 24);
-            this.tbClay.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbClay.Name = "tbClay";
-            this.tbClay.Size = new System.Drawing.Size(127, 26);
-            this.tbClay.TabIndex = 6;
             // 
             // label8
             // 
@@ -1171,14 +1048,6 @@
             this.label10.Size = new System.Drawing.Size(45, 18);
             this.label10.TabIndex = 5;
             this.label10.Text = "Sand";
-            // 
-            // tbSoilErosivity
-            // 
-            this.tbSoilErosivity.Location = new System.Drawing.Point(390, 133);
-            this.tbSoilErosivity.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbSoilErosivity.Name = "tbSoilErosivity";
-            this.tbSoilErosivity.Size = new System.Drawing.Size(134, 26);
-            this.tbSoilErosivity.TabIndex = 1;
             // 
             // label5
             // 
@@ -1220,22 +1089,6 @@
             this.gbDetentionPonds.TabStop = false;
             this.gbDetentionPonds.Text = "Detention Ponds";
             // 
-            // tbDetVolume
-            // 
-            this.tbDetVolume.Location = new System.Drawing.Point(183, 72);
-            this.tbDetVolume.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbDetVolume.Name = "tbDetVolume";
-            this.tbDetVolume.Size = new System.Drawing.Size(108, 26);
-            this.tbDetVolume.TabIndex = 9;
-            // 
-            // tbImpRouting
-            // 
-            this.tbImpRouting.Location = new System.Drawing.Point(183, 32);
-            this.tbImpRouting.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbImpRouting.Name = "tbImpRouting";
-            this.tbImpRouting.Size = new System.Drawing.Size(108, 26);
-            this.tbImpRouting.TabIndex = 8;
-            // 
             // label18
             // 
             this.label18.AutoSize = true;
@@ -1270,22 +1123,6 @@
             this.gbStreetSweeping.TabIndex = 2;
             this.gbStreetSweeping.TabStop = false;
             this.gbStreetSweeping.Text = "Street Sweeping";
-            // 
-            // tbEfficiency
-            // 
-            this.tbEfficiency.Location = new System.Drawing.Point(149, 72);
-            this.tbEfficiency.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbEfficiency.Name = "tbEfficiency";
-            this.tbEfficiency.Size = new System.Drawing.Size(142, 26);
-            this.tbEfficiency.TabIndex = 9;
-            // 
-            // tbFrequency
-            // 
-            this.tbFrequency.Location = new System.Drawing.Point(149, 32);
-            this.tbFrequency.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbFrequency.Name = "tbFrequency";
-            this.tbFrequency.Size = new System.Drawing.Size(142, 26);
-            this.tbFrequency.TabIndex = 8;
             // 
             // label16
             // 
@@ -1325,38 +1162,6 @@
             this.gbBufferZone.TabIndex = 1;
             this.gbBufferZone.TabStop = false;
             this.gbBufferZone.Text = "Stream Buffer Zone";
-            // 
-            // tbBufferRoughness
-            // 
-            this.tbBufferRoughness.Location = new System.Drawing.Point(149, 153);
-            this.tbBufferRoughness.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbBufferRoughness.Name = "tbBufferRoughness";
-            this.tbBufferRoughness.Size = new System.Drawing.Size(142, 26);
-            this.tbBufferRoughness.TabIndex = 7;
-            // 
-            // tbBufferSlope
-            // 
-            this.tbBufferSlope.Location = new System.Drawing.Point(149, 112);
-            this.tbBufferSlope.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbBufferSlope.Name = "tbBufferSlope";
-            this.tbBufferSlope.Size = new System.Drawing.Size(142, 26);
-            this.tbBufferSlope.TabIndex = 6;
-            // 
-            // tbBufferWidth
-            // 
-            this.tbBufferWidth.Location = new System.Drawing.Point(149, 72);
-            this.tbBufferWidth.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbBufferWidth.Name = "tbBufferWidth";
-            this.tbBufferWidth.Size = new System.Drawing.Size(142, 26);
-            this.tbBufferWidth.TabIndex = 5;
-            // 
-            // tbPctBuffered
-            // 
-            this.tbPctBuffered.Location = new System.Drawing.Point(149, 32);
-            this.tbPctBuffered.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbPctBuffered.Name = "tbPctBuffered";
-            this.tbPctBuffered.Size = new System.Drawing.Size(142, 26);
-            this.tbPctBuffered.TabIndex = 4;
             // 
             // label15
             // 
@@ -1475,14 +1280,6 @@
             this.groupBox8.TabIndex = 15;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Water source information corresponds to selected point source";
-            // 
-            // tbNPDESNumber
-            // 
-            this.tbNPDESNumber.Location = new System.Drawing.Point(259, 142);
-            this.tbNPDESNumber.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbNPDESNumber.Name = "tbNPDESNumber";
-            this.tbNPDESNumber.Size = new System.Drawing.Size(221, 26);
-            this.tbNPDESNumber.TabIndex = 14;
             // 
             // label35
             // 
@@ -1742,86 +1539,6 @@
             this.tpSeptic.Text = "Septic Systems";
             this.tpSeptic.UseVisualStyleBackColor = true;
             // 
-            // tbBioMortCoeff
-            // 
-            this.tbBioMortCoeff.Location = new System.Drawing.Point(484, 403);
-            this.tbBioMortCoeff.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbBioMortCoeff.Name = "tbBioMortCoeff";
-            this.tbBioMortCoeff.Size = new System.Drawing.Size(127, 26);
-            this.tbBioMortCoeff.TabIndex = 20;
-            // 
-            // tbBioRespCoeff
-            // 
-            this.tbBioRespCoeff.Location = new System.Drawing.Point(484, 367);
-            this.tbBioRespCoeff.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbBioRespCoeff.Name = "tbBioRespCoeff";
-            this.tbBioRespCoeff.Size = new System.Drawing.Size(127, 26);
-            this.tbBioRespCoeff.TabIndex = 19;
-            // 
-            // tbBiozoneArea
-            // 
-            this.tbBiozoneArea.Location = new System.Drawing.Point(484, 331);
-            this.tbBiozoneArea.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbBiozoneArea.Name = "tbBiozoneArea";
-            this.tbBiozoneArea.Size = new System.Drawing.Size(127, 26);
-            this.tbBiozoneArea.TabIndex = 18;
-            // 
-            // tbBioThick
-            // 
-            this.tbBioThick.Location = new System.Drawing.Point(484, 295);
-            this.tbBioThick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbBioThick.Name = "tbBioThick";
-            this.tbBioThick.Size = new System.Drawing.Size(127, 26);
-            this.tbBioThick.TabIndex = 17;
-            // 
-            // tbInitBiomass
-            // 
-            this.tbInitBiomass.Location = new System.Drawing.Point(484, 259);
-            this.tbInitBiomass.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbInitBiomass.Name = "tbInitBiomass";
-            this.tbInitBiomass.Size = new System.Drawing.Size(127, 26);
-            this.tbInitBiomass.TabIndex = 16;
-            // 
-            // tbTreatment3
-            // 
-            this.tbTreatment3.Location = new System.Drawing.Point(484, 223);
-            this.tbTreatment3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbTreatment3.Name = "tbTreatment3";
-            this.tbTreatment3.Size = new System.Drawing.Size(127, 26);
-            this.tbTreatment3.TabIndex = 15;
-            // 
-            // tbTreatment2
-            // 
-            this.tbTreatment2.Location = new System.Drawing.Point(484, 187);
-            this.tbTreatment2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbTreatment2.Name = "tbTreatment2";
-            this.tbTreatment2.Size = new System.Drawing.Size(127, 26);
-            this.tbTreatment2.TabIndex = 14;
-            // 
-            // tbTreatment1
-            // 
-            this.tbTreatment1.Location = new System.Drawing.Point(484, 151);
-            this.tbTreatment1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbTreatment1.Name = "tbTreatment1";
-            this.tbTreatment1.Size = new System.Drawing.Size(127, 26);
-            this.tbTreatment1.TabIndex = 13;
-            // 
-            // tbPopSeptic
-            // 
-            this.tbPopSeptic.Location = new System.Drawing.Point(484, 79);
-            this.tbPopSeptic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbPopSeptic.Name = "tbPopSeptic";
-            this.tbPopSeptic.Size = new System.Drawing.Size(127, 26);
-            this.tbPopSeptic.TabIndex = 12;
-            // 
-            // tbDischargeSoilLayer
-            // 
-            this.tbDischargeSoilLayer.Location = new System.Drawing.Point(485, 43);
-            this.tbDischargeSoilLayer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbDischargeSoilLayer.Name = "tbDischargeSoilLayer";
-            this.tbDischargeSoilLayer.Size = new System.Drawing.Size(127, 26);
-            this.tbDischargeSoilLayer.TabIndex = 11;
-            // 
             // label30
             // 
             this.label30.AutoSize = true;
@@ -2005,13 +1722,13 @@
             // tpSoil
             // 
             this.tpSoil.Controls.Add(this.cbSoilCoeffGroup);
-            this.tpSoil.Controls.Add(this.tbNumSoilLayers);
             this.tpSoil.Controls.Add(this.label31);
             this.tpSoil.Controls.Add(this.dgSoilHydroCoeffs);
             this.tpSoil.Controls.Add(this.dgInorganicC);
             this.tpSoil.Controls.Add(this.dgMineralComp);
             this.tpSoil.Controls.Add(this.dgAdsorption);
             this.tpSoil.Controls.Add(this.dgInitialConc);
+            this.tpSoil.Controls.Add(this.tbNumSoilLayers);
             this.tpSoil.Location = new System.Drawing.Point(4, 50);
             this.tpSoil.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tpSoil.Name = "tpSoil";
@@ -2019,6 +1736,32 @@
             this.tpSoil.TabIndex = 11;
             this.tpSoil.Text = "Soil Layers";
             this.tpSoil.UseVisualStyleBackColor = true;
+            // 
+            // cbSoilCoeffGroup
+            // 
+            this.cbSoilCoeffGroup.FormattingEnabled = true;
+            this.cbSoilCoeffGroup.Items.AddRange(new object[] {
+            "Hydrology",
+            "Initial Concentrations",
+            "Adsorption",
+            "Mineral Composition",
+            "Inorganic Carbon"});
+            this.cbSoilCoeffGroup.Location = new System.Drawing.Point(339, 57);
+            this.cbSoilCoeffGroup.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cbSoilCoeffGroup.Name = "cbSoilCoeffGroup";
+            this.cbSoilCoeffGroup.Size = new System.Drawing.Size(351, 26);
+            this.cbSoilCoeffGroup.TabIndex = 2;
+            this.cbSoilCoeffGroup.SelectedIndexChanged += new System.EventHandler(this.cbSoilCoeffGroup_SelectedIndexChanged);
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(49, 60);
+            this.label31.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(166, 18);
+            this.label31.TabIndex = 0;
+            this.label31.Text = "Number of Soil Layers:";
             // 
             // dgSoilHydroCoeffs
             // 
@@ -2120,40 +1863,6 @@
             this.SoilTort.Name = "SoilTort";
             this.SoilTort.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.SoilTort.Width = 99;
-            // 
-            // cbSoilCoeffGroup
-            // 
-            this.cbSoilCoeffGroup.FormattingEnabled = true;
-            this.cbSoilCoeffGroup.Items.AddRange(new object[] {
-            "Hydrology",
-            "Initial Concentrations",
-            "Adsorption",
-            "Mineral Composition",
-            "Inorganic Carbon"});
-            this.cbSoilCoeffGroup.Location = new System.Drawing.Point(339, 57);
-            this.cbSoilCoeffGroup.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cbSoilCoeffGroup.Name = "cbSoilCoeffGroup";
-            this.cbSoilCoeffGroup.Size = new System.Drawing.Size(351, 26);
-            this.cbSoilCoeffGroup.TabIndex = 2;
-            this.cbSoilCoeffGroup.SelectedIndexChanged += new System.EventHandler(this.cbSoilCoeffGroup_SelectedIndexChanged);
-            // 
-            // tbNumSoilLayers
-            // 
-            this.tbNumSoilLayers.Location = new System.Drawing.Point(228, 57);
-            this.tbNumSoilLayers.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbNumSoilLayers.Name = "tbNumSoilLayers";
-            this.tbNumSoilLayers.Size = new System.Drawing.Size(48, 26);
-            this.tbNumSoilLayers.TabIndex = 1;
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(49, 60);
-            this.label31.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(166, 18);
-            this.label31.TabIndex = 0;
-            this.label31.Text = "Number of Soil Layers:";
             // 
             // dgInorganicC
             // 
@@ -2614,6 +2323,298 @@
             this.chbxApplyToSelected.TabIndex = 17;
             this.chbxApplyToSelected.Text = "Apply to Selected";
             this.chbxApplyToSelected.UseVisualStyleBackColor = true;
+            this.chbxApplyToSelected.CheckedChanged += new System.EventHandler(this.chbxApplyToSelected_CheckedChanged);
+            // 
+            // tbSlope
+            // 
+            this.tbSlope.Location = new System.Drawing.Point(566, 84);
+            this.tbSlope.Margin = new System.Windows.Forms.Padding(4);
+            this.tbSlope.Name = "tbSlope";
+            this.tbSlope.Size = new System.Drawing.Size(133, 26);
+            this.tbSlope.TabIndex = 8;
+            // 
+            // tbAspect
+            // 
+            this.tbAspect.Location = new System.Drawing.Point(566, 42);
+            this.tbAspect.Margin = new System.Windows.Forms.Padding(4);
+            this.tbAspect.Name = "tbAspect";
+            this.tbAspect.Size = new System.Drawing.Size(133, 26);
+            this.tbAspect.TabIndex = 7;
+            // 
+            // tbWidth
+            // 
+            this.tbWidth.Location = new System.Drawing.Point(225, 84);
+            this.tbWidth.Margin = new System.Windows.Forms.Padding(4);
+            this.tbWidth.Name = "tbWidth";
+            this.tbWidth.Size = new System.Drawing.Size(133, 26);
+            this.tbWidth.TabIndex = 6;
+            // 
+            // tbArea
+            // 
+            this.tbArea.Location = new System.Drawing.Point(225, 42);
+            this.tbArea.Margin = new System.Windows.Forms.Padding(4);
+            this.tbArea.Name = "tbArea";
+            this.tbArea.ReadOnly = true;
+            this.tbArea.Size = new System.Drawing.Size(133, 26);
+            this.tbArea.TabIndex = 5;
+            // 
+            // tbRoughness
+            // 
+            this.tbRoughness.Location = new System.Drawing.Point(441, 390);
+            this.tbRoughness.Margin = new System.Windows.Forms.Padding(4);
+            this.tbRoughness.Name = "tbRoughness";
+            this.tbRoughness.Size = new System.Drawing.Size(133, 26);
+            this.tbRoughness.TabIndex = 10;
+            // 
+            // tbDetention
+            // 
+            this.tbDetention.Location = new System.Drawing.Point(441, 343);
+            this.tbDetention.Margin = new System.Windows.Forms.Padding(4);
+            this.tbDetention.Name = "tbDetention";
+            this.tbDetention.Size = new System.Drawing.Size(133, 26);
+            this.tbDetention.TabIndex = 9;
+            // 
+            // tbCatchID
+            // 
+            this.tbCatchID.Location = new System.Drawing.Point(156, 80);
+            this.tbCatchID.Margin = new System.Windows.Forms.Padding(4);
+            this.tbCatchID.Name = "tbCatchID";
+            this.tbCatchID.ReadOnly = true;
+            this.tbCatchID.Size = new System.Drawing.Size(133, 26);
+            this.tbCatchID.TabIndex = 4;
+            // 
+            // tbAltLapse
+            // 
+            this.tbAltLapse.Location = new System.Drawing.Point(543, 87);
+            this.tbAltLapse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbAltLapse.Name = "tbAltLapse";
+            this.tbAltLapse.Size = new System.Drawing.Size(127, 26);
+            this.tbAltLapse.TabIndex = 6;
+            // 
+            // tbTempLapse
+            // 
+            this.tbTempLapse.Location = new System.Drawing.Point(543, 55);
+            this.tbTempLapse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbTempLapse.Name = "tbTempLapse";
+            this.tbTempLapse.Size = new System.Drawing.Size(127, 26);
+            this.tbTempLapse.TabIndex = 5;
+            // 
+            // tbPrecipWeight
+            // 
+            this.tbPrecipWeight.Location = new System.Drawing.Point(543, 24);
+            this.tbPrecipWeight.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbPrecipWeight.Name = "tbPrecipWeight";
+            this.tbPrecipWeight.Size = new System.Drawing.Size(127, 26);
+            this.tbPrecipWeight.TabIndex = 4;
+            // 
+            // tbMaxAccTime
+            // 
+            this.tbMaxAccTime.Location = new System.Drawing.Point(448, 431);
+            this.tbMaxAccTime.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbMaxAccTime.Name = "tbMaxAccTime";
+            this.tbMaxAccTime.Size = new System.Drawing.Size(126, 26);
+            this.tbMaxAccTime.TabIndex = 2;
+            // 
+            // tbAppliedWaterRate
+            // 
+            this.tbAppliedWaterRate.Location = new System.Drawing.Point(219, 22);
+            this.tbAppliedWaterRate.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbAppliedWaterRate.Name = "tbAppliedWaterRate";
+            this.tbAppliedWaterRate.ReadOnly = true;
+            this.tbAppliedWaterRate.Size = new System.Drawing.Size(126, 26);
+            this.tbAppliedWaterRate.TabIndex = 10;
+            // 
+            // tbSand
+            // 
+            this.tbSand.Location = new System.Drawing.Point(148, 105);
+            this.tbSand.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbSand.Name = "tbSand";
+            this.tbSand.Size = new System.Drawing.Size(127, 26);
+            this.tbSand.TabIndex = 8;
+            // 
+            // tbSilt
+            // 
+            this.tbSilt.Location = new System.Drawing.Point(148, 63);
+            this.tbSilt.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbSilt.Name = "tbSilt";
+            this.tbSilt.Size = new System.Drawing.Size(127, 26);
+            this.tbSilt.TabIndex = 7;
+            // 
+            // tbClay
+            // 
+            this.tbClay.Location = new System.Drawing.Point(148, 24);
+            this.tbClay.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbClay.Name = "tbClay";
+            this.tbClay.Size = new System.Drawing.Size(127, 26);
+            this.tbClay.TabIndex = 6;
+            // 
+            // tbSoilErosivity
+            // 
+            this.tbSoilErosivity.Location = new System.Drawing.Point(390, 133);
+            this.tbSoilErosivity.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbSoilErosivity.Name = "tbSoilErosivity";
+            this.tbSoilErosivity.Size = new System.Drawing.Size(134, 26);
+            this.tbSoilErosivity.TabIndex = 1;
+            // 
+            // tbDetVolume
+            // 
+            this.tbDetVolume.Location = new System.Drawing.Point(183, 72);
+            this.tbDetVolume.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbDetVolume.Name = "tbDetVolume";
+            this.tbDetVolume.Size = new System.Drawing.Size(108, 26);
+            this.tbDetVolume.TabIndex = 9;
+            // 
+            // tbImpRouting
+            // 
+            this.tbImpRouting.Location = new System.Drawing.Point(183, 32);
+            this.tbImpRouting.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbImpRouting.Name = "tbImpRouting";
+            this.tbImpRouting.Size = new System.Drawing.Size(108, 26);
+            this.tbImpRouting.TabIndex = 8;
+            // 
+            // tbEfficiency
+            // 
+            this.tbEfficiency.Location = new System.Drawing.Point(149, 72);
+            this.tbEfficiency.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbEfficiency.Name = "tbEfficiency";
+            this.tbEfficiency.Size = new System.Drawing.Size(142, 26);
+            this.tbEfficiency.TabIndex = 9;
+            // 
+            // tbFrequency
+            // 
+            this.tbFrequency.Location = new System.Drawing.Point(149, 32);
+            this.tbFrequency.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbFrequency.Name = "tbFrequency";
+            this.tbFrequency.Size = new System.Drawing.Size(142, 26);
+            this.tbFrequency.TabIndex = 8;
+            // 
+            // tbBufferRoughness
+            // 
+            this.tbBufferRoughness.Location = new System.Drawing.Point(149, 153);
+            this.tbBufferRoughness.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbBufferRoughness.Name = "tbBufferRoughness";
+            this.tbBufferRoughness.Size = new System.Drawing.Size(142, 26);
+            this.tbBufferRoughness.TabIndex = 7;
+            // 
+            // tbBufferSlope
+            // 
+            this.tbBufferSlope.Location = new System.Drawing.Point(149, 112);
+            this.tbBufferSlope.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbBufferSlope.Name = "tbBufferSlope";
+            this.tbBufferSlope.Size = new System.Drawing.Size(142, 26);
+            this.tbBufferSlope.TabIndex = 6;
+            // 
+            // tbBufferWidth
+            // 
+            this.tbBufferWidth.Location = new System.Drawing.Point(149, 72);
+            this.tbBufferWidth.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbBufferWidth.Name = "tbBufferWidth";
+            this.tbBufferWidth.Size = new System.Drawing.Size(142, 26);
+            this.tbBufferWidth.TabIndex = 5;
+            // 
+            // tbPctBuffered
+            // 
+            this.tbPctBuffered.Location = new System.Drawing.Point(149, 32);
+            this.tbPctBuffered.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbPctBuffered.Name = "tbPctBuffered";
+            this.tbPctBuffered.Size = new System.Drawing.Size(142, 26);
+            this.tbPctBuffered.TabIndex = 4;
+            // 
+            // tbNPDESNumber
+            // 
+            this.tbNPDESNumber.Location = new System.Drawing.Point(259, 142);
+            this.tbNPDESNumber.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbNPDESNumber.Name = "tbNPDESNumber";
+            this.tbNPDESNumber.Size = new System.Drawing.Size(221, 26);
+            this.tbNPDESNumber.TabIndex = 14;
+            // 
+            // tbBioMortCoeff
+            // 
+            this.tbBioMortCoeff.Location = new System.Drawing.Point(484, 403);
+            this.tbBioMortCoeff.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbBioMortCoeff.Name = "tbBioMortCoeff";
+            this.tbBioMortCoeff.Size = new System.Drawing.Size(127, 26);
+            this.tbBioMortCoeff.TabIndex = 20;
+            // 
+            // tbBioRespCoeff
+            // 
+            this.tbBioRespCoeff.Location = new System.Drawing.Point(484, 367);
+            this.tbBioRespCoeff.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbBioRespCoeff.Name = "tbBioRespCoeff";
+            this.tbBioRespCoeff.Size = new System.Drawing.Size(127, 26);
+            this.tbBioRespCoeff.TabIndex = 19;
+            // 
+            // tbBiozoneArea
+            // 
+            this.tbBiozoneArea.Location = new System.Drawing.Point(484, 331);
+            this.tbBiozoneArea.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbBiozoneArea.Name = "tbBiozoneArea";
+            this.tbBiozoneArea.Size = new System.Drawing.Size(127, 26);
+            this.tbBiozoneArea.TabIndex = 18;
+            // 
+            // tbBioThick
+            // 
+            this.tbBioThick.Location = new System.Drawing.Point(484, 295);
+            this.tbBioThick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbBioThick.Name = "tbBioThick";
+            this.tbBioThick.Size = new System.Drawing.Size(127, 26);
+            this.tbBioThick.TabIndex = 17;
+            // 
+            // tbInitBiomass
+            // 
+            this.tbInitBiomass.Location = new System.Drawing.Point(484, 259);
+            this.tbInitBiomass.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbInitBiomass.Name = "tbInitBiomass";
+            this.tbInitBiomass.Size = new System.Drawing.Size(127, 26);
+            this.tbInitBiomass.TabIndex = 16;
+            // 
+            // tbTreatment3
+            // 
+            this.tbTreatment3.Location = new System.Drawing.Point(484, 223);
+            this.tbTreatment3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbTreatment3.Name = "tbTreatment3";
+            this.tbTreatment3.Size = new System.Drawing.Size(127, 26);
+            this.tbTreatment3.TabIndex = 15;
+            // 
+            // tbTreatment2
+            // 
+            this.tbTreatment2.Location = new System.Drawing.Point(484, 187);
+            this.tbTreatment2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbTreatment2.Name = "tbTreatment2";
+            this.tbTreatment2.Size = new System.Drawing.Size(127, 26);
+            this.tbTreatment2.TabIndex = 14;
+            // 
+            // tbTreatment1
+            // 
+            this.tbTreatment1.Location = new System.Drawing.Point(484, 151);
+            this.tbTreatment1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbTreatment1.Name = "tbTreatment1";
+            this.tbTreatment1.Size = new System.Drawing.Size(127, 26);
+            this.tbTreatment1.TabIndex = 13;
+            // 
+            // tbPopSeptic
+            // 
+            this.tbPopSeptic.Location = new System.Drawing.Point(484, 79);
+            this.tbPopSeptic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbPopSeptic.Name = "tbPopSeptic";
+            this.tbPopSeptic.Size = new System.Drawing.Size(127, 26);
+            this.tbPopSeptic.TabIndex = 12;
+            // 
+            // tbDischargeSoilLayer
+            // 
+            this.tbDischargeSoilLayer.Location = new System.Drawing.Point(485, 43);
+            this.tbDischargeSoilLayer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbDischargeSoilLayer.Name = "tbDischargeSoilLayer";
+            this.tbDischargeSoilLayer.Size = new System.Drawing.Size(127, 26);
+            this.tbDischargeSoilLayer.TabIndex = 11;
+            // 
+            // tbNumSoilLayers
+            // 
+            this.tbNumSoilLayers.Location = new System.Drawing.Point(228, 57);
+            this.tbNumSoilLayers.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbNumSoilLayers.Name = "tbNumSoilLayers";
+            this.tbNumSoilLayers.Size = new System.Drawing.Size(48, 26);
+            this.tbNumSoilLayers.TabIndex = 1;
             // 
             // DialogCatchCoeffs
             // 
