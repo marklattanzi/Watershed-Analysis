@@ -359,8 +359,8 @@ namespace warmf {
         public double advancedPct;
         public double failingPct;
         public double initialBiomass;
-        public double thickness;
-        public double area;
+        public double biomassThickness;
+        public double biomassArea;
         public double biomassRespRate;
         public double biomassMortRate;
     }
@@ -1430,8 +1430,8 @@ namespace warmf {
                         advancedPct = dnums[3],
                         failingPct = dnums[4],
                         initialBiomass = dnums[5],
-                        thickness = dnums[6],
-                        area = dnums[7],
+                        biomassThickness = dnums[6],
+                        biomassArea = dnums[7],
                         biomassRespRate = dnums[8],
                         biomassMortRate = ReadDouble(sr, "SEPTIC")
                     };
@@ -2590,8 +2590,8 @@ namespace warmf {
                         sw.WriteDouble(catchments[i].septic.advancedPct);
                         sw.WriteDouble(catchments[i].septic.failingPct);
                         sw.WriteDouble(catchments[i].septic.initialBiomass);
-                        sw.WriteDouble(catchments[i].septic.thickness);
-                        sw.WriteDouble(catchments[i].septic.area);
+                        sw.WriteDouble(catchments[i].septic.biomassThickness);
+                        sw.WriteDouble(catchments[i].septic.biomassArea);
                         sw.WriteDouble(catchments[i].septic.biomassRespRate);
                         sw.WriteLine();
                         sw.WriteString("SEPTIC");

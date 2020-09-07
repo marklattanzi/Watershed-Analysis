@@ -15,6 +15,11 @@ namespace warmf
             filename = fname;
         }
 
+        public override bool IsRegularInterval()
+        {
+            return false;
+        }
+
         public override bool ReadParameters(ref STechStreamReader SR)
         {
             try

@@ -28,9 +28,12 @@ namespace warmf.UtilityClasses
             const int WM_KEYDOWN = 0x100;
             const int WM_ENTERIDLE = 0x121;
             const int VK_DELETE = 0x2e;
+            const int VK_BACKSPACE = 0x08;
 
             bool delete = m.Msg == WM_KEYDOWN && (int)m.WParam == VK_DELETE;
-            if ((m.Msg == WM_KEYDOWN && !delete) || m.Msg == WM_ENTERIDLE)
+            bool backspace = m.Msg == WM_KEYDOWN && (int)m.WParam == VK_BACKSPACE;
+
+            if ((m.Msg == WM_KEYDOWN && !delete) || (m.Msg == WM_KEYDOWN && !backspace) || m.Msg == WM_ENTERIDLE)
             {
                 DontProcessMessage(() =>
                 {
@@ -42,6 +45,7 @@ namespace warmf.UtilityClasses
 
             const int WM_CHAR = 0x102;
             const int WM_PASTE = 0x302;
+
             if (m.Msg == WM_CHAR || m.Msg == WM_PASTE || delete)
             {
                 string newText = null;
@@ -88,7 +92,8 @@ namespace warmf.UtilityClasses
     {
         protected override void OnTextValidating(object sender, TextValidatingEventArgs e)
         {
-            e.Cancel = !int.TryParse(e.NewText, out int i);
+            if (e.NewText != "")
+                e.Cancel = !int.TryParse(e.NewText, out int i);
         }
     }
 
@@ -96,7 +101,8 @@ namespace warmf.UtilityClasses
     {
         protected override void OnTextValidating(object sender, TextValidatingEventArgs e)
         {
-            e.Cancel = !long.TryParse(e.NewText, out long i);
+            if (e.NewText != "")
+                e.Cancel = !long.TryParse(e.NewText, out long i);
         }
     }
 
@@ -104,7 +110,8 @@ namespace warmf.UtilityClasses
     {
         protected override void OnTextValidating(object sender, TextValidatingEventArgs e)
         {
-            e.Cancel = !double.TryParse(e.NewText, out double i);
+            if (e.NewText != "")
+                e.Cancel = !double.TryParse(e.NewText, out double i);
         }
     }
 
