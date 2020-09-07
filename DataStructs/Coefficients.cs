@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -1591,7 +1592,7 @@ namespace warmf {
                 line = ReadSpacerLine(sr, "RIVER COEFFICIENTS");
                 rivers = new List<River>();
                 for (int ii = 0; ii < numRivers; ii++) {
-					line = ReadSpacerLine(sr, "RIVE");	// RIVE####  - can these have 5 digits?  MRL
+					line = ReadSpacerLine(sr, "RIVE");
                     River river = new River();
 					dnums = ReadDoubleData(sr, "STRE", 9);
 					river.idNum = (int)dnums[0];
@@ -3557,6 +3558,86 @@ namespace warmf {
             }
         }
 
+        public void RunFilesCrosscheck()
+        //Read through the coefficient file and identify all FLO, MET, PTS, ORC, ORH, OLC, OLH files
+        //Cross-reference these lists with the files contained in the corresponding /input/ directory
+        //Highlight any files that exist in the COE but not in the /input/ directories
+        {
+            List<string> fileNames = new List<string>();
+            int MissingFileCount = 0;
+
+            if (File.Exists(Global.DIR.INPUT + "MissingFiles.txt"))
+            {
+                File.Delete(Global.DIR.INPUT + "MissingFiles.txt");
+            }
+            StreamWriter sw = new StreamWriter(Global.DIR.INPUT + "MissingFiles.txt");
+            sw.WriteLine("This list contains the type and name of files cited in the active COE file, that can't be found");
+            sw.WriteLine();
+            sw.WriteLine("File Type   File Name");
+
+            //MET Files
+            for (int i = 0; i < Global.coe.numMETFiles; i++)
+            {
+                if (!File.Exists(Global.DIR.MET + Global.coe.METFilename[i]))
+                {
+                    sw.WriteLine("MET         " + Global.coe.METFilename[i]);
+                    MissingFileCount++;
+                }
+            }
+
+            //FLO Files
+            for (int i = 0; i < Global.coe.numDIVFiles; i++)
+            {
+                if (!File.Exists(Global.DIR.FLO + Global.coe.DIVData[i].filename))
+                {
+                    sw.WriteLine("FLO         " + Global.coe.DIVData[i].filename);
+                    MissingFileCount++;
+                }
+            }
+
+            //PTS Files
+            for (int i = 0; i < Global.coe.numPTSFiles; i++)
+            {
+                if (!File.Exists(Global.DIR.PTS + Global.coe.PTSFilename[i]))
+                {
+                    sw.WriteLine("PTS         " + Global.coe.PTSFilename[i]);
+                    MissingFileCount++;
+                }
+            }
+
+            //ORC/OLC Files
+            fileNames = GetAllObservedWaterQualityFiles();
+            for (int i = 0; i < fileNames.Count; i++)
+            {
+                if (!File.Exists(Global.DIR.ORC + fileNames[i]))
+                {
+                    if (!File.Exists(Global.DIR.OLC + fileNames[i]))
+                    {
+                        sw.WriteLine("ORC/OLC     " + fileNames[i]);
+                        MissingFileCount++;
+                    }
+                }
+            }
+            fileNames.Clear();
+
+            //ORH/OLH Files
+            fileNames = GetAllObservedHydrologyFiles();
+            for (int i = 0; i < fileNames.Count; i++)
+            {
+                if (!File.Exists(Global.DIR.ORH + fileNames[i]))
+                {
+                    if (!File.Exists(Global.DIR.OLH + fileNames[i]))
+                    {
+                        sw.WriteLine("ORH/OLH     " + fileNames[i]);
+                        MissingFileCount++;
+                    }
+                }
+            }
+
+            sw.Close();
+            MessageBox.Show("Analysis complete." + Environment.NewLine + MissingFileCount.ToString()
+                + " files not found", "Analysis Complete", MessageBoxButtons.OK);
+        }
         #endregion
     }
 }

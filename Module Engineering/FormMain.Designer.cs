@@ -52,7 +52,19 @@
             this.miEditZoomOut = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.miEditRestore = new System.Windows.Forms.ToolStripMenuItem();
+            this.miViewTribConnect = new System.Windows.Forms.ToolStripMenuItem();
+            this.miViewEntityIDs = new System.Windows.Forms.ToolStripMenuItem();
+            this.miViewEntityPoints = new System.Windows.Forms.ToolStripMenuItem();
+            this.miViewSubwatersheds = new System.Windows.Forms.ToolStripMenuItem();
             this.miViewMETStations = new System.Windows.Forms.ToolStripMenuItem();
+            this.miViewGagingStations = new System.Windows.Forms.ToolStripMenuItem();
+            this.miViewWQStations = new System.Windows.Forms.ToolStripMenuItem();
+            this.miViewManagedFlow = new System.Windows.Forms.ToolStripMenuItem();
+            this.miViewPointSources = new System.Windows.Forms.ToolStripMenuItem();
+            this.miViewAirQualityStations = new System.Windows.Forms.ToolStripMenuItem();
+            this.miViewScale = new System.Windows.Forms.ToolStripMenuItem();
+            this.miViewPictures = new System.Windows.Forms.ToolStripMenuItem();
+            this.miViewLabels = new System.Windows.Forms.ToolStripMenuItem();
             this.miTopMode = new System.Windows.Forms.ToolStripMenuItem();
             this.miModeInput = new System.Windows.Forms.ToolStripMenuItem();
             this.miModeOutput = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,6 +83,7 @@
             this.miScenarioViewCoeff = new System.Windows.Forms.ToolStripMenuItem();
             this.miScenarioCompare = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.miScenarioFileCheck = new System.Windows.Forms.ToolStripMenuItem();
             this.miTopDocument = new System.Windows.Forms.ToolStripMenuItem();
             this.miDocumentModelLog = new System.Windows.Forms.ToolStripMenuItem();
             this.miDocumentNotes = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,18 +101,6 @@
             this.miHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.pboxSplash = new System.Windows.Forms.PictureBox();
             this.lblLatLong = new System.Windows.Forms.Label();
-            this.miViewTribConnect = new System.Windows.Forms.ToolStripMenuItem();
-            this.miViewEntityIDs = new System.Windows.Forms.ToolStripMenuItem();
-            this.miViewEntityPoints = new System.Windows.Forms.ToolStripMenuItem();
-            this.miViewSubwatersheds = new System.Windows.Forms.ToolStripMenuItem();
-            this.miViewGagingStations = new System.Windows.Forms.ToolStripMenuItem();
-            this.miViewWQStations = new System.Windows.Forms.ToolStripMenuItem();
-            this.miViewManagedFlow = new System.Windows.Forms.ToolStripMenuItem();
-            this.miViewPointSources = new System.Windows.Forms.ToolStripMenuItem();
-            this.miViewAirQualityStations = new System.Windows.Forms.ToolStripMenuItem();
-            this.miViewScale = new System.Windows.Forms.ToolStripMenuItem();
-            this.miViewPictures = new System.Windows.Forms.ToolStripMenuItem();
-            this.miViewLabels = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxSplash)).BeginInit();
             this.SuspendLayout();
@@ -338,12 +339,120 @@
             this.miEditRestore.Size = new System.Drawing.Size(195, 22);
             this.miEditRestore.Text = "Restore Map";
             // 
+            // miViewTribConnect
+            // 
+            this.miViewTribConnect.CheckOnClick = true;
+            this.miViewTribConnect.Enabled = false;
+            this.miViewTribConnect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.miViewTribConnect.Name = "miViewTribConnect";
+            this.miViewTribConnect.Size = new System.Drawing.Size(195, 22);
+            this.miViewTribConnect.Text = "Tributary Connections";
+            // 
+            // miViewEntityIDs
+            // 
+            this.miViewEntityIDs.CheckOnClick = true;
+            this.miViewEntityIDs.Enabled = false;
+            this.miViewEntityIDs.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.miViewEntityIDs.Name = "miViewEntityIDs";
+            this.miViewEntityIDs.Size = new System.Drawing.Size(195, 22);
+            this.miViewEntityIDs.Text = "Entity ID\'s";
+            // 
+            // miViewEntityPoints
+            // 
+            this.miViewEntityPoints.CheckOnClick = true;
+            this.miViewEntityPoints.Enabled = false;
+            this.miViewEntityPoints.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.miViewEntityPoints.Name = "miViewEntityPoints";
+            this.miViewEntityPoints.Size = new System.Drawing.Size(195, 22);
+            this.miViewEntityPoints.Text = "Selected Entities Points";
+            // 
+            // miViewSubwatersheds
+            // 
+            this.miViewSubwatersheds.CheckOnClick = true;
+            this.miViewSubwatersheds.Enabled = false;
+            this.miViewSubwatersheds.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.miViewSubwatersheds.Name = "miViewSubwatersheds";
+            this.miViewSubwatersheds.Size = new System.Drawing.Size(195, 22);
+            this.miViewSubwatersheds.Text = "Subwatersheds";
+            // 
             // miViewMETStations
             // 
+            this.miViewMETStations.CheckOnClick = true;
+            this.miViewMETStations.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.miViewMETStations.Name = "miViewMETStations";
             this.miViewMETStations.Size = new System.Drawing.Size(195, 22);
             this.miViewMETStations.Text = "Meteorology Stations";
             this.miViewMETStations.Click += new System.EventHandler(this.miMETStations_Click);
+            // 
+            // miViewGagingStations
+            // 
+            this.miViewGagingStations.CheckOnClick = true;
+            this.miViewGagingStations.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.miViewGagingStations.Name = "miViewGagingStations";
+            this.miViewGagingStations.Size = new System.Drawing.Size(195, 22);
+            this.miViewGagingStations.Text = "Gaging Stations";
+            this.miViewGagingStations.Click += new System.EventHandler(this.miViewGagingStations_Click);
+            // 
+            // miViewWQStations
+            // 
+            this.miViewWQStations.CheckOnClick = true;
+            this.miViewWQStations.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.miViewWQStations.Name = "miViewWQStations";
+            this.miViewWQStations.Size = new System.Drawing.Size(195, 22);
+            this.miViewWQStations.Text = "Water Quality Stations";
+            this.miViewWQStations.Click += new System.EventHandler(this.miViewWQStations_Click);
+            // 
+            // miViewManagedFlow
+            // 
+            this.miViewManagedFlow.CheckOnClick = true;
+            this.miViewManagedFlow.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.miViewManagedFlow.Name = "miViewManagedFlow";
+            this.miViewManagedFlow.Size = new System.Drawing.Size(195, 22);
+            this.miViewManagedFlow.Text = "Managed Flow";
+            this.miViewManagedFlow.Click += new System.EventHandler(this.miViewManagedFlow_Click);
+            // 
+            // miViewPointSources
+            // 
+            this.miViewPointSources.CheckOnClick = true;
+            this.miViewPointSources.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.miViewPointSources.Name = "miViewPointSources";
+            this.miViewPointSources.Size = new System.Drawing.Size(195, 22);
+            this.miViewPointSources.Text = "Point Sources";
+            this.miViewPointSources.Click += new System.EventHandler(this.miViewPointSources_Click);
+            // 
+            // miViewAirQualityStations
+            // 
+            this.miViewAirQualityStations.CheckOnClick = true;
+            this.miViewAirQualityStations.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.miViewAirQualityStations.Name = "miViewAirQualityStations";
+            this.miViewAirQualityStations.Size = new System.Drawing.Size(195, 22);
+            this.miViewAirQualityStations.Text = "Air Quality Stations";
+            this.miViewAirQualityStations.Click += new System.EventHandler(this.miViewAirQualityStations_Click);
+            // 
+            // miViewScale
+            // 
+            this.miViewScale.CheckOnClick = true;
+            this.miViewScale.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.miViewScale.Name = "miViewScale";
+            this.miViewScale.Size = new System.Drawing.Size(195, 22);
+            this.miViewScale.Text = "Scale";
+            // 
+            // miViewPictures
+            // 
+            this.miViewPictures.CheckOnClick = true;
+            this.miViewPictures.Enabled = false;
+            this.miViewPictures.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.miViewPictures.Name = "miViewPictures";
+            this.miViewPictures.Size = new System.Drawing.Size(195, 22);
+            this.miViewPictures.Text = "Pictures";
+            // 
+            // miViewLabels
+            // 
+            this.miViewLabels.CheckOnClick = true;
+            this.miViewLabels.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.miViewLabels.Name = "miViewLabels";
+            this.miViewLabels.Size = new System.Drawing.Size(195, 22);
+            this.miViewLabels.Text = "Labels";
             // 
             // miTopMode
             // 
@@ -399,7 +508,8 @@
             this.toolStripSeparator5,
             this.miScenarioViewCoeff,
             this.miScenarioCompare,
-            this.toolStripSeparator7});
+            this.toolStripSeparator7,
+            this.miScenarioFileCheck});
             this.miTopScenario.Name = "miTopScenario";
             this.miTopScenario.Size = new System.Drawing.Size(64, 22);
             this.miTopScenario.Text = "&Scenario";
@@ -407,76 +517,83 @@
             // miScenarioRun
             // 
             this.miScenarioRun.Name = "miScenarioRun";
-            this.miScenarioRun.Size = new System.Drawing.Size(181, 22);
+            this.miScenarioRun.Size = new System.Drawing.Size(205, 22);
             this.miScenarioRun.Text = "Run";
             this.miScenarioRun.Click += new System.EventHandler(this.miScenarioRun_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(178, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(202, 6);
             // 
             // miScenarioManager
             // 
             this.miScenarioManager.Name = "miScenarioManager";
-            this.miScenarioManager.Size = new System.Drawing.Size(181, 22);
+            this.miScenarioManager.Size = new System.Drawing.Size(205, 22);
             this.miScenarioManager.Text = "Manager";
             this.miScenarioManager.Click += new System.EventHandler(this.miScenarioManager_Click);
             // 
             // miScenarioSave
             // 
             this.miScenarioSave.Name = "miScenarioSave";
-            this.miScenarioSave.Size = new System.Drawing.Size(181, 22);
+            this.miScenarioSave.Size = new System.Drawing.Size(205, 22);
             this.miScenarioSave.Text = "Save";
             this.miScenarioSave.Click += new System.EventHandler(this.miScenarioSave_Click);
             // 
             // miScenarioSaveAs
             // 
             this.miScenarioSaveAs.Name = "miScenarioSaveAs";
-            this.miScenarioSaveAs.Size = new System.Drawing.Size(181, 22);
+            this.miScenarioSaveAs.Size = new System.Drawing.Size(205, 22);
             this.miScenarioSaveAs.Text = "Save As";
             this.miScenarioSaveAs.Click += new System.EventHandler(this.miScenarioSaveAs_Click);
             // 
             // miScenarioDelete
             // 
             this.miScenarioDelete.Name = "miScenarioDelete";
-            this.miScenarioDelete.Size = new System.Drawing.Size(181, 22);
+            this.miScenarioDelete.Size = new System.Drawing.Size(205, 22);
             this.miScenarioDelete.Text = "Delete";
             // 
             // miScenarioExport
             // 
             this.miScenarioExport.Name = "miScenarioExport";
-            this.miScenarioExport.Size = new System.Drawing.Size(181, 22);
+            this.miScenarioExport.Size = new System.Drawing.Size(205, 22);
             this.miScenarioExport.Text = "Export";
             // 
             // miScenarioImport
             // 
             this.miScenarioImport.Name = "miScenarioImport";
-            this.miScenarioImport.Size = new System.Drawing.Size(181, 22);
+            this.miScenarioImport.Size = new System.Drawing.Size(205, 22);
             this.miScenarioImport.Text = "Import";
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(178, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(202, 6);
             // 
             // miScenarioViewCoeff
             // 
             this.miScenarioViewCoeff.Name = "miScenarioViewCoeff";
-            this.miScenarioViewCoeff.Size = new System.Drawing.Size(181, 22);
+            this.miScenarioViewCoeff.Size = new System.Drawing.Size(205, 22);
             this.miScenarioViewCoeff.Text = "View Coefficient File";
             // 
             // miScenarioCompare
             // 
             this.miScenarioCompare.Name = "miScenarioCompare";
-            this.miScenarioCompare.Size = new System.Drawing.Size(181, 22);
+            this.miScenarioCompare.Size = new System.Drawing.Size(205, 22);
             this.miScenarioCompare.Text = "Compare";
             this.miScenarioCompare.Click += new System.EventHandler(this.miScenarioCompare_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(178, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(202, 6);
+            // 
+            // miScenarioFileCheck
+            // 
+            this.miScenarioFileCheck.Name = "miScenarioFileCheck";
+            this.miScenarioFileCheck.Size = new System.Drawing.Size(205, 22);
+            this.miScenarioFileCheck.Text = "Check Scenario Run Files";
+            this.miScenarioFileCheck.Click += new System.EventHandler(this.miScenarioFileCheck_Click);
             // 
             // miTopDocument
             // 
@@ -611,83 +728,6 @@
             this.lblLatLong.Text = "Lat/Long:";
             this.lblLatLong.Visible = false;
             // 
-            // miViewTribConnect
-            // 
-            this.miViewTribConnect.Enabled = false;
-            this.miViewTribConnect.Name = "miViewTribConnect";
-            this.miViewTribConnect.Size = new System.Drawing.Size(195, 22);
-            this.miViewTribConnect.Text = "Tributary Connections";
-            // 
-            // miViewEntityIDs
-            // 
-            this.miViewEntityIDs.Enabled = false;
-            this.miViewEntityIDs.Name = "miViewEntityIDs";
-            this.miViewEntityIDs.Size = new System.Drawing.Size(195, 22);
-            this.miViewEntityIDs.Text = "Entity ID\'s";
-            // 
-            // miViewEntityPoints
-            // 
-            this.miViewEntityPoints.Enabled = false;
-            this.miViewEntityPoints.Name = "miViewEntityPoints";
-            this.miViewEntityPoints.Size = new System.Drawing.Size(195, 22);
-            this.miViewEntityPoints.Text = "Selected Entities Points";
-            // 
-            // miViewSubwatersheds
-            // 
-            this.miViewSubwatersheds.Enabled = false;
-            this.miViewSubwatersheds.Name = "miViewSubwatersheds";
-            this.miViewSubwatersheds.Size = new System.Drawing.Size(195, 22);
-            this.miViewSubwatersheds.Text = "Subwatersheds";
-            // 
-            // miViewGagingStations
-            // 
-            this.miViewGagingStations.Name = "miViewGagingStations";
-            this.miViewGagingStations.Size = new System.Drawing.Size(195, 22);
-            this.miViewGagingStations.Text = "Gaging Stations";
-            // 
-            // miViewWQStations
-            // 
-            this.miViewWQStations.Name = "miViewWQStations";
-            this.miViewWQStations.Size = new System.Drawing.Size(195, 22);
-            this.miViewWQStations.Text = "Water Quality Stations";
-            // 
-            // miViewManagedFlow
-            // 
-            this.miViewManagedFlow.Name = "miViewManagedFlow";
-            this.miViewManagedFlow.Size = new System.Drawing.Size(195, 22);
-            this.miViewManagedFlow.Text = "Managed Flow";
-            // 
-            // miViewPointSources
-            // 
-            this.miViewPointSources.Name = "miViewPointSources";
-            this.miViewPointSources.Size = new System.Drawing.Size(195, 22);
-            this.miViewPointSources.Text = "Point Sources";
-            // 
-            // miViewAirQualityStations
-            // 
-            this.miViewAirQualityStations.Name = "miViewAirQualityStations";
-            this.miViewAirQualityStations.Size = new System.Drawing.Size(195, 22);
-            this.miViewAirQualityStations.Text = "Air Quality Stations";
-            // 
-            // miViewScale
-            // 
-            this.miViewScale.Name = "miViewScale";
-            this.miViewScale.Size = new System.Drawing.Size(195, 22);
-            this.miViewScale.Text = "Scale";
-            // 
-            // miViewPictures
-            // 
-            this.miViewPictures.Enabled = false;
-            this.miViewPictures.Name = "miViewPictures";
-            this.miViewPictures.Size = new System.Drawing.Size(195, 22);
-            this.miViewPictures.Text = "Pictures";
-            // 
-            // miViewLabels
-            // 
-            this.miViewLabels.Name = "miViewLabels";
-            this.miViewLabels.Size = new System.Drawing.Size(195, 22);
-            this.miViewLabels.Text = "Labels";
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -790,6 +830,7 @@
         private System.Windows.Forms.ToolStripMenuItem miViewScale;
         private System.Windows.Forms.ToolStripMenuItem miViewPictures;
         private System.Windows.Forms.ToolStripMenuItem miViewLabels;
+        private System.Windows.Forms.ToolStripMenuItem miScenarioFileCheck;
     }
 }
 

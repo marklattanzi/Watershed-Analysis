@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using warmf.Module_Data;
 
-namespace warmf {
-	public partial class FormData : Form {
+namespace warmf
+{
+    public partial class FormData : Form {
 		FormMain parent;
 		DataFile activeData;
         bool needToSave;
@@ -351,7 +348,7 @@ namespace warmf {
 					tboxStdDev.Text = Extensions.StdDev(data).ToString("0.00000");
 				}
 				catch (Exception e) {
-					// likely no data in file
+                    MessageBox.Show(e.Message, "Exception/Error", MessageBoxButtons.OK);
 				}
 
 				Series series = toolGraph.Series["data"];
@@ -899,6 +896,21 @@ namespace warmf {
         private void importHECDSSToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            //override form's OnFormClosing method to hide the form, not dispose of it
+            if (e.CloseReason == CloseReason.WindowsShutDown
+                || e.CloseReason == CloseReason.ApplicationExitCall
+                || e.CloseReason == CloseReason.TaskManagerClosing)
+            {
+                return;
+            }
+            e.Cancel = true;
+            
+            this.Hide();
         }
     }
 }
