@@ -5,7 +5,6 @@
 
     partial class DialogImportDelimitedFile
     {
-        int NumIgnoreLines;
         int NumHeaderLines;
         
         /// <summary>
