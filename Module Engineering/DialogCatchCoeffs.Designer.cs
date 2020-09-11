@@ -79,13 +79,13 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.btnClear = new System.Windows.Forms.Button();
-            this.btnSelect = new System.Windows.Forms.Button();
+            this.btnClearPondFile = new System.Windows.Forms.Button();
+            this.btnSelectPondFile = new System.Windows.Forms.Button();
             this.tbPondDepth = new System.Windows.Forms.TextBox();
-            this.btnBalance = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btnBalanceIrrigationSources = new System.Windows.Forms.Button();
+            this.btnDeleteIrrigationSource = new System.Windows.Forms.Button();
+            this.btnAddIrrigationSource = new System.Windows.Forms.Button();
+            this.dgIrrigationSources = new System.Windows.Forms.DataGridView();
             this.ColIrrSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPct = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cbIrrLandUse = new System.Windows.Forms.ComboBox();
@@ -262,7 +262,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgLandApp)).BeginInit();
             this.tpIrrigation.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgIrrigationSources)).BeginInit();
             this.tpSediment.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.tpBMPs.SuspendLayout();
@@ -819,13 +819,13 @@
             // tpIrrigation
             // 
             this.tpIrrigation.Controls.Add(this.groupBox2);
-            this.tpIrrigation.Controls.Add(this.btnClear);
-            this.tpIrrigation.Controls.Add(this.btnSelect);
+            this.tpIrrigation.Controls.Add(this.btnClearPondFile);
+            this.tpIrrigation.Controls.Add(this.btnSelectPondFile);
             this.tpIrrigation.Controls.Add(this.tbPondDepth);
-            this.tpIrrigation.Controls.Add(this.btnBalance);
-            this.tpIrrigation.Controls.Add(this.btnDelete);
-            this.tpIrrigation.Controls.Add(this.btnAdd);
-            this.tpIrrigation.Controls.Add(this.dataGridView1);
+            this.tpIrrigation.Controls.Add(this.btnBalanceIrrigationSources);
+            this.tpIrrigation.Controls.Add(this.btnDeleteIrrigationSource);
+            this.tpIrrigation.Controls.Add(this.btnAddIrrigationSource);
+            this.tpIrrigation.Controls.Add(this.dgIrrigationSources);
             this.tpIrrigation.Controls.Add(this.cbIrrLandUse);
             this.tpIrrigation.Controls.Add(this.label4);
             this.tpIrrigation.Controls.Add(this.groupBox1);
@@ -872,25 +872,27 @@
             this.label6.TabIndex = 8;
             this.label6.Text = "m/year";
             // 
-            // btnClear
+            // btnClearPondFile
             // 
-            this.btnClear.Location = new System.Drawing.Point(604, 344);
-            this.btnClear.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(103, 34);
-            this.btnClear.TabIndex = 17;
-            this.btnClear.Text = "Clear";
-            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClearPondFile.Location = new System.Drawing.Point(604, 344);
+            this.btnClearPondFile.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnClearPondFile.Name = "btnClearPondFile";
+            this.btnClearPondFile.Size = new System.Drawing.Size(103, 34);
+            this.btnClearPondFile.TabIndex = 17;
+            this.btnClearPondFile.Text = "Clear";
+            this.btnClearPondFile.UseVisualStyleBackColor = true;
+            this.btnClearPondFile.Click += new System.EventHandler(this.btnClearPondFile_Click);
             // 
-            // btnSelect
+            // btnSelectPondFile
             // 
-            this.btnSelect.Location = new System.Drawing.Point(476, 344);
-            this.btnSelect.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.btnSelect.Name = "btnSelect";
-            this.btnSelect.Size = new System.Drawing.Size(103, 34);
-            this.btnSelect.TabIndex = 16;
-            this.btnSelect.Text = "Select";
-            this.btnSelect.UseVisualStyleBackColor = true;
+            this.btnSelectPondFile.Location = new System.Drawing.Point(476, 344);
+            this.btnSelectPondFile.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnSelectPondFile.Name = "btnSelectPondFile";
+            this.btnSelectPondFile.Size = new System.Drawing.Size(103, 34);
+            this.btnSelectPondFile.TabIndex = 16;
+            this.btnSelectPondFile.Text = "Select";
+            this.btnSelectPondFile.UseVisualStyleBackColor = true;
+            this.btnSelectPondFile.Click += new System.EventHandler(this.btnSelectPondFile_Click);
             // 
             // tbPondDepth
             // 
@@ -900,50 +902,53 @@
             this.tbPondDepth.Size = new System.Drawing.Size(385, 26);
             this.tbPondDepth.TabIndex = 15;
             // 
-            // btnBalance
+            // btnBalanceIrrigationSources
             // 
-            this.btnBalance.Enabled = false;
-            this.btnBalance.Location = new System.Drawing.Point(436, 259);
-            this.btnBalance.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.btnBalance.Name = "btnBalance";
-            this.btnBalance.Size = new System.Drawing.Size(167, 34);
-            this.btnBalance.TabIndex = 14;
-            this.btnBalance.Text = "Balance Sources";
-            this.btnBalance.UseVisualStyleBackColor = true;
+            this.btnBalanceIrrigationSources.Enabled = false;
+            this.btnBalanceIrrigationSources.Location = new System.Drawing.Point(436, 259);
+            this.btnBalanceIrrigationSources.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnBalanceIrrigationSources.Name = "btnBalanceIrrigationSources";
+            this.btnBalanceIrrigationSources.Size = new System.Drawing.Size(167, 34);
+            this.btnBalanceIrrigationSources.TabIndex = 14;
+            this.btnBalanceIrrigationSources.Text = "Balance Sources";
+            this.btnBalanceIrrigationSources.UseVisualStyleBackColor = true;
             // 
-            // btnDelete
+            // btnDeleteIrrigationSource
             // 
-            this.btnDelete.Enabled = false;
-            this.btnDelete.Location = new System.Drawing.Point(294, 259);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(103, 34);
-            this.btnDelete.TabIndex = 13;
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDeleteIrrigationSource.Location = new System.Drawing.Point(294, 259);
+            this.btnDeleteIrrigationSource.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnDeleteIrrigationSource.Name = "btnDeleteIrrigationSource";
+            this.btnDeleteIrrigationSource.Size = new System.Drawing.Size(103, 34);
+            this.btnDeleteIrrigationSource.TabIndex = 13;
+            this.btnDeleteIrrigationSource.Text = "Delete";
+            this.btnDeleteIrrigationSource.UseVisualStyleBackColor = true;
+            this.btnDeleteIrrigationSource.Click += new System.EventHandler(this.btnDeleteIrrigationSource_Click);
             // 
-            // btnAdd
+            // btnAddIrrigationSource
             // 
-            this.btnAdd.Location = new System.Drawing.Point(153, 259);
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(103, 34);
-            this.btnAdd.TabIndex = 12;
-            this.btnAdd.Text = "Add";
-            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAddIrrigationSource.Location = new System.Drawing.Point(153, 259);
+            this.btnAddIrrigationSource.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnAddIrrigationSource.Name = "btnAddIrrigationSource";
+            this.btnAddIrrigationSource.Size = new System.Drawing.Size(103, 34);
+            this.btnAddIrrigationSource.TabIndex = 12;
+            this.btnAddIrrigationSource.Text = "Add";
+            this.btnAddIrrigationSource.UseVisualStyleBackColor = true;
+            this.btnAddIrrigationSource.Click += new System.EventHandler(this.btnAddIrrigationSource_Click);
             // 
-            // dataGridView1
+            // dgIrrigationSources
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgIrrigationSources.AllowUserToAddRows = false;
+            this.dgIrrigationSources.AllowUserToDeleteRows = false;
+            this.dgIrrigationSources.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgIrrigationSources.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColIrrSource,
             this.colPct});
-            this.dataGridView1.Location = new System.Drawing.Point(24, 129);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(714, 124);
-            this.dataGridView1.TabIndex = 11;
+            this.dgIrrigationSources.Location = new System.Drawing.Point(24, 129);
+            this.dgIrrigationSources.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.dgIrrigationSources.Name = "dgIrrigationSources";
+            this.dgIrrigationSources.RowHeadersVisible = false;
+            this.dgIrrigationSources.Size = new System.Drawing.Size(714, 124);
+            this.dgIrrigationSources.TabIndex = 11;
             // 
             // ColIrrSource
             // 
@@ -966,6 +971,7 @@
             this.cbIrrLandUse.Name = "cbIrrLandUse";
             this.cbIrrLandUse.Size = new System.Drawing.Size(293, 26);
             this.cbIrrLandUse.TabIndex = 6;
+            this.cbIrrLandUse.SelectedIndexChanged += new System.EventHandler(this.cbIrrLanduse_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -2656,7 +2662,7 @@
             this.tpIrrigation.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgIrrigationSources)).EndInit();
             this.tpSediment.ResumeLayout(false);
             this.tpSediment.PerformLayout();
             this.groupBox4.ResumeLayout(false);
@@ -2815,12 +2821,12 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button btnClear;
-        private System.Windows.Forms.Button btnSelect;
-        private System.Windows.Forms.Button btnBalance;
-        private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.DataGridView dgIrrigationSources;
+        private System.Windows.Forms.Button btnClearPondFile;
+        private System.Windows.Forms.Button btnSelectPondFile;
+        private System.Windows.Forms.Button btnBalanceIrrigationSources;
+        private System.Windows.Forms.Button btnDeleteIrrigationSource;
+        private System.Windows.Forms.Button btnAddIrrigationSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColIrrSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPct;
         private System.Windows.Forms.GroupBox groupBox2;

@@ -1391,7 +1391,7 @@ namespace warmf {
                     }
 
                     catchData.nluPonds = ReadInt(sr, "NLUPONDS");
-                    if (catchData.nluPonds > 0) catchData.ponds = new List<PondedLandUse>();
+                    catchData.ponds = new List<PondedLandUse>();
                     for (int jj = 0; jj < catchData.nluPonds; jj++)
                     {
                         PondedLandUse newpond = new PondedLandUse();
