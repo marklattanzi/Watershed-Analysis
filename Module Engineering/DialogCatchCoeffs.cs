@@ -742,7 +742,33 @@ namespace warmf
                 catchment.landUsePercent[i] = Convert.ToDouble(dgLanduse.Rows[i].Cells[1].Value);
             }
 
-            //Irrigation tab - Tabled for now - there is no irrigation in the Catawba watershed...
+            // Irrigation tab
+            for (int i = 0; i < catchment.irrigationSource.Count; i++) //Landuse
+            {
+                // Clear the old irrigation sources for this land use
+                catchment.irrigationSource[i].Clear();
+                for (int j = 0; j < irrigationArray[i].Count; j++)
+                {
+                    // Add back the irrigation sources from the dialog
+                    IrrigationSourcePercent theSourcePercent = irrigationArray[i][j];
+                    catchment.irrigationSource[i].Add(theSourcePercent);
+                }
+            }
+
+            // Ponded land uses
+            catchment.ponds.Clear();
+            for (int i = 0; i < pondFilesArray.Count; i++)
+            {
+                // There is a pond depth file if the file name is not blank
+                if (!string.IsNullOrWhiteSpace(pondFilesArray[i]))
+                {
+                    // Save the land use and file name in the master coefficients
+                    PondedLandUse thePondedLandUse = new PondedLandUse();
+                    thePondedLandUse.landUseNumber = i + 1;
+                    thePondedLandUse.pondFilename = pondFilesArray[i];
+                    catchment.ponds.Add(thePondedLandUse);
+                }
+            }
             //cbIrrLandUse.Items.Clear();
             //cbIrrLandUse.Items.AddRange(landuselist.ToArray());
             //cbIrrLandUse.SelectedIndex = 7;
@@ -763,11 +789,11 @@ namespace warmf
             catchment.pumpToDivFile.Clear();
             for (int i = 0; i < lbPumpingFrom.Items.Count; i++)
             {
-                catchment.pumpFromDivFile.Add(Global.coe.GetFLONumberFromName(lbPumpingFrom.Items[i].ToString()));
+                catchment.pumpFromDivFile.Add(Global.coe.GetFLONumberFromName(lbPumpingFrom.Items[i].ToString()) + 1);
             }
             for (int i = 0; i < lbPumpingTo.Items.Count; i++)
             {
-                catchment.pumpToDivFile.Add(Global.coe.GetFLONumberFromName(lbPumpingTo.Items[i].ToString()));
+                catchment.pumpToDivFile.Add(Global.coe.GetFLONumberFromName(lbPumpingTo.Items[i].ToString()) + 1);
             }
 
             //CE-QUAL-W2 tab
@@ -945,24 +971,26 @@ namespace warmf
                 //Soil Layers > Hydrology coefficients
                 for (int j = 0; j < catchment.numSoilLayers; j++)
                 {
-                    if (catchment.soils[j].thickness != Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[0].Value))
-                        catchment_i.soils[j].thickness = Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[0].Value);
-                    if (catchment.soils[j].moisture != Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[1].Value))
-                        catchment_i.soils[j].moisture = Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[1].Value);
-                    if (catchment.soils[j].fieldCapacity != Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[2].Value))
-                        catchment_i.soils[j].fieldCapacity = Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[2].Value);
-                    if (catchment.soils[j].saturationMoisture != Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[3].Value))
-                        catchment_i.soils[j].saturationMoisture = Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[3].Value);
-                    if (catchment.soils[j].horizHydraulicConduct != Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[4].Value))
-                        catchment_i.soils[j].horizHydraulicConduct = Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[4].Value);
-                    if (catchment.soils[j].vertHydraulicConduct != Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[5].Value))
-                        catchment_i.soils[j].vertHydraulicConduct = Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[5].Value);
-                    if (catchment.soils[j].evapTranspireFract != Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[6].Value))
-                        catchment_i.soils[j].evapTranspireFract = Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[6].Value);
-                    if (catchment.soils[j].density != Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[7].Value))
-                        catchment_i.soils[j].density = Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[7].Value);
-                    if (catchment.soils[j].tortuosity != Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[8].Value))
-                        catchment_i.soils[j].tortuosity = Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[8].Value);
+                    if (catchment.soils[j].area != Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[0].Value))
+                        catchment_i.soils[j].area = Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[0].Value);
+                    if (catchment.soils[j].thickness != Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[1].Value))
+                        catchment_i.soils[j].thickness = Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[1].Value);
+                    if (catchment.soils[j].moisture != Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[2].Value))
+                        catchment_i.soils[j].moisture = Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[2].Value);
+                    if (catchment.soils[j].fieldCapacity != Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[3].Value))
+                        catchment_i.soils[j].fieldCapacity = Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[3].Value);
+                    if (catchment.soils[j].saturationMoisture != Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[4].Value))
+                        catchment_i.soils[j].saturationMoisture = Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[4].Value);
+                    if (catchment.soils[j].horizHydraulicConduct != Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[5].Value))
+                        catchment_i.soils[j].horizHydraulicConduct = Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[5].Value);
+                    if (catchment.soils[j].vertHydraulicConduct != Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[6].Value))
+                        catchment_i.soils[j].vertHydraulicConduct = Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[6].Value);
+                    if (catchment.soils[j].evapTranspireFract != Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[7].Value))
+                        catchment_i.soils[j].evapTranspireFract = Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[7].Value);
+                    if (catchment.soils[j].density != Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[8].Value))
+                        catchment_i.soils[j].density = Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[8].Value);
+                    if (catchment.soils[j].tortuosity != Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[9].Value))
+                        catchment_i.soils[j].tortuosity = Convert.ToDouble(dgSoilHydroCoeffs.Rows[j].Cells[9].Value);
                 }
 
                 //Soil Layers > Initial Concentrations

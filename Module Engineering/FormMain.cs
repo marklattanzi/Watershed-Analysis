@@ -1137,8 +1137,8 @@ namespace warmf {
                         if (!oldCOEline.StartsWith("FILES") || !newCOElineTrim.StartsWith("FILES"))
                         {
                             swErrors.WriteLine("Line " + i.ToString());
-                            swErrors.WriteLine(Path.GetFileName(firstCOEFileName) + ": " + oldCOEline);
-                            swErrors.WriteLine(Path.GetFileName(secondCOEFileName) + ": " + newCOElineTrim);
+                            swErrors.WriteLine(Path.GetFileName(firstCOEFileName) + ":\n" + oldCOEline);
+                            swErrors.WriteLine(Path.GetFileName(secondCOEFileName) + ":\n" + newCOElineTrim);
                             swErrors.WriteLine();
 
                             differences++;
