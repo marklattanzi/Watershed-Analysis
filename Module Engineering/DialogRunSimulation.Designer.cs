@@ -92,30 +92,30 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(7, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(98, 15);
+            this.label1.Size = new System.Drawing.Size(104, 16);
             this.label1.TabIndex = 2;
             this.label1.Text = "Beginning Date: ";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(7, 53);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(81, 15);
+            this.label2.Size = new System.Drawing.Size(87, 16);
             this.label2.TabIndex = 3;
             this.label2.Text = "Ending Date: ";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(7, 85);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(118, 15);
+            this.label3.Size = new System.Drawing.Size(127, 16);
             this.label3.TabIndex = 4;
             this.label3.Text = "Time steps per day: ";
             // 
@@ -153,9 +153,10 @@
             // chbxWaterQuality
             // 
             this.chbxWaterQuality.AutoSize = true;
+            this.chbxWaterQuality.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chbxWaterQuality.Location = new System.Drawing.Point(11, 25);
             this.chbxWaterQuality.Name = "chbxWaterQuality";
-            this.chbxWaterQuality.Size = new System.Drawing.Size(98, 19);
+            this.chbxWaterQuality.Size = new System.Drawing.Size(107, 20);
             this.chbxWaterQuality.TabIndex = 7;
             this.chbxWaterQuality.Text = "Water Quality";
             this.chbxWaterQuality.UseVisualStyleBackColor = true;
@@ -163,9 +164,10 @@
             // chbxSediment
             // 
             this.chbxSediment.AutoSize = true;
+            this.chbxSediment.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chbxSediment.Location = new System.Drawing.Point(11, 50);
             this.chbxSediment.Name = "chbxSediment";
-            this.chbxSediment.Size = new System.Drawing.Size(79, 19);
+            this.chbxSediment.Size = new System.Drawing.Size(82, 20);
             this.chbxSediment.TabIndex = 8;
             this.chbxSediment.Text = "Sediment";
             this.chbxSediment.UseVisualStyleBackColor = true;
@@ -173,9 +175,10 @@
             // chbxLandApplication
             // 
             this.chbxLandApplication.AutoSize = true;
+            this.chbxLandApplication.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chbxLandApplication.Location = new System.Drawing.Point(11, 75);
             this.chbxLandApplication.Name = "chbxLandApplication";
-            this.chbxLandApplication.Size = new System.Drawing.Size(116, 19);
+            this.chbxLandApplication.Size = new System.Drawing.Size(122, 20);
             this.chbxLandApplication.TabIndex = 9;
             this.chbxLandApplication.Text = "Land Application";
             this.chbxLandApplication.UseVisualStyleBackColor = true;
@@ -183,9 +186,10 @@
             // chbxPointSources
             // 
             this.chbxPointSources.AutoSize = true;
+            this.chbxPointSources.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chbxPointSources.Location = new System.Drawing.Point(10, 100);
             this.chbxPointSources.Name = "chbxPointSources";
-            this.chbxPointSources.Size = new System.Drawing.Size(103, 19);
+            this.chbxPointSources.Size = new System.Drawing.Size(109, 20);
             this.chbxPointSources.TabIndex = 10;
             this.chbxPointSources.Text = "Point Sources";
             this.chbxPointSources.UseVisualStyleBackColor = true;
@@ -206,9 +210,10 @@
             // label4
             // 
             this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(300, 33);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(97, 15);
+            this.label4.Size = new System.Drawing.Size(101, 16);
             this.label4.TabIndex = 12;
             this.label4.Text = "Subwatersheds:";
             // 
@@ -226,9 +231,10 @@
             // chbxHydrologyAutocalibration
             // 
             this.chbxHydrologyAutocalibration.AutoSize = true;
+            this.chbxHydrologyAutocalibration.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chbxHydrologyAutocalibration.Location = new System.Drawing.Point(17, 18);
             this.chbxHydrologyAutocalibration.Name = "chbxHydrologyAutocalibration";
-            this.chbxHydrologyAutocalibration.Size = new System.Drawing.Size(163, 19);
+            this.chbxHydrologyAutocalibration.Size = new System.Drawing.Size(174, 20);
             this.chbxHydrologyAutocalibration.TabIndex = 14;
             this.chbxHydrologyAutocalibration.Text = "Hydrology Autocalibration";
             this.chbxHydrologyAutocalibration.UseVisualStyleBackColor = true;
@@ -238,9 +244,10 @@
             // 
             this.lblNumLoops.AutoSize = true;
             this.lblNumLoops.Enabled = false;
+            this.lblNumLoops.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNumLoops.Location = new System.Drawing.Point(14, 45);
             this.lblNumLoops.Name = "lblNumLoops";
-            this.lblNumLoops.Size = new System.Drawing.Size(105, 15);
+            this.lblNumLoops.Size = new System.Drawing.Size(110, 16);
             this.lblNumLoops.TabIndex = 15;
             this.lblNumLoops.Text = "Number of loops: ";
             // 
@@ -270,18 +277,20 @@
             // 
             // btnSelectAll
             // 
-            this.btnSelectAll.Location = new System.Drawing.Point(366, 155);
+            this.btnSelectAll.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSelectAll.Location = new System.Drawing.Point(350, 151);
             this.btnSelectAll.Name = "btnSelectAll";
-            this.btnSelectAll.Size = new System.Drawing.Size(108, 25);
+            this.btnSelectAll.Size = new System.Drawing.Size(124, 29);
             this.btnSelectAll.TabIndex = 17;
             this.btnSelectAll.Text = "Select All";
             this.btnSelectAll.UseVisualStyleBackColor = true;
             // 
             // btnClearSelection
             // 
-            this.btnClearSelection.Location = new System.Drawing.Point(480, 155);
+            this.btnClearSelection.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClearSelection.Location = new System.Drawing.Point(480, 151);
             this.btnClearSelection.Name = "btnClearSelection";
-            this.btnClearSelection.Size = new System.Drawing.Size(108, 25);
+            this.btnClearSelection.Size = new System.Drawing.Size(124, 29);
             this.btnClearSelection.TabIndex = 18;
             this.btnClearSelection.Text = "Clear Selection";
             this.btnClearSelection.UseVisualStyleBackColor = true;
@@ -300,9 +309,10 @@
             // chbxLoadingData
             // 
             this.chbxLoadingData.AutoSize = true;
+            this.chbxLoadingData.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chbxLoadingData.Location = new System.Drawing.Point(304, 271);
             this.chbxLoadingData.Name = "chbxLoadingData";
-            this.chbxLoadingData.Size = new System.Drawing.Size(154, 19);
+            this.chbxLoadingData.Size = new System.Drawing.Size(160, 20);
             this.chbxLoadingData.TabIndex = 20;
             this.chbxLoadingData.Text = "Generate Loading Data";
             this.chbxLoadingData.UseVisualStyleBackColor = true;
@@ -310,9 +320,10 @@
             // chbxWarmStart
             // 
             this.chbxWarmStart.AutoSize = true;
+            this.chbxWarmStart.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chbxWarmStart.Location = new System.Drawing.Point(14, 30);
             this.chbxWarmStart.Name = "chbxWarmStart";
-            this.chbxWarmStart.Size = new System.Drawing.Size(268, 19);
+            this.chbxWarmStart.Size = new System.Drawing.Size(284, 20);
             this.chbxWarmStart.TabIndex = 21;
             this.chbxWarmStart.Text = "Initial conditions from warm start file (*.WST)";
             this.chbxWarmStart.UseVisualStyleBackColor = true;
@@ -322,15 +333,17 @@
             // 
             this.lblWarmStartFile.AutoSize = true;
             this.lblWarmStartFile.Enabled = false;
+            this.lblWarmStartFile.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWarmStartFile.Location = new System.Drawing.Point(13, 66);
             this.lblWarmStartFile.Name = "lblWarmStartFile";
-            this.lblWarmStartFile.Size = new System.Drawing.Size(92, 15);
+            this.lblWarmStartFile.Size = new System.Drawing.Size(101, 16);
             this.lblWarmStartFile.TabIndex = 22;
             this.lblWarmStartFile.Text = "Warm start file: ";
             // 
             // btnSelectWst
             // 
             this.btnSelectWst.Enabled = false;
+            this.btnSelectWst.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSelectWst.Location = new System.Drawing.Point(298, 26);
             this.btnSelectWst.Name = "btnSelectWst";
             this.btnSelectWst.Size = new System.Drawing.Size(137, 25);
@@ -361,6 +374,7 @@
             // 
             // btnHelp
             // 
+            this.btnHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnHelp.Location = new System.Drawing.Point(441, 431);
             this.btnHelp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnHelp.Name = "btnHelp";
@@ -372,6 +386,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.Location = new System.Drawing.Point(280, 431);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCancel.Name = "btnCancel";
@@ -382,6 +397,7 @@
             // 
             // btnRun
             // 
+            this.btnRun.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRun.Location = new System.Drawing.Point(116, 431);
             this.btnRun.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnRun.Name = "btnRun";

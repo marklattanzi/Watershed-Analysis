@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tcRiverTabs = new System.Windows.Forms.TabControl();
             this.tpPhysicalData = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -487,14 +487,14 @@
             // 
             // chartStageWidth
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartStageWidth.ChartAreas.Add(chartArea1);
+            chartArea2.Name = "ChartArea1";
+            this.chartStageWidth.ChartAreas.Add(chartArea2);
             this.chartStageWidth.Location = new System.Drawing.Point(273, 8);
             this.chartStageWidth.Margin = new System.Windows.Forms.Padding(4);
             this.chartStageWidth.Name = "chartStageWidth";
-            series1.ChartArea = "ChartArea1";
-            series1.Name = "SeriesStageWidth";
-            this.chartStageWidth.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.Name = "SeriesStageWidth";
+            this.chartStageWidth.Series.Add(series2);
             this.chartStageWidth.Size = new System.Drawing.Size(465, 458);
             this.chartStageWidth.TabIndex = 2;
             this.chartStageWidth.Text = "chart1";
@@ -1581,6 +1581,7 @@
             // 
             // btnHelp
             // 
+            this.btnHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnHelp.Location = new System.Drawing.Point(535, 596);
             this.btnHelp.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnHelp.Name = "btnHelp";
@@ -1592,6 +1593,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.Location = new System.Drawing.Point(277, 596);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnCancel.Name = "btnCancel";
@@ -1604,6 +1606,7 @@
             // btnOK
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnOK.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnOK.Location = new System.Drawing.Point(20, 596);
             this.btnOK.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnOK.Name = "btnOK";

@@ -70,9 +70,10 @@
             this.chkShowObservations.AutoSize = true;
             this.chkShowObservations.Checked = true;
             this.chkShowObservations.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkShowObservations.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkShowObservations.Location = new System.Drawing.Point(11, 345);
             this.chkShowObservations.Name = "chkShowObservations";
-            this.chkShowObservations.Size = new System.Drawing.Size(118, 17);
+            this.chkShowObservations.Size = new System.Drawing.Size(143, 20);
             this.chkShowObservations.TabIndex = 2;
             this.chkShowObservations.Text = "Show Observations";
             this.chkShowObservations.UseVisualStyleBackColor = true;
@@ -80,6 +81,7 @@
             // 
             // btnStatistics
             // 
+            this.btnStatistics.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStatistics.Location = new System.Drawing.Point(11, 368);
             this.btnStatistics.Name = "btnStatistics";
             this.btnStatistics.Size = new System.Drawing.Size(130, 34);
@@ -89,26 +91,28 @@
             // 
             // btnCreateTextFile
             // 
+            this.btnCreateTextFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCreateTextFile.Location = new System.Drawing.Point(15, 34);
             this.btnCreateTextFile.Name = "btnCreateTextFile";
-            this.btnCreateTextFile.Size = new System.Drawing.Size(108, 29);
+            this.btnCreateTextFile.Size = new System.Drawing.Size(135, 29);
             this.btnCreateTextFile.TabIndex = 4;
             this.btnCreateTextFile.Text = "Create Text File";
             this.btnCreateTextFile.UseVisualStyleBackColor = true;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(129, 39);
+            this.textBox1.Location = new System.Drawing.Point(156, 39);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(167, 20);
+            this.textBox1.Size = new System.Drawing.Size(187, 22);
             this.textBox1.TabIndex = 5;
             // 
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(302, 19);
+            this.radioButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton1.Location = new System.Drawing.Point(357, 19);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(164, 17);
+            this.radioButton1.Size = new System.Drawing.Size(200, 20);
             this.radioButton1.TabIndex = 6;
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "This constituent, all scenarios";
@@ -117,9 +121,10 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(302, 42);
+            this.radioButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton2.Location = new System.Drawing.Point(357, 42);
             this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(164, 17);
+            this.radioButton2.Size = new System.Drawing.Size(198, 20);
             this.radioButton2.TabIndex = 7;
             this.radioButton2.TabStop = true;
             this.radioButton2.Text = "All constituents, this scenario:";
@@ -128,9 +133,9 @@
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(321, 65);
+            this.comboBox2.Location = new System.Drawing.Point(354, 65);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(234, 21);
+            this.comboBox2.Size = new System.Drawing.Size(249, 24);
             this.comboBox2.TabIndex = 8;
             // 
             // chartOutput
@@ -168,15 +173,17 @@
             this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.btnCreateTextFile);
-            this.groupBox1.Location = new System.Drawing.Point(221, 349);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Location = new System.Drawing.Point(170, 349);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(569, 94);
+            this.groupBox1.Size = new System.Drawing.Size(620, 94);
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Export Timeseries Output";
+            this.groupBox1.Text = "Export Time Series Output";
             // 
             // button1
             // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.Location = new System.Drawing.Point(11, 409);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(130, 34);

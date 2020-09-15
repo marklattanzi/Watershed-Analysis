@@ -28,21 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.tcReservoirTabs = new System.Windows.Forms.TabControl();
             this.tpPhysicalData = new System.Windows.Forms.TabPage();
-            this.tbMaxElev = new UtilityClasses.DoubleTextBox();
-            this.tbMinElev = new UtilityClasses.DoubleTextBox();
-            this.tbInitElev = new UtilityClasses.DoubleTextBox();
-            this.tbResSegID = new UtilityClasses.Int32TextBox();
+            this.tbMaxElev = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbMinElev = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbInitElev = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbResSegID = new warmf.UtilityClasses.Int32TextBox();
             this.tbName = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -67,35 +67,35 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.tbSecchiDepth = new UtilityClasses.DoubleTextBox();
-            this.tbRadiationFractionDepth = new UtilityClasses.DoubleTextBox();
-            this.tbRadiationAbsorbed = new UtilityClasses.DoubleTextBox();
+            this.tbSecchiDepth = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbRadiationFractionDepth = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbRadiationAbsorbed = new warmf.UtilityClasses.DoubleTextBox();
             this.tpDiffusion = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.tbDensityAttenuationExponent = new UtilityClasses.DoubleTextBox();
-            this.tbDensityMaxDiff = new UtilityClasses.DoubleTextBox();
-            this.tbDensityCriticalGradient = new UtilityClasses.DoubleTextBox();
+            this.tbDensityAttenuationExponent = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbDensityMaxDiff = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbDensityCriticalGradient = new warmf.UtilityClasses.DoubleTextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tbWindMaxDiff = new UtilityClasses.DoubleTextBox();
-            this.tbWindA1 = new UtilityClasses.DoubleTextBox();
-            this.tbWindA2 = new UtilityClasses.DoubleTextBox();
-            this.tbWindMinDiff = new UtilityClasses.DoubleTextBox();
+            this.tbWindMaxDiff = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbWindA1 = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbWindA2 = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbWindMinDiff = new warmf.UtilityClasses.DoubleTextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.tbMinNegDensGrad = new UtilityClasses.DoubleTextBox();
+            this.tbMinNegDensGrad = new warmf.UtilityClasses.DoubleTextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.tbInflowEntrainment = new UtilityClasses.DoubleTextBox();
+            this.tbInflowEntrainment = new warmf.UtilityClasses.DoubleTextBox();
             this.tpSediment = new System.Windows.Forms.TabPage();
-            this.tbSedDiffRate = new UtilityClasses.DoubleTextBox();
+            this.tbSedDiffRate = new warmf.UtilityClasses.DoubleTextBox();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
-            this.tbSedThickness = new UtilityClasses.DoubleTextBox();
+            this.tbSedThickness = new warmf.UtilityClasses.DoubleTextBox();
             this.tpInitTemp = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
             this.chartDepthTemp = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -106,8 +106,8 @@
             this.tpPtSrcs = new System.Windows.Forms.TabPage();
             this.tbNPDESpermit = new System.Windows.Forms.TextBox();
             this.label34 = new System.Windows.Forms.Label();
-            this.tbOutletWidth = new UtilityClasses.DoubleTextBox();
-            this.tbOutletElev = new UtilityClasses.DoubleTextBox();
+            this.tbOutletWidth = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbOutletElev = new warmf.UtilityClasses.DoubleTextBox();
             this.label33 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
@@ -154,9 +154,9 @@
             this.Width = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Type = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tpMet = new System.Windows.Forms.TabPage();
-            this.tbTempLapse = new UtilityClasses.DoubleTextBox();
-            this.tbWindSpeedFactor = new UtilityClasses.DoubleTextBox();
-            this.tbPrecipWeight = new UtilityClasses.DoubleTextBox();
+            this.tbTempLapse = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbWindSpeedFactor = new warmf.UtilityClasses.DoubleTextBox();
+            this.tbPrecipWeight = new warmf.UtilityClasses.DoubleTextBox();
             this.label30 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
@@ -210,6 +210,7 @@
             // 
             // btnHelp
             // 
+            this.btnHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnHelp.Location = new System.Drawing.Point(492, 552);
             this.btnHelp.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnHelp.Name = "btnHelp";
@@ -221,6 +222,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.Location = new System.Drawing.Point(277, 552);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCancel.Name = "btnCancel";
@@ -232,6 +234,7 @@
             // btnOK
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnOK.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnOK.Location = new System.Drawing.Point(58, 552);
             this.btnOK.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnOK.Name = "btnOK";
@@ -385,13 +388,13 @@
             // 
             // chartStageFlow
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chartStageFlow.ChartAreas.Add(chartArea4);
+            chartArea1.Name = "ChartArea1";
+            this.chartStageFlow.ChartAreas.Add(chartArea1);
             this.chartStageFlow.Location = new System.Drawing.Point(276, 29);
             this.chartStageFlow.Name = "chartStageFlow";
-            series4.ChartArea = "ChartArea1";
-            series4.Name = "seriesStageFlow";
-            this.chartStageFlow.Series.Add(series4);
+            series1.ChartArea = "ChartArea1";
+            series1.Name = "seriesStageFlow";
+            this.chartStageFlow.Series.Add(series1);
             this.chartStageFlow.Size = new System.Drawing.Size(403, 355);
             this.chartStageFlow.TabIndex = 17;
             this.chartStageFlow.Text = "chart1";
@@ -835,15 +838,15 @@
             // 
             // chartDepthTemp
             // 
-            chartArea5.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea5.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea5.Name = "ChartArea1";
-            this.chartDepthTemp.ChartAreas.Add(chartArea5);
+            chartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea2.Name = "ChartArea1";
+            this.chartDepthTemp.ChartAreas.Add(chartArea2);
             this.chartDepthTemp.Location = new System.Drawing.Point(281, 32);
             this.chartDepthTemp.Name = "chartDepthTemp";
-            series5.ChartArea = "ChartArea1";
-            series5.Name = "Series1";
-            this.chartDepthTemp.Series.Add(series5);
+            series2.ChartArea = "ChartArea1";
+            series2.Name = "Series1";
+            this.chartDepthTemp.Series.Add(series2);
             this.chartDepthTemp.Size = new System.Drawing.Size(389, 313);
             this.chartDepthTemp.TabIndex = 9;
             this.chartDepthTemp.Text = "chart1";
@@ -1209,13 +1212,13 @@
             // 
             // chartStageArea
             // 
-            chartArea6.Name = "ChartArea1";
-            this.chartStageArea.ChartAreas.Add(chartArea6);
+            chartArea3.Name = "ChartArea1";
+            this.chartStageArea.ChartAreas.Add(chartArea3);
             this.chartStageArea.Location = new System.Drawing.Point(279, 15);
             this.chartStageArea.Name = "chartStageArea";
-            series6.ChartArea = "ChartArea1";
-            series6.Name = "seriesStageArea";
-            this.chartStageArea.Series.Add(series6);
+            series3.ChartArea = "ChartArea1";
+            series3.Name = "seriesStageArea";
+            this.chartStageArea.Series.Add(series3);
             this.chartStageArea.Size = new System.Drawing.Size(403, 355);
             this.chartStageArea.TabIndex = 20;
             this.chartStageArea.Text = "chart1";
