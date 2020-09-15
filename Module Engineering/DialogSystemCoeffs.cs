@@ -405,20 +405,16 @@ namespace warmf
             tbNonstructLeachFract.Text = Global.coe.litter.nonStructLeach.ToString();
 
             //Septic Systems
-            tbSepticFlow.Text = Global.coe.septic.failedFlow.ToString();
-            dgvSepticDischQual.Columns.Add("Type1", "Type 1");
-            dgvSepticDischQual.Columns.Add("Type2", "Type 2");
-            dgvSepticDischQual.Columns.Add("Type3", "Type 3");
+            tbSepticFlow.Text = Global.coe.septic[0].flow.ToString();
+            for (int ii = 0; ii < Global.coe.septic.Count; ii++)
+                dgvSepticDischQual.Columns.Add("Type1", Global.coe.septic[ii].name);
             for (int iConstit = 0; iConstit < Global.coe.numChemicalParams; iConstit++)
             {
                 dgvSepticDischQual.Rows.Insert(iConstit);
                 dgvSepticDischQual.Rows[iConstit].HeaderCell.Value = ConstitNames[iConstit];
-                dgvSepticDischQual.Rows[iConstit].Cells[0].Value =
-                    Global.coe.septic.type1[iConstit].ToString();
-                dgvSepticDischQual.Rows[iConstit].Cells[1].Value =
-                    Global.coe.septic.type2[iConstit].ToString();
-                dgvSepticDischQual.Rows[iConstit].Cells[2].Value =
-                    Global.coe.septic.type3[iConstit].ToString();
+                for (int ii = 0; ii < Global.coe.septic.Count; ii++)
+                    dgvSepticDischQual.Rows[iConstit].Cells[ii].Value =
+                        Global.coe.septic[ii].quality[iConstit].ToString();
             }
             FormatDataGridView(dgvTrunkComp);
 
@@ -1094,12 +1090,11 @@ namespace warmf
             Global.coe.litter.nonStructLeach = Convert.ToDouble(tbNonstructLeachFract.Text);
 
             //Septic Systems
-            Global.coe.septic.failedFlow = Convert.ToDouble(tbSepticFlow.Text);
+            Global.coe.septic[0].flow = Convert.ToDouble(tbSepticFlow.Text);
             for (int i = 0; i < Global.coe.numChemicalParams; i++)
             {
-                Global.coe.septic.type1[i] = Convert.ToDouble(dgvSepticDischQual.Rows[i].Cells[0].Value);
-                Global.coe.septic.type2[i] = Convert.ToDouble(dgvSepticDischQual.Rows[i].Cells[1].Value);
-                Global.coe.septic.type3[i] = Convert.ToDouble(dgvSepticDischQual.Rows[i].Cells[2].Value);
+                for (int j = 0; j < Global.coe.septic.Count; j++)
+                    Global.coe.septic[j].quality[i] = Convert.ToDouble(dgvSepticDischQual.Rows[i].Cells[0].Value);
             }
 
             //Minerals

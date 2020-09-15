@@ -318,11 +318,11 @@ namespace warmf {
         public double nitrificationRate;
     }
 
-    public class Septic {
-        public double failedFlow;
-        public List<double> type1;
-        public List<double> type2;
-        public List<double> type3;
+    public class SepticTypeInfo
+    {
+        public string name;
+        public double flow;
+        public List<double> quality;
     }
 
     public class Landuse {
@@ -352,12 +352,15 @@ namespace warmf {
         public List<List<List<double>>> fertPlanApplication;
     }
 
+    public class CatchSepticInfo
+    {
+        public double percent;
+        public double layer;
+    }
+
     public class CatchSeptic {
-        public double soilLayer;
+        public List<CatchSepticInfo> septicType;
         public double population;
-        public double standardPct;
-        public double advancedPct;
-        public double failingPct;
         public double initialBiomass;
         public double biomassThickness;
         public double biomassArea;
@@ -791,7 +794,7 @@ namespace warmf {
         public List<Mineral> minerals;
         public Litter litter;
         public Snow snow;
-        public Septic septic;
+        public List<SepticTypeInfo> septic;
 
         // land use data
         public List<double> partDV;     // one per month
@@ -1240,12 +1243,17 @@ namespace warmf {
 
 				// Septic
 				line = ReadSpacerLine(sr, "SEPTIC");
-                septic = new Septic
+                int numSeptic = 3;
+                dnums = ReadDoubleData(sr, "SEPTIC", 1);
+                double septicFlow = dnums[0];
+                septic = new List<SepticTypeInfo>();
+                for (int i = 0; i < numSeptic; i++)
                 {
-                    failedFlow = ReadDouble(sr, "SEPTIC"),
-                    type1 = ReadDoubleData(sr, "SEPTIC", numComponents),
-                    type2 = ReadDoubleData(sr, "SEPTIC", numComponents),
-                    type3 = ReadDoubleData(sr, "SEPTIC", numComponents)
+                    SepticTypeInfo aSepticType = new SepticTypeInfo();
+                    aSepticType.name = "Septic Type " + Convert.ToString(i + 1);
+                    aSepticType.flow = septicFlow;
+                    aSepticType.quality = ReadDoubleData(sr, "SEPTIC", numComponents);
+                    septic.Add(aSepticType);
                 };
 
                 // Land use data
@@ -1422,18 +1430,21 @@ namespace warmf {
 
                     // septic
                     dnums = ReadDoubleData(sr, "SEPTIC", 9);
-                    catchData.septic = new CatchSeptic
+                    int catchSepticSoilLayer = Convert.ToInt32(dnums[0]);
+                    catchData.septic = new CatchSeptic();
+                    catchData.septic.population = dnums[1];
+                    catchData.septic.initialBiomass = dnums[5];
+                    catchData.septic.biomassThickness = dnums[6];
+                    catchData.septic.biomassArea = dnums[7];
+                    catchData.septic.biomassRespRate = dnums[8];
+                    catchData.septic.biomassMortRate = ReadDouble(sr, "SEPTIC");
+                    catchData.septic.septicType = new List<CatchSepticInfo>();
+                    for (int jj = 0; jj < Global.coe.septic.Count; jj++)
                     {
-                        soilLayer = dnums[0],
-                        population = dnums[1],
-                        standardPct = dnums[2],
-                        advancedPct = dnums[3],
-                        failingPct = dnums[4],
-                        initialBiomass = dnums[5],
-                        biomassThickness = dnums[6],
-                        biomassArea = dnums[7],
-                        biomassRespRate = dnums[8],
-                        biomassMortRate = ReadDouble(sr, "SEPTIC")
+                        CatchSepticInfo aSepticInfo = new CatchSepticInfo();
+                        aSepticInfo.layer = catchSepticSoilLayer;
+                        aSepticInfo.percent = dnums[2 + jj];
+                        catchData.septic.septicType.Add(aSepticInfo);
                     };
 
                     // sediment
@@ -2389,12 +2400,11 @@ namespace warmf {
                 //Septic
                 sw.WriteLine("******** SEPTIC ********");
                 sw.WriteString("SEPTIC");
-                sw.WriteDouble(septic.failedFlow);
+                sw.WriteDouble(septic[0].flow);
                 sw.WriteLine();
 
-                WriteDoubleData(sw, "SEPTIC", septic.type1);
-                WriteDoubleData(sw, "SEPTIC", septic.type2);
-                WriteDoubleData(sw, "SEPTIC", septic.type3);
+                for (int i = 0; i < septic.Count; i++)
+                    WriteDoubleData(sw, "SEPTIC", septic[i].quality);
 
                 //Land use data
                 sw.WriteLine("******** CANOPY AND LAND USE ********");
@@ -2584,11 +2594,10 @@ namespace warmf {
 
                         // septic
                         sw.WriteString("SEPTIC");
-                        sw.WriteDouble(catchments[i].septic.soilLayer);
+                        sw.WriteDouble(catchments[i].septic.septicType[0].layer);
                         sw.WriteDouble(catchments[i].septic.population);
-                        sw.WriteDouble(catchments[i].septic.standardPct);
-                        sw.WriteDouble(catchments[i].septic.advancedPct);
-                        sw.WriteDouble(catchments[i].septic.failingPct);
+                        for (int j = 0; j < catchments[i].septic.septicType.Count; j++)
+                            sw.WriteDouble(catchments[i].septic.septicType[j].percent);
                         sw.WriteDouble(catchments[i].septic.initialBiomass);
                         sw.WriteDouble(catchments[i].septic.biomassThickness);
                         sw.WriteDouble(catchments[i].septic.biomassArea);

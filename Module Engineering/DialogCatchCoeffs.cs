@@ -232,11 +232,11 @@ namespace warmf
             }
 
             //Septic Systems tab
-            tbDischargeSoilLayer.Text = catchment.septic.soilLayer.ToString();
+            tbDischargeSoilLayer.Text = catchment.septic.septicType[0].layer.ToString();
             tbPopSeptic.Text = catchment.septic.population.ToString();
-            tbTreatment1.Text = catchment.septic.failingPct.ToString();
-            tbTreatment2.Text = catchment.septic.standardPct.ToString();
-            tbTreatment3.Text = catchment.septic.advancedPct.ToString();
+            tbTreatment1.Text = catchment.septic.septicType[0].percent.ToString();
+            tbTreatment2.Text = catchment.septic.septicType[1].percent.ToString();
+            tbTreatment3.Text = catchment.septic.septicType[2].percent.ToString();
             tbInitBiomass.Text = catchment.septic.initialBiomass.ToString();
             tbBioThick.Text = catchment.septic.biomassThickness.ToString();
             tbBiozoneArea.Text = catchment.septic.biomassArea.ToString();
@@ -769,13 +769,6 @@ namespace warmf
                     catchment.ponds.Add(thePondedLandUse);
                 }
             }
-            //cbIrrLandUse.Items.Clear();
-            //cbIrrLandUse.Items.AddRange(landuselist.ToArray());
-            //cbIrrLandUse.SelectedIndex = 7;
-
-            //catchment.numIrrigationSources[cbIrrLandUse.SelectedIndex].ToString();
-            //catchment.irrigationSource.ToString();
-            //catchment.irrigationSourcePercent.ToString();
 
             //Point Sources tab
             catchment.pointSources.Clear();
@@ -908,16 +901,8 @@ namespace warmf
                     catchment_i.bmp.detentionPondVol = Convert.ToDouble(tbDetVolume.Text);
 
                 //Septic Systems tab
-                if (catchment.septic.soilLayer != Convert.ToDouble(tbDischargeSoilLayer.Text))
-                    catchment_i.septic.soilLayer = Convert.ToDouble(tbDischargeSoilLayer.Text);
                 if (catchment.septic.population != Convert.ToDouble(tbPopSeptic.Text))
                     catchment_i.septic.population = Convert.ToDouble(tbPopSeptic.Text);
-                if (catchment.septic.failingPct != Convert.ToDouble(tbTreatment1.Text))
-                    catchment_i.septic.failingPct = Convert.ToDouble(tbTreatment1.Text);
-                if (catchment.septic.standardPct != Convert.ToDouble(tbTreatment2.Text))
-                    catchment_i.septic.standardPct = Convert.ToDouble(tbTreatment2.Text);
-                if (catchment.septic.advancedPct != Convert.ToDouble(tbTreatment3.Text))
-                    catchment_i.septic.advancedPct = Convert.ToDouble(tbTreatment3.Text);
                 if (catchment.septic.initialBiomass != Convert.ToDouble(tbInitBiomass.Text))
                     catchment_i.septic.initialBiomass = Convert.ToDouble(tbInitBiomass.Text);
                 if (catchment.septic.biomassThickness != Convert.ToDouble(tbBioThick.Text))
@@ -928,6 +913,18 @@ namespace warmf
                     catchment_i.septic.biomassRespRate = Convert.ToDouble(tbBioRespCoeff.Text);
                 if (catchment.septic.biomassMortRate != Convert.ToDouble(tbBioMortCoeff.Text))
                     catchment_i.septic.biomassMortRate = Convert.ToDouble(tbBioMortCoeff.Text);
+                if (catchment.septic.septicType[0].percent != Convert.ToDouble(tbTreatment1.Text))
+                    catchment_i.septic.septicType[0].percent = Convert.ToDouble(tbTreatment1.Text);
+                if (catchment.septic.septicType[1].percent != Convert.ToDouble(tbTreatment2.Text))
+                    catchment_i.septic.septicType[1].percent = Convert.ToDouble(tbTreatment2.Text);
+                if (catchment.septic.septicType[2].percent != Convert.ToDouble(tbTreatment3.Text))
+                    catchment_i.septic.septicType[2].percent = Convert.ToDouble(tbTreatment3.Text);
+                for (int j = 0; j < catchment.septic.septicType.Count; j++)
+                {
+                    if (catchment.septic.septicType[j].layer != Convert.ToDouble(tbDischargeSoilLayer.Text))
+                        catchment_i.septic.septicType[j].layer = Convert.ToDouble(tbDischargeSoilLayer.Text);
+                }
+
 
                 //Reactions tab
                 for (int j = 0; j < Global.coe.numReactions; j++)
