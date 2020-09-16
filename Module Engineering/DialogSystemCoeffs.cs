@@ -72,6 +72,17 @@ namespace warmf
                 ConstitUnits.Add(Global.coe.physicalConstits[ii].units.ToString());
             }
 
+            // Fortran codes for each chemical and physical parameter
+            List<string> ConstitFortranCodes = new List<string>();
+            for (int ii = 0; ii < Global.coe.numChemicalParams; ii++)
+            {
+                ConstitFortranCodes.Add(Global.coe.chemConstits[ii].fortranCode.ToString());
+            }
+            for (int ii = 0; ii < Global.coe.numPhysicalParams; ii++)
+            {
+                ConstitFortranCodes.Add(Global.coe.physicalConstits[ii].fortranCode.ToString());
+            }
+
             //Physical Data
             tbLatitude.Text = Global.coe.latitude.ToString();
             tbLongitude.Text = Global.coe.longitude.ToString();
@@ -405,18 +416,37 @@ namespace warmf
             tbNonstructLeachFract.Text = Global.coe.litter.nonStructLeach.ToString();
 
             //Septic Systems
-            tbSepticFlow.Text = Global.coe.septic[0].flow.ToString();
+            // Flow
+            dgvSepticDischQual.Columns.Add("Flow", "Flow, L/cap/d");
+            dgvSepticDischQual.RowHeadersWidth = 150;
+            // Row headers and flow
             for (int ii = 0; ii < Global.coe.septic.Count; ii++)
-                dgvSepticDischQual.Columns.Add("Type1", Global.coe.septic[ii].name);
+            {
+                dgvSepticDischQual.Rows.Add();
+                dgvSepticDischQual.Rows[ii].HeaderCell.Value = Global.coe.septic[ii].name;
+                dgvSepticDischQual.Rows[ii].Cells[0].Value = Global.coe.septic[ii].flow.ToString();
+            }
+            // Column headers and data
+            string [] hideCodes = { "MSOX", "MNOX", "MH", "MALK", "MTIC", "MCO2", "MALG1", "MALG2", "MALG3", "MALG4", "MSDET", "MSSED" };
             for (int iConstit = 0; iConstit < Global.coe.numChemicalParams; iConstit++)
             {
-                dgvSepticDischQual.Rows.Insert(iConstit);
-                dgvSepticDischQual.Rows[iConstit].HeaderCell.Value = ConstitNames[iConstit];
+                // Header
+                dgvSepticDischQual.Columns.Add("Qual" + (iConstit + 1).ToString(), ConstitShortNames[iConstit] + ", " + ConstitUnits[iConstit]);
+                // Concentrations
                 for (int ii = 0; ii < Global.coe.septic.Count; ii++)
-                    dgvSepticDischQual.Rows[iConstit].Cells[ii].Value =
+                    dgvSepticDischQual.Rows[ii].Cells[iConstit + 1].Value =
                         Global.coe.septic[ii].quality[iConstit].ToString();
+                // Hide those constituents which do not apply
+                for (int jj = 0; jj < hideCodes.Count(); jj++)
+                    if (ConstitFortranCodes[iConstit].StartsWith(hideCodes[jj]))
+                    {
+                        dgvSepticDischQual.Columns[iConstit + 1].Visible = false;
+                        break;
+                    }
+
             }
-            FormatDataGridView(dgvTrunkComp);
+//            FormatDataGridView(dgvSepticDischQual);
+            EnableSepticAddRemoveButtons();
 
             //Minerals
             //Make copies of all mineral information - save changes on ok_click event
@@ -992,6 +1022,51 @@ namespace warmf
             FormatDataGridView(dgvRxnProducts);
         }
 
+        private void btnAddSepticType_Click(object sender, EventArgs e)
+        {
+            DialogAddSepticType myDialog = new DialogAddSepticType();
+            int numRows = dgvSepticDischQual.Rows.Count;
+            myDialog.tbNewSepticSystemType.Text = "Septic Type " + (numRows + 1).ToString();
+            if (myDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                dgvSepticDischQual.Rows.Add();
+                if (numRows > 0)
+                    for (int i = 0; i < dgvSepticDischQual.Columns.Count; i++)
+                        dgvSepticDischQual.Rows[numRows].Cells[i].Value = dgvSepticDischQual.Rows[numRows - 1].Cells[i].Value;
+
+                dgvSepticDischQual.Rows[numRows].HeaderCell.Value = myDialog.tbNewSepticSystemType.Text;
+            }
+            EnableSepticAddRemoveButtons();
+        }
+
+        private void btnRemoveSepticType_Click(object sender, EventArgs e)
+        {
+            DataGridViewSelectedCellCollection selectedCells = dgvSepticDischQual.SelectedCells;
+            // Delete the rows in backward order so we don't mess up the ordering as we delete
+            // Refuse to delete the last row in the spreadsheet
+            for (int i = selectedCells.Count - 1; i >= 0; i--)
+                if (dgvSepticDischQual.Rows.Count > 1)
+                    dgvSepticDischQual.Rows.RemoveAt(selectedCells[i].RowIndex);
+
+            EnableSepticAddRemoveButtons();
+        }
+
+        // Enables and disables the Add and Remove buttons on the Septic tab based on the current number of types
+        private void EnableSepticAddRemoveButtons()
+        {
+
+            // Disable the remove button if we only have one septic type
+            if (dgvSepticDischQual.Rows.Count <= 1)
+                btnRemoveSepticType.Enabled = false;
+            else
+                btnRemoveSepticType.Enabled = true;
+            // Disable the add button if there are 15 septic types
+            if (dgvSepticDischQual.Rows.Count >= 15)
+                btnAddSepticType.Enabled = false;
+            else
+                btnAddSepticType.Enabled = true;
+        }
+
         private void cbParameters_SelectedIndexChanged(object sender, EventArgs e)
         {
             int ii = cbParameters.SelectedIndex;
@@ -1090,11 +1165,15 @@ namespace warmf
             Global.coe.litter.nonStructLeach = Convert.ToDouble(tbNonstructLeachFract.Text);
 
             //Septic Systems
-            Global.coe.septic[0].flow = Convert.ToDouble(tbSepticFlow.Text);
-            for (int i = 0; i < Global.coe.numChemicalParams; i++)
+            Global.coe.septic.Clear();
+            for (int j = 0; j < dgvSepticDischQual.Rows.Count; j++)
             {
-                for (int j = 0; j < Global.coe.septic.Count; j++)
-                    Global.coe.septic[j].quality[i] = Convert.ToDouble(dgvSepticDischQual.Rows[i].Cells[0].Value);
+                SepticTypeInfo aSepticTypeInfo = new SepticTypeInfo();
+                aSepticTypeInfo.flow = Convert.ToDouble(dgvSepticDischQual.Rows[j].Cells[0].Value);
+                for (int i = 0; i < Global.coe.numChemicalParams; i++)
+                    aSepticTypeInfo.quality[i] = Convert.ToDouble(dgvSepticDischQual.Rows[j].Cells[i + 1].Value);
+
+                Global.coe.septic.Add(aSepticTypeInfo);
             }
 
             //Minerals

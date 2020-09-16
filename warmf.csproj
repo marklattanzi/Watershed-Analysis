@@ -114,6 +114,12 @@
     <Compile Include="Module Engineering\DialogOutput.Designer.cs">
       <DependentUpon>DialogOutput.cs</DependentUpon>
     </Compile>
+    <Compile Include="Module Engineering\DialogAddSepticType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Module Engineering\DialogAddSepticType.Designer.cs">
+      <DependentUpon>DialogAddSepticType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Module Engineering\ScenarioManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -188,6 +194,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Module Data\ImportFileFormat.resx">
       <DependentUpon>ImportFileFormat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Module Engineering\DialogAddSepticType.resx">
+      <DependentUpon>DialogAddSepticType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Module Engineering\DialogCatchCoeffs.resx">
       <DependentUpon>DialogCatchCoeffs.cs</DependentUpon>
