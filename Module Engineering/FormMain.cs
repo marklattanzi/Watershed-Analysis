@@ -459,19 +459,19 @@ namespace warmf {
 
         private void pboxSplash_Click(object sender, EventArgs e)
         {
-            catchmentLayer.FileName = "catchments.shp";
+/*            catchmentLayer.FileName = "catchments.shp";
             riverLayer.FileName = "rivers.shp";
             reservoirLayer.FileName = "lakes.shp";
             LoadCatchmentRiverReservoirShapefiles();
             SetupEngrModule();  // shortcut to load SHP file --MRL
 
             // read in Coefficients file
-            string fname = Global.DIR.COE + "Catawba.coe";
+            string fname = Global.DIR.COE + "Catawba_69b.coe";
 
             if (!Global.coe.ReadCOE(fname))
             {
                 MessageBox.Show(this, "Error reading coefficients file.", "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
-            }
+            }*/
         }
 
         #region File Menu Events

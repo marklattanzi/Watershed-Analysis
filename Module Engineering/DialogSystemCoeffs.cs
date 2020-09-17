@@ -1029,6 +1029,7 @@ namespace warmf
             myDialog.tbNewSepticSystemType.Text = "Septic Type " + (numRows + 1).ToString();
             if (myDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                // Add a row and if possible (should be) copy the contents from the row above
                 dgvSepticDischQual.Rows.Add();
                 if (numRows > 0)
                     for (int i = 0; i < dgvSepticDischQual.Columns.Count; i++)

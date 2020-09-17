@@ -141,12 +141,7 @@
             this.label28 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
             this.tpRxns = new System.Windows.Forms.TabPage();
             this.label40 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
@@ -242,12 +237,9 @@
             this.tbBiozoneArea = new warmf.UtilityClasses.DoubleTextBox();
             this.tbBioThick = new warmf.UtilityClasses.DoubleTextBox();
             this.tbInitBiomass = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbTreatment3 = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbTreatment2 = new warmf.UtilityClasses.DoubleTextBox();
-            this.tbTreatment1 = new warmf.UtilityClasses.DoubleTextBox();
             this.tbPopSeptic = new warmf.UtilityClasses.Int32TextBox();
-            this.tbDischargeSoilLayer = new warmf.UtilityClasses.Int32TextBox();
             this.tbNumSoilLayers = new warmf.UtilityClasses.Int32TextBox();
+            this.dgvSepticLayerPercent = new System.Windows.Forms.DataGridView();
             this.tcCatchTabs.SuspendLayout();
             this.tpPhysData.SuspendLayout();
             this.gbSizeSlope.SuspendLayout();
@@ -294,6 +286,7 @@
             this.gbCEQUALW2temp.SuspendLayout();
             this.gbCEQUALW2flow.SuspendLayout();
             this.groupBox10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSepticLayerPercent)).BeginInit();
             this.SuspendLayout();
             // 
             // tcCatchTabs
@@ -1515,27 +1508,19 @@
             // 
             // tpSeptic
             // 
+            this.tpSeptic.Controls.Add(this.dgvSepticLayerPercent);
             this.tpSeptic.Controls.Add(this.tbBioMortCoeff);
             this.tpSeptic.Controls.Add(this.tbBioRespCoeff);
             this.tpSeptic.Controls.Add(this.tbBiozoneArea);
             this.tpSeptic.Controls.Add(this.tbBioThick);
             this.tpSeptic.Controls.Add(this.tbInitBiomass);
-            this.tpSeptic.Controls.Add(this.tbTreatment3);
-            this.tpSeptic.Controls.Add(this.tbTreatment2);
-            this.tpSeptic.Controls.Add(this.tbTreatment1);
             this.tpSeptic.Controls.Add(this.tbPopSeptic);
-            this.tpSeptic.Controls.Add(this.tbDischargeSoilLayer);
             this.tpSeptic.Controls.Add(this.label30);
             this.tpSeptic.Controls.Add(this.label29);
             this.tpSeptic.Controls.Add(this.label28);
             this.tpSeptic.Controls.Add(this.label27);
             this.tpSeptic.Controls.Add(this.label26);
-            this.tpSeptic.Controls.Add(this.label25);
-            this.tpSeptic.Controls.Add(this.label24);
-            this.tpSeptic.Controls.Add(this.label23);
-            this.tpSeptic.Controls.Add(this.label22);
             this.tpSeptic.Controls.Add(this.label21);
-            this.tpSeptic.Controls.Add(this.label20);
             this.tpSeptic.Location = new System.Drawing.Point(4, 50);
             this.tpSeptic.Margin = new System.Windows.Forms.Padding(4);
             this.tpSeptic.Name = "tpSeptic";
@@ -1595,65 +1580,15 @@
             this.label26.TabIndex = 6;
             this.label26.Text = "Initial Biomass (g/cm2)";
             // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(174, 191);
-            this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(227, 18);
-            this.label25.TabIndex = 5;
-            this.label25.Text = "Treatment Type 2 (Standard, %)";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(174, 227);
-            this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(233, 18);
-            this.label24.TabIndex = 4;
-            this.label24.Text = "Treatment Type 3 (Advanced, %)";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(174, 155);
-            this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(210, 18);
-            this.label23.TabIndex = 3;
-            this.label23.Text = "Treatment Type 1 (Failing, %)";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(138, 119);
-            this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(318, 18);
-            this.label22.TabIndex = 2;
-            this.label22.Text = "Distribution of Septic Systems (total = 100%)";
-            // 
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(138, 83);
+            this.label21.Location = new System.Drawing.Point(138, 15);
             this.label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(213, 18);
             this.label21.TabIndex = 1;
             this.label21.Text = "Population Served by Septics";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(138, 47);
-            this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(154, 18);
-            this.label20.TabIndex = 0;
-            this.label20.Text = "Discharge Soil Layer";
             // 
             // tpRxns
             // 
@@ -2578,45 +2513,13 @@
             this.tbInitBiomass.Size = new System.Drawing.Size(127, 26);
             this.tbInitBiomass.TabIndex = 16;
             // 
-            // tbTreatment3
-            // 
-            this.tbTreatment3.Location = new System.Drawing.Point(484, 223);
-            this.tbTreatment3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbTreatment3.Name = "tbTreatment3";
-            this.tbTreatment3.Size = new System.Drawing.Size(127, 26);
-            this.tbTreatment3.TabIndex = 15;
-            // 
-            // tbTreatment2
-            // 
-            this.tbTreatment2.Location = new System.Drawing.Point(484, 187);
-            this.tbTreatment2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbTreatment2.Name = "tbTreatment2";
-            this.tbTreatment2.Size = new System.Drawing.Size(127, 26);
-            this.tbTreatment2.TabIndex = 14;
-            // 
-            // tbTreatment1
-            // 
-            this.tbTreatment1.Location = new System.Drawing.Point(484, 151);
-            this.tbTreatment1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbTreatment1.Name = "tbTreatment1";
-            this.tbTreatment1.Size = new System.Drawing.Size(127, 26);
-            this.tbTreatment1.TabIndex = 13;
-            // 
             // tbPopSeptic
             // 
-            this.tbPopSeptic.Location = new System.Drawing.Point(484, 79);
+            this.tbPopSeptic.Location = new System.Drawing.Point(484, 11);
             this.tbPopSeptic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbPopSeptic.Name = "tbPopSeptic";
             this.tbPopSeptic.Size = new System.Drawing.Size(127, 26);
             this.tbPopSeptic.TabIndex = 12;
-            // 
-            // tbDischargeSoilLayer
-            // 
-            this.tbDischargeSoilLayer.Location = new System.Drawing.Point(485, 43);
-            this.tbDischargeSoilLayer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbDischargeSoilLayer.Name = "tbDischargeSoilLayer";
-            this.tbDischargeSoilLayer.Size = new System.Drawing.Size(127, 26);
-            this.tbDischargeSoilLayer.TabIndex = 11;
             // 
             // tbNumSoilLayers
             // 
@@ -2625,6 +2528,16 @@
             this.tbNumSoilLayers.Name = "tbNumSoilLayers";
             this.tbNumSoilLayers.Size = new System.Drawing.Size(48, 26);
             this.tbNumSoilLayers.TabIndex = 1;
+            // 
+            // dgvSepticLayerPercent
+            // 
+            this.dgvSepticLayerPercent.AllowUserToAddRows = false;
+            this.dgvSepticLayerPercent.AllowUserToDeleteRows = false;
+            this.dgvSepticLayerPercent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSepticLayerPercent.Location = new System.Drawing.Point(141, 49);
+            this.dgvSepticLayerPercent.Name = "dgvSepticLayerPercent";
+            this.dgvSepticLayerPercent.Size = new System.Drawing.Size(470, 197);
+            this.dgvSepticLayerPercent.TabIndex = 21;
             // 
             // DialogCatchCoeffs
             // 
@@ -2718,6 +2631,7 @@
             this.gbCEQUALW2flow.PerformLayout();
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSepticLayerPercent)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2752,15 +2666,11 @@
         private UtilityClasses.DoubleTextBox tbBufferWidth;
         private UtilityClasses.DoubleTextBox tbPctBuffered;
         private UtilityClasses.Int32TextBox tbPopSeptic;
-        private UtilityClasses.Int32TextBox tbDischargeSoilLayer;
         private UtilityClasses.DoubleTextBox tbBioMortCoeff;
         private UtilityClasses.DoubleTextBox tbBioRespCoeff;
         private UtilityClasses.DoubleTextBox tbBiozoneArea;
         private UtilityClasses.DoubleTextBox tbBioThick;
         private UtilityClasses.DoubleTextBox tbInitBiomass;
-        private UtilityClasses.DoubleTextBox tbTreatment3;
-        private UtilityClasses.DoubleTextBox tbTreatment2;
-        private UtilityClasses.DoubleTextBox tbTreatment1;
         private UtilityClasses.Int32TextBox tbNumSoilLayers;
         private System.Windows.Forms.TextBox tbCEQUALconcFile;
         private System.Windows.Forms.TextBox tbCEQUALtempFile;
@@ -2862,12 +2772,7 @@
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label20;
         private System.Windows.Forms.DataGridView dgSoilHydroCoeffs;
         private System.Windows.Forms.ComboBox cbSoilCoeffGroup;
         private System.Windows.Forms.Label label31;
@@ -2954,5 +2859,6 @@
         private System.Windows.Forms.CheckBox chbxApplyToAll;
         private System.Windows.Forms.CheckBox chbxApplyToSelected;
         private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.DataGridView dgvSepticLayerPercent;
     }
 }
