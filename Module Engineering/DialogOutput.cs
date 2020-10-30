@@ -93,7 +93,8 @@ namespace warmf
 
             //select output type and chemical parameter
             cbOutputType.SelectedIndex = 1;
-            lbOutputParameters.SelectedIndex = 0;
+            if (lbOutputParameters.Items.Count > 0)
+                lbOutputParameters.SelectedIndex = 0;
 
             //chart the data
             ChartTheData();

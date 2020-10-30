@@ -133,19 +133,12 @@ namespace warmf
             {
                 if (Global.coe.rivers[i].swIsSubwaterBoundary)
                 {
-                    for (int j = SubwatershedNodesList.Count - 1; j >= 0; j--)
+                    // Go as far down the list as possible but stop when we are upstream of another subwatershed node
+                    for (int j = 0; j < SubwatershedNodesList.Count; j++)
                     {
-                        if (IsNodeUpstream(SubwatershedNodesList[j].idNum, Global.coe.rivers[i].idNum) == false
-                            || j==0)
+                        if (IsNodeUpstream(SubwatershedNodesList[j].idNum, Global.coe.rivers[i].idNum))
                         {
-                            if (SubwatershedNodesList.Count==numPourPoints)
-                            {
-                                SubwatershedNodesList.Insert(j, Global.coe.rivers[i]);
-                            }
-                            else
-                            {
-                                SubwatershedNodesList.Insert(j + 1, Global.coe.rivers[i]);//added +1 - if conditions met, add below comparison node, not above
-                            }
+                            SubwatershedNodesList.Insert(j, Global.coe.rivers[i]);
                             break;
                         }
                     }
@@ -157,19 +150,12 @@ namespace warmf
                 {
                     if (Global.coe.reservoirs[i].reservoirSegs[k].swIsSubwaterBoundary)
                     {
-                        for (int j = SubwatershedNodesList.Count - 1; j >= 0; j--)
+                        // Go as far down the list as possible but stop when we are upstream of another subwatershed node
+                        for (int j = 0; j <  SubwatershedNodesList.Count; j++)
                         {
-                            if (IsNodeUpstream(SubwatershedNodesList[j].idNum, Global.coe.reservoirs[i].reservoirSegs[k].idNum) == false
-                                || j==0)
+                            if (IsNodeUpstream(SubwatershedNodesList[j].idNum, Global.coe.reservoirs[i].reservoirSegs[k].idNum))
                             {
-                                if (SubwatershedNodesList.Count==numPourPoints)
-                                {
-                                    SubwatershedNodesList.Insert(j, Global.coe.rivers[i]);
-                                }
-                                else
-                                {
-                                    SubwatershedNodesList.Insert(j + 1, Global.coe.reservoirs[i].reservoirSegs[k]);
-                                }
+                                SubwatershedNodesList.Insert(j, Global.coe.reservoirs[i].reservoirSegs[k]);
                                 break;
                             }
                         }
@@ -347,18 +333,23 @@ namespace warmf
             {
                 Global.coe.numAutoCalibrationLoops = Convert.ToInt32(nudLoops.Value);
             }
-            
+
+            // Write MODEL.CTL file
+            STechStreamWriter modelctl = new STechStreamWriter(Global.DIR.ROOT + "MODEL.CTL");
+            // Number of batch loops
+            modelctl.WriteLine("0");
+            // Number of subwatersheds
+            modelctl.WriteLine(lbSubwatersheds.SelectedIndices.Count.ToString());
+
             // Generate run file (00000000.Txx) for each subwatershed
             for (int i = 0; i < SubwatershedNodesList.Count; i++)
             {
-                if (i<9)
-                {
-                    fileName = Global.DIR.INPUT + "00000000.T0" + (i + 1).ToString();
-                }
-                else
-                {
-                    fileName = Global.DIR.INPUT + "00000000.T" + (i + 1).ToString();
-                }
+                fileName = Global.coe.AppendFileNameWithSubwatershed(Global.DIR.INPUT + "00000000.T00", i + 1);
+
+                // Write file name to MODEL.CTL if this subwatershed is to be simulated
+                if (lbSubwatersheds.SelectedIndices.Contains(i))
+                    modelctl.WriteLine(Global.coe.GetRelativePath(fileName));
+
                 int nodeIndex = Global.coe.GetRiverNumberFromID(SubwatershedNodesList[i].idNum);
                 if (nodeIndex >= 0) //rivers
                 {
@@ -370,6 +361,7 @@ namespace warmf
                     List<int> reservoirAndSegment = Global.coe.GetReservoirAndSegmentNumberFromID(SubwatershedNodesList[i].idNum);
                     if (reservoirAndSegment.Count == 2 && reservoirAndSegment[0] >= 0 && reservoirAndSegment[1] >= 0)
                     {
+                        Global.coe.reservoirs[reservoirAndSegment[0]].subwatershed = i + 1;
                         Global.coe.reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]].subwatershed = i + 1;
                         Global.coe.DefineSubwatershed(Global.coe.reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]],i+1);
                     }
@@ -389,7 +381,15 @@ namespace warmf
                 
             }
 
-            // Run WARMF.exe
+            // Write final output files to MODEL.CTL
+            modelctl.WriteLine(Global.coe.GetRelativePath(Global.DIR.CAT) + Global.coe.catchmentOutFilename);
+            modelctl.WriteLine(Global.coe.GetRelativePath(Global.DIR.RIV) + Global.coe.riverOutFilename);
+            modelctl.WriteLine(Global.coe.GetRelativePath(Global.DIR.LAK) + Global.coe.reservoirOutFilename);
+            modelctl.WriteLine(Global.coe.GetRelativePath(Global.DIR.PSM) + Global.coe.loadingOutFilename);
+            modelctl.WriteLine(Global.coe.GetRelativePath(Global.DIR.WST) + Global.coe.warmstartOutFilename);
+            modelctl.Close();
+
+            // Run model.exe
             using (System.Diagnostics.Process pProcess = new System.Diagnostics.Process())
             {
                 pProcess.StartInfo.FileName = Global.DIR.ROOT + "\\MODEL.EXE";
@@ -398,9 +398,20 @@ namespace warmf
                 pProcess.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
                 pProcess.StartInfo.CreateNoWindow = false; //display in a separate window
                 pProcess.Start();
-                string output = pProcess.StandardOutput.ReadToEnd(); //The output result
-                pProcess.WaitForExit();
+//                string output = pProcess.StandardOutput.ReadToEnd(); //The output result
+//                pProcess.WaitForExit();
             }
+        }
+
+        private void btnSelectAll_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < lbSubwatersheds.Items.Count; i++)
+                lbSubwatersheds.SetSelected(i, true);
+        }
+
+        private void btnClearSelection_Click(object sender, EventArgs e)
+        {
+            lbSubwatersheds.ClearSelected();
         }
     }
 }

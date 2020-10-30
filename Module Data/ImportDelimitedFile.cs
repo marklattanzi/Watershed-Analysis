@@ -267,9 +267,6 @@ namespace warmf.Module_Data
             List<string> modifiedFiles = new List<string>();
             List <int> modifiedParameters = new List<int>();
 
-            // Save list of observed data files
-            List <string> observedFiles;
-
             // Get information from transfer buffer
             for (lineCount = 0; lineCount < ImportDelimitedDataGrid.Rows.Count; lineCount++)
             {

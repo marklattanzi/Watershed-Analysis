@@ -284,6 +284,7 @@
             this.btnSelectAll.TabIndex = 17;
             this.btnSelectAll.Text = "Select All";
             this.btnSelectAll.UseVisualStyleBackColor = true;
+            this.btnSelectAll.Click += new System.EventHandler(this.btnSelectAll_Click);
             // 
             // btnClearSelection
             // 
@@ -294,6 +295,7 @@
             this.btnClearSelection.TabIndex = 18;
             this.btnClearSelection.Text = "Clear Selection";
             this.btnClearSelection.UseVisualStyleBackColor = true;
+            this.btnClearSelection.Click += new System.EventHandler(this.btnClearSelection_Click);
             // 
             // groupBox3
             // 
@@ -397,6 +399,7 @@
             // 
             // btnRun
             // 
+            this.btnRun.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnRun.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRun.Location = new System.Drawing.Point(116, 431);
             this.btnRun.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);

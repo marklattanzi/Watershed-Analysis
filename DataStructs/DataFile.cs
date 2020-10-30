@@ -117,6 +117,17 @@ namespace warmf
             public string yaxis;
         }
 
+        // Determines if the latitude and longitude are possible
+        public bool CoordinatesInRange()
+        {
+            if (latitude < -90 || latitude > 90)
+                return false;
+            if (longitude < -180 || longitude > 180)
+                return false;
+
+            return true;
+        }
+
         public bool ReadVersionLatLongName(ref STechStreamReader SR)
         {
             string line;

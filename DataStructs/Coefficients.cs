@@ -2118,6 +2118,9 @@ namespace warmf {
                 if (swStartupFile)
                 {
                     sw.WriteInt(1);
+                    // Write directory if this is for running a simulation
+                    if (subwatershedID >= 0)
+                        sw.WriteString(GetRelativePath(Global.DIR.WST));
                     sw.WriteString(startupFileName);
                 }
                 else sw.WriteInt(0);
@@ -2130,6 +2133,9 @@ namespace warmf {
                 for (int i = 0; i < numMETFiles; i++)
                 {
                     sw.WriteString("METFILE");
+                    // Write directory when running a simulation
+                    if (subwatershedID >= 0)
+                        sw.WriteString(GetRelativePath(Global.DIR.MET));
                     sw.WriteString(METFilename[i]);
                     sw.WriteLine();
                 }
@@ -2145,6 +2151,9 @@ namespace warmf {
                     sw.WriteDouble(DIVData[i].flowCap);
                     sw.WriteOnOffas1or0(DIVData[i].swUseMonthFlows);
                     sw.WriteOnOffas1or0(DIVData[i].managed);
+                    // Write directory when running a simulation
+                    if (subwatershedID >= 0)
+                        sw.WriteString(GetRelativePath(Global.DIR.FLO));
                     sw.WriteString(DIVData[i].filename);
                     sw.WriteLine();
                     WriteDoubleData(sw, "DIVFILES", DIVData[i].monthlyFlow);
@@ -2157,6 +2166,9 @@ namespace warmf {
                 for (int i = 0; i < numPTSFiles; i++)
                 {
                     sw.WriteString("PTSFILES");
+                    // Write directory when running a simulation
+                    if (subwatershedID >= 0)
+                        sw.WriteString(GetRelativePath(Global.DIR.PTS));
                     sw.WriteString(PTSFilename[i]);
                     sw.WriteLine();
                 }
@@ -2168,27 +2180,53 @@ namespace warmf {
                 for (int i = 0; i < numAIRFiles; i++)
                 {
                     sw.WriteString("AIRFILE");
+                    // Write directory when running a simulation
+                    if (subwatershedID >= 0)
+                        sw.WriteString(GetRelativePath(Global.DIR.AIR));
                     sw.WriteString(AIRFilename[i]);
                     sw.WriteLine();
                 }
 
                 //run files
                 sw.WriteString("FILES");
-                sw.WriteString(catchmentOutFilename);
+                // Include directory when running a simulation
+                if (subwatershedID >= 0)
+                    sw.WriteString(GetRelativePath(Global.DIR.CAT) + AppendFileNameWithSubwatershed(catchmentOutFilename, subwatershedID));
+                else
+                    sw.WriteString(catchmentOutFilename);
                 sw.WriteLine();
                 sw.WriteString("FILES");
-                sw.WriteString(riverOutFilename);
+                // Include directory when running a simulation
+                if (subwatershedID >= 0)
+                    sw.WriteString(GetRelativePath(Global.DIR.RIV) + AppendFileNameWithSubwatershed(riverOutFilename, subwatershedID));
+                else
+                    sw.WriteString(riverOutFilename);
                 sw.WriteLine();
                 sw.WriteString("FILES");
-                sw.WriteString(reservoirOutFilename);
+                // Include directory when running a simulation
+                if (subwatershedID >= 0)
+                    sw.WriteString(GetRelativePath(Global.DIR.LAK) + AppendFileNameWithSubwatershed(reservoirOutFilename, subwatershedID));
+                else
+                    sw.WriteString(reservoirOutFilename);
                 sw.WriteLine();
                 sw.WriteString("FILES");
-                sw.WriteString(loadingOutFilename);
+                // Include directory when running a simulation
+                if (subwatershedID >= 0)
+                    sw.WriteString(GetRelativePath(Global.DIR.PSM) + AppendFileNameWithSubwatershed(loadingOutFilename, subwatershedID));
+                else
+                    sw.WriteString(loadingOutFilename);
                 sw.WriteLine();
                 sw.WriteString("FILES");
-                sw.WriteString(warmstartOutFilename);
+                // Include directory when running a simulation
+                if (subwatershedID >= 0)
+                    sw.WriteString(GetRelativePath(Global.DIR.WST) + AppendFileNameWithSubwatershed(warmstartOutFilename, subwatershedID));
+                else
+                    sw.WriteString(warmstartOutFilename);
                 sw.WriteLine();
                 sw.WriteString("FILES");
+                // Include directory when running a simulation
+                if (subwatershedID >= 0)
+                    sw.WriteString(GetRelativePath(Global.DIR.OUTPUT));
                 sw.WriteString(textOutFilename);
                 sw.WriteLine();
 
@@ -2572,6 +2610,9 @@ namespace warmf {
                             {
                                 sw.WriteString("PONDFILE");
                                 sw.WriteInt(catchments[i].ponds[j].landUseNumber);
+                                // Include directory when running a simulation
+                                if (subwatershedID >= 0)
+                                    sw.WriteString(GetRelativePath(Global.DIR.ORH));
                                 sw.WriteString(catchments[i].ponds[j].pondFilename);
                                 sw.WriteLine();
                             }
@@ -2866,6 +2907,9 @@ namespace warmf {
                         sw.WriteLine();
 
                         sw.WriteString("OBSD" + rivers[i].idNum.ToString());
+                        // Include directory when running a simulation
+                        if (subwatershedID >= 0)
+                            sw.WriteString(GetRelativePath(Global.DIR.ORH));
                         sw.WriteString(rivers[i].hydrologyFilename);
                         sw.WriteLine();
 
@@ -2896,6 +2940,9 @@ namespace warmf {
 
                         //water quality observations
                         sw.WriteString("OBSD" + rivers[i].idNum.ToString());
+                        // Include directory when running a simulation
+                        if (subwatershedID >= 0)
+                            sw.WriteString(GetRelativePath(Global.DIR.ORC));
                         sw.WriteString(rivers[i].obsWQFilename);
                         sw.WriteLine();
 
@@ -2996,6 +3043,9 @@ namespace warmf {
                         //Observed reservoir hydrology
                         sw.WriteString("OBSDATA");
                         sw.WriteOnOffas1or0(reservoirs[i].swAdjustResRelease);
+                        // Include directory when running a simulation
+                        if (subwatershedID >= 0)
+                            sw.WriteString(GetRelativePath(Global.DIR.OLH));
                         sw.WriteString(reservoirs[i].hydrologyFilename);
                         sw.WriteLine();
 
@@ -3084,6 +3134,9 @@ namespace warmf {
                                 sw.WriteDouble(reservoirs[i].reservoirSegs[j].outlets[k].width);
                                 sw.WriteInt(reservoirs[i].reservoirSegs[j].outlets[k].outletType);
                                 sw.WriteInt(reservoirs[i].reservoirSegs[j].outlets[k].numFlowFile);
+                                // Include directory when running a simulation
+                                if (subwatershedID >= 0)
+                                    sw.WriteString(GetRelativePath(Global.DIR.FLO));
                                 sw.WriteString(reservoirs[i].reservoirSegs[j].outlets[k].managedFlowFilename);
                                 sw.WriteLine();
                             }
@@ -3190,6 +3243,9 @@ namespace warmf {
 
                             //observed water quality data
                             sw.WriteString("OBSDATA");
+                            // Include directory when running a simulation
+                            if (subwatershedID >= 0)
+                                sw.WriteString(GetRelativePath(Global.DIR.OLC));
                             sw.WriteString(reservoirs[i].reservoirSegs[j].obsWQFilename);
                             sw.WriteLine();
                         }
@@ -3501,7 +3557,17 @@ namespace warmf {
 
         #endregion
 
-        #region Methods - Working with Observed Data (ORC, ORH, OLC, OLH)
+        #region Methods - Working with Managed Flow & Observed Data (ORC, ORH, OLC, OLH)
+
+        // Compiles a list of all managed flow files
+        public List<string> GetAllManagedFlowFiles()
+        {
+            List<string> managedFlowFiles = new List<string> ();
+            for (int i = 0; i < DIVData.Count; i++)
+                managedFlowFiles.Add(DIVData[i].filename);
+
+            return managedFlowFiles;
+        }
 
         // Compiles a list of all catchment, river, and reservoir observed hydrology files
         public List<string> GetAllObservedHydrologyFiles()
@@ -3573,6 +3639,23 @@ namespace warmf {
                         reservoirs[ii].reservoirSegs[jj].obsWQFilename = newFileName;
 
             }
+        }
+
+        // Replaces the end of a file name with the subwatershed number (as long as the number < 100)
+        public string AppendFileNameWithSubwatershed(string fileName, int subwatershedNumber)
+        {
+            return fileName.Substring(0, fileName.Length - 2) + subwatershedNumber.ToString("00");
+        }
+
+        // Converts a file name with complete path into a file name relative to the root directory
+        public string GetRelativePath(string completeFilename)
+        {
+            // If the root directory is the first part of the complete file name, return the portion after the root directory
+            if (completeFilename.IndexOf(Global.DIR.ROOT) == 0)
+                return completeFilename.Substring(Global.DIR.ROOT.Length);
+
+            // Can't do anything so return the file name passed in
+            return completeFilename;
         }
 
         public void RunFilesCrosscheck()
