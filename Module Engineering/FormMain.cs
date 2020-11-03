@@ -713,6 +713,8 @@ namespace warmf {
                             scenarios.Add(newScenario);
                         }
                     }
+
+                    sr.Close();
                 }
                 catch (Exception ex)
                 {
@@ -1895,6 +1897,7 @@ namespace warmf {
                             //need to populate the dialog - but is it the same dialog as is used for catchments and rivers?
                             using (dlgOutput = new DialogOutput(this))
                             {
+                                dlgOutput.Populate("Lake", segmentID);
                                 dlgOutput.ShowDialog();
                             }
                         }

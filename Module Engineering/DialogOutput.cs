@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 
 
@@ -31,7 +32,7 @@ namespace warmf
             {
                 //Set reference to river and form header text
                 river = Global.coe.rivers[cnum];
-                Text = featureType + " " + river.idNum + " Output";
+                Text = river.name + " Output";
 
                 //Observed data files
                 if (river.hydrologyFilename != "")
@@ -44,9 +45,9 @@ namespace warmf
                     wqData = new ObservedFile(Global.DIR.ORC + river.obsWQFilename);
                     wqData.ReadFile();
                 }
-                
+
                 //Read the .RIV file (for selected river) into memory
-                scenarioOutput.ReadOutput(Global.DIR.RIV + "Catawba_SC_June2018.RIV", river.idNum);
+                scenarioOutput.ReadOutput(Global.DIR.RIV + Global.coe.riverOutFilename, river.idNum);
 
                 //Output Types (add function places item at bottom of list)
                 //****Don't change the order here, as it corresponds with the output order in the RIV file****
@@ -61,10 +62,10 @@ namespace warmf
             {
                 //set reference to catchment and form header text
                 catchment = Global.coe.catchments[cnum];
-                Text = featureType + " " + catchment.idNum + " Output";
+                Text = catchment.name + " Output";
 
                 //Read the .CAT file (for selected catchment) into memory
-                scenarioOutput.ReadOutput(Global.DIR.CAT + "Catawba_SC_June2018.CAT", catchment.idNum);
+                scenarioOutput.ReadOutput(Global.DIR.CAT + Global.coe.catchmentOutFilename, catchment.idNum);
 
                 //Output Types
                 cbOutputType.Items.Clear();
@@ -77,6 +78,17 @@ namespace warmf
 
                 //Hide the "Show Observations" checkbox
                 chkShowObservations.Hide();
+            }
+            else if (featureType == "Lake")
+            {
+                // Unlike catchments and rivers, the cnum passed in is the reservoir segment ID, not the index
+                List<int> reservoirAndSegment = Global.coe.GetReservoirAndSegmentNumberFromID(cnum);
+
+                // Set the caption bar of the dialog
+                Text = Global.coe.reservoirs[reservoirAndSegment[0]].reservoirSegs[reservoirAndSegment[1]].name;
+
+                // Read the .LAK file into memory
+                
             }
 
             //Populate listbox containing output parameters
