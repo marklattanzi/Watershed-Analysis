@@ -18,7 +18,7 @@ namespace warmf {
 		static Logger() {
 			datetimeFormat = "yyyy-MM-dd HH:mm:ss.fff";
 			useTime = false;
-			logFilename = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + ".log";
+			logFilename = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + "gui.log";
 
 			// Log file header line
 			string logHeader = logFilename + " is created.";

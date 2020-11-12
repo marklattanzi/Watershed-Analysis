@@ -585,6 +585,7 @@ namespace warmf
             {
                 dgvOutputControl.Rows.Insert(iCount);
                 dgvOutputControl.Rows[iCount].HeaderCell.Value = Global.coe.hydroConstits[ii].fullName.ToString();
+                dgvOutputControl.Rows[iCount].Cells[0].Value = Global.coe.hydroConstits[ii].swIncludeInOutput;
                 dgvOutputControl.Rows[iCount].Cells[1].Value = Global.coe.hydroConstits[ii].swCatchmentInclude;
                 dgvOutputControl.Rows[iCount].Cells[2].Value = Global.coe.hydroConstits[ii].swRiverInclude;
                 dgvOutputControl.Rows[iCount].Cells[3].Value = Global.coe.hydroConstits[ii].swReservoirInclude;
@@ -595,6 +596,7 @@ namespace warmf
             {
                 dgvOutputControl.Rows.Insert(iCount);
                 dgvOutputControl.Rows[iCount].HeaderCell.Value = Global.coe.chemConstits[ii].fullName.ToString();
+                dgvOutputControl.Rows[iCount].Cells[0].Value = Global.coe.chemConstits[ii].swIncludeInOutput;
                 dgvOutputControl.Rows[iCount].Cells[1].Value = Global.coe.chemConstits[ii].swCatchmentInclude;
                 dgvOutputControl.Rows[iCount].Cells[2].Value = Global.coe.chemConstits[ii].swRiverInclude;
                 dgvOutputControl.Rows[iCount].Cells[3].Value = Global.coe.chemConstits[ii].swReservoirInclude;
@@ -605,6 +607,7 @@ namespace warmf
             {
                 dgvOutputControl.Rows.Insert(iCount);
                 dgvOutputControl.Rows[iCount].HeaderCell.Value = Global.coe.physicalConstits[ii].fullName.ToString();
+                dgvOutputControl.Rows[iCount].Cells[0].Value = Global.coe.physicalConstits[ii].swIncludeInOutput;
                 dgvOutputControl.Rows[iCount].Cells[1].Value = Global.coe.physicalConstits[ii].swCatchmentInclude;
                 dgvOutputControl.Rows[iCount].Cells[2].Value = Global.coe.physicalConstits[ii].swRiverInclude;
                 dgvOutputControl.Rows[iCount].Cells[3].Value = Global.coe.physicalConstits[ii].swReservoirInclude;
@@ -615,6 +618,7 @@ namespace warmf
             {
                 dgvOutputControl.Rows.Insert(iCount);
                 dgvOutputControl.Rows[iCount].HeaderCell.Value = Global.coe.compositeConstits[ii].fullName.ToString();
+                dgvOutputControl.Rows[iCount].Cells[0].Value = Global.coe.compositeConstits[ii].swIncludeInOutput;
                 dgvOutputControl.Rows[iCount].Cells[1].Value = Global.coe.compositeConstits[ii].swCatchmentInclude;
                 dgvOutputControl.Rows[iCount].Cells[2].Value = Global.coe.compositeConstits[ii].swRiverInclude;
                 dgvOutputControl.Rows[iCount].Cells[3].Value = Global.coe.compositeConstits[ii].swReservoirInclude;
@@ -1171,8 +1175,9 @@ namespace warmf
             {
                 SepticTypeInfo aSepticTypeInfo = new SepticTypeInfo();
                 aSepticTypeInfo.flow = Convert.ToDouble(dgvSepticDischQual.Rows[j].Cells[0].Value);
+                aSepticTypeInfo.quality = new List<double>();
                 for (int i = 0; i < Global.coe.numChemicalParams; i++)
-                    aSepticTypeInfo.quality[i] = Convert.ToDouble(dgvSepticDischQual.Rows[j].Cells[i + 1].Value);
+                    aSepticTypeInfo.quality.Add(Convert.ToDouble(dgvSepticDischQual.Rows[j].Cells[i + 1].Value));
 
                 Global.coe.septic.Add(aSepticTypeInfo);
             }
@@ -1228,21 +1233,14 @@ namespace warmf
             ////Food Web
             ////Needs to be added later, using an example that has food web dynamics activated
 
-            ////Parameters
-            ////Names
-            //int iCount = 0;
-            //dgvNames.Columns.Add("abbrev", "Abbreviation");
-            //dgvNames.Columns.Add("fortcode", "Fortran Code");
-            //dgvNames.Columns.Add("units", "units");
-            //for (int ii = 0; ii < Global.coe.numHydrologyParams; ii++)
-            //{
-            //    dgvNames.Rows.Insert(iCount);
-            //    dgvNames.Rows[iCount].HeaderCell.Value = Global.coe.hydroConstits[ii].fullName.ToString();
-            //    dgvNames.Rows[iCount].Cells[0].Value = Global.coe.hydroConstits[ii].abbrevName.ToString();
-            //    dgvNames.Rows[iCount].Cells[1].Value = Global.coe.hydroConstits[ii].fortranCode.ToString();
-            //    dgvNames.Rows[iCount].Cells[2].Value = Global.coe.hydroConstits[ii].units.ToString();
-            //    iCount = iCount + 1;
-            //}
+            //Parameters
+            //Names
+            for (int ii = 0; ii < Global.coe.AllConstits.Count; ii++)
+            {
+                Global.coe.AllConstits[ii].abbrevName = dgvNames.Rows[ii].Cells[0].Value.ToString();
+                Global.coe.AllConstits[ii].fortranCode = dgvNames.Rows[ii].Cells[1].Value.ToString();
+                Global.coe.AllConstits[ii].units = dgvNames.Rows[ii].Cells[2].Value.ToString();
+            }
             //for (int ii = 0; ii < Global.coe.numChemicalParams; ii++)
             //{
             //    dgvNames.Rows.Insert(iCount);

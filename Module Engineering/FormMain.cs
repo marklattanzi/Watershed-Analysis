@@ -53,7 +53,7 @@ namespace warmf {
         public LayerInfo riverLayer;
         public LayerInfo reservoirLayer;
         public List<LayerInfo> layers = new List<LayerInfo>();
-        public List<ScenarioInfo> scenarios = new List<ScenarioInfo>();
+        public static List<ScenarioInfo> scenarios = new List<ScenarioInfo>();
 
         // sub forms of Engineering (Main) module
         public DialogRiverCoeffs dlgRiverCoeffs;
@@ -1944,6 +1944,24 @@ namespace warmf {
                         frmData.Show();
                     }
                 }
+            }
+            // System coefficients dialog or spatial output
+            else
+            {
+                if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
+                {
+                    using (dlgSystemCoeffs = new DialogSystemCoeffs(this))
+                    {
+                        dlgSystemCoeffs.Populate();
+                        if (dlgSystemCoeffs.ShowDialog() == DialogResult.OK)
+                            scenarioChanged = true;
+                    }
+                }
+                else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
+                {
+                    MessageBox.Show("Display Spatial Output Dialog");
+                }
+
             }
         }
     }

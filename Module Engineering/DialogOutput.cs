@@ -12,7 +12,7 @@ namespace warmf
 {
     public partial class DialogOutput : Form
     {
-        public static Output scenarioOutput = new Output();
+        public static List <Output> scenarioOutput = new List <Output>();
         public static River river = new River();
         public static Catchment catchment = new Catchment();
         ObservedFile hydroData;
@@ -27,7 +27,6 @@ namespace warmf
 
         public void Populate(string featureType, int cnum)
         {
-            
             if (featureType == "River")
             {
                 //Set reference to river and form header text
@@ -46,8 +45,15 @@ namespace warmf
                     wqData.ReadFile();
                 }
 
-                //Read the .RIV file (for selected river) into memory
-                scenarioOutput.ReadOutput(Global.DIR.RIV + Global.coe.riverOutFilename, river.idNum);
+                //Read the .RIV files (for selected river) into memory
+                for (int i = 0; i < FormMain.scenarios.Count; i++)
+                {
+                    Output newOutput = new Output();
+                    // Compile river output file name from scenario name
+                    string outputFilename = Path.GetFileNameWithoutExtension(FormMain.scenarios[i].Name) + ".RIV";
+                    newOutput.ReadOutput(Global.DIR.RIV + outputFilename, river.idNum);
+                    scenarioOutput.Add(newOutput);
+                }
 
                 //Output Types (add function places item at bottom of list)
                 //****Don't change the order here, as it corresponds with the output order in the RIV file****
@@ -64,8 +70,15 @@ namespace warmf
                 catchment = Global.coe.catchments[cnum];
                 Text = catchment.name + " Output";
 
-                //Read the .CAT file (for selected catchment) into memory
-                scenarioOutput.ReadOutput(Global.DIR.CAT + Global.coe.catchmentOutFilename, catchment.idNum);
+                //Read the .CAT files (for selected catchment) into memory
+                for (int i = 0; i < FormMain.scenarios.Count; i++)
+                {
+                    Output newOutput = new Output();
+                    // Compile catchment output file name from scenario name
+                    string outputFilename = Path.GetFileNameWithoutExtension(FormMain.scenarios[i].Name) + ".CAT";
+                    newOutput.ReadOutput(Global.DIR.CAT + outputFilename, catchment.idNum);
+                    scenarioOutput.Add(newOutput);
+                }
 
                 //Output Types
                 cbOutputType.Items.Clear();
@@ -92,13 +105,12 @@ namespace warmf
             }
 
             //Populate listbox containing output parameters
-            lbOutputParameters.DataSource = scenarioOutput.constituentNameUnits;
+            // Needs to be modified to allow for different scenarios to have different parameters in output
+            lbOutputParameters.DataSource = scenarioOutput[0].constituentNameUnits;
 
             //format the output graph (populated on ChartTheData)
             ChartArea chartArea1 = chartOutput.ChartAreas["ChartArea1"];
-            Series series1 = chartOutput.Series["SeriesOutput"];
             Series series2 = chartOutput.Series["SeriesObserved"];
-            series1.ChartType = SeriesChartType.Line;
             chartArea1.AxisX.MajorGrid.LineColor = Color.LightGray;
             chartArea1.AxisX.Title = "Date";
             chartArea1.AxisY.MajorGrid.LineColor = Color.LightGray;
@@ -115,49 +127,105 @@ namespace warmf
             this.lbOutputParameters.SelectedIndexChanged += new System.EventHandler(this.lbOutputParameters_SelectedIndexChanged);
         }
 
+        // Returns the name of the string referenced by chartOutput.Series
+        private string GetScenarioSeriesName(int scenarioNumber)
+        {
+            return "SeriesOutput" + (scenarioNumber + 1).ToString();
+        }
+
+        // Returns a nice round number larger than the maximum value passed in to be the maximum Y-axis value
+        private double GetMaximumYAxisValue(float maxValue)
+        {
+            // Don't know what to do with zero or negative numbers
+            if (maxValue <= 0)
+                return 1;
+            // Get the order of magnitude
+            int orderOfMagnitude = Convert.ToInt32(Math.Log10(maxValue));
+            // Make maxValue a number between 10 and 100
+            double axisMaximum = maxValue / Math.Pow(10, orderOfMagnitude - 2);
+
+            double increment;
+            // 10-20: Get next increment of 4 higher
+            if (axisMaximum < 20)
+                increment = 4;
+
+            else if (axisMaximum < 40)
+                increment = 5;
+            else
+                increment = 10;
+
+            return Convert.ToInt32(axisMaximum / increment + 1) * increment * Math.Pow(10, orderOfMagnitude - 2);
+        }
+
         public void ChartTheData()
         {
-            chartOutput.Series["SeriesOutput"].Points.Clear();
-            chartOutput.Series["SeriesObserved"].Points.Clear();
-            double timeStep = new double();
-            timeStep = 24 / scenarioOutput.timeStepPerDay;
-            DateTime xValue = new DateTime(scenarioOutput.startDateYear, scenarioOutput.startDateMonth, scenarioOutput.startDateDay, 0, 0, 0);
             DateTime startDate = new DateTime();
             DateTime endDate = new DateTime();
-            float yValue = new float();
-            int indexOutputType, indexParameter;
-
-            startDate = xValue;
-
-            indexOutputType = cbOutputType.SelectedIndex; //output type
-            indexParameter = lbOutputParameters.SelectedIndex; //parameter
-
-            for (int i = 0; i < (scenarioOutput.output[indexOutputType, indexParameter].Count); i++)
+            DateTime xValue = new DateTime();
+            float yValue;
+            float maxValue = 0;
+            chartOutput.Series.Clear();
+            // Add the scenario output
+            for (int j = 0; j < FormMain.scenarios.Count; j++)
             {
-                //y values (time series output)
-                yValue = scenarioOutput.output[indexOutputType, indexParameter][i];
+                System.Windows.Forms.DataVisualization.Charting.Series scenarioSeries = new System.Windows.Forms.DataVisualization.Charting.Series();
+                scenarioSeries.ChartArea = "ChartArea1";
+                scenarioSeries.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+                scenarioSeries.Legend = "Legend1";
+                scenarioSeries.Name = GetScenarioSeriesName(j);
 
-                if (yValue != -999)
+                double timeStep = new double();
+                if (scenarioOutput[j].timeStepPerDay > 0)
                 {
-                    chartOutput.Series["SeriesOutput"].Points.AddXY(xValue, yValue);
+                    timeStep = 24 / scenarioOutput[j].timeStepPerDay;
+                    xValue = new DateTime(scenarioOutput[j].startDateYear, scenarioOutput[j].startDateMonth, scenarioOutput[j].startDateDay, 0, 0, 0);
+                    int indexOutputType, indexParameter;
+
+                    if (j == 0 || xValue < startDate)
+                        startDate = xValue;
+
+                    indexOutputType = cbOutputType.SelectedIndex; //output type
+                    indexParameter = lbOutputParameters.SelectedIndex; //parameter
+
+                    for (int i = 0; i < (scenarioOutput[j].output[indexOutputType, indexParameter].Count); i++)
+                    {
+                        //y values (time series output)
+                        yValue = scenarioOutput[j].output[indexOutputType, indexParameter][i];
+
+                        if (yValue != -999)
+                        {
+                            scenarioSeries.Points.AddXY(xValue, yValue);
+                            maxValue = Math.Max(maxValue, yValue);
+                        }
+
+                        //increment x value
+                        xValue = xValue.AddHours(timeStep);
+                    }
+                    scenarioSeries.LegendText = Path.GetFileNameWithoutExtension(FormMain.scenarios[j].Name);
+                    chartOutput.Series.Add(scenarioSeries);
+                    if (j == 0 || xValue > endDate)
+                        endDate = xValue;
                 }
-
-                //increment x value
-                xValue = xValue.AddHours(timeStep);
             }
-            chartOutput.ChartAreas["ChartArea1"].AxisY.Title = scenarioOutput.constituentNameUnits[lbOutputParameters.SelectedIndex];
-            chartOutput.Series["SeriesOutput"].LegendText = "Scenario Output";
+            chartOutput.ChartAreas["ChartArea1"].AxisY.Title = lbOutputParameters.SelectedItem.ToString();
            
-            endDate = xValue;
-
             if (chkShowObservations.Checked) //show observed data
             {
+                System.Windows.Forms.DataVisualization.Charting.Series observedSeries = new System.Windows.Forms.DataVisualization.Charting.Series();
+                observedSeries.ChartArea = "ChartArea1";
+                observedSeries.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+                observedSeries.Legend = "Legend1";
+                observedSeries.MarkerBorderColor = System.Drawing.Color.Black;
+                observedSeries.MarkerColor = System.Drawing.Color.Transparent;
+                observedSeries.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+                observedSeries.Name = "Observed";
+
                 if (hydroData != null) //does a ORH file exist
                 {
                     for (int i = 0; i < hydroData.NumParameters; i++)
                     {
                         //does Fortran code for selected parameter exist in ORH file
-                        if (hydroData.ParameterCodes[i].Trim() == scenarioOutput.constituentFortranCode[lbOutputParameters.SelectedIndex].Trim())
+                        if (hydroData.ParameterCodes[i].Trim() == scenarioOutput[0].constituentFortranCode[lbOutputParameters.SelectedIndex].Trim())
                         {
                             for (int j = 0; j < hydroData.TheData.Count; j++) //add data to chart
                             {
@@ -165,19 +233,23 @@ namespace warmf
                                 {
                                     xValue = hydroData.TheData[j].Date;
                                     yValue = Convert.ToSingle(hydroData.TheData[j].Values[i]);
-                                    chartOutput.Series["SeriesObserved"].Points.AddXY(xValue, yValue);
+                                    if (yValue != -999)
+                                    {
+                                        observedSeries.Points.AddXY(xValue, yValue);
+                                        maxValue = Math.Max(maxValue, yValue);
+                                    }
                                 }
                             }
                             break;
                         }
                     }
                 }
-                if (wqData != null && chartOutput.Series["SeriesObserved"].Points.Count == 0) //ORC exists, and parameter not found in ORH
+                if (wqData != null) //ORC exists, and parameter not found in ORH
                 {
                     for (int i = 0; i < wqData.NumParameters; i++)
                     {
                         //does Fortran code for selected parameter exist in ORC file
-                        if (wqData.ParameterCodes[i].Trim() == scenarioOutput.constituentFortranCode[lbOutputParameters.SelectedIndex].Trim())
+                        if (wqData.ParameterCodes[i].Trim() == scenarioOutput[0].constituentFortranCode[lbOutputParameters.SelectedIndex].Trim())
                         {
                             for (int j = 0; j < wqData.TheData.Count; j++) //add data to chart
                             {
@@ -185,14 +257,26 @@ namespace warmf
                                 {
                                     xValue = wqData.TheData[j].Date;
                                     yValue = Convert.ToSingle(wqData.TheData[j].Values[i]);
-                                    chartOutput.Series["SeriesObserved"].Points.AddXY(xValue, yValue);
+                                    if (yValue != -999)
+                                    {
+                                        observedSeries.Points.AddXY(xValue, yValue);
+                                        maxValue = Math.Max(maxValue, yValue);
+                                    }
                                 }
                             }
                             break;
                         }
                     }
                 }
-                chartOutput.Series["SeriesObserved"].LegendText = "Observations";
+                if (observedSeries.Points.Count > 0)
+                    chartOutput.Series.Add(observedSeries);
+            }
+
+            // Reset the scaling on the Y axis
+            if (maxValue > 0)
+            {
+                // First set the maximum value to get the tick mark interval
+                chartOutput.ChartAreas["ChartArea1"].AxisY.Maximum = GetMaximumYAxisValue(maxValue);
             }
         }
 

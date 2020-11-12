@@ -37,9 +37,9 @@ namespace warmf {
             {
                 fortranCode = line.Substring(8, 8);
                 swIncludeInOutput = !line.Substring(16, 8).Contains("0");
-                units = line.Substring(24, 16);
-                abbrevName = line.Substring(40, 16);
-                fullName = line.Substring(56);
+                units = line.Substring(24, 16).Trim();
+                abbrevName = line.Substring(40, 16).Trim();
+                fullName = line.Substring(56).Trim();
 
                 List<int> nums = new List<int>();
                 nums = sr.ReadIntData(header, 4);
@@ -94,7 +94,7 @@ namespace warmf {
                     electricalCharge = Double.TryParse(line.Substring(8, 8), out double dblRes) ? dblRes : 0;
                     massEquivalent = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0;
                     loadingUnitConversion = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : 0;
-                    loadingUnits = line.Substring(32);
+                    loadingUnits = line.Substring(32).Trim();
 
                     return true;
                 }
@@ -1128,7 +1128,7 @@ namespace warmf {
                         reaction.tempCorrectCoeff = Double.TryParse(line.Substring(48, 8), out dblRes) ? dblRes : 0;
                         reaction.fortranCode = line.Substring(56, 8);
                         reaction.units = line.Substring(64, 8);
-                        reaction.name = line.Substring(72);
+                        reaction.name = line.Substring(72).Trim();
 
                         reaction.stoich = ReadDoubleData(sr, "STOICH", numComponents);
                     }
@@ -1199,7 +1199,7 @@ namespace warmf {
                     line = sr.ReadLine();
                     Mineral mineral = new Mineral();
                     if (TestLine(line, sr.LineNum, "MINERL")) {
-                        mineral.name = line.Substring(8, 16);
+                        mineral.name = line.Substring(8, 16).Trim();
                         mineral.molecularWgt = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : 0;
                         mineral.phDepend = Double.TryParse(line.Substring(32, 8), out dblRes) ? dblRes : 0;
                         mineral.weatheringRate = Double.TryParse(line.Substring(40, 8), out dblRes) ? dblRes : 0;
@@ -1288,7 +1288,7 @@ namespace warmf {
                         lu.openWinterFrac = Double.TryParse(line.Substring(8, 8), out dblRes) ? dblRes : 0;
                         lu.imperviousFrac = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0;
                         lu.maxPotentInceptStorage = Double.TryParse(line.Substring(24, 8), out dblRes) ? dblRes : 0;
-                        lu.name = line.Substring(32);
+                        lu.name = line.Substring(32).Trim();
 
                         dnums = ReadDoubleData(sr, "EROSION", 2);
                         lu.rainDetachFactor = dnums[0];
@@ -1349,7 +1349,7 @@ namespace warmf {
                         swOutputResults = !line.Substring(48, 8).Contains("0"),
                         airRainChemFileNum = Int32.TryParse(line.Substring(56, 8), out intRes) ? intRes : 0,
                         particleRainChemFileNum = Int32.TryParse(line.Substring(64, 8), out intRes) ? intRes : 0,
-                        name = line.Substring(72)
+                        name = line.Substring(72).Trim()
                     };
                     line = sr.ReadLine();
                     catchData.numSoilLayers = Int32.TryParse(line.Substring(8, 8), out intRes) ? intRes : 0;
@@ -1507,9 +1507,9 @@ namespace warmf {
                         CatchMine mine = new CatchMine();
                         if (TestLine(line, sr.LineNum, "MINEPERM")) {
                             mine.areaFraction = Double.TryParse(line.Substring(8, 8), out dblRes) ? dblRes : 0;
-                            mine.name = line.Substring(16);
+                            mine.name = line.Substring(16).Trim();
                             mine.concentrationLimit = ReadDoubleData(sr, "MINECONC", numComponents);
-                            mine.mineOutFilename = ReadString(sr, "MINEOUT");
+                            mine.mineOutFilename = ReadString(sr, "MINEOUT").Trim();
                         }
                         catchData.mining.deepMines.Add(mine);
                     }
@@ -1523,9 +1523,9 @@ namespace warmf {
                         CatchMine mine = new CatchMine();
                         if (TestLine(line, sr.LineNum, "MINEPERM")) {
                             mine.areaFraction = Double.TryParse(line.Substring(8, 8), out dblRes) ? dblRes : 0;
-                            mine.name = line.Substring(16);
+                            mine.name = line.Substring(16).Trim();
                             mine.concentrationLimit = ReadDoubleData(sr, "MINECONC", numComponents);
-                            mine.mineOutFilename = ReadString(sr, "MINEOUT");
+                            mine.mineOutFilename = ReadString(sr, "MINEOUT").Trim();
                         }
                         catchData.mining.surfaceMines.Add(mine);
                     }
@@ -1620,7 +1620,7 @@ namespace warmf {
 					river.swOutputResults = !line.Substring(8, 8).Contains("0");
 					river.swIsSubwaterBoundary = !line.Substring(16, 8).Contains("0");
                     river.swViewManagerOutput = !line.Substring(24, 8).Contains("0");
-					river.name = line.Substring(32);
+					river.name = line.Substring(32).Trim();
 
 					dnums = ReadDoubleData(sr, "IMPO", 5);
 					river.impoundArea = dnums[0];
@@ -1671,7 +1671,7 @@ namespace warmf {
                         alkAdjustmentPriority = nums[5],
                         phAdjustmentPriority = nums[6]
                     };
-                    river.hydrologyFilename = ReadString(sr, "OBSD");
+                    river.hydrologyFilename = ReadString(sr, "OBSD").Trim();
 					dnums = ReadDoubleData(sr, "SEDIMENT", 6);
 					river.sedDetachVelMult = dnums[0];
 					river.sedDetachVelExp = dnums[1];
@@ -1690,7 +1690,7 @@ namespace warmf {
 
 					river.waterReactionRate = ReadDoubleData(sr, "REAC-H2O", numReactions);
 					river.bedReactionRate = ReadDoubleData(sr, "REAC-BED", numReactions);
-					river.obsWQFilename = ReadString(sr, "OBSD");
+					river.obsWQFilename = ReadString(sr, "OBSD").Trim();
 					river.numCEQW2Files = ReadInt(sr, "W2FILES");
 					if (river.numCEQW2Files == 3) {
 						river.flowInputFilename = ReadString(sr, "W2FILES");
@@ -1723,7 +1723,7 @@ namespace warmf {
                         elevation = Double.TryParse(line.Substring(32, 8), out dblRes) ? dblRes : 0,
                         airRainChemFilenum = Int32.TryParse(line.Substring(40, 8), out intRes) ? intRes : 0,
                         coarseAirPartFilenum = Int32.TryParse(line.Substring(48, 8), out intRes) ? intRes : 0,
-                        releaseFlowFilename = line.Substring(56)
+                        releaseFlowFilename = line.Substring(56).Trim()
                     };
 
                     dnums = ReadDoubleData(sr, "STGFLO", 18);
@@ -1750,7 +1750,7 @@ namespace warmf {
 
                     line = sr.ReadLine();
                     reservoir.swAdjustResRelease = !line.Substring(8, 8).Contains("0");
-                    reservoir.hydrologyFilename = line.Substring(16);
+                    reservoir.hydrologyFilename = line.Substring(16).Trim();
                     //just uncommented following line..
 
                     //reservoir.swAdjustResRelease = !ReadString(sr, "OBSDATA").Contains("0");
@@ -1802,7 +1802,7 @@ namespace warmf {
 							seg.bottomElevation = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0;
 							seg.swOutputResults = !line.Substring(24, 8).Contains("0");
 							seg.numOutlets = Int32.TryParse(line.Substring(32, 8), out intRes) ? intRes : 0;
-							seg.name = line.Substring(40);
+							seg.name = line.Substring(40).Trim();
 						}
 						seg.outlets = new List<ReservoirOutlet>();
 						for (int kk=0; kk<seg.numOutlets+1; kk++) {
@@ -1814,7 +1814,7 @@ namespace warmf {
                                     width = Double.TryParse(line.Substring(16, 8), out dblRes) ? dblRes : 0,
                                     outletType = Int32.TryParse(line.Substring(24, 8), out intRes) ? intRes : 0,
                                     numFlowFile = Int32.TryParse(line.Substring(32, 8), out intRes) ? intRes : 0,
-                                    managedFlowFilename = line.Substring(40)
+                                    managedFlowFilename = line.Substring(40).Trim()
                                 };
                                 seg.outlets.Add(outlet);
 							}
@@ -1884,7 +1884,7 @@ namespace warmf {
                             seg.diversionToFilenums = ReadIntData(sr, "DIVTO", numDiversionsTo);
                         else
                             seg.diversionToFilenums = new List<int>();
-						seg.obsWQFilename = ReadString(sr, "OBSDATA");
+						seg.obsWQFilename = ReadString(sr, "OBSDATA").Trim();
 
                         //last (downstream-most) segment of a reservoir is always a subwatershed boundary
                         //parameter is not written to or read from COE
