@@ -42,9 +42,11 @@ namespace warmf
                         numConstits = reader.ReadInt32();
 
                         //get lists of name and units, and Fortran code for each parameter in output file
+                        constituentNumbers = new List<int> ();
                         for (int j = 0; j < numConstits; j++)
                         {
                             parameterNumber = reader.ReadInt32();
+                            constituentNumbers.Add(parameterNumber + tempParameterNumber);
                             nameUnits = Global.coe.GetParameterNameAndUnitsFromNumber(parameterNumber + tempParameterNumber);
                             constituentNameUnits.Add(nameUnits);
                             fortranCode = Global.coe.GetParameterCodeFromNumber(parameterNumber + tempParameterNumber);
@@ -55,9 +57,11 @@ namespace warmf
                         numOutputs = reader.ReadInt32();
                         positionSet = false;
                         fractionCount = 0;
+                        entityNumbers = new List<int>();
                         for (int i = 0; i < numOutputs; i++)
                         {
                             outputID = reader.ReadInt32();
+                            entityNumbers.Add(outputID);
                             segmentID = outputID % 65536;
                             outputFraction = outputID / 65536;
                             if (segmentID == entityID)

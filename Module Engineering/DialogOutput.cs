@@ -15,6 +15,7 @@ namespace warmf
         public static List <Output> scenarioOutput = new List <Output>();
         public static River river = new River();
         public static Catchment catchment = new Catchment();
+        public List<int> masterConstituentNumbers;
         ObservedFile hydroData;
         ObservedFile wqData;
         FormMain parent;
@@ -27,6 +28,7 @@ namespace warmf
 
         public void Populate(string featureType, int cnum)
         {
+            masterConstituentNumbers = new List<int>();
             if (featureType == "River")
             {
                 //Set reference to river and form header text
@@ -53,6 +55,11 @@ namespace warmf
                     string outputFilename = Path.GetFileNameWithoutExtension(FormMain.scenarios[i].Name) + ".RIV";
                     newOutput.ReadOutput(Global.DIR.RIV + outputFilename, river.idNum);
                     scenarioOutput.Add(newOutput);
+
+                    // Add constituents for each scenario to master list if not already present
+                    for (int j = 0; j < newOutput.constituentNumbers.Count; j++)
+                        if (!masterConstituentNumbers.Contains(newOutput.constituentNumbers[j]))
+                            masterConstituentNumbers.Add(newOutput.constituentNumbers[j]);
                 }
 
                 //Output Types (add function places item at bottom of list)
@@ -104,9 +111,12 @@ namespace warmf
                 
             }
 
-            //Populate listbox containing output parameters
-            // Needs to be modified to allow for different scenarios to have different parameters in output
-            lbOutputParameters.DataSource = scenarioOutput[0].constituentNameUnits;
+            // Populate listbox containing output parameters
+            masterConstituentNumbers.Sort();
+            List<string> constituentNameUnits = new List<string>();
+            for (int i = 0; i < masterConstituentNumbers.Count; i++)
+                constituentNameUnits.Add(Global.coe.GetParameterNameAndUnitsFromNumber(masterConstituentNumbers[i]));
+            lbOutputParameters.DataSource = constituentNameUnits;
 
             //format the output graph (populated on ChartTheData)
             ChartArea chartArea1 = chartOutput.ChartAreas["ChartArea1"];
@@ -185,26 +195,33 @@ namespace warmf
                         startDate = xValue;
 
                     indexOutputType = cbOutputType.SelectedIndex; //output type
-                    indexParameter = lbOutputParameters.SelectedIndex; //parameter
+                    // indexParameter is the position in the list of a scenario's output parameter list of the selected parameter in the list box
+                    if (lbOutputParameters.SelectedIndex >= 0 && lbOutputParameters.SelectedIndex < masterConstituentNumbers.Count)
+                        indexParameter = scenarioOutput[j].constituentNumbers.IndexOf(masterConstituentNumbers[lbOutputParameters.SelectedIndex]);
+                    else
+                        indexParameter = -1;
 
-                    for (int i = 0; i < (scenarioOutput[j].output[indexOutputType, indexParameter].Count); i++)
+                    if (indexParameter >= 0)
                     {
-                        //y values (time series output)
-                        yValue = scenarioOutput[j].output[indexOutputType, indexParameter][i];
-
-                        if (yValue != -999)
+                        for (int i = 0; i < (scenarioOutput[j].output[indexOutputType, indexParameter].Count); i++)
                         {
-                            scenarioSeries.Points.AddXY(xValue, yValue);
-                            maxValue = Math.Max(maxValue, yValue);
-                        }
+                            //y values (time series output)
+                            yValue = scenarioOutput[j].output[indexOutputType, indexParameter][i];
 
-                        //increment x value
-                        xValue = xValue.AddHours(timeStep);
+                            if (yValue != -999)
+                            {
+                                scenarioSeries.Points.AddXY(xValue, yValue);
+                                maxValue = Math.Max(maxValue, yValue);
+                            }
+
+                            //increment x value
+                            xValue = xValue.AddHours(timeStep);
+                        }
+                        scenarioSeries.LegendText = Path.GetFileNameWithoutExtension(FormMain.scenarios[j].Name);
+                        chartOutput.Series.Add(scenarioSeries);
+                        if (j == 0 || xValue > endDate)
+                            endDate = xValue;
                     }
-                    scenarioSeries.LegendText = Path.GetFileNameWithoutExtension(FormMain.scenarios[j].Name);
-                    chartOutput.Series.Add(scenarioSeries);
-                    if (j == 0 || xValue > endDate)
-                        endDate = xValue;
                 }
             }
             chartOutput.ChartAreas["ChartArea1"].AxisY.Title = lbOutputParameters.SelectedItem.ToString();
