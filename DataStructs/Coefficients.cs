@@ -3421,6 +3421,19 @@ namespace warmf {
             return -1;
         }
 
+        // Returns the number of the first constituent in the master list which is of type ChemicalConstit
+        public int GetFirstChemicalConstituent()
+        {
+            for (int i = 0; i < AllConstits.Count; i++)
+            {
+                ChemicalConstits aChemicalConstit = AllConstits[i] as ChemicalConstits;
+                if (aChemicalConstit != null)
+                    return i;
+            }
+
+            return -1;
+        }
+
         public int GetParameterNumberFromCode(string TheCode)
         // Returns the ordinal number of the constituent from the master list of all constituents 
         // (hydro -> chemical -> physical -> composite)
@@ -3502,6 +3515,15 @@ namespace warmf {
             }  
             else
                 return "";
+        }
+
+        public int GetReactionNumberFromName(string reactionName)
+        {
+            for (int i = 0; i < Global.coe.reactions.Count; i++)
+                if (String.Compare(reactionName, Global.coe.reactions[i].name, new CultureInfo("en-US"), System.Globalization.CompareOptions.IgnoreSymbols) == 0)
+                    return i;
+
+            return -1;
         }
 
         // Sets the scenario portion of output file names
