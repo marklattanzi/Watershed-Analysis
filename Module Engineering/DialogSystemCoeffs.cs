@@ -17,6 +17,9 @@ namespace warmf
         public int cbMineralsSelected = -1;
         public List<Mineral> temporaryMineralCoefficients = new List<Mineral>();
 
+        // Dry deposition types - actual strings added in Populate function
+        public List<string> dryDepositionTypes = new List<string>();
+
         public DialogSystemCoeffs(FormMain par)
         {
             InitializeComponent();
@@ -628,9 +631,11 @@ namespace warmf
             }
             FormatDataGridView(dgvOutputControl);
             //Physical Data (DGV Columns created in Dialog Designer)
-            ((DataGridViewComboBoxColumn)dgvPhysicalData.Columns[2]).Items.Add("Particulate");
-            ((DataGridViewComboBoxColumn)dgvPhysicalData.Columns[2]).Items.Add("Gaseous - Nutrient");
-            ((DataGridViewComboBoxColumn)dgvPhysicalData.Columns[2]).Items.Add("Gaseous - Pollutant");
+            dryDepositionTypes.Add("Particulate");
+            dryDepositionTypes.Add("Gaseous - Nutrient");
+            dryDepositionTypes.Add("Gaseous - Pollutant");
+            for (int ii = 0; ii < dryDepositionTypes.Count; ii++)
+                ((DataGridViewComboBoxColumn)dgvPhysicalData.Columns[2]).Items.Add(dryDepositionTypes[ii]);
             iCount = 0;
             for (int ii = 0; ii < Global.coe.numChemicalParams; ii++)
             {
@@ -655,17 +660,9 @@ namespace warmf
                 }
                 else
                 {
-                    if (Global.coe.chemConstits[ii].dryDepositionForm == 0)
+                    if (Global.coe.chemConstits[ii].dryDepositionForm >= 0 && Global.coe.chemConstits[ii].dryDepositionForm < dryDepositionTypes.Count)
                     {
-                        dgvPhysicalData.Rows[iCount].Cells[2].Value = "Particulate";
-                    }
-                    else if (Global.coe.chemConstits[ii].dryDepositionForm == 1)
-                    {
-                        dgvPhysicalData.Rows[iCount].Cells[2].Value = "Gaseous - Nutrient";
-                    }
-                    else
-                    {
-                        dgvPhysicalData.Rows[iCount].Cells[2].Value = "Gaseous - Pollutant";
+                        dgvPhysicalData.Rows[iCount].Cells[2].Value = dryDepositionTypes[Global.coe.chemConstits[ii].dryDepositionForm];
                     }
                     dgvPhysicalData.Rows[iCount].Cells[3].Value = Global.coe.chemConstits[ii].swChemAdvection;
                 }
@@ -677,17 +674,9 @@ namespace warmf
                 dgvPhysicalData.Rows[iCount].HeaderCell.Value = Global.coe.physicalConstits[ii].fullName.ToString();
                 dgvPhysicalData.Rows[iCount].Cells[0].Value = Global.coe.physicalConstits[ii].electricalCharge.ToString();
                 dgvPhysicalData.Rows[iCount].Cells[1].Value = Global.coe.physicalConstits[ii].massEquivalent.ToString();
-                if (Global.coe.chemConstits[ii].dryDepositionForm == 0)
+                if (Global.coe.physicalConstits[ii].dryDepositionForm >= 0 && Global.coe.physicalConstits[ii].dryDepositionForm < dryDepositionTypes.Count)
                 {
-                    dgvPhysicalData.Rows[iCount].Cells[2].Value = "Particulate";
-                }
-                else if (Global.coe.chemConstits[ii].dryDepositionForm == 1)
-                {
-                    dgvPhysicalData.Rows[iCount].Cells[2].Value = "Gaseous - Nutrient";
-                }
-                else
-                {
-                    dgvPhysicalData.Rows[iCount].Cells[2].Value = "Gaseous - Pollutant";
+                    dgvPhysicalData.Rows[iCount].Cells[2].Value = dryDepositionTypes[Global.coe.physicalConstits[ii].dryDepositionForm];
                 }
                 dgvPhysicalData.Rows[iCount].Cells[3].Value = Global.coe.physicalConstits[ii].swChemAdvection;
                 iCount = iCount + 1;
@@ -1240,7 +1229,7 @@ namespace warmf
 
             //Parameters
             // Counter for chemical / physical / total constituents
-/*            int compositeCount = 0;
+            int compositeCount = 0;
             // Counts the number of chemical / physical constituents
             int numPhysicalConstits = 0;
             // Counts the number of total parameters
@@ -1273,12 +1262,9 @@ namespace warmf
                     theCompositeConstit.massEquivalent = Convert.ToDouble(dgvPhysicalData.Rows[compositeCount].Cells[1].Value);
                     if (thePhysicalConstit != null)
                     {
-                        if (dgvPhysicalData.Rows[compositeCount].Cells[2].Value.ToString() == "Particulate")
-                            thePhysicalConstit.dryDepositionForm = 0;
-                        else if (dgvPhysicalData.Rows[compositeCount].Cells[2].Value.ToString() == "Gaseous - Nutrient")
-                            thePhysicalConstit.dryDepositionForm = 1;
-                        else if (dgvPhysicalData.Rows[compositeCount].Cells[2].Value.ToString() == "Gaseous - Pollutant")
-                            thePhysicalConstit.dryDepositionForm = 2;
+                        for (int i = 0; i < dryDepositionTypes.Count; i++)
+                            if (dgvPhysicalData.Rows[compositeCount].Cells[2].Value.ToString() == dryDepositionTypes[i])
+                                thePhysicalConstit.dryDepositionForm = i;
                     }
 
                     // Solubility products and gaseous deposition velocity only apply to ChemicalConstits
@@ -1353,9 +1339,10 @@ namespace warmf
             }
 
             // Reactions parameters
+            int firstChemical = Global.coe.GetFirstChemicalConstituent();
             for (int ii = 0; ii < Global.coe.numReactions; ii++)
             {
-                Global.coe.reactions[ii].primReactantNumber = Global.coe.GetParameterNumberFromName(dgvReactions.Rows[ii].Cells[0].Value.ToString());
+                Global.coe.reactions[ii].primReactantNumber = Global.coe.GetParameterNumberFromName(dgvReactions.Rows[ii].Cells[0].Value.ToString()) - firstChemical + 1;
                 Global.coe.reactions[ii].swIsAnoxic = Convert.ToBoolean(dgvReactions.Rows[ii].Cells[1].Value);
                 Global.coe.reactions[ii].dissolvedOxyLimit = Convert.ToDouble(dgvReactions.Rows[ii].Cells[2].Value);
                 Global.coe.reactions[ii].swIsUVCatalysis = Convert.ToBoolean(dgvReactions.Rows[ii].Cells[3].Value);
@@ -1364,7 +1351,7 @@ namespace warmf
                     Global.coe.reactions[ii].numLinkedReactions = Global.coe.GetReactionNumberFromName(dgvReactions.Rows[ii].Cells[5].Value.ToString()) + 1;
                 else
                     Global.coe.reactions[ii].numLinkedReactions = 0;
-            }*/
+            }
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
