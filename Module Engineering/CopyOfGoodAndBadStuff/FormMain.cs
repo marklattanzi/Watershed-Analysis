@@ -11,6 +11,7 @@ using DotSpatial.Controls;
 using DotSpatial.Symbology;
 using DotSpatial.Topology;
 using DotSpatial.Data;
+//using DotSpatial.Data.Rasters.GdalExtension;
 
 namespace warmf {
     public partial class FormMain : Form
@@ -21,10 +22,11 @@ namespace warmf {
         public static int LAYERRIVER = 2;
         public static int LAYERLAKE = 3;
         public static int LAYERDATA = 4;
-        public static int LAYERLANDUSE = 5;
-        public static int LAYERSEPTIC = 6;
-        public static int LAYERSOILS = 7;
-        public static int LAYERREFERENCE = 8;
+        public static int LAYERDEM = 5;
+        public static int LAYERLANDUSE = 6;
+        public static int LAYERSEPTIC = 7;
+        public static int LAYERSOILS = 8;
+        public static int LAYERREFERENCE = 9;
         public static string FIELDNAMEWARMFID = "WARMF_ID";
         public static string FIELDNAMENAME = "Name";
         public static string FIELDNAMEFILENAME = "File Name";
@@ -41,13 +43,7 @@ namespace warmf {
         public EGIS.ShapeFileLib.ShapeFile lakeShapefile;
 
         // what's showing on the map
-/*        bool showMETStations = false;
-        bool showGageStations = false;
-        bool showWQStations = false;
-        bool showFLOStations = false;
-        bool showPTSStations = false;
-        bool showAIRStations = false;*/
-        DotSpatial.Topology.Coordinate mouseCoordinates;
+        GeoAPI.Geometries.Coordinate mouseCoordinates;
 
         public LayerInfo catchmentLayer;
         public LayerInfo riverLayer;
@@ -77,6 +73,7 @@ namespace warmf {
             public string Name;
             public string FileName;
             public int Type;
+            public string DataField;
         }
         #endregion
 
@@ -123,6 +120,36 @@ namespace warmf {
             this.Hide();
         }
 
+        // Formats a catchment layer to the DotSpatial map
+        private void FormatCatchmentLayer(int layerNumber)
+        {
+            MapPolygonLayer catchmentLayerPolygon = mainMap.Layers[layerNumber] as MapPolygonLayer;
+            PolygonScheme catchmentLayerScheme = new PolygonScheme();
+            PolygonCategory catchmentPolygonCategory = new PolygonCategory(Color.FromArgb(224, 250, 207), Color.FromArgb(178, 178, 178), 1);
+            catchmentLayerScheme.AddCategory(catchmentPolygonCategory);
+            catchmentLayerPolygon.Symbology = catchmentLayerScheme;
+        }
+
+        // Formats a river layer to the DotSpatial map
+        private void FormatRiverLayer(int layerNumber)
+        {
+            MapLineLayer riverLayerLine = (MapLineLayer)this.mainMap.Layers[layerNumber];
+            LineScheme riverLayerScheme = new LineScheme();
+            LineCategory riverLineCategory = new LineCategory(Color.FromArgb(0, 0, 255), 1);
+            riverLayerScheme.AddCategory(riverLineCategory);
+            riverLayerLine.Symbology = riverLayerScheme;
+        }
+
+        // Formats a lake layer to the DotSpatial map
+        private void FormatLakeLayer(int layerNumber)
+        {
+            MapPolygonLayer reservoirLayerPolygon = (MapPolygonLayer)this.mainMap.Layers[layerNumber];
+            PolygonScheme reservoirLayerScheme = new PolygonScheme();
+            PolygonCategory reservoirPolygonCategory = new PolygonCategory(Color.FromArgb(0, 0, 255), Color.FromArgb(255, 255, 255), 1);
+            reservoirLayerScheme.AddCategory(reservoirPolygonCategory);
+            reservoirLayerPolygon.Symbology = reservoirLayerScheme;
+        }
+
         // Loads the catchment, river, and reservoir shapefiles
         private void LoadCatchmentRiverReservoirShapefiles()
         {
@@ -166,27 +193,15 @@ namespace warmf {
                     // Color schemes hardwired for now
                     if (layers[i].Type == LAYERCATCHMENT)
                     {
-                        MapPolygonLayer catchmentLayerPolygon = (MapPolygonLayer)this.mainMap.Layers[i];
-                        PolygonScheme catchmentLayerScheme = new PolygonScheme();
-                        PolygonCategory catchmentPolygonCategory = new PolygonCategory(Color.FromArgb(224, 250, 207), Color.FromArgb(178, 178, 178), 1);
-                        catchmentLayerScheme.AddCategory(catchmentPolygonCategory);
-                        catchmentLayerPolygon.Symbology = catchmentLayerScheme;
+                        FormatCatchmentLayer(i);
                     }
                     else if (layers[i].Type == LAYERRIVER)
                     {
-                        MapLineLayer riverLayerLine = (MapLineLayer)this.mainMap.Layers[i];
-                        LineScheme riverLayerScheme = new LineScheme();
-                        LineCategory riverLineCategory = new LineCategory(Color.FromArgb(0, 0, 255), 1);
-                        riverLayerScheme.AddCategory(riverLineCategory);
-                        riverLayerLine.Symbology = riverLayerScheme;
+                        FormatRiverLayer(i);
                     }
                     else if (layers[i].Type == LAYERLAKE)
                     {
-                        MapPolygonLayer reservoirLayerPolygon = (MapPolygonLayer)this.mainMap.Layers[i];
-                        PolygonScheme reservoirLayerScheme = new PolygonScheme();
-                        PolygonCategory reservoirPolygonCategory = new PolygonCategory(Color.FromArgb(0, 0, 255), Color.FromArgb(255, 255, 255), 1);
-                        reservoirLayerScheme.AddCategory(reservoirPolygonCategory);
-                        reservoirLayerPolygon.Symbology = reservoirLayerScheme;
+                        FormatLakeLayer(i);
                     }
                 }
             }
@@ -713,6 +728,8 @@ namespace warmf {
                             scenarios.Add(newScenario);
                         }
                     }
+
+                    sr.Close();
                 }
                 catch (Exception ex)
                 {
@@ -958,10 +975,18 @@ namespace warmf {
             return -1;
         }
 
-        private bool RemoveLayer(string layerName)
+        private int GetLayerNumberFromType(int layerType)
         {
-            int layerNumber = GetLayerNumberFromName(layerName);
-            if (layerNumber >= 0) 
+            for (int i = 0; i < layers.Count; i++)
+                if (layers[i].Type == layerType)
+                    return i;
+
+            return -1;
+        }
+
+        private bool RemoveLayer(int layerNumber)
+        {
+            if (layerNumber >= 0)
             {
                 layers.RemoveAt(layerNumber);
                 if (layerNumber < mainMap.Layers.Count)
@@ -972,6 +997,10 @@ namespace warmf {
             }
 
             return false;
+        }
+        private bool RemoveLayer(string layerName)
+        {
+            return RemoveLayer(GetLayerNumberFromName(layerName));
         }
 
         private void AddDataLayer(string name, string fileName)
@@ -994,7 +1023,7 @@ namespace warmf {
             thePointLayer.Symbology = thePointScheme;
             
             // Update record keeping
-            LayerInfo newLayerInfo;
+            LayerInfo newLayerInfo = new LayerInfo();
             newLayerInfo.Name = name;
             newLayerInfo.FileName = fileName;
             newLayerInfo.Type = LAYERDATA;
@@ -1667,16 +1696,49 @@ namespace warmf {
         private void mainMap_MouseMove(object sender, MouseEventArgs e)
         {
             mouseCoordinates = mainMap.PixelToProj(e.Location);
+            double[] coordinateArray = new double[2];
+            coordinateArray[0] = mouseCoordinates.X;
+            coordinateArray[1] = mouseCoordinates.Y;
+            double[] zArray = new double[1];
+            zArray[0] = 0;
+
+            // Convert from map coordinate system to latitude / longitude
+            DotSpatial.Projections.ProjectionInfo latLongProjection = new DotSpatial.Projections.ProjectionInfo();
+            latLongProjection.IsLatLon = true;
+            latLongProjection.Name = "WGS84";
+//            DotSpatial.Projections.Reproject.ReprojectPoints(coordinateArray, zArray, mainMap.Projection, latLongProjection, 0, 1);
+
             lblLatLong.Text = "Lat/Long: " + mouseCoordinates.Y + ", " + mouseCoordinates.X;
         }
-
+        
         private void mainMap_MouseHover(object sender, EventArgs e)
         {
 
             lblLatLong.Text = "Lat/Long: " + mouseCoordinates.Y + ", " + mouseCoordinates.X;
         }
 
-        private bool GetShapeAndLayerFromCoordinates(DotSpatial.Topology.Coordinate theCoordinates, ref int layerNumber, ref int featureNumber)
+        // Determines if a point is in a polygon layer and also returns the feature number
+        private bool IsPointInPolygonLayer(MapPolygonLayer thePolygonLayer, DotSpatial.Topology.Coordinate theCoordinates, ref int featureNumber)
+        {
+            if (thePolygonLayer == null)
+                return false;
+
+            DotSpatial.Data.IFeatureSet theFeatureSet = thePolygonLayer.FeatureSet;
+            for (featureNumber = 0; featureNumber < theFeatureSet.Features.Count; featureNumber++)
+            {
+                Polygon thePolygon = theFeatureSet.Features[featureNumber].Geometry as Polygon;
+                if (thePolygon != null)
+                {
+                    if (thePolygon.Contains(new DotSpatial.Topology.Point(theCoordinates)))
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        // Determines which shape the specified coordinate is in
+        private bool GetShapeAndLayerFromCoordinates(GeoAPI.Geometries.Coordinate theCoordinates, ref int layerNumber, ref int featureNumber)
         {
             // Check layers from front to back to find the first which has been clicked upon
             for (layerNumber = mainMap.Layers.Count - 1; layerNumber >= 0; layerNumber--)
@@ -1688,25 +1750,27 @@ namespace warmf {
                     DotSpatial.Data.IFeatureSet theFeatureSet = thePolygonLayer.FeatureSet;
                     for (featureNumber = 0; featureNumber < theFeatureSet.Features.Count; featureNumber++)
                     {
-                        Polygon thePolygon = theFeatureSet.Features[featureNumber].BasicGeometry as Polygon;
+                        Polygon thePolygon = theFeatureSet.Features[featureNumber].Geometry as Polygon;
                         if (thePolygon != null)
                         {
-                            if (thePolygon.Contains(new DotSpatial.Topology.Point(theCoordinates)))
+                            DotSpatial.Topology.Point thePoint = new DotSpatial.Topology.Point(theCoordinates.X, theCoordinates.Y);
+                            if (thePoint != null && thePolygon.Contains(thePoint))
                                 return true;
                         }
                     }
                 }
                 else
                 {
-                    // If the layer isn't polygons (lines or points), figure out whether it is selected by
-                    // creating a circular polygon around the double-click coordinate and finding the intersection with a layer
-
                     // Get the longitude distance for 2 pixels
                     System.Drawing.Point pixelCoordinates = mainMap.ProjToPixel(theCoordinates);
                     pixelCoordinates.Y += 2;
                     double latitudeRadius = Math.Abs(mainMap.PixelToProj(pixelCoordinates).Y - theCoordinates.Y);
+
+                    // If the layer isn't polygons (lines or points), figure out whether it is selected by
+                    // creating a circular polygon around the double-click coordinate and finding the intersection with a layer
+
                     // Create a circular polygon around the double-click point with the above radius
-                    FeatureSet circleFeatureSet = new FeatureSet(FeatureType.Polygon);
+                    FeatureSet circleFeatureSet = new FeatureSet(DotSpatial.Data.FeatureType.Polygon);
                     int pointsInCircle = 50;
                     Coordinate[] circleCoordinates = new Coordinate[pointsInCircle];
                     for (int i = 0; i < pointsInCircle; i++)
@@ -1724,7 +1788,7 @@ namespace warmf {
                         DotSpatial.Data.IFeatureSet theFeatureSet = thePointLayer.FeatureSet;
                         for (featureNumber = 0; featureNumber < theFeatureSet.Features.Count; featureNumber++)
                         {
-                            DotSpatial.Topology.Point thePoint = theFeatureSet.Features[featureNumber].BasicGeometry as DotSpatial.Topology.Point;
+                            DotSpatial.Topology.Point thePoint = theFeatureSet.Features[featureNumber].Geometry as DotSpatial.Topology.Point;
                             // Determine if the distance between the feature point and the mouse double-click point is less than the radius
                             double latitudeDistance = (thePoint.Y - theCoordinates.Y) * Math.Cos(theCoordinates.Y * Math.PI / 180);
                             double longitudeDistance = thePoint.X - theCoordinates.X;
@@ -1737,10 +1801,14 @@ namespace warmf {
                     MapLineLayer theLineLayer = mainMap.Layers[layerNumber] as MapLineLayer;
                     if (theLineLayer != null)
                     {
+                        // New method: create a square envelope around the coordinate and see if it intersects with the a feature in the line layer
+                        GeoAPI.Geometries.Coordinate envelopeCorner1 = new GeoAPI.Geometries.Coordinate(theCoordinates.X + latitudeRadius, theCoordinates.Y + latitudeRadius * Math.Cos(theCoordinates.Y * Math.PI / 180));
+                        GeoAPI.Geometries.Coordinate envelopeCorner2 = new GeoAPI.Geometries.Coordinate(theCoordinates.X - latitudeRadius, theCoordinates.Y - latitudeRadius * Math.Cos(theCoordinates.Y * Math.PI / 180));
+
                         DotSpatial.Data.IFeatureSet theFeatureSet = theLineLayer.FeatureSet;
                         for (featureNumber = 0; featureNumber < theFeatureSet.Features.Count; featureNumber++)
                         {
-                            if (theFeatureSet.Features[featureNumber].Intersects(circleRing))
+                            if (theFeatureSet.Features[featureNumber].Intersects(new GeoAPI.Geometries.Envelope(envelopeCorner1, envelopeCorner2)))
                                 return true;
                         }
                     }
@@ -1895,6 +1963,7 @@ namespace warmf {
                             //need to populate the dialog - but is it the same dialog as is used for catchments and rivers?
                             using (dlgOutput = new DialogOutput(this))
                             {
+                                dlgOutput.Populate("Lake", segmentID);
                                 dlgOutput.ShowDialog();
                             }
                         }
@@ -1958,6 +2027,181 @@ namespace warmf {
                 {
                     MessageBox.Show("Display Spatial Output Dialog");
                 }
+
+            }
+        }
+
+        private void layersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogEditLayers layersDialog = new DialogEditLayers(ref layers);
+
+            if (layersDialog.ShowDialog() == DialogResult.OK)
+            {
+                int originalNumLayers = layers.Count;
+                List<int> foundLayers = new List<int>();
+                // Add new layers to the master
+                for (int i = 0; i < layersDialog.changedLayers.Count; i++)
+                {
+                    int currentLayerNumber = GetLayerNumberFromName(layersDialog.changedLayers[i].Name);
+                    if (currentLayerNumber >= 0)
+                        foundLayers.Add(currentLayerNumber);
+                    else
+                    {
+                        string newFileName = Global.DIR.SHP + Path.GetFileName(layersDialog.changedLayers[i].FileName);
+                        var grp = new DotSpatial.Data.Rasters.GdalExtension.GdalRasterProvider();
+
+                        try
+                        {
+                            // Add the new layer to the map
+//                            mainMap.AddLayer(Global.DIR.SHP + newFileName);
+                            // Color schemes hardwired for now
+                            if (layersDialog.changedLayers[i].Type == LAYERCATCHMENT)
+                            {
+                                mainMap.AddLayer(newFileName);
+                                FormatCatchmentLayer(mainMap.Layers.Count - 1);
+                            }
+                            else if (layersDialog.changedLayers[i].Type == LAYERRIVER)
+                            {
+                                mainMap.AddLayer(newFileName);
+                                FormatRiverLayer(mainMap.Layers.Count - 1);
+                            }
+                            else if (layersDialog.changedLayers[i].Type == LAYERLAKE)
+                            {
+                                mainMap.AddLayer(newFileName);
+                                FormatLakeLayer(mainMap.Layers.Count - 1);
+                            }
+                            else if (layersDialog.changedLayers[i].Type == LAYERDATA)
+                            {
+                                MapPointLayer thePointLayer = mainMap.AddLayer(newFileName) as MapPointLayer;
+                                if (thePointLayer != null)
+                                {
+                                    thePointLayer.Projection = mainMap.Projection;
+                                    PointScheme thePointScheme = new PointScheme();
+                                    PointCategory thePointCategory = new PointCategory(Color.FromArgb(0, 0, 0), DotSpatial.Symbology.PointShape.Ellipse, 10);
+                                    thePointScheme.AddCategory(thePointCategory);
+                                    thePointLayer.Symbology = thePointScheme;
+                                }
+                            }
+                            else if (layersDialog.changedLayers[i].Type == LAYERDEM)
+                            {
+                                MapImageLayer theImageLayer = mainMap.AddLayer(newFileName) as MapImageLayer;
+                                if (theImageLayer != null)
+                                {
+                                    // Reproject the layer
+                                    theImageLayer.Reproject(mainMap.Projection);
+                                    mainMap.Layers.Move(mainMap.Layers[mainMap.Layers.Count - 1], 0);
+
+                                    // Overlay image points with catchment boundaries
+                                }
+                                //                                IRaster theRaster = Raster.Open(Global.DIR.SHP + layersDialog.changedLayers[i].FileName);
+                                //                                IRasterLayer theRasterLayer = mainMap.Layers.Add(theRaster);
+                                //IRasterLayer theRasterLayer = mainMap.AddLayer(layersDialog.changedLayers[i].FileName) as IRasterLayer;
+                                //                                mainMap.AddLayer(Global.DIR.SHP + newFileName);
+                                //                                mainMap.Layers.Move(mainMap.Layers[mainMap.Layers.Count - 1], 0);
+                                //                                IMapRasterLayer rasterLayer = mainMap.Layers[0] as IMapRasterLayer;
+                                /*                                if (theRasterLayer != null)
+                                                                {
+                                                                    theRasterLayer.Projection = mainMap.Projection;
+                                                                    // Overlay DEM with catchments to calculate slope and aspect
+
+                                                                    // Set up color scheme for display
+                                                                }*/
+                            }
+                            else if (layersDialog.changedLayers[i].Type == LAYERLANDUSE)
+                            {
+                                MapImageLayer theImageLayer = mainMap.AddLayer(newFileName) as MapImageLayer;
+                                //                                MapImageLayer theImageLayer = MapImageLayer.OpenFile(newFileName) as MapImageLayer;
+//                                mainMap.AddLayer(newFileName);
+                                if (theImageLayer != null)
+                                {
+                                    // Get the catchment layer
+                                    int catchmentLayerNumber = GetLayerNumberFromType(LAYERCATCHMENT);
+                                    if (catchmentLayerNumber >= 0 && catchmentLayerNumber < mainMap.Layers.Count)
+                                    {
+                                        // Copy the catchment layer and project it
+/*                                        MapPolygonLayer projectedCatchmentLayer = new MapPolygonLayer((mainMap.Layers[catchmentLayerNumber] as MapPolygonLayer).FeatureSet);
+                                        if (projectedCatchmentLayer != null)
+                                        {
+                                            projectedCatchmentLayer.Reproject(theImageLayer.Projection);
+//                                            mainMap.Layers.Add(projectedCatchmentLayer);
+                                            // Check each point in the image file to see if it is within a catchment
+                                            for (int columnNumber = 0; columnNumber < theImageLayer.DataSet.Bounds.X; columnNumber++)
+                                            {
+                                                for (int rowNumber = 0; rowNumber < theImageLayer.DataSet.Bounds.Y; rowNumber++)
+                                                {
+
+                                                }
+                                            }
+                                        }*/
+                                    }
+
+                                    // Convert the map and other layers to this projection
+                                    for (int layerCount = 0; layerCount < mainMap.Layers.Count - 1; layerCount++)
+                                    //    mainMap.Layers[layerCount].Reproject(mainMap.Layers[mainMap.Layers.Count - 1].Projection);
+                                                                        mainMap.Layers[layerCount].Reproject(theImageLayer.Projection);
+//                                    mainMap.Projection = mainMap.Layers[mainMap.Layers.Count - 1].Projection;
+                                    mainMap.Projection = theImageLayer.Projection;
+                                    //                                    mainMap.Layers.RemoveAt(mainMap.Layers.Count - 1);
+
+                                    /*                                    Raster theRaster = new Raster();
+                                                                        theRaster.Filename = newFileName;
+                                                                        theRaster.Open();
+                                                                        RasterLayer theRasterLayer = new RasterLayer(theRaster);
+                                                                        if (theRasterLayer != null)
+                                                                        {
+                                                                            Coordinate bottomLeft = theRasterLayer.DataSet.Bounds.CellCenter_ToProj(0, 0);
+                                                                        }*/
+                                    //                                    mainMap.Layers.Move(mainMap.Layers[mainMap.Layers.Count - 1], 0);
+
+                                    /*                                    for (int columnCount = 0; columnCount < theImageLayer.DataSet.Bounds.NumColumns; columnCount++)
+                                                                        {
+                                                                            for (int rowCount = 0; rowCount < theImageLayer.DataSet.Bounds.NumRows; rowCount++)
+                                                                            {
+                                                                                Coordinate theCoordinate = 
+                                                                            }
+                                                                        }
+
+                                                                        // Reproject the layer
+                                                                        theImageLayer.Reproject(mainMap.Projection);*/
+                                                                        mainMap.Layers.Move(mainMap.Layers[mainMap.Layers.Count - 1], 0);
+                                    //                                    mainMap.Layers.RemoveAt(mainMap.Layers.Count - 1);
+
+                                    // Overlay image points with catchment boundaries
+                                }
+                                /*                                IRaster theRaster = Raster.Open(Global.DIR.SHP + layersDialog.changedLayers[i].FileName);
+                                                                DotSpatial.Projections.ProjectionInfo dest = default(DotSpatial.Projections.ProjectionInfo);
+                                                                //                                dest = DotSpatial.Projections.ProjectionInfo.FromEpsgCode(4326);
+                                                                dest = mainMap.Projection;
+                                                                theRaster.Projection = dest;
+                                                                IMapRasterLayer myLayer = mainMap.Layers.Add(theRaster);*/
+                                //                                IMapRasterLayer rasterLayer = mainMap.Layers[0] as IMapRasterLayer;
+                                //                                if (rasterLayer != null)
+                                {
+//                                    rasterLayer.Projection = mainMap.Projection;
+                                    // Overlay land use with catchments to calculate percent of each land use in each catchment
+
+                                    // Set up color scheme for display
+                                }
+                            }
+                            else if (layersDialog.changedLayers[i].Type == LAYERREFERENCE)
+                            {
+                                mainMap.AddLayer(newFileName);
+                            }
+
+                            // Update record keeping
+                            layers.Add(layersDialog.changedLayers[i]);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Unable to read spatial data file: " + newFileName, "Data File Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        }
+                    }
+                }
+
+                // Remove layers from the master list
+                for (int i = 0; i < originalNumLayers; i++)
+                    if (foundLayers.IndexOf(i) < 0)
+                        RemoveLayer(i);
             }
         }
     }

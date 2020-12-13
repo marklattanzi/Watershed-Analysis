@@ -47,6 +47,7 @@
             this.miEditSelectRivers = new System.Windows.Forms.ToolStripMenuItem();
             this.miEditSelectAll = new System.Windows.Forms.ToolStripMenuItem();
             this.miEditClearSelectedFeatures = new System.Windows.Forms.ToolStripMenuItem();
+            this.layersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.miTopView = new System.Windows.Forms.ToolStripMenuItem();
             this.miViewZoomIn = new System.Windows.Forms.ToolStripMenuItem();
             this.miViewZoomOut = new System.Windows.Forms.ToolStripMenuItem();
@@ -115,9 +116,16 @@
             this.panButton = new System.Windows.Forms.ToolStripButton();
             this.tsbPointer = new System.Windows.Forms.ToolStripButton();
             this.mainMap = new DotSpatial.Controls.Map();
+            this.appManager1 = new DotSpatial.Controls.AppManager();
+            this.spatialHeaderControl1 = new DotSpatial.Controls.SpatialHeaderControl();
+            this.spatialDockManager1 = new DotSpatial.Controls.SpatialDockManager();
+            this.spatialStatusStrip1 = new DotSpatial.Controls.SpatialStatusStrip();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxSplash)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.spatialHeaderControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spatialDockManager1)).BeginInit();
+            this.spatialDockManager1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dlgFileOpen
@@ -188,78 +196,78 @@
             // miFileNew
             // 
             this.miFileNew.Name = "miFileNew";
-            this.miFileNew.Size = new System.Drawing.Size(180, 22);
+            this.miFileNew.Size = new System.Drawing.Size(149, 22);
             this.miFileNew.Text = "&New";
             // 
             // miFileOpen
             // 
             this.miFileOpen.Name = "miFileOpen";
-            this.miFileOpen.Size = new System.Drawing.Size(180, 22);
+            this.miFileOpen.Size = new System.Drawing.Size(149, 22);
             this.miFileOpen.Text = "&Open";
             this.miFileOpen.Click += new System.EventHandler(this.miFileOpen_Click);
             // 
             // miFileClose
             // 
             this.miFileClose.Name = "miFileClose";
-            this.miFileClose.Size = new System.Drawing.Size(180, 22);
+            this.miFileClose.Size = new System.Drawing.Size(149, 22);
             this.miFileClose.Text = "&Close";
             // 
             // miFileImport
             // 
             this.miFileImport.Name = "miFileImport";
-            this.miFileImport.Size = new System.Drawing.Size(180, 22);
+            this.miFileImport.Size = new System.Drawing.Size(149, 22);
             this.miFileImport.Text = "&Import...";
             // 
             // miFileExport
             // 
             this.miFileExport.Name = "miFileExport";
-            this.miFileExport.Size = new System.Drawing.Size(180, 22);
+            this.miFileExport.Size = new System.Drawing.Size(149, 22);
             this.miFileExport.Text = "&Export";
             // 
             // miFileSave
             // 
             this.miFileSave.Name = "miFileSave";
-            this.miFileSave.Size = new System.Drawing.Size(180, 22);
+            this.miFileSave.Size = new System.Drawing.Size(149, 22);
             this.miFileSave.Text = "&Save";
             // 
             // miFileSaveAs
             // 
             this.miFileSaveAs.Name = "miFileSaveAs";
-            this.miFileSaveAs.Size = new System.Drawing.Size(180, 22);
+            this.miFileSaveAs.Size = new System.Drawing.Size(149, 22);
             this.miFileSaveAs.Text = "Save &As";
             // 
             // miFileSep1
             // 
             this.miFileSep1.Name = "miFileSep1";
-            this.miFileSep1.Size = new System.Drawing.Size(177, 6);
+            this.miFileSep1.Size = new System.Drawing.Size(146, 6);
             // 
             // miFilePrint
             // 
             this.miFilePrint.Name = "miFilePrint";
-            this.miFilePrint.Size = new System.Drawing.Size(180, 22);
+            this.miFilePrint.Size = new System.Drawing.Size(149, 22);
             this.miFilePrint.Text = "&Print...";
             // 
             // miFilePrintPreview
             // 
             this.miFilePrintPreview.Name = "miFilePrintPreview";
-            this.miFilePrintPreview.Size = new System.Drawing.Size(180, 22);
+            this.miFilePrintPreview.Size = new System.Drawing.Size(149, 22);
             this.miFilePrintPreview.Text = "Print Pre&view...";
             // 
             // miFilePrinterSetup
             // 
             this.miFilePrinterSetup.Name = "miFilePrinterSetup";
-            this.miFilePrinterSetup.Size = new System.Drawing.Size(180, 22);
-            this.miFilePrinterSetup.Text = "Printer Set&up";
+            this.miFilePrinterSetup.Size = new System.Drawing.Size(149, 22);
+            this.miFilePrinterSetup.Text = "Printer Setup";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(146, 6);
             // 
             // miFileExit
             // 
             this.miFileExit.Name = "miFileExit";
-            this.miFileExit.Size = new System.Drawing.Size(180, 22);
+            this.miFileExit.Size = new System.Drawing.Size(149, 22);
             this.miFileExit.Text = "E&xit";
             this.miFileExit.Click += new System.EventHandler(this.miFileExit_Click);
             // 
@@ -270,7 +278,8 @@
             this.miEditSelectReservoir,
             this.miEditSelectRivers,
             this.miEditSelectAll,
-            this.miEditClearSelectedFeatures});
+            this.miEditClearSelectedFeatures,
+            this.layersToolStripMenuItem});
             this.miTopEdit.Name = "miTopEdit";
             this.miTopEdit.Size = new System.Drawing.Size(37, 22);
             this.miTopEdit.Text = "&Edit";
@@ -286,14 +295,14 @@
             // 
             this.miEditSelectReservoir.Name = "miEditSelectReservoir";
             this.miEditSelectReservoir.Size = new System.Drawing.Size(202, 22);
-            this.miEditSelectReservoir.Text = "Select &Reservoir Segments";
+            this.miEditSelectReservoir.Text = "Select Reservoir &Segments";
             this.miEditSelectReservoir.Click += new System.EventHandler(this.miEditSelectReservoir_Click);
             // 
             // miEditSelectRivers
             // 
             this.miEditSelectRivers.Name = "miEditSelectRivers";
             this.miEditSelectRivers.Size = new System.Drawing.Size(202, 22);
-            this.miEditSelectRivers.Text = "Select Ri&vers";
+            this.miEditSelectRivers.Text = "Select &Rivers";
             this.miEditSelectRivers.Click += new System.EventHandler(this.miEditSelectRivers_Click);
             // 
             // miEditSelectAll
@@ -309,6 +318,13 @@
             this.miEditClearSelectedFeatures.Size = new System.Drawing.Size(202, 22);
             this.miEditClearSelectedFeatures.Text = "&Clear Selected Features";
             this.miEditClearSelectedFeatures.Click += new System.EventHandler(this.miEditClearSelectedFeatures_Click);
+            // 
+            // layersToolStripMenuItem
+            // 
+            this.layersToolStripMenuItem.Name = "layersToolStripMenuItem";
+            this.layersToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.layersToolStripMenuItem.Text = "&Layers";
+            this.layersToolStripMenuItem.Click += new System.EventHandler(this.layersToolStripMenuItem_Click);
             // 
             // miTopView
             // 
@@ -354,7 +370,7 @@
             // 
             this.miViewZoomToExtent.Name = "miViewZoomToExtent";
             this.miViewZoomToExtent.Size = new System.Drawing.Size(185, 22);
-            this.miViewZoomToExtent.Text = "Zoom to E&xtent";
+            this.miViewZoomToExtent.Text = "Zoom to &Extent";
             this.miViewZoomToExtent.Click += new System.EventHandler(this.miViewZoomToExtent_Click);
             // 
             // toolStripSeparator6
@@ -411,7 +427,7 @@
             this.miViewTribConnect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.miViewTribConnect.Name = "miViewTribConnect";
             this.miViewTribConnect.Size = new System.Drawing.Size(185, 22);
-            this.miViewTribConnect.Text = "&Tributary Connections";
+            this.miViewTribConnect.Text = "Tributary Connections";
             // 
             // miViewEntityIDs
             // 
@@ -420,7 +436,7 @@
             this.miViewEntityIDs.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.miViewEntityIDs.Name = "miViewEntityIDs";
             this.miViewEntityIDs.Size = new System.Drawing.Size(185, 22);
-            this.miViewEntityIDs.Text = "&Entity ID\'s";
+            this.miViewEntityIDs.Text = "Entity ID\'s";
             // 
             // miViewEntityPoints
             // 
@@ -429,7 +445,7 @@
             this.miViewEntityPoints.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.miViewEntityPoints.Name = "miViewEntityPoints";
             this.miViewEntityPoints.Size = new System.Drawing.Size(185, 22);
-            this.miViewEntityPoints.Text = "Selected E&ntities Points";
+            this.miViewEntityPoints.Text = "Selected Entities Points";
             // 
             // miViewSubwatersheds
             // 
@@ -438,7 +454,7 @@
             this.miViewSubwatersheds.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.miViewSubwatersheds.Name = "miViewSubwatersheds";
             this.miViewSubwatersheds.Size = new System.Drawing.Size(185, 22);
-            this.miViewSubwatersheds.Text = "&Subwatersheds";
+            this.miViewSubwatersheds.Text = "Subwatersheds";
             // 
             // miViewMETStations
             // 
@@ -500,7 +516,7 @@
             this.miViewScale.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.miViewScale.Name = "miViewScale";
             this.miViewScale.Size = new System.Drawing.Size(185, 22);
-            this.miViewScale.Text = "S&cale";
+            this.miViewScale.Text = "Scale";
             // 
             // miViewPictures
             // 
@@ -556,7 +572,7 @@
             // 
             this.miModeLongGowdyOutput.Name = "miModeLongGowdyOutput";
             this.miModeLongGowdyOutput.Size = new System.Drawing.Size(211, 22);
-            this.miModeLongGowdyOutput.Text = "&Longitudinal / Gowdy Output";
+            this.miModeLongGowdyOutput.Text = "Longitudinal / &Gowdy Output";
             this.miModeLongGowdyOutput.Click += new System.EventHandler(this.miModeLongGowdyOutput_Click);
             // 
             // miTopScenario
@@ -673,13 +689,13 @@
             // miDocumentModelLog
             // 
             this.miDocumentModelLog.Name = "miDocumentModelLog";
-            this.miDocumentModelLog.Size = new System.Drawing.Size(180, 22);
+            this.miDocumentModelLog.Size = new System.Drawing.Size(122, 22);
             this.miDocumentModelLog.Text = "Model &Log";
             // 
             // miDocumentNotes
             // 
             this.miDocumentNotes.Name = "miDocumentNotes";
-            this.miDocumentNotes.Size = new System.Drawing.Size(180, 22);
+            this.miDocumentNotes.Size = new System.Drawing.Size(122, 22);
             this.miDocumentNotes.Text = "&Notes";
             // 
             // miModule
@@ -697,35 +713,35 @@
             // miData
             // 
             this.miData.Name = "miData";
-            this.miData.Size = new System.Drawing.Size(180, 22);
+            this.miData.Size = new System.Drawing.Size(126, 22);
             this.miData.Text = "&Data";
             this.miData.Click += new System.EventHandler(this.miData_Click);
             // 
             // miKnowledge
             // 
             this.miKnowledge.Name = "miKnowledge";
-            this.miKnowledge.Size = new System.Drawing.Size(180, 22);
+            this.miKnowledge.Size = new System.Drawing.Size(126, 22);
             this.miKnowledge.Text = "&Knowledge";
             this.miKnowledge.Click += new System.EventHandler(this.miKnowledge_Click);
             // 
             // miTMDL
             // 
             this.miTMDL.Name = "miTMDL";
-            this.miTMDL.Size = new System.Drawing.Size(180, 22);
+            this.miTMDL.Size = new System.Drawing.Size(126, 22);
             this.miTMDL.Text = "&TMDL";
             this.miTMDL.Click += new System.EventHandler(this.miTMDL_Click);
             // 
             // miConsensus
             // 
             this.miConsensus.Name = "miConsensus";
-            this.miConsensus.Size = new System.Drawing.Size(180, 22);
+            this.miConsensus.Size = new System.Drawing.Size(126, 22);
             this.miConsensus.Text = "&Consensus";
             this.miConsensus.Click += new System.EventHandler(this.miConsensus_Click);
             // 
             // miManager
             // 
             this.miManager.Name = "miManager";
-            this.miManager.Size = new System.Drawing.Size(180, 22);
+            this.miManager.Size = new System.Drawing.Size(126, 22);
             this.miManager.Text = "&Manager";
             this.miManager.Click += new System.EventHandler(this.miManager_Click);
             // 
@@ -749,24 +765,24 @@
             // miHelpContents
             // 
             this.miHelpContents.Name = "miHelpContents";
-            this.miHelpContents.Size = new System.Drawing.Size(180, 22);
+            this.miHelpContents.Size = new System.Drawing.Size(134, 22);
             this.miHelpContents.Text = "&Contents";
             // 
             // miHelpHelp
             // 
             this.miHelpHelp.Name = "miHelpHelp";
-            this.miHelpHelp.Size = new System.Drawing.Size(180, 22);
+            this.miHelpHelp.Size = new System.Drawing.Size(134, 22);
             this.miHelpHelp.Text = "&Help on Help";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(131, 6);
             // 
             // miHelpAbout
             // 
             this.miHelpAbout.Name = "miHelpAbout";
-            this.miHelpAbout.Size = new System.Drawing.Size(180, 22);
+            this.miHelpAbout.Size = new System.Drawing.Size(134, 22);
             this.miHelpAbout.Text = "&About";
             this.miHelpAbout.Click += new System.EventHandler(this.miHelpAbout_Click);
             // 
@@ -923,18 +939,55 @@
             this.mainMap.MouseHover += new System.EventHandler(this.mainMap_MouseHover);
             this.mainMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mainMap_MouseMove);
             // 
+            // appManager1
+            // 
+            this.appManager1.Directories = ((System.Collections.Generic.List<string>)(resources.GetObject("appManager1.Directories")));
+            this.appManager1.DockManager = this.spatialDockManager1;
+            this.appManager1.HeaderControl = this.spatialHeaderControl1;
+            this.appManager1.Legend = null;
+            this.appManager1.Map = this.mainMap;
+            this.appManager1.ProgressHandler = this.spatialStatusStrip1;
+            this.appManager1.ShowExtensionsDialogMode = DotSpatial.Controls.ShowExtensionsDialogMode.Default;
+            // 
+            // spatialHeaderControl1
+            // 
+            this.spatialHeaderControl1.ApplicationManager = null;
+            this.spatialHeaderControl1.MenuStrip = null;
+            this.spatialHeaderControl1.ToolbarsContainer = null;
+            // 
+            // spatialDockManager1
+            // 
+            this.spatialDockManager1.Location = new System.Drawing.Point(0, 0);
+            this.spatialDockManager1.Name = "spatialDockManager1";
+            this.spatialDockManager1.Size = new System.Drawing.Size(150, 100);
+            this.spatialDockManager1.TabControl1 = null;
+            this.spatialDockManager1.TabControl2 = null;
+            this.spatialDockManager1.TabIndex = 7;
+            // 
+            // spatialStatusStrip1
+            // 
+            this.spatialStatusStrip1.Location = new System.Drawing.Point(0, 590);
+            this.spatialStatusStrip1.Name = "spatialStatusStrip1";
+            this.spatialStatusStrip1.ProgressBar = null;
+            this.spatialStatusStrip1.ProgressLabel = null;
+            this.spatialStatusStrip1.Size = new System.Drawing.Size(960, 22);
+            this.spatialStatusStrip1.TabIndex = 8;
+            this.spatialStatusStrip1.Text = "spatialStatusStrip1";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(960, 612);
+            this.Controls.Add(this.spatialStatusStrip1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.lblLatLong);
             this.Controls.Add(this.pboxSplash);
             this.Controls.Add(this.frmMap);
             this.Controls.Add(this.mnuMain);
             this.Controls.Add(this.mainMap);
+            this.Controls.Add(this.spatialDockManager1);
             this.MainMenuStrip = this.mnuMain;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormMain";
@@ -945,6 +998,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pboxSplash)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.spatialHeaderControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spatialDockManager1)).EndInit();
+            this.spatialDockManager1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1044,6 +1100,11 @@
         private System.Windows.Forms.ToolStripButton tsbSelect;
         private System.Windows.Forms.ToolStripButton tsbPointer;
         private System.Windows.Forms.ToolStripButton panButton;
+        private System.Windows.Forms.ToolStripMenuItem layersToolStripMenuItem;
+        private DotSpatial.Controls.AppManager appManager1;
+        private DotSpatial.Controls.SpatialHeaderControl spatialHeaderControl1;
+        private DotSpatial.Controls.SpatialDockManager spatialDockManager1;
+        private DotSpatial.Controls.SpatialStatusStrip spatialStatusStrip1;
     }
 }
 

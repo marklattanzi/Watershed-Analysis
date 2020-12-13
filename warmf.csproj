@@ -137,6 +137,18 @@
     <Compile Include="Module Data\ImportFileFormat.Designer.cs">
       <DependentUpon>ImportFileFormat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Module Engineering\DialogAddLayer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Module Engineering\DialogAddLayer.Designer.cs">
+      <DependentUpon>DialogAddLayer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Module Engineering\DialogEditLayers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Module Engineering\DialogEditLayers.Designer.cs">
+      <DependentUpon>DialogEditLayers.cs</DependentUpon>
+    </Compile>
     <Compile Include="Module Engineering\DialogReservoirCoeffs.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -248,6 +260,9 @@
     <EmbeddedResource Include="Module Data\ImportFileFormat.resx">
       <DependentUpon>ImportFileFormat.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Module Engineering\DialogAddLayer.resx">
+      <DependentUpon>DialogAddLayer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Module Engineering\DialogAddSepticType.resx">
       <DependentUpon>DialogAddSepticType.cs</DependentUpon>
     </EmbeddedResource>
@@ -256,6 +271,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Module Consensus\FormConsensus.resx">
       <DependentUpon>FormConsensus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Module Engineering\DialogEditLayers.resx">
+      <DependentUpon>DialogEditLayers.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Module Engineering\DialogOutput.resx">
       <DependentUpon>DialogOutput.cs</DependentUpon>
