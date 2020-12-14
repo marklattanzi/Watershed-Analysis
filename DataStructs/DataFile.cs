@@ -684,9 +684,6 @@ namespace warmf
         // Replaces data in this file with data in another structure
         public virtual bool ReplaceData(List <double> replaceVariable, DataFile other, int otherVariable, bool fillBetween, double flowConvert)
         {
-            int i;
-            int lineNumber = 0;
-
             if (otherVariable > other.NumParameters)
                 return false;
             if (other.TheData.Count <= 0)

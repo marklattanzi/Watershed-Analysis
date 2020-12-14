@@ -95,6 +95,8 @@ namespace warmf {
             frmManager = new FormManager(this);
             frmConsensus = new FormConsensus(this);
             frmTMDL = new FormTMDL(this);
+
+            scenarioChanged = false;
         }
 
         private void FormMain_Load(object sender, EventArgs e)
