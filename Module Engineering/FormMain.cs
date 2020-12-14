@@ -125,6 +125,36 @@ namespace warmf {
             this.Hide();
         }
 
+        // Formats a catchment layer to the DotSpatial map
+        private void FormatCatchmentLayer(int layerNumber)
+        {
+            MapPolygonLayer catchmentLayerPolygon = mainMap.Layers[layerNumber] as MapPolygonLayer;
+            PolygonScheme catchmentLayerScheme = new PolygonScheme();
+            PolygonCategory catchmentPolygonCategory = new PolygonCategory(Color.FromArgb(224, 250, 207), Color.FromArgb(178, 178, 178), 1);
+            catchmentLayerScheme.AddCategory(catchmentPolygonCategory);
+            catchmentLayerPolygon.Symbology = catchmentLayerScheme;
+        }
+
+        // Formats a river layer to the DotSpatial map
+        private void FormatRiverLayer(int layerNumber)
+        {
+            MapLineLayer riverLayerLine = (MapLineLayer)this.mainMap.Layers[layerNumber];
+            LineScheme riverLayerScheme = new LineScheme();
+            LineCategory riverLineCategory = new LineCategory(Color.FromArgb(0, 0, 255), 1);
+            riverLayerScheme.AddCategory(riverLineCategory);
+            riverLayerLine.Symbology = riverLayerScheme;
+        }
+
+        // Formats a lake layer to the DotSpatial map
+        private void FormatLakeLayer(int layerNumber)
+        {
+            MapPolygonLayer reservoirLayerPolygon = (MapPolygonLayer)this.mainMap.Layers[layerNumber];
+            PolygonScheme reservoirLayerScheme = new PolygonScheme();
+            PolygonCategory reservoirPolygonCategory = new PolygonCategory(Color.FromArgb(0, 0, 255), Color.FromArgb(255, 255, 255), 1);
+            reservoirLayerScheme.AddCategory(reservoirPolygonCategory);
+            reservoirLayerPolygon.Symbology = reservoirLayerScheme;
+        }
+
         // Loads the catchment, river, and reservoir shapefiles
         private void LoadCatchmentRiverReservoirShapefiles()
         {
@@ -168,27 +198,15 @@ namespace warmf {
                     // Color schemes hardwired for now
                     if (layers[i].Type == LAYERCATCHMENT)
                     {
-                        MapPolygonLayer catchmentLayerPolygon = (MapPolygonLayer)this.mainMap.Layers[i];
-                        PolygonScheme catchmentLayerScheme = new PolygonScheme();
-                        PolygonCategory catchmentPolygonCategory = new PolygonCategory(Color.FromArgb(224, 250, 207), Color.FromArgb(178, 178, 178), 1);
-                        catchmentLayerScheme.AddCategory(catchmentPolygonCategory);
-                        catchmentLayerPolygon.Symbology = catchmentLayerScheme;
+                        FormatCatchmentLayer(i);
                     }
                     else if (layers[i].Type == LAYERRIVER)
                     {
-                        MapLineLayer riverLayerLine = (MapLineLayer)this.mainMap.Layers[i];
-                        LineScheme riverLayerScheme = new LineScheme();
-                        LineCategory riverLineCategory = new LineCategory(Color.FromArgb(0, 0, 255), 1);
-                        riverLayerScheme.AddCategory(riverLineCategory);
-                        riverLayerLine.Symbology = riverLayerScheme;
+                        FormatRiverLayer(i);
                     }
                     else if (layers[i].Type == LAYERLAKE)
                     {
-                        MapPolygonLayer reservoirLayerPolygon = (MapPolygonLayer)this.mainMap.Layers[i];
-                        PolygonScheme reservoirLayerScheme = new PolygonScheme();
-                        PolygonCategory reservoirPolygonCategory = new PolygonCategory(Color.FromArgb(0, 0, 255), Color.FromArgb(255, 255, 255), 1);
-                        reservoirLayerScheme.AddCategory(reservoirPolygonCategory);
-                        reservoirLayerPolygon.Symbology = reservoirLayerScheme;
+                        FormatLakeLayer(i);
                     }
                 }
             }
@@ -1965,6 +1983,11 @@ namespace warmf {
                 }
 
             }
+        }
+
+        private void layersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

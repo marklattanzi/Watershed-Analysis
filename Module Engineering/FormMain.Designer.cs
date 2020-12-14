@@ -115,6 +115,7 @@
             this.panButton = new System.Windows.Forms.ToolStripButton();
             this.tsbPointer = new System.Windows.Forms.ToolStripButton();
             this.mainMap = new DotSpatial.Controls.Map();
+            this.layersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxSplash)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -188,78 +189,78 @@
             // miFileNew
             // 
             this.miFileNew.Name = "miFileNew";
-            this.miFileNew.Size = new System.Drawing.Size(180, 22);
+            this.miFileNew.Size = new System.Drawing.Size(149, 22);
             this.miFileNew.Text = "&New";
             // 
             // miFileOpen
             // 
             this.miFileOpen.Name = "miFileOpen";
-            this.miFileOpen.Size = new System.Drawing.Size(180, 22);
+            this.miFileOpen.Size = new System.Drawing.Size(149, 22);
             this.miFileOpen.Text = "&Open";
             this.miFileOpen.Click += new System.EventHandler(this.miFileOpen_Click);
             // 
             // miFileClose
             // 
             this.miFileClose.Name = "miFileClose";
-            this.miFileClose.Size = new System.Drawing.Size(180, 22);
+            this.miFileClose.Size = new System.Drawing.Size(149, 22);
             this.miFileClose.Text = "&Close";
             // 
             // miFileImport
             // 
             this.miFileImport.Name = "miFileImport";
-            this.miFileImport.Size = new System.Drawing.Size(180, 22);
+            this.miFileImport.Size = new System.Drawing.Size(149, 22);
             this.miFileImport.Text = "&Import...";
             // 
             // miFileExport
             // 
             this.miFileExport.Name = "miFileExport";
-            this.miFileExport.Size = new System.Drawing.Size(180, 22);
+            this.miFileExport.Size = new System.Drawing.Size(149, 22);
             this.miFileExport.Text = "&Export";
             // 
             // miFileSave
             // 
             this.miFileSave.Name = "miFileSave";
-            this.miFileSave.Size = new System.Drawing.Size(180, 22);
+            this.miFileSave.Size = new System.Drawing.Size(149, 22);
             this.miFileSave.Text = "&Save";
             // 
             // miFileSaveAs
             // 
             this.miFileSaveAs.Name = "miFileSaveAs";
-            this.miFileSaveAs.Size = new System.Drawing.Size(180, 22);
+            this.miFileSaveAs.Size = new System.Drawing.Size(149, 22);
             this.miFileSaveAs.Text = "Save &As";
             // 
             // miFileSep1
             // 
             this.miFileSep1.Name = "miFileSep1";
-            this.miFileSep1.Size = new System.Drawing.Size(177, 6);
+            this.miFileSep1.Size = new System.Drawing.Size(146, 6);
             // 
             // miFilePrint
             // 
             this.miFilePrint.Name = "miFilePrint";
-            this.miFilePrint.Size = new System.Drawing.Size(180, 22);
+            this.miFilePrint.Size = new System.Drawing.Size(149, 22);
             this.miFilePrint.Text = "&Print...";
             // 
             // miFilePrintPreview
             // 
             this.miFilePrintPreview.Name = "miFilePrintPreview";
-            this.miFilePrintPreview.Size = new System.Drawing.Size(180, 22);
+            this.miFilePrintPreview.Size = new System.Drawing.Size(149, 22);
             this.miFilePrintPreview.Text = "Print Pre&view...";
             // 
             // miFilePrinterSetup
             // 
             this.miFilePrinterSetup.Name = "miFilePrinterSetup";
-            this.miFilePrinterSetup.Size = new System.Drawing.Size(180, 22);
+            this.miFilePrinterSetup.Size = new System.Drawing.Size(149, 22);
             this.miFilePrinterSetup.Text = "Printer Set&up";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(146, 6);
             // 
             // miFileExit
             // 
             this.miFileExit.Name = "miFileExit";
-            this.miFileExit.Size = new System.Drawing.Size(180, 22);
+            this.miFileExit.Size = new System.Drawing.Size(149, 22);
             this.miFileExit.Text = "E&xit";
             this.miFileExit.Click += new System.EventHandler(this.miFileExit_Click);
             // 
@@ -270,7 +271,8 @@
             this.miEditSelectReservoir,
             this.miEditSelectRivers,
             this.miEditSelectAll,
-            this.miEditClearSelectedFeatures});
+            this.miEditClearSelectedFeatures,
+            this.layersToolStripMenuItem});
             this.miTopEdit.Name = "miTopEdit";
             this.miTopEdit.Size = new System.Drawing.Size(37, 22);
             this.miTopEdit.Text = "&Edit";
@@ -673,13 +675,13 @@
             // miDocumentModelLog
             // 
             this.miDocumentModelLog.Name = "miDocumentModelLog";
-            this.miDocumentModelLog.Size = new System.Drawing.Size(180, 22);
+            this.miDocumentModelLog.Size = new System.Drawing.Size(122, 22);
             this.miDocumentModelLog.Text = "Model &Log";
             // 
             // miDocumentNotes
             // 
             this.miDocumentNotes.Name = "miDocumentNotes";
-            this.miDocumentNotes.Size = new System.Drawing.Size(180, 22);
+            this.miDocumentNotes.Size = new System.Drawing.Size(122, 22);
             this.miDocumentNotes.Text = "&Notes";
             // 
             // miModule
@@ -697,35 +699,35 @@
             // miData
             // 
             this.miData.Name = "miData";
-            this.miData.Size = new System.Drawing.Size(180, 22);
+            this.miData.Size = new System.Drawing.Size(126, 22);
             this.miData.Text = "&Data";
             this.miData.Click += new System.EventHandler(this.miData_Click);
             // 
             // miKnowledge
             // 
             this.miKnowledge.Name = "miKnowledge";
-            this.miKnowledge.Size = new System.Drawing.Size(180, 22);
+            this.miKnowledge.Size = new System.Drawing.Size(126, 22);
             this.miKnowledge.Text = "&Knowledge";
             this.miKnowledge.Click += new System.EventHandler(this.miKnowledge_Click);
             // 
             // miTMDL
             // 
             this.miTMDL.Name = "miTMDL";
-            this.miTMDL.Size = new System.Drawing.Size(180, 22);
+            this.miTMDL.Size = new System.Drawing.Size(126, 22);
             this.miTMDL.Text = "&TMDL";
             this.miTMDL.Click += new System.EventHandler(this.miTMDL_Click);
             // 
             // miConsensus
             // 
             this.miConsensus.Name = "miConsensus";
-            this.miConsensus.Size = new System.Drawing.Size(180, 22);
+            this.miConsensus.Size = new System.Drawing.Size(126, 22);
             this.miConsensus.Text = "&Consensus";
             this.miConsensus.Click += new System.EventHandler(this.miConsensus_Click);
             // 
             // miManager
             // 
             this.miManager.Name = "miManager";
-            this.miManager.Size = new System.Drawing.Size(180, 22);
+            this.miManager.Size = new System.Drawing.Size(126, 22);
             this.miManager.Text = "&Manager";
             this.miManager.Click += new System.EventHandler(this.miManager_Click);
             // 
@@ -749,24 +751,24 @@
             // miHelpContents
             // 
             this.miHelpContents.Name = "miHelpContents";
-            this.miHelpContents.Size = new System.Drawing.Size(180, 22);
+            this.miHelpContents.Size = new System.Drawing.Size(134, 22);
             this.miHelpContents.Text = "&Contents";
             // 
             // miHelpHelp
             // 
             this.miHelpHelp.Name = "miHelpHelp";
-            this.miHelpHelp.Size = new System.Drawing.Size(180, 22);
+            this.miHelpHelp.Size = new System.Drawing.Size(134, 22);
             this.miHelpHelp.Text = "&Help on Help";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(131, 6);
             // 
             // miHelpAbout
             // 
             this.miHelpAbout.Name = "miHelpAbout";
-            this.miHelpAbout.Size = new System.Drawing.Size(180, 22);
+            this.miHelpAbout.Size = new System.Drawing.Size(134, 22);
             this.miHelpAbout.Text = "&About";
             this.miHelpAbout.Click += new System.EventHandler(this.miHelpAbout_Click);
             // 
@@ -923,6 +925,13 @@
             this.mainMap.MouseHover += new System.EventHandler(this.mainMap_MouseHover);
             this.mainMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mainMap_MouseMove);
             // 
+            // layersToolStripMenuItem
+            // 
+            this.layersToolStripMenuItem.Name = "layersToolStripMenuItem";
+            this.layersToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.layersToolStripMenuItem.Text = "&Layers";
+            this.layersToolStripMenuItem.Click += new System.EventHandler(this.layersToolStripMenuItem_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1044,6 +1053,7 @@
         private System.Windows.Forms.ToolStripButton tsbSelect;
         private System.Windows.Forms.ToolStripButton tsbPointer;
         private System.Windows.Forms.ToolStripButton panButton;
+        private System.Windows.Forms.ToolStripMenuItem layersToolStripMenuItem;
     }
 }
 
