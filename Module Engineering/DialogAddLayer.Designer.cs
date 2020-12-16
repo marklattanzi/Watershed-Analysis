@@ -35,7 +35,6 @@
             this.labelNewLayerName = new System.Windows.Forms.Label();
             this.cbAddLayerType = new System.Windows.Forms.ComboBox();
             this.labelAddLayerType = new System.Windows.Forms.Label();
-            this.appManager1 = new DotSpatial.Controls.AppManager();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -102,16 +101,6 @@
             this.labelAddLayerType.TabIndex = 25;
             this.labelAddLayerType.Text = "Layer Type:";
             // 
-            // appManager1
-            // 
-            this.appManager1.Directories = ((System.Collections.Generic.List<string>)(resources.GetObject("appManager1.Directories")));
-            this.appManager1.DockManager = null;
-            this.appManager1.HeaderControl = null;
-            this.appManager1.Legend = null;
-            this.appManager1.Map = null;
-            this.appManager1.ProgressHandler = null;
-            this.appManager1.ShowExtensionsDialogMode = DotSpatial.Controls.ShowExtensionsDialogMode.Default;
-            // 
             // DialogAddLayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -138,6 +127,5 @@
         private System.Windows.Forms.Label labelNewLayerName;
         public System.Windows.Forms.ComboBox cbAddLayerType;
         private System.Windows.Forms.Label labelAddLayerType;
-        private DotSpatial.Controls.AppManager appManager1;
     }
 }

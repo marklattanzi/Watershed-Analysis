@@ -47,6 +47,7 @@
             this.miEditSelectRivers = new System.Windows.Forms.ToolStripMenuItem();
             this.miEditSelectAll = new System.Windows.Forms.ToolStripMenuItem();
             this.miEditClearSelectedFeatures = new System.Windows.Forms.ToolStripMenuItem();
+            this.layersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.miTopView = new System.Windows.Forms.ToolStripMenuItem();
             this.miViewZoomIn = new System.Windows.Forms.ToolStripMenuItem();
             this.miViewZoomOut = new System.Windows.Forms.ToolStripMenuItem();
@@ -115,7 +116,6 @@
             this.panButton = new System.Windows.Forms.ToolStripButton();
             this.tsbPointer = new System.Windows.Forms.ToolStripButton();
             this.mainMap = new DotSpatial.Controls.Map();
-            this.layersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxSplash)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -189,78 +189,81 @@
             // miFileNew
             // 
             this.miFileNew.Name = "miFileNew";
-            this.miFileNew.Size = new System.Drawing.Size(149, 22);
+            this.miFileNew.Size = new System.Drawing.Size(180, 22);
             this.miFileNew.Text = "&New";
+            this.miFileNew.Click += new System.EventHandler(this.miFileNew_Click);
             // 
             // miFileOpen
             // 
             this.miFileOpen.Name = "miFileOpen";
-            this.miFileOpen.Size = new System.Drawing.Size(149, 22);
+            this.miFileOpen.Size = new System.Drawing.Size(180, 22);
             this.miFileOpen.Text = "&Open";
             this.miFileOpen.Click += new System.EventHandler(this.miFileOpen_Click);
             // 
             // miFileClose
             // 
             this.miFileClose.Name = "miFileClose";
-            this.miFileClose.Size = new System.Drawing.Size(149, 22);
+            this.miFileClose.Size = new System.Drawing.Size(180, 22);
             this.miFileClose.Text = "&Close";
             // 
             // miFileImport
             // 
             this.miFileImport.Name = "miFileImport";
-            this.miFileImport.Size = new System.Drawing.Size(149, 22);
+            this.miFileImport.Size = new System.Drawing.Size(180, 22);
             this.miFileImport.Text = "&Import...";
             // 
             // miFileExport
             // 
             this.miFileExport.Name = "miFileExport";
-            this.miFileExport.Size = new System.Drawing.Size(149, 22);
+            this.miFileExport.Size = new System.Drawing.Size(180, 22);
             this.miFileExport.Text = "&Export";
             // 
             // miFileSave
             // 
             this.miFileSave.Name = "miFileSave";
-            this.miFileSave.Size = new System.Drawing.Size(149, 22);
+            this.miFileSave.Size = new System.Drawing.Size(180, 22);
             this.miFileSave.Text = "&Save";
+            this.miFileSave.Click += new System.EventHandler(this.miFileSave_Click);
             // 
             // miFileSaveAs
             // 
             this.miFileSaveAs.Name = "miFileSaveAs";
-            this.miFileSaveAs.Size = new System.Drawing.Size(149, 22);
+            this.miFileSaveAs.Size = new System.Drawing.Size(180, 22);
             this.miFileSaveAs.Text = "Save &As";
+            this.miFileSaveAs.Click += new System.EventHandler(this.miFileSaveAs_Click);
             // 
             // miFileSep1
             // 
             this.miFileSep1.Name = "miFileSep1";
-            this.miFileSep1.Size = new System.Drawing.Size(146, 6);
+            this.miFileSep1.Size = new System.Drawing.Size(177, 6);
             // 
             // miFilePrint
             // 
             this.miFilePrint.Name = "miFilePrint";
-            this.miFilePrint.Size = new System.Drawing.Size(149, 22);
+            this.miFilePrint.Size = new System.Drawing.Size(180, 22);
             this.miFilePrint.Text = "&Print...";
             // 
             // miFilePrintPreview
             // 
             this.miFilePrintPreview.Name = "miFilePrintPreview";
-            this.miFilePrintPreview.Size = new System.Drawing.Size(149, 22);
+            this.miFilePrintPreview.Size = new System.Drawing.Size(180, 22);
             this.miFilePrintPreview.Text = "Print Pre&view...";
             // 
             // miFilePrinterSetup
             // 
             this.miFilePrinterSetup.Name = "miFilePrinterSetup";
-            this.miFilePrinterSetup.Size = new System.Drawing.Size(149, 22);
+            this.miFilePrinterSetup.Size = new System.Drawing.Size(180, 22);
             this.miFilePrinterSetup.Text = "Printer Set&up";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(146, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
             // 
             // miFileExit
             // 
             this.miFileExit.Name = "miFileExit";
-            this.miFileExit.Size = new System.Drawing.Size(149, 22);
+            this.miFileExit.Size = new System.Drawing.Size(180, 22);
             this.miFileExit.Text = "E&xit";
             this.miFileExit.Click += new System.EventHandler(this.miFileExit_Click);
             // 
@@ -311,6 +314,13 @@
             this.miEditClearSelectedFeatures.Size = new System.Drawing.Size(202, 22);
             this.miEditClearSelectedFeatures.Text = "&Clear Selected Features";
             this.miEditClearSelectedFeatures.Click += new System.EventHandler(this.miEditClearSelectedFeatures_Click);
+            // 
+            // layersToolStripMenuItem
+            // 
+            this.layersToolStripMenuItem.Name = "layersToolStripMenuItem";
+            this.layersToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.layersToolStripMenuItem.Text = "&Layers";
+            this.layersToolStripMenuItem.Click += new System.EventHandler(this.layersToolStripMenuItem_Click);
             // 
             // miTopView
             // 
@@ -924,13 +934,6 @@
             this.mainMap.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.mainMap_MouseDoubleClick);
             this.mainMap.MouseHover += new System.EventHandler(this.mainMap_MouseHover);
             this.mainMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mainMap_MouseMove);
-            // 
-            // layersToolStripMenuItem
-            // 
-            this.layersToolStripMenuItem.Name = "layersToolStripMenuItem";
-            this.layersToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.layersToolStripMenuItem.Text = "&Layers";
-            this.layersToolStripMenuItem.Click += new System.EventHandler(this.layersToolStripMenuItem_Click);
             // 
             // FormMain
             // 

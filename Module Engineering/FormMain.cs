@@ -16,6 +16,9 @@ namespace warmf {
     public partial class FormMain : Form
     {
         #region Declarations
+        // Versions
+        public static int PROJECTFILEVERSION = 2;
+        
         // Constants
         public static int LAYERCATCHMENT = 1;
         public static int LAYERRIVER = 2;
@@ -42,13 +45,8 @@ namespace warmf {
         public EGIS.ShapeFileLib.ShapeFile lakeShapefile;
 
         // what's showing on the map
-/*        bool showMETStations = false;
-        bool showGageStations = false;
-        bool showWQStations = false;
-        bool showFLOStations = false;
-        bool showPTSStations = false;
-        bool showAIRStations = false;*/
-        DotSpatial.Topology.Coordinate mouseCoordinates;
+        private DotSpatial.Topology.Coordinate mouseCoordinates;
+        public string projectFileName;
 
         public LayerInfo catchmentLayer;
         public LayerInfo riverLayer;
@@ -73,6 +71,8 @@ namespace warmf {
             public string Name;
         }
 
+        // Layers
+        public bool projectChanged;
         public struct LayerInfo
         {
             public string Name;
@@ -97,6 +97,7 @@ namespace warmf {
             frmConsensus = new FormConsensus(this);
             frmTMDL = new FormTMDL(this);
 
+            projectChanged = false;
             scenarioChanged = false;
         }
 
@@ -563,10 +564,309 @@ namespace warmf {
         }
 
         #region File Menu Events
+        // Reads the project file
+        private void ReadProjectFile(string fileName)
+        {
+            try
+            {
+                STechStreamReader sr = new STechStreamReader(fileName);
+                bool endOfLine = false;
+                // Read where it says "VERSION"
+                sr.ReadDelimitedField(',', ref endOfLine);
+                int version = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine));
+                if (version >= 2)
+                {
+                    // Read directory structure
+                    int numDirectories = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine));
+                    for (int i = 0; i < numDirectories; i++)
+                    {
+                        // Read the name and directory
+                        string fieldString = sr.ReadDelimitedField(',', ref endOfLine);
+                        string dirString = sr.ReadDelimitedField(',', ref endOfLine);
+
+                        // Check to make sure the directory ends with a backslash
+                        if (!dirString.EndsWith("\\"))
+                            dirString = dirString + "\\";
+
+                        if (fieldString.StartsWith("DATA"))
+                        {
+                            Global.DIR.DATA = Global.DIR.ROOT + dirString;
+                        }
+                        else if (fieldString.StartsWith("INPUT"))
+                        {
+                            Global.DIR.INPUT = Global.DIR.DATA + dirString;
+                        }
+                        else if (fieldString.StartsWith("OUTPUT"))
+                        {
+                            Global.DIR.OUTPUT = Global.DIR.DATA + dirString;
+                        }
+                        else if (fieldString.StartsWith("SHP"))
+                        {
+                            Global.DIR.SHP = Global.DIR.INPUT + dirString;
+                        }
+                        else if (fieldString.StartsWith("COE"))
+                        {
+                            Global.DIR.COE = Global.DIR.INPUT + dirString;
+                        }
+                        else if (fieldString.StartsWith("NPT"))
+                        {
+                            Global.DIR.NPT = Global.DIR.INPUT + dirString;
+                        }
+                        else if (fieldString.StartsWith("AIR"))
+                        {
+                            Global.DIR.AIR = Global.DIR.INPUT + dirString;
+                        }
+                        else if (fieldString.StartsWith("CPA"))
+                        {
+                            Global.DIR.CPA = Global.DIR.INPUT + dirString;
+                        }
+                        else if (fieldString.StartsWith("FLO"))
+                        {
+                            Global.DIR.FLO = Global.DIR.INPUT + dirString;
+                        }
+                        else if (fieldString.StartsWith("MET"))
+                        {
+                            Global.DIR.MET = Global.DIR.INPUT + dirString;
+                        }
+                        else if (fieldString.StartsWith("OLC"))
+                        {
+                            Global.DIR.OLC = Global.DIR.INPUT + dirString;
+                        }
+                        else if (fieldString.StartsWith("OLH"))
+                        {
+                            Global.DIR.OLH = Global.DIR.INPUT + dirString;
+                        }
+                        else if (fieldString.StartsWith("ORC"))
+                        {
+                            Global.DIR.ORC = Global.DIR.INPUT + dirString;
+                        }
+                        else if (fieldString.StartsWith("ORH"))
+                        {
+                            Global.DIR.ORH = Global.DIR.INPUT + dirString;
+                        }
+                        else if (fieldString.StartsWith("PTS"))
+                        {
+                            Global.DIR.PTS = Global.DIR.INPUT + dirString;
+                        }
+                        else if (fieldString.StartsWith("CAT"))
+                        {
+                            Global.DIR.CAT = Global.DIR.OUTPUT + dirString;
+                        }
+                        else if (fieldString.StartsWith("RIV"))
+                        {
+                            Global.DIR.RIV = Global.DIR.OUTPUT + dirString;
+                        }
+                        else if (fieldString.StartsWith("LAK"))
+                        {
+                            Global.DIR.LAK = Global.DIR.OUTPUT + dirString;
+                        }
+                        else if (fieldString.StartsWith("PSM"))
+                        {
+                            Global.DIR.PSM = Global.DIR.OUTPUT + dirString;
+                        }
+                        else if (fieldString.StartsWith("QWQ"))
+                        {
+                            Global.DIR.QWQ = Global.DIR.OUTPUT + dirString;
+                        }
+                        else if (fieldString.StartsWith("WST"))
+                        {
+                            Global.DIR.WST = Global.DIR.OUTPUT + dirString;
+                        }
+                    }
+
+                    // Read the catchment, river, and reservoir layer information
+                    layers.Clear();
+                    int numLayers = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine));
+                    for (int i = 0; i < numLayers; i++)
+                    {
+                        LayerInfo newLayer = new LayerInfo();
+                        newLayer.Type = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine));
+                        newLayer.Name = sr.ReadDelimitedField(',', ref endOfLine);
+                        newLayer.FileName = sr.ReadDelimitedField(',', ref endOfLine);
+
+                        // Old hardwired layers only used with EasyGIS map
+                        if (newLayer.Type == LAYERCATCHMENT)
+                            catchmentLayer = newLayer;
+                        if (newLayer.Type == LAYERRIVER)
+                            riverLayer = newLayer;
+                        if (newLayer.Type == LAYERLAKE)
+                            reservoirLayer = newLayer;
+
+                        layers.Add(newLayer);
+                    }
+/*                    catchmentLayer.Name = sr.ReadDelimitedField(',', ref endOfLine);
+                    catchmentLayer.FileName = sr.ReadDelimitedField(',', ref endOfLine);
+                    catchmentLayer.Type = LAYERCATCHMENT;
+                    layers.Add(catchmentLayer);
+                    riverLayer.Name = sr.ReadDelimitedField(',', ref endOfLine);
+                    riverLayer.FileName = sr.ReadDelimitedField(',', ref endOfLine);
+                    riverLayer.Type = LAYERRIVER;
+                    layers.Add(riverLayer);
+                    reservoirLayer.Name = sr.ReadDelimitedField(',', ref endOfLine);
+                    reservoirLayer.FileName = sr.ReadDelimitedField(',', ref endOfLine);
+                    reservoirLayer.Type = LAYERLAKE;
+                    layers.Add(reservoirLayer);*/
+                    LoadCatchmentRiverReservoirShapefiles();
+
+                    // Read reference layer information
+/*                    int numReferenceLayers = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine));
+                    for (int i = 0; i < numReferenceLayers; i++)
+                    {
+                        LayerInfo referenceLayer = new LayerInfo
+                        {
+                            Name = sr.ReadDelimitedField(',', ref endOfLine),
+                            FileName = sr.ReadDelimitedField(',', ref endOfLine)
+                        };
+                        referenceLayer.Type = LAYERREFERENCE;
+                        layers.Add(referenceLayer);
+                        miTopView.DropDownItems.Add(referenceLayer.Name);
+                    }*/
+
+                    // Read the information on scenarios in the project
+                    int numScenarios = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine));
+                    scenarios.Clear();
+                    for (int i = 0; i < numScenarios; i++)
+                    {
+                        ScenarioInfo newScenario = new ScenarioInfo
+                        {
+                            IsOpen = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine)),
+                            IsActive = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine)),
+                            Name = sr.ReadDelimitedField(',', ref endOfLine)
+                        };
+
+                        // Add open scenarios to the bottom of the Scenario menu
+                        if (newScenario.IsOpen > 0)
+                        {
+                            string scenarioName = Path.GetFileNameWithoutExtension(newScenario.Name);
+                            miTopScenario.DropDownItems.Add(scenarioName);
+                        }
+
+                        // Read the active scenario and check it in the scenario menu
+                        if (newScenario.IsActive > 0)
+                        {
+                            string coeFileName = Global.DIR.COE + newScenario.Name;
+                            Global.coe.ReadCOE(coeFileName);
+
+                            int itemNumber = miTopScenario.DropDownItems.Count - 1;
+                            if (itemNumber >= 0)
+                                ((ToolStripMenuItem)miTopScenario.DropDownItems[itemNumber]).Checked = true;
+                        }
+
+                        // Add the scenario to the master list of scenarios in the project
+                        scenarios.Add(newScenario);
+                    }
+                }
+
+                sr.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, "Error : " + ex.Message);
+            }
+        }
+
+        // Removes the portion of a directory which coincides with the directory passed in to get a directory relative to root
+        private string GetRelativePath(string inputPath, string removePath)
+        {
+            int rootString = inputPath.IndexOf(removePath);
+            if (rootString == 0)
+            {
+                // If the remaining path is just a backslash, return an empty string
+                if (inputPath.Length == removePath.Length + 1 && inputPath.EndsWith("\\"))
+                    return "";
+
+                // Return portion of inputPath after removePath
+                return inputPath.Substring(removePath.Length);
+            }
+
+            // removePath not found at the beginning of inputPath
+            return inputPath;
+        }
+
+        // Writes the project file
+        private void WriteProjectFile(string fileName)
+        {
+            try
+            {
+                STechStreamWriter wr = new STechStreamWriter(fileName);
+                // Write the version number
+                wr.WriteLine("VERSION," + Convert.ToString(PROJECTFILEVERSION));
+
+                // Write directory structure
+                // Number of directories to be written
+                wr.WriteLine("21");
+                // Data directory
+                wr.WriteLine("DATA," + GetRelativePath(Global.DIR.DATA, Global.DIR.ROOT));
+                // Input directory
+                wr.WriteLine("INPUT," + GetRelativePath(Global.DIR.INPUT, Global.DIR.DATA));
+                // Output directory
+                wr.WriteLine("OUTPUT," + GetRelativePath(Global.DIR.OUTPUT, Global.DIR.DATA));
+                // Shapefile directory
+                wr.WriteLine("SHP," + GetRelativePath(Global.DIR.SHP, Global.DIR.INPUT));
+                // Coefficient file directory
+                wr.WriteLine("COE," + GetRelativePath(Global.DIR.COE, Global.DIR.INPUT));
+                // CE-QUAL-W2 coefficient file directory
+                wr.WriteLine("NPT," + GetRelativePath(Global.DIR.NPT, Global.DIR.INPUT));
+                // Air/rain chemistry file directory
+                wr.WriteLine("AIR," + GetRelativePath(Global.DIR.AIR, Global.DIR.INPUT));
+                // Coarse particle air quality file directory
+                wr.WriteLine("CPA," + GetRelativePath(Global.DIR.CPA, Global.DIR.INPUT));
+                // Managed flow file directory
+                wr.WriteLine("FLO," + GetRelativePath(Global.DIR.FLO, Global.DIR.INPUT));
+                // Meteorology file directory
+                wr.WriteLine("MET," + GetRelativePath(Global.DIR.MET, Global.DIR.INPUT));
+                // Observed lake chemistry file directory
+                wr.WriteLine("OLC," + GetRelativePath(Global.DIR.OLC, Global.DIR.INPUT));
+                // Observed lake hydrology file directory
+                wr.WriteLine("OLH," + GetRelativePath(Global.DIR.OLH, Global.DIR.INPUT));
+                // Observed river chemistry file directory
+                wr.WriteLine("ORC," + GetRelativePath(Global.DIR.ORC, Global.DIR.INPUT));
+                // Observed river hydrology file directory
+                wr.WriteLine("ORH," + GetRelativePath(Global.DIR.ORH, Global.DIR.INPUT));
+                // Point source file directory
+                wr.WriteLine("PTS," + GetRelativePath(Global.DIR.PTS, Global.DIR.INPUT));
+                // Catchment output file directory
+                wr.WriteLine("CAT," + GetRelativePath(Global.DIR.CAT, Global.DIR.OUTPUT));
+                // River output file directory
+                wr.WriteLine("RIV," + GetRelativePath(Global.DIR.RIV, Global.DIR.OUTPUT));
+                // Lake output file directory
+                wr.WriteLine("LAK," + GetRelativePath(Global.DIR.LAK, Global.DIR.OUTPUT));
+                // Loading output file directory
+                wr.WriteLine("PSM," + GetRelativePath(Global.DIR.PSM, Global.DIR.OUTPUT));
+                // Diverted flow/water quality file directory
+                wr.WriteLine("QWQ," + GetRelativePath(Global.DIR.QWQ, Global.DIR.OUTPUT));
+                // Warm start file directory
+                wr.WriteLine("WST," + GetRelativePath(Global.DIR.WST, Global.DIR.OUTPUT));
+
+                // Write the layer information
+                wr.WriteLine(Convert.ToString(layers.Count));
+                for (int i = 0; i < layers.Count; i++)
+                    wr.WriteLine(Convert.ToString(layers[i].Type) + "," + layers[i].Name + "," + layers[i].FileName);
+
+                // Write the information on scenarios in the project
+                wr.WriteLine(Convert.ToString(scenarios.Count));
+                for (int i = 0; i < scenarios.Count; i++)
+                    wr.WriteLine(Convert.ToString(scenarios[i].IsOpen) + "," + Convert.ToString(scenarios[i].IsActive) + "," + scenarios[i].Name);
+
+                wr.Close();
+
+                projectChanged = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, "Error : " + ex.Message);
+            }
+        }
+
+        // Called by File / New in the main map menu
+        private void miFileNew_Click(object sender, EventArgs e)
+        {
+            layers.Clear();
+            SetupEngrModule();
+        }
+
         private void miFileOpen_Click(object sender, EventArgs e)
         {
-            int i;
-
             OpenFileDialog openDialog = new OpenFileDialog
             {
                 InitialDirectory = Global.DIR.ROOT,
@@ -577,185 +877,33 @@ namespace warmf {
             };
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
-                try
-                {
-                    STechStreamReader sr = new STechStreamReader(openDialog.FileName);
-                    bool endOfLine = false;
-                    // Read where it says "VERSION"
-                    sr.ReadDelimitedField(',', ref endOfLine);
-                    int version = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine));
-                    if (version >= 2)
-                    {
-                        // Read directory structure
-                        int numDirectories = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine));
-                        for (i = 0; i < numDirectories; i++)
-                        {
-                            // Read the name and directory
-                            string fieldString = sr.ReadDelimitedField(',', ref endOfLine);
-                            string dirString = sr.ReadDelimitedField(',', ref endOfLine);
-
-                            // Check to make sure the directory ends with a backslash
-                            if (!dirString.EndsWith("\\"))
-                                dirString = dirString + "\\";
-
-                            if (fieldString.StartsWith("DATA"))
-                            {
-                                Global.DIR.DATA = Global.DIR.ROOT + dirString;
-                            }
-                            else if (fieldString.StartsWith("INPUT"))
-                            {
-                                Global.DIR.INPUT = Global.DIR.DATA + dirString;
-                            }
-                            else if (fieldString.StartsWith("OUTPUT"))
-                            {
-                                Global.DIR.OUTPUT = Global.DIR.DATA + dirString;
-                            }
-                            else if (fieldString.StartsWith("SHP"))
-                            {
-                                Global.DIR.SHP = Global.DIR.INPUT + dirString;
-                            }
-                            else if (fieldString.StartsWith("COE"))
-                            {
-                                Global.DIR.COE = Global.DIR.INPUT + dirString;
-                            }
-                            else if (fieldString.StartsWith("NPT"))
-                            {
-                                Global.DIR.NPT = Global.DIR.INPUT + dirString;
-                            }
-                            else if (fieldString.StartsWith("AIR"))
-                            {
-                                Global.DIR.AIR = Global.DIR.INPUT + dirString;
-                            }
-                            else if (fieldString.StartsWith("CPA"))
-                            {
-                                Global.DIR.CPA = Global.DIR.INPUT + dirString;
-                            }
-                            else if (fieldString.StartsWith("FLO"))
-                            {
-                                Global.DIR.FLO = Global.DIR.INPUT + dirString;
-                            }
-                            else if (fieldString.StartsWith("MET"))
-                            {
-                                Global.DIR.MET = Global.DIR.INPUT + dirString;
-                            }
-                            else if (fieldString.StartsWith("OLC"))
-                            {
-                                Global.DIR.OLC = Global.DIR.INPUT + dirString;
-                            }
-                            else if (fieldString.StartsWith("OLH"))
-                            {
-                                Global.DIR.OLH = Global.DIR.INPUT + dirString;
-                            }
-                            else if (fieldString.StartsWith("ORC"))
-                            {
-                                Global.DIR.ORC = Global.DIR.INPUT + dirString;
-                            }
-                            else if (fieldString.StartsWith("ORH"))
-                            {
-                                Global.DIR.ORH = Global.DIR.INPUT + dirString;
-                            }
-                            else if (fieldString.StartsWith("PTS"))
-                            {
-                                Global.DIR.PTS = Global.DIR.INPUT + dirString;
-                            }
-                            else if (fieldString.StartsWith("CAT"))
-                            {
-                                Global.DIR.CAT = Global.DIR.OUTPUT + dirString;
-                            }
-                            else if (fieldString.StartsWith("RIV"))
-                            {
-                                Global.DIR.RIV = Global.DIR.OUTPUT + dirString;
-                            }
-                            else if (fieldString.StartsWith("LAK"))
-                            {
-                                Global.DIR.LAK = Global.DIR.OUTPUT + dirString;
-                            }
-                            else if (fieldString.StartsWith("PSM"))
-                            {
-                                Global.DIR.PSM = Global.DIR.OUTPUT + dirString;
-                            }
-                            else if (fieldString.StartsWith("QWQ"))
-                            {
-                                Global.DIR.QWQ = Global.DIR.OUTPUT + dirString;
-                            }
-                            else if (fieldString.StartsWith("WST"))
-                            {
-                                Global.DIR.WST = Global.DIR.OUTPUT + dirString;
-                            }
-                        }
-
-                        // Read the catchment, river, and reservoir layer information
-                        layers.Clear();
-                        catchmentLayer.Name = sr.ReadDelimitedField(',', ref endOfLine);
-                        catchmentLayer.FileName = sr.ReadDelimitedField(',', ref endOfLine);
-                        catchmentLayer.Type = LAYERCATCHMENT;
-                        layers.Add(catchmentLayer);
-                        riverLayer.Name = sr.ReadDelimitedField(',', ref endOfLine);
-                        riverLayer.FileName = sr.ReadDelimitedField(',', ref endOfLine);
-                        riverLayer.Type = LAYERRIVER;
-                        layers.Add(riverLayer);
-                        reservoirLayer.Name = sr.ReadDelimitedField(',', ref endOfLine);
-                        reservoirLayer.FileName = sr.ReadDelimitedField(',', ref endOfLine);
-                        reservoirLayer.Type = LAYERLAKE;
-                        layers.Add(reservoirLayer);
-                        LoadCatchmentRiverReservoirShapefiles();
-
-                        // Read reference layer information
-                        int numReferenceLayers = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine));
-                        for (i = 0; i < numReferenceLayers; i++)
-                        {
-                            LayerInfo referenceLayer = new LayerInfo
-                            {
-                                Name = sr.ReadDelimitedField(',', ref endOfLine),
-                                FileName = sr.ReadDelimitedField(',', ref endOfLine)
-                            };
-                            referenceLayer.Type = LAYERREFERENCE;
-                            layers.Add(referenceLayer);
-                            miTopView.DropDownItems.Add(referenceLayer.Name);
-                        }
-
-                        // Read the information on scenarios in the project
-                        int numScenarios = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine));
-                        scenarios.Clear();
-                        for (i = 0; i < numScenarios; i++)
-                        {
-                            ScenarioInfo newScenario = new ScenarioInfo
-                            {
-                                IsOpen = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine)),
-                                IsActive = Convert.ToInt32(sr.ReadDelimitedField(',', ref endOfLine)),
-                                Name = sr.ReadDelimitedField(',', ref endOfLine)
-                            };
-
-                            // Add open scenarios to the bottom of the Scenario menu
-                            if (newScenario.IsOpen > 0)
-                            {
-                                string scenarioName = Path.GetFileNameWithoutExtension(newScenario.Name);
-                                miTopScenario.DropDownItems.Add(scenarioName);
-                            }
-
-                            // Read the active scenario and check it in the scenario menu
-                            if (newScenario.IsActive > 0)
-                            {
-                                string coeFileName = Global.DIR.COE + newScenario.Name;
-                                Global.coe.ReadCOE(coeFileName);
-
-                                int itemNumber = miTopScenario.DropDownItems.Count - 1;
-                                if (itemNumber >= 0)
-                                    ((ToolStripMenuItem)miTopScenario.DropDownItems[itemNumber]).Checked = true;
-                            }
-
-                            // Add the scenario to the master list of scenarios in the project
-                            scenarios.Add(newScenario);
-                        }
-                    }
-
-                    sr.Close();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(this, "Error : " + ex.Message);
-                }
+                projectFileName = openDialog.FileName;
+                ReadProjectFile(projectFileName);
                 SetupEngrModule();
+            }
+        }
+
+        // Called by File / Save in the main map's menu
+        private void miFileSave_Click(object sender, EventArgs e)
+        {
+            WriteProjectFile(projectFileName);
+        }
+
+        // Called by File / Save As in the main map's menu
+        private void miFileSaveAs_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveDialog = new SaveFileDialog
+            {
+                InitialDirectory = Global.DIR.ROOT,
+                FileName = "",
+                DefaultExt = ".wpf",
+                Filter = "WARMF Project File (.wpf)|*.wpf",
+                Title = "Save WARMF Project"
+            };
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                projectFileName = saveDialog.FileName;
+                WriteProjectFile(projectFileName);
             }
         }
 
@@ -1055,30 +1203,8 @@ namespace warmf {
             if (RemoveLayer("Meteorology Stations"))
                 return;
 
-/*            if (showMETStations) //remove points from map
-            {
-                showMETStations = false;
-                for (int i = 0; i < frmMap.ShapeFileCount; i++)
-                {
-                    if (frmMap[i].Name == "Meteorology Stations")
-                    {
-                        frmMap.RemoveShapeFile(frmMap[i]);
-                    }
-                }
-
-                return;
-            }
-            else //add points to map*/
-            {
-                if (STechShapes.CreateShapeFile("MET", Global.DIR.MET, Global.coe.METFilename))
-                {
-//                    this.frmMap.AddShapeFile(Global.DIR.SHP + "MET.shp", "Meteorology Stations", "Name");
-//                    showMETStations = true;
-//                    frmMap.ZoomLevel /= 1.05;
-
-                    AddDataLayer("Meteorology Stations", "MET.shp");
-                }
-            }
+            if (STechShapes.CreateShapeFile("MET", Global.DIR.MET, Global.coe.METFilename))
+                AddDataLayer("Meteorology Stations", "MET.shp");
         }
 
         private void miViewGagingStations_Click(object sender, EventArgs e)
@@ -1343,6 +1469,9 @@ namespace warmf {
                     if (((ToolStripMenuItem)miTopScenario.DropDownItems[i]).Checked)
                         miTopScenario.DropDownItems[i].Text = Path.GetFileNameWithoutExtension(scenarios[activeScenario].Name);
                 }
+
+                scenarioChanged = false;
+                projectChanged = true;
             }
         }
 
@@ -1487,6 +1616,7 @@ namespace warmf {
                 }
 
                 SetActiveScenario(newActiveScenario);
+                projectChanged = true;
             }
         }
 
@@ -1587,6 +1717,8 @@ namespace warmf {
                     else
                         MessageBox.Show("Unable to read coefficient file " + fileName);
                 }
+
+                projectChanged = true;
             }
 
         }
@@ -2163,6 +2295,7 @@ namespace warmf {
 
                             // Update record keeping
                             layers.Add(layersDialog.changedLayers[i]);
+                            projectChanged = true;
                         }
                         catch
                         {
