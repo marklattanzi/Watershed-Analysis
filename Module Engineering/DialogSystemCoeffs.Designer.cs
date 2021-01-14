@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tcSystemTabs = new System.Windows.Forms.TabControl();
             this.tpPhysicalData = new System.Windows.Forms.TabPage();
             this.label4 = new System.Windows.Forms.Label();
@@ -140,6 +140,8 @@
             this.tbFineLitterDecay = new warmf.UtilityClasses.DoubleTextBox();
             this.tbLitterDecay = new warmf.UtilityClasses.DoubleTextBox();
             this.tpSepticSystems = new System.Windows.Forms.TabPage();
+            this.btnRemoveSepticType = new System.Windows.Forms.Button();
+            this.btnAddSepticType = new System.Windows.Forms.Button();
             this.dgvSepticDischQual = new System.Windows.Forms.DataGridView();
             this.label36 = new System.Windows.Forms.Label();
             this.tpMinerals = new System.Windows.Forms.TabPage();
@@ -225,8 +227,6 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.btnAddSepticType = new System.Windows.Forms.Button();
-            this.btnRemoveSepticType = new System.Windows.Forms.Button();
             this.tcSystemTabs.SuspendLayout();
             this.tpPhysicalData.SuspendLayout();
             this.tpLandUses.SuspendLayout();
@@ -656,6 +656,7 @@
             // 
             // cbLandUseParameter
             // 
+            this.cbLandUseParameter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbLandUseParameter.FormattingEnabled = true;
             this.cbLandUseParameter.Items.AddRange(new object[] {
             "Fraction Open in Winter",
@@ -684,7 +685,6 @@
             this.cbLandUseParameter.Name = "cbLandUseParameter";
             this.cbLandUseParameter.Size = new System.Drawing.Size(269, 24);
             this.cbLandUseParameter.TabIndex = 2;
-            this.cbLandUseParameter.Text = "--Select--";
             this.cbLandUseParameter.SelectedIndexChanged += new System.EventHandler(this.CbLandUseParameter_SelectedIndexChanged);
             // 
             // label5
@@ -1366,40 +1366,62 @@
             this.tpSepticSystems.Text = "Septic Systems";
             this.tpSepticSystems.UseVisualStyleBackColor = true;
             // 
+            // btnRemoveSepticType
+            // 
+            this.btnRemoveSepticType.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRemoveSepticType.Location = new System.Drawing.Point(333, 434);
+            this.btnRemoveSepticType.Name = "btnRemoveSepticType";
+            this.btnRemoveSepticType.Size = new System.Drawing.Size(166, 28);
+            this.btnRemoveSepticType.TabIndex = 7;
+            this.btnRemoveSepticType.Text = "&Remove";
+            this.btnRemoveSepticType.UseVisualStyleBackColor = true;
+            this.btnRemoveSepticType.Click += new System.EventHandler(this.btnRemoveSepticType_Click);
+            // 
+            // btnAddSepticType
+            // 
+            this.btnAddSepticType.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddSepticType.Location = new System.Drawing.Point(155, 434);
+            this.btnAddSepticType.Name = "btnAddSepticType";
+            this.btnAddSepticType.Size = new System.Drawing.Size(166, 28);
+            this.btnAddSepticType.TabIndex = 6;
+            this.btnAddSepticType.Text = "&Add";
+            this.btnAddSepticType.UseVisualStyleBackColor = true;
+            this.btnAddSepticType.Click += new System.EventHandler(this.btnAddSepticType_Click);
+            // 
             // dgvSepticDischQual
             // 
             this.dgvSepticDischQual.AllowUserToAddRows = false;
             this.dgvSepticDischQual.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvSepticDischQual.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSepticDischQual.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvSepticDischQual.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvSepticDischQual.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvSepticDischQual.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvSepticDischQual.Location = new System.Drawing.Point(16, 27);
             this.dgvSepticDischQual.Name = "dgvSepticDischQual";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvSepticDischQual.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSepticDischQual.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvSepticDischQual.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.dgvSepticDischQual.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.dgvSepticDischQual.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvSepticDischQual.Size = new System.Drawing.Size(682, 398);
             this.dgvSepticDischQual.TabIndex = 5;
             // 
@@ -2136,6 +2158,7 @@
             // 
             // cbParameters
             // 
+            this.cbParameters.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbParameters.FormattingEnabled = true;
             this.cbParameters.Items.AddRange(new object[] {
             "Names",
@@ -2191,28 +2214,6 @@
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
-            // btnAddSepticType
-            // 
-            this.btnAddSepticType.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddSepticType.Location = new System.Drawing.Point(155, 434);
-            this.btnAddSepticType.Name = "btnAddSepticType";
-            this.btnAddSepticType.Size = new System.Drawing.Size(166, 28);
-            this.btnAddSepticType.TabIndex = 6;
-            this.btnAddSepticType.Text = "&Add";
-            this.btnAddSepticType.UseVisualStyleBackColor = true;
-            this.btnAddSepticType.Click += new System.EventHandler(this.btnAddSepticType_Click);
-            // 
-            // btnRemoveSepticType
-            // 
-            this.btnRemoveSepticType.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRemoveSepticType.Location = new System.Drawing.Point(333, 434);
-            this.btnRemoveSepticType.Name = "btnRemoveSepticType";
-            this.btnRemoveSepticType.Size = new System.Drawing.Size(166, 28);
-            this.btnRemoveSepticType.TabIndex = 7;
-            this.btnRemoveSepticType.Text = "&Remove";
-            this.btnRemoveSepticType.UseVisualStyleBackColor = true;
-            this.btnRemoveSepticType.Click += new System.EventHandler(this.btnRemoveSepticType_Click);
             // 
             // DialogSystemCoeffs
             // 

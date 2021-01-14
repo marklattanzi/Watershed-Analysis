@@ -224,6 +224,10 @@ namespace warmf {
                     {
                         FormatLakeLayer(i);
                     }
+                    else if (layers[i].Type == LAYERDATA)
+                    {
+                        FormatDataLayer(i);
+                    }
                 }
             }
             catch (Exception ex)
@@ -861,8 +865,17 @@ namespace warmf {
         // Called by File / New in the main map menu
         private void miFileNew_Click(object sender, EventArgs e)
         {
-            layers.Clear();
-            SetupEngrModule();
+            // Choose the data directory
+            FolderBrowserDialog fbDialog = new FolderBrowserDialog();
+            fbDialog.Description = "Select Data Directory";
+            if (fbDialog.ShowDialog() == DialogResult.OK)
+            {
+
+                Global.DIR.DATA = fbDialog.SelectedPath;
+                CloseFile();
+                Global.defaultCoefficients.ReadCOE(Global.DIR.ROOT + "untitled.coe");
+                SetupEngrModule();
+            }
         }
 
         private void miFileOpen_Click(object sender, EventArgs e)
@@ -879,8 +892,48 @@ namespace warmf {
             {
                 projectFileName = openDialog.FileName;
                 ReadProjectFile(projectFileName);
+                Global.defaultCoefficients.ReadCOE(Global.DIR.ROOT + "untitled.coe");
                 SetupEngrModule();
             }
+        }
+
+        // Actually closes a file, checking to see if it should be saved first
+        private void CloseFile()
+        {
+            // Check if the scenario needs saving
+            if (scenarioChanged == true)
+            {
+                DialogResult shouldSaveScenario = MessageBox.Show("Save scenario " + Path.GetFileNameWithoutExtension(GetActiveScenarioName()) + "?", "Close File", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                // Cancel means don't close the file
+                if (shouldSaveScenario == DialogResult.Cancel)
+                    return;
+                // Yes means save the scenario
+                if (shouldSaveScenario == DialogResult.Yes)
+                    SaveScenario();
+            }
+
+            // Check if the project needs saving
+            if (projectChanged == true)
+            {
+                DialogResult shouldSaveProject = MessageBox.Show("Save project " + Path.GetFileName(projectFileName) + "?", "Close File", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                // Cancel means don't close the file
+                if (shouldSaveProject == DialogResult.Cancel)
+                    return;
+                // Yes means save the project
+                if (shouldSaveProject == DialogResult.Yes)
+                    WriteProjectFile(projectFileName);
+            }
+
+            // Clear the coefficients
+
+            // Clear the map
+            mainMap.Layers.Clear();
+            layers.Clear();
+        }
+
+        private void miFileClose_Click(object sender, EventArgs e)
+        {
+            CloseFile();
         }
 
         // Called by File / Save in the main map's menu
@@ -909,6 +962,9 @@ namespace warmf {
 
         private void miFileExit_Click(object sender, EventArgs e)
         {
+            // Close the file, asking to save as needed
+            CloseFile();
+
             System.Windows.Forms.Application.Exit();
         }
 
@@ -921,20 +977,6 @@ namespace warmf {
             FeatureLayer theFeatureLayer = mainMap.Layers[layerNumber] as FeatureLayer;
             if (theFeatureLayer != null)
                 theFeatureLayer.SelectAll();
-/*            // Polygon layer
-            MapPolygonLayer polygonLayer = mainMap.Layers[layerNumber] as MapPolygonLayer;
-            if (polygonLayer != null)
-                polygonLayer.SelectAll();
-
-            // Line layer
-            MapLineLayer lineLayer = mainMap.Layers[layerNumber] as MapLineLayer;
-            if (lineLayer != null)
-                lineLayer.SelectAll();
-                
-            // Point layer
-            MapPointLayer pointLayer = mainMap.Layers[layerNumber] as MapPointLayer;
-            if (pointLayer != null)
-                pointLayer.SelectAll();*/
         }
 
         private void miEditSelectCatchments_Click(object sender, EventArgs e)
@@ -1213,29 +1255,8 @@ namespace warmf {
             if (RemoveLayer("Gaging Stations"))
                 return;
 
-/*            if (showGageStations) //remove points from map
-            {
-                showGageStations = false;
-                for (int i = 0; i < frmMap.ShapeFileCount; i++)
-                {
-                    if (frmMap[i].Name == "Gaging Stations")
-                    {
-                        frmMap.RemoveShapeFile(frmMap[i]);
-                    }
-                }
-                return;
-            }
-            else //add points to map*/
-            {
-                if (STechShapes.CreateShapeFile("ORH", Global.DIR.ORH, Global.coe.GetAllObservedHydrologyFiles()))
-                {
-//                    this.frmMap.AddShapeFile(Global.DIR.SHP + "ORH.shp", "Gaging Stations", "Name");
-//                    showGageStations = true;
-//                    frmMap.ZoomLevel /= 1.05;
-
-                    AddDataLayer("Gaging Stations", "ORH.shp");
-                }
-            }
+            if (STechShapes.CreateShapeFile("ORH", Global.DIR.ORH, Global.coe.GetAllObservedHydrologyFiles()))
+                AddDataLayer("Gaging Stations", "ORH.shp");
         }
 
         private void miViewWQStations_Click(object sender, EventArgs e)
@@ -1244,29 +1265,8 @@ namespace warmf {
             if (RemoveLayer("Water Quality Stations"))
                 return;
 
-/*            if (showWQStations) //remove points from map
-            {
-                showWQStations = false;
-                for (int i = 0; i < frmMap.ShapeFileCount; i++)
-                {
-                    if (frmMap[i].Name == "Water Quality Stations")
-                    {
-                        frmMap.RemoveShapeFile(frmMap[i]);
-                    }
-                }
-                return;
-            }
-            else //add points to map*/
-            {
-                if (STechShapes.CreateShapeFile("ORC", Global.DIR.ORC, Global.coe.GetAllObservedWaterQualityFiles()))
-                {
-//                    this.frmMap.AddShapeFile(Global.DIR.SHP + "ORC.shp", "Water Quality Stations", "Name");
-//                    showWQStations = true;
-//                    frmMap.ZoomLevel /= 1.05;
-
-                    AddDataLayer("Water Quality Stations", "ORC.shp");
-                }
-            }
+            if (STechShapes.CreateShapeFile("ORC", Global.DIR.ORC, Global.coe.GetAllObservedWaterQualityFiles()))
+                AddDataLayer("Water Quality Stations", "ORC.shp");
         }
 
         private void miViewManagedFlow_Click(object sender, EventArgs e)
@@ -1275,30 +1275,8 @@ namespace warmf {
             if (RemoveLayer("Managed Flow"))
                 return;
 
-  /*          if (showFLOStations) //remove points from map
-            {
-                showFLOStations = false;
-                for (int i = 0; i < frmMap.ShapeFileCount; i++)
-                {
-                    if (frmMap[i].Name == "Managed Flow")
-                    {
-                        frmMap.RemoveShapeFile(frmMap[i]);
-                    }
-                }
-                frmMap.Refresh();
-                return;
-            }
-            else //add points to map*/
-            {
-                if (STechShapes.CreateShapeFile("FLO", Global.DIR.FLO, Global.coe.GetAllManagedFlowFiles()))
-                {
-//                    this.frmMap.AddShapeFile(Global.DIR.SHP + "FLO.shp", "Managed Flow", "Name");
-//                    showFLOStations = true;
-//                    frmMap.ZoomLevel /= 1.05;
-
-                    AddDataLayer("Managed Flow", "FLO.shp");
-                }
-            }
+            if (STechShapes.CreateShapeFile("FLO", Global.DIR.FLO, Global.coe.GetAllManagedFlowFiles()))
+                AddDataLayer("Managed Flow", "FLO.shp");
         }
 
         private void miViewPointSources_Click(object sender, EventArgs e)
@@ -1307,30 +1285,8 @@ namespace warmf {
             if (RemoveLayer("Point Sources"))
                 return;
 
- /*           if (showPTSStations) //remove points from map
-            {
-                showPTSStations = false;
-                for (int i = 0; i < frmMap.ShapeFileCount; i++)
-                {
-                    if (frmMap[i].Name == "Point Sources")
-                    {
-                        frmMap.RemoveShapeFile(frmMap[i]);
-                    }
-                }
-                return;
-            }
-            else //add points to map*/
-            {
-                if (STechShapes.CreateShapeFile("PTS", Global.DIR.PTS, Global.coe.PTSFilename))
-                {
-//                    this.frmMap.AddShapeFile(Global.DIR.SHP + "PTS.shp", "Point Sources", "Name");
-//                    showPTSStations = true;
-//                    frmMap.ZoomLevel /= 1.05;
-
-                    AddDataLayer("Point Sources", "PTS.shp");
-                }
-
-            }
+            if (STechShapes.CreateShapeFile("PTS", Global.DIR.PTS, Global.coe.PTSFilename))
+                AddDataLayer("Point Sources", "PTS.shp");
         }
 
         private void miViewAirQualityStations_Click(object sender, EventArgs e)
@@ -1339,29 +1295,8 @@ namespace warmf {
             if (RemoveLayer("Air Quality Stations"))
                 return;
 
- /*           if (showAIRStations) //remove points from map
-            {
-                showAIRStations = false;
-                for (int i = 0; i < frmMap.ShapeFileCount; i++)
-                {
-                    if (frmMap[i].Name == "Air Quality Stations")
-                    {
-                        frmMap.RemoveShapeFile(frmMap[i]);
-                    }
-                }
-                return;
-            }
-            else //add points to map*/
-            {
-                if (STechShapes.CreateShapeFile("AIR", Global.DIR.AIR, Global.coe.AIRFilename))
-                {
-//                    this.frmMap.AddShapeFile(Global.DIR.SHP + "AIR.shp", "Air Quality Stations", "Name");
-//                    showAIRStations = true;
-//                    frmMap.ZoomLevel /= 1.05;
-
-                    AddDataLayer("Air Quality Stations", "AIR.shp");
-                }
-            }
+            if (STechShapes.CreateShapeFile("AIR", Global.DIR.AIR, Global.coe.AIRFilename))
+                AddDataLayer("Air Quality Stations", "AIR.shp");
         }
         #endregion
 
@@ -1400,7 +1335,8 @@ namespace warmf {
         #endregion
 
         #region Scenario Menu Events
-        private void miScenarioSave_Click(object sender, EventArgs e)
+        // Actually saves a scenario
+        private void SaveScenario()
         {
             int activeScenario = GetActiveScenario();
             if (activeScenario >= 0)
@@ -1410,6 +1346,10 @@ namespace warmf {
             }
             else
                 MessageBox.Show("There is no active scenario to save.");
+        }
+        private void miScenarioSave_Click(object sender, EventArgs e)
+        {
+            SaveScenario();
         }
 
         public static bool ScenarioSaveAs(ref string newScenario)
@@ -1637,6 +1577,16 @@ namespace warmf {
 
             // For some reason there is no active scenario
             return -1;
+        }
+
+        // Returns the name of the active scenario
+        private string GetActiveScenarioName()
+        {
+            int theActiveScenario = GetActiveScenario();
+            if (theActiveScenario < 0 || theActiveScenario >= scenarios.Count)
+                return "";
+
+            return scenarios[theActiveScenario].Name;
         }
 
         // Returns the number of the scenario in the master list from the name
@@ -2143,6 +2093,23 @@ namespace warmf {
             }
         }
 
+        public List<int> GetFieldLinkages(List<string> warmfFields, string [] shapefileFields)
+        {
+            // Initialize the linkages to 
+            List<int> theLinkages = new List<int>();
+            for (int i = 0; i < warmfFields.Count; i++)
+                theLinkages.Add(-1);
+
+            DialogGridView theDialog = new DialogGridView();
+            theDialog.Text = "Select Shapefile Fields for WARMF Parameters";
+            theDialog.Populate(warmfFields, shapefileFields);
+            if (theDialog.ShowDialog() == DialogResult.OK)
+            {
+
+            }
+                return theLinkages;
+        }
+
         private void layersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogEditLayers layersDialog = new DialogEditLayers(ref layers);
@@ -2171,6 +2138,30 @@ namespace warmf {
                             {
                                 mainMap.AddLayer(newFileName);
                                 FormatCatchmentLayer(mainMap.Layers.Count - 1);
+
+                                // Give default model coefficients to each catchment
+                                // Get the fields from the shapefile
+                                ShapeFile theShapeFile = new ShapeFile(newFileName);
+                                string[] fieldNames = theShapeFile.GetAttributeFieldNames();
+                                // Get the ID, slope, name, and aspect fields
+                                List<string> catchmentFields = new List<string>();
+                                catchmentFields.Add("WARMF_ID");
+                                catchmentFields.Add("Area");
+                                catchmentFields.Add("Slope");
+                                catchmentFields.Add("Aspect");
+                                List<int> fieldNumbers = GetFieldLinkages(catchmentFields, theShapeFile.GetAttributeFieldNames());
+                                FeatureLayer theFeatureLayer = mainMap.Layers[mainMap.Layers.Count - 1] as FeatureLayer;
+                                if (theFeatureLayer != null && Global.defaultCoefficients.catchments.Count > 0)
+                                {
+                                    int highestID = Global.coe.GetHighestCatchmentID();
+                                    DotSpatial.Data.IFeatureSet theFeatureSet = theFeatureLayer.FeatureSet;
+                                    for (int featureNumber = 0; featureNumber < theFeatureSet.Features.Count; featureNumber++)
+                                    {
+                                        Catchment newCatchment = new Catchment();
+                                        newCatchment = Global.defaultCoefficients.catchments[0];
+                                        newCatchment.idNum = highestID + featureNumber;
+                                    }
+                                }
                             }
                             else if (layersDialog.changedLayers[i].Type == LAYERRIVER)
                             {

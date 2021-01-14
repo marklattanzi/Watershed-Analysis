@@ -28,19 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series13 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series14 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.cbOutputType = new System.Windows.Forms.ComboBox();
             this.lbOutputParameters = new System.Windows.Forms.ListBox();
             this.chkShowObservations = new System.Windows.Forms.CheckBox();
             this.btnStatistics = new System.Windows.Forms.Button();
             this.btnCreateTextFile = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.tbTextFileName = new System.Windows.Forms.TextBox();
+            this.rbThisConstituent = new System.Windows.Forms.RadioButton();
+            this.rbAllConstituents = new System.Windows.Forms.RadioButton();
+            this.cbTextFileScenario = new System.Windows.Forms.ComboBox();
             this.chartOutput = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -92,86 +92,91 @@
             // btnCreateTextFile
             // 
             this.btnCreateTextFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCreateTextFile.Location = new System.Drawing.Point(15, 34);
+            this.btnCreateTextFile.Location = new System.Drawing.Point(92, 26);
             this.btnCreateTextFile.Name = "btnCreateTextFile";
             this.btnCreateTextFile.Size = new System.Drawing.Size(135, 29);
             this.btnCreateTextFile.TabIndex = 4;
-            this.btnCreateTextFile.Text = "Create Text File";
+            this.btnCreateTextFile.Text = "Export CSV File";
             this.btnCreateTextFile.UseVisualStyleBackColor = true;
+            this.btnCreateTextFile.Click += new System.EventHandler(this.btnCreateTextFile_Click);
             // 
-            // textBox1
+            // tbTextFileName
             // 
-            this.textBox1.Location = new System.Drawing.Point(156, 39);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(187, 22);
-            this.textBox1.TabIndex = 5;
+            this.tbTextFileName.Location = new System.Drawing.Point(6, 66);
+            this.tbTextFileName.Name = "tbTextFileName";
+            this.tbTextFileName.Size = new System.Drawing.Size(291, 22);
+            this.tbTextFileName.TabIndex = 5;
             // 
-            // radioButton1
+            // rbThisConstituent
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton1.Location = new System.Drawing.Point(357, 19);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(200, 20);
-            this.radioButton1.TabIndex = 6;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "This constituent, all scenarios";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.rbThisConstituent.AutoSize = true;
+            this.rbThisConstituent.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbThisConstituent.Location = new System.Drawing.Point(357, 19);
+            this.rbThisConstituent.Name = "rbThisConstituent";
+            this.rbThisConstituent.Size = new System.Drawing.Size(200, 20);
+            this.rbThisConstituent.TabIndex = 6;
+            this.rbThisConstituent.TabStop = true;
+            this.rbThisConstituent.Text = "This constituent, all scenarios";
+            this.rbThisConstituent.UseVisualStyleBackColor = true;
+            this.rbThisConstituent.CheckedChanged += new System.EventHandler(this.rbThisConstituent_CheckedChanged);
             // 
-            // radioButton2
+            // rbAllConstituents
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton2.Location = new System.Drawing.Point(357, 42);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(198, 20);
-            this.radioButton2.TabIndex = 7;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "All constituents, this scenario:";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.rbAllConstituents.AutoSize = true;
+            this.rbAllConstituents.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbAllConstituents.Location = new System.Drawing.Point(357, 42);
+            this.rbAllConstituents.Name = "rbAllConstituents";
+            this.rbAllConstituents.Size = new System.Drawing.Size(198, 20);
+            this.rbAllConstituents.TabIndex = 7;
+            this.rbAllConstituents.TabStop = true;
+            this.rbAllConstituents.Text = "All constituents, this scenario:";
+            this.rbAllConstituents.UseVisualStyleBackColor = true;
+            this.rbAllConstituents.CheckedChanged += new System.EventHandler(this.rbAllConstituents_CheckedChanged);
             // 
-            // comboBox2
+            // cbTextFileScenario
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(354, 65);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(249, 24);
-            this.comboBox2.TabIndex = 8;
+            this.cbTextFileScenario.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTextFileScenario.FormattingEnabled = true;
+            this.cbTextFileScenario.Location = new System.Drawing.Point(303, 65);
+            this.cbTextFileScenario.Name = "cbTextFileScenario";
+            this.cbTextFileScenario.Size = new System.Drawing.Size(300, 24);
+            this.cbTextFileScenario.TabIndex = 8;
+            this.cbTextFileScenario.SelectedIndexChanged += new System.EventHandler(this.cbTextFileScenario_SelectedIndexChanged);
             // 
             // chartOutput
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartOutput.ChartAreas.Add(chartArea1);
-            legend1.Alignment = System.Drawing.StringAlignment.Center;
-            legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
-            legend1.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row;
-            legend1.Name = "Legend1";
-            this.chartOutput.Legends.Add(legend1);
+            chartArea7.Name = "ChartArea1";
+            this.chartOutput.ChartAreas.Add(chartArea7);
+            legend7.Alignment = System.Drawing.StringAlignment.Center;
+            legend7.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
+            legend7.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row;
+            legend7.Name = "Legend1";
+            this.chartOutput.Legends.Add(legend7);
             this.chartOutput.Location = new System.Drawing.Point(221, 13);
             this.chartOutput.Name = "chartOutput";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend1";
-            series1.Name = "SeriesOutput";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series2.Legend = "Legend1";
-            series2.MarkerBorderColor = System.Drawing.Color.Red;
-            series2.MarkerColor = System.Drawing.Color.White;
-            series2.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series2.Name = "SeriesObserved";
-            this.chartOutput.Series.Add(series1);
-            this.chartOutput.Series.Add(series2);
+            series13.ChartArea = "ChartArea1";
+            series13.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series13.Legend = "Legend1";
+            series13.Name = "SeriesOutput";
+            series14.ChartArea = "ChartArea1";
+            series14.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series14.Legend = "Legend1";
+            series14.MarkerBorderColor = System.Drawing.Color.Red;
+            series14.MarkerColor = System.Drawing.Color.White;
+            series14.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series14.Name = "SeriesObserved";
+            this.chartOutput.Series.Add(series13);
+            this.chartOutput.Series.Add(series14);
             this.chartOutput.Size = new System.Drawing.Size(569, 325);
             this.chartOutput.TabIndex = 9;
             this.chartOutput.Text = "chart1";
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.comboBox2);
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.cbTextFileScenario);
+            this.groupBox1.Controls.Add(this.rbAllConstituents);
+            this.groupBox1.Controls.Add(this.rbThisConstituent);
+            this.groupBox1.Controls.Add(this.tbTextFileName);
             this.groupBox1.Controls.Add(this.btnCreateTextFile);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(170, 349);
@@ -220,10 +225,10 @@
         private System.Windows.Forms.CheckBox chkShowObservations;
         private System.Windows.Forms.Button btnStatistics;
         private System.Windows.Forms.Button btnCreateTextFile;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.TextBox tbTextFileName;
+        private System.Windows.Forms.RadioButton rbThisConstituent;
+        private System.Windows.Forms.RadioButton rbAllConstituents;
+        private System.Windows.Forms.ComboBox cbTextFileScenario;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartOutput;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button1;

@@ -345,5 +345,21 @@ namespace warmf {
             else
                 WriteInt(0);
         }
+
+        // Writes a field with a preceding delimiter which is a comma by default
+        public void WriteDelimitedField(string TheField, char Delimiter = ',')
+        {
+            // Write the preceding delimiter
+            Write(Delimiter);
+
+            // Determine if the delimiter occurs in the field
+            int delimiterFound = TheField.IndexOf(Delimiter);
+            // Put quotes around the field if there is a delimiter within it
+            if (delimiterFound >= 0)
+                Write('\"');
+            Write(TheField);
+            if (delimiterFound >= 0)
+                Write('\"');
+        }
     }
 }

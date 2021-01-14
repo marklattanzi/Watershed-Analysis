@@ -130,6 +130,14 @@ namespace warmf
             if (lbOutputParameters.Items.Count > 0)
                 lbOutputParameters.SelectedIndex = 0;
 
+            // Populate the combo box to select the scenario for text output
+            rbThisConstituent.Checked = true;
+            rbAllConstituents.Checked = false;
+            for (int i = 0; i < FormMain.scenarios.Count; i++)
+                cbTextFileScenario.Items.Add(Path.GetFileNameWithoutExtension(FormMain.scenarios[i].Name));
+            if (cbTextFileScenario.Items.Count > 0)
+                cbTextFileScenario.Text = cbTextFileScenario.Items[0].ToString();
+
             //chart the data
             ChartTheData();
 
@@ -300,6 +308,7 @@ namespace warmf
         private void lbOutputParameters_SelectedIndexChanged(object sender, EventArgs e)
         {
             ChartTheData();
+            SetTextFileName();
         }
 
         private void cbOutputType_SelectionChangeCommitted(object sender, EventArgs e)
@@ -328,6 +337,234 @@ namespace warmf
         private void chkShowObservations_CheckedChanged(object sender, EventArgs e)
         {
             ChartTheData();
-        }   
+        }
+
+        // Sets the default file name for exporting output to a CSV file
+        private void SetTextFileName()
+        {
+            string textFileString;
+
+            // Get the state of the radio buttons
+            if (rbThisConstituent.Checked == true)
+            {
+                // Output for one constituent, multiple scenarios: get constituent name
+                int selected = lbOutputParameters.SelectedIndex;
+                if (lbOutputParameters.SelectedIndex >= 0)
+                {
+                    // Start with the constituent name as shown in the list box
+                    textFileString = lbOutputParameters.SelectedItem.ToString();
+
+                    // Truncate at the comma to remove the units
+                    int commaLocation = textFileString.IndexOf(",");
+                    if (commaLocation > 0)
+                        textFileString = textFileString.Substring(0, commaLocation);
+                }
+                else
+                    textFileString = "output";
+            }
+            else
+                // Output for all constituents, one scenario
+                textFileString = cbTextFileScenario.Text;
+
+            // Add the extension for a comma delimited file
+            textFileString = textFileString + ".CSV";
+
+            // Set the text edit box
+            tbTextFileName.Text = textFileString;
+        }
+
+        private void rbThisConstituent_CheckedChanged(object sender, EventArgs e)
+        {
+            SetTextFileName();
+        }
+
+        private void rbAllConstituents_CheckedChanged(object sender, EventArgs e)
+        {
+            SetTextFileName();
+        }
+
+        private void cbTextFileScenario_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetTextFileName();
+        }
+
+        private void btnCreateTextFile_Click(object sender, EventArgs e)
+        {
+            // Get the output file name and open the file
+            STechStreamWriter dumpFile = new STechStreamWriter(tbTextFileName.Text);
+
+            if (dumpFile != null)
+            {
+                // List of time series included in output
+                List<int> timeSeriesInOutput = new List<int>();
+                
+                // Header
+                dumpFile.Write("Date");
+                if (rbThisConstituent.Checked == true)
+                {
+                    for (int i = 0; i < chartOutput.Series.Count; i++)
+                    {
+                        dumpFile.WriteDelimitedField(chartOutput.Series[i].LegendText);
+
+                        // This constituent means all time series are included in text output
+                        timeSeriesInOutput.Add(i);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < lbOutputParameters.Items.Count; i++)
+                        dumpFile.WriteDelimitedField(lbOutputParameters.Items.ToString());
+
+                    // The scenario to include in output is the one in the combo box
+                    timeSeriesInOutput.Add(cbTextFileScenario.SelectedIndex);
+                }
+                dumpFile.WriteLine();
+
+                // The first and last dates plotted for all the scenarios in output
+                DateTime firstDateTime = new DateTime();
+                DateTime lastDateTime = new DateTime();
+                // The time steps per day in the text file is the maximum of all selected scenarios
+                int outputTimeStepsPerDay = 1;
+                // Counters for each time series in output
+                List<int> pointCounters = new List<int>();
+                for (int i = 0; i < timeSeriesInOutput.Count; i++)
+                {
+                    if (timeSeriesInOutput[i] >= 0 && timeSeriesInOutput[i] < scenarioOutput.Count)
+                    {
+                        // Greatest number of time steps per day
+                        outputTimeStepsPerDay = Math.Max(outputTimeStepsPerDay, scenarioOutput[timeSeriesInOutput[i]].timeStepPerDay);
+
+                        // Earliest start of model output
+                        DateTime scenarioStartDate = new DateTime(scenarioOutput[timeSeriesInOutput[i]].startDateYear, scenarioOutput[timeSeriesInOutput[i]].startDateMonth, scenarioOutput[timeSeriesInOutput[i]].startDateDay);
+                        if (i == 0 || firstDateTime > scenarioStartDate)
+                            firstDateTime = scenarioStartDate;
+
+                        // Last end of model output
+                        DateTime scenarioEndDate = scenarioStartDate.AddDays(scenarioOutput[timeSeriesInOutput[i]].numSimDays);
+                        if (i == 0 || lastDateTime < scenarioEndDate)
+                            lastDateTime = scenarioEndDate;
+                    }
+
+                    pointCounters.Add(0);
+                }
+
+                // Output
+                DateTime dateBase = new DateTime(1900, 1, 1);
+                DateTime outputDateTime = firstDateTime;
+                double outputDateIncrement = 1 / outputTimeStepsPerDay;
+                while (outputDateTime <= lastDateTime)
+                {
+                    // Date and Time
+                    dumpFile.Write(outputDateTime.Date.ToString("M/d/yyyy"));
+                    dumpFile.WriteDelimitedField(outputDateTime.ToString("HH:mm"));
+
+                    // Output
+                    if (rbThisConstituent.Checked == true)
+                    {
+                        for (int i = 0; i < chartOutput.Series.Count; i++)
+                        {
+                            // Advance to the current date/time
+                            while (pointCounters[i] < chartOutput.Series[i].Points.Count && dateBase.AddDays(chartOutput.Series[i].Points[pointCounters[i]].XValue - 2) < outputDateTime.AddDays(outputDateIncrement))
+                            {
+                                if (dateBase.AddDays(chartOutput.Series[i].Points[pointCounters[i]].XValue) >= outputDateTime)
+                                    dumpFile.WriteDelimitedField(chartOutput.Series[i].Points[pointCounters[i]].YValues[0].ToString());
+                                pointCounters[i]++;
+                            }
+                        }
+                    }
+                    // All constituents, this scenario
+                    else
+                    {
+
+                    }
+                    dumpFile.WriteLine();
+                    outputDateTime = outputDateTime.AddDays(outputDateIncrement);
+                }
+
+                /*                if (rbThisConstituent.Checked == true)
+                                {
+                                    // Get the size of the data stored in the chart
+                                    int nCols = ChartData->GetNSets();
+
+                                    // Write header columns
+
+                                    dumpFile << "     Day";
+                                    headerText = new char[256];
+                                    for (i = 0; i < nCols; i++)
+                                    {
+                                        // Don't output hidden/excluded series
+                                        if (ChartData->GetDisplay(i) == XRT_DISPLAY_SHOW)
+                                        {
+                                            // Get the name of each plotted series
+                                            strcpy(headerText, Chart->GetNthSetLabel(i));
+                                            //trucate headerText if more than 8 characters
+                                            headerText[8] = '\0';
+
+                                            // Pad the beginning of the header text with spaces if it is
+                                            // less than eight characters plus NULL.
+                                            int extra = 8 - strlen(headerText);
+                                            if (extra > 0)
+                                            {
+                                                for (j = 8; j >= extra; j--)
+                                                    headerText[j] = headerText[j - extra];
+                                                for (j = 0; j < extra; j++)
+                                                    headerText[j] = ' ';
+                                            }
+                                            dumpFile << setw(9) << setiosflags(ios::right) << headerText;
+                                        }
+                                    }
+                                    dumpFile << "\n";
+                                    delete[] headerText;
+
+                                    WriteConstituentData(dumpFile);
+                                    dumpFile.close();
+                                }
+                                else
+                                {
+                                    // Write header columns
+                                    dumpFile << "    Date";
+                                    for (i = 0; i < ChartInfo->ConstituentColumn.Number; i++)
+                                    {
+                                        int length = ConstituentListBox->GetStringLen(i) + 1;
+                                        headerText = new char[length];
+                                        ConstituentListBox->GetString(headerText, i);
+                                        AbbreviateConstituentName(headerText);
+                                        // Pad the beginning of the header text with spaces if it is
+                                        // less than eight characters plus NULL.
+                                        int extra = 9 - strlen(headerText);
+                                        for (j = 0; j < extra; j++)
+                                            dumpFile << " ";
+                                        dumpFile << headerText;
+                                        delete[] headerText;
+                                    }
+                                    dumpFile << "\n";
+
+                                    // Write scenario data
+                                    int theScenario = ScenarioCombo->GetSelIndex();
+                                    stDate outDate;
+                                    char dateString[9];
+                                    outDate = BegDate + ScenarioInfo[theScenario].DaysOffset;
+                                    for (i = 0; i < ScenarioInfo[theScenario].NumberOfSimulationDays; i++)
+                                    {
+                                        for (int timestep = 0; timestep < ScenarioInfo[theScenario].TimeSteps; timestep++)
+                                        {
+                                            sprintf(dateString, "%2.2d%2.2d%4.4d", outDate.nDay, outDate.nMonth, outDate.nYear);
+                                            dumpFile.SetString(dateString);
+                                            for (j = 0; j < ChartInfo->ConstituentColumn.Number; j++)
+                                            {
+                                                dumpFile.put(' ');
+                                                if (ScenarioData[theScenario])
+                                                    dumpFile.SetDouble(ScenarioData[theScenario][j].Data.Values[i * ScenarioInfo[theScenario].TimeSteps + timestep]);
+                                                else
+                                                    dumpFile.SetDouble(-999.);
+                                            }
+                                            dumpFile << "\n";
+                                        }
+                                        outDate++;
+                                    }
+                                }*/
+                dumpFile.Close();
+            }
+        }
     }
 }

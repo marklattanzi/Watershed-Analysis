@@ -1917,7 +1917,10 @@ namespace warmf {
                 return true;
             }
             catch (Exception e) {
-                Debug.WriteLine("COE exception at line " + sr.LineNum + ": " + e.ToString());
+                if (sr == null)
+                    Debug.WriteLine("Unable to open " + filename + ": " + e.ToString());
+                else
+                    Debug.WriteLine("COE exception at line " + sr.LineNum + ": " + e.ToString());
                 return false;
             }
         }
@@ -3371,6 +3374,37 @@ namespace warmf {
             ReservoirAndSegment.Add(-1);
             ReservoirAndSegment.Add(-1);
             return ReservoirAndSegment;
+        }
+
+        // Returns the highest ID number in use
+        public int GetHighestCatchmentID()
+        {
+            int highest = 0;
+            for (int i = 0; i < catchments.Count; i++)
+                highest = Math.Max(highest, catchments[i].idNum);
+
+            return highest;
+        }
+
+        // Returns the highest ID number in use
+        public int GetHighestRiverID()
+        {
+            int highest = 0;
+            for (int i = 0; i < rivers.Count; i++)
+                highest = Math.Max(highest, rivers[i].idNum);
+
+            return highest;
+        }
+
+        // Returns the highest ID number in use
+        public int GetHighestReservoirSegmentID()
+        {
+            int highest = 0;
+            for (int i = 0; i < numReservoirs; i++)
+                for (int j = 0; j < reservoirs[i].numSegments; j++)
+                    highest = Math.Max(highest, reservoirs[i].reservoirSegs[j].idNum);
+
+            return highest;
         }
 
         public int GetAIRNumberFromName(string name)

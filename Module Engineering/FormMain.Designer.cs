@@ -205,6 +205,7 @@
             this.miFileClose.Name = "miFileClose";
             this.miFileClose.Size = new System.Drawing.Size(180, 22);
             this.miFileClose.Text = "&Close";
+            this.miFileClose.Click += new System.EventHandler(this.miFileClose_Click);
             // 
             // miFileImport
             // 

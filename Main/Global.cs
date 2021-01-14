@@ -41,6 +41,7 @@ namespace warmf {
         }
 
         public static Coefficients coe = new Coefficients(); // so we can access coefficients from anywhere - may not be necessary...  MRL
+        public static Coefficients defaultCoefficients = new Coefficients();
         public static Simulation simulation = new Simulation();
     }
 }
