@@ -1871,42 +1871,81 @@ namespace warmf {
             return minimumDistance;
         }
 
+        // Determines if one number is between two others, inclusive of the end range points
+        private bool IsBetween(double testNumber, double range1, double range2)
+        {
+            return ((testNumber - range1) * (testNumber - range2) <= 0);
+        }
+
+        // Determines if there is overlap in values between two sets (1 and 2) of points
+        private bool RangesOverlap(double value1A, double value1B, double value2A, double value2B)
+        {
+            return IsBetween(value1A, value2A, value2B) || IsBetween(value1B, value2A, value2B) ||
+                   IsBetween(value2A, value1A, value1B) || IsBetween(value2B, value1A, value1B);
+        }
+
         // Determines if two lines each defined by two points cross each other between the points
         private bool LinesIntersect(GeoAPI.Geometries.Coordinate line1Point1, GeoAPI.Geometries.Coordinate line1Point2, GeoAPI.Geometries.Coordinate line2Point1, GeoAPI.Geometries.Coordinate line2Point2)
         {
-            // Line 1 is vertical
-            if (line1Point1.X == line1Point2.X)
-            {
-                // Line 2 is also vertical
-                if (line2Point1.X == line2Point2.X)
-                {
-                    // Not the same X value
-                    if (line1Point1.X != line2Point1.X)
-                        return false;
+            // Check for overlap in x and y values for each line - without overlap in both X and Y they can't intersect
+            if (!RangesOverlap(line1Point1.X, line1Point2.X, line2Point1.X, line2Point2.X))
+                return false;
+            if (!RangesOverlap(line1Point1.Y, line1Point2.Y, line2Point1.Y, line2Point2.Y))
+                return false;
 
-                    // Lines intersect if either end of the first line to see if it is within the points of the second line
-                    return ((line1Point1.Y - line2Point1.Y) * (line1Point1.Y - line2Point2.Y) <= 0 ||
-                            (line1Point2.Y - line2Point1.Y) * (line1Point2.Y - line2Point2.Y) <= 0);
-                }
+            // Check for vertical lines (infinite slope)
+            bool line1Vertical = (line1Point1.X == line1Point2.X);
+            bool line2Vertical = (line2Point1.X == line2Point2.X);
+
+            // Determine slopes and intercepts
+            double slope1 = 9999999;
+            double intercept1 = 0;
+            if (!line1Vertical)
+            {
+                slope1 = (line1Point2.Y - line1Point1.Y) / (line1Point2.X - line1Point1.X);
+                intercept1 = line1Point1.Y - slope1 * line1Point1.X;
+            }
+            double slope2 = 9999999;
+            double intercept2 = 0;
+            if (!line2Vertical)
+            {
+                slope2 = (line2Point2.Y - line2Point1.Y) / (line2Point2.X - line2Point1.X);
+                intercept2 = line2Point1.Y - slope2 * line2Point1.X;
             }
 
-            // Determine slopes
-            double slope1 = (line1Point2.Y - line1Point1.Y) / (line1Point2.X - line1Point1.X);
-            double slope2 = (line2Point2.Y - line2Point1.Y) / (line2Point2.X - line2Point1.X);
+            // Both lines are vertical and we already know their values overlap
+            if (line1Vertical && line2Vertical)
+                return true;
 
-            // Determine intercepts
-            double intercept1 = line1Point1.Y - slope1 * line1Point1.X;
-            double intercept2 = line2Point1.Y - slope2 * line2Point1.X;
+            // Line 1 is vertical but line 2 is not
+            if (line1Vertical)
+            {
+                // Find the y-value for line 2 at line 1's constant X value
+                double yValue = slope2 * line1Point1.X + intercept2;
+
+                // Lines intersect if line 2 y value is in the range of line 1 y value
+                return IsBetween(yValue, line1Point1.Y, line1Point2.Y);
+            }
+
+            // Line 2 is vertical but line 2 is not
+            if (line2Vertical)
+            {
+                // Find the y-value for line 2 at line 1's constant X value
+                double yValue = slope1 * line2Point1.X + intercept1;
+
+                // Lines intersect if line 2 y value is in the range of line 1 y value
+                return IsBetween(yValue, line2Point1.Y, line2Point2.Y);
+            }
 
             // Parallel
             if (slope1 == slope2)
                 return (intercept1 == intercept2);
 
-            // Solve for x at interception
+            // Two non-vertical, non-parallel lines: solve for x at intersection
             double intersectionX = (intercept2 - intercept1) / (slope1 - slope2);
 
-            // Lines intersect if intersection is within the endpoints of either (both) of the lines
-            return ((intersectionX - line1Point1.X) * (intersectionX - line1Point2.X) < 0);
+            // Lines intersect if intersection is within the endpoints of both of the lines
+            return (IsBetween(intersectionX, line1Point1.X, line1Point2.X) && IsBetween(intersectionX, line2Point1.X, line2Point2.X));
         }
 
         // Checks to see if a point is within a polygon using robust ray crossing method
@@ -1959,6 +1998,58 @@ namespace warmf {
             // Odd number of crosses means the point is in the polygon
             return (numCrosses % 2 == 1);
         }
+        private bool CoordinateInPolygon(GeoAPI.Geometries.Coordinate theCoordinate, IList<DotSpatial.Topology.Coordinate> polygonVertices)
+        {
+            // Polygon has no vertices(
+            if (polygonVertices.Count < 2)
+                return false;
+
+            // Get bounding box of polygon
+            double minX = polygonVertices[0].X;
+            double maxX = polygonVertices[0].X;
+            double minY = polygonVertices[0].Y;
+            double maxY = polygonVertices[0].Y;
+            for (int i = 1; i < polygonVertices.Count; i++)
+            {
+                minX = Math.Min(minX, polygonVertices[i].X);
+                maxX = Math.Max(maxX, polygonVertices[i].X);
+                minY = Math.Min(minY, polygonVertices[i].Y);
+                maxY = Math.Max(maxY, polygonVertices[i].Y);
+            }
+
+            // Coordinate outside bounding box
+            if (!IsBetween(theCoordinate.X, minX, maxX) || !IsBetween(theCoordinate.Y, minY, maxY))
+                return false;
+
+            // Get a coordinate definitely outside the bounding box
+            GeoAPI.Geometries.Coordinate outsideCoordinate = new GeoAPI.Geometries.Coordinate(2 * maxX - minX, 2.001 * maxY - minY);
+
+            // Check how many times a line between the coordinates crosses lines between polygon vertices
+            int numCrosses = 0;
+            for (int i = 0; i < polygonVertices.Count; i++)
+            {
+                GeoAPI.Geometries.Coordinate polygonCoordinate1 = new GeoAPI.Geometries.Coordinate(polygonVertices[i].X, polygonVertices[i].Y);
+
+                // Second point is the previous point unless this is the first point, in which case the second point is the last vertex
+                GeoAPI.Geometries.Coordinate polygonCoordinate2 = new GeoAPI.Geometries.Coordinate();
+                if (i >= 1)
+                {
+                    polygonCoordinate2.X = polygonVertices[i - 1].X;
+                    polygonCoordinate2.Y = polygonVertices[i - 1].Y;
+                }
+                else
+                {
+                    polygonCoordinate2.X = polygonVertices[polygonVertices.Count - 1].X;
+                    polygonCoordinate2.Y = polygonVertices[polygonVertices.Count - 1].Y;
+                }
+
+                if (LinesIntersect(theCoordinate, outsideCoordinate, polygonCoordinate1, polygonCoordinate2))
+                    numCrosses++;
+            }
+
+            // Odd number of crosses means the point is in the polygon
+            return (numCrosses % 2 == 1);
+        }
 
         private bool GetShapeAndLayerFromCoordinates(DotSpatial.Topology.Coordinate theCoordinates, ref int layerNumber, ref int featureNumber)
         {
@@ -1975,8 +2066,27 @@ namespace warmf {
                         Polygon thePolygon = theFeatureSet.Features[featureNumber].BasicGeometry as Polygon;
                         if (thePolygon != null)
                         {
-                            if (thePolygon.Contains(new DotSpatial.Topology.Point(theCoordinates)))
+                            if (CoordinateInPolygon(new GeoAPI.Geometries.Coordinate(theCoordinates.X, theCoordinates.Y), thePolygon.Coordinates) == true)
                                 return true;
+//                            if (thePolygon.Contains(new DotSpatial.Topology.Point(theCoordinates)))
+//                                return true;
+                        }
+                        else
+                        {
+                            // Check for multi-polygon
+                            MultiPolygon theMultiPolygon = theFeatureSet.Features[featureNumber].BasicGeometry as MultiPolygon;
+                            if (theMultiPolygon != null)
+                            {
+                                for (int i = 0; i < theMultiPolygon.Geometries.Length; i++)
+                                {
+                                    Polygon thePolygonPiece = theMultiPolygon.Geometries[i] as Polygon;
+                                    if (thePolygonPiece != null)
+                                    {
+                                        if (CoordinateInPolygon(new GeoAPI.Geometries.Coordinate(theCoordinates.X, theCoordinates.Y), thePolygonPiece.Coordinates) == true)
+                                            return true;
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -2074,12 +2184,22 @@ namespace warmf {
                         }
                         if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
                         {
+                            // Select the catchment
+                            MapPolygonLayer thePolygonLayer = mainMap.Layers[layerNumber] as MapPolygonLayer;
+                            if (thePolygonLayer != null && featureNumber < thePolygonLayer.FeatureSet.Features.Count)
+                                thePolygonLayer.Select(featureNumber);
+
                             using (dlgCatchCoeffs = new DialogCatchCoeffs(this))
                             {
+                                // Open the catchment dialog
                                 dlgCatchCoeffs.Populate(catchIndex);
                                 if (dlgCatchCoeffs.ShowDialog() == DialogResult.OK)
                                     scenarioChanged = true;
                             }
+
+                            // Clear selection
+                            if (thePolygonLayer != null)
+                                thePolygonLayer.ClearSelection();
                         }
                         else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
                         {
@@ -2114,12 +2234,21 @@ namespace warmf {
                         }
                         if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
                         {
+                            // Select the river
+                            MapLineLayer theLineLayer = mainMap.Layers[layerNumber] as MapLineLayer;
+                            if (theLineLayer != null && featureNumber < theLineLayer.FeatureSet.Features.Count)
+                                theLineLayer.Select(featureNumber);
+
                             using (dlgRiverCoeffs = new DialogRiverCoeffs(this))
                             {
                                 dlgRiverCoeffs.Populate(riverIndex);
                                 if (dlgRiverCoeffs.ShowDialog() == DialogResult.OK)
                                     scenarioChanged = true;
                             }
+
+                            // Clear selection
+                            if (theLineLayer != null)
+                                theLineLayer.ClearSelection();
                         }
                         else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
                         {
@@ -2154,12 +2283,21 @@ namespace warmf {
                         }
                         if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
                         {
+                            // Select the reservoir segment
+                            MapPolygonLayer thePolygonLayer = mainMap.Layers[layerNumber] as MapPolygonLayer;
+                            if (thePolygonLayer != null && featureNumber < thePolygonLayer.FeatureSet.Features.Count)
+                                thePolygonLayer.Select(featureNumber);
+
                             using (dlgReservoirCoeffs = new DialogReservoirCoeffs(this))
                             {
                                 dlgReservoirCoeffs.Populate(reservoirAndSegmentIndices[0], reservoirAndSegmentIndices[1]);
                                 if (dlgReservoirCoeffs.ShowDialog() == DialogResult.OK)
                                     scenarioChanged = true;
                             }
+
+                            // Clear selection
+                            if (thePolygonLayer != null)
+                                thePolygonLayer.ClearSelection();
                         }
                         else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
                         {
