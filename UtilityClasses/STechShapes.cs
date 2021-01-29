@@ -9,7 +9,6 @@ using EGIS.ShapeFileLib;
 using System.Drawing;
 using DotSpatial.Controls;
 using DotSpatial.Data;
-using DotSpatial.Topology;
 
 namespace warmf
 {
@@ -58,12 +57,10 @@ namespace warmf
                     if (dataFile.CoordinatesInRange())
                     {
                         // Add the field values for each file
-                        DotSpatial.Topology.Point thePoint = new DotSpatial.Topology.Point();
-                        thePoint.X = dataFile.longitude;
-                        thePoint.Y = dataFile.latitude;
-                        IFeature newFeature = theFeatureSet.AddFeature(thePoint);
-                        newFeature.DataRow[0] = dataFile.shortName;
-                        newFeature.DataRow[1] = fileNames[i];
+                        GeoAPI.Geometries.Coordinate thePoint = new GeoAPI.Geometries.Coordinate(dataFile.longitude, dataFile.latitude);
+                        theFeatureSet.Features.Add(thePoint);
+                        theFeatureSet.Features[theFeatureSet.Features.Count - 1].DataRow[0] = dataFile.shortName;
+                        theFeatureSet.Features[theFeatureSet.Features.Count - 1].DataRow[1] = fileNames[i];
                     }
                 }
 

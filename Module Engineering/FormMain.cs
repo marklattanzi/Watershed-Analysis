@@ -9,7 +9,7 @@ using EGIS;
 using EGIS.ShapeFileLib;
 using DotSpatial.Controls;
 using DotSpatial.Symbology;
-using DotSpatial.Topology;
+//using DotSpatial.Topology;
 using DotSpatial.Data;
 
 namespace warmf {
@@ -45,7 +45,7 @@ namespace warmf {
         public EGIS.ShapeFileLib.ShapeFile lakeShapefile;
 
         // what's showing on the map
-        private DotSpatial.Topology.Coordinate mouseCoordinates;
+        private GeoAPI.Geometries.Coordinate mouseCoordinates;
         public string projectFileName;
 
         public LayerInfo catchmentLayer;
@@ -1796,7 +1796,7 @@ namespace warmf {
 
         private void mainMap_MouseMove(object sender, MouseEventArgs e)
         {
-            mouseCoordinates = mainMap.PixelToProj(e.Location);
+            mouseCoordinates = mainMap.PixelToProj(e.Location); 
             lblLatLong.Text = "Lat/Long: " + mouseCoordinates.Y + ", " + mouseCoordinates.X;
         }
 
@@ -1807,7 +1807,7 @@ namespace warmf {
         }
 
         // Determines the distance between two points assuming lat / long projection
-        private double GetCoordinateToCoordinateDistance(DotSpatial.Topology.Point point1, DotSpatial.Topology.Coordinate theCoordinate)
+        private double GetCoordinateToCoordinateDistance(GeoAPI.Geometries.Coordinate point1, GeoAPI.Geometries.Coordinate theCoordinate)
         {
             double latitudeDistance = (point1.Y - theCoordinate.Y) * Math.Cos(point1.Y * Math.PI / 180);
             double longitudeDistance = point1.X - theCoordinate.X;
@@ -1815,11 +1815,11 @@ namespace warmf {
         }
 
         // Determines the shortest distance between a point and a line segment
-        private double GetPointToLineSegmentDistance(DotSpatial.Topology.Coordinate theCoordinate, DotSpatial.Topology.Coordinate lineCoordinate1, DotSpatial.Topology.Coordinate lineCoordinate2)
+        private double GetPointToLineSegmentDistance(GeoAPI.Geometries.Coordinate theCoordinate, GeoAPI.Geometries.Coordinate lineCoordinate1, GeoAPI.Geometries.Coordinate lineCoordinate2)
         {
             // First check the length to each end of the segment
-            double minimumDistance = GetCoordinateToCoordinateDistance(new DotSpatial.Topology.Point(theCoordinate.X, theCoordinate.Y), lineCoordinate1);
-            minimumDistance = Math.Min(minimumDistance, GetCoordinateToCoordinateDistance(new DotSpatial.Topology.Point(theCoordinate.X, theCoordinate.Y), lineCoordinate2));
+            double minimumDistance = GetCoordinateToCoordinateDistance(theCoordinate, lineCoordinate1);
+            minimumDistance = Math.Min(minimumDistance, GetCoordinateToCoordinateDistance(theCoordinate, lineCoordinate2));
 
             // Get the shortest distance to the line segment between the points
             // Infinte slope
@@ -1853,7 +1853,7 @@ namespace warmf {
                 if ((intersectionX - lineCoordinate1.X) * (intersectionX - lineCoordinate2.X) < 0)
                 {
                     double intersectionY = coordinateSlope * intersectionX + coordinateIntercept;
-                    return GetCoordinateToCoordinateDistance(new DotSpatial.Topology.Point(intersectionX, intersectionY), theCoordinate);
+                    return GetCoordinateToCoordinateDistance(new GeoAPI.Geometries.Coordinate(intersectionX, intersectionY), theCoordinate);
                 }
             }
 
@@ -1861,7 +1861,7 @@ namespace warmf {
         }
 
         // Determines the shortest distance between a point and a polyline
-        private double GetPointToLineDistance(DotSpatial.Topology.Coordinate theCoordinate, IList <DotSpatial.Topology.Coordinate> lineCoordinates)
+        private double GetPointToLineDistance(GeoAPI.Geometries.Coordinate theCoordinate, IList <GeoAPI.Geometries.Coordinate> lineCoordinates)
         {
             double minimumDistance = 999999999999;
             for (int i = 0; i < lineCoordinates.Count - 1; i++)
@@ -1998,12 +1998,12 @@ namespace warmf {
             // Odd number of crosses means the point is in the polygon
             return (numCrosses % 2 == 1);
         }
-        private bool CoordinateInPolygon(GeoAPI.Geometries.Coordinate theCoordinate, IList<DotSpatial.Topology.Coordinate> polygonVertices)
+        private bool CoordinateInPolygon(GeoAPI.Geometries.Coordinate theCoordinate, IList<GeoAPI.Geometries.Coordinate> polygonVertices)
         {
-            // Polygon has no vertices(
+            // Polygon has no vertices
             if (polygonVertices.Count < 2)
                 return false;
-
+            
             // Get bounding box of polygon
             double minX = polygonVertices[0].X;
             double maxX = polygonVertices[0].X;
@@ -2051,7 +2051,7 @@ namespace warmf {
             return (numCrosses % 2 == 1);
         }
 
-        private bool GetShapeAndLayerFromCoordinates(DotSpatial.Topology.Coordinate theCoordinates, ref int layerNumber, ref int featureNumber)
+        private bool GetShapeAndLayerFromCoordinates(GeoAPI.Geometries.Coordinate theCoordinates, ref int layerNumber, ref int featureNumber)
         {
             // Check layers from front to back to find the first which has been clicked upon
             for (layerNumber = mainMap.Layers.Count - 1; layerNumber >= 0; layerNumber--)
@@ -2063,7 +2063,7 @@ namespace warmf {
                     DotSpatial.Data.IFeatureSet theFeatureSet = thePolygonLayer.FeatureSet;
                     for (featureNumber = 0; featureNumber < theFeatureSet.Features.Count; featureNumber++)
                     {
-                        Polygon thePolygon = theFeatureSet.Features[featureNumber].BasicGeometry as Polygon;
+                        GeoAPI.Geometries.IPolygon thePolygon = theFeatureSet.Features[featureNumber].Geometry as GeoAPI.Geometries.IPolygon;
                         if (thePolygon != null)
                         {
                             if (CoordinateInPolygon(new GeoAPI.Geometries.Coordinate(theCoordinates.X, theCoordinates.Y), thePolygon.Coordinates) == true)
@@ -2074,12 +2074,12 @@ namespace warmf {
                         else
                         {
                             // Check for multi-polygon
-                            MultiPolygon theMultiPolygon = theFeatureSet.Features[featureNumber].BasicGeometry as MultiPolygon;
+                            GeoAPI.Geometries.IMultiPolygon theMultiPolygon = theFeatureSet.Features[featureNumber].Geometry as GeoAPI.Geometries.IMultiPolygon;
                             if (theMultiPolygon != null)
                             {
                                 for (int i = 0; i < theMultiPolygon.Geometries.Length; i++)
                                 {
-                                    Polygon thePolygonPiece = theMultiPolygon.Geometries[i] as Polygon;
+                                    GeoAPI.Geometries.IPolygon thePolygonPiece = theMultiPolygon.Geometries[i] as GeoAPI.Geometries.IPolygon;
                                     if (thePolygonPiece != null)
                                     {
                                         if (CoordinateInPolygon(new GeoAPI.Geometries.Coordinate(theCoordinates.X, theCoordinates.Y), thePolygonPiece.Coordinates) == true)
@@ -2107,9 +2107,9 @@ namespace warmf {
                         DotSpatial.Data.IFeatureList theFeatureList = thePointLayer.DataSet.Features;
                         for (featureNumber = 0; featureNumber < theFeatureList.Count; featureNumber++)
                         {
-                            DotSpatial.Topology.Point thePoint = theFeatureList[featureNumber].BasicGeometry as DotSpatial.Topology.Point;
+                            GeoAPI.Geometries.IPoint thePoint = theFeatureList[featureNumber].Geometry as GeoAPI.Geometries.IPoint;
                             // Determine if the distance between the feature point and the mouse double-click point is less than the radius
-                            if (GetCoordinateToCoordinateDistance(thePoint, theCoordinates) <= latitudeRadius)
+                            if (GetCoordinateToCoordinateDistance(new GeoAPI.Geometries.Coordinate(thePoint.X, thePoint.Y), theCoordinates) <= latitudeRadius)
                                 return true;
                         }
                     }
@@ -2121,7 +2121,8 @@ namespace warmf {
                         DotSpatial.Data.IFeatureSet theFeatureSet = theLineLayer.FeatureSet;
                         for (featureNumber = 0; featureNumber < theFeatureSet.Features.Count; featureNumber++)
                         {
-                            if (GetPointToLineDistance(theCoordinates, theFeatureSet.Features[featureNumber].Coordinates) < latitudeRadius)
+
+                            if (GetPointToLineDistance(theCoordinates, theFeatureSet.Features[featureNumber].Geometry.Coordinates) < latitudeRadius)
                                 return true;
                         }
                     }
