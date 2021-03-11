@@ -42,6 +42,10 @@
     <Reference Include="DotSpatial.Data.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=53ab5a198378d4c1, processorArchitecture=MSIL">
       <HintPath>packages\DotSpatial.Data.Forms.2.0.0-rc1\lib\net40-client\DotSpatial.Data.Forms.dll</HintPath>
     </Reference>
+    <Reference Include="DotSpatial.Data.Rasters.GdalExtension, Version=2.0.0.508, Culture=neutral, PublicKeyToken=a8023d70ef7a76f8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DotSpatial.Data.Rasters.GdalExtension.dll</HintPath>
+    </Reference>
     <Reference Include="DotSpatial.Extensions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=4d9e49339a7d240c, processorArchitecture=MSIL">
       <HintPath>packages\DotSpatial.Extensions.2.0.0-rc1\lib\net40-client\DotSpatial.Extensions.dll</HintPath>
     </Reference>
@@ -82,6 +86,7 @@
       <HintPath>EGIS.ShapeFileLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />

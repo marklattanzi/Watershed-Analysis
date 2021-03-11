@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Diagnostics;
+using System.ComponentModel.Composition;
 using EGIS;
 using EGIS.ShapeFileLib;
 using DotSpatial.Controls;
@@ -32,6 +33,10 @@ namespace warmf {
         public static string FIELDNAMEWARMFID = "WARMF_ID";
         public static string FIELDNAMENAME = "Name";
         public static string FIELDNAMEFILENAME = "File Name";
+
+        // For DotSpatial and extensions
+        [Export("Shell", typeof(ContainerControl))]
+        private static ContainerControl shell;
 
         private FormData frmData;
         private FormKnowledge frmKnow;
@@ -84,6 +89,9 @@ namespace warmf {
         public FormMain()
         {
             InitializeComponent();
+
+            shell = this;
+            appManager.LoadExtensions();
 
             Logger.useTime = true;
             Logger.Info("*********************************************************************************");
@@ -873,7 +881,7 @@ namespace warmf {
 
                 Global.DIR.DATA = fbDialog.SelectedPath;
                 CloseFile();
-                Global.defaultCoefficients.ReadCOE(Global.DIR.ROOT + "untitled.coe");
+                Global.defaultCoefficients.ReadCOE(Global.DIR.ROOT + "default.coe");
                 SetupEngrModule();
             }
         }
@@ -892,7 +900,7 @@ namespace warmf {
             {
                 projectFileName = openDialog.FileName;
                 ReadProjectFile(projectFileName);
-                Global.defaultCoefficients.ReadCOE(Global.DIR.ROOT + "untitled.coe");
+                Global.defaultCoefficients.ReadCOE(Global.DIR.ROOT + "default.coe");
                 SetupEngrModule();
             }
         }
@@ -2407,7 +2415,7 @@ namespace warmf {
                     else
                     {
                         string newFileName = Global.DIR.SHP + Path.GetFileName(layersDialog.changedLayers[i].FileName);
-//                        var grp = new DotSpatial.Data.Rasters.GdalExtension.GdalRasterProvider();
+                        //var grp = new DotSpatial.Data.Rasters.GdalExtension.GdalRasterProvider();
 
                         try
                         {
@@ -2471,9 +2479,10 @@ namespace warmf {
                                 }
                                 //                                IRaster theRaster = Raster.Open(Global.DIR.SHP + layersDialog.changedLayers[i].FileName);
                                 //                                IRasterLayer theRasterLayer = mainMap.Layers.Add(theRaster);
-                                //IRasterLayer theRasterLayer = mainMap.AddLayer(layersDialog.changedLayers[i].FileName) as IRasterLayer;
-                                //                                mainMap.AddLayer(Global.DIR.SHP + newFileName);
-                                //                                mainMap.Layers.Move(mainMap.Layers[mainMap.Layers.Count - 1], 0);
+                                //IRaster theRaster = grp.Open(Global.DIR.SHP + layersDialog.changedLayers[i].FileName);
+                                //IRasterLayer theRasterLayer = mainMap.AddLayer(Global.DIR.SHP + layersDialog.changedLayers[i].FileName) as IRasterLayer;
+                                                                //mainMap.AddLayer(Global.DIR.SHP + newFileName);
+                                                                mainMap.Layers.Move(mainMap.Layers[mainMap.Layers.Count - 1], 0);
                                 //                                IMapRasterLayer rasterLayer = mainMap.Layers[0] as IMapRasterLayer;
                                 /*                                if (theRasterLayer != null)
                                                                 {
