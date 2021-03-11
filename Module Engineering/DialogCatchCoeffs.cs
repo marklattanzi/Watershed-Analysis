@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using DotSpatial.Controls;
 
 namespace warmf
 {
@@ -83,7 +84,7 @@ namespace warmf
             tbRoughness.Text = catchment.ManningN.ToString();
 
             //Meteorology tab
-            tbMetFile.Text = Global.coe.METFilename[catchment.METFileNum];
+            tbMetFile.Text = Global.coe.METFilename[catchment.METFileNum - 1];
             tbPrecipWeight.Text = catchment.precipMultiplier.ToString();
             tbTempLapse.Text = catchment.aveTempLapse.ToString();
             tbAltLapse.Text = catchment.altitudeTempLapse.ToString();
@@ -709,31 +710,43 @@ namespace warmf
 
             Catchment catchment = Global.coe.catchments[Global.coe.GetCatchmentNumberFromID(Convert.ToInt16(tbCatchID.Text))];
             List<int> warmfCatchmentNumbers = new List<int>();
-
+            
             #region Apply-to-All / Apply-to-Selected switches
             if (chbxApplyToSelected.Checked) //if apply to selected
             {
-                warmfCatchmentNumbers.Add(Global.coe.GetCatchmentNumberFromID(Convert.ToInt16(tbCatchID.Text)));
-                int warmfIDfield = parent.GetWarmfIDFieldIndex(0);
-                int warmfCatchNumber;
+//                warmfCatchmentNumbers.Add(Global.coe.GetCatchmentNumberFromID(Convert.ToInt16(tbCatchID.Text)));
 
-                for (int j = 0; j < parent.frmMap[0].SelectedRecordIndices.Count; j++)
+                // Get the indices of selected catchments in the catchment layer of the main map
+                int catchmentLayerNumber = parent.GetCatchmentLayerNumber();
+                List<int> selectedCatchmentIDs = parent.GetSelectedWARMFIDs(catchmentLayerNumber);
+                for (int i = 0; i < selectedCatchmentIDs.Count; i++)
                 {
-                    string[] recordAttributes = parent.frmMap[0].GetAttributeFieldValues(parent.frmMap[0].SelectedRecordIndices[j]);
-                    warmfCatchNumber = Global.coe.GetCatchmentNumberFromID(Convert.ToInt16(recordAttributes[warmfIDfield]));
-                    if (!warmfCatchmentNumbers.Contains(warmfCatchNumber))
-                    {
-                        warmfCatchmentNumbers.Add(warmfCatchNumber);
-                    }
+                    int catchmentNumber = Global.coe.GetCatchmentNumberFromID(selectedCatchmentIDs[i]);
+                    if (catchmentNumber >= 0)
+                        warmfCatchmentNumbers.Add(catchmentNumber);
                 }
             }
             else if (chbxApplyToAll.Checked) //if apply to all
             {
-                warmfCatchmentNumbers = Enumerable.Range(0, Global.coe.numRivers - 1).ToList();
+                warmfCatchmentNumbers = Enumerable.Range(0, Global.coe.catchments.Count - 1).ToList();
             }
             else //if neither apply to all or selected are checked
             {
                 warmfCatchmentNumbers.Add(Global.coe.GetCatchmentNumberFromID(Convert.ToInt16(tbCatchID.Text)));
+            }
+
+            // Move the edited catchment to the end of the list so that changes will be made to other selected / all catchments
+            if (warmfCatchmentNumbers.Count > 1)
+            {
+                // The list warmfCatchmentNumbers is of indexes in the master coefficient list of catchments
+                int thisCatchmentNumber = Global.coe.GetCatchmentNumberFromID(catchment.idNum);
+                int thisCatchmentIndex = parent.FindInList(warmfCatchmentNumbers, thisCatchmentNumber);
+                if (thisCatchmentIndex >= 0)
+                {
+                    // Put this catchment at the end of the list and remove it from where it was found
+                    warmfCatchmentNumbers.Add(thisCatchmentNumber);
+                    warmfCatchmentNumbers.RemoveAt(thisCatchmentIndex);
+                }
             }
             #endregion
 
@@ -819,8 +832,8 @@ namespace warmf
                     catchment_i.ManningN = Convert.ToDouble(tbRoughness.Text);
                 
                 //Meteorology tab
-                if (catchment.METFileNum != Global.coe.GetMETNumberFromName(tbMetFile.Text))
-                    catchment_i.METFileNum = Global.coe.GetMETNumberFromName(tbMetFile.Text);
+                if (catchment.METFileNum != Global.coe.GetMETNumberFromName(tbMetFile.Text) + 1)
+                    catchment_i.METFileNum = Global.coe.GetMETNumberFromName(tbMetFile.Text) + 1;
                 if (catchment.precipMultiplier != Convert.ToDouble(tbPrecipWeight.Text))
                     catchment_i.precipMultiplier = Convert.ToDouble(tbPrecipWeight.Text);
                 if (catchment.aveTempLapse != Convert.ToDouble(tbTempLapse.Text))
@@ -1033,7 +1046,7 @@ namespace warmf
                 //Soil Layers > Inorganic Carbon
                 for (int j = 0; j < catchment.numSoilLayers; j++)
                 {
-                    string co2Selection = (dgInorganicC.Rows[i].Cells[0] as DataGridViewComboBoxCell).Value.ToString();
+                    string co2Selection = (dgInorganicC.Rows[j].Cells[0] as DataGridViewComboBoxCell).Value.ToString();
                     if (catchment.soils[j].CO2CalcMethod != (dgInorganicC.Rows[j].Cells[0] as DataGridViewComboBoxCell).Items.IndexOf(co2Selection) + 1)
                         catchment_i.soils[j].CO2CalcMethod = (dgInorganicC.Rows[j].Cells[0] as DataGridViewComboBoxCell).Items.IndexOf(co2Selection) + 1;
                     if (catchment.soils[j].CO2ConcenFactor != Convert.ToDouble(dgInorganicC.Rows[j].Cells[1].Value))
@@ -1303,3 +1316,4 @@ namespace warmf
         }
     }
 }
+

@@ -1063,7 +1063,7 @@
         private System.Windows.Forms.ToolStripButton tsbZoomOut;
         private System.Windows.Forms.ToolStripMenuItem miViewZoomToExtent;
         private System.Windows.Forms.ToolStripMenuItem miEditClearSelectedFeatures;
-        private DotSpatial.Controls.Map mainMap;
+        public DotSpatial.Controls.Map mainMap;
         private System.Windows.Forms.ToolStripButton tsbSelect;
         private System.Windows.Forms.ToolStripButton tsbPointer;
         private System.Windows.Forms.ToolStripButton tsbPan;

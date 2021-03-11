@@ -1075,6 +1075,28 @@ namespace warmf {
             }
         }
 
+        public List<int> GetSelectedWARMFIDs(int layerNumber)
+        {
+            List<int> theSelectedIndices = new List<int>();
+            if (layerNumber >= 0 && layerNumber < mainMap.Layers.Count)
+            {
+                // Get the fields from the shapefile
+                ShapeFile theShapeFile = new ShapeFile(Global.DIR.SHP + layers[layerNumber].FileName);
+                string[] fieldNames = theShapeFile.GetAttributeFieldNames();
+
+                FeatureLayer theFeatureLayer = mainMap.Layers[layerNumber] as FeatureLayer;
+                foreach (Feature theFeature in theFeatureLayer.Selection.ToFeatureList())
+                {
+                    string[] theFields = theShapeFile.GetAttributeFieldValues(theFeature.Fid);
+                    int warmfID = GetWARMF_IDFromAttributes(fieldNames, theFields);
+                    if (warmfID > 0)
+                        theSelectedIndices.Add(warmfID);
+                }
+            }
+
+            return theSelectedIndices;
+        }
+
         private void miEditClearSelectedFeatures_Click(object sender, EventArgs e)
         {
             ClearAllSelections();
@@ -1185,7 +1207,7 @@ namespace warmf {
         }
 
         // Returns the index of the first instance of a layer name precisely matching the specified name
-        private int GetLayerNumberFromName(string layerName)
+        public int GetLayerNumberFromName(string layerName)
         {
             for (int i = 0; i < layers.Count; i++)
                 if (layers[i].Name == layerName)
@@ -1195,13 +1217,31 @@ namespace warmf {
         }
 
         // Returns the index of the first instance of a layer matching the specified type
-        private int GetLayerNumberFromType(int layerType)
+        public int GetLayerNumberFromType(int layerType)
         {
             for (int i = 0; i < layers.Count; i++)
                 if (layers[i].Type == layerType)
                     return i;
 
             return -1;
+        }
+
+        // Returns the index of the catchment layer
+        public int GetCatchmentLayerNumber()
+        {
+            return GetLayerNumberFromType(LAYERCATCHMENT);
+        }
+
+        // Returns the index of the river layer
+        public int GetRiverLayerNumber()
+        {
+            return GetLayerNumberFromType(LAYERRIVER);
+        }
+
+        // Returns the index of the river layer
+        public int GetLakeLayerNumber()
+        {
+            return GetLayerNumberFromType(LAYERLAKE);
         }
 
         private bool RemoveLayer(int layerNumber)
@@ -2160,6 +2200,16 @@ namespace warmf {
             return -1;
         }
 
+        // Returns the index of a feature in a layer from its "Fid"
+        public int GetFeatureIndexFromFid(FeatureLayer theFeatureLayer, int fid)
+        {
+            for (int i = 0; i < theFeatureLayer.FeatureSet.Features.Count; i++)
+                if (theFeatureLayer.FeatureSet.Features[i].Fid == fid)
+                    return i;
+
+            return -1;
+        }
+
         private void mainMap_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             int layerNumber = -1;
@@ -2589,6 +2639,88 @@ namespace warmf {
                     if (foundLayers.IndexOf(i) < 0)
                         RemoveLayer(i);
             }
+        }
+        // Calculates the sum of the elements of an integer list
+        public double GetListTotal(List<double> theList)
+        {
+            double total = 0;
+            for (int i = 0; i < theList.Count; i++)
+                total += theList[i];
+
+            return total;
+        }
+
+        // Calculates the average of a list of doubles
+        public double GetListAverage(List<double> theList)
+        {
+            double total = GetListTotal(theList);
+
+            if (theList.Count > 0)
+                total /= Convert.ToDouble(theList.Count);
+
+            return total;
+        }
+
+        // Determines if a value is already present in a list of integers
+        public int FindInList(List<int> theList, int theValue)
+        {
+            for (int i = 0; i < theList.Count; i++)
+                if (theList[i] == theValue)
+                    return i;
+
+            return -1;
+        }
+
+        // Determines if a value is already present in a list of floats
+        public int FindInList(List<float> theList, float theValue)
+        {
+            for (int i = 0; i < theList.Count; i++)
+                if (theList[i] == theValue)
+                    return i;
+
+            return -1;
+        }
+
+        // Determines if a string is present in an array of strings
+        public int FindInArray(string[] theArray, string theString)
+        {
+            for (int i = 0; i < theArray.Length; i++)
+                if (theArray[i] == theString)
+                    return i;
+
+            return -1;
+        }
+
+        // Adds a value to an integer list if it is not already in the list and returns the value's place in the list
+        public int AddUniqueValueToList(List<int> theList, int theValue)
+        {
+            // Determine if theValue is already in the list
+            int placeInList = FindInList(theList, theValue);
+            if (placeInList >= 0)
+                return placeInList;
+
+            // Add theValue to the list in sorted order
+            int i = 0;
+            while (i < theList.Count && theList[i] < theValue)
+                i++;
+            theList.Insert(i, theValue);
+            return theList.Count - 1;
+        }
+
+        // Adds a value to an integer list if it is not already in the list and returns the value's place in the list
+        public int AddUniqueValueToList(List<float> theList, float theValue)
+        {
+            // Determine if theValue is already in the list
+            int placeInList = FindInList(theList, theValue);
+            if (placeInList >= 0)
+                return placeInList;
+
+            // Add theValue to the list in sorted order
+            int i = 0;
+            while (i < theList.Count && theList[i] < theValue)
+                i++;
+            theList.Insert(i, theValue);
+            return theList.Count - 1;
         }
     }
 }
