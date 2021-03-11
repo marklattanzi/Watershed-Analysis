@@ -81,10 +81,9 @@ namespace warmf
                 maxDate = getMaxDate(fileName, maxDate);
             }
 
-            dtpBeginDate.Value = minDate;
-            dtpBeginDate.MinDate = minDate;
-            dtpEndDate.Value = maxDate;
-            dtpEndDate.MaxDate = maxDate;
+            // Set the initial dates - use previously used dates unless they are not within the data date range
+            SetDate(ref dtpBeginDate, Global.coe.begDate, minDate, maxDate);
+            SetDate(ref dtpEndDate, Global.coe.endDate, minDate, maxDate);
 
             //time steps per day
             nudTimeStepsPerDay.Value = Global.coe.numTimeStepsPerDay;
@@ -165,7 +164,23 @@ namespace warmf
             for (int i = 0; i < SubwatershedNodesList.Count; i++)
             {
                 lbSubwatersheds.Items.Add(SubwatershedNodesList[i].name);
+                lbSubwatersheds.SetSelected(i, true);
             }
+        }
+
+        // Sets either the beginning or ending date and date range
+        private void SetDate(ref System.Windows.Forms.DateTimePicker datePicker, DateTime theDate, DateTime minDate, DateTime maxDate)
+        {
+            if (minDate <= theDate)
+                datePicker.Value = theDate;
+            else
+                datePicker.Value = minDate;
+            if (maxDate >= theDate)
+                datePicker.Value = theDate;
+            else
+                datePicker.Value = maxDate;
+            datePicker.MinDate = minDate;
+            datePicker.MaxDate = maxDate;
         }
 
         public static DateTime getMinDate(string fileName, DateTime minDate)
@@ -407,11 +422,18 @@ namespace warmf
         {
             for (int i = 0; i < lbSubwatersheds.Items.Count; i++)
                 lbSubwatersheds.SetSelected(i, true);
+            btnRun.Enabled = true;
         }
 
         private void btnClearSelection_Click(object sender, EventArgs e)
         {
             lbSubwatersheds.ClearSelected();
+            btnRun.Enabled = false;
+        }
+
+        private void lbSubwatersheds_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnRun.Enabled = (lbSubwatersheds.SelectedIndices.Count > 0);
         }
     }
 }

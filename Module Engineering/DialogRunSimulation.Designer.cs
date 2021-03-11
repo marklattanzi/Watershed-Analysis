@@ -227,6 +227,7 @@
             this.lbSubwatersheds.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.lbSubwatersheds.Size = new System.Drawing.Size(355, 94);
             this.lbSubwatersheds.TabIndex = 13;
+            this.lbSubwatersheds.SelectedIndexChanged += new System.EventHandler(this.lbSubwatersheds_SelectedIndexChanged);
             // 
             // chbxHydrologyAutocalibration
             // 
