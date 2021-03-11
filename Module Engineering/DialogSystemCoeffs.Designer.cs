@@ -220,7 +220,7 @@
             this.Catch = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Riv = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Res = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Load = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.OutputLoad = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dgvNames = new System.Windows.Forms.DataGridView();
             this.cbParameters = new System.Windows.Forms.ComboBox();
             this.btnHelp = new System.Windows.Forms.Button();
@@ -2104,7 +2104,7 @@
             this.Catch,
             this.Riv,
             this.Res,
-            this.Load});
+            this.OutputLoad});
             this.dgvOutputControl.Location = new System.Drawing.Point(27, 75);
             this.dgvOutputControl.Name = "dgvOutputControl";
             this.dgvOutputControl.RowHeadersWidth = 200;
@@ -2141,10 +2141,10 @@
             // 
             // Load
             // 
-            this.Load.Frozen = true;
-            this.Load.HeaderText = "Loading";
-            this.Load.Name = "Load";
-            this.Load.Width = 63;
+            this.OutputLoad.Frozen = true;
+            this.OutputLoad.HeaderText = "Loading";
+            this.OutputLoad.Name = "Load";
+            this.OutputLoad.Width = 63;
             // 
             // dgvNames
             // 
@@ -2495,7 +2495,7 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn Catch;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Riv;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Res;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Load;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn OutputLoad;
         private System.Windows.Forms.DataGridViewTextBoxColumn Charge;
         private System.Windows.Forms.DataGridViewTextBoxColumn Equiv;
         private System.Windows.Forms.DataGridViewComboBoxColumn DryDep;

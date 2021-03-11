@@ -112,11 +112,13 @@
             this.tsbZoomOut = new System.Windows.Forms.ToolStripButton();
             this.tsbZoomToExtent = new System.Windows.Forms.ToolStripButton();
             this.tsbClearSelected = new System.Windows.Forms.ToolStripButton();
+            this.tsbLegend = new System.Windows.Forms.ToolStripButton();
             this.tsbSelect = new System.Windows.Forms.ToolStripButton();
             this.tsbPan = new System.Windows.Forms.ToolStripButton();
             this.tsbPointer = new System.Windows.Forms.ToolStripButton();
             this.mainMap = new DotSpatial.Controls.Map();
-            this.appManager = new DotSpatial.Controls.AppManager();
+            this.mapLegend = new DotSpatial.Controls.Legend();
+            //this.appManager = new DotSpatial.Controls.AppManager();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxSplash)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -141,6 +143,7 @@
             this.frmMap.Size = new System.Drawing.Size(88, 79);
             this.frmMap.TabIndex = 0;
             this.frmMap.UseMercatorProjection = false;
+            this.frmMap.Visible = false;
             this.frmMap.ZoomLevel = 1D;
             this.frmMap.ZoomToSelectedExtentWhenCtrlKeydown = false;
             this.frmMap.MapDoubleClick += new System.EventHandler<EGIS.Controls.SFMap.MapDoubleClickedEventArgs>(this.frmMap_MapDoubleClick);
@@ -817,6 +820,7 @@
             this.tsbZoomOut,
             this.tsbZoomToExtent,
             this.tsbClearSelected,
+            this.tsbLegend,
             this.tsbSelect,
             this.tsbPan,
             this.tsbPointer});
@@ -875,6 +879,16 @@
             this.tsbClearSelected.ToolTipText = "Clear selected features";
             this.tsbClearSelected.Click += new System.EventHandler(this.tsbClearSelected_Click);
             // 
+            // tsbLegend
+            // 
+            this.tsbLegend.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbLegend.Image = ((System.Drawing.Image)(resources.GetObject("tsbLegend.Image")));
+            this.tsbLegend.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbLegend.Name = "tsbLegend";
+            this.tsbLegend.Size = new System.Drawing.Size(34, 34);
+            this.tsbLegend.Text = "Legend";
+            this.tsbLegend.Click += new System.EventHandler(this.legendButton_Click);
+            // 
             // tsbSelect
             // 
             this.tsbSelect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -915,13 +929,12 @@
             this.mainMap.AutoScroll = true;
             this.mainMap.BackColor = System.Drawing.Color.LightGray;
             this.mainMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.mainMap.CollectAfterDraw = false;
             this.mainMap.CollisionDetection = false;
             this.mainMap.ExtendBuffer = false;
             this.mainMap.FunctionMode = DotSpatial.Controls.FunctionMode.None;
             this.mainMap.IsBusy = false;
             this.mainMap.IsZoomedToMaxExtent = true;
-            this.mainMap.Legend = null;
+            this.mainMap.Legend = this.mapLegend;
             this.mainMap.Location = new System.Drawing.Point(15, 61);
             this.mainMap.Name = "mainMap";
             this.mainMap.ProgressHandler = null;
@@ -937,14 +950,36 @@
             this.mainMap.MouseHover += new System.EventHandler(this.mainMap_MouseHover);
             this.mainMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mainMap_MouseMove);
             // 
+            // mapLegend
+            // 
+            this.mapLegend.BackColor = System.Drawing.Color.White;
+            this.mapLegend.ControlRectangle = new System.Drawing.Rectangle(0, 0, 187, 428);
+            this.mapLegend.DocumentRectangle = new System.Drawing.Rectangle(0, 0, 187, 428);
+            this.mapLegend.HorizontalScrollEnabled = true;
+            this.mapLegend.Indentation = 30;
+            this.mapLegend.IsInitialized = false;
+            this.mapLegend.Location = new System.Drawing.Point(15, 61);
+            this.mapLegend.MinimumSize = new System.Drawing.Size(5, 5);
+            this.mapLegend.Name = "mapLegend";
+            this.mapLegend.ProgressHandler = null;
+            this.mapLegend.ResetOnResize = false;
+            this.mapLegend.SelectionFontColor = System.Drawing.Color.Black;
+            this.mapLegend.SelectionHighlight = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(238)))), ((int)(((byte)(252)))));
+            this.mapLegend.Size = new System.Drawing.Size(187, 428);
+            this.mapLegend.TabIndex = 7;
+            this.mapLegend.Text = "mapLegend";
+            this.mapLegend.UseLegendForSelection = true;
+            this.mapLegend.VerticalScrollEnabled = true;
+            this.mapLegend.Visible = false;
+            // 
             // appManager
             // 
-            this.appManager.Directories = ((System.Collections.Generic.List<string>)(resources.GetObject("appManager.Directories")));
+            /*this.appManager.Directories = ((System.Collections.Generic.List<string>)(resources.GetObject("appManager.Directories")));
             this.appManager.DockManager = null;
             this.appManager.HeaderControl = null;
-            this.appManager.Legend = null;
-            this.appManager.Map = null;
-            this.appManager.ProgressHandler = null;
+            this.appManager.Legend = this.mapLegend;
+            this.appManager.Map = this.mainMap;
+            this.appManager.ProgressHandler = null;*/
             // 
             // FormMain
             // 
@@ -952,6 +987,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(960, 612);
+            this.Controls.Add(this.mapLegend);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.lblLatLong);
             this.Controls.Add(this.pboxSplash);
@@ -1068,7 +1104,9 @@
         private System.Windows.Forms.ToolStripButton tsbPointer;
         private System.Windows.Forms.ToolStripButton tsbPan;
         private System.Windows.Forms.ToolStripMenuItem layersToolStripMenuItem;
-        private DotSpatial.Controls.AppManager appManager;
+        //private DotSpatial.Controls.AppManager appManager;
+        private DotSpatial.Controls.Legend mapLegend;
+        private System.Windows.Forms.ToolStripButton tsbLegend;
     }
 }
 

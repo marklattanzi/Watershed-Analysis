@@ -47,6 +47,14 @@ namespace warmf
             }
         }
 
+        public void SetGridViewColumnHeaders(string columnHeader1, string columnHeader2)
+        {
+            if (theGridView.Columns.Count > 0)
+                theGridView.Columns[0].HeaderText = columnHeader1;
+            if (theGridView.Columns.Count > 1)
+                theGridView.Columns[1].HeaderText = columnHeader2;
+        }
+
         private void btnOK_Click(object sender, EventArgs e)
         {
             // Get the results

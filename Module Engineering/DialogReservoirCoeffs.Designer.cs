@@ -151,7 +151,7 @@
             this.BtnAddOutflow = new System.Windows.Forms.Button();
             this.dgvOutflowsFromReservoir = new System.Windows.Forms.DataGridView();
             this.Elevation = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Width = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.WidthColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Type = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tpMet = new System.Windows.Forms.TabPage();
             this.tbTempLapse = new warmf.UtilityClasses.DoubleTextBox();
@@ -1371,7 +1371,7 @@
             this.dgvOutflowsFromReservoir.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvOutflowsFromReservoir.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Elevation,
-            this.Width,
+            this.WidthColumn,
             this.Type});
             this.dgvOutflowsFromReservoir.Location = new System.Drawing.Point(30, 40);
             this.dgvOutflowsFromReservoir.Name = "dgvOutflowsFromReservoir";
@@ -1389,8 +1389,8 @@
             // 
             // Width
             // 
-            this.Width.HeaderText = "Width, m";
-            this.Width.Name = "Width";
+            this.WidthColumn.HeaderText = "Width, m";
+            this.WidthColumn.Name = "Width";
             // 
             // Type
             // 
@@ -1766,7 +1766,7 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chartStageArea;
         private System.Windows.Forms.ListBox lbDiversionsToReservoir;
         private System.Windows.Forms.DataGridViewTextBoxColumn Elevation;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Width;
+        private System.Windows.Forms.DataGridViewTextBoxColumn WidthColumn;
         private System.Windows.Forms.DataGridViewComboBoxColumn Type;
     }
 }
