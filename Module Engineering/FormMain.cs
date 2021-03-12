@@ -880,9 +880,11 @@ namespace warmf {
             {
 
                 Global.DIR.DATA = fbDialog.SelectedPath;
-                CloseFile();
-                Global.defaultCoefficients.ReadCOE(Global.DIR.ROOT + "default.coe");
-                SetupEngrModule();
+                if (CloseFile() == true)
+                {
+                    Global.defaultCoefficients.ReadCOE(Global.DIR.ROOT + "default.coe");
+                    SetupEngrModule();
+                }
             }
         }
 
@@ -906,7 +908,8 @@ namespace warmf {
         }
 
         // Actually closes a file, checking to see if it should be saved first
-        private void CloseFile()
+        // If user cancels, return is false
+        private bool CloseFile()
         {
             // Check if the scenario needs saving
             if (scenarioChanged == true)
@@ -914,7 +917,7 @@ namespace warmf {
                 DialogResult shouldSaveScenario = MessageBox.Show("Save scenario " + Path.GetFileNameWithoutExtension(GetActiveScenarioName()) + "?", "Close File", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 // Cancel means don't close the file
                 if (shouldSaveScenario == DialogResult.Cancel)
-                    return;
+                    return false;
                 // Yes means save the scenario
                 if (shouldSaveScenario == DialogResult.Yes)
                     SaveScenario();
@@ -926,7 +929,7 @@ namespace warmf {
                 DialogResult shouldSaveProject = MessageBox.Show("Save project " + Path.GetFileName(projectFileName) + "?", "Close File", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 // Cancel means don't close the file
                 if (shouldSaveProject == DialogResult.Cancel)
-                    return;
+                    return false;
                 // Yes means save the project
                 if (shouldSaveProject == DialogResult.Yes)
                     WriteProjectFile(projectFileName);
@@ -937,6 +940,8 @@ namespace warmf {
             // Clear the map
             mainMap.Layers.Clear();
             layers.Clear();
+
+            return true;
         }
 
         private void miFileClose_Click(object sender, EventArgs e)
@@ -971,9 +976,8 @@ namespace warmf {
         private void miFileExit_Click(object sender, EventArgs e)
         {
             // Close the file, asking to save as needed
-            CloseFile();
-
-            System.Windows.Forms.Application.Exit();
+            if (CloseFile() == true)
+                System.Windows.Forms.Application.Exit();
         }
 
         #endregion

@@ -537,9 +537,6 @@ namespace warmf
             river.upElevation = Convert.ToDouble(tbUpElevation.Text);
             river.downElevation = Convert.ToDouble(tbDownElevation.Text);
             river.length = Convert.ToDouble(tbLength.Text);
-            river.depth = Convert.ToDouble(tbDepth.Text);
-            river.impoundArea = Convert.ToDouble(tbImpArea.Text);
-            river.impoundVol = Convert.ToDouble(tbImpVolume.Text);
             
             //Diversions
             river.diversionFromFilenums.Clear();
@@ -602,9 +599,15 @@ namespace warmf
                 //Physical Data Tab
                 if (river.name != tbName.Text)
                     Global.coe.rivers[warmfRiverNumbers[i]].name = tbName.Text;
+                if (river.depth != Convert.ToDouble(tbDepth.Text))
+                    Global.coe.rivers[warmfRiverNumbers[i]].depth = Convert.ToDouble(tbDepth.Text);
                 if (river.ManningN != Convert.ToDouble(tbManningsN.Text))
                     Global.coe.rivers[warmfRiverNumbers[i]].ManningN = Convert.ToDouble(tbManningsN.Text);
-                
+                if (river.impoundArea != Convert.ToDouble(tbImpArea.Text))
+                    Global.coe.rivers[warmfRiverNumbers[i]].impoundArea = Convert.ToDouble(tbImpArea.Text);
+                if (river.impoundVol != Convert.ToDouble(tbImpVolume.Text))
+                    Global.coe.rivers[warmfRiverNumbers[i]].impoundVol = Convert.ToDouble(tbImpVolume.Text);
+
                 //Stage-Width
                 for (int j = 0; j < 9; j++)
                 {
