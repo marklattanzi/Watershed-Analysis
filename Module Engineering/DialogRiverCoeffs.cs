@@ -498,18 +498,14 @@ namespace warmf
 
             if (chbxApplyToSelected.Checked) //if apply to selected
             {
-                warmfRiverNumbers.Add(Global.coe.GetRiverNumberFromID(Convert.ToInt32(tbStreamID.Text)));
-                int warmfIDfield = parent.GetWarmfIDFieldIndex(1);
-                int warmfRiverNumber;
-
-                for (int j = 0; j < parent.frmMap[1].SelectedRecordIndices.Count; j++)
+                // Get the indices of selected catchments in the catchment layer of the main map
+                int riverLayerNumber = parent.GetRiverLayerNumber();
+                List<int> selectedRiverIDs = parent.GetSelectedWARMFIDs(riverLayerNumber);
+                for (int i = 0; i < selectedRiverIDs.Count; i++)
                 {
-                    string[] recordAttributes = parent.frmMap[1].GetAttributeFieldValues(parent.frmMap[1].SelectedRecordIndices[j]);
-                    warmfRiverNumber = Global.coe.GetRiverNumberFromID(Convert.ToInt16(recordAttributes[warmfIDfield]));
-                    if (!warmfRiverNumbers.Contains(warmfRiverNumber))
-                    {
-                        warmfRiverNumbers.Add(warmfRiverNumber);
-                    } 
+                    int riverNumber = Global.coe.GetRiverNumberFromID(selectedRiverIDs[i]);
+                    if (riverNumber >= 0)
+                        warmfRiverNumbers.Add(riverNumber);
                 }
             }
             else if (chbxApplyToAll.Checked) //if apply to all
@@ -519,6 +515,20 @@ namespace warmf
             else //if neither apply to all or selected are checked
             {
                 warmfRiverNumbers.Add(Global.coe.GetRiverNumberFromID(Convert.ToInt32(tbStreamID.Text)));
+            }
+
+            // Move the edited catchment to the end of the list so that changes will be made to other selected / all catchments
+            if (warmfRiverNumbers.Count > 1)
+            {
+                // The list warmfCatchmentNumbers is of indexes in the master coefficient list of catchments
+                int thisRiverNumber = Global.coe.GetRiverNumberFromID(river.idNum);
+                int thisRiverIndex = parent.FindInList(warmfRiverNumbers, thisRiverNumber);
+                if (thisRiverIndex >= 0)
+                {
+                    // Put this catchment at the end of the list and remove it from where it was found
+                    warmfRiverNumbers.Add(thisRiverNumber);
+                    warmfRiverNumbers.RemoveAt(thisRiverIndex);
+                }
             }
 
             #region Update each of the coefficients that should not be applied to other rivers first
@@ -623,7 +633,7 @@ namespace warmf
                 if (river.sedBedDepth != Convert.ToDouble(tbInitSedDepth.Text))
                     Global.coe.rivers[warmfRiverNumbers[i]].sedBedDepth = Convert.ToDouble(tbInitSedDepth.Text);
                 if (river.sedDiffusionRate != Convert.ToDouble(tbBedDiffRate.Text))
-                    Global.coe.rivers[warmfRiverNumbers[i]].sedDiffusionRate = Convert.ToDouble(tbInitSedDepth.Text);
+                    Global.coe.rivers[warmfRiverNumbers[i]].sedDiffusionRate = Convert.ToDouble(tbBedDiffRate.Text);
                 if (river.sedDetachVelMult != Convert.ToDouble(tbDetachVelMult.Text))
                     Global.coe.rivers[warmfRiverNumbers[i]].sedDetachVelMult = Convert.ToDouble(tbDetachVelMult.Text);
                 if (river.sedDetachVelExp != Convert.ToDouble(tbDetachVelExp.Text))

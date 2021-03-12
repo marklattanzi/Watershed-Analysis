@@ -714,8 +714,6 @@ namespace warmf
             #region Apply-to-All / Apply-to-Selected switches
             if (chbxApplyToSelected.Checked) //if apply to selected
             {
-//                warmfCatchmentNumbers.Add(Global.coe.GetCatchmentNumberFromID(Convert.ToInt16(tbCatchID.Text)));
-
                 // Get the indices of selected catchments in the catchment layer of the main map
                 int catchmentLayerNumber = parent.GetCatchmentLayerNumber();
                 List<int> selectedCatchmentIDs = parent.GetSelectedWARMFIDs(catchmentLayerNumber);
