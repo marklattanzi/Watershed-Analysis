@@ -25,7 +25,6 @@
 		private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.dlgFileOpen = new System.Windows.Forms.OpenFileDialog();
-            this.frmMap = new EGIS.Controls.SFMap();
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.miTopFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miFileNew = new System.Windows.Forms.ToolStripMenuItem();
@@ -125,27 +124,6 @@
             // dlgFileOpen
             // 
             this.dlgFileOpen.FileName = "openFileDialog1";
-            // 
-            // frmMap
-            // 
-            this.frmMap.AutoScrollMargin = new System.Drawing.Size(20, 20);
-            this.frmMap.AutoSize = true;
-            this.frmMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.frmMap.CentrePoint2D = ((EGIS.ShapeFileLib.PointD)(resources.GetObject("frmMap.CentrePoint2D")));
-            this.frmMap.Location = new System.Drawing.Point(15, 61);
-            this.frmMap.MapBackColor = System.Drawing.SystemColors.Control;
-            this.frmMap.Margin = new System.Windows.Forms.Padding(6);
-            this.frmMap.Name = "frmMap";
-            this.frmMap.PanSelectMode = EGIS.Controls.PanSelectMode.Pan;
-            this.frmMap.RenderQuality = EGIS.ShapeFileLib.RenderQuality.Auto;
-            this.frmMap.Size = new System.Drawing.Size(88, 79);
-            this.frmMap.TabIndex = 0;
-            this.frmMap.UseMercatorProjection = false;
-            this.frmMap.ZoomLevel = 1D;
-            this.frmMap.ZoomToSelectedExtentWhenCtrlKeydown = false;
-            this.frmMap.MapDoubleClick += new System.EventHandler<EGIS.Controls.SFMap.MapDoubleClickedEventArgs>(this.frmMap_MapDoubleClick);
-            this.frmMap.Load += new System.EventHandler(this.frmMap_Load);
-            this.frmMap.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.frmMap_MouseDoubleClick);
             // 
             // mnuMain
             // 
@@ -955,7 +933,6 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.lblLatLong);
             this.Controls.Add(this.pboxSplash);
-            this.Controls.Add(this.frmMap);
             this.Controls.Add(this.mnuMain);
             this.Controls.Add(this.mainMap);
             this.MainMenuStrip = this.mnuMain;
@@ -975,7 +952,6 @@
 
 		#endregion
 
-		public EGIS.Controls.SFMap frmMap;
 		private System.Windows.Forms.MenuStrip mnuMain;
 		private System.Windows.Forms.ToolStripMenuItem miTopFile;
 		private System.Windows.Forms.OpenFileDialog dlgFileOpen;

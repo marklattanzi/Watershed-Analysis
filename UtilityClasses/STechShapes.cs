@@ -76,10 +76,10 @@ namespace warmf
             }
         }
 
-        public void DrawMarker(EGIS.Controls.SFMap frmMap, Graphics g, double longitude, double latitude)
+        public void DrawMarker(DotSpatial.Controls.Map mainMap, Graphics g, GeoAPI.Geometries.Coordinate theCoordinate)
         {
             //not used at the moment, but retained in case we need it later
-            System.Drawing.Point pt = frmMap.GisPointToPixelCoord(longitude, latitude);
+            System.Drawing.Point pt = mainMap.ProjToPixel(theCoordinate);
             int width = 10;
 
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;

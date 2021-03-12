@@ -111,7 +111,7 @@ namespace warmf {
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            frmMap.Hide();
+            mainMap.Hide();
             pboxSplash.Top = 100;
             pboxSplash.Left = 100;
             miFileClose.Visible = false;
@@ -184,34 +184,6 @@ namespace warmf {
         {
             try
             {
-                //Add catchments shapefile (shapefile [0])
-                this.frmMap.AddShapeFile(Global.DIR.SHP + catchmentLayer.FileName, catchmentLayer.Name, "");
-                catchShapefile = this.frmMap[0];
-                catchShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
-                catchShapefile.RenderSettings.UseToolTip = true;
-                catchShapefile.RenderSettings.ToolTipFieldName = catchShapefile.RenderSettings.FieldName;
-                catchShapefile.RenderSettings.IsSelectable = false;
-                catchShapefile.RenderSettings.FillColor = Color.FromArgb(224, 250, 207);
-                catchShapefile.RenderSettings.OutlineColor = Color.FromArgb(178, 178, 178);
-                //Add rivers shapefile (shapefile [1])
-                this.frmMap.AddShapeFile(Global.DIR.SHP + riverLayer.FileName, riverLayer.Name, "");
-                riverShapefile = this.frmMap[1];
-                riverShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
-                riverShapefile.RenderSettings.UseToolTip = true;
-                riverShapefile.RenderSettings.ToolTipFieldName = catchShapefile.RenderSettings.FieldName;
-                riverShapefile.RenderSettings.IsSelectable = false;
-                riverShapefile.RenderSettings.LineType = LineType.Solid;
-                riverShapefile.RenderSettings.OutlineColor = Color.FromArgb(0, 0, 255);
-                //add reservoirs shapefile (shapefile [2])
-                this.frmMap.AddShapeFile(Global.DIR.SHP + reservoirLayer.FileName, reservoirLayer.Name, "");
-                lakeShapefile = this.frmMap[2];                                                                                      
-                lakeShapefile.RenderSettings.FieldName = catchShapefile.RenderSettings.DbfReader.GetFieldNames()[0];
-                lakeShapefile.RenderSettings.UseToolTip = true;
-                lakeShapefile.RenderSettings.ToolTipFieldName = catchShapefile.RenderSettings.FieldName;
-                lakeShapefile.RenderSettings.IsSelectable = false;
-                lakeShapefile.RenderSettings.FillColor = Color.FromArgb(151, 219, 242);
-                lakeShapefile.RenderSettings.OutlineColor = Color.FromArgb(61, 101, 235);
-
                 // DotSpatial map
                 // Map Settings
 
@@ -247,7 +219,7 @@ namespace warmf {
         private void SetupEngrModule()
         {
             pboxSplash.Hide();
-            frmMap.Show();
+            mainMap.Show();
             miFileClose.Visible = true;
             miFileImport.Visible = true;
             miFileExport.Visible = true;
@@ -270,8 +242,6 @@ namespace warmf {
 
             lblLatLong.Visible = true;
             toolStrip1.Visible = true;
-            frmMap.Focus();
-            frmMap.ZoomToSelectedExtentWhenCtrlKeydown = false;
         }
 
         public void ShowForm(string name)
@@ -294,267 +264,8 @@ namespace warmf {
             }
         }
 
-        public int GetWarmfIDFieldIndex(int shapefileIndex)
-        {
-            string[] attributeNames = frmMap[shapefileIndex].GetAttributeFieldNames();
-            int n = 0;
-            while (attributeNames[n] != FIELDNAMEWARMFID) //test of shapefile attributes
-            {
-                if (n < (attributeNames.Length - 1))
-                    n++;
-                else
-                {
-                    Debug.WriteLine("No WARMF_ID Field found in river attribute table");
-                    return -1;
-                }
-            }
-            return n;
-        }
-
         #region Map Interaction Events
 
-        private void frmMap_MapDoubleClick(object sender, EGIS.Controls.SFMap.MapDoubleClickedEventArgs e)
-        {
-            e.Cancel = true;
-        }
-
-        private void frmMap_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            List<int> shapefileRecord = new List<int>();
-            List<int> shapefileNumber = new List<int>();
-            int numShapeFiles = frmMap.ShapeFileCount;
-            int CatchmentRecordIndex = frmMap.GetShapeIndexAtPixelCoord(0, e.Location, 8);
-            int riverRecordIndex = frmMap.GetShapeIndexAtPixelCoord(1, e.Location, 8);
-            int reservoirRecordIndex = frmMap.GetShapeIndexAtPixelCoord(2, e.Location, 8);
-
-            if (numShapeFiles > 3) //three shapefiles are default - catchments, rivers, lakes
-            {
-                string fileName;
-                for (int i = 3; i < numShapeFiles; i++)
-                {
-                    int record = frmMap.GetShapeIndexAtPixelCoord(i, e.Location, 8);
-                    if (record >= 0) //record exists at this location for this shapefile
-                    {
-                        string[] recordAttributes = frmMap[i].GetAttributeFieldValues(record);
-                        string[] attributeNames = frmMap[i].GetAttributeFieldNames();
-                        for (int j = 0; j < attributeNames.Length; j++)
-                        {
-                            if (attributeNames[j] == FIELDNAMEFILENAME)
-                            {
-                                fileName = recordAttributes[j];
-                                fileName = fileName.Trim();
-                                string fileType = fileName.Substring(fileName.Length - 3);
-                                if (fileType == "MET")
-                                    frmData.cboxTypeOfFile.SelectedIndex = 0;
-                                else if (fileType == "AIR")
-                                    frmData.cboxTypeOfFile.SelectedIndex = 1;
-                                else if (fileType == "ORH" || fileType == "OLH")
-                                    frmData.cboxTypeOfFile.SelectedIndex = 2;
-                                else if (fileType == "ORC" || fileType == "OLC")
-                                    frmData.cboxTypeOfFile.SelectedIndex = 3;
-                                else if (fileType == "FLO")
-                                    frmData.cboxTypeOfFile.SelectedIndex = 4;
-                                else if (fileType == "PTS")
-                                    frmData.cboxTypeOfFile.SelectedIndex = 5;
-                                else
-                                {
-                                    MessageBox.Show("File extension does not match any of the recognized WARMF file extensions", "Exception/Error", MessageBoxButtons.OK);
-                                    return;
-                                }
-                                frmData.cboxFilename.SelectedIndex =
-                                    frmData.cboxFilename.FindString(fileName);
-                                frmData.cboxData.SelectedIndex = 0;
-                                frmData.Show();
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (riverRecordIndex >= 0) //River segment selected - River coefficients
-            {
-                string[] recordAttributes = frmMap[1].GetAttributeFieldValues(riverRecordIndex);
-                string[] attributeNames = frmMap[1].GetAttributeFieldNames();
-                int n = 0;
-                while (attributeNames[n] != FIELDNAMEWARMFID) //test of shapefile attributes
-                {
-                    if (n < (attributeNames.Length - 1))
-                        n++;
-                    else
-                    {
-                        Debug.WriteLine("No " + FIELDNAMEWARMFID + "field found in catchments attribute table");
-                        return;
-                    }
-                }
-                int riverID = Int32.Parse(recordAttributes[n]);
-                int ii = 0;
-                while (Global.coe.rivers[ii].idNum != riverID) //test of coefficients file read
-                    if (ii < Global.coe.numRivers - 1)
-                        ii++;
-                    else
-                    {
-                        Debug.WriteLine("No river found with IDnum = " + riverID);
-                        return;
-                    }
-                if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
-                {
-                    using (dlgRiverCoeffs = new DialogRiverCoeffs(this))
-                    {
-                        dlgRiverCoeffs.Populate(ii);
-                        if (dlgRiverCoeffs.ShowDialog() == DialogResult.OK)
-                            scenarioChanged = true;
-                    }
-                }
-                else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
-                {
-                    using (dlgOutput = new DialogOutput(this))
-                    {
-                        dlgOutput.Populate("River", ii);
-                        dlgOutput.ShowDialog();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Gowdy or Herr Output Selected");
-                }
-
-            }
-            else if (reservoirRecordIndex >= 0) //Reservoir segment selected - Reservoir coefficients
-            {
-                string[] recordAttributes = frmMap[2].GetAttributeFieldValues(reservoirRecordIndex);
-                string[] attributeNames = frmMap[2].GetAttributeFieldNames();
-                int n = 0;
-                while (attributeNames[n] != FIELDNAMEWARMFID) //test of shapefile attributes
-                {
-                    if (n < (attributeNames.Length - 1))
-                        n++;
-                    else
-                    {
-                        Debug.WriteLine("No " + FIELDNAMEWARMFID + " field found in reservoirs attribute table");
-                        return;
-                    }
-                }
-                int reservoirID = Int32.Parse(recordAttributes[n]);
-
-                int iRes = 0;
-                int iSeg = 0;
-                while (Global.coe.reservoirs[iRes].reservoirSegs[iSeg].idNum != reservoirID) //test of coefficients file read
-                    if (iSeg < Global.coe.reservoirs[iRes].numSegments - 1)
-                        iSeg++;
-                    else
-                        if (iRes < Global.coe.numReservoirs - 1)
-                        iRes++;
-                    else
-                    {
-                        Debug.WriteLine("No reservoir found with IDnum = " + reservoirID);
-                        return;
-                    }
-                if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
-                {
-                    using (dlgReservoirCoeffs = new DialogReservoirCoeffs(this))
-                    {
-                        dlgReservoirCoeffs.Populate(iRes, iSeg);
-                        if (dlgReservoirCoeffs.ShowDialog() == DialogResult.OK)
-                            scenarioChanged = true;
-                    }
-                }
-                else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
-                {
-                    //need to populate the dialog - but is it the same dialog as is used for catchments and rivers?
-                    using (dlgOutput = new DialogOutput(this))
-                    {
-                        dlgOutput.ShowDialog();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Gowdy or Herr Output Selected");
-                }
-            }
-            else if (CatchmentRecordIndex >= 0) //Catchment selected - Catchment coefficients
-            {
-                string[] recordAttributes = frmMap[0].GetAttributeFieldValues(CatchmentRecordIndex);
-                string[] attributeNames = frmMap[0].GetAttributeFieldNames();
-                int n = 0;
-                while (attributeNames[n] != FIELDNAMEWARMFID) //test of shapefile attributes
-                {
-                    if (n < (attributeNames.Length - 1))
-                        n++;
-                    else
-                    {
-                        Debug.WriteLine("No " + FIELDNAMEWARMFID + " field found in catchments attribute table");
-                        return;
-                    }
-                }
-                int catchID = Int32.Parse(recordAttributes[n]);
-                int ii = 0;
-                while (Global.coe.catchments[ii].idNum != catchID) //test of coefficients file read
-                    if (ii < Global.coe.numCatchments - 1)
-                        ii++;
-                    else
-                    {
-                        Debug.WriteLine("No catchment found with IDnum = " + catchID);
-                        return;
-                    }
-                if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
-                {
-                    using (dlgCatchCoeffs = new DialogCatchCoeffs(this))
-                    {
-                        dlgCatchCoeffs.Populate(ii);
-                        if (dlgCatchCoeffs.ShowDialog() == DialogResult.OK)
-                            scenarioChanged = true;
-                    }
-                }
-                else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
-                {
-                    using (dlgOutput = new DialogOutput(this))
-                    {
-                        dlgOutput.Populate("Catchment", ii);
-                        dlgOutput.ShowDialog();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Gowdy or Herr Output Selected");
-                }
-            }
-
-            else //System coefficients
-            {
-                if (miModeInput.BackColor == System.Drawing.SystemColors.Highlight)
-                {
-                    using (dlgSystemCoeffs = new DialogSystemCoeffs(this))
-                    {
-                        dlgSystemCoeffs.Populate();
-                        if (dlgSystemCoeffs.ShowDialog() == DialogResult.OK)
-                            scenarioChanged = true;
-                    }
-                }
-                else if (miModeOutput.BackColor == System.Drawing.SystemColors.Highlight)
-                {
-                    MessageBox.Show("Display Spatial Output Dialog");
-                }
-                else
-                {
-                    MessageBox.Show("Gowdy or Herr Output Selected");
-                }
-            }
-        }
-
-        private void frmMap_Load(object sender, EventArgs e)
-        {
-            this.frmMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMap_MouseMove);
-            //this.frmMap.Paint += new System.Windows.Forms.PaintEventHandler(this.frmMap_Paint);
-        }
-
-        private void frmMap_MouseMove(object sender, MouseEventArgs e)
-        {
-            PointD pt = frmMap.PixelCoordToGisPoint(e.Y, e.X);
-            lblLatLong.Text = "Lat/Long: " + pt.Y + ", " + pt.X;
-        }
-
-        //private void frmMap_Paint(object sender, PaintEventArgs e){}
 
         #endregion
 
@@ -1004,7 +715,6 @@ namespace warmf {
             {
                 catchShapefile.SelectRecord(i, true);
             }
-            frmMap.Refresh(true);
         }
 
         private void miEditSelectReservoir_Click(object sender, EventArgs e)
@@ -1020,7 +730,6 @@ namespace warmf {
             {
                 lakeShapefile.SelectRecord(i, true);
             }
-            frmMap.Refresh(true);
         }
 
         private void miEditSelectRivers_Click(object sender, EventArgs e)
@@ -1036,7 +745,6 @@ namespace warmf {
             {
                 riverShapefile.SelectRecord(i, true);
             }
-            frmMap.Refresh(true);
         }
 
         private void miEditSelectAll_Click(object sender, EventArgs e)
@@ -1065,7 +773,6 @@ namespace warmf {
                     lakeShapefile.SelectRecord(i, true);
                 }
             }
-            frmMap.Refresh(true);
         }
 
         // De-selects all features in all layers on the map
@@ -1107,27 +814,22 @@ namespace warmf {
             catchShapefile.ClearSelectedRecords();
             riverShapefile.ClearSelectedRecords();
             lakeShapefile.ClearSelectedRecords();
-            frmMap.Refresh(true);
         }
         #endregion
 
         #region View Menu Events
         private void miViewZoomIn_Click(object sender, EventArgs e)
         {
-            frmMap.ZoomLevel *= 1.5;
             mainMap.ZoomIn();
         }
 
         private void miViewZoomOut_Click(object sender, EventArgs e)
         {
-            frmMap.ZoomLevel /= 1.5;
             mainMap.ZoomOut();
         }
 
         private void miViewZoomToExtent_Click(object sender, EventArgs e)
         {
-            frmMap.ZoomToFullExtent();
-            frmMap.ZoomLevel /= 1.05;
             mainMap.ZoomToMaxExtent();
         }
 
@@ -1153,7 +855,6 @@ namespace warmf {
                 {
                     miEditSelectAll.Enabled = false;
                 }
-                frmMap.Refresh(true);
             }
         }
 
@@ -1179,7 +880,6 @@ namespace warmf {
                 {
                     miEditSelectAll.Enabled = false;
                 }
-                frmMap.Refresh(true);
             }
         }
 
@@ -1206,7 +906,6 @@ namespace warmf {
                 {
                     miEditSelectAll.Enabled = false;
                 }
-                frmMap.Refresh(true);
             }
         }
 
@@ -1797,8 +1496,6 @@ namespace warmf {
         #region Tool Strip Buttons
         private void tsbZoomToExtent_Click(object sender, EventArgs e)
         {
-            frmMap.ZoomToFullExtent();
-            frmMap.ZoomLevel /= 1.05;
             mainMap.ZoomToMaxExtent();
         }
 
@@ -1808,18 +1505,15 @@ namespace warmf {
             catchShapefile.ClearSelectedRecords();
             riverShapefile.ClearSelectedRecords();
             lakeShapefile.ClearSelectedRecords();
-            frmMap.Refresh(true);
         }
 
         private void tsbZoomIn_Click(object sender, EventArgs e)
         {
-            frmMap.ZoomLevel *= 1.25;
             mainMap.ZoomIn();
         }
 
         private void tsbZoomOut_Click(object sender, EventArgs e)
         {
-            frmMap.ZoomLevel /= 1.25;
             mainMap.ZoomOut();
         }
 
